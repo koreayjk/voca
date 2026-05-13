@@ -335,11 +335,11 @@ let books = JSON.parse(localStorage.getItem('imvoca.v2') || 'null') || [
     ]}]
   }
 ];
-let apiKey = localStorage.getItem('imvoca.apikey') || '';
+let apiKey = 'AIzaSyBBkG8ESh0BWR-hBRIZMYM__m491SLoobc';
 let imgData = null, pendingW = null, pendingB = null, pendingP = null;
 
 function saveData() { localStorage.setItem('imvoca.v2', JSON.stringify(books)); }
-function saveApi() { apiKey = document.getElementById('api-in').value.trim(); localStorage.setItem('imvoca.apikey', apiKey); closeModal('modal-api'); toast('Gemini API 키 저장 완료'); }
+
 
 function toast(m) {
   const t = document.getElementById('toast');
@@ -434,11 +434,7 @@ async function doScan() {
       const data = await res.json();
       const txt = data.candidates[0].content.parts[0].text;
       words = JSON.parse(txt.replace(/```json|```/g,'').trim()).words;
-    } catch(e) { words = getDemoWords(); toast('API 오류 — 데모 결과로 표시합니다'); }
-  } else {
-    await new Promise(r => setTimeout(r, 1200));
-    words = getDemoWords();
-    toast('API 키를 설정하면 실제 분석이 가능해요');
+    } catch(e) { console.error(e); toast('분석 오류: ' + e.message); render(); return; }
   }
 
   pendingW = words; pendingB = bId; pendingP = pg;
@@ -482,12 +478,8 @@ function renderScanResult(words, bId, pg) {
         <div class="h-display h-xl">Page ${pg}</div>
         <div class="muted" style="font-size:12px;margin-top:4px">${words.length}개 단어 발견</div>
       </div>
-      <div class="preview-page-mini">
-        Eleanor felt a <span class="uline">fervent</span> attachment to the garden.
-        She grew <span class="uline">wary</span> of every sound, and once <span class="uline">stagger</span>ed at the pond's edge.
-        She <span class="uline">muster</span>ed courage to look down. Her <span class="uline">frail</span> grandmother…
-      </div>
-      <div class="label-xs" style="margin-top:16px">발견된 단어</div>
+      ${imgData ? `<img src="${imgData}" style="width:100%;border-radius:10px;margin-top:12px;max-height:180px;object-fit:cover;">` : ''}
+      <div class="label-xs" style="margin-top:14px">발견된 단어</div>
       <div class="chip-wrap">
         ${words.map(w=>`<span class="chip">${w.en}</span>`).join('')}
       </div>
@@ -546,7 +538,7 @@ function render() {
           </div>
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
-          <button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button>
+
           <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
       </div>` + dock;
