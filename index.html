@@ -30,13 +30,13 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .stage { display: none; }
 .phone { display: none; }
 .phone__screen { display: none; }
-#root { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; }
+#root { position: fixed; inset: 0; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
 
 /* ── SCREEN BASE ── */
-.scr { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; }
+.scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 .scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
 .scr-scroll::-webkit-scrollbar { display: none; }
 
@@ -193,7 +193,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 </style>
 </head>
 <body>
-<div id="root"><div style="position:fixed;inset:0;background:#f5f0e8;display:flex;align-items:center;justify-content:center;font-family:'Gowun Dodum',sans-serif;font-size:14px;color:#9a7c4e;">로딩 중...</div></div>
+<div id="root"></div>
 
 <!-- ADD BOOK MODAL -->
 <div class="overlay" id="modal-add">
@@ -227,63 +227,108 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
 <script>
-// ── SUPABASE ──
+// ── SUPABASE REST API (라이브러리 없이 직접 호출) ──
 const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
-const _sb = supabase.createClient(SB_URL, SB_KEY);
 let currentUser = null;
+let _authToken = null;
+
+// REST API 헬퍼
+async function sbFetch(path, method='GET', body=null, useAuth=true) {
+  const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY };
+  if (useAuth && _authToken) headers['Authorization'] = 'Bearer ' + _authToken;
+  else headers['Authorization'] = 'Bearer ' + SB_KEY;
+  const res = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
+  return res.json();
+}
 
 async function sbInit() {
-  try {
-    const { data:{ session } } = await _sb.auth.getSession();
-    if (session?.user) { currentUser = session.user; await loadBooksFromDB(); render(); }
-    else { renderLogin(); }
-  } catch(e) {
-    renderLogin();
+  renderLogin(); // 즉시 로그인 화면 표시
+  // 백그라운드에서 세션 확인
+  const saved = localStorage.getItem('imvoca.session');
+  if (saved) {
+    try {
+      const sess = JSON.parse(saved);
+      _authToken = sess.access_token;
+      currentUser = sess.user;
+      await loadBooksFromDB();
+      render();
+    } catch(e) { localStorage.removeItem('imvoca.session'); }
   }
 }
+
 async function sbSignIn(email, pw) {
-  const { data, error } = await _sb.auth.signInWithPassword({ email, password: pw });
-  if (error) { toast('로그인 실패: ' + (error.message.includes('Invalid') ? '이메일 또는 비밀번호가 틀렸어요' : error.message)); return; }
-  currentUser = data.user; await loadBooksFromDB(); render();
+  try {
+    const data = await sbFetch('/auth/v1/token?grant_type=password', 'POST', { email, password: pw }, false);
+    if (data.error || !data.access_token) { toast('로그인 실패: 이메일 또는 비밀번호를 확인해주세요'); return; }
+    _authToken = data.access_token;
+    currentUser = data.user;
+    localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
+    await loadBooksFromDB();
+    render();
+  } catch(e) { toast('로그인 오류: ' + e.message); }
 }
+
 async function sbSignUp(email, pw, name) {
-  const { data, error } = await _sb.auth.signUp({ email, password: pw, options:{ data:{ name } } });
-  if (error) { toast('가입 실패: ' + error.message); return; }
-  toast('가입 완료! 로그인해주세요'); renderLogin('login');
+  try {
+    const data = await sbFetch('/auth/v1/signup', 'POST', { email, password: pw, data: { name } }, false);
+    if (data.error) { toast('가입 실패: ' + data.error.message); return; }
+    toast('가입 완료! 로그인해주세요'); renderLogin('login');
+  } catch(e) { toast('가입 오류: ' + e.message); }
 }
+
 async function sbSignOut() {
-  await _sb.auth.signOut(); currentUser = null; books = []; renderLogin();
+  localStorage.removeItem('imvoca.session');
+  _authToken = null; currentUser = null; books = []; renderLogin();
 }
+
 async function loadBooksFromDB() {
-  const { data: bd } = await _sb.from('voca_books').select('*').eq('user_id', currentUser.id).order('created_at');
-  if (!bd) return;
-  books = [];
-  for (const b of bd) {
-    const { data: pd } = await _sb.from('voca_pages').select('*').eq('book_id', b.id).order('page_num');
-    const pages = [];
-    for (const p of (pd||[])) {
-      const { data: wd } = await _sb.from('voca_words').select('*').eq('page_id', p.id).order('created_at');
-      pages.push({ num:p.page_num, _pid:p.id, words:(wd||[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||''})) });
+  try {
+    const bd = await sbFetch(`/rest/v1/voca_books?user_id=eq.${currentUser.id}&order=created_at`);
+    if (!Array.isArray(bd)) return;
+    books = [];
+    for (const b of bd) {
+      const pd = await sbFetch(`/rest/v1/voca_pages?book_id=eq.${b.id}&order=page_num`);
+      const pages = [];
+      for (const p of (Array.isArray(pd) ? pd : [])) {
+        const wd = await sbFetch(`/rest/v1/voca_words?page_id=eq.${p.id}&order=created_at`);
+        pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||''})) });
+      }
+      books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', pages });
     }
-    books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', pages });
-  }
+  } catch(e) { console.error('DB load error:', e); }
 }
+
 async function saveBookToDB(title, author, color, desc) {
-  const { data } = await _sb.from('voca_books').insert({ user_id:currentUser.id, title, author, color, description:desc }).select().single();
-  return data;
+  try {
+    const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
+    const res = await fetch(SB_URL + '/rest/v1/voca_books', { method:'POST', headers, body: JSON.stringify({ user_id:currentUser.id, title, author, color, description:desc }) });
+    const data = await res.json();
+    return Array.isArray(data) ? data[0] : data;
+  } catch(e) { return null; }
 }
+
 async function savePageWordsToDB(bookId, pageNum, words) {
-  const book = findBook(bookId);
-  let pageId;
-  const ex = book?.pages.find(p=>p.num===pageNum);
-  if (ex?._pid) { pageId = ex._pid; }
-  else { const { data } = await _sb.from('voca_pages').insert({ book_id:bookId, page_num:pageNum }).select().single(); pageId = data?.id; }
-  if (!pageId) return null;
-  for (const w of words) await _sb.from('voca_words').insert({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'' });
-  return pageId;
+  try {
+    const book = findBook(bookId);
+    let pageId;
+    const ex = book?.pages.find(p=>p.num===pageNum);
+    if (ex?._pid) { pageId = ex._pid; }
+    else {
+      const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
+      const res = await fetch(SB_URL + '/rest/v1/voca_pages', { method:'POST', headers, body: JSON.stringify({ book_id:bookId, page_num:pageNum }) });
+      const data = await res.json();
+      pageId = (Array.isArray(data) ? data[0] : data)?.id;
+    }
+    if (!pageId) return null;
+    for (const w of words) {
+      const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken };
+      await fetch(SB_URL + '/rest/v1/voca_words', { method:'POST', headers, body: JSON.stringify({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'' }) });
+    }
+    return pageId;
+  } catch(e) { return null; }
 }
 function renderLogin(tab='login') {
   const root = document.getElementById('root');
@@ -791,11 +836,7 @@ function advance(isKnown) {
   }
 }
 
-// full screen — no scaling needed
-fitPhone();
-window.addEventListener('load', function() {
-  sbInit();
-});
+sbInit();
 </script>
 </body>
 </html>
