@@ -28,9 +28,9 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 body { background: #d4cabb; }
 
 /* ── STAGE ── */
-.stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #ede5d8 0%, #d9cfc0 100%); }
-.phone { position: relative; width: 375px; height: 812px; transform-origin: center center; flex-shrink: 0; }
-.phone__screen { position: absolute; inset: 0; background: var(--bg-page); border-radius: 44px; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.08); z-index: 1; }
+.stage { position: fixed; inset: 0; background: var(--bg-page); }
+.phone { position: fixed; inset: 0; }
+.phone__screen { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
@@ -335,7 +335,7 @@ let books = JSON.parse(localStorage.getItem('imvoca.v2') || 'null') || [
     ]}]
   }
 ];
-let apiKey = 'AIzaSyBBkG8ESh0BWR-hBRIZMYM__m491SLoobc';
+let apiKey = 'AIzaSyA9Sl-UbXRwSFbm_Zojt4LUzRVjOuaV-Kw';
 let imgData = null, pendingW = null, pendingB = null, pendingP = null;
 
 function saveData() { localStorage.setItem('imvoca.v2', JSON.stringify(books)); }
@@ -791,14 +791,7 @@ function advance(isKnown) {
   }
 }
 
-function fitPhone() {
-  const el = document.querySelector('.phone');
-  if (!el) return;
-  const s = Math.min(window.innerWidth/420, window.innerHeight/840, 1.3);
-  el.style.transform = `scale(${s})`;
-}
-window.addEventListener('resize', fitPhone);
-fitPhone();
+// full screen — no scaling needed
 fitPhone();
 sbInit();
 </script>
