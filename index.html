@@ -27,9 +27,10 @@
 html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; overflow: hidden; background: var(--bg-page); }
 
 /* ── STAGE ── */
-.stage, .phone { position: fixed; inset: 0; }
-.phone__screen { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; }
-#root { position: absolute; inset: 0; }
+.stage { display: none; }
+.phone { display: none; }
+.phone__screen { display: none; }
+#root { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
@@ -192,43 +193,39 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 </style>
 </head>
 <body>
-<div class="stage">
-  <div class="phone">
-    <div class="phone__screen" id="root"></div>
+<div id="root"><div style="position:fixed;inset:0;background:#f5f0e8;display:flex;align-items:center;justify-content:center;font-family:'Gowun Dodum',sans-serif;font-size:14px;color:#9a7c4e;">로딩 중...</div></div>
 
-    <!-- ADD BOOK MODAL -->
-    <div class="overlay" id="modal-add">
-      <div class="sheet">
-        <div class="sheet-handle"></div>
-        <h3>새 책 추가</h3>
-        <input type="text" id="nb-title" placeholder="책 제목">
-        <input type="text" id="nb-author" placeholder="저자">
-        <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
-        <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
-        <div class="gap-sm"></div>
-        <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
-      </div>
-    </div>
-
-    <!-- API MODAL -->
-    <div class="overlay" id="modal-api">
-      <div class="sheet">
-        <div class="sheet-handle"></div>
-        <h3>Gemini AI 연동</h3>
-        <p class="sheet-note">
-          구글 Gemini API 키를 입력하면 사진에서 밑줄 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
-          발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key
-        </p>
-        <input type="password" id="api-in" placeholder="AIza...">
-        <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
-        <div class="gap-sm"></div>
-        <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
-      </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
+<!-- ADD BOOK MODAL -->
+<div class="overlay" id="modal-add">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>새 책 추가</h3>
+    <input type="text" id="nb-title" placeholder="책 제목">
+    <input type="text" id="nb-author" placeholder="저자">
+    <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
+    <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
   </div>
 </div>
+
+<!-- API MODAL -->
+<div class="overlay" id="modal-api">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Gemini AI 연동</h3>
+    <p class="sheet-note">
+      구글 Gemini API 키를 입력하면 사진에서 밑줄 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
+      발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key
+    </p>
+    <input type="password" id="api-in" placeholder="AIza...">
+    <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
@@ -239,9 +236,13 @@ const _sb = supabase.createClient(SB_URL, SB_KEY);
 let currentUser = null;
 
 async function sbInit() {
-  const { data:{ session } } = await _sb.auth.getSession();
-  if (session?.user) { currentUser = session.user; await loadBooksFromDB(); render(); }
-  else { renderLogin(); }
+  try {
+    const { data:{ session } } = await _sb.auth.getSession();
+    if (session?.user) { currentUser = session.user; await loadBooksFromDB(); render(); }
+    else { renderLogin(); }
+  } catch(e) {
+    renderLogin();
+  }
 }
 async function sbSignIn(email, pw) {
   const { data, error } = await _sb.auth.signInWithPassword({ email, password: pw });
@@ -792,7 +793,9 @@ function advance(isKnown) {
 
 // full screen — no scaling needed
 fitPhone();
-sbInit();
+window.addEventListener('load', function() {
+  sbInit();
+});
 </script>
 </body>
 </html>
