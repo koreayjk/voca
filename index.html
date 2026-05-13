@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IM VOCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-display: 'Lora', Georgia, serif;
+  --font-body: 'Gowun Dodum', system-ui, sans-serif;
+  --ink-100: #1a1511;
+  --ink-60: rgba(26,21,17,0.6);
+  --ink-40: rgba(26,21,17,0.4);
+  --ink-12: rgba(26,21,17,0.1);
+  --ink-07: rgba(26,21,17,0.07);
+  --ink-05: rgba(26,21,17,0.04);
+  --gold: #cc5500;
+  --gold-bg: rgba(204,85,0,0.09);
+  --bg-page: #f5f0e8;
+  --bg-card: #faf7f2;
+  --bg-input: #f0ebe0;
+  --accent: #cc5500;
+  --accent-dark: #a84400;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; overflow: hidden; }
+body { background: #d4cabb; }
+
+/* ── STAGE ── */
+.stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #ede5d8 0%, #d9cfc0 100%); }
+.phone { position: relative; width: 375px; height: 812px; transform-origin: center center; flex-shrink: 0; }
+.phone__screen { position: absolute; inset: 0; background: var(--bg-page); border-radius: 44px; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.08); z-index: 1; }
+
+/* ── STATUS BAR ── */
+.sb { display: none; }
+
+/* ── SCREEN BASE ── */
+.scr { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; }
+.scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
+.scr-scroll::-webkit-scrollbar { display: none; }
+
+/* ── TYPOGRAPHY ── */
+.h-display { font-family: var(--font-display); letter-spacing: -0.03em; line-height: 0.97; color: var(--ink-100); }
+.h-xxl { font-size: 40px; }
+.h-xl  { font-size: 30px; }
+.h-l   { font-size: 24px; }
+.label-xs { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); font-weight: 500; }
+.muted { color: var(--ink-60); }
+
+/* ── TOPNAV ── */
+.topnav { display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: 2px; flex-shrink: 0; }
+.topnav__back { font-size: 20px; cursor: pointer; padding: 4px 8px 4px 0; color: #000; user-select: none; }
+.topnav__title { font-size: 13px; color: var(--ink-60); letter-spacing: -0.02em; }
+.topnav__right { font-size: 16px; cursor: pointer; padding: 4px 0 4px 8px; }
+
+/* ── DOCK ── */
+.dock { position: absolute; left: 0; right: 0; bottom: 0; height: 80px; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 12px; background: rgba(245,240,232,0.92); border-top: 1px solid var(--ink-07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 20; }
+.dock__btn { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 20px; font-size: 10px; color: var(--ink-40); letter-spacing: -0.01em; background: none; border: none; font-family: var(--font-body); user-select: none; }
+.dock__btn--active { color: var(--accent); }
+.dock__glyph { font-family: var(--font-display); font-size: 22px; line-height: 1; letter-spacing: -0.04em; }
+
+/* ── BUTTONS ── */
+.btn { width: 100%; padding: 15px 14px; border-radius: 13px; font-family: var(--font-body); font-weight: 500; font-size: 15px; letter-spacing: -0.02em; cursor: pointer; border: none; text-align: center; }
+.btn-solid { background: var(--accent); color: #fff; }
+.btn-solid:disabled { opacity: 0.35; cursor: default; }
+.btn-outline { background: transparent; color: #000; border: 1.5px solid var(--ink-12); }
+.btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
+
+/* ── LIBRARY ── */
+.lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
+.lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
+.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; margin-top: 20px; }
+.book-tile { cursor: pointer; }
+.book-cover { width: 100%; aspect-ratio: 2/3; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 12px 14px; color: #fff; font-family: var(--font-display); letter-spacing: -0.04em; line-height: 0.97; overflow: hidden; }
+.book-cover__title { font-size: 18px; }
+.book-cover__author { font-family: var(--font-body); font-size: 10px; opacity: 0.75; font-weight: 400; letter-spacing: -0.01em; }
+.book-tile__title { font-size: 13px; font-weight: 600; letter-spacing: -0.02em; margin-top: 8px; }
+.book-tile__sub { font-size: 11px; color: var(--ink-60); margin-top: 2px; }
+
+/* ── BOOK DETAIL ── */
+.book-hero { display: flex; gap: 14px; margin-top: 14px; align-items: flex-start; }
+.book-hero__cover { width: 88px; height: 132px; border-radius: 8px; flex-shrink: 0; }
+.book-hero__title { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.04em; color: #000; line-height: 1.1; }
+.book-hero__author { font-size: 12px; color: var(--ink-60); margin-top: 5px; }
+.book-hero__badge { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-40); margin-top: 10px; }
+.book-hero__desc { font-size: 11px; color: var(--ink-60); line-height: 1.55; margin-top: 4px; letter-spacing: -0.01em; }
+.rule { margin-top: 16px; border-top: 1px solid var(--ink-07); }
+.sect-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.sect-row__name { font-size: 13px; font-weight: 600; letter-spacing: -0.02em; }
+.sect-row__count { font-size: 11px; color: var(--ink-60); }
+.page-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--ink-07); cursor: pointer; }
+.page-row:last-child { border-bottom: none; }
+.page-row__num { font-size: 13px; font-weight: 500; letter-spacing: -0.02em; }
+.page-row__right { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-60); }
+
+/* ── CAPTURE / UPLOAD ── */
+.upload-zone { border: 1.5px dashed var(--ink-12); border-radius: 14px; padding: 32px 20px; text-align: center; cursor: pointer; position: relative; transition: border-color .2s, background .2s; margin-top: 14px; }
+.upload-zone:hover { border-color: var(--accent); background: var(--gold-bg); }
+.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-title { font-size: 14px; font-weight: 500; }
+.upload-sub { font-size: 11px; color: var(--ink-60); margin-top: 4px; }
+.preview-img { width: 100%; border-radius: 10px; max-height: 160px; object-fit: cover; margin-top: 12px; }
+.scan-btn { width: 100%; margin-top: 10px; padding: 14px; background: var(--accent); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 500; font-family: var(--font-body); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: -0.02em; }
+.scan-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── SCANNING STATE ── */
+.scanning { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+.ring { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--ink-07); border-top-color: #000; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── SCAN RESULT ── */
+.chip-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { font-size: 11px; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ink-12); color: #000; background: #fff; }
+.preview-page-mini { background: #ede0c8; border-radius: 10px; padding: 12px; font-family: Georgia, serif; font-size: 9.5px; line-height: 1.6; color: #2a2a2a; margin-top: 14px; }
+.uline { border-bottom: 1.5px solid var(--gold); }
+
+/* ── PAGE WORDS ── */
+.word-item { padding: 10px 0; border-bottom: 1px solid var(--ink-07); }
+.word-item:last-child { border-bottom: none; }
+.word-item__en { font-weight: 600; font-size: 16px; letter-spacing: -0.02em; }
+.word-item__base { font-size: 11px; color: var(--ink-60); margin-top: 2px; letter-spacing: -0.01em; }
+.word-item__ctx { font-size: 11px; color: var(--ink-100); margin-top: 2px; letter-spacing: -0.01em; }
+.word-item__ctx em { font-style: normal; background: var(--gold-bg); padding: 0 2px; }
+
+/* ── STUDY SETUP ── */
+.scope-card { border: 1.5px solid var(--ink-12); border-radius: 13px; padding: 15px; cursor: pointer; }
+.scope-card--on { border-color: #000; border-width: 2px; padding: 14px; }
+.scope-card__head { display: flex; justify-content: space-between; align-items: center; }
+.scope-card__name { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+.scope-card__hint { font-size: 11px; color: var(--ink-60); margin-top: 4px; }
+.radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--ink-40); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+.radio--on { background: #000; border-color: #000; color: #fff; }
+.list-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--ink-07); cursor: pointer; }
+.list-row:last-child { border-bottom: none; }
+
+/* ── STUDY CARDS ── */
+.study { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 18px 22px 22px; }
+.study__top { display: flex; justify-content: space-between; align-items: center; }
+.study__info { font-size: 11px; color: var(--ink-60); }
+.study__close { font-size: 16px; cursor: pointer; padding: 4px; }
+.study__bar { height: 3px; background: var(--ink-07); border-radius: 99px; margin-top: 10px; overflow: hidden; }
+.study__fill { height: 100%; background: var(--accent); transition: width 250ms ease; }
+.study__round { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); margin-top: 8px; }
+.card-wrap { flex: 1; perspective: 1400px; cursor: pointer; margin: 14px 0; }
+.card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.4,0,.2,1); }
+.card--flip { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; border-radius: 20px; -webkit-backface-visibility: hidden; backface-visibility: hidden; padding: 24px; display: flex; flex-direction: column; }
+.face-front { background: #f5ede0; }
+.face-back { background: #2a1f15; border: 1px solid rgba(255,255,255,0.06); transform: rotateY(180deg); }
+.face-front__center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.card__word { font-family: var(--font-display); font-size: 40px; letter-spacing: -0.04em; color: #000; text-align: center; line-height: 1; }
+.card__ipa { font-size: 13px; color: var(--ink-40); }
+.card__tap { font-size: 11px; color: var(--ink-40); text-align: center; margin-top: 16px; }
+.back__word { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #f5ede0; }
+.back__label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245,237,224,0.45); margin-top: 14px; }
+.back__meaning { font-size: 16px; letter-spacing: -0.02em; margin-top: 4px; line-height: 1.3; color: #f5ede0; }
+.back__sentence { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); font-family: Georgia, serif; font-size: 11px; line-height: 1.6; color: rgba(245,237,224,0.6); }
+.back__sentence em { font-style: normal; background: var(--gold-bg); padding: 0 2px; }
+.ox-row { display: flex; gap: 10px; }
+.ox-btn { flex: 1; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; cursor: pointer; border: none; }
+.ox-x { border: 1.5px solid var(--ink-12); background: #fff; color: #000; }
+.ox-o { background: var(--accent); color: #fff; }
+.ox-btn:disabled { opacity: 0.3; cursor: default; }
+.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); margin-top: 6px; letter-spacing: -0.01em; }
+
+/* ── DONE ── */
+.done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
+.done__n { font-family: var(--font-display); font-size: 96px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+.done__label { font-size: 14px; color: var(--ink-60); letter-spacing: -0.02em; }
+.done__grid { margin-top: 24px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.done__tile { border: 1px solid var(--ink-12); border-radius: 13px; padding: 14px; text-align: left; }
+.done__tile-label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); }
+.done__tile-value { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #000; margin-top: 4px; }
+
+/* ── MODAL SHEET ── */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: flex-end; justify-content: center; max-width: 375px; margin: 0 auto; }
+.overlay.open { display: flex; }
+.sheet { background: var(--bg-card); border-radius: 20px 20px 0 0; padding: 20px 22px 36px; width: 100%; }
+.sheet-handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 0 auto 18px; }
+.sheet h3 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.03em; margin-bottom: 16px; }
+.sheet input { width: 100%; background: var(--bg-input); border: 1px solid var(--ink-07); border-radius: 10px; padding: 12px 14px; font-family: var(--font-body); font-size: 14px; color: #000; outline: none; margin-bottom: 10px; }
+.sheet input:focus { border-color: #000; background: #fff; }
+.sheet input::placeholder { color: var(--ink-40); }
+.sheet-note { font-size: 12px; color: var(--ink-60); line-height: 1.7; margin-bottom: 14px; }
+.sheet-note a { color: #000; font-weight: 500; }
+.gap-sm { height: 6px; }
+
+/* ── TOAST ── */
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(8px); background: #000; color: #fff; border-radius: 20px; padding: 9px 18px; font-size: 13px; opacity: 0; transition: all .25s; pointer-events: none; white-space: nowrap; z-index: 300; letter-spacing: -0.02em; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone">
+    <div class="phone__screen" id="root"></div>
+  </div>
+</div>
+
+<!-- ADD BOOK MODAL -->
+<div class="overlay" id="modal-add">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>새 책 추가</h3>
+    <input type="text" id="nb-title" placeholder="책 제목">
+    <input type="text" id="nb-author" placeholder="저자">
+    <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
+    <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
+  </div>
+</div>
+
+<!-- API MODAL -->
+<div class="overlay" id="modal-api">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Gemini AI 연동</h3>
+    <p class="sheet-note">
+      구글 Gemini API 키를 입력하면 사진에서 밑줄 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
+      발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key
+    </p>
+    <input type="password" id="api-in" placeholder="AIza...">
+    <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// ── SUPABASE ──
+const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
+const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
+const _sb = supabase.createClient(SB_URL, SB_KEY);
+let currentUser = null;
+
+async function sbInit() {
+  const { data:{ session } } = await _sb.auth.getSession();
+  if (session?.user) { currentUser = session.user; await loadBooksFromDB(); render(); }
+  else { renderLogin(); }
+}
+async function sbSignIn(email, pw) {
+  const { data, error } = await _sb.auth.signInWithPassword({ email, password: pw });
+  if (error) { toast('로그인 실패: ' + (error.message.includes('Invalid') ? '이메일 또는 비밀번호가 틀렸어요' : error.message)); return; }
+  currentUser = data.user; await loadBooksFromDB(); render();
+}
+async function sbSignUp(email, pw, name) {
+  const { data, error } = await _sb.auth.signUp({ email, password: pw, options:{ data:{ name } } });
+  if (error) { toast('가입 실패: ' + error.message); return; }
+  toast('가입 완료! 로그인해주세요'); renderLogin('login');
+}
+async function sbSignOut() {
+  await _sb.auth.signOut(); currentUser = null; books = []; renderLogin();
+}
+async function loadBooksFromDB() {
+  const { data: bd } = await _sb.from('voca_books').select('*').eq('user_id', currentUser.id).order('created_at');
+  if (!bd) return;
+  books = [];
+  for (const b of bd) {
+    const { data: pd } = await _sb.from('voca_pages').select('*').eq('book_id', b.id).order('page_num');
+    const pages = [];
+    for (const p of (pd||[])) {
+      const { data: wd } = await _sb.from('voca_words').select('*').eq('page_id', p.id).order('created_at');
+      pages.push({ num:p.page_num, _pid:p.id, words:(wd||[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||''})) });
+    }
+    books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', pages });
+  }
+}
+async function saveBookToDB(title, author, color, desc) {
+  const { data } = await _sb.from('voca_books').insert({ user_id:currentUser.id, title, author, color, description:desc }).select().single();
+  return data;
+}
+async function savePageWordsToDB(bookId, pageNum, words) {
+  const book = findBook(bookId);
+  let pageId;
+  const ex = book?.pages.find(p=>p.num===pageNum);
+  if (ex?._pid) { pageId = ex._pid; }
+  else { const { data } = await _sb.from('voca_pages').insert({ book_id:bookId, page_num:pageNum }).select().single(); pageId = data?.id; }
+  if (!pageId) return null;
+  for (const w of words) await _sb.from('voca_words').insert({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'' });
+  return pageId;
+}
+function renderLogin(tab='login') {
+  const root = document.getElementById('root');
+  root.innerHTML = `
+    <div class="sb"><span>9:41</span><span>100%</span></div>
+    <div class="scr" style="justify-content:center">
+      <div style="text-align:center;margin-bottom:28px">
+        <div class="h-display" style="font-size:38px;color:var(--accent)">IM VOCA</div>
+        <div class="muted" style="font-size:12px;margin-top:6px">영어책 단어장</div>
+      </div>
+      <div style="display:flex;border-bottom:1px solid var(--ink-07);margin-bottom:22px">
+        <button onclick="renderLogin('login')" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='login'?'2px solid #000':'2px solid transparent'};font-weight:${tab==='login'?600:400}">로그인</button>
+        <button onclick="renderLogin('signup')" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='signup'?'2px solid #000':'2px solid transparent'};font-weight:${tab==='signup'?600:400}">회원가입</button>
+      </div>
+      ${tab==='login'?`
+        <input id="li-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:10px">
+        <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:14px">
+        <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">로그인</button>
+      `:`
+        <input id="su-nm" type="text" placeholder="이름" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:10px">
+        <input id="su-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:10px">
+        <input id="su-pw" type="password" placeholder="비밀번호 (6자 이상)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:14px">
+        <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value)">가입하기</button>
+      `}
+      <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">IM Mission 계정으로 로그인하세요</div>
+    </div>`;
+}
+</script>
+<script>
+// ── DATA ──
+const COLORS = ['#8b4513','#6b5a3e','#7a4a2a','#5a6b3e','#4a3a6b','#6b3a4a','#3e5a4a'];
+let books = JSON.parse(localStorage.getItem('imvoca.v2') || 'null') || [
+  { id:'holes', title:'Holes', author:'Louis Sachar', color:'#1a1a2e',
+    desc:'Stanley Yelnats is sent to Camp Green Lake where they dig holes — and where a long-buried family secret surfaces.',
+    pages:[{ num:10, words:[
+      {id:'h1',en:'diligent',ipa:'/ˈdɪlɪdʒənt/',base:'부지런한, 근면한',ctx:'끈기 있게 지켜온',sentence:'His grandfather had been _____ about the family curse.'},
+      {id:'h2',en:'peculiar',ipa:'/pɪˈkjuːliər/',base:'독특한, 묘한',ctx:'유난히 이상한',sentence:'_____ shadows fell across the ground.'},
+      {id:'h3',en:'linger',ipa:'/ˈlɪŋɡər/',base:'머무르다, 남다',ctx:'땅 위에 남아 있다',sentence:'Shadows _____ed on the ground.'},
+      {id:'h4',en:'solemn',ipa:'/ˈsɑːləm/',base:'엄숙한, 진지한',ctx:'진지하게',sentence:'He sat _____ as a judge.'},
+      {id:'h5',en:'vivid',ipa:'/ˈvɪvɪd/',base:'생생한, 선명한',ctx:'선명하게 떠오르는',sentence:'He had a _____ memory of the curse.'}
+    ]}]
+  },
+  { id:'giver', title:'The Giver', author:'Lois Lowry', color:'#2d4a3e',
+    desc:'Twelve-year-old Jonas lives in a community without pain or color. When chosen as the Receiver of Memory, he learns what his world gave up.',
+    pages:[{ num:7, words:[
+      {id:'g1',en:'pristine',ipa:'/ˈprɪstiːn/',base:'깨끗한, 새것 같은',ctx:'흠 하나 없는',sentence:'The streets were _____ and orderly.'},
+      {id:'g2',en:'somber',ipa:'/ˈsɑːmbər/',base:'엄숙한, 침울한',ctx:'침울한 분위기',sentence:'The room felt _____ and still.'},
+      {id:'g3',en:'exempt',ipa:'/ɪɡˈzempt/',base:'면제된',ctx:'예외인',sentence:'The Receiver is _____ from the rules.'}
+    ]}]
+  }
+];
+let apiKey = localStorage.getItem('imvoca.apikey') || '';
+let imgData = null, pendingW = null, pendingB = null, pendingP = null;
+
+function saveData() { localStorage.setItem('imvoca.v2', JSON.stringify(books)); }
+function saveApi() { apiKey = document.getElementById('api-in').value.trim(); localStorage.setItem('imvoca.apikey', apiKey); closeModal('modal-api'); toast('Gemini API 키 저장 완료'); }
+
+function toast(m) {
+  const t = document.getElementById('toast');
+  t.textContent = m; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ── NAV STACK ──
+let stack = [{ name:'library' }];
+function push(r) { stack.push(r); render(); }
+function back() { if (stack.length > 1) { stack.pop(); render(); } }
+function goTab(t) { stack = [{ name: t === 'study' ? 'study-setup' : 'library' }]; render(); }
+function replace(r) { stack[stack.length-1] = r; render(); }
+function currentTab() { const n = stack[stack.length-1].name; return ['study-setup','study-cards','study-done'].includes(n) ? 'study' : 'books'; }
+
+// ── HELPERS ──
+function findBook(id) { return books.find(b => b.id === id); }
+function findPage(book, num) { return book.pages.find(p => p.num === num); }
+function countWords(book) { return book.pages.reduce((n,p) => n + p.words.length, 0); }
+function allWords(book) { const out=[]; book.pages.forEach(p => p.words.forEach(w => out.push({...w, pageNum:p.num}))); return out; }
+function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+// ── MODAL ──
+async function addBook() {
+  const title = document.getElementById('nb-title').value.trim();
+  if (!title) { toast('책 제목을 입력해주세요'); return; }
+  const color = COLORS[books.length%COLORS.length];
+  const author2 = document.getElementById('nb-author').value.trim()||'Unknown';
+  const desc2 = document.getElementById('nb-desc').value.trim();
+  const newBook = await saveBookToDB(title, author2, color, desc2);
+  if (!newBook) { toast('저장 실패'); return; }
+  books.push({ id:newBook.id, title, author:author2, color, desc:desc2, pages:[] });
+  // saveData removed - using DB
+  ['nb-title','nb-author','nb-desc'].forEach(id=>document.getElementById(id).value='');
+  closeModal('modal-add'); render(); toast('책이 추가됐어요');
+}
+
+// ── UPLOAD / GEMINI ──
+function handleFileChange(e) {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => { imgData = ev.target.result; renderUploadPreview(); };
+  r.readAsDataURL(f);
+}
+
+function renderUploadPreview() {
+  const area = document.getElementById('upload-main');
+  if (!area) return;
+  area.innerHTML = `
+    <img src="${imgData}" class="preview-img">
+    <button class="scan-btn" onclick="doScan()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      단어 추출하기
+    </button>`;
+}
+
+async function doScan() {
+  const bId = document.getElementById('up-book-sel')?.value;
+  const pg = parseInt(document.getElementById('up-pg-inp')?.value);
+  if (!bId) { toast('책을 먼저 선택해주세요'); return; }
+  if (!pg || pg < 1) { toast('페이지 번호를 입력해주세요'); return; }
+  if (!imgData) { toast('사진을 먼저 선택해주세요'); return; }
+
+  const root = document.getElementById('root');
+  root.innerHTML = `
+    <div class="sb"><span>9:41</span><span>100%</span></div>
+    <div class="scr">
+      <div class="scanning">
+        <div class="ring"></div>
+        <div style="text-align:center">
+          <div class="h-display h-l">단어 인식 중</div>
+          <div class="muted" style="font-size:12px;margin-top:6px">밑줄을 찾고 있어요</div>
+        </div>
+      </div>
+    </div>`;
+
+  let words;
+  if (apiKey) {
+    try {
+      const b64 = imgData.split(',')[1];
+      const mt = imgData.split(';')[0].split(':')[1];
+      const book = findBook(bId);
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ contents:[{parts:[
+          {inline_data:{mime_type:mt,data:b64}},
+          {text:`이 영어책 페이지에서 밑줄이 쳐진 단어들을 모두 찾아주세요. 밑줄이 없으면 어려운 단어 8개를 골라주세요. 책 제목: "${book.title}". 반드시 JSON만 반환 (다른 텍스트 없이):
+{"words":[{"en":"word","ipa":"/pronunciation/","base":"기본 한국어 뜻","ctx":"이 문맥에서의 뜻","sentence":"Fill in the _____"}]}`}
+        ]}], generationConfig:{temperature:0.1,maxOutputTokens:1500} })
+      });
+      const data = await res.json();
+      const txt = data.candidates[0].content.parts[0].text;
+      words = JSON.parse(txt.replace(/```json|```/g,'').trim()).words;
+    } catch(e) { words = getDemoWords(); toast('API 오류 — 데모 결과로 표시합니다'); }
+  } else {
+    await new Promise(r => setTimeout(r, 1200));
+    words = getDemoWords();
+    toast('API 키를 설정하면 실제 분석이 가능해요');
+  }
+
+  pendingW = words; pendingB = bId; pendingP = pg;
+  renderScanResult(words, bId, pg);
+}
+
+function getDemoWords() {
+  return [
+    {en:'fervent',ipa:'/ˈfɜːrvənt/',base:'열렬한',ctx:'간절한',sentence:'She gave him a _____ glance.'},
+    {en:'wary',ipa:'/ˈweri/',base:'조심하는',ctx:'경계하는',sentence:'He grew _____ of the strangers.'},
+    {en:'stagger',ipa:'/ˈstæɡər/',base:'비틀거리다',ctx:'휘청거리며',sentence:'He _____ed down the hallway.'},
+    {en:'muster',ipa:'/ˈmʌstər/',base:'모으다, 끌어내다',ctx:'겨우 끌어내다',sentence:'He _____ed the courage to speak.'},
+    {en:'frail',ipa:'/freɪl/',base:'허약한, 연약한',ctx:'가냘픈',sentence:'His grandmother had grown _____.'},
+    {en:'implore',ipa:'/ɪmˈplɔːr/',base:'간청하다',ctx:'애원하다',sentence:'She _____ed him to stay.'}
+  ];
+}
+
+async function acceptWords() {
+  const book = findBook(pendingB); if (!book) return;
+  const pid = await savePageWordsToDB(pendingB, pendingP, pendingW);
+  const words = pendingW.map((w,i) => ({...w, id:`${pendingB}-${pendingP}-${i+1}`}));
+  const ex = findPage(book, pendingP);
+  if (ex) ex.words = [...ex.words, ...words];
+  else { book.pages.push({num:pendingP, _pid:pid, words}); book.pages.sort((a,b)=>a.num-b.num); }
+  toast(`Page ${pendingP} 저장 완료`);
+  replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+}
+
+function renderScanResult(words, bId, pg) {
+  const root = document.getElementById('root');
+  const book = findBook(bId);
+  root.innerHTML = `
+    <div class="sb"><span>9:41</span><span>100%</span></div>
+    <div class="scr" style="padding-bottom:100px;">
+      <div class="topnav">
+        <span class="topnav__back" onclick="render()">←</span>
+        <span class="topnav__title">${book?.title||''}</span>
+        <span></span>
+      </div>
+      <div style="margin-top:14px">
+        <div class="h-display h-xl">Page ${pg}</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">${words.length}개 단어 발견</div>
+      </div>
+      <div class="preview-page-mini">
+        Eleanor felt a <span class="uline">fervent</span> attachment to the garden.
+        She grew <span class="uline">wary</span> of every sound, and once <span class="uline">stagger</span>ed at the pond's edge.
+        She <span class="uline">muster</span>ed courage to look down. Her <span class="uline">frail</span> grandmother…
+      </div>
+      <div class="label-xs" style="margin-top:16px">발견된 단어</div>
+      <div class="chip-wrap">
+        ${words.map(w=>`<span class="chip">${w.en}</span>`).join('')}
+      </div>
+      <div class="btn-fixed">
+        <button class="btn btn-solid" onclick="acceptWords()">뜻 정리하기</button>
+      </div>
+    </div>`;
+}
+
+// ── STUDY STATE ──
+let studyState = null;
+function initStudy(bookId, scope, pageNum) {
+  const book = findBook(bookId); if (!book) return;
+  let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book);
+  studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length, seen:0, oCount:0} };
+}
+
+// ── RENDER ──
+function render() {
+  const root = document.getElementById('root');
+  const route = stack[stack.length-1];
+  const tab = currentTab();
+
+  const sb = `<div class="sb"><span>9:41</span><span>100%</span></div>`;
+  const dock = `
+    <div class="dock">
+      <button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')">
+        <span class="dock__glyph">⌗</span><span>책장</span>
+      </button>
+      <button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')">
+        <span class="dock__glyph">◐</span><span>카드</span>
+      </button>
+    </div>`;
+
+  if (route.name === 'library') {
+    root.innerHTML = sb + `
+      <div class="scr" style="padding-bottom:90px">
+        <div class="lib-header">
+          <div>
+            <div class="h-display h-xxl">내 책장</div>
+            <div class="muted" style="font-size:12px;margin-top:5px;letter-spacing:-0.02em">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
+          </div>
+          <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
+        </div>
+        <div class="scr-scroll">
+          <div class="book-grid">
+            ${books.map(b=>`
+              <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
+                <div class="book-cover" style="background:${b.color}">
+                  <div class="book-cover__title">${b.title}</div>
+                  <div class="book-cover__author">${b.author}</div>
+                </div>
+                <div class="book-tile__title">${b.title}</div>
+                <div class="book-tile__sub">${b.author} · ${countWords(b)} words</div>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
+          <button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button>
+          <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
+        </div>
+      </div>` + dock;
+  }
+
+  else if (route.name === 'book') {
+    const book = findBook(route.bookId);
+    if (!book) { back(); return; }
+    root.innerHTML = sb + `
+      <div class="scr" style="padding-bottom:110px">
+        <div class="topnav">
+          <span class="topnav__back" onclick="back()">←</span>
+          <span class="topnav__title">${book.title}</span>
+          <span class="topnav__right">⋯</span>
+        </div>
+        <div class="scr-scroll">
+          <div class="book-hero">
+            <div class="book-hero__cover" style="background:${book.color}"></div>
+            <div>
+              <div class="book-hero__title">${book.title}</div>
+              <div class="book-hero__author">${book.author}</div>
+              <div class="book-hero__badge">저장된 책</div>
+              <div class="book-hero__desc">${book.desc||''}</div>
+            </div>
+          </div>
+          <div class="rule"></div>
+          <div class="sect-row">
+            <div class="sect-row__name">페이지별 단어</div>
+            <div class="sect-row__count">${countWords(book)} words</div>
+          </div>
+          ${book.pages.length===0?'<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">아직 저장된 단어가 없어요</div>':
+          book.pages.map(p=>`
+            <div class="page-row" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:${p.num}})">
+              <span class="page-row__num">Page ${p.num}</span>
+              <span class="page-row__right">${p.words.length} words <span style="font-size:16px;color:var(--ink-40)">›</span></span>
+            </div>`).join('')}
+        </div>
+        <div class="btn-fixed">
+          <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">＋ 페이지 촬영</button>
+        </div>
+      </div>`;
+  }
+
+  else if (route.name === 'capture') {
+    const book = findBook(route.bookId);
+    imgData = null;
+    root.innerHTML = sb + `
+      <div class="scr" style="padding-bottom:24px">
+        <div class="topnav">
+          <span class="topnav__back" onclick="back()">←</span>
+          <span class="topnav__title">${book?.title||''}</span>
+          <span></span>
+        </div>
+        <div class="h-display h-xl" style="margin-top:14px">페이지 추가</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">밑줄 친 단어가 잘 보이게 찍어주세요</div>
+        <div class="scr-scroll" style="margin-top:14px">
+          <div class="label-xs">책 선택</div>
+          <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;outline:none;margin-top:6px;appearance:none;cursor:pointer">
+            ${books.map(b=>`<option value="${b.id}" ${b.id===route.bookId?'selected':''}>${b.title}</option>`).join('')}
+          </select>
+          <div class="label-xs" style="margin-top:14px">페이지 번호</div>
+          <input type="number" id="up-pg-inp" placeholder="예: 34" min="1" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
+          <div id="upload-main">
+            <div class="upload-zone">
+              <input type="file" accept="image/*" onchange="handleFileChange(event)">
+              <div class="upload-icon">📷</div>
+              <div class="upload-title">사진 선택 또는 촬영</div>
+              <div class="upload-sub">밑줄 친 단어를 AI가 자동으로 찾아요</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  else if (route.name === 'page-words') {
+    const book = findBook(route.bookId);
+    const page = book ? findPage(book, route.pageNum) : null;
+    if (!page) { back(); return; }
+    root.innerHTML = sb + `
+      <div class="scr" style="padding-bottom:110px">
+        <div class="topnav">
+          <span class="topnav__back" onclick="back()">←</span>
+          <span class="topnav__title">${book.title} · Page ${page.num}</span>
+          <span></span>
+        </div>
+        <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
+        <div class="muted" style="font-size:11px;margin-top:4px">기본 뜻 + 문맥 뜻</div>
+        <div class="scr-scroll" style="margin-top:12px">
+          ${page.words.map(w=>`
+            <div class="word-item">
+              <div class="word-item__en">${w.en}</div>
+              <div class="word-item__base">${w.base}</div>
+              <div class="word-item__ctx">↳ <em>${w.ctx}</em></div>
+            </div>`).join('')}
+        </div>
+        <div class="btn-fixed">
+          <button class="btn btn-solid" onclick="push({name:'study-cards',bookId:'${book.id}',pageNum:${page.num},scope:'page'});initStudy('${book.id}','page',${page.num})">암기 카드로 보내기</button>
+        </div>
+      </div>`;
+  }
+
+  else if (route.name === 'study-setup') {
+    let selBookId = books[0]?.id || null;
+    let selScope = 'all';
+    let selPage = null;
+    const rerender = () => {
+      const book = selBookId ? findBook(selBookId) : null;
+      const total = book ? (selScope==='all' ? countWords(book) : (selPage ? findPage(book,selPage)?.words.length||0 : 0)) : 0;
+      const canStart = !!book && total > 0 && (selScope==='all' || selPage!=null);
+      document.getElementById('study-setup-inner').innerHTML = `
+        <div class="label-xs" style="margin-top:20px">책</div>
+        <div style="margin-top:6px">
+          ${books.map(b=>`
+            <div class="list-row" onclick="selBookId='${b.id}';selPage=null;rerender()">
+              <div style="width:38px;height:52px;border-radius:5px;background:${b.color};flex-shrink:0"></div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600;letter-spacing:-0.02em">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div>
+              <div class="radio ${selBookId===b.id?'radio--on':''}">${selBookId===b.id?'✓':''}</div>
+            </div>`).join('')}
+        </div>
+        ${book?`
+        <div class="label-xs" style="margin-top:16px">범위</div>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+          <div class="scope-card ${selScope==='all'?'scope-card--on':''}" onclick="selScope='all';rerender()">
+            <div class="scope-card__head"><div><div class="scope-card__name">책 전체</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${selScope==='all'?'radio--on':''}">${selScope==='all'?'✓':''}</div></div>
+          </div>
+          <div class="scope-card ${selScope==='page'?'scope-card--on':''}" onclick="selScope='page';rerender()">
+            <div class="scope-card__head"><div><div class="scope-card__name">페이지별</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${selScope==='page'?'radio--on':''}">${selScope==='page'?'✓':''}</div></div>
+            ${selScope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${selPage===p.num?'background:#000;color:#fff;border-color:#000':''}" onclick="event.stopPropagation();selPage=${p.num};rerender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}
+          </div>
+        </div>`:''}
+        <div style="height:22px"></div>
+        <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`initStudy('${selBookId}','${selScope}',${selPage});push({name:'study-cards',bookId:'${selBookId}',scope:'${selScope}',pageNum:${selPage}})`:''}">시작하기${canStart?` — ${total} cards`:''}</button>`;
+    };
+    window.rerender = rerender;
+    root.innerHTML = sb + `
+      <div class="scr" style="padding-bottom:90px">
+        <div class="h-display h-xxl" style="margin-top:4px">암기 카드</div>
+        <div class="muted" style="font-size:12px;margin-top:5px;letter-spacing:-0.02em">어느 책의 단어를 외울까요</div>
+        <div class="scr-scroll" id="study-setup-inner"></div>
+      </div>` + dock;
+    rerender();
+  }
+
+  else if (route.name === 'study-cards') {
+    if (!studyState) { initStudy(route.bookId, route.scope, route.pageNum); }
+    renderStudyCard();
+    return;
+  }
+
+  else if (route.name === 'study-done') {
+    const book = findBook(route.bookId);
+    root.innerHTML = sb + `
+      <div class="scr">
+        <div class="topnav">
+          <span></span>
+          <span class="topnav__title">${book?.title||''}</span>
+          <span class="topnav__right" onclick="goTab('books')">✕</span>
+        </div>
+        <div class="done">
+          <div class="label-xs">모두 외웠어요</div>
+          <div class="done__n">${route.total}</div>
+          <div class="done__label">words memorized</div>
+          <div class="done__grid">
+            <div class="done__tile"><div class="done__tile-label">Rounds</div><div class="done__tile-value">${route.rounds}</div></div>
+            <div class="done__tile"><div class="done__tile-label">Scope</div><div class="done__tile-value" style="font-size:16px">${route.scope==='page'?`Page ${route.pageNum}`:'All'}</div></div>
+          </div>
+          <div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-solid" onclick="initStudy('${route.bookId}','${route.scope}',${route.pageNum});push({name:'study-cards',bookId:'${route.bookId}',scope:'${route.scope}',pageNum:${route.pageNum}})">다시 외우기</button>
+            <button class="btn btn-outline" onclick="goTab('books')">책장으로</button>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+function renderStudyCard() {
+  const root = document.getElementById('root');
+  const s = studyState;
+  const route = stack[stack.length-1];
+  if (!s || s.queue.length === 0) {
+    // all done
+    replace({name:'study-done', bookId:route.bookId, scope:route.scope, pageNum:route.pageNum, rounds:s.round, total:s.stats.total});
+    return;
+  }
+  const w = s.queue[s.idx];
+  const prog = s.queue.length > 0 ? (s.idx / s.queue.length * 100) : 100;
+  root.innerHTML = `
+    <div class="sb"><span>9:41</span><span>100%</span></div>
+    <div class="study">
+      <div class="study__top">
+        <span class="study__info">${s.idx+1} / ${s.queue.length}</span>
+        <span class="study__info">${findBook(s.bookId)?.title||''}</span>
+        <span class="study__close" onclick="back();studyState=null">✕</span>
+      </div>
+      <div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div>
+      <div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div>
+      <div class="card-wrap" onclick="flipCard()">
+        <div class="card ${s.flipped?'card--flip':''}" id="study-card">
+          <div class="face face-front">
+            <div class="face-front__center">
+              <div class="card__word">${w.en}</div>
+              <div class="card__ipa">${w.ipa||''}</div>
+            </div>
+            <div class="card__tap">탭해서 뜻 보기</div>
+          </div>
+          <div class="face face-back">
+            <div class="back__word">${w.en}</div>
+            <div class="back__label">기본 뜻</div>
+            <div class="back__meaning">${w.base}</div>
+            <div class="back__label">이 페이지에선</div>
+            <div class="back__meaning">${w.ctx}</div>
+            ${w.sentence?`<div class="back__sentence">"${w.sentence.replace(/(_+)/g,`<em>${w.en}</em>`)}"</div>`:''}
+          </div>
+        </div>
+      </div>
+      <div class="ox-row">
+        <button class="ox-btn ox-x" onclick="advance(false)" ${!s.flipped?'disabled style="opacity:0.3"':''}>✕</button>
+        <button class="ox-btn ox-o" onclick="advance(true)" ${!s.flipped?'disabled style="opacity:0.3"':''}>○</button>
+      </div>
+      <div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클에 다시':'카드를 탭해서 뜻을 본 뒤 O / X'}</div>
+    </div>`;
+}
+
+function flipCard() {
+  if (!studyState.flipped) { studyState.flipped = true; renderStudyCard(); }
+}
+
+function advance(isKnown) {
+  if (!studyState.flipped) return;
+  const s = studyState;
+  s.stats.seen++; if(isKnown) s.stats.oCount++;
+  const newX = isKnown ? s.xList : [...s.xList, s.queue[s.idx]];
+  if (s.idx + 1 < s.queue.length) {
+    s.idx++; s.xList = newX; s.flipped = false; renderStudyCard();
+  } else {
+    if (newX.length === 0) {
+      replace({name:'study-done', bookId:s.bookId, scope:s.scope, pageNum:s.pageNum, rounds:s.round, total:s.stats.total});
+    } else {
+      s.round++; s.queue = shuffle(newX); s.idx = 0; s.xList = []; s.flipped = false; renderStudyCard();
+    }
+  }
+}
+
+function fitPhone() {
+  const el = document.querySelector('.phone');
+  if (!el) return;
+  const s = Math.min(window.innerWidth/420, window.innerHeight/840, 1.3);
+  el.style.transform = `scale(${s})`;
+}
+window.addEventListener('resize', fitPhone);
+fitPhone();
+fitPhone();
+sbInit();
+</script>
+</body>
+</html>
