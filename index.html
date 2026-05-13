@@ -497,10 +497,10 @@ async function doScan() {
       body: JSON.stringify({
         contents:[{parts:[
           {inline_data:{mime_type:mt, data:b64}},
-          {text:`사진에서 밑줄 친 영어 단어를 찾아주세요. 없으면 어려운 단어 6개. JSON만 응답:
-{"words":[{"en":"word","ipa":"/ipa/","base":"한국어뜻","ctx":"문맥뜻","sentence":"예문_____"}]}`}
+          {text:`이 영어책 페이지에서 밑줄 친 단어 최대 5개를 찾아주세요. 밑줄이 없으면 어려운 단어 5개. 반드시 아래 JSON 형식으로만 답하세요:
+{"words":[{"en":"word","base":"뜻","ctx":"문맥"}]}`}
         ]}],
-        generationConfig:{temperature:0.1, maxOutputTokens:800}
+        generationConfig:{temperature:0.1, maxOutputTokens:1024, responseMimeType:'application/json'}
       })
     });
     const data = await res.json();
