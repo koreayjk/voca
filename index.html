@@ -30,7 +30,7 @@ body { background: #d4cabb; }
 /* ── STAGE ── */
 .stage { position: fixed; inset: 0; background: var(--bg-page); }
 .phone { position: fixed; inset: 0; }
-.phone__screen { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; }
+.phone__screen { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; z-index: 1; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
@@ -175,7 +175,7 @@ body { background: #d4cabb; }
 .done__tile-value { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #000; margin-top: 4px; }
 
 /* ── MODAL SHEET ── */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: flex-end; justify-content: center; max-width: 375px; margin: 0 auto; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: flex-end; justify-content: center; max-width: 375px; margin: 0 auto; }
 .overlay.open { display: flex; }
 .sheet { background: var(--bg-card); border-radius: 20px 20px 0 0; padding: 20px 22px 36px; width: 100%; }
 .sheet-handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 0 auto 18px; }
@@ -196,40 +196,40 @@ body { background: #d4cabb; }
 <div class="stage">
   <div class="phone">
     <div class="phone__screen" id="root"></div>
+
+    <!-- ADD BOOK MODAL -->
+    <div class="overlay" id="modal-add">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <h3>새 책 추가</h3>
+        <input type="text" id="nb-title" placeholder="책 제목">
+        <input type="text" id="nb-author" placeholder="저자">
+        <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
+        <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
+        <div class="gap-sm"></div>
+        <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
+      </div>
+    </div>
+
+    <!-- API MODAL -->
+    <div class="overlay" id="modal-api">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <h3>Gemini AI 연동</h3>
+        <p class="sheet-note">
+          구글 Gemini API 키를 입력하면 사진에서 밑줄 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
+          발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key
+        </p>
+        <input type="password" id="api-in" placeholder="AIza...">
+        <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
+        <div class="gap-sm"></div>
+        <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
   </div>
 </div>
-
-<!-- ADD BOOK MODAL -->
-<div class="overlay" id="modal-add">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h3>새 책 추가</h3>
-    <input type="text" id="nb-title" placeholder="책 제목">
-    <input type="text" id="nb-author" placeholder="저자">
-    <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
-    <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
-    <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
-  </div>
-</div>
-
-<!-- API MODAL -->
-<div class="overlay" id="modal-api">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h3>Gemini AI 연동</h3>
-    <p class="sheet-note">
-      구글 Gemini API 키를 입력하면 사진에서 밑줄 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
-      발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key
-    </p>
-    <input type="password" id="api-in" placeholder="AIza...">
-    <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
-    <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
