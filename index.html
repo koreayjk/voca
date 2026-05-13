@@ -245,18 +245,42 @@ async function sbFetch(path, method='GET', body=null, useAuth=true) {
 }
 
 async function sbInit() {
-  renderLogin(); // 즉시 로그인 화면 표시
-  // 백그라운드에서 세션 확인
+  renderLogin();
   const saved = localStorage.getItem('imvoca.session');
   if (saved) {
     try {
       const sess = JSON.parse(saved);
       _authToken = sess.access_token;
       currentUser = sess.user;
+      await loadApiKey();
       await loadBooksFromDB();
       render();
     } catch(e) { localStorage.removeItem('imvoca.session'); }
   }
+}
+
+function saveApi() { const key = document.getElementById("api-in").value.trim(); if(!key){toast("키를 입력해주세요");return;} saveApiKeyToDB(key); }
+async function loadApiKey() {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1&select=gemini_key', {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    const data = await res.json();
+    if (data[0]?.gemini_key) apiKey = data[0].gemini_key;
+  } catch(e) { console.error('키 로드 실패:', e); }
+}
+
+async function saveApiKeyToDB(key) {
+  try {
+    await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify({ gemini_key: key, updated_at: new Date().toISOString() })
+    });
+    apiKey = key;
+    toast('API 키가 저장됐어요!');
+    closeModal('modal-api');
+  } catch(e) { toast('저장 실패: ' + e.message); }
 }
 
 async function sbSignIn(email, pw) {
@@ -266,6 +290,7 @@ async function sbSignIn(email, pw) {
     _authToken = data.access_token;
     currentUser = data.user;
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
+    await loadApiKey();
     await loadBooksFromDB();
     render();
   } catch(e) { toast('로그인 오류: ' + e.message); }
@@ -380,7 +405,7 @@ let books = JSON.parse(localStorage.getItem('imvoca.v2') || 'null') || [
     ]}]
   }
 ];
-let apiKey = 'AIzaSyA9Sl-UbXRwSFbm_Zojt4LUzRVjOuaV-Kw';
+let apiKey = '';
 let imgData = null, pendingW = null, pendingB = null, pendingP = null;
 
 function saveData() { localStorage.setItem('imvoca.v2', JSON.stringify(books)); }
@@ -593,6 +618,7 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
 
+          <button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button>
           <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
       </div>` + dock;
