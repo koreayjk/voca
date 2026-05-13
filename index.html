@@ -507,9 +507,8 @@ async function doScan() {
     if (data.error) { toast('API 오류: ' + data.error.message + ' / 코드: ' + data.error.code); render(); return; }
     if (!data.candidates || !data.candidates[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
-    const clean = txt.replace(/```json|```/g,'').trim();
-    words = JSON.parse(clean).words;
-    if (!words || !words.length) { toast('단어를 찾지 못했어요. 다시 시도해주세요'); render(); return; }
+    toast('응답: ' + txt.substring(0, 100));
+    return;
   } catch(e) {
     console.error(e);
     toast('오류: ' + e.message + ' / 키: ' + (apiKey ? apiKey.substring(0,8)+'...' : '없음'));
