@@ -507,8 +507,29 @@ async function doScan() {
     if (data.error) { toast('API 오류: ' + data.error.message + ' / 코드: ' + data.error.code); render(); return; }
     if (!data.candidates || !data.candidates[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
-    toast('응답: ' + txt.substring(0, 100));
-    return;
+    const clean = txt.replace(/```json|```/g,'').trim();
+    let parsed;
+    try { parsed = JSON.parse(clean); }
+    catch(pe) {
+      // JSON이 잘린 경우 복구 시도
+      const fixed = clean.replace(/,?\s*\{[^}]*$/, '').replace(/,\s*$/, '') + ']}';
+      try { parsed = JSON.parse(fixed); }
+      catch(pe2) {
+        // 단어 직접 추출
+        const matches = clean.match(/"en"\s*:\s*"([^"]+)"/g) || [];
+        const bases = clean.match(/"base"\s*:\s*"([^"]+)"/g) || [];
+        const ctxs = clean.match(/"ctx"\s*:\s*"([^"]+)"/g) || [];
+        if (matches.length > 0) {
+          parsed = { words: matches.map((m,i) => ({
+            en: m.match(/"en"\s*:\s*"([^"]+)"/)[1],
+            base: bases[i] ? bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1] : '',
+            ctx: ctxs[i] ? ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1] : ''
+          }))};
+        } else { toast('단어를 찾지 못했어요'); render(); return; }
+      }
+    }
+    words = parsed.words;
+    if (!words || !words.length) { toast('단어를 찾지 못했어요'); render(); return; }
   } catch(e) {
     console.error(e);
     toast('오류: ' + e.message + ' / 키: ' + (apiKey ? apiKey.substring(0,8)+'...' : '없음'));
