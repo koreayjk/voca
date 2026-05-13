@@ -24,13 +24,12 @@
   --accent-dark: #a84400;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; overflow: hidden; }
-body { background: #d4cabb; }
+html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; overflow: hidden; background: var(--bg-page); }
 
 /* ── STAGE ── */
-.stage { position: fixed; inset: 0; background: var(--bg-page); }
-.phone { position: fixed; inset: 0; }
-.phone__screen { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; z-index: 1; }
+.stage, .phone { position: fixed; inset: 0; }
+.phone__screen { position: fixed; inset: 0; background: var(--bg-page); overflow: hidden; }
+#root { position: absolute; inset: 0; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
