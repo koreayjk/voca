@@ -30,13 +30,13 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .stage { display: none; }
 .phone { display: none; }
 .phone__screen { display: none; }
-#root { position: fixed; inset: 0; }
+#root { position: fixed; inset: 0; background: #d4cabb; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
 
 /* ── SCREEN BASE ── */
-.scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
+.scr { position: fixed; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 .scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
 .scr-scroll::-webkit-scrollbar { display: none; }
 
@@ -55,7 +55,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .topnav__right { font-size: 16px; cursor: pointer; padding: 4px 0 4px 8px; }
 
 /* ── DOCK ── */
-.dock { position: absolute; left: 0; right: 0; bottom: 0; height: 80px; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 12px; background: rgba(245,240,232,0.92); border-top: 1px solid var(--ink-07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 20; }
+.dock { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 80px; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 12px; background: rgba(245,240,232,0.92); border-top: 1px solid var(--ink-07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 20; }
 .dock__btn { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 20px; font-size: 10px; color: var(--ink-40); letter-spacing: -0.01em; background: none; border: none; font-family: var(--font-body); user-select: none; }
 .dock__btn--active { color: var(--accent); }
 .dock__glyph { font-family: var(--font-display); font-size: 22px; line-height: 1; letter-spacing: -0.04em; }
