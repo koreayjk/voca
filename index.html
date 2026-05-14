@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" type="image/png" href="https://koreayjk.github.io/voca/2.png">
+<link rel="apple-touch-icon" href="https://koreayjk.github.io/voca/2.png">
 <title>IM VOCA</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
@@ -393,8 +395,8 @@ function renderLogin(tab='login') {
     <div class="sb"><span>9:41</span><span>100%</span></div>
     <div class="scr" style="justify-content:center">
       <div style="text-align:center;margin-bottom:28px">
-        <div class="h-display" style="font-size:38px;color:var(--accent)">IM VOCA</div>
-        <div class="muted" style="font-size:12px;margin-top:6px">영어책 단어장</div>
+        <img src="https://koreayjk.github.io/voca/2.png" style="width:140px;height:140px;object-fit:contain;margin-bottom:4px;">
+        <div class="muted" style="font-size:12px;margin-top:2px">영어책 단어장</div>
       </div>
       <div style="display:flex;border-bottom:1px solid var(--ink-07);margin-bottom:22px">
         <button onclick="renderLogin('login')" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='login'?'2px solid #000':'2px solid transparent'};font-weight:${tab==='login'?600:400}">로그인</button>
@@ -647,8 +649,11 @@ function render() {
       <div class="scr" style="padding-bottom:90px">
         <div class="lib-header">
           <div>
-            <div class="h-display h-xxl">내 책장</div>
-            <div class="muted" style="font-size:12px;margin-top:5px;letter-spacing:-0.02em">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+              <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
+              <div class="h-display h-xxl">내 책장</div>
+            </div>
+            <div class="muted" style="font-size:12px;margin-top:2px;letter-spacing:-0.02em">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
           </div>
           <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
         </div>
