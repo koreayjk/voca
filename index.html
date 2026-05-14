@@ -421,7 +421,7 @@ function replace(r) { stack[stack.length-1] = r; render(); }
 function currentTab() { const n = stack[stack.length-1].name; if (['study-setup','study-cards','study-done'].includes(n)) return 'study'; if (n==='stats') return 'stats'; if (n==='search') return 'search'; return 'books'; }
 
 function findBook(id) { return books.find(b => b.id === id); }
-function findPage(book, num) { return book.pages.find(p => p.num === num); }
+function findPage(book, num) { return book.pages.find(p => String(p.num) === String(num)); }
 function countWords(book) { return book.pages.reduce((n,p) => n + p.words.length, 0); }
 function allWords(book) { const out=[]; book.pages.forEach(p => p.words.forEach(w => out.push({...w, pageNum:p.num}))); return out; }
 function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
@@ -899,7 +899,7 @@ function showActionSheet(items) {
 function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
 
 function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:'책 정보 수정',action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:'책 삭제',danger:true,action:`deleteBook('${bookId}')`}]); }
-function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} 삭제`,danger:true,action:`deletePage('${bookId}',${pageNum})`}]); }
+function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} 삭제`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
   const book=findBook(bookId); if(!book)return;
