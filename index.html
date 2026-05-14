@@ -973,7 +973,18 @@ function speak(word) {
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(word);
   u.lang = 'en-US';
-  u.rate = 0.9;
+  u.rate = 0.85;
+  u.pitch = 1;
+  // 더 자연스러운 목소리 선택
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v =>
+    v.name.includes('Samantha') ||   // macOS/iOS 최고 품질
+    v.name.includes('Google US English') ||
+    v.name.includes('Aaron') ||
+    v.name.includes('Alex') ||
+    (v.lang === 'en-US' && v.localService)
+  ) || voices.find(v => v.lang === 'en-US');
+  if (preferred) u.voice = preferred;
   window.speechSynthesis.speak(u);
 }
 
