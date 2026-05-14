@@ -542,7 +542,16 @@ async function doScan() {
 {"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
     });
     const data = await res.json();
-    if (data.error) { toast('API 오류: ' + data.error.message); render(); return; }
+    if (data.error) {
+      const code = data.error.code;
+      let msg = '잠시 후 다시 시도해주세요';
+      if (code === 429 || data.error.message?.includes('demand') || data.error.message?.includes('quota')) {
+        msg = '서버에 과부하가 있어요\n잠시 후 다시 시도해주세요';
+      } else if (code === 403) {
+        msg = 'API 키를 확인해주세요';
+      }
+      toast(msg); render(); return;
+    }
     if (!data.candidates?.[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
     const clean = txt.replace(/```json|```/g,'').trim();
@@ -559,7 +568,7 @@ async function doScan() {
     }
     words = parsed.words;
     if (!words?.length) { toast('단어를 찾지 못했어요'); render(); return; }
-  } catch(e) { toast('오류: ' + e.message); render(); return; }
+  } catch(e) { toast('네트워크 오류\n잠시 후 다시 시도해주세요'); render(); return; }
   pendingW = words; pendingB = bId; pendingP = pg;
   renderWordSelection(words);
 }
@@ -617,15 +626,20 @@ function renderWordSelection(words) {
 
 function toggleWord(i) {
   window._wordSelected[i] = !window._wordSelected[i];
+  const sel = window._wordSelected[i];
   const el = document.getElementById(`wsel-${i}`);
   const check = document.getElementById(`wsel-check-${i}`);
-  if (window._wordSelected[i]) {
-    el.style.border = '2px solid transparent';
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  const level = pendingW[i]?.level || '중';
+  if (sel) {
+    el.style.border = `2px solid ${levelColor[level]||'#ddd'}`;
     el.style.opacity = '1';
+    el.style.background = '#fff';
     check.style.display = 'flex';
   } else {
     el.style.border = '2px solid var(--ink-12)';
-    el.style.opacity = '0.5';
+    el.style.opacity = '0.4';
+    el.style.background = '#f5f5f5';
     check.style.display = 'none';
   }
 }
@@ -773,8 +787,8 @@ function render() {
           <div class="label-xs" style="margin-top:14px">페이지 번호</div>
           <input type="text" id="up-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
           <div id="upload-main">
-            <div class="upload-zone">
-              <input type="file" accept="image/*" onchange="handleFileChange(event)">
+            <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileChange(event)">
               <div class="upload-icon">📷</div>
               <div class="upload-title">사진 선택 또는 촬영</div>
               <div class="upload-sub">AI가 단어를 추출하면 원하는 것만 선택해요</div>
