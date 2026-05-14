@@ -651,7 +651,7 @@ function render() {
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
-              <div class="h-display h-xxl">내 책장</div>
+              <div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;">내 책장</div>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;letter-spacing:-0.02em">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
           </div>
@@ -775,45 +775,56 @@ function render() {
   }
 
   else if (route.name === 'study-setup') {
-    let selBookId = books[0]?.id || null;
-    let selScope = 'all';
-    let selPage = null;
-    const rerender = () => {
-      const book = selBookId ? findBook(selBookId) : null;
-      const total = book ? (selScope==='all' ? countWords(book) : (selPage ? findPage(book,selPage)?.words.length||0 : 0)) : 0;
-      const canStart = !!book && total > 0 && (selScope==='all' || selPage!=null);
-      document.getElementById('study-setup-inner').innerHTML = `
+    // Store state globally so innerHTML onclick can access
+    window._ss = { bookId: books[0]?.id || null, scope: 'all', page: null };
+    
+    window.ssSelectBook = function(id) { window._ss.bookId=id; window._ss.page=null; ssRender(); };
+    window.ssSelectScope = function(s) { window._ss.scope=s; window._ss.page=null; ssRender(); };
+    window.ssSelectPage = function(n) { window._ss.page=n; ssRender(); };
+    window.ssStart = function() {
+      const s = window._ss;
+      initStudy(s.bookId, s.scope, s.page);
+      push({name:'study-cards', bookId:s.bookId, scope:s.scope, pageNum:s.page});
+    };
+    window.ssRender = function() {
+      const s = window._ss;
+      const book = s.bookId ? findBook(s.bookId) : null;
+      const total = book ? (s.scope==='all' ? countWords(book) : (s.page ? findPage(book,s.page)?.words.length||0 : 0)) : 0;
+      const canStart = !!book && total > 0 && (s.scope==='all' || s.page!=null);
+      const el = document.getElementById('study-setup-inner');
+      if (!el) return;
+      el.innerHTML = `
         <div class="label-xs" style="margin-top:20px">책</div>
         <div style="margin-top:6px">
           ${books.map(b=>`
-            <div class="list-row" onclick="selBookId='${b.id}';selPage=null;rerender()">
+            <div class="list-row" onclick="ssSelectBook('${b.id}')">
               <div style="width:38px;height:52px;border-radius:5px;background:${b.color};flex-shrink:0"></div>
-              <div style="flex:1"><div style="font-size:13px;font-weight:600;letter-spacing:-0.02em">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div>
-              <div class="radio ${selBookId===b.id?'radio--on':''}">${selBookId===b.id?'✓':''}</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600;">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div>
+              <div class="radio ${s.bookId===b.id?'radio--on':''}">${s.bookId===b.id?'✓':''}</div>
             </div>`).join('')}
         </div>
         ${book?`
         <div class="label-xs" style="margin-top:16px">범위</div>
         <div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
-          <div class="scope-card ${selScope==='all'?'scope-card--on':''}" onclick="selScope='all';rerender()">
-            <div class="scope-card__head"><div><div class="scope-card__name">책 전체</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${selScope==='all'?'radio--on':''}">${selScope==='all'?'✓':''}</div></div>
+          <div class="scope-card ${s.scope==='all'?'scope-card--on':''}" onclick="ssSelectScope('all')">
+            <div class="scope-card__head"><div><div class="scope-card__name">책 전체</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${s.scope==='all'?'radio--on':''}">${s.scope==='all'?'✓':''}</div></div>
           </div>
-          <div class="scope-card ${selScope==='page'?'scope-card--on':''}" onclick="selScope='page';rerender()">
-            <div class="scope-card__head"><div><div class="scope-card__name">페이지별</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${selScope==='page'?'radio--on':''}">${selScope==='page'?'✓':''}</div></div>
-            ${selScope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${selPage===p.num?'background:#000;color:#fff;border-color:#000':''}" onclick="event.stopPropagation();selPage=${p.num};rerender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}
+          <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')">
+            <div class="scope-card__head"><div><div class="scope-card__name">페이지별</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>
+            ${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${s.page===p.num?'background:#000;color:#fff;border-color:#000':''}" onclick="event.stopPropagation();ssSelectPage(${p.num})">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}
           </div>
         </div>`:''}
         <div style="height:22px"></div>
-        <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`initStudy('${selBookId}','${selScope}',${selPage});push({name:'study-cards',bookId:'${selBookId}',scope:'${selScope}',pageNum:${selPage}})`:''}">시작하기${canStart?` — ${total} cards`:''}</button>`;
+        <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">시작하기${canStart?` — ${total} cards`:''}</button>`;
     };
-    window.rerender = rerender;
+
     root.innerHTML = sb + `
       <div class="scr" style="padding-bottom:90px">
-        <div class="h-display h-xxl" style="margin-top:4px">암기 카드</div>
+        <div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;margin-top:4px">암기 카드</div>
         <div class="muted" style="font-size:12px;margin-top:5px;letter-spacing:-0.02em">어느 책의 단어를 외울까요</div>
         <div class="scr-scroll" id="study-setup-inner"></div>
       </div>` + dock;
-    rerender();
+    ssRender();
   }
 
   else if (route.name === 'study-cards') {
