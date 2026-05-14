@@ -278,7 +278,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
     <div class="sheet-handle"></div>
     <h3>Gemini AI 연동</h3>
     <p class="sheet-note">
-      구글 Gemini API 키를 입력하면 사진에서 밑줄 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
+      구글 Gemini API 키를 입력하면 사진에서 형광펜 단어를 <strong>무료로</strong> 자동 추출해요.<br><br>
       발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key
     </p>
     <input type="password" id="api-in" placeholder="AIza...">
@@ -570,7 +570,7 @@ async function doScan() {
         <div class="ring"></div>
         <div style="text-align:center">
           <div class="h-display h-l">단어 인식 중</div>
-          <div class="muted" style="font-size:12px;margin-top:6px">밑줄을 찾고 있어요</div>
+          <div class="muted" style="font-size:12px;margin-top:6px">형광펜 표시를 찾고 있어요</div>
         </div>
       </div>
     </div>`;
@@ -730,7 +730,7 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
 
-          <button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button>
+          ${currentUser?.email === 'koreayjk@gmail.com' ? '<button onclick="document.getElementById(\'modal-api\').classList.add(\'open\')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button>' : ''}
           <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
       </div>` + dock;
@@ -791,7 +791,7 @@ function render() {
           <span></span>
         </div>
         <div class="h-display h-xl" style="margin-top:14px">페이지 추가</div>
-        <div class="muted" style="font-size:12px;margin-top:4px">밑줄 친 단어가 잘 보이게 찍어주세요</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">형광펜 표시가 잘 보이게 찍어주세요</div>
         <div class="scr-scroll" style="margin-top:14px">
           <div class="label-xs">책 선택</div>
           <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;outline:none;margin-top:6px;appearance:none;cursor:pointer">
@@ -804,7 +804,7 @@ function render() {
               <input type="file" accept="image/*" onchange="handleFileChange(event)">
               <div class="upload-icon">📷</div>
               <div class="upload-title">사진 선택 또는 촬영</div>
-              <div class="upload-sub">밑줄 친 단어를 AI가 자동으로 찾아요</div>
+              <div class="upload-sub">형광펜 표시된 단어를 AI가 자동으로 찾아요</div>
             </div>
           </div>
         </div>
