@@ -968,6 +968,15 @@ async function rejectUser(userId) {
   } catch(e) { toast('오류: ' + e.message); }
 }
 
+// ── 발음 듣기 ──
+function speak(word) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US';
+  u.rate = 0.9;
+  window.speechSynthesis.speak(u);
+}
+
 // ── 스와이프 뒤로가기 ──
 (function() {
   let startX = 0, startY = 0;
