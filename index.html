@@ -746,7 +746,7 @@ function render() {
         <div class="topnav">
           <span class="topnav__back" onclick="back()">←</span>
           <span class="topnav__title">${book.title}</span>
-          <span></span>
+          <span class="topnav__right" onclick="showBookMenu('${book.id}')">⋯</span>
         </div>
         <div class="scr-scroll">
           <div class="book-hero">
@@ -1089,8 +1089,9 @@ async function searchBook() {
   listEl.style.display = 'block';
 
   try {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=8`);
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=8&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY`);
     const data = await res.json();
+    if (data.error) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${data.error.message}</div>`; return; }
     if (!data.items || !data.items.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요<br><span style="font-size:11px;">영어 제목으로 다시 시도해보세요</span></div>'; return; }
     
     listEl.innerHTML = data.items.map((item, i) => {
