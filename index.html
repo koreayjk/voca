@@ -263,10 +263,8 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
       </div>
     </div>
     <div id="book-search-list" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
-    <div id="nb-manual">
-      <input type="text" id="nb-author" placeholder="저자">
-      <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
-    </div>
+    <input type="hidden" id="nb-author">
+    <input type="hidden" id="nb-desc">
     <input type="hidden" id="nb-cover">
     <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
     <div class="gap-sm"></div>
@@ -710,7 +708,7 @@ function render() {
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
-              <div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;">내 책장</div>
+              <div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;">${(currentUser?.user_metadata?.name || currentUser?.email?.split('@')[0] || '내')}님 책장</div>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;letter-spacing:-0.02em">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
           </div>
