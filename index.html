@@ -497,10 +497,10 @@ async function doScan() {
       body: JSON.stringify({
         contents:[{parts:[
           {inline_data:{mime_type:mt, data:b64}},
-          {text:`이 영어책 페이지에서 밑줄 친 단어 최대 5개를 찾아주세요. 밑줄이 없으면 어려운 단어 5개. 반드시 아래 JSON 형식으로만 답하세요:
-{"words":[{"en":"word","base":"뜻","ctx":"문맥"}]}`}
+          {text:`이 영어책 페이지 사진에서 밑줄 그어진 단어들을 모두 찾아주세요. 밑줄이 없으면 어려운 단어 10개. JSON만 반환:
+{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥뜻"}]}`}
         ]}],
-        generationConfig:{temperature:0.1, maxOutputTokens:1024, responseMimeType:'application/json'}
+        generationConfig:{temperature:0.1, maxOutputTokens:4096}
       })
     });
     const data = await res.json();
@@ -537,7 +537,7 @@ async function doScan() {
   }
 
   pendingW = words; pendingB = bId; pendingP = pg;
-  renderScanResult(words, bId, pg);
+  await acceptWords();
 }
 
 function getDemoWords() {
