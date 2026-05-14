@@ -1084,9 +1084,7 @@ async function searchBook() {
   if (!title) { toast('책 제목을 입력해주세요'); return; }
   
   const listEl = document.getElementById('book-search-list');
-  const resultEl = document.getElementById('book-search-result');
   listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 중...</div>';
-  resultEl.style.display = 'none';
   listEl.style.display = 'block';
 
   try {
