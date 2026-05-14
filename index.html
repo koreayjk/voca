@@ -707,7 +707,7 @@ function render() {
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
-  const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span class="dock__glyph">⌗</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span class="dock__glyph">◐</span><span>게임</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span class="dock__glyph">◎</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span class="dock__glyph">🔍</span><span>검색</span></button></div>`;
+  const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
 
   if (route.name === 'library') {
     root.innerHTML = `
@@ -860,7 +860,7 @@ function render() {
           <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >🎯 퀴즈 모드${canStart?` — ${total}개`:''}</button>
         </div>`;
     };
-    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;margin-top:4px">암기 카드</div><div class="muted" style="font-size:12px;margin-top:5px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
+    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
     ssRender();
   }
 
@@ -1018,7 +1018,7 @@ function speak(word) {
 }
 
 async function renderStats(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px"><div class="h-xxl" style="font-family:var(--font-body);font-weight:500;margin-top:4px">학습 통계</div><div class="muted" style="font-size:12px;margin-top:5px;">나의 학습 기록</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">나의 학습 기록</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div></div></div>` + dock;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const stats = await res.json();
@@ -1045,7 +1045,7 @@ async function renderStats(root, dock) {
 }
 
 function renderSearch(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px"><div class="h-xxl" style="font-family:var(--font-body);font-weight:500;margin-top:4px">단어 검색</div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="영어 또는 한국어로 검색..." oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">단어를 입력하세요</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="영어 또는 한국어로 검색..." oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">단어를 입력하세요</div></div></div>` + dock;
 }
 
 function doWordSearch() {
