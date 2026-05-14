@@ -340,7 +340,7 @@ async function loadBooksFromDB() {
       const pages = [];
       for (const p of (Array.isArray(pd) ? pd : [])) {
         const wd = await sbFetch(`/rest/v1/voca_words?page_id=eq.${p.id}&order=created_at`);
-        pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||''})) });
+        pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||'',level:w.level||''})) });
       }
       books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', cover:b.cover_url||'', pages });
     }
@@ -372,7 +372,7 @@ async function savePageWordsToDB(bookId, pageNum, words) {
     if (!pageId) return null;
     for (const w of words) {
       const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken };
-      await fetch(SB_URL + '/rest/v1/voca_words', { method:'POST', headers, body: JSON.stringify({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'' }) });
+      await fetch(SB_URL + '/rest/v1/voca_words', { method:'POST', headers, body: JSON.stringify({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' }) });
     }
     return pageId;
   } catch(e) { return null; }
@@ -823,10 +823,10 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">기본 뜻 + 문맥 뜻</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map(w=>`<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div><button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`).join('')}
+          ${page.words.map(w=>{const lc={'상':'#e74c3c','중':'#e67e22','하':'#27ae60'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
         <div class="btn-fixed">
-          <button class="btn btn-solid" onclick="push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'});initStudy('${book.id}','page','${page.num}')">암기 카드로 보내기</button>
+          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">암기 카드로 보내기</button>
         </div>
       </div>`;
   }
@@ -865,7 +865,7 @@ function render() {
   }
 
   else if (route.name === 'study-cards') {
-    if (!studyState) { initStudy(route.bookId, route.scope, route.pageNum); }
+    if (!studyState || studyState.bookId !== route.bookId) { initStudy(route.bookId, route.scope, route.pageNum); }
     renderStudyCard(); return;
   }
 
