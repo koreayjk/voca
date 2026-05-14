@@ -24,21 +24,53 @@
   --accent-dark: #a84400;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; overflow: hidden; background: var(--bg-page); }
+html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #d4cabb; }
 
 /* ── STAGE ── */
 .stage { display: none; }
 .phone { display: none; }
 .phone__screen { display: none; }
-#root { position: fixed; inset: 0; background: #d4cabb; }
+#root { position: fixed; inset: 0; }
 
 /* ── STATUS BAR ── */
 .sb { display: none; }
 
 /* ── SCREEN BASE ── */
-.scr { position: fixed; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
+/* 모바일: 꽉 차게 / 데스크탑: 사이드바 + 메인 레이아웃 */
+.scr {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 20px 22px 0;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+@media (min-width: 768px) {
+  .scr {
+    left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px;
+    padding: 28px 32px 0;
+    border-left: 1px solid var(--ink-12);
+    border-right: 1px solid var(--ink-12);
+  }
+  .h-xxl { font-size: 52px; }
+  .h-xl { font-size: 40px; }
+  .book-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .dock {
+    left: 50% !important; transform: translateX(-50%) !important;
+    width: 100% !important; max-width: 480px !important;
+    border-left: 1px solid var(--ink-12);
+    border-right: 1px solid var(--ink-12);
+  }
+  .overlay { max-width: 480px; left: 50%; transform: translateX(-50%); }
+  .sheet { max-width: 560px; margin: 0 auto; border-radius: 20px; margin-bottom: 40px; }
+  .btn-fixed { left: 48px !important; right: 48px !important; }
+  .card-scene { max-height: 320px; }
+  .word-item__en { font-size: 20px; }
+  .upload-zone { padding: 60px 40px; }
+}
 .scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
-.scr-scroll::-webkit-scrollbar { display: none; }
+.scr-scroll::-webkit-scrollbar { width: 4px; }
+.scr-scroll::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 2px; }
 
 /* ── TYPOGRAPHY ── */
 .h-display { font-family: var(--font-display); letter-spacing: -0.03em; line-height: 0.97; color: var(--ink-100); }
