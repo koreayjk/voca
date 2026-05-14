@@ -1096,17 +1096,12 @@ async function searchBook() {
     const books = data.books || [];
     if (!books.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요<br><span style="font-size:11px;">다른 제목으로 시도해보세요</span></div>'; return; }
     
-    listEl.innerHTML = data.items.map((item, i) => {
-      const info = item.volumeInfo;
-      const cover = info.imageLinks?.thumbnail?.replace('http:', 'https:') || '';
-      const author = info.authors?.[0] || 'Unknown';
-      return `<div onclick="selectBook(${i})" style="display:flex;gap:10px;padding:10px;border-radius:8px;cursor:pointer;border-bottom:1px solid var(--ink-07);" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='none'" data-idx="${i}">
-        ${cover ? `<img src="${cover}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;">` : '<div style="width:36px;height:50px;background:var(--bg-input);border-radius:3px;flex-shrink:0;"></div>'}
-        <div><div style="font-size:13px;font-weight:600;">${info.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${author}</div></div>
-      </div>`;
-    }).join('');
-    
-    window._searchResults = data.items;
+    window._searchResults = books;
+    listEl.innerHTML = books.map((book, i) => `
+      <div onclick="selectBook(${i})" style="display:flex;gap:10px;padding:10px;border-radius:8px;cursor:pointer;border-bottom:1px solid var(--ink-07);" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='none'">
+        ${book.cover ? `<img src="${book.cover}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;" onerror="this.style.display='none'">` : '<div style="width:36px;height:50px;background:var(--bg-input);border-radius:3px;flex-shrink:0;"></div>'}
+        <div><div style="font-size:13px;font-weight:600;">${book.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${book.author}</div></div>
+      </div>`).join('');
   } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${e.message}</div>`; }
 }
 
