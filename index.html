@@ -596,7 +596,7 @@ function renderWordSelection(words) {
           </div>`).join('')}
       </div>
       <div class="btn-fixed">
-        <button class="btn btn-solid" onclick="saveSelectedWords()">선택한 단어 저장</button>
+        <button id="save-words-btn" class="btn btn-solid" onclick="saveSelectedWords()">선택한 단어 저장</button>
       </div>
     </div>`;
 
@@ -634,8 +634,15 @@ function toggleAllWords() {
 }
 
 async function saveSelectedWords() {
+  const btn = document.getElementById('save-words-btn');
+  if (btn?.disabled) return;
+  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
   const selected = pendingW.filter((_, i) => window._wordSelected[i]);
-  if (!selected.length) { toast('선택한 단어가 없어요'); return; }
+  if (!selected.length) { 
+    toast('선택한 단어가 없어요'); 
+    if (btn) { btn.disabled = false; btn.textContent = '선택한 단어 저장'; btn.style.opacity = '1'; }
+    return; 
+  }
   pendingW = selected;
   await acceptWords();
 }
