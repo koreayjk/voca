@@ -209,7 +209,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .done__tile-value { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #000; margin-top: 4px; }
 
 /* ── MODAL SHEET ── */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: flex-end; justify-content: center; max-width: 375px; margin: 0 auto; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: flex-end; justify-content: center; }
 .overlay.open { display: flex; }
 .sheet { background: var(--bg-card); border-radius: 20px 20px 0 0; padding: 20px 22px 36px; width: 100%; }
 .sheet-handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 0 auto 18px; }
@@ -263,8 +263,10 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
       </div>
     </div>
     <div id="book-search-list" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
-    <input type="hidden" id="nb-author">
-    <input type="hidden" id="nb-desc">
+    <div id="nb-manual">
+      <input type="text" id="nb-author" placeholder="저자">
+      <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
+    </div>
     <input type="hidden" id="nb-cover">
     <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
     <div class="gap-sm"></div>
@@ -507,8 +509,8 @@ async function addBook() {
   const title = document.getElementById('nb-title').value.trim();
   if (!title) { toast('책 제목을 입력해주세요'); return; }
   const color = COLORS[books.length%COLORS.length];
-  const author2 = document.getElementById('nb-author').value || 'Unknown';
-  const desc2 = document.getElementById('nb-desc').value || '';
+  const author2 = document.getElementById('nb-author').value.trim() || 'Unknown';
+  const desc2 = document.getElementById('nb-desc').value.trim() || '';
   const cover2 = document.getElementById('nb-cover').value || '';
   const newBook = await saveBookToDB(title, author2, color, desc2, cover2);
   if (!newBook) { toast('저장 실패'); return; }
@@ -1087,9 +1089,9 @@ async function searchBook() {
   listEl.style.display = 'block';
 
   try {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=5&langRestrict=en`);
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=8`);
     const data = await res.json();
-    if (!data.items || !data.items.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요</div>'; return; }
+    if (!data.items || !data.items.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요<br><span style="font-size:11px;">영어 제목으로 다시 시도해보세요</span></div>'; return; }
     
     listEl.innerHTML = data.items.map((item, i) => {
       const info = item.volumeInfo;
@@ -1102,7 +1104,7 @@ async function searchBook() {
     }).join('');
     
     window._searchResults = data.items;
-  } catch(e) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류가 났어요</div>'; }
+  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${e.message}</div>`; }
 }
 
 function selectBook(idx) {
@@ -1115,6 +1117,7 @@ function selectBook(idx) {
   document.getElementById('nb-title').value = info.title;
   document.getElementById('nb-author').value = author;
   document.getElementById('nb-desc').value = desc;
+
   document.getElementById('nb-cover').value = cover;
 
   // Show preview
