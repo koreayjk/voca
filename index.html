@@ -1089,8 +1089,9 @@ async function searchBook() {
   listEl.style.display = 'block';
 
   try {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=8&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY`);
+    const res = await fetch(`https://imvoca-books.koreayjk.workers.dev/?q=${encodeURIComponent(title)}`);
     const data = await res.json();
+    // Convert iTunes format if needed
     if (data.error) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${data.error.message}</div>`; return; }
     if (!data.items || !data.items.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요<br><span style="font-size:11px;">영어 제목으로 다시 시도해보세요</span></div>'; return; }
     
