@@ -1109,10 +1109,15 @@ async function searchBook() {
     
     window._searchResults = books;
     listEl.innerHTML = books.map((book, i) => `
-      <div onclick="selectBook(${i})" style="display:flex;gap:10px;padding:10px;border-radius:8px;cursor:pointer;border-bottom:1px solid var(--ink-07);" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='none'">
-        ${book.cover ? `<img src="${book.cover}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;" onerror="this.style.display='none'">` : '<div style="width:36px;height:50px;background:var(--bg-input);border-radius:3px;flex-shrink:0;"></div>'}
-        <div><div style="font-size:13px;font-weight:600;">${book.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${book.author}</div></div>
+      <div data-idx="${i}" style="display:flex;gap:10px;padding:10px;border-radius:8px;cursor:pointer;border-bottom:1px solid var(--ink-07);background:transparent;">
+        ${book.cover ? `<img src="${book.cover}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;pointer-events:none;" onerror="this.style.display='none'">` : '<div style="width:36px;height:50px;background:var(--bg-input);border-radius:3px;flex-shrink:0;pointer-events:none;"></div>'}
+        <div style="pointer-events:none;"><div style="font-size:13px;font-weight:600;">${book.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${book.author}</div></div>
       </div>`).join('');
+    listEl.onclick = function(e) {
+      const item = e.target.closest('[data-idx]');
+      if (!item) return;
+      window.selectBook(parseInt(item.dataset.idx));
+    };
   } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${e.message}</div>`; }
 }
 
