@@ -385,26 +385,7 @@ function renderLogin(tab='login') {
 <script>
 // ── DATA ──
 const COLORS = ['#8b4513','#6b5a3e','#7a4a2a','#5a6b3e','#4a3a6b','#6b3a4a','#3e5a4a'];
-let books = JSON.parse(localStorage.getItem('imvoca.v2') || 'null') || [
-  { id:'holes', title:'Holes', author:'Louis Sachar', color:'#1a1a2e',
-    desc:'Stanley Yelnats is sent to Camp Green Lake where they dig holes — and where a long-buried family secret surfaces.',
-    pages:[{ num:10, words:[
-      {id:'h1',en:'diligent',ipa:'/ˈdɪlɪdʒənt/',base:'부지런한, 근면한',ctx:'끈기 있게 지켜온',sentence:'His grandfather had been _____ about the family curse.'},
-      {id:'h2',en:'peculiar',ipa:'/pɪˈkjuːliər/',base:'독특한, 묘한',ctx:'유난히 이상한',sentence:'_____ shadows fell across the ground.'},
-      {id:'h3',en:'linger',ipa:'/ˈlɪŋɡər/',base:'머무르다, 남다',ctx:'땅 위에 남아 있다',sentence:'Shadows _____ed on the ground.'},
-      {id:'h4',en:'solemn',ipa:'/ˈsɑːləm/',base:'엄숙한, 진지한',ctx:'진지하게',sentence:'He sat _____ as a judge.'},
-      {id:'h5',en:'vivid',ipa:'/ˈvɪvɪd/',base:'생생한, 선명한',ctx:'선명하게 떠오르는',sentence:'He had a _____ memory of the curse.'}
-    ]}]
-  },
-  { id:'giver', title:'The Giver', author:'Lois Lowry', color:'#2d4a3e',
-    desc:'Twelve-year-old Jonas lives in a community without pain or color. When chosen as the Receiver of Memory, he learns what his world gave up.',
-    pages:[{ num:7, words:[
-      {id:'g1',en:'pristine',ipa:'/ˈprɪstiːn/',base:'깨끗한, 새것 같은',ctx:'흠 하나 없는',sentence:'The streets were _____ and orderly.'},
-      {id:'g2',en:'somber',ipa:'/ˈsɑːmbər/',base:'엄숙한, 침울한',ctx:'침울한 분위기',sentence:'The room felt _____ and still.'},
-      {id:'g3',en:'exempt',ipa:'/ɪɡˈzempt/',base:'면제된',ctx:'예외인',sentence:'The Receiver is _____ from the rules.'}
-    ]}]
-  }
-];
+let books = [];
 let apiKey = '';
 let imgData = null, pendingW = null, pendingB = null, pendingP = null;
 
@@ -642,7 +623,7 @@ function render() {
         <div class="scr-scroll">
           <div class="book-grid">
             ${books.map(b=>`
-              <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
+              <div class="book-tile" onclick="push({name:'book',bookId:this.dataset.id})" data-id="${b.id}">
                 <div class="book-cover" style="background:${b.color}">
                   <div class="book-cover__title">${b.title}</div>
                   <div class="book-cover__author">${b.author}</div>
