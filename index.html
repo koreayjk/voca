@@ -564,7 +564,7 @@ function render() {
 
   if (route.name === 'library') {
     root.innerHTML = `
-      <div class="scr" style="padding-bottom:90px">
+      <div class="scr" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
@@ -705,7 +705,7 @@ function render() {
         <div style="height:22px"></div>
         <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">시작하기${canStart?` — ${total} cards`:''}</button>`;
     };
-    root.innerHTML = `<div class="scr" style="padding-bottom:90px"><div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;margin-top:4px">암기 카드</div><div class="muted" style="font-size:12px;margin-top:5px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
+    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;margin-top:4px">암기 카드</div><div class="muted" style="font-size:12px;margin-top:5px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
     ssRender();
   }
 
@@ -853,6 +853,23 @@ async function rejectUser(userId) {
     showAdminPanel();
   } catch(e) { toast('오류: ' + e.message); }
 }
+
+// ── 스와이프 뒤로가기 ──
+(function() {
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = Math.abs(e.changedTouches[0].clientY - startY);
+    // 왼쪽에서 오른쪽으로 60px 이상, 세로 움직임 적을 때
+    if (dx > 60 && dy < 80 && startX < 40 && stack.length > 1) {
+      back();
+    }
+  }, { passive: true });
+})();
 
 sbInit();
 </script>
