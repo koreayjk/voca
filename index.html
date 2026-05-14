@@ -234,9 +234,24 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   <div class="sheet">
     <div class="sheet-handle"></div>
     <h3>새 책 추가</h3>
-    <input type="text" id="nb-title" placeholder="책 제목">
-    <input type="text" id="nb-author" placeholder="저자">
-    <input type="text" id="nb-desc" placeholder="책 소개 (선택사항)">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="text" id="nb-title" placeholder="책 제목 (영어)" style="flex:1;margin-bottom:0">
+      <button onclick="searchBook()" style="padding:0 14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;white-space:nowrap;">검색</button>
+    </div>
+    <div id="book-search-result" style="display:none;margin-bottom:10px;">
+      <div id="book-preview" style="display:flex;gap:12px;align-items:flex-start;background:var(--bg-input);border-radius:10px;padding:12px;">
+        <img id="book-cover-preview" style="width:52px;height:72px;object-fit:cover;border-radius:4px;flex-shrink:0;">
+        <div>
+          <div id="book-title-preview" style="font-size:13px;font-weight:600;color:var(--ink-100)"></div>
+          <div id="book-author-preview" style="font-size:11px;color:var(--ink-60);margin-top:2px"></div>
+          <div id="book-desc-preview" style="font-size:11px;color:var(--ink-60);margin-top:4px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;"></div>
+        </div>
+      </div>
+    </div>
+    <div id="book-search-list" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
+    <input type="hidden" id="nb-author">
+    <input type="hidden" id="nb-desc">
+    <input type="hidden" id="nb-cover">
     <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
     <div class="gap-sm"></div>
     <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
@@ -355,18 +370,19 @@ async function loadBooksFromDB() {
         const wd = await sbFetch(`/rest/v1/voca_words?page_id=eq.${p.id}&order=created_at`);
         pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||''})) });
       }
-      books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', pages });
+      books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', cover:b.cover_url||'', pages });
     }
   } catch(e) { console.error('DB load error:', e); }
 }
 
-async function saveBookToDB(title, author, color, desc) {
+async function saveBookToDB(title, author, color, desc, cover='') {
   try {
     const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
-    const res = await fetch(SB_URL + '/rest/v1/voca_books', { method:'POST', headers, body: JSON.stringify({ user_id:currentUser.id, title, author, color, description:desc }) });
+    const res = await fetch(SB_URL + '/rest/v1/voca_books', { method:'POST', headers, body: JSON.stringify({ user_id:currentUser.id, title, author, color, description:desc, cover_url:cover }) });
     const data = await res.json();
+    if (data.code || data.error) { toast('DB 오류: ' + (data.message || data.error)); return null; }
     return Array.isArray(data) ? data[0] : data;
-  } catch(e) { return null; }
+  } catch(e) { toast('저장 오류: ' + e.message); return null; }
 }
 
 async function savePageWordsToDB(bookId, pageNum, words) {
@@ -453,13 +469,16 @@ async function addBook() {
   const title = document.getElementById('nb-title').value.trim();
   if (!title) { toast('책 제목을 입력해주세요'); return; }
   const color = COLORS[books.length%COLORS.length];
-  const author2 = document.getElementById('nb-author').value.trim()||'Unknown';
-  const desc2 = document.getElementById('nb-desc').value.trim();
-  const newBook = await saveBookToDB(title, author2, color, desc2);
+  const author2 = document.getElementById('nb-author').value || 'Unknown';
+  const desc2 = document.getElementById('nb-desc').value || '';
+  const cover2 = document.getElementById('nb-cover').value || '';
+  const newBook = await saveBookToDB(title, author2, color, desc2, cover2);
   if (!newBook) { toast('저장 실패'); return; }
-  books.push({ id:newBook.id, title, author:author2, color, desc:desc2, pages:[] });
-  // saveData removed - using DB
-  ['nb-title','nb-author','nb-desc'].forEach(id=>document.getElementById(id).value='');
+  books.push({ id:newBook.id, title, author:author2, color, desc:desc2, cover:cover2, pages:[] });
+  ['nb-title','nb-author','nb-desc','nb-cover'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('book-search-result').style.display='none';
+  document.getElementById('book-search-list').style.display='none';
+  document.getElementById('book-search-list').innerHTML='';
   closeModal('modal-add'); render(); toast('책이 추가됐어요');
 }
 
@@ -661,9 +680,10 @@ function render() {
           <div class="book-grid">
             ${books.map(b=>`
               <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
-                <div class="book-cover" style="background:${b.color}">
-                  <div class="book-cover__title">${b.title}</div>
-                  <div class="book-cover__author">${b.author}</div>
+                <div class="book-cover" style="background:${b.color};position:relative;overflow:hidden;">
+                  ${b.cover ? `<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">` : ''}
+                  <div class="book-cover__title" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.title}</div>
+                  <div class="book-cover__author" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.author}</div>
                 </div>
                 <div class="book-tile__title">${b.title}</div>
                 <div class="book-tile__sub">${b.author} · ${countWords(b)} words</div>
@@ -690,7 +710,9 @@ function render() {
         </div>
         <div class="scr-scroll">
           <div class="book-hero">
-            <div class="book-hero__cover" style="background:${book.color}"></div>
+            <div class="book-hero__cover" style="background:${book.color};overflow:hidden;position:relative;">
+              ${book.cover ? `<img src="${book.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">` : ''}
+            </div>
             <div>
               <div class="book-hero__title">${book.title}</div>
               <div class="book-hero__author">${book.author}</div>
@@ -925,6 +947,58 @@ function advance(isKnown) {
       s.round++; s.queue = shuffle(newX); s.idx = 0; s.xList = []; s.flipped = false; renderStudyCard();
     }
   }
+}
+
+// ── GOOGLE BOOKS ──
+async function searchBook() {
+  const title = document.getElementById('nb-title').value.trim();
+  if (!title) { toast('책 제목을 입력해주세요'); return; }
+  
+  const listEl = document.getElementById('book-search-list');
+  const resultEl = document.getElementById('book-search-result');
+  listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 중...</div>';
+  resultEl.style.display = 'none';
+  listEl.style.display = 'block';
+
+  try {
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=5&langRestrict=en`);
+    const data = await res.json();
+    if (!data.items || !data.items.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요</div>'; return; }
+    
+    listEl.innerHTML = data.items.map((item, i) => {
+      const info = item.volumeInfo;
+      const cover = info.imageLinks?.thumbnail?.replace('http:', 'https:') || '';
+      const author = info.authors?.[0] || 'Unknown';
+      return `<div onclick="selectBook(${i})" style="display:flex;gap:10px;padding:10px;border-radius:8px;cursor:pointer;border-bottom:1px solid var(--ink-07);" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='none'" data-idx="${i}">
+        ${cover ? `<img src="${cover}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;">` : '<div style="width:36px;height:50px;background:var(--bg-input);border-radius:3px;flex-shrink:0;"></div>'}
+        <div><div style="font-size:13px;font-weight:600;">${info.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${author}</div></div>
+      </div>`;
+    }).join('');
+    
+    window._searchResults = data.items;
+  } catch(e) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류가 났어요</div>'; }
+}
+
+function selectBook(idx) {
+  const item = window._searchResults[idx];
+  const info = item.volumeInfo;
+  const cover = info.imageLinks?.thumbnail?.replace('http:', 'https:') || '';
+  const author = info.authors?.[0] || 'Unknown';
+  const desc = info.description ? info.description.substring(0, 200) : '';
+
+  document.getElementById('nb-title').value = info.title;
+  document.getElementById('nb-author').value = author;
+  document.getElementById('nb-desc').value = desc;
+  document.getElementById('nb-cover').value = cover;
+
+  // Show preview
+  document.getElementById('book-cover-preview').src = cover;
+  document.getElementById('book-cover-preview').style.display = cover ? 'block' : 'none';
+  document.getElementById('book-title-preview').textContent = info.title;
+  document.getElementById('book-author-preview').textContent = author;
+  document.getElementById('book-desc-preview').textContent = desc;
+  document.getElementById('book-search-result').style.display = 'block';
+  document.getElementById('book-search-list').style.display = 'none';
 }
 
 sbInit();
