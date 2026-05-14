@@ -252,17 +252,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
       <input type="text" id="nb-title" placeholder="책 제목 (영어)" style="flex:1;margin-bottom:0">
       <button onclick="searchBook()" style="padding:0 14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;white-space:nowrap;">검색</button>
     </div>
-    <div id="book-search-result" style="display:none;margin-bottom:10px;">
-      <div id="book-preview" style="display:flex;gap:12px;align-items:flex-start;background:var(--bg-input);border-radius:10px;padding:12px;">
-        <img id="book-cover-preview" style="width:52px;height:72px;object-fit:cover;border-radius:4px;flex-shrink:0;">
-        <div>
-          <div id="book-title-preview" style="font-size:13px;font-weight:600;color:var(--ink-100)"></div>
-          <div id="book-author-preview" style="font-size:11px;color:var(--ink-60);margin-top:2px"></div>
-          <div id="book-desc-preview" style="font-size:11px;color:var(--ink-60);margin-top:4px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;"></div>
-        </div>
-      </div>
-    </div>
-    <div id="book-search-list" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
+    <div id="book-search-list" style="max-height:220px;overflow-y:auto;margin-bottom:10px;"></div>
     <input type="hidden" id="nb-author">
     <input type="hidden" id="nb-desc">
     <input type="hidden" id="nb-cover">
