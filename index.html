@@ -833,7 +833,10 @@ function render() {
           <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">페이지별</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${s.page===p.num?'background:#000;color:#fff;border-color:#000':''}" onclick="event.stopPropagation();ssSelectPage(${p.num})">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
         </div>`:''}
         <div style="height:22px"></div>
-        <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">시작하기${canStart?` — ${total} cards`:''}</button>`;
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">🃏 암기 카드${canStart?` — ${total}개`:''}</button>
+          <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}',${s.page})`:''}">🎯 퀴즈 모드${canStart?` — ${total}개`:''}</button>
+        </div>`;
     };
     root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;margin-top:4px">암기 카드</div><div class="muted" style="font-size:12px;margin-top:5px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
     ssRender();
@@ -876,7 +879,7 @@ function render() {
 
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
-  if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
+  if (!s||s.queue.length===0) { saveStats(s.bookId,s.stats.total,s.stats.oCount); replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
   root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">🔊 발음 듣기</button></div><div class="card__tap">탭해서 뜻 보기</div></div><div class="face face-back"><div class="back__word">${w.en}</div><div class="back__label">기본 뜻</div><div class="back__meaning">${w.base}</div><div class="back__label">이 페이지에선</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)" ${!s.flipped?'disabled style="opacity:0.3"':''}>✕</button><button class="ox-btn ox-o" onclick="advance(true)" ${!s.flipped?'disabled style="opacity:0.3"':''}>○</button></div><div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클에 다시':'카드를 탭해서 뜻을 본 뒤 O / X'}</div></div>`;
 }
