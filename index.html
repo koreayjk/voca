@@ -515,7 +515,7 @@ function renderUploadPreview() {
     </button>`;
 }
 
-function cancelPreview() {
+window.cancelPreview = function() {
   imgData = null;
   document.getElementById('file-input').value = '';
   const area = document.getElementById('upload-main');
