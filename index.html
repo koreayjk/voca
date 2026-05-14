@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="icon" type="image/png" href="https://koreayjk.github.io/voca/2.png">
 <link rel="apple-touch-icon" href="https://koreayjk.github.io/voca/2.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f5f0e8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="IM VOCA">
 <title>IM VOCA</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
@@ -159,6 +165,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
+.install-banner.show { display: block; }
+.install-banner__title { font-size: 14px; font-weight: 700; color: #000; margin-bottom:6px; }
+.install-banner__desc { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
+.install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
+.install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 </style>
 </head>
 <body>
@@ -229,6 +241,15 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
     <div class="gap-sm"></div>
     <button class="btn btn-outline" onclick="closeModal('modal-admin')">닫기</button>
   </div>
+</div>
+
+<!-- INSTALL BANNER -->
+<div class="install-banner" id="install-banner">
+  <button class="install-banner__close" onclick="dismissInstall()">✕</button>
+  <div class="install-banner__icon">📲</div>
+  <div class="install-banner__title" id="install-title">홈화면에 추가하기</div>
+  <div class="install-banner__desc" id="install-desc"></div>
+  <div id="install-btn-wrap" style="margin-top:10px;"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1128,6 +1149,60 @@ function answerQuiz(chosen, correct) {
     if (dx > 60 && dy < 80 && startX < 40 && stack.length > 1) { back(); }
   }, { passive: true });
 })();
+
+// ── 홈화면 설치 안내 ──
+(function() {
+  // 이미 설치됐거나 무시했으면 스킵
+  if (localStorage.getItem('imvoca.install.dismissed')) return;
+  if (window.navigator.standalone) return; // 이미 홈화면 앱으로 실행 중
+
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  const isAndroid = /android/i.test(ua);
+
+  if (isIOS) {
+    // iOS: Safari에서만 보여줌 (Chrome 등에선 설치 안됨)
+    const isSafari = /safari/i.test(ua) && !/chrome|crios|fxios/i.test(ua);
+    if (!isSafari) return;
+    setTimeout(() => {
+      document.getElementById('install-title').textContent = '앱처럼 사용하기 📱';
+      document.getElementById('install-desc').innerHTML =
+        'Safari 하단 <strong>공유 버튼(□↑)</strong>을 탭한 후<br><strong>"홈 화면에 추가"</strong>를 선택하세요!';
+      document.getElementById('install-btn-wrap').innerHTML =
+        '<button onclick="dismissInstall()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">확인했어요</button>';
+      document.getElementById('install-banner').classList.add('show');
+    }, 3000);
+  } else if (isAndroid) {
+    // Android: beforeinstallprompt 이벤트 감지
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window._deferredPrompt = e;
+      document.getElementById('install-title').textContent = '앱으로 설치하기 📲';
+      document.getElementById('install-desc').textContent = '홈화면에 추가하면 앱처럼 빠르게 실행할 수 있어요!';
+      document.getElementById('install-btn-wrap').innerHTML =
+        '<div style="display:flex;gap:8px;">' +
+        '<button onclick="doInstall()" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">설치하기</button>' +
+        '<button onclick="dismissInstall()" style="flex:1;padding:10px;background:transparent;color:#000;border:1px solid var(--ink-12);border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">나중에</button>' +
+        '</div>';
+      document.getElementById('install-banner').classList.add('show');
+    });
+  }
+})();
+
+function doInstall() {
+  if (window._deferredPrompt) {
+    window._deferredPrompt.prompt();
+    window._deferredPrompt.userChoice.then(() => {
+      window._deferredPrompt = null;
+      dismissInstall();
+    });
+  }
+}
+
+function dismissInstall() {
+  document.getElementById('install-banner').classList.remove('show');
+  localStorage.setItem('imvoca.install.dismissed', '1');
+}
 
 sbInit();
 </script>
