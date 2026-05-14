@@ -214,6 +214,17 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   </div>
 </div>
 
+<!-- ADMIN MODAL -->
+<div class="overlay" id="modal-admin">
+  <div class="sheet" style="max-height:80vh;overflow-y:auto;">
+    <div class="sheet-handle"></div>
+    <h3>회원 관리</h3>
+    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">불러오는 중...</div></div>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-admin')">닫기</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -275,7 +286,22 @@ async function sbSignIn(email, pw) {
     if (data.error || !data.access_token) { toast('로그인 실패: 이메일 또는 비밀번호를 확인해주세요'); return; }
     _authToken = data.access_token; currentUser = data.user;
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
-    await loadApiKey(); await loadUserName(); await loadBooksFromDB(); render();
+    await loadApiKey(); await loadUserName();
+    // Check if user is approved
+    if (currentUser.email !== 'koreayjk@gmail.com') {
+      try {
+        const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=role`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+        const data = await res.json();
+        const role = data[0]?.role;
+        if (role === '대기중') {
+          toast('아직 승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
+          _authToken = null; currentUser = null;
+          localStorage.removeItem('imvoca.session');
+          return;
+        }
+      } catch(e) {}
+    }
+    await loadBooksFromDB(); render();
   } catch(e) { toast('로그인 오류: ' + e.message); }
 }
 
@@ -283,7 +309,15 @@ async function sbSignUp(email, pw, name) {
   try {
     const data = await sbFetch('/auth/v1/signup', 'POST', { email, password: pw, data: { name } }, false);
     if (data.error) { toast('가입 실패: ' + data.error.message); return; }
-    toast('가입 완료! 로그인해주세요'); renderLogin('login');
+    // Save to members table with pending role
+    if (data.user?.id) {
+      await fetch(SB_URL + '/rest/v1/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ id: data.user.id, name, email, role: '대기중' })
+      });
+    }
+    toast('가입 신청 완료! 관리자 승인 후 사용할 수 있어요'); renderLogin('login');
   } catch(e) { toast('가입 오류: ' + e.message); }
 }
 
@@ -556,7 +590,7 @@ function render() {
           </div>
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
-          ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button>`:''}
+          ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button><button onclick="showAdminPanel()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">회원관리</button>`:''}
           <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
       </div>` + dock;
@@ -767,6 +801,57 @@ async function deletePage(bookId, pageNum) {
     if (book) book.pages=book.pages.filter(p=>p.num!==pageNum);
     render(); toast(`Page ${pageNum} 삭제됐어요`);
   } catch(e) { toast('삭제 실패: '+e.message); }
+}
+
+// ── ADMIN ──
+async function showAdminPanel() {
+  document.getElementById('modal-admin').classList.add('open');
+  const listEl = document.getElementById('admin-list');
+  listEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">불러오는 중...</div>';
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/members?order=created_at&select=id,name,email,role', {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const members = await res.json();
+    if (!members.length) { listEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">회원이 없어요</div>'; return; }
+    listEl.innerHTML = members.map(m => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--ink-07);">
+        <div>
+          <div style="font-size:13px;font-weight:600;">${m.name||'이름없음'}</div>
+          <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
+          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role||'멤버'}</div>
+        </div>
+        ${m.role==='대기중'?`
+        <div style="display:flex;gap:6px;">
+          <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">승인</button>
+          <button onclick="rejectUser('${m.id}')" style="background:#fff;color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">거절</button>
+        </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?'관리자':''}</div>`}
+      </div>`).join('');
+  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">오류: ${e.message}</div>`; }
+}
+
+async function approveUser(userId) {
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify({ role: '멤버' })
+    });
+    toast('승인됐어요!');
+    showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
+}
+
+async function rejectUser(userId) {
+  if (!confirm('이 회원을 거절하고 삭제할까요?')) return;
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    toast('거절됐어요');
+    showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
 }
 
 sbInit();
