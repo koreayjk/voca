@@ -660,7 +660,7 @@ function render() {
         <div class="scr-scroll">
           <div class="book-grid">
             ${books.map(b=>`
-              <div class="book-tile" onclick="openDetail('${b.id}')">
+              <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
                 <div class="book-cover" style="background:${b.color}">
                   <div class="book-cover__title">${b.title}</div>
                   <div class="book-cover__author">${b.author}</div>
