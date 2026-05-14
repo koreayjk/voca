@@ -513,7 +513,8 @@ async function doScan() {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지 사진에서 형광펜으로 표시(하이라이트)된 단어들만 찾아주세요. 형광펜 표시가 없으면 빈 배열을 반환하세요. JSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥뜻"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 중학생 이상이 알아야 할 어휘 단어를 15개 이내로 추출해주세요. 각 단어의 난이도를 상/중/하로 분류해주세요. JSON만 반환:
+{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
     });
     const data = await res.json();
     if (data.error) { toast('API 오류: ' + data.error.message); render(); return; }
@@ -535,6 +536,80 @@ async function doScan() {
     if (!words?.length) { toast('단어를 찾지 못했어요'); render(); return; }
   } catch(e) { toast('오류: ' + e.message); render(); return; }
   pendingW = words; pendingB = bId; pendingP = pg;
+  renderWordSelection(words);
+}
+
+function renderWordSelection(words) {
+  const root = document.getElementById('root');
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  const levelBg = { '상': '#fdeaea', '중': '#fef3e2', '하': '#eafaf1' };
+  
+  root.innerHTML = `
+    <div class="scr" style="padding-bottom:100px;">
+      <div class="topnav">
+        <span class="topnav__back" onclick="render()">←</span>
+        <span class="topnav__title">단어 선택</span>
+        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">저장할 단어를 선택해주세요</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <span style="display:flex;align-items:center;gap:4px;font-size:11px;"><span style="width:10px;height:10px;border-radius:50%;background:#e74c3c;display:inline-block;"></span>상</span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:11px;"><span style="width:10px;height:10px;border-radius:50%;background:#e67e22;display:inline-block;"></span>중</span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:11px;"><span style="width:10px;height:10px;border-radius:50%;background:#27ae60;display:inline-block;"></span>하</span>
+      </div>
+      <div class="scr-scroll" id="word-sel-list">
+        ${words.map((w, i) => `
+          <div id="wsel-${i}" onclick="toggleWord(${i})" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;margin-bottom:6px;background:${levelBg[w.level]||'#f5f0e8'};cursor:pointer;border:2px solid transparent;" data-selected="true">
+            <div style="width:10px;height:10px;border-radius:50%;background:${levelColor[w.level]||'#999'};flex-shrink:0;"></div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:600;">${w.en}</div>
+              <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${w.base} · ${w.ctx}</div>
+            </div>
+            <div id="wsel-check-${i}" style="width:22px;height:22px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;flex-shrink:0;">✓</div>
+          </div>`).join('')}
+      </div>
+      <div class="btn-fixed">
+        <button class="btn btn-solid" onclick="saveSelectedWords()">선택한 단어 저장</button>
+      </div>
+    </div>`;
+
+  // Track selection state
+  window._wordSelected = words.map(() => true);
+}
+
+function toggleWord(i) {
+  window._wordSelected[i] = !window._wordSelected[i];
+  const el = document.getElementById(`wsel-${i}`);
+  const check = document.getElementById(`wsel-check-${i}`);
+  if (window._wordSelected[i]) {
+    el.style.border = '2px solid transparent';
+    el.style.opacity = '1';
+    check.style.display = 'flex';
+  } else {
+    el.style.border = '2px solid var(--ink-12)';
+    el.style.opacity = '0.5';
+    check.style.display = 'none';
+  }
+}
+
+function toggleAllWords() {
+  const allSelected = window._wordSelected.every(v => v);
+  window._wordSelected = window._wordSelected.map(() => !allSelected);
+  window._wordSelected.forEach((sel, i) => {
+    const el = document.getElementById(`wsel-${i}`);
+    const check = document.getElementById(`wsel-check-${i}`);
+    if (el && check) {
+      el.style.border = sel ? '2px solid transparent' : '2px solid var(--ink-12)';
+      el.style.opacity = sel ? '1' : '0.5';
+      check.style.display = sel ? 'flex' : 'none';
+    }
+  });
+}
+
+async function saveSelectedWords() {
+  const selected = pendingW.filter((_, i) => window._wordSelected[i]);
+  if (!selected.length) { toast('선택한 단어가 없어요'); return; }
+  pendingW = selected;
   await acceptWords();
 }
 
@@ -644,7 +719,7 @@ function render() {
       <div class="scr" style="padding-bottom:24px">
         <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book?.title||''}</span><span></span></div>
         <div class="h-display h-xl" style="margin-top:14px">페이지 추가</div>
-        <div class="muted" style="font-size:12px;margin-top:4px">형광펜 표시가 잘 보이게 찍어주세요</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">페이지를 찍으면 AI가 단어를 골라드려요</div>
         <div class="scr-scroll" style="margin-top:14px">
           <div class="label-xs">책 선택</div>
           <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;outline:none;margin-top:6px;appearance:none;cursor:pointer">
@@ -657,7 +732,7 @@ function render() {
               <input type="file" accept="image/*" onchange="handleFileChange(event)">
               <div class="upload-icon">📷</div>
               <div class="upload-title">사진 선택 또는 촬영</div>
-              <div class="upload-sub">형광펜 표시된 단어를 AI가 자동으로 찾아요</div>
+              <div class="upload-sub">AI가 단어를 추출하면 원하는 것만 선택해요</div>
             </div>
           </div>
         </div>
