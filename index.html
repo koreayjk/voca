@@ -456,7 +456,7 @@ function handleFileChange(e) {
   r.onload = ev => {
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      const MAX = 1024;
+      const MAX = 1600;
       let w = img.width, h = img.height;
       if (w > MAX || h > MAX) {
         if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -464,7 +464,7 @@ function handleFileChange(e) {
       }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      imgData = canvas.toDataURL('image/jpeg', 0.8);
+      imgData = canvas.toDataURL('image/jpeg', 0.92);
       renderUploadPreview();
     };
     img.src = ev.target.result;
@@ -513,7 +513,7 @@ async function doScan() {
       body: JSON.stringify({
         contents:[{parts:[
           {inline_data:{mime_type:mt, data:b64}},
-          {text:`이 영어책 페이지 사진에서 밑줄이 그어지거나 형광펜으로 표시된 단어들을 모두 찾아주세요. 표시된 단어가 없으면 어려운 단어 10개를 골라주세요. JSON만 반환:
+          {text:`이 영어책 페이지 사진에서 형광펜으로 표시(하이라이트)된 단어들만 찾아주세요. 형광펜 표시가 없으면 빈 배열을 반환하세요. JSON만 반환:
 {"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥뜻"}]}`}
         ]}],
         generationConfig:{temperature:0.1, maxOutputTokens:4096}
