@@ -340,6 +340,7 @@ async function sbInit() {
       _authToken = sess.access_token;
       currentUser = sess.user;
       await loadApiKey();
+      await loadUserName();
       await loadBooksFromDB();
       render();
     } catch(e) { localStorage.removeItem('imvoca.session'); }
@@ -347,6 +348,16 @@ async function sbInit() {
 }
 
 function saveApi() { const key = document.getElementById("api-in").value.trim(); if(!key){toast("키를 입력해주세요");return;} saveApiKeyToDB(key); }
+async function loadUserName() {
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=name`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    if (data[0]?.name) userName = data[0].name;
+  } catch(e) { console.error('이름 로드 실패:', e); }
+}
+
 async function loadApiKey() {
   try {
     const res = await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1&select=gemini_key', {
@@ -378,6 +389,7 @@ async function sbSignIn(email, pw) {
     currentUser = data.user;
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
     await loadApiKey();
+    await loadUserName();
     await loadBooksFromDB();
     render();
   } catch(e) { toast('로그인 오류: ' + e.message); }
@@ -475,6 +487,7 @@ function renderLogin(tab='login') {
 const COLORS = ['#8b4513','#6b5a3e','#7a4a2a','#5a6b3e','#4a3a6b','#6b3a4a','#3e5a4a'];
 let books = [];
 let apiKey = '';
+let userName = '';
 let imgData = null, pendingW = null, pendingB = null, pendingP = null;
 
 function saveData() { localStorage.setItem('imvoca.v2', JSON.stringify(books)); }
@@ -708,7 +721,7 @@ function render() {
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
-              <div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;">${(currentUser?.user_metadata?.name || currentUser?.email?.split('@')[0] || '내')}님 책장</div>
+              <div class="h-xxl" style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;">${userName || '내'}님 책장</div>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;letter-spacing:-0.02em">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
           </div>
@@ -1103,7 +1116,7 @@ async function searchBook() {
   } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${e.message}</div>`; }
 }
 
-function selectBook(idx) {
+window.selectBook = function(idx) {
   const item = window._searchResults[idx];
   const info = item.volumeInfo;
   const cover = info.imageLinks?.thumbnail?.replace('http:', 'https:') || '';
