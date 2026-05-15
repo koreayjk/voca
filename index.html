@@ -586,11 +586,66 @@ function renderUploadPreview() {
   });
 }
 
+function setCaptureMode(mode) {
+  window._captureMode = mode;
+  window._addTargetPage = null;
+  const newBtn = document.getElementById('mode-new-btn');
+  const addBtn = document.getElementById('mode-add-btn');
+  const newArea = document.getElementById('mode-new-area');
+  const addArea = document.getElementById('mode-add-area');
+  if (mode === 'new') {
+    newBtn.style.background = '#000'; newBtn.style.color = '#fff'; newBtn.style.borderColor = '#000';
+    addBtn.style.background = '#fff'; addBtn.style.color = '#000'; addBtn.style.borderColor = 'var(--ink-12)';
+    newArea.style.display = 'block';
+    addArea.style.display = 'none';
+  } else {
+    addBtn.style.background = '#000'; addBtn.style.color = '#fff'; addBtn.style.borderColor = '#000';
+    newBtn.style.background = '#fff'; newBtn.style.color = '#000'; newBtn.style.borderColor = 'var(--ink-12)';
+    newArea.style.display = 'none';
+    addArea.style.display = 'block';
+  }
+}
+
+function selectExistingPage(pageNum) {
+  window._addTargetPage = pageNum;
+  // 모든 페이지 선택 해제
+  document.querySelectorAll('[id^="ep-check-"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('[id^="ep-"]').forEach(el => {
+    if (el.id.startsWith('ep-') && !el.id.startsWith('ep-check-')) {
+      el.style.borderColor = 'var(--ink-12)';
+      el.style.background = '#fff';
+    }
+  });
+  // 선택된 페이지 하이라이트
+  const safeNum = pageNum.replace(/[^a-zA-Z0-9]/g,'_');
+  const el = document.getElementById(`ep-${safeNum}`);
+  const check = document.getElementById(`ep-check-${safeNum}`);
+  if (el) { el.style.borderColor = 'var(--accent)'; el.style.background = '#fff8f5'; }
+  if (check) check.style.display = 'block';
+  // 이름 변경 영역 표시
+  const renameArea = document.getElementById('rename-area');
+  const renameInp = document.getElementById('rename-pg-inp');
+  if (renameArea) renameArea.style.display = 'block';
+  if (renameInp) renameInp.placeholder = `예: ${pageNum}-${Number(pageNum)+2 || pageNum+'+'}`; 
+}
+
 async function doScan() {
   const bId = document.getElementById('up-book-sel')?.value;
-  const pg = document.getElementById('up-pg-inp')?.value.trim();
   if (!bId) { toast('책을 먼저 선택해주세요'); return; }
-  if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
+
+  let pg;
+  if (window._captureMode === 'add') {
+    if (!window._addTargetPage) { toast('추가할 페이지를 선택해주세요'); return; }
+    pg = window._addTargetPage;
+    // 이름 변경이 있으면 적용
+    const newName = document.getElementById('rename-pg-inp')?.value.trim();
+    if (newName) window._renamedPageNum = newName;
+    else window._renamedPageNum = null;
+  } else {
+    pg = document.getElementById('up-pg-inp')?.value.trim();
+    if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
+    window._renamedPageNum = null;
+  }
   if (!imgData) { toast('사진을 먼저 선택해주세요'); return; }
   document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">단어를 분석하고 있어요</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:rgba(255,255,255,0.6);border-radius:12px;padding:12px 16px;">
@@ -738,10 +793,37 @@ async function acceptWords() {
   const pid = await savePageWordsToDB(pendingB, pendingP, pendingW);
   const words = pendingW.map((w,i) => ({...w, id:`${pendingB}-${pendingP}-${i+1}`}));
   const ex = findPage(book, pendingP);
-  if (ex) ex.words = [...ex.words, ...words];
-  else { book.pages.push({num:pendingP, _pid:pid, words}); book.pages.sort((a,b)=>String(a.num).localeCompare(String(b.num))); }
-  toast(`Page ${pendingP} 저장 완료`);
-  replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+
+  // 페이지 이름 변경 처리
+  const newName = window._renamedPageNum;
+  if (ex) {
+    ex.words = [...ex.words, ...words];
+    // 이름 변경이 있으면 DB + 로컬 업데이트
+    if (newName && newName !== pendingP) {
+      try {
+        await fetch(SB_URL + `/rest/v1/voca_pages?id=eq.${ex._pid}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+          body: JSON.stringify({ page_num: newName })
+        });
+        ex.num = newName;
+        toast(`Page ${newName} 단어 추가 완료`);
+        replace({ name:'page-words', bookId:pendingB, pageNum:newName });
+      } catch(e) {
+        toast(`Page ${pendingP} 단어 추가 완료`);
+        replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+      }
+    } else {
+      toast(`Page ${pendingP} 단어 추가 완료`);
+      replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+    }
+  } else {
+    book.pages.push({num:pendingP, _pid:pid, words});
+    book.pages.sort((a,b)=>String(a.num).localeCompare(String(b.num)));
+    toast(`Page ${pendingP} 저장 완료`);
+    replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+  }
+  window._renamedPageNum = null;
 }
 
 let studyState = null;
@@ -835,6 +917,11 @@ function render() {
   else if (route.name === 'capture') {
     const book = findBook(route.bookId);
     imgData = null;
+    window._captureMode = 'new'; // 'new' or 'add'
+    window._addTargetPage = null;
+
+    const existingPages = book?.pages || [];
+
     root.innerHTML = `
       <div class="scr" style="padding-bottom:24px">
         <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book?.title||''}</span><span></span></div>
@@ -845,9 +932,44 @@ function render() {
           <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;outline:none;margin-top:6px;appearance:none;cursor:pointer">
             ${books.map(b=>`<option value="${b.id}" ${b.id===route.bookId?'selected':''}>${b.title}</option>`).join('')}
           </select>
-          <div class="label-xs" style="margin-top:14px">페이지 번호</div>
-          <input type="text" id="up-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
-          <div id="upload-main">
+
+          <!-- 새 페이지 / 기존 페이지 추가 탭 -->
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button id="mode-new-btn" onclick="setCaptureMode('new')" style="flex:1;padding:10px;border-radius:10px;border:2px solid #000;background:#000;color:#fff;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;">새 페이지</button>
+            <button id="mode-add-btn" onclick="setCaptureMode('add')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--ink-12);background:#fff;color:#000;font-family:var(--font-body);font-size:13px;cursor:pointer;">기존 페이지에 추가</button>
+          </div>
+
+          <!-- 새 페이지 입력 -->
+          <div id="mode-new-area" style="margin-top:14px;">
+            <div class="label-xs">페이지 번호</div>
+            <input type="text" id="up-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
+          </div>
+
+          <!-- 기존 페이지 선택 -->
+          <div id="mode-add-area" style="display:none;margin-top:14px;">
+            <div class="label-xs">추가할 페이지 선택</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;" id="existing-page-list">
+              ${existingPages.length === 0
+                ? '<div style="font-size:13px;color:var(--ink-40);padding:12px 0;">저장된 페이지가 없어요</div>'
+                : existingPages.map(p => `
+                  <div onclick="selectExistingPage('${p.num}')" id="ep-${p.num.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:10px;border:2px solid var(--ink-12);background:#fff;cursor:pointer;">
+                    <div>
+                      <div style="font-size:13px;font-weight:600;">Page ${p.num}</div>
+                      <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${p.words.length}개 단어</div>
+                    </div>
+                    <div id="ep-check-${p.num.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:none;color:var(--accent);font-size:18px;">✓</div>
+                  </div>`).join('')
+              }
+            </div>
+            <!-- 페이지 이름 변경 -->
+            <div id="rename-area" style="display:none;margin-top:14px;">
+              <div class="label-xs">페이지 이름 변경 <span style="color:var(--ink-40);font-weight:400;">(선택사항)</span></div>
+              <input type="text" id="rename-pg-inp" placeholder="예: 1-3, 5-8, Chapter1" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
+              <div style="font-size:11px;color:var(--ink-40);margin-top:4px;">비워두면 기존 페이지 이름 유지</div>
+            </div>
+          </div>
+
+          <div id="upload-main" style="margin-top:14px;">
             <div class="upload-zone" onclick="document.getElementById('file-input').click()">
               <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileChange(event)">
               <div class="upload-icon">📷</div>
@@ -1157,7 +1279,7 @@ async function deleteStats(id) {
     // 통계 다시 렌더링
     const root = document.getElementById('root');
     const tab = currentTab();
-    const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
+    const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
     renderStats(root, dock);
   } catch(e) { toast('삭제 실패: ' + e.message); }
 }
