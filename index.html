@@ -1315,6 +1315,13 @@ async function updateReviewStep(review) {
   } catch(e) {}
 }
 
+// ── 앱 포커스 시 복습 체크 ──
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible' && currentUser) {
+    checkReviews();
+  }
+});
+
 // 스와이프 뒤로가기
 (function() {
   let startX = 0, startY = 0;
