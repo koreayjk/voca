@@ -465,11 +465,12 @@ function goTab(t) {
   if (t==='study') stack = [{name:'study-setup'}];
   else if (t==='stats') stack = [{name:'stats'}];
   else if (t==='search') stack = [{name:'search'}];
+  else if (t==='review') stack = [{name:'review'}];
   else stack = [{name:'library'}];
   render();
 }
 function replace(r) { stack[stack.length-1] = r; render(); }
-function currentTab() { const n = stack[stack.length-1].name; if (['study-setup','study-cards','study-done'].includes(n)) return 'study'; if (n==='stats') return 'stats'; if (n==='search') return 'search'; return 'books'; }
+function currentTab() { const n = stack[stack.length-1].name; if (['study-setup','study-cards','study-done'].includes(n)) return 'study'; if (n==='stats') return 'stats'; if (n==='search') return 'search'; if (n==='review') return 'review'; return 'books'; }
 
 function findBook(id) { return books.find(b => b.id === id); }
 function findPage(book, num) { return book.pages.find(p => String(p.num) === String(num)); }
@@ -754,7 +755,7 @@ function render() {
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
-  const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
+  const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
 
   if (route.name === 'library') {
     root.innerHTML = `
@@ -880,6 +881,8 @@ function render() {
 
   else if (route.name === 'stats') { renderStats(root, dock); return; }
   else if (route.name === 'search') { renderSearch(root, dock); return; }
+
+  else if (route.name === 'review') { renderReviewPage(root, dock); return; }
 
   else if (route.name === 'study-setup') {
     window._ss = { bookId: books[0]?.id || null, scope: 'all', page: null };
@@ -1310,6 +1313,137 @@ async function updateReviewStep(review) {
       body: JSON.stringify(patch)
     });
   } catch(e) {}
+}
+
+// ── 복습 현황 페이지 ──
+async function renderReviewPage(root, dock) {
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
+      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">복습 현황</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
+      <span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;font-weight:600;">에빙하우스 망각곡선</span>
+      <span class="muted" style="font-size:11px;">1일·2일·3일·6일·15일·30일·60일</span>
+    </div>
+    <div class="scr-scroll" id="review-list">
+      <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div>
+    </div>
+  </div>` + dock;
+
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&order=first_studied_at.desc`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const reviews = await res.json();
+    const el = document.getElementById('review-list');
+    if (!reviews?.length) {
+      el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 복습 일정이 없어요<br>암기 카드를 완료하면 자동으로 등록돼요</div>';
+      return;
+    }
+
+    const today = new Date().toISOString();
+    const STEPS = [
+      { key: 'review_2d',  label: '1일차'  },
+      { key: 'review_3d',  label: '2일차'  },
+      { key: 'review_6d',  label: '3일차'  },
+      { key: 'review_15d', label: '6일차'  },
+      { key: 'review_30d', label: '15일차' },
+      { key: 'review_60d', label: '30일차' },
+    ];
+
+    // 오늘 복습 / 예정 / 완료로 분류
+    const todayDue = [], upcoming = [], done = [];
+
+    reviews.forEach(r => {
+      if (r.completed) { done.push(r); return; }
+      const overdueStep = STEPS.find(s => r[s.key] && r[s.key] <= today);
+      if (overdueStep) { todayDue.push({ ...r, _stepKey: overdueStep.key, _stepLabel: overdueStep.label }); return; }
+      const nextStep = STEPS.find(s => r[s.key]);
+      if (nextStep) upcoming.push({ ...r, _nextLabel: nextStep.label, _nextDate: r[nextStep.key] });
+    });
+
+    function reviewCard(r, type) {
+      const book = findBook(r.book_id);
+      const page = book ? findPage(book, r.page_num) : null;
+      const wordCount = page?.words.length || 0;
+      const studiedDate = new Date(r.first_studied_at).toLocaleDateString('ko-KR');
+
+      // 진행도 계산
+      const completedSteps = STEPS.filter(s => !r[s.key]).length;
+      const totalSteps = STEPS.length;
+      const progress = Math.round(completedSteps / totalSteps * 100);
+
+      const bgColor = type === 'due' ? '#fff8f5' : type === 'done' ? '#f0faf4' : '#fafafa';
+      const borderColor = type === 'due' ? 'var(--accent)' : type === 'done' ? '#27ae60' : 'var(--ink-12)';
+
+      return `<div style="background:${bgColor};border:1.5px solid ${borderColor};border-radius:14px;padding:14px 16px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;color:#000;">${book?.title||'삭제된 책'}</div>
+            <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}개 단어 · 학습일 ${studiedDate}</div>
+          </div>
+          ${type === 'due' ? `<span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${r._stepLabel} 복습!</span>` :
+            type === 'done' ? `<span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">완료 ✓</span>` :
+            `<span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} 예정</span>`}
+        </div>
+        
+        <!-- 진행도 바 -->
+        <div style="margin-top:10px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--ink-40);">복습 진행도</span>
+            <span style="font-size:10px;color:var(--ink-60);font-weight:600;">${completedSteps}/${totalSteps} 완료</span>
+          </div>
+          <div style="height:6px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${progress}%;background:${type==='done'?'#27ae60':'var(--accent)'};border-radius:99px;transition:width .3s;"></div>
+          </div>
+          <!-- 단계 표시 -->
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'#27ae60':s.key===r._stepKey?'var(--accent)':'var(--ink-40)'};font-weight:${!r[s.key]||s.key===r._stepKey?'700':'400'}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+          </div>
+        </div>
+        
+        ${type === 'due' ? `<button onclick="startSingleReview('${r.book_id}','${r.page_num}','${r.id}','${r._stepKey}')" style="width:100%;margin-top:12px;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">지금 복습하기 →</button>` :
+          type === 'upcoming' ? `<div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 다음 복습: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>` : ''}
+      </div>`;
+    }
+
+    let html = '';
+    if (todayDue.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;">🔔 오늘 복습 (${todayDue.length}개)</div>`;
+      html += todayDue.map(r => reviewCard(r, 'due')).join('');
+    }
+    if (upcoming.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">📅 예정된 복습 (${upcoming.length}개)</div>`;
+      html += upcoming.map(r => reviewCard(r, 'upcoming')).join('');
+    }
+    if (done.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">✅ 완료 (${done.length}개)</div>`;
+      html += done.map(r => reviewCard(r, 'done')).join('');
+    }
+
+    el.innerHTML = html || '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">복습 일정이 없어요</div>';
+  } catch(e) {
+    document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`;
+  }
+}
+
+async function startSingleReview(bookId, pageNum, reviewId, stepKey) {
+  // 해당 복습 단계 완료 처리
+  const patch = {};
+  if (stepKey === 'review_60d') { patch.review_60d = null; patch.completed = true; }
+  else patch[stepKey] = null;
+  
+  try {
+    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${reviewId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify(patch)
+    });
+  } catch(e) {}
+
+  initStudy(bookId, 'page', pageNum);
+  push({ name: 'study-cards', bookId, scope: 'page', pageNum });
 }
 
 // ── 앱 포커스 시 복습 체크 ──
