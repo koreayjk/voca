@@ -829,6 +829,7 @@ async function acceptWords() {
 let studyState = null;
 function initStudy(bookId, scope, pageNum) {
   const book = findBook(bookId); if (!book) return;
+  console.log('[initStudy] bookId=', bookId, 'scope=', scope, 'pageNum=', pageNum);
   let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book);
   studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
 }
@@ -1082,7 +1083,11 @@ function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { 
     saveStats(s.bookId,s.stats.total,s.stats.oCount);
-    if (s.scope === 'page') saveReviewSchedule(s.bookId, s.pageNum);
+    if (s.scope === 'page') {
+      console.log('[복습] scope=page, bookId=', s.bookId, 'pageNum=', s.pageNum);
+      if (s.pageNum) saveReviewSchedule(s.bookId, s.pageNum);
+      else console.error('[복습] pageNum이 없어요!');
+    }
     replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; 
   }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
