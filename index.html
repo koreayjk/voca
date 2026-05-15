@@ -1228,14 +1228,20 @@ async function checkReviews() {
     const reviews = await res.json();
     if (!Array.isArray(reviews)) return;
 
-    // 오늘 복습해야 할 것들 필터링
-    const due = reviews.filter(r => {
-      return (r.review_2d  && r.review_2d  <= today) ||
-             (r.review_3d  && r.review_3d  <= today) ||
-             (r.review_6d  && r.review_6d  <= today) ||
-             (r.review_15d && r.review_15d <= today) ||
-             (r.review_30d && r.review_30d <= today) ||
-             (r.review_60d && r.review_60d <= today);
+    // 각 페이지별로 가장 오래된 미완료 단계 하나만 선택
+    const due = [];
+    reviews.forEach(r => {
+      const steps = [
+        { key: 'review_2d',  label: '1일차',  date: r.review_2d  },
+        { key: 'review_3d',  label: '2일차',  date: r.review_3d  },
+        { key: 'review_6d',  label: '3일차',  date: r.review_6d  },
+        { key: 'review_15d', label: '6일차',  date: r.review_15d },
+        { key: 'review_30d', label: '15일차', date: r.review_30d },
+        { key: 'review_60d', label: '30일차', date: r.review_60d },
+      ];
+      // 가장 오래된 미완료 단계 하나만
+      const oldest = steps.find(s => s.date && s.date <= today);
+      if (oldest) due.push({ ...r, _stepKey: oldest.key, _stepLabel: oldest.label });
     });
 
     if (!due.length) return;
@@ -1250,20 +1256,12 @@ async function checkReviews() {
 
     window._dueReviews = due;
 
-    // 복습 단계 계산
-    const steps = due.map(r => {
-      const today = new Date().toISOString();
-      if (r.review_2d  && r.review_2d  <= today) return '1일차';
-      if (r.review_3d  && r.review_3d  <= today) return '2일차';
-      if (r.review_6d  && r.review_6d  <= today) return '6일차';
-      if (r.review_15d && r.review_15d <= today) return '15일차';
-      if (r.review_30d && r.review_30d <= today) return '30일차';
-      if (r.review_60d && r.review_60d <= today) return '60일차';
-      return '';
-    });
+    // 단계별 카운트
     const stepCounts = {};
-    steps.forEach(s => { if(s) stepCounts[s] = (stepCounts[s]||0) + 1; });
-    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} 복습 ${v}개`).join(' · ');
+    due.forEach(r => {
+      stepCounts[r._stepLabel] = (stepCounts[r._stepLabel]||0) + 1;
+    });
+    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}개`).join(' · ');
 
     document.getElementById('review-banner-desc').textContent =
       `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
@@ -1298,15 +1296,14 @@ async function startReviewSession() {
 
 async function updateReviewStep(review) {
   try {
-    const today = new Date().toISOString();
     const patch = {};
-    if      (review.review_2d  && review.review_2d  <= today) patch.review_2d  = null;
-    else if (review.review_3d  && review.review_3d  <= today) patch.review_3d  = null;
-    else if (review.review_6d  && review.review_6d  <= today) patch.review_6d  = null;
-    else if (review.review_15d && review.review_15d <= today) patch.review_15d = null;
-    else if (review.review_30d && review.review_30d <= today) patch.review_30d = null;
-    else if (review.review_60d && review.review_60d <= today) { patch.review_60d = null; patch.completed = true; }
-
+    const key = review._stepKey;
+    if (key === 'review_60d') {
+      patch.review_60d = null;
+      patch.completed = true;
+    } else {
+      patch[key] = null;
+    }
     await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
