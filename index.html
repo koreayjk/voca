@@ -935,7 +935,7 @@ function render() {
           ${route.scope==='page'?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
             <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">📊 에빙하우스 망각곡선 복습 등록됨!</div>
             <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">
-              1일 후 · 3일 후 · 7일 후 · 21일 후<br>
+              1일 · 2일 · 3일 · 6일 · 15일 · 30일 · 60일 후<br>
               로그인하면 복습 알림이 자동으로 나타나요
             </div>
           </div>`:''}
@@ -1230,10 +1230,12 @@ async function checkReviews() {
 
     // 오늘 복습해야 할 것들 필터링
     const due = reviews.filter(r => {
-      return (r.review_2 && r.review_2 <= today) ||
-             (r.review_4 && r.review_4 <= today) ||
-             (r.review_8 && r.review_8 <= today) ||
-             (r.review_22 && r.review_22 <= today);
+      return (r.review_2d  && r.review_2d  <= today) ||
+             (r.review_3d  && r.review_3d  <= today) ||
+             (r.review_6d  && r.review_6d  <= today) ||
+             (r.review_15d && r.review_15d <= today) ||
+             (r.review_30d && r.review_30d <= today) ||
+             (r.review_60d && r.review_60d <= today);
     });
 
     if (!due.length) return;
@@ -1251,10 +1253,12 @@ async function checkReviews() {
     // 복습 단계 계산
     const steps = due.map(r => {
       const today = new Date().toISOString();
-      if (r.review_2 && r.review_2 <= today) return '1일차';
-      if (r.review_4 && r.review_4 <= today) return '3일차';
-      if (r.review_8 && r.review_8 <= today) return '7일차';
-      if (r.review_22 && r.review_22 <= today) return '21일차';
+      if (r.review_2d  && r.review_2d  <= today) return '1일차';
+      if (r.review_3d  && r.review_3d  <= today) return '2일차';
+      if (r.review_6d  && r.review_6d  <= today) return '6일차';
+      if (r.review_15d && r.review_15d <= today) return '15일차';
+      if (r.review_30d && r.review_30d <= today) return '30일차';
+      if (r.review_60d && r.review_60d <= today) return '60일차';
       return '';
     });
     const stepCounts = {};
@@ -1295,13 +1299,13 @@ async function startReviewSession() {
 async function updateReviewStep(review) {
   try {
     const today = new Date().toISOString();
-    // 어떤 단계인지 확인하고 완료 처리
-    const allDone = !review.review_22 || review.review_22 <= today;
     const patch = {};
-    if (review.review_2 && review.review_2 <= today) patch.review_2 = null;
-    else if (review.review_4 && review.review_4 <= today) patch.review_4 = null;
-    else if (review.review_8 && review.review_8 <= today) patch.review_8 = null;
-    else if (review.review_22 && review.review_22 <= today) { patch.review_22 = null; patch.completed = true; }
+    if      (review.review_2d  && review.review_2d  <= today) patch.review_2d  = null;
+    else if (review.review_3d  && review.review_3d  <= today) patch.review_3d  = null;
+    else if (review.review_6d  && review.review_6d  <= today) patch.review_6d  = null;
+    else if (review.review_15d && review.review_15d <= today) patch.review_15d = null;
+    else if (review.review_30d && review.review_30d <= today) patch.review_30d = null;
+    else if (review.review_60d && review.review_60d <= today) { patch.review_60d = null; patch.completed = true; }
 
     await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
       method: 'PATCH',
