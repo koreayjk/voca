@@ -163,6 +163,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .action-sheet__item.danger { color: #c0392b; }
 .action-sheet__divider { height: 1px; background: var(--ink-07); margin: 4px 0; }
 .action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
+.review-banner { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #fff; border-bottom: 2px solid var(--accent); padding: 12px 16px; z-index: 550; display: none; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.review-banner.show { display: block; }
+.review-banner__title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.review-banner__desc { font-size: 12px; color: var(--ink-60); }
+.review-banner__btns { display: flex; gap: 8px; margin-top: 10px; }
+.review-banner__btn { flex: 1; padding: 8px; border-radius: 8px; border: none; font-family: var(--font-body); font-size: 12px; cursor: pointer; }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
@@ -252,6 +258,25 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   <div id="install-btn-wrap" style="margin-top:10px;"></div>
 </div>
 
+<!-- REVIEW BANNER -->
+<div class="review-banner" id="review-banner">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <span style="font-size:13px;font-weight:700;color:var(--accent);">🔔 복습할 단어가 있어요!</span>
+        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;">에빙하우스 망각곡선</span>
+      </div>
+      <div class="review-banner__desc" id="review-banner-desc"></div>
+      <div style="font-size:10px;color:var(--ink-40);margin-top:4px;" id="review-banner-step"></div>
+    </div>
+    <button onclick="closeReviewBanner()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-40);padding:0 0 0 8px;">✕</button>
+  </div>
+  <div class="review-banner__btns">
+    <button class="review-banner__btn" onclick="startReviewSession()" style="background:var(--accent);color:#fff;">지금 복습하기</button>
+    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:#000;">나중에</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -278,6 +303,7 @@ async function sbInit() {
       await loadUserName();
       await loadBooksFromDB();
       render();
+      setTimeout(checkReviews, 1000);
     } catch(e) { localStorage.removeItem('imvoca.session'); }
   }
 }
@@ -327,7 +353,7 @@ async function sbSignIn(email, pw) {
         }
       } catch(e) {}
     }
-    await loadBooksFromDB(); render();
+    await loadBooksFromDB(); render(); setTimeout(checkReviews, 1000);
   } catch(e) { toast('로그인 오류: ' + e.message); }
 }
 
@@ -906,6 +932,13 @@ function render() {
           <div class="label-xs">모두 외웠어요</div>
           <div class="done__n">${route.total}</div>
           <div class="done__label">words memorized</div>
+          ${route.scope==='page'?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
+            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">📊 에빙하우스 망각곡선 복습 등록됨!</div>
+            <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">
+              1일 후 · 3일 후 · 7일 후 · 21일 후<br>
+              로그인하면 복습 알림이 자동으로 나타나요
+            </div>
+          </div>`:''}
           <div class="done__grid">
             <div class="done__tile"><div class="done__tile-label">Rounds</div><div class="done__tile-value">${route.rounds}</div></div>
             <div class="done__tile"><div class="done__tile-label">Scope</div><div class="done__tile-value" style="font-size:16px">${route.scope==='page'?`Page ${route.pageNum}`:'All'}</div></div>
@@ -922,7 +955,11 @@ function render() {
 
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
-  if (!s||s.queue.length===0) { saveStats(s.bookId,s.stats.total,s.stats.oCount); replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
+  if (!s||s.queue.length===0) { 
+    saveStats(s.bookId,s.stats.total,s.stats.oCount);
+    if (s.scope === 'page') saveReviewSchedule(s.bookId, s.pageNum);
+    replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; 
+  }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
   root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">🔊 발음 듣기</button></div><div class="card__tap">탭해서 뜻 보기</div></div><div class="face face-back"><div class="back__word">${w.en}</div><div class="back__label">기본 뜻</div><div class="back__meaning">${w.base}</div><div class="back__label">이 페이지에선</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)" ${!s.flipped?'disabled style="opacity:0.3"':''}>✕</button><button class="ox-btn ox-o" onclick="advance(true)" ${!s.flipped?'disabled style="opacity:0.3"':''}>○</button></div><div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클에 다시  |  Space = 앞면':'카드를 탭하거나 Space 키로 뜻 보기'}</div></div>`;
 }
@@ -1179,6 +1216,99 @@ function answerQuiz(chosen, correct) {
     else if (word?.en === chosen && !isCorrect) btn.style.background = '#fdeaea';
   });
   setTimeout(() => { q.idx++; renderQuiz(); }, 800);
+}
+
+// ── 복습 알림 ──
+async function checkReviews() {
+  try {
+    const today = new Date().toISOString();
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&select=*`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const reviews = await res.json();
+    if (!Array.isArray(reviews)) return;
+
+    // 오늘 복습해야 할 것들 필터링
+    const due = reviews.filter(r => {
+      return (r.review_2 && r.review_2 <= today) ||
+             (r.review_4 && r.review_4 <= today) ||
+             (r.review_8 && r.review_8 <= today) ||
+             (r.review_22 && r.review_22 <= today);
+    });
+
+    if (!due.length) return;
+
+    // 복습 단어 수 계산
+    let totalWords = 0;
+    due.forEach(r => {
+      const book = findBook(r.book_id);
+      const page = book ? findPage(book, r.page_num) : null;
+      if (page) totalWords += page.words.length;
+    });
+
+    window._dueReviews = due;
+
+    // 복습 단계 계산
+    const steps = due.map(r => {
+      const today = new Date().toISOString();
+      if (r.review_2 && r.review_2 <= today) return '1일차';
+      if (r.review_4 && r.review_4 <= today) return '3일차';
+      if (r.review_8 && r.review_8 <= today) return '7일차';
+      if (r.review_22 && r.review_22 <= today) return '21일차';
+      return '';
+    });
+    const stepCounts = {};
+    steps.forEach(s => { if(s) stepCounts[s] = (stepCounts[s]||0) + 1; });
+    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} 복습 ${v}개`).join(' · ');
+
+    document.getElementById('review-banner-desc').textContent =
+      `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
+    document.getElementById('review-banner-step').textContent =
+      `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
+    document.getElementById('review-banner').classList.add('show');
+  } catch(e) {}
+}
+
+function closeReviewBanner() {
+  document.getElementById('review-banner').classList.remove('show');
+}
+
+async function startReviewSession() {
+  closeReviewBanner();
+  const due = window._dueReviews;
+  if (!due?.length) return;
+
+  // 첫 번째 복습 항목으로 이동
+  const first = due[0];
+  const book = findBook(first.book_id);
+  if (!book) return;
+
+  // 복습 완료 처리 (다음 단계로 업데이트)
+  await updateReviewStep(first);
+
+  toast(`${book.title} Page ${first.page_num} 복습 시작!`);
+  initStudy(first.book_id, 'page', first.page_num);
+  stack = [{name:'study-cards', bookId:first.book_id, scope:'page', pageNum:first.page_num}];
+  render();
+}
+
+async function updateReviewStep(review) {
+  try {
+    const today = new Date().toISOString();
+    // 어떤 단계인지 확인하고 완료 처리
+    const allDone = !review.review_22 || review.review_22 <= today;
+    const patch = {};
+    if (review.review_2 && review.review_2 <= today) patch.review_2 = null;
+    else if (review.review_4 && review.review_4 <= today) patch.review_4 = null;
+    else if (review.review_8 && review.review_8 <= today) patch.review_8 = null;
+    else if (review.review_22 && review.review_22 <= today) { patch.review_22 = null; patch.completed = true; }
+
+    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify(patch)
+    });
+  } catch(e) {}
 }
 
 // 스와이프 뒤로가기
