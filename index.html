@@ -1082,12 +1082,6 @@ function render() {
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { 
-    saveStats(s.bookId,s.stats.total,s.stats.oCount);
-    if (s.scope === 'page') {
-      console.log('[복습] scope=page, bookId=', s.bookId, 'pageNum=', s.pageNum);
-      if (s.pageNum) saveReviewSchedule(s.bookId, s.pageNum);
-      else console.error('[복습] pageNum이 없어요!');
-    }
     replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; 
   }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
@@ -1127,7 +1121,14 @@ function advance(isKnown) {
   const s=studyState; s.stats.seen++; if(isKnown)s.stats.oCount++;
   const newX=isKnown?s.xList:[...s.xList,s.queue[s.idx]];
   if (s.idx+1<s.queue.length) { s.idx++; s.xList=newX; s.flipped=false; renderStudyCard(); }
-  else if (newX.length===0) { replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total}); }
+  else if (newX.length===0) {
+    // 모두 완료! 복습 일정 저장
+    saveStats(s.bookId, s.stats.total, s.stats.oCount);
+    if (s.scope === 'page' && s.pageNum) {
+      saveReviewSchedule(s.bookId, s.pageNum);
+    }
+    replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total});
+  }
   else { s.round++; s.queue=shuffle(newX); s.idx=0; s.xList=[]; s.flipped=false; renderStudyCard(); }
 }
 
