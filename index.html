@@ -568,6 +568,51 @@ async function addBook() {
   closeModal('modal-add'); render(); toast('책이 추가됐어요');
 }
 
+async function openCamera() {
+  const area = document.getElementById('camera-area');
+  const video = document.getElementById('camera-video');
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ 
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } } 
+    });
+    video.srcObject = stream;
+    area.style.display = 'block';
+    window._cameraStream = stream;
+  } catch(e) {
+    // 후면 카메라 실패 시 전면 카메라 시도
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = stream;
+      area.style.display = 'block';
+      window._cameraStream = stream;
+    } catch(e2) {
+      toast('카메라 접근 권한이 필요해요');
+    }
+  }
+}
+
+function closeCamera() {
+  const video = document.getElementById('camera-video');
+  const area = document.getElementById('camera-area');
+  if (window._cameraStream) {
+    window._cameraStream.getTracks().forEach(t => t.stop());
+    window._cameraStream = null;
+  }
+  video.srcObject = null;
+  area.style.display = 'none';
+}
+
+function capturePhoto() {
+  const video = document.getElementById('camera-video');
+  const canvas = document.getElementById('camera-canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  imgData = canvas.toDataURL('image/jpeg', 0.92);
+  closeCamera();
+  renderUploadPreview();
+}
+
 function handleFileChange(e) {
   const f = e.target.files[0]; if(!f) return;
   const img = new Image(), r = new FileReader();
@@ -945,8 +990,9 @@ function render() {
               </span>
             </div>`).join('')}
         </div>
-        <div class="btn-fixed">
-          <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">＋ 페이지 촬영</button>
+        <div class="btn-fixed" style="flex-direction:row;gap:8px;">
+          <button class="btn btn-solid" style="flex:1;" onclick="push({name:'capture',bookId:'${book.id}'})">📷 페이지 촬영</button>
+          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}'})">✏️ 직접 입력</button>
         </div>
       </div>`;
   }
@@ -1007,14 +1053,27 @@ function render() {
           </div>
 
           <div id="upload-main" style="margin-top:14px;">
-            <div class="upload-zone" onclick="document.getElementById('file-input').click()">
-              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileChange(event)">
-              <div class="upload-icon">📷</div>
-              <div class="upload-title">사진 선택 또는 촬영</div>
-              <div class="upload-sub">AI가 단어를 추출하면 원하는 것만 선택해요</div>
-              <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">JPG · PNG · WEBP · GIF 지원</div>
-              <div style="font-size:10px;color:#e67e22;margin-top:3px;">📱 아이폰은 카메라 설정 → 포맷 → 높은 호환성 선택</div>
+            <!-- 파일선택 / 카메라 버튼 -->
+            <div style="display:flex;gap:8px;margin-bottom:10px;">
+              <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
+                🖼️ 파일 선택
+              </button>
+              <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
+                📷 카메라 촬영
+              </button>
             </div>
+            <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileChange(event)">
+            <!-- 카메라 스트림 영역 -->
+            <div id="camera-area" style="display:none;margin-top:8px;">
+              <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <button onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">📸 촬영하기</button>
+                <button onclick="closeCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">취소</button>
+              </div>
+            </div>
+            <canvas id="camera-canvas" style="display:none;"></canvas>
+            <div style="font-size:10px;color:var(--ink-40);margin-top:8px;text-align:center;">JPG · PNG · WEBP · GIF 지원</div>
+            <div style="font-size:10px;color:#e67e22;margin-top:3px;text-align:center;">📱 아이폰은 카메라 설정 → 포맷 → 높은 호환성 선택</div>
           </div>
         </div>
       </div>`;
@@ -1042,6 +1101,8 @@ function render() {
   else if (route.name === 'search') { renderSearch(root, dock); return; }
 
   else if (route.name === 'review') { renderReviewPage(root, dock); return; }
+
+  else if (route.name === 'manual-add') { renderManualAdd(root, route); return; }
 
 
   else if (route.name === 'study-setup') {
@@ -1642,12 +1703,163 @@ async function startSingleReview(bookId, pageNum, reviewId, stepKey) {
   push({ name: 'study-cards', bookId, scope: 'page', pageNum });
 }
 
+// ── 단어 직접 입력 ──
+function renderManualAdd(root, route) {
+  const book = findBook(route.bookId);
+  if (!window._manualWords) window._manualWords = [];
+
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+
+  root.innerHTML = `
+    <div class="scr" style="padding-bottom:120px;">
+      <div class="topnav">
+        <span class="topnav__back" onclick="window._manualWords=[];back()">←</span>
+        <span class="topnav__title">${book?.title||''}</span>
+        <span></span>
+      </div>
+      <div class="h-display h-xl" style="margin-top:14px;">단어 직접 입력</div>
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">단어를 직접 입력해서 단어장을 만들어요</div>
+
+      <div class="label-xs">페이지 번호</div>
+      <input type="text" id="manual-pg" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px;margin-bottom:16px;">
+
+      <!-- 단어 입력 폼 -->
+      <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
+        <div class="label-xs" style="margin-bottom:8px;">새 단어 추가</div>
+        <input type="text" id="manual-en" placeholder="영어 단어" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-bottom:8px;">
+        <input type="text" id="manual-base" placeholder="기본 뜻 (한국어)" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-bottom:8px;">
+        <input type="text" id="manual-ctx" placeholder="문맥 뜻 (선택사항)" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-bottom:10px;">
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          ${['상','중','하'].map(lv => `
+            <button id="level-btn-${lv}" onclick="selectLevel('${lv}')" style="flex:1;padding:8px;border-radius:8px;border:1.5px solid ${levelColor[lv]};background:${lv==='중'?levelColor[lv]:'transparent'};color:${lv==='중'?'#fff':levelColor[lv]};font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;">${lv}</button>
+          `).join('')}
+        </div>
+        <button onclick="addManualWord()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">+ 단어 추가</button>
+      </div>
+
+      <!-- 추가된 단어 목록 -->
+      <div id="manual-word-list">
+        ${renderManualWordList()}
+      </div>
+
+      <div class="btn-fixed">
+        <button id="manual-save-btn" class="btn btn-solid" onclick="saveManualWords('${route.bookId}')" style="opacity:${window._manualWords.length>0?1:0.4};">저장하기 (${window._manualWords.length}개)</button>
+      </div>
+    </div>`;
+
+  window._manualLevel = '중';
+}
+
+function renderManualWordList() {
+  if (!window._manualWords?.length) {
+    return '<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">아직 추가된 단어가 없어요</div>';
+  }
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  return window._manualWords.map((w, i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-card);border-radius:10px;margin-bottom:6px;">
+      <div style="width:18px;height:18px;border-radius:50%;background:${levelColor[w.level]||'#999'};flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;">${w.en}</div>
+        <div style="font-size:11px;color:var(--ink-60);">${w.base}${w.ctx?` · ${w.ctx}`:''}</div>
+      </div>
+      <button onclick="removeManualWord(${i})" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">✕</button>
+    </div>`).join('');
+}
+
+function selectLevel(lv) {
+  window._manualLevel = lv;
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  ['상','중','하'].forEach(l => {
+    const btn = document.getElementById(`level-btn-${l}`);
+    if (!btn) return;
+    if (l === lv) {
+      btn.style.background = levelColor[l];
+      btn.style.color = '#fff';
+    } else {
+      btn.style.background = 'transparent';
+      btn.style.color = levelColor[l];
+    }
+  });
+}
+
+function addManualWord() {
+  const en = document.getElementById('manual-en')?.value.trim();
+  const base = document.getElementById('manual-base')?.value.trim();
+  const ctx = document.getElementById('manual-ctx')?.value.trim();
+  const level = window._manualLevel || '중';
+
+  if (!en) { toast('영어 단어를 입력해주세요'); return; }
+  if (!base) { toast('기본 뜻을 입력해주세요'); return; }
+
+  if (!window._manualWords) window._manualWords = [];
+  window._manualWords.push({ en, base, ctx: ctx||'', level, ipa: '' });
+
+  // 입력창 초기화
+  document.getElementById('manual-en').value = '';
+  document.getElementById('manual-base').value = '';
+  document.getElementById('manual-ctx').value = '';
+  document.getElementById('manual-en').focus();
+
+  // 목록 업데이트
+  document.getElementById('manual-word-list').innerHTML = renderManualWordList();
+  const saveBtn = document.getElementById('manual-save-btn');
+  if (saveBtn) {
+    saveBtn.textContent = `저장하기 (${window._manualWords.length}개)`;
+    saveBtn.style.opacity = '1';
+  }
+  toast(`"${en}" 추가됐어요`);
+}
+
+function removeManualWord(i) {
+  window._manualWords.splice(i, 1);
+  document.getElementById('manual-word-list').innerHTML = renderManualWordList();
+  const saveBtn = document.getElementById('manual-save-btn');
+  if (saveBtn) {
+    saveBtn.textContent = `저장하기 (${window._manualWords.length}개)`;
+    saveBtn.style.opacity = window._manualWords.length > 0 ? '1' : '0.4';
+  }
+}
+
+async function saveManualWords(bookId) {
+  const pg = document.getElementById('manual-pg')?.value.trim();
+  if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
+  if (!window._manualWords?.length) { toast('추가된 단어가 없어요'); return; }
+
+  const btn = document.getElementById('manual-save-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
+
+  const book = findBook(bookId);
+  if (!book) return;
+
+  const pid = await savePageWordsToDB(bookId, pg, window._manualWords);
+  const words = window._manualWords.map((w, i) => ({ ...w, id: `${bookId}-${pg}-m${i+1}` }));
+  const ex = findPage(book, pg);
+  if (ex) ex.words = [...ex.words, ...words];
+  else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b) => String(a.num).localeCompare(String(b.num))); }
+
+  toast(`Page ${pg} 저장 완료 (${words.length}개)`);
+  window._manualWords = [];
+  replace({ name: 'page-words', bookId, pageNum: pg });
+}
+
 // ── 앱 포커스 시 복습 체크 ──
 document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'visible' && currentUser) {
     checkReviews();
   }
 });
+
+// 1시간마다 자동 체크 (자정 넘어가도 감지)
+setInterval(function() {
+  if (currentUser) checkReviews();
+}, 60 * 60 * 1000);
+
+// 복습 탭 열 때도 최신 데이터 반영
+const _origGoTab = goTab;
+goTab = function(t) {
+  _origGoTab(t);
+  if (t === 'review' && currentUser) checkReviews();
+};
 
 // 스와이프 뒤로가기
 (function() {
