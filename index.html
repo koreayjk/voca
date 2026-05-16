@@ -1706,9 +1706,8 @@ async function startSingleReview(bookId, pageNum, reviewId, stepKey) {
 // ── 단어 직접 입력 ──
 function renderManualAdd(root, route) {
   const book = findBook(route.bookId);
-  if (!window._manualWords) window._manualWords = [];
-
-  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  window._manualWords = window._manualWords || [];
+  window._manualBookId = route.bookId;
 
   root.innerHTML = `
     <div class="scr" style="padding-bottom:120px;">
@@ -1718,96 +1717,71 @@ function renderManualAdd(root, route) {
         <span></span>
       </div>
       <div class="h-display h-xl" style="margin-top:14px;">단어 직접 입력</div>
-      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">단어를 직접 입력해서 단어장을 만들어요</div>
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">단어만 입력하면 뜻을 자동으로 찾아드려요</div>
 
       <div class="label-xs">페이지 번호</div>
       <input type="text" id="manual-pg" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px;margin-bottom:16px;">
 
       <!-- 단어 입력 폼 -->
       <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:8px;">새 단어 추가</div>
-        <input type="text" id="manual-en" placeholder="영어 단어" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-bottom:8px;">
-        <input type="text" id="manual-base" placeholder="기본 뜻 (한국어)" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-bottom:8px;">
-        <input type="text" id="manual-ctx" placeholder="문맥 뜻 (선택사항)" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-bottom:10px;">
-        <div style="display:flex;gap:6px;margin-bottom:10px;">
-          ${['상','중','하'].map(lv => `
-            <button id="level-btn-${lv}" onclick="selectLevel('${lv}')" style="flex:1;padding:8px;border-radius:8px;border:1.5px solid ${levelColor[lv]};background:${lv==='중'?levelColor[lv]:'transparent'};color:${lv==='중'?'#fff':levelColor[lv]};font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;">${lv}</button>
-          `).join('')}
+        <div class="label-xs" style="margin-bottom:8px;">단어 입력 <span style="color:var(--ink-40);font-weight:400;">(Enter로 계속 추가)</span></div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="manual-en" placeholder="영어 단어" 
+            style="flex:1;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();addManualWord();}">
+          <button onclick="addManualWord()" style="padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;">추가</button>
         </div>
-        <button onclick="addManualWord()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">+ 단어 추가</button>
+        <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">뜻은 인터넷 사전에서 자동으로 찾아드려요</div>
       </div>
 
       <!-- 추가된 단어 목록 -->
-      <div id="manual-word-list">
-        ${renderManualWordList()}
-      </div>
+      <div id="manual-word-list">${renderManualWordList()}</div>
 
       <div class="btn-fixed">
-        <button id="manual-save-btn" class="btn btn-solid" onclick="saveManualWords('${route.bookId}')" style="opacity:${window._manualWords.length>0?1:0.4};">저장하기 (${window._manualWords.length}개)</button>
+        <button id="manual-save-btn" class="btn btn-solid" onclick="saveManualWords('${route.bookId}')" style="opacity:${window._manualWords.length>0?1:0.4};">
+          ${window._manualWords.length>0?`뜻 검색 후 저장 (${window._manualWords.length}개)`:'단어를 추가해주세요'}
+        </button>
       </div>
     </div>`;
 
-  window._manualLevel = '중';
+  setTimeout(() => document.getElementById('manual-en')?.focus(), 100);
 }
 
 function renderManualWordList() {
   if (!window._manualWords?.length) {
-    return '<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">아직 추가된 단어가 없어요</div>';
+    return '<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">아직 추가된 단어가 없어요<br>영어 단어를 입력하고 추가 버튼을 눌러주세요</div>';
   }
-  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
   return window._manualWords.map((w, i) => `
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-card);border-radius:10px;margin-bottom:6px;">
-      <div style="width:18px;height:18px;border-radius:50%;background:${levelColor[w.level]||'#999'};flex-shrink:0;"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-card);border-radius:10px;margin-bottom:6px;">
+      <div style="font-size:16px;">📝</div>
       <div style="flex:1;">
-        <div style="font-size:13px;font-weight:700;">${w.en}</div>
-        <div style="font-size:11px;color:var(--ink-60);">${w.base}${w.ctx?` · ${w.ctx}`:''}</div>
+        <div style="font-size:14px;font-weight:700;color:#000;">${w.en}</div>
+        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">뜻 자동 검색 예정</div>
       </div>
       <button onclick="removeManualWord(${i})" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">✕</button>
     </div>`).join('');
 }
 
-function selectLevel(lv) {
-  window._manualLevel = lv;
-  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
-  ['상','중','하'].forEach(l => {
-    const btn = document.getElementById(`level-btn-${l}`);
-    if (!btn) return;
-    if (l === lv) {
-      btn.style.background = levelColor[l];
-      btn.style.color = '#fff';
-    } else {
-      btn.style.background = 'transparent';
-      btn.style.color = levelColor[l];
-    }
-  });
-}
-
 function addManualWord() {
-  const en = document.getElementById('manual-en')?.value.trim();
-  const base = document.getElementById('manual-base')?.value.trim();
-  const ctx = document.getElementById('manual-ctx')?.value.trim();
-  const level = window._manualLevel || '중';
-
+  const enInput = document.getElementById('manual-en');
+  const en = enInput?.value.trim();
   if (!en) { toast('영어 단어를 입력해주세요'); return; }
-  if (!base) { toast('기본 뜻을 입력해주세요'); return; }
 
-  if (!window._manualWords) window._manualWords = [];
-  window._manualWords.push({ en, base, ctx: ctx||'', level, ipa: '' });
+  // 중복 체크
+  if (window._manualWords.find(w => w.en.toLowerCase() === en.toLowerCase())) {
+    toast('이미 추가된 단어예요'); enInput.value=''; enInput.focus(); return;
+  }
 
-  // 입력창 초기화
-  document.getElementById('manual-en').value = '';
-  document.getElementById('manual-base').value = '';
-  document.getElementById('manual-ctx').value = '';
-  document.getElementById('manual-en').focus();
+  window._manualWords.push({ en, base: '', ctx: '', level: '중', ipa: '' });
+  enInput.value = '';
+  enInput.focus();
 
-  // 목록 업데이트
   document.getElementById('manual-word-list').innerHTML = renderManualWordList();
   const saveBtn = document.getElementById('manual-save-btn');
   if (saveBtn) {
-    saveBtn.textContent = `저장하기 (${window._manualWords.length}개)`;
+    saveBtn.textContent = `뜻 검색 후 저장 (${window._manualWords.length}개)`;
     saveBtn.style.opacity = '1';
   }
-  toast(`"${en}" 추가됐어요`);
 }
 
 function removeManualWord(i) {
@@ -1815,8 +1789,30 @@ function removeManualWord(i) {
   document.getElementById('manual-word-list').innerHTML = renderManualWordList();
   const saveBtn = document.getElementById('manual-save-btn');
   if (saveBtn) {
-    saveBtn.textContent = `저장하기 (${window._manualWords.length}개)`;
-    saveBtn.style.opacity = window._manualWords.length > 0 ? '1' : '0.4';
+    if (window._manualWords.length > 0) {
+      saveBtn.textContent = `뜻 검색 후 저장 (${window._manualWords.length}개)`;
+      saveBtn.style.opacity = '1';
+    } else {
+      saveBtn.textContent = '단어를 추가해주세요';
+      saveBtn.style.opacity = '0.4';
+    }
+  }
+}
+
+async function fetchWordMeaning(word) {
+  try {
+    // Free Dictionary API 사용
+    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || !data[0]) return { base: '뜻을 찾지 못했어요', ipa: '' };
+    const entry = data[0];
+    const ipa = entry.phonetics?.find(p => p.text)?.text || '';
+    // 첫 번째 의미 가져오기
+    const meaning = entry.meanings?.[0]?.definitions?.[0]?.definition || '';
+    // 간단하게 한국어로 표시하기 어려우니 영어 뜻을 base로 저장
+    return { base: meaning || '뜻을 찾지 못했어요', ipa };
+  } catch(e) {
+    return { base: '뜻을 찾지 못했어요', ipa: '' };
   }
 }
 
@@ -1826,7 +1822,20 @@ async function saveManualWords(bookId) {
   if (!window._manualWords?.length) { toast('추가된 단어가 없어요'); return; }
 
   const btn = document.getElementById('manual-save-btn');
-  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
+  if (btn) { btn.disabled = true; btn.textContent = '뜻 검색 중...'; btn.style.opacity = '0.6'; }
+
+  // 각 단어 뜻 검색
+  toast('단어 뜻을 검색하는 중이에요...');
+  for (let i = 0; i < window._manualWords.length; i++) {
+    const w = window._manualWords[i];
+    if (!w.base) {
+      if (btn) btn.textContent = `검색 중 (${i+1}/${window._manualWords.length})...`;
+      const result = await fetchWordMeaning(w.en);
+      w.base = result.base;
+      w.ipa = result.ipa;
+      w.ctx = ''; // 문맥 뜻 없음 (직접 입력 표시)
+    }
+  }
 
   const book = findBook(bookId);
   if (!book) return;
