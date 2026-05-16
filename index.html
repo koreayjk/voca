@@ -996,7 +996,7 @@ async function processNextMultiScan() {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요. JSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
     });
     const data = await res.json();
     if (data.error) {
@@ -1135,6 +1135,28 @@ function selectExistingPage(pageNum) {
   if (renameInp) renameInp.placeholder = `예: ${pageNum}-${Number(pageNum)+2 || pageNum+'+'}`; 
 }
 
+// ── 이미 등록된 단어 목록 추출 ──
+function getExistingWordList() {
+  const words = [];
+  books.forEach(book => {
+    book.pages.forEach(page => {
+      page.words.forEach(w => {
+        if (w.en) words.push(w.en.toLowerCase().trim());
+      });
+    });
+  });
+  // 중복 제거
+  return [...new Set(words)];
+}
+
+function buildExcludePrompt() {
+  const existing = getExistingWordList();
+  if (!existing.length) return '';
+  // 너무 많으면 최근 500개만 (토큰 절약)
+  const limited = existing.slice(-500);
+  return `\n\n이미 등록된 단어이므로 반드시 제외해주세요:\n${limited.join(', ')}`;
+}
+
 async function doScan() {
   const bId = document.getElementById('up-book-sel')?.value;
   if (!bId) { toast('책을 먼저 선택해주세요'); return; }
@@ -1161,7 +1183,7 @@ async function doScan() {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요. JSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
     });
     const data = await res.json();
     if (data.error) {
