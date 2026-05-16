@@ -2,227 +2,1789 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IM VOCA — 영어 원서 단어장</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" type="image/png" href="https://koreayjk.github.io/voca/2.png">
+<link rel="apple-touch-icon" href="https://koreayjk.github.io/voca/2.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f5f0e8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="IM VOCA">
+<title>IM VOCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f0e8; color: #1a1511; }
-  .page { max-width: 680px; margin: 0 auto; padding: 40px 32px; background: #fff; min-height: 100vh; }
-
-  /* 히어로 */
-  .hero { text-align: center; padding: 32px 0 24px; }
-  .badge { display: inline-block; background: #fff0e8; color: #cc5500; font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 99px; margin-bottom: 16px; border: 1px solid rgba(204,85,0,0.2); letter-spacing: 0.03em; }
-  .hero-title { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; color: #1a1511; }
-  .hero-title span { color: #cc5500; }
-  .hero-sub { font-size: 14px; color: #888; line-height: 1.8; max-width: 460px; margin: 0 auto 24px; }
-  .hero-btn { display: inline-block; background: #cc5500; color: #fff; font-size: 14px; font-weight: 600; padding: 12px 28px; border-radius: 12px; text-decoration: none; }
-  .hero-url { font-size: 11px; color: #aaa; margin-top: 10px; }
-  .divider { height: 1px; background: #f0ece4; margin: 24px 0; }
-
-  /* 섹션 라벨 */
-  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #cc5500; text-align: center; margin: 28px 0 12px; }
-
-  /* 플로우 */
-  .flow { display: flex; align-items: flex-start; gap: 0; background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 20px 12px; overflow-x: auto; }
-  .flow-step { flex: 1; min-width: 90px; text-align: center; padding: 0 6px; }
-  .flow-num { width: 30px; height: 30px; border-radius: 50%; background: #cc5500; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
-  .flow-label { font-size: 11px; font-weight: 600; color: #1a1511; line-height: 1.4; margin-bottom: 4px; }
-  .flow-desc { font-size: 10px; color: #999; line-height: 1.4; }
-  .flow-arrow { color: #cc5500; font-size: 20px; flex-shrink: 0; padding: 0 4px; margin-top: 8px; opacity: 0.4; }
-
-  /* 기능 카드 */
-  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
-  .feat { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 16px; }
-  .feat-icon { font-size: 20px; margin-bottom: 8px; }
-  .feat-title { font-size: 13px; font-weight: 600; color: #1a1511; margin-bottom: 5px; }
-  .feat-desc { font-size: 11px; color: #999; line-height: 1.6; }
-
-  /* 에빙하우스 */
-  .ebb { background: #fff0e8; border: 1px solid rgba(204,85,0,0.15); border-radius: 12px; padding: 20px; }
-  .ebb-title { font-size: 13px; font-weight: 600; color: #cc5500; margin-bottom: 12px; }
-  .ebb-days { display: flex; flex-wrap: wrap; gap: 6px; }
-  .ebb-day { background: #fff; border: 1px solid rgba(204,85,0,0.25); border-radius: 99px; padding: 4px 11px; font-size: 11px; color: #cc5500; font-weight: 500; }
-  .ebb-desc { font-size: 11px; color: #888; margin-top: 10px; line-height: 1.6; }
-
-  /* 비교 */
-  .diff { background: #fafafa; border: 1px solid #eee; border-radius: 12px; overflow: hidden; }
-  .diff-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid #f0ece4; font-size: 12px; }
-  .diff-row:last-child { border-bottom: none; }
-  .diff-row.head { background: #f5f2ee; font-weight: 600; font-size: 11px; }
-  .diff-label { flex: 1; color: #888; }
-  .diff-label.head { color: #1a1511; }
-  .diff-imvoca { width: 90px; text-align: center; color: #cc5500; font-weight: 600; }
-  .diff-others { width: 90px; text-align: center; color: #bbb; }
-
-  /* 인용구 */
-  .quote { text-align: center; padding: 24px 16px; }
-  .quote p { font-size: 14px; color: #888; line-height: 1.8; font-style: italic; }
-  .quote strong { color: #cc5500; font-style: normal; }
-
-  /* CTA */
-  .cta { background: #cc5500; border-radius: 14px; padding: 32px 24px; text-align: center; margin-top: 8px; }
-  .cta-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .cta-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
-  .cta-url { font-size: 14px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.2); padding: 10px 24px; border-radius: 8px; display: inline-block; text-decoration: none; }
-
-  @media print {
-    body { background: #fff; }
-    .page { padding: 20px; }
-  }
+:root {
+  --font-display: 'Lora', Georgia, serif;
+  --font-body: 'Gowun Dodum', system-ui, sans-serif;
+  --ink-100: #1a1511; --ink-60: rgba(26,21,17,0.6); --ink-40: rgba(26,21,17,0.4);
+  --ink-12: rgba(26,21,17,0.1); --ink-07: rgba(26,21,17,0.07); --ink-05: rgba(26,21,17,0.04);
+  --gold: #cc5500; --gold-bg: rgba(204,85,0,0.09);
+  --bg-page: #f5f0e8; --bg-card: #faf7f2; --bg-input: #f0ebe0;
+  --accent: #cc5500; --accent-dark: #a84400;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #d4cabb; }
+#root { position: fixed; inset: 0; }
+.scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
+@media (min-width: 768px) {
+  .scr { left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 28px 32px 0; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
+  .h-xxl { font-size: 52px; } .h-xl { font-size: 40px; }
+  .book-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .dock { left: 50% !important; transform: translateX(-50%) !important; width: 100% !important; max-width: 480px !important; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
+  .overlay { max-width: none; left: 0; transform: none; }
+  .sheet { max-width: 480px; margin: 0 auto; }
+  .btn-fixed { left: 48px !important; right: 48px !important; }
+}
+.scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
+.scr-scroll::-webkit-scrollbar { width: 4px; }
+.scr-scroll::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 2px; }
+.h-display { font-family: var(--font-display); letter-spacing: -0.03em; line-height: 0.97; color: var(--ink-100); }
+.h-xxl { font-size: 40px; } .h-xl { font-size: 30px; } .h-l { font-size: 24px; }
+.label-xs { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); font-weight: 500; }
+.muted { color: var(--ink-60); }
+.topnav { display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: 2px; flex-shrink: 0; }
+.topnav__back { font-size: 20px; cursor: pointer; padding: 4px 8px 4px 0; color: #000; user-select: none; }
+.topnav__title { font-size: 13px; color: var(--ink-60); letter-spacing: -0.02em; }
+.topnav__right { font-size: 16px; cursor: pointer; padding: 4px 0 4px 8px; }
+.dock { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 80px; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 12px; background: rgba(245,240,232,0.92); border-top: 1px solid var(--ink-07); backdrop-filter: blur(20px); z-index: 20; }
+.dock__btn { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 20px; font-size: 10px; color: var(--ink-40); background: none; border: none; font-family: var(--font-body); }
+.dock__btn--active { color: var(--accent); }
+button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-row:active, .page-row:active, .chip:active {
+  opacity: 0.6 !important;
+  transform: scale(0.97);
+  transition: opacity 0.05s, transform 0.05s;
+}
+.btn:active { filter: brightness(0.88); transform: scale(0.98); transition: all 0.05s; }
+.ox-btn:active { filter: brightness(0.85); transform: scale(0.96); transition: all 0.05s; }
+.dock__glyph { font-family: var(--font-display); font-size: 22px; line-height: 1; letter-spacing: -0.04em; }
+.btn { width: 100%; padding: 15px 14px; border-radius: 13px; font-family: var(--font-body); font-weight: 500; font-size: 15px; cursor: pointer; border: none; text-align: center; }
+.btn-solid { background: var(--accent); color: #fff; }
+.btn-outline { background: transparent; color: #000; border: 1.5px solid var(--ink-12); }
+.btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
+.lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
+.lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
+.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; margin-top: 20px; }
+.book-tile { cursor: pointer; }
+.book-cover { width: 100%; aspect-ratio: 2/3; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 12px 14px; color: #fff; font-family: var(--font-display); letter-spacing: -0.04em; line-height: 0.97; overflow: hidden; }
+.book-cover__title { font-size: 18px; } .book-cover__author { font-family: var(--font-body); font-size: 10px; opacity: 0.75; }
+.book-tile__title { font-size: 13px; font-weight: 600; margin-top: 8px; }
+.book-tile__sub { font-size: 11px; color: var(--ink-60); margin-top: 2px; }
+.book-hero { display: flex; gap: 14px; margin-top: 14px; align-items: flex-start; }
+.book-hero__cover { width: 88px; height: 132px; border-radius: 8px; flex-shrink: 0; }
+.book-hero__title { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.04em; color: #000; line-height: 1.1; }
+.book-hero__author { font-size: 12px; color: var(--ink-60); margin-top: 5px; }
+.book-hero__badge { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-40); margin-top: 10px; }
+.book-hero__desc { font-size: 11px; color: var(--ink-60); line-height: 1.55; margin-top: 4px; }
+.rule { margin-top: 16px; border-top: 1px solid var(--ink-07); }
+.sect-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.sect-row__name { font-size: 13px; font-weight: 600; }
+.sect-row__count { font-size: 11px; color: var(--ink-60); }
+.page-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--ink-07); }
+.page-row:last-child { border-bottom: none; }
+.page-row__num { font-size: 13px; font-weight: 500; }
+.page-row__right { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-60); }
+.upload-zone { border: 1.5px dashed var(--ink-12); border-radius: 14px; padding: 32px 20px; text-align: center; cursor: pointer; position: relative; margin-top: 14px; }
+.upload-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-title { font-size: 14px; font-weight: 500; }
+.upload-sub { font-size: 11px; color: var(--ink-60); margin-top: 4px; }
+.preview-img { width: 100%; border-radius: 10px; max-height: 160px; object-fit: cover; margin-top: 12px; }
+.scan-btn { width: 100%; margin-top: 10px; padding: 14px; background: var(--accent); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-family: var(--font-body); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.scanning { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+.ring { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--ink-07); border-top-color: #000; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.chip-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { font-size: 11px; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ink-12); color: #000; background: #fff; }
+.word-item { padding: 10px 0; border-bottom: 1px solid var(--ink-07); }
+.word-item:last-child { border-bottom: none; }
+.word-item__en { font-weight: 600; font-size: 16px; }
+.word-item__base { font-size: 11px; color: var(--ink-60); margin-top: 2px; }
+.word-item__ctx { font-size: 11px; color: var(--ink-100); margin-top: 2px; }
+.word-item__ctx em { font-style: normal; background: var(--gold-bg); padding: 0 2px; }
+.scope-card { border: 1.5px solid var(--ink-12); border-radius: 13px; padding: 15px; cursor: pointer; }
+.scope-card--on { border-color: #000; border-width: 2px; padding: 14px; }
+.scope-card__head { display: flex; justify-content: space-between; align-items: center; }
+.scope-card__name { font-size: 14px; font-weight: 600; }
+.scope-card__hint { font-size: 11px; color: var(--ink-60); margin-top: 4px; }
+.radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--ink-40); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+.radio--on { background: #000; border-color: #000; color: #fff; }
+.list-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--ink-07); cursor: pointer; }
+.list-row:last-child { border-bottom: none; }
+.study { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 18px 22px 22px; }
+.study__top { display: flex; justify-content: space-between; align-items: center; }
+.study__info { font-size: 11px; color: var(--ink-60); }
+.study__close { font-size: 16px; cursor: pointer; padding: 4px; }
+.study__bar { height: 3px; background: var(--ink-07); border-radius: 99px; margin-top: 10px; overflow: hidden; }
+.study__fill { height: 100%; background: var(--accent); transition: width 250ms ease; }
+.study__round { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); margin-top: 8px; }
+.card-wrap { flex: 1; perspective: 1400px; cursor: pointer; margin: 14px 0; }
+.card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.4,0,.2,1); }
+.card--flip { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; border-radius: 20px; -webkit-backface-visibility: hidden; backface-visibility: hidden; padding: 24px; display: flex; flex-direction: column; }
+.face-front { background: #f5ede0; }
+.face-back { background: #2a1f15; border: 1px solid rgba(255,255,255,0.06); transform: rotateY(180deg); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.face-front__center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.card__word { font-family: var(--font-display); font-size: 40px; letter-spacing: -0.04em; color: #000; text-align: center; line-height: 1; }
+.card__ipa { font-size: 13px; color: var(--ink-40); }
+.card__tap { font-size: 11px; color: var(--ink-40); text-align: center; margin-top: 16px; }
+.back__word { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #f5ede0; text-align:center; }
+.back__label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245,237,224,0.45); margin-top: 14px; text-align:center; }
+.back__meaning { font-size: 16px; margin-top: 4px; line-height: 1.3; color: #f5ede0; text-align:center; }
+.ox-row { display: flex; gap: 10px; }
+.ox-btn { flex: 1; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; cursor: pointer; border: none; }
+.ox-x { border: 1.5px solid var(--ink-12); background: #fff; color: #000; }
+.ox-o { background: var(--accent); color: #fff; }
+.ox-btn:disabled { opacity: 0.3; cursor: default; }
+.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); margin-top: 6px; }
+.done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
+.done__n { font-family: var(--font-display); font-size: 96px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+.done__label { font-size: 14px; color: var(--ink-60); }
+.done__grid { margin-top: 24px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.done__tile { border: 1px solid var(--ink-12); border-radius: 13px; padding: 14px; text-align: left; }
+.done__tile-label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); }
+.done__tile-value { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #000; margin-top: 4px; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 500; align-items: flex-end; justify-content: center; }
+.overlay.open { display: flex; }
+.sheet { background: var(--bg-card); border-radius: 20px 20px 0 0; padding: 20px 22px 36px; width: 100%; max-width: 480px; }
+.sheet-handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 0 auto 18px; }
+.sheet h3 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.03em; margin-bottom: 16px; }
+.sheet input { width: 100%; background: var(--bg-input); border: 1px solid var(--ink-07); border-radius: 10px; padding: 12px 14px; font-family: var(--font-body); font-size: 14px; color: #000; outline: none; margin-bottom: 10px; }
+.sheet input:focus { border-color: #000; background: #fff; }
+.sheet input::placeholder { color: var(--ink-40); }
+.sheet-note { font-size: 12px; color: var(--ink-60); line-height: 1.7; margin-bottom: 14px; }
+.sheet-note a { color: #000; font-weight: 500; }
+.gap-sm { height: 6px; }
+.action-sheet { display: none; position: fixed; inset: 0; z-index: 400; pointer-events: none; }
+.action-sheet.open { display: block; pointer-events: all; }
+.action-sheet__bg { position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+.action-sheet__menu { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg-card); border-radius: 20px 20px 0 0; padding: 8px 0 32px; }
+.action-sheet__item { display: flex; align-items: center; gap: 14px; padding: 16px 22px; font-size: 15px; cursor: pointer; color: var(--ink-100); border: none; background: none; width: 100%; font-family: var(--font-body); text-align: left; }
+.action-sheet__item:hover { background: var(--bg-input); }
+.action-sheet__item.danger { color: #c0392b; }
+.action-sheet__divider { height: 1px; background: var(--ink-07); margin: 4px 0; }
+.action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
+.review-banner { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #fff; border-bottom: 2px solid var(--accent); padding: 12px 16px; z-index: 550; display: none; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.review-banner.show { display: block; }
+.review-banner__title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.review-banner__desc { font-size: 12px; color: var(--ink-60); }
+.review-banner__btns { display: flex; gap: 8px; margin-top: 10px; }
+.review-banner__btn { flex: 1; padding: 8px; border-radius: 8px; border: none; font-family: var(--font-body); font-size: 12px; cursor: pointer; }
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
+.install-banner.show { display: block; }
+.install-banner__title { font-size: 14px; font-weight: 700; color: #000; margin-bottom:6px; }
+.install-banner__desc { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
+.install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
+.install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 </style>
 </head>
 <body>
-<div class="page">
+<div id="root"></div>
 
-  <!-- 상단 뒤로가기 -->
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;">
-    <button onclick="window.close();history.back();" style="display:flex;align-items:center;gap:6px;background:none;border:1px solid #eee;border-radius:99px;padding:7px 14px;font-size:12px;color:#888;cursor:pointer;font-family:-apple-system,sans-serif;">
-      ← 앱으로 돌아가기
-    </button>
-    <img src="https://koreayjk.github.io/voca/2.png" style="width:28px;height:28px;object-fit:contain;">
+<!-- ADD BOOK MODAL -->
+<div class="overlay" id="modal-add">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>새 책 추가</h3>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="text" id="nb-title" placeholder="책 제목 (영어)" style="flex:1;margin-bottom:0">
+      <button onclick="searchBook()" style="padding:0 14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;white-space:nowrap;">검색</button>
+    </div>
+    <div id="book-search-list" style="max-height:220px;overflow-y:auto;margin-bottom:10px;"></div>
+    <input type="hidden" id="nb-author">
+    <input type="hidden" id="nb-desc">
+    <input type="hidden" id="nb-cover">
+    <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
   </div>
-
-  <!-- 히어로 -->
-  <div class="hero">
-    <div class="badge">영어 원서 독자를 위한 AI 단어장</div>
-    <div class="hero-title">원서를 읽으며<br><span>자연스럽게 단어를</span> 내 것으로</div>
-    <div class="hero-sub">페이지를 찍으면 AI가 어려운 단어를 자동으로 찾아드려요.<br>책의 문맥에 맞는 뜻으로, 에빙하우스 망각곡선으로 완전히 내 것이 됩니다.</div>
-    <a class="hero-btn" href="https://koreayjk.github.io/voca/">지금 시작하기</a>
-    <div class="hero-url">koreayjk.github.io/voca</div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- 사용 방법 -->
-  <div class="section-label">사용 방법</div>
-  <div class="flow">
-    <div class="flow-step">
-      <div class="flow-num">1</div>
-      <div class="flow-label">페이지 촬영</div>
-      <div class="flow-desc">읽던 원서 페이지 사진</div>
-    </div>
-    <div class="flow-arrow">›</div>
-    <div class="flow-step">
-      <div class="flow-num">2</div>
-      <div class="flow-label">AI 단어 추출</div>
-      <div class="flow-desc">어려운 순서로 자동 분류</div>
-    </div>
-    <div class="flow-arrow">›</div>
-    <div class="flow-step">
-      <div class="flow-num">3</div>
-      <div class="flow-label">내 단어장 저장</div>
-      <div class="flow-desc">모르는 단어만 선택</div>
-    </div>
-    <div class="flow-arrow">›</div>
-    <div class="flow-step">
-      <div class="flow-num">4</div>
-      <div class="flow-label">암기 카드</div>
-      <div class="flow-desc">플래시카드 + 퀴즈</div>
-    </div>
-    <div class="flow-arrow">›</div>
-    <div class="flow-step">
-      <div class="flow-num">5</div>
-      <div class="flow-label">자동 복습</div>
-      <div class="flow-desc">에빙하우스 일정으로</div>
-    </div>
-  </div>
-
-  <!-- 핵심 기능 -->
-  <div class="section-label">핵심 기능</div>
-  <div class="features">
-    <div class="feat">
-      <div class="feat-icon">📷</div>
-      <div class="feat-title">AI 자동 단어 추출</div>
-      <div class="feat-desc">사진 한 장으로 어려운 단어를 난이도 순으로 자동 추출해요</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">📖</div>
-      <div class="feat-title">문맥 맞춤 뜻 제공</div>
-      <div class="feat-desc">내가 읽는 책에서 실제로 쓰인 의미로 알려줘요</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">🃏</div>
-      <div class="feat-title">암기 카드 + 퀴즈</div>
-      <div class="feat-desc">플래시카드로 외우고 4지선다 퀴즈로 테스트해요</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">🧠</div>
-      <div class="feat-title">에빙하우스 복습</div>
-      <div class="feat-desc">망각 전에 자동 알림으로 장기 기억으로 완성해요</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">🎓</div>
-      <div class="feat-title">Comprehensible Input</div>
-      <div class="feat-desc">영어 교육학 이론 기반의 자연스러운 단어 습득 방식이에요</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">📱</div>
-      <div class="feat-title">모바일 앱처럼</div>
-      <div class="feat-desc">홈화면에 추가하면 앱처럼 편리하게 사용할 수 있어요</div>
-    </div>
-  </div>
-
-  <!-- 에빙하우스 -->
-  <div class="section-label">에빙하우스 망각곡선</div>
-  <div class="ebb">
-    <div class="ebb-title">📊 과학적으로 증명된 복습 일정</div>
-    <div class="ebb-days">
-      <span class="ebb-day">학습 당일</span>
-      <span class="ebb-day">1일 후</span>
-      <span class="ebb-day">2일 후</span>
-      <span class="ebb-day">3일 후</span>
-      <span class="ebb-day">6일 후</span>
-      <span class="ebb-day">15일 후</span>
-      <span class="ebb-day">30일 후</span>
-      <span class="ebb-day">60일 후</span>
-    </div>
-    <div class="ebb-desc">암기 카드를 완료하면 자동으로 복습 일정이 등록돼요. 망각하기 직전에 복습하면 장기 기억으로 완전히 내 것이 됩니다.</div>
-  </div>
-
-  <!-- 비교 -->
-  <div class="section-label">다른 앱과의 차이</div>
-  <div class="diff">
-    <div class="diff-row head">
-      <div class="diff-label head">기능</div>
-      <div class="diff-imvoca">IM VOCA</div>
-      <div class="diff-others">다른 앱들</div>
-    </div>
-    <div class="diff-row">
-      <div class="diff-label">원서 페이지 사진 → 단어 추출</div>
-      <div class="diff-imvoca">✅</div>
-      <div class="diff-others">일부</div>
-    </div>
-    <div class="diff-row">
-      <div class="diff-label">책 문맥에 맞는 뜻 제공</div>
-      <div class="diff-imvoca">✅</div>
-      <div class="diff-others">❌</div>
-    </div>
-    <div class="diff-row">
-      <div class="diff-label">난이도 자동 분류 (상/중/하)</div>
-      <div class="diff-imvoca">✅</div>
-      <div class="diff-others">❌</div>
-    </div>
-    <div class="diff-row">
-      <div class="diff-label">에빙하우스 7단계 복습</div>
-      <div class="diff-imvoca">✅</div>
-      <div class="diff-others">일부</div>
-    </div>
-  </div>
-
-  <!-- 인용구 -->
-  <div class="quote">
-    <p>"단어를 억지로 외우지 마세요.<br><strong>원서를 읽으면서 자연스럽게</strong> 내 것으로 만드세요."</p>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta">
-    <div class="cta-title">지금 바로 시작해보세요</div>
-    <div class="cta-sub">회원가입 후 사용할 수 있어요 · IM Mission</div>
-    <a class="cta-url" href="https://koreayjk.github.io/voca/">koreayjk.github.io/voca</a>
-    <br><br>
-    <button onclick="window.close();history.back();" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:10px;padding:10px 24px;color:#fff;font-size:13px;font-family:-apple-system,sans-serif;cursor:pointer;">← 앱으로 돌아가기</button>
-  </div>
-
 </div>
+
+<!-- API MODAL -->
+<div class="overlay" id="modal-api">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Gemini AI 연동</h3>
+    <p class="sheet-note">구글 Gemini API 키를 입력하면 사진에서 단어를 <strong>자동 추출</strong>해요.<br><br>발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key</p>
+    <input type="password" id="api-in" placeholder="AIza...">
+    <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
+  </div>
+</div>
+
+<!-- ACTION SHEET -->
+<div class="action-sheet" id="action-sheet">
+  <div class="action-sheet__bg" onclick="closeActionSheet()"></div>
+  <div class="action-sheet__menu">
+    <div class="action-sheet__handle"></div>
+    <div id="action-sheet-items"></div>
+  </div>
+</div>
+
+<!-- EDIT BOOK MODAL -->
+<div class="overlay" id="modal-edit">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>책 수정</h3>
+    <input type="text" id="edit-title" placeholder="책 제목">
+    <input type="text" id="edit-author" placeholder="저자">
+    <input type="text" id="edit-desc" placeholder="책 소개">
+    <input type="hidden" id="edit-book-id">
+    <button class="btn btn-solid" onclick="saveEditBook()" style="margin-top:4px;">저장</button>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-edit')">취소</button>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="overlay" id="modal-admin">
+  <div class="sheet" style="max-height:80vh;overflow-y:auto;">
+    <div class="sheet-handle"></div>
+    <h3>회원 관리</h3>
+    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">불러오는 중...</div></div>
+    <div class="gap-sm"></div>
+    <button class="btn btn-outline" onclick="closeModal('modal-admin')">닫기</button>
+  </div>
+</div>
+
+<!-- INSTALL BANNER -->
+<div class="install-banner" id="install-banner">
+  <button class="install-banner__close" onclick="dismissInstall()">✕</button>
+  <div class="install-banner__icon">📲</div>
+  <div class="install-banner__title" id="install-title">홈화면에 추가하기</div>
+  <div class="install-banner__desc" id="install-desc"></div>
+  <div id="install-btn-wrap" style="margin-top:10px;"></div>
+</div>
+
+<!-- REVIEW BANNER -->
+<div class="review-banner" id="review-banner">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <span style="font-size:13px;font-weight:700;color:var(--accent);">🔔 복습할 단어가 있어요!</span>
+        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;">에빙하우스 망각곡선</span>
+      </div>
+      <div class="review-banner__desc" id="review-banner-desc"></div>
+      <div style="font-size:10px;color:var(--ink-40);margin-top:4px;" id="review-banner-step"></div>
+    </div>
+    <button onclick="closeReviewBanner()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-40);padding:0 0 0 8px;">✕</button>
+  </div>
+  <div class="review-banner__btns">
+    <button class="review-banner__btn" onclick="startReviewSession()" style="background:var(--accent);color:#fff;">지금 복습하기</button>
+    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:#000;">나중에</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
+const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
+let currentUser = null, _authToken = null;
+
+async function sbFetch(path, method='GET', body=null, useAuth=true) {
+  const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY };
+  headers['Authorization'] = (useAuth && _authToken) ? 'Bearer ' + _authToken : 'Bearer ' + SB_KEY;
+  const res = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
+  return res.json();
+}
+
+async function sbInit() {
+  renderLogin();
+  const saved = localStorage.getItem('imvoca.session');
+  if (saved) {
+    try {
+      const sess = JSON.parse(saved);
+      if (!sess.access_token || !sess.user) { localStorage.removeItem('imvoca.session'); return; }
+      
+      // 세션 유효성 서버에서 확인
+      const verify = await fetch(SB_URL + '/auth/v1/user', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + sess.access_token }
+      });
+      
+      if (!verify.ok) {
+        // 토큰 만료 or 유효하지 않음
+        localStorage.removeItem('imvoca.session');
+        renderLogin();
+        return;
+      }
+      
+      const userData = await verify.json();
+      _authToken = sess.access_token;
+      currentUser = userData; // 서버에서 최신 유저 정보 사용
+      
+      // 역할 확인 (관리자 아닌 경우)
+      if (currentUser.email !== 'koreayjk@gmail.com') {
+        const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=role`, {
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+        });
+        const roleData = await res.json();
+        const role = roleData[0]?.role;
+        if (role === '대기중') {
+          localStorage.removeItem('imvoca.session');
+          renderLogin();
+          toast('승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
+          return;
+        }
+      }
+      
+      await loadApiKey();
+      await loadUserName();
+      await loadBooksFromDB();
+      render();
+      setTimeout(checkReviews, 1000);
+    } catch(e) { 
+      console.error('세션 복원 실패:', e);
+      localStorage.removeItem('imvoca.session'); 
+      renderLogin();
+    }
+  }
+}
+
+async function loadUserName() {
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=name`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const data = await res.json();
+    if (data[0]?.name) userName = data[0].name;
+  } catch(e) {}
+}
+
+function saveApi() { const key = document.getElementById("api-in").value.trim(); if(!key){toast("키를 입력해주세요");return;} saveApiKeyToDB(key); }
+
+async function loadApiKey() {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1&select=gemini_key', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } });
+    const data = await res.json();
+    if (data[0]?.gemini_key) apiKey = data[0].gemini_key;
+  } catch(e) {}
+}
+
+async function saveApiKeyToDB(key) {
+  try {
+    await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1', { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify({ gemini_key: key, updated_at: new Date().toISOString() }) });
+    apiKey = key; toast('API 키가 저장됐어요!'); closeModal('modal-api');
+  } catch(e) { toast('저장 실패: ' + e.message); }
+}
+
+async function sbSignIn(email, pw) {
+  try {
+    const data = await sbFetch('/auth/v1/token?grant_type=password', 'POST', { email, password: pw }, false);
+    if (data.error || !data.access_token) { toast('로그인 실패: 이메일 또는 비밀번호를 확인해주세요'); return; }
+    _authToken = data.access_token; currentUser = data.user;
+    localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
+    await loadApiKey(); await loadUserName();
+    if (currentUser.email !== 'koreayjk@gmail.com') {
+      try {
+        const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=role`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+        const roleData = await res.json();
+        const role = roleData[0]?.role;
+        if (role === '대기중') {
+          toast('아직 승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
+          _authToken = null; currentUser = null;
+          localStorage.removeItem('imvoca.session');
+          return;
+        }
+      } catch(e) {}
+    }
+    await loadBooksFromDB(); render(); setTimeout(checkReviews, 1000);
+  } catch(e) { toast('로그인 오류: ' + e.message); }
+}
+
+async function sbSignUp(email, pw, name) {
+  try {
+    const data = await sbFetch('/auth/v1/signup', 'POST', { email, password: pw, data: { name } }, false);
+    if (data.error) { toast('가입 실패: ' + data.error.message); return; }
+    if (data.user?.id) {
+      await fetch(SB_URL + '/rest/v1/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ id: data.user.id, name, email, role: '대기중' })
+      });
+    }
+    toast('가입 신청 완료! 관리자 승인 후 사용할 수 있어요'); renderLogin('login');
+  } catch(e) { toast('가입 오류: ' + e.message); }
+}
+
+async function sbSignOut() {
+  localStorage.removeItem('imvoca.session');
+  _authToken = null; currentUser = null; books = []; renderLogin();
+}
+
+async function loadBooksFromDB() {
+  try {
+    const bd = await sbFetch(`/rest/v1/voca_books?user_id=eq.${currentUser.id}&order=created_at`);
+    if (!Array.isArray(bd)) return;
+    books = [];
+    for (const b of bd) {
+      const pd = await sbFetch(`/rest/v1/voca_pages?book_id=eq.${b.id}&order=page_num`);
+      const pages = [];
+      for (const p of (Array.isArray(pd) ? pd : [])) {
+        const wd = await sbFetch(`/rest/v1/voca_words?page_id=eq.${p.id}&order=created_at`);
+        pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||'',level:w.level||''})) });
+      }
+      books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', cover:b.cover_url||'', pages });
+    }
+  } catch(e) { console.error('DB load error:', e); }
+}
+
+async function saveBookToDB(title, author, color, desc, cover='') {
+  try {
+    const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
+    const res = await fetch(SB_URL + '/rest/v1/voca_books', { method:'POST', headers, body: JSON.stringify({ user_id:currentUser.id, title, author, color, description:desc, cover_url:cover }) });
+    const data = await res.json();
+    if (data.code || data.error) { toast('DB 오류: ' + (data.message || data.error)); return null; }
+    return Array.isArray(data) ? data[0] : data;
+  } catch(e) { toast('저장 오류: ' + e.message); return null; }
+}
+
+async function savePageWordsToDB(bookId, pageNum, words) {
+  try {
+    const book = findBook(bookId);
+    let pageId;
+    const ex = book?.pages.find(p => String(p.num) === String(pageNum));
+    if (ex?._pid) { pageId = ex._pid; }
+    else {
+      const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
+      const res = await fetch(SB_URL + '/rest/v1/voca_pages', { method:'POST', headers, body: JSON.stringify({ book_id:bookId, page_num:String(pageNum) }) });
+      const data = await res.json();
+      pageId = (Array.isArray(data) ? data[0] : data)?.id;
+    }
+    if (!pageId) return null;
+    for (const w of words) {
+      const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken };
+      await fetch(SB_URL + '/rest/v1/voca_words', { method:'POST', headers, body: JSON.stringify({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' }) });
+    }
+    return pageId;
+  } catch(e) { return null; }
+}
+
+function renderLogin(tab='login') {
+  document.getElementById('root').innerHTML = `
+    <div class="scr" style="justify-content:center">
+      <div style="text-align:center;margin-bottom:28px">
+        <img src="https://koreayjk.github.io/voca/2.png" style="width:140px;height:140px;object-fit:contain;margin-bottom:4px;">
+        <div class="muted" style="font-size:12px;margin-top:2px">영어책 단어장</div>
+      </div>
+      <div style="display:flex;border-bottom:1px solid var(--ink-07);margin-bottom:22px">
+        <button onclick="renderLogin('login')" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='login'?'2px solid #000':'2px solid transparent'};font-weight:${tab==='login'?600:400}">로그인</button>
+        <button onclick="renderLogin('signup')" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='signup'?'2px solid #000':'2px solid transparent'};font-weight:${tab==='signup'?600:400}">회원가입</button>
+      </div>
+      ${tab==='login'?`
+        <input id="li-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:10px">
+        <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:14px">
+        <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">로그인</button>
+      `:`
+        <input id="su-nm" type="text" placeholder="이름" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:10px">
+        <input id="su-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:10px">
+        <input id="su-pw" type="password" placeholder="비밀번호 (6자 이상)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;margin-bottom:14px">
+        <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value)">가입하기</button>
+      `}
+      <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">IM Mission 계정으로 로그인하세요</div>
+    </div>`;
+}
+</script>
+<script>
+const COLORS = ['#8b4513','#6b5a3e','#7a4a2a','#5a6b3e','#4a3a6b','#6b3a4a','#3e5a4a'];
+let books = [], apiKey = '', userName = '';
+let imgData = null, pendingW = null, pendingB = null, pendingP = null;
+
+function toast(m) { const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+let stack = [{ name:'library' }];
+function push(r) { stack.push(r); render(); }
+function back() { if (stack.length > 1) { stack.pop(); render(); } }
+function goTab(t) {
+  if (t==='study') stack = [{name:'study-setup'}];
+  else if (t==='stats') stack = [{name:'stats'}];
+  else if (t==='search') stack = [{name:'search'}];
+  else if (t==='review') stack = [{name:'review'}];
+  else stack = [{name:'library'}];
+  render();
+}
+function replace(r) { stack[stack.length-1] = r; render(); }
+function currentTab() { const n = stack[stack.length-1].name; if (['study-setup','study-cards','study-done'].includes(n)) return 'study'; if (n==='stats') return 'stats'; if (n==='search') return 'search'; if (n==='review') return 'review'; return 'books'; }
+
+function findBook(id) { return books.find(b => b.id === id); }
+function findPage(book, num) { return book.pages.find(p => String(p.num) === String(num)); }
+function countWords(book) { return book.pages.reduce((n,p) => n + p.words.length, 0); }
+function allWords(book) { const out=[]; book.pages.forEach(p => p.words.forEach(w => out.push({...w, pageNum:p.num}))); return out; }
+function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+async function searchBook() {
+  const title = document.getElementById('nb-title').value.trim();
+  if (!title) { toast('책 제목을 입력해주세요'); return; }
+  const listEl = document.getElementById('book-search-list');
+  listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 중...</div>';
+  try {
+    const res = await fetch(`https://imvoca-books.koreayjk.workers.dev/?q=${encodeURIComponent(title)}`);
+    const data = await res.json();
+    const results = data.books || [];
+    if (!results.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요</div>'; return; }
+    window._bookResults = results;
+    listEl.innerHTML = results.map((b, i) => `
+      <button type="button" onclick="pickBook(${i})" style="display:flex;gap:10px;padding:12px;border-radius:8px;cursor:pointer;border:none;border-bottom:1px solid var(--ink-07);background:transparent;width:100%;text-align:left;font-family:var(--font-body);align-items:center;">
+        ${b.cover ? `<img src="${b.cover}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;" onerror="this.style.display='none'">` : `<div style="width:36px;height:50px;background:var(--bg-input);border-radius:3px;flex-shrink:0;"></div>`}
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#000;">${b.title}</div>
+          <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${b.author}</div>
+        </div>
+      </button>`).join('');
+  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${e.message}</div>`; }
+}
+
+function pickBook(i) {
+  const b = window._bookResults[i];
+  if (!b) return;
+  document.getElementById('nb-title').value = b.title;
+  document.getElementById('nb-author').value = b.author;
+  document.getElementById('nb-desc').value = b.desc || '';
+  document.getElementById('nb-cover').value = b.cover || '';
+  document.getElementById('book-search-list').innerHTML = `
+    <div style="display:flex;gap:12px;align-items:center;background:var(--gold-bg);border-radius:10px;padding:12px;border:1px solid var(--ink-12);">
+      ${b.cover ? `<img src="${b.cover}" style="width:44px;height:60px;object-fit:cover;border-radius:4px;flex-shrink:0;">` : ''}
+      <div>
+        <div style="font-size:13px;font-weight:600;">${b.title}</div>
+        <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${b.author}</div>
+        <div style="font-size:11px;color:var(--accent);margin-top:4px;">✓ 선택됨</div>
+      </div>
+    </div>`;
+}
+
+async function addBook() {
+  const title = document.getElementById('nb-title').value.trim();
+  if (!title) { toast('책 제목을 입력해주세요'); return; }
+  const color = COLORS[books.length%COLORS.length];
+  const author2 = document.getElementById('nb-author').value || 'Unknown';
+  const desc2 = document.getElementById('nb-desc').value || '';
+  const cover2 = document.getElementById('nb-cover').value || '';
+  const newBook = await saveBookToDB(title, author2, color, desc2, cover2);
+  if (!newBook) { toast('저장 실패'); return; }
+  books.push({ id:newBook.id, title, author:author2, color, desc:desc2, cover:cover2, pages:[] });
+  ['nb-title','nb-author','nb-desc','nb-cover'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('book-search-list').innerHTML='';
+  closeModal('modal-add'); render(); toast('책이 추가됐어요');
+}
+
+async function openCamera() {
+  const area = document.getElementById('camera-area');
+  const video = document.getElementById('camera-video');
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ 
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } } 
+    });
+    video.srcObject = stream;
+    area.style.display = 'block';
+    window._cameraStream = stream;
+  } catch(e) {
+    // 후면 카메라 실패 시 전면 카메라 시도
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = stream;
+      area.style.display = 'block';
+      window._cameraStream = stream;
+    } catch(e2) {
+      toast('카메라 접근 권한이 필요해요');
+    }
+  }
+}
+
+function closeCamera() {
+  const video = document.getElementById('camera-video');
+  const area = document.getElementById('camera-area');
+  if (window._cameraStream) {
+    window._cameraStream.getTracks().forEach(t => t.stop());
+    window._cameraStream = null;
+  }
+  video.srcObject = null;
+  area.style.display = 'none';
+}
+
+function capturePhoto() {
+  const video = document.getElementById('camera-video');
+  const canvas = document.getElementById('camera-canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  imgData = canvas.toDataURL('image/jpeg', 0.92);
+  closeCamera();
+  renderUploadPreview();
+}
+
+function handleFileChange(e) {
+  const f = e.target.files[0]; if(!f) return;
+  const img = new Image(), r = new FileReader();
+  r.onload = ev => {
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX = 1600;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) { if (w > h) { h = Math.round(h*MAX/w); w=MAX; } else { w=Math.round(w*MAX/h); h=MAX; } }
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      imgData = canvas.toDataURL('image/jpeg', 0.92);
+      renderUploadPreview();
+    };
+    img.src = ev.target.result;
+  };
+  r.readAsDataURL(f);
+}
+
+function renderUploadPreview() {
+  const area = document.getElementById('upload-main');
+  if (!area) return;
+  // 업로드존 숨기기
+  area.style.display = 'none';
+  // 기존 미리보기 제거
+  const oldP = document.getElementById('preview-area');
+  if (oldP) oldP.remove();
+  // 새 미리보기 생성
+  const preview = document.createElement('div');
+  preview.id = 'preview-area';
+  preview.style.cssText = 'margin-top:12px;';
+  preview.innerHTML =
+    '<div style="position:relative;">' +
+      '<img src="' + imgData + '" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover;display:block;">' +
+      '<button id="cancel-preview-btn" style="position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.7);border:none;color:#fff;font-size:18px;cursor:pointer;z-index:10;line-height:32px;text-align:center;">✕</button>' +
+    '</div>' +
+    '<button id="scan-preview-btn" style="width:100%;margin-top:10px;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:14px;font-family:var(--font-body);cursor:pointer;">🔍 단어 추출하기</button>';
+  area.parentNode.insertBefore(preview, area.nextSibling);
+  // 이벤트 직접 바인딩 (onclick 속성 사용 안함)
+  document.getElementById('cancel-preview-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    imgData = null;
+    document.getElementById('preview-area').remove();
+    area.style.display = 'block';
+    const fi = document.getElementById('file-input');
+    if (fi) fi.value = '';
+  });
+  document.getElementById('scan-preview-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    doScan();
+  });
+}
+
+function setCaptureMode(mode) {
+  window._captureMode = mode;
+  window._addTargetPage = null;
+  const newBtn = document.getElementById('mode-new-btn');
+  const addBtn = document.getElementById('mode-add-btn');
+  const newArea = document.getElementById('mode-new-area');
+  const addArea = document.getElementById('mode-add-area');
+  if (mode === 'new') {
+    newBtn.style.background = '#000'; newBtn.style.color = '#fff'; newBtn.style.borderColor = '#000';
+    addBtn.style.background = '#fff'; addBtn.style.color = '#000'; addBtn.style.borderColor = 'var(--ink-12)';
+    newArea.style.display = 'block';
+    addArea.style.display = 'none';
+  } else {
+    addBtn.style.background = '#000'; addBtn.style.color = '#fff'; addBtn.style.borderColor = '#000';
+    newBtn.style.background = '#fff'; newBtn.style.color = '#000'; newBtn.style.borderColor = 'var(--ink-12)';
+    newArea.style.display = 'none';
+    addArea.style.display = 'block';
+  }
+}
+
+function selectExistingPage(pageNum) {
+  window._addTargetPage = pageNum;
+  // 모든 페이지 선택 해제
+  document.querySelectorAll('[id^="ep-check-"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('[id^="ep-"]').forEach(el => {
+    if (el.id.startsWith('ep-') && !el.id.startsWith('ep-check-')) {
+      el.style.borderColor = 'var(--ink-12)';
+      el.style.background = '#fff';
+    }
+  });
+  // 선택된 페이지 하이라이트
+  const safeNum = pageNum.replace(/[^a-zA-Z0-9]/g,'_');
+  const el = document.getElementById(`ep-${safeNum}`);
+  const check = document.getElementById(`ep-check-${safeNum}`);
+  if (el) { el.style.borderColor = 'var(--accent)'; el.style.background = '#fff8f5'; }
+  if (check) check.style.display = 'block';
+  // 이름 변경 영역 표시
+  const renameArea = document.getElementById('rename-area');
+  const renameInp = document.getElementById('rename-pg-inp');
+  if (renameArea) renameArea.style.display = 'block';
+  if (renameInp) renameInp.placeholder = `예: ${pageNum}-${Number(pageNum)+2 || pageNum+'+'}`; 
+}
+
+async function doScan() {
+  const bId = document.getElementById('up-book-sel')?.value;
+  if (!bId) { toast('책을 먼저 선택해주세요'); return; }
+
+  let pg;
+  if (window._captureMode === 'add') {
+    if (!window._addTargetPage) { toast('추가할 페이지를 선택해주세요'); return; }
+    pg = window._addTargetPage;
+    // 이름 변경이 있으면 적용
+    const newName = document.getElementById('rename-pg-inp')?.value.trim();
+    if (newName) window._renamedPageNum = newName;
+    else window._renamedPageNum = null;
+  } else {
+    pg = document.getElementById('up-pg-inp')?.value.trim();
+    if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
+    window._renamedPageNum = null;
+  }
+  if (!imgData) { toast('사진을 먼저 선택해주세요'); return; }
+  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">단어를 분석하고 있어요</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:rgba(255,255,255,0.6);border-radius:12px;padding:12px 16px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e74c3c;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;"><strong style="color:#e74c3c;">상</strong> — 대학/원서 수준 고급 어휘</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;"><strong style="color:#e67e22;">중</strong> — 고등학교 수준 어휘</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;"><strong style="color:#27ae60;">하</strong> — 중학교 수준 기본 어휘</span></div>
+    </div></div></div></div>`;
+  let words;
+  try {
+    const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요. JSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+    });
+    const data = await res.json();
+    if (data.error) {
+      const code = data.error.code;
+      let msg = '잠시 후 다시 시도해주세요';
+      if (code === 429 || data.error.message?.includes('demand') || data.error.message?.includes('quota')) {
+        msg = '서버에 과부하가 있어요\n잠시 후 다시 시도해주세요';
+      } else if (code === 403) { msg = 'API 키를 확인해주세요'; }
+      toast(msg); render(); return;
+    }
+    if (!data.candidates?.[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
+    const txt = data.candidates[0].content.parts[0].text;
+    const clean = txt.replace(/```json|```/g,'').trim();
+    let parsed;
+    try { parsed = JSON.parse(clean); }
+    catch(pe) {
+      const fixed = clean.replace(/,?\s*\{[^}]*$/,'').replace(/,\s*$/,'') + ']}';
+      try { parsed = JSON.parse(fixed); }
+      catch(pe2) {
+        const matches = clean.match(/"en"\s*:\s*"([^"]+)"/g)||[], bases=clean.match(/"base"\s*:\s*"([^"]+)"/g)||[], ctxs=clean.match(/"ctx"\s*:\s*"([^"]+)"/g)||[];
+        if (matches.length>0) { parsed={words:matches.map((m,i)=>({en:m.match(/"en"\s*:\s*"([^"]+)"/)[1],base:bases[i]?bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1]:'',ctx:ctxs[i]?ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1]:''}))}; }
+        else { toast('단어를 찾지 못했어요'); render(); return; }
+      }
+    }
+    words = parsed.words;
+    if (!words?.length) { toast('단어를 찾지 못했어요'); render(); return; }
+  } catch(e) { toast('네트워크 오류\n잠시 후 다시 시도해주세요'); render(); return; }
+  pendingW = words; pendingB = bId; pendingP = pg;
+  renderWordSelection(words);
+}
+
+function renderWordSelection(words) {
+  const root = document.getElementById('root');
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  root.innerHTML = `
+    <div class="scr" style="padding-bottom:100px;">
+      <div class="topnav">
+        <span class="topnav__back" onclick="render()">←</span>
+        <span class="topnav__title">단어 선택</span>
+        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">저장할 단어를 선택해주세요</div>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:6px;background:#fdeaea;border-radius:99px;padding:5px 12px;">
+          <span style="width:12px;height:12px;border-radius:50%;background:#e74c3c;display:inline-block;"></span>
+          <span style="font-size:12px;font-weight:600;color:#e74c3c;">상 — 어려운</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;background:#fef3e2;border-radius:99px;padding:5px 12px;">
+          <span style="width:12px;height:12px;border-radius:50%;background:#e67e22;display:inline-block;"></span>
+          <span style="font-size:12px;font-weight:600;color:#e67e22;">중</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;background:#eafaf1;border-radius:99px;padding:5px 12px;">
+          <span style="width:12px;height:12px;border-radius:50%;background:#27ae60;display:inline-block;"></span>
+          <span style="font-size:12px;font-weight:600;color:#27ae60;">하 — 쉬운</span>
+        </div>
+      </div>
+      <div class="scr-scroll" id="word-sel-list">
+        ${words.map((w, i) => `
+          <div id="wsel-${i}" onclick="toggleWord(${i})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:#fff;cursor:pointer;border:2px solid ${levelColor[w.level]||'#ddd'};">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
+              <div style="width:20px;height:20px;border-radius:50%;background:${levelColor[w.level]||'#999'};"></div>
+              <span style="font-size:10px;font-weight:700;color:${levelColor[w.level]||'#999'};">${w.level||'?'}</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:700;color:#000;">${w.en}</div>
+              <div style="font-size:12px;color:var(--ink-60);margin-top:3px;">${w.base}</div>
+              <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${w.ctx}</div>
+            </div>
+            <div id="wsel-check-${i}" style="width:24px;height:24px;border-radius:50%;background:${levelColor[w.level]||'var(--accent)'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;">✓</div>
+          </div>`).join('')}
+      </div>
+      <div class="btn-fixed">
+        <button id="save-words-btn" class="btn btn-solid" onclick="saveSelectedWords()">선택한 단어 저장</button>
+      </div>
+    </div>`;
+  window._wordSelected = words.map(() => true);
+}
+
+function toggleWord(i) {
+  window._wordSelected[i] = !window._wordSelected[i];
+  const sel = window._wordSelected[i];
+  const el = document.getElementById(`wsel-${i}`);
+  const check = document.getElementById(`wsel-check-${i}`);
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  const level = pendingW[i]?.level || '중';
+  if (sel) {
+    el.style.border = `2px solid ${levelColor[level]||'#ddd'}`;
+    el.style.opacity = '1';
+    el.style.background = '#fff';
+    check.style.display = 'flex';
+  } else {
+    el.style.border = '2px solid var(--ink-12)';
+    el.style.opacity = '0.4';
+    el.style.background = '#f5f5f5';
+    check.style.display = 'none';
+  }
+}
+
+function toggleAllWords() {
+  const allSelected = window._wordSelected.every(v => v);
+  window._wordSelected = window._wordSelected.map(() => !allSelected);
+  window._wordSelected.forEach((sel, i) => {
+    const el = document.getElementById(`wsel-${i}`);
+    const check = document.getElementById(`wsel-check-${i}`);
+    const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+    const level = pendingW[i]?.level || '중';
+    if (el && check) {
+      el.style.border = sel ? `2px solid ${levelColor[level]||'#ddd'}` : '2px solid var(--ink-12)';
+      el.style.opacity = sel ? '1' : '0.4';
+      el.style.background = sel ? '#fff' : '#f5f5f5';
+      check.style.display = sel ? 'flex' : 'none';
+    }
+  });
+}
+
+async function saveSelectedWords() {
+  const btn = document.getElementById('save-words-btn');
+  if (btn?.disabled) return;
+  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
+  const selected = pendingW.filter((_, i) => window._wordSelected[i]);
+  if (!selected.length) {
+    toast('선택한 단어가 없어요');
+    if (btn) { btn.disabled = false; btn.textContent = '선택한 단어 저장'; btn.style.opacity = '1'; }
+    return;
+  }
+  pendingW = selected;
+  await acceptWords();
+}
+
+async function acceptWords() {
+  const book = findBook(pendingB); if (!book) return;
+  const pid = await savePageWordsToDB(pendingB, pendingP, pendingW);
+  const words = pendingW.map((w,i) => ({...w, id:`${pendingB}-${pendingP}-${i+1}`}));
+  const ex = findPage(book, pendingP);
+
+  // 페이지 이름 변경 처리
+  const newName = window._renamedPageNum;
+  if (ex) {
+    ex.words = [...ex.words, ...words];
+    // 이름 변경이 있으면 DB + 로컬 업데이트
+    if (newName && newName !== pendingP) {
+      try {
+        await fetch(SB_URL + `/rest/v1/voca_pages?id=eq.${ex._pid}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+          body: JSON.stringify({ page_num: newName })
+        });
+        ex.num = newName;
+        toast(`Page ${newName} 단어 추가 완료`);
+        replace({ name:'page-words', bookId:pendingB, pageNum:newName });
+      } catch(e) {
+        toast(`Page ${pendingP} 단어 추가 완료`);
+        replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+      }
+    } else {
+      toast(`Page ${pendingP} 단어 추가 완료`);
+      replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+    }
+  } else {
+    book.pages.push({num:pendingP, _pid:pid, words});
+    book.pages.sort((a,b)=>String(a.num).localeCompare(String(b.num)));
+    toast(`Page ${pendingP} 저장 완료`);
+    replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
+  }
+  window._renamedPageNum = null;
+}
+
+let studyState = null;
+function initStudy(bookId, scope, pageNum) {
+  const book = findBook(bookId); if (!book) return;
+  console.log('[initStudy] bookId=', bookId, 'scope=', scope, 'pageNum=', pageNum);
+  let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book);
+  studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
+}
+
+function render() {
+  const root = document.getElementById('root');
+  const route = stack[stack.length-1];
+  const tab = currentTab();
+  const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
+
+  if (route.name === 'library') {
+    root.innerHTML = `
+      <div class="scr" style="padding-bottom:90px;padding-top:50px;">
+        <div class="lib-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+              <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
+              <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">${userName||'내'}님 책장</div>
+            </div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
+          </div>
+          <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
+        </div>
+        <div class="scr-scroll">
+          <div class="book-grid">
+            ${books.map(b=>`
+              <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
+                <div class="book-cover" style="background:${b.color};position:relative;overflow:hidden;">
+                  ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:''}
+                  <div class="book-cover__title" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.title}</div>
+                  <div class="book-cover__author" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.author}</div>
+                </div>
+                <div class="book-tile__title">${b.title}</div>
+                <div class="book-tile__sub">${b.author} · ${countWords(b)} words</div>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
+          ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button><button onclick="showAdminPanel()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">회원관리</button>`:''}
+          <button onclick="window.open('https://koreayjk.github.io/voca/ad.html','_blank')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">앱 소개</button>
+          <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
+        </div>
+      </div>` + dock;
+  }
+
+  else if (route.name === 'book') {
+    const book = findBook(route.bookId);
+    if (!book) { back(); return; }
+    root.innerHTML = `
+      <div class="scr" style="padding-bottom:110px">
+        <div class="topnav">
+          <span class="topnav__back" onclick="back()">←</span>
+          <span class="topnav__title">${book.title}</span>
+          <span class="topnav__right" onclick="showBookMenu('${book.id}')">⋯</span>
+        </div>
+        <div class="scr-scroll">
+          <div class="book-hero">
+            <div class="book-hero__cover" style="background:${book.color};overflow:hidden;position:relative;">
+              ${book.cover?`<img src="${book.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">`:''}
+            </div>
+            <div>
+              <div class="book-hero__title">${book.title}</div>
+              <div class="book-hero__author">${book.author}</div>
+              <div class="book-hero__badge">저장된 책</div>
+              <div class="book-hero__desc">${book.desc||''}</div>
+            </div>
+          </div>
+          <div class="rule"></div>
+          <div class="sect-row"><div class="sect-row__name">페이지별 단어</div><div class="sect-row__count">${countWords(book)} words</div></div>
+          ${book.pages.length===0?'<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">아직 저장된 단어가 없어요</div>':
+          book.pages.map(p=>`
+            <div class="page-row">
+              <span class="page-row__num" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="flex:1;cursor:pointer;">Page ${p.num}</span>
+              <span class="page-row__right">
+                ${p.words.length} words
+                <span onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="font-size:16px;color:var(--ink-40);cursor:pointer;">›</span>
+                <span onclick="showPageMenu('${book.id}','${p.num}')" style="font-size:16px;color:var(--ink-40);cursor:pointer;padding:0 4px;">⋯</span>
+              </span>
+            </div>`).join('')}
+        </div>
+        <div class="btn-fixed">
+          <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">＋ 페이지 촬영</button>
+        </div>
+      </div>`;
+  }
+
+  else if (route.name === 'capture') {
+    const book = findBook(route.bookId);
+    imgData = null;
+    window._captureMode = 'new'; // 'new' or 'add'
+    window._addTargetPage = null;
+
+    const existingPages = book?.pages || [];
+
+    root.innerHTML = `
+      <div class="scr" style="padding-bottom:24px">
+        <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book?.title||''}</span><span></span></div>
+        <div class="h-display h-xl" style="margin-top:14px">페이지 추가</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">페이지를 찍으면 AI가 단어를 골라드려요</div>
+        <div class="scr-scroll" style="margin-top:14px">
+          <div class="label-xs">책 선택</div>
+          <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;outline:none;margin-top:6px;appearance:none;cursor:pointer">
+            ${books.map(b=>`<option value="${b.id}" ${b.id===route.bookId?'selected':''}>${b.title}</option>`).join('')}
+          </select>
+
+          <!-- 새 페이지 / 기존 페이지 추가 탭 -->
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button id="mode-new-btn" onclick="setCaptureMode('new')" style="flex:1;padding:10px;border-radius:10px;border:2px solid #000;background:#000;color:#fff;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;">새 페이지</button>
+            <button id="mode-add-btn" onclick="setCaptureMode('add')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--ink-12);background:#fff;color:#000;font-family:var(--font-body);font-size:13px;cursor:pointer;">기존 페이지에 추가</button>
+          </div>
+
+          <!-- 새 페이지 입력 -->
+          <div id="mode-new-area" style="margin-top:14px;">
+            <div class="label-xs">페이지 번호</div>
+            <input type="text" id="up-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
+          </div>
+
+          <!-- 기존 페이지 선택 -->
+          <div id="mode-add-area" style="display:none;margin-top:14px;">
+            <div class="label-xs">추가할 페이지 선택</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;" id="existing-page-list">
+              ${existingPages.length === 0
+                ? '<div style="font-size:13px;color:var(--ink-40);padding:12px 0;">저장된 페이지가 없어요</div>'
+                : existingPages.map(p => `
+                  <div onclick="selectExistingPage('${p.num}')" id="ep-${p.num.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:10px;border:2px solid var(--ink-12);background:#fff;cursor:pointer;">
+                    <div>
+                      <div style="font-size:13px;font-weight:600;">Page ${p.num}</div>
+                      <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${p.words.length}개 단어</div>
+                    </div>
+                    <div id="ep-check-${p.num.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:none;color:var(--accent);font-size:18px;">✓</div>
+                  </div>`).join('')
+              }
+            </div>
+            <!-- 페이지 이름 변경 -->
+            <div id="rename-area" style="display:none;margin-top:14px;">
+              <div class="label-xs">페이지 이름 변경 <span style="color:var(--ink-40);font-weight:400;">(선택사항)</span></div>
+              <input type="text" id="rename-pg-inp" placeholder="예: 1-3, 5-8, Chapter1" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:#000;outline:none;margin-top:6px">
+              <div style="font-size:11px;color:var(--ink-40);margin-top:4px;">비워두면 기존 페이지 이름 유지</div>
+            </div>
+          </div>
+
+          <div id="upload-main" style="margin-top:14px;">
+            <!-- 파일선택 / 카메라 버튼 -->
+            <div style="display:flex;gap:8px;margin-bottom:10px;">
+              <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
+                🖼️ 파일 선택
+              </button>
+              <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
+                📷 카메라 촬영
+              </button>
+            </div>
+            <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileChange(event)">
+            <!-- 카메라 스트림 영역 -->
+            <div id="camera-area" style="display:none;margin-top:8px;">
+              <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <button onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">📸 촬영하기</button>
+                <button onclick="closeCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">취소</button>
+              </div>
+            </div>
+            <canvas id="camera-canvas" style="display:none;"></canvas>
+            <div style="font-size:10px;color:var(--ink-40);margin-top:8px;text-align:center;">JPG · PNG · WEBP · GIF 지원</div>
+            <div style="font-size:10px;color:#e67e22;margin-top:3px;text-align:center;">📱 아이폰은 카메라 설정 → 포맷 → 높은 호환성 선택</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  else if (route.name === 'page-words') {
+    const book = findBook(route.bookId);
+    const page = book ? findPage(book, route.pageNum) : null;
+    if (!page) { back(); return; }
+    root.innerHTML = `
+      <div class="scr" style="padding-bottom:110px">
+        <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book.title} · Page ${page.num}</span><span></span></div>
+        <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
+        <div class="muted" style="font-size:11px;margin-top:4px">기본 뜻 + 문맥 뜻</div>
+        <div class="scr-scroll" style="margin-top:12px">
+          ${page.words.map(w=>{const lc={'상':'#e74c3c','중':'#e67e22','하':'#27ae60'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
+        </div>
+        <div class="btn-fixed">
+          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">암기 카드로 보내기</button>
+        </div>
+      </div>`;
+  }
+
+  else if (route.name === 'stats') { renderStats(root, dock); return; }
+  else if (route.name === 'search') { renderSearch(root, dock); return; }
+
+  else if (route.name === 'review') { renderReviewPage(root, dock); return; }
+
+
+  else if (route.name === 'study-setup') {
+    window._ss = { bookId: books[0]?.id || null, scope: 'all', page: null };
+    window.ssSelectBook = id => { window._ss.bookId=id; window._ss.page=null; ssRender(); };
+    window.ssSelectScope = s => { window._ss.scope=s; window._ss.page=null; ssRender(); };
+    window.ssSelectPage = n => { window._ss.page=n; ssRender(); };
+    window.ssStart = () => { const s=window._ss; initStudy(s.bookId,s.scope,s.page); push({name:'study-cards',bookId:s.bookId,scope:s.scope,pageNum:s.page}); };
+    window.ssRender = () => {
+      const s=window._ss, book=s.bookId?findBook(s.bookId):null;
+      const total=book?(s.scope==='all'?countWords(book):(s.page?findPage(book,s.page)?.words.length||0:0)):0;
+      const canStart=!!book&&total>0&&(s.scope==='all'||s.page!=null);
+      const el=document.getElementById('study-setup-inner'); if(!el)return;
+      el.innerHTML=`
+        <div class="label-xs" style="margin-top:20px">책</div>
+        <div style="margin-top:6px">
+          ${books.map(b=>`<div class="list-row" onclick="ssSelectBook('${b.id}')"><div style="width:38px;height:52px;border-radius:5px;background:${b.color};flex-shrink:0"></div><div style="flex:1"><div style="font-size:13px;font-weight:600;">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div><div class="radio ${s.bookId===b.id?'radio--on':''}">${s.bookId===b.id?'✓':''}</div></div>`).join('')}
+        </div>
+        ${book?`<div class="label-xs" style="margin-top:16px">범위</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+          <div class="scope-card ${s.scope==='all'?'scope-card--on':''}" onclick="ssSelectScope('all')"><div class="scope-card__head"><div><div class="scope-card__name">책 전체</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${s.scope==='all'?'radio--on':''}">${s.scope==='all'?'✓':''}</div></div></div>
+          <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">페이지별</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:#000;color:#fff;border-color:#000':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
+        </div>`:''}
+        <div style="height:22px"></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">🃏 암기 카드${canStart?` — ${total}개`:''}</button>
+          <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >🎯 퀴즈 모드${canStart?` — ${total}개`:''}</button>
+        </div>`;
+    };
+    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
+    ssRender();
+  }
+
+  else if (route.name === 'study-cards') {
+    if (!studyState || studyState.bookId !== route.bookId) { initStudy(route.bookId, route.scope, route.pageNum); }
+    renderStudyCard(); return;
+  }
+
+  else if (route.name === 'quiz') {
+    if (!window._quiz || window._quiz.bookId !== route.bookId) {
+      startQuiz(route.bookId, route.scope, route.pageNum);
+    }
+    renderQuiz(); return;
+  }
+
+  else if (route.name === 'study-done') {
+    const book = findBook(route.bookId);
+    root.innerHTML = `
+      <div class="scr">
+        <div class="topnav"><span></span><span class="topnav__title">${book?.title||''}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
+        <div class="done">
+          <div class="label-xs">모두 외웠어요</div>
+          <div class="done__n">${route.total}</div>
+          <div class="done__label">words memorized</div>
+          ${route.scope==='page'?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
+            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">📊 에빙하우스 망각곡선 복습 등록됨!</div>
+            <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">
+              1일 · 2일 · 3일 · 6일 · 15일 · 30일 · 60일 후<br>
+              로그인하면 복습 알림이 자동으로 나타나요
+            </div>
+          </div>`:''}
+          <div class="done__grid">
+            <div class="done__tile"><div class="done__tile-label">Rounds</div><div class="done__tile-value">${route.rounds}</div></div>
+            <div class="done__tile"><div class="done__tile-label">Scope</div><div class="done__tile-value" style="font-size:16px">${route.scope==='page'?`Page ${route.pageNum}`:'All'}</div></div>
+          </div>
+          <div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-solid" onclick="initStudy('${route.bookId}','${route.scope}','${route.pageNum}');push({name:'study-cards',bookId:'${route.bookId}',scope:'${route.scope}',pageNum:'${route.pageNum}'})">다시 외우기</button>
+            <button class="btn btn-outline" onclick="startQuiz('${route.bookId}','${route.scope}','${route.pageNum}')">퀴즈 모드로</button>
+            <button class="btn btn-outline" onclick="goTab('books')">책장으로</button>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+function renderStudyCard() {
+  const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
+  if (!s||s.queue.length===0) { 
+    replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; 
+  }
+  const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">🔊 발음 듣기</button></div><div class="card__tap">탭해서 뜻 보기</div></div><div class="face face-back"><div class="back__word">${w.en}</div><div class="back__label">기본 뜻</div><div class="back__meaning">${w.base}</div><div class="back__label">이 페이지에선</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)" ${!s.flipped?'disabled style="opacity:0.3"':''}>✕</button><button class="ox-btn ox-o" onclick="advance(true)" ${!s.flipped?'disabled style="opacity:0.3"':''}>○</button></div><div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클에 다시  |  Space = 앞면':'카드를 탭하거나 Space 키로 뜻 보기'}</div></div>`;
+}
+
+function flipCard() { 
+  if (!studyState.flipped) { 
+    studyState.flipped=true; 
+    renderStudyCard(); 
+  } else {
+    // 뒤집혀 있으면 다시 앞면으로
+    studyState.flipped=false;
+    renderStudyCard();
+  }
+}
+
+// ── 키보드 단축키 ──
+document.addEventListener('keydown', function(e) {
+  if (!studyState) return;
+  const route = stack[stack.length-1];
+  if (route.name !== 'study-cards') return;
+  if (e.code === 'Space') {
+    e.preventDefault();
+    flipCard();
+  } else if (e.code === 'ArrowRight' || e.code === 'KeyO') {
+    // O키 또는 오른쪽 화살표 = 외웠어요
+    if (studyState.flipped) advance(true);
+  } else if (e.code === 'ArrowLeft' || e.code === 'KeyX') {
+    // X키 또는 왼쪽 화살표 = 다음에 다시
+    if (studyState.flipped) advance(false);
+  }
+});
+
+function advance(isKnown) {
+  if (!studyState.flipped) return;
+  const s=studyState; s.stats.seen++; if(isKnown)s.stats.oCount++;
+  const newX=isKnown?s.xList:[...s.xList,s.queue[s.idx]];
+  if (s.idx+1<s.queue.length) { s.idx++; s.xList=newX; s.flipped=false; renderStudyCard(); }
+  else if (newX.length===0) {
+    // 모두 완료! 복습 일정 저장
+    saveStats(s.bookId, s.stats.total, s.stats.oCount);
+    if (s.scope === 'page' && s.pageNum) {
+      saveReviewSchedule(s.bookId, s.pageNum);
+    }
+    replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total});
+  }
+  else { s.round++; s.queue=shuffle(newX); s.idx=0; s.xList=[]; s.flipped=false; renderStudyCard(); }
+}
+
+function showActionSheet(items) {
+  document.getElementById('action-sheet-items').innerHTML = items.map(item=>item==='divider'?'<div class="action-sheet__divider"></div>':`<button class="action-sheet__item ${item.danger?'danger':''}" onclick="closeActionSheet();${item.action}">${item.icon} ${item.label}</button>`).join('');
+  document.getElementById('action-sheet').classList.add('open');
+}
+function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
+
+function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:'책 정보 수정',action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:'책 삭제',danger:true,action:`deleteBook('${bookId}')`}]); }
+function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} 삭제`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
+
+function openEditBook(bookId) {
+  const book=findBook(bookId); if(!book)return;
+  document.getElementById('edit-book-id').value=bookId;
+  document.getElementById('edit-title').value=book.title;
+  document.getElementById('edit-author').value=book.author;
+  document.getElementById('edit-desc').value=book.desc||'';
+  document.getElementById('modal-edit').classList.add('open');
+}
+
+async function saveEditBook() {
+  const bookId=document.getElementById('edit-book-id').value;
+  const title=document.getElementById('edit-title').value.trim();
+  const author=document.getElementById('edit-author').value.trim();
+  const desc=document.getElementById('edit-desc').value.trim();
+  if (!title) { toast('제목을 입력해주세요'); return; }
+  try {
+    await fetch(SB_URL+`/rest/v1/voca_books?id=eq.${bookId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},body:JSON.stringify({title,author,description:desc})});
+    const book=findBook(bookId); if(book){book.title=title;book.author=author;book.desc=desc;}
+    closeModal('modal-edit'); render(); toast('수정됐어요!');
+  } catch(e) { toast('수정 실패: '+e.message); }
+}
+
+async function deleteBook(bookId) {
+  if (!confirm('이 책을 삭제할까요? 저장된 단어도 모두 삭제돼요.')) return;
+  try {
+    await fetch(SB_URL+`/rest/v1/voca_books?id=eq.${bookId}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}});
+    books=books.filter(b=>b.id!==bookId); back(); render(); toast('삭제됐어요');
+  } catch(e) { toast('삭제 실패: '+e.message); }
+}
+
+async function deletePage(bookId, pageNum) {
+  if (!confirm(`Page ${pageNum}을 삭제할까요?`)) return;
+  try {
+    const book=findBook(bookId), page=findPage(book,pageNum);
+    if (page?._pid) await fetch(SB_URL+`/rest/v1/voca_pages?id=eq.${page._pid}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}});
+    if (book) book.pages=book.pages.filter(p=>String(p.num)!==String(pageNum));
+    render(); toast(`Page ${pageNum} 삭제됐어요`);
+  } catch(e) { toast('삭제 실패: '+e.message); }
+}
+
+async function showAdminPanel() {
+  document.getElementById('modal-admin').classList.add('open');
+  const listEl = document.getElementById('admin-list');
+  listEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">불러오는 중...</div>';
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role', {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const members = await res.json();
+    if (!members.length) { listEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">회원이 없어요</div>'; return; }
+    listEl.innerHTML = members.map(m => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--ink-07);">
+        <div>
+          <div style="font-size:13px;font-weight:600;">${m.name||'이름없음'}</div>
+          <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
+          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role||'멤버'}</div>
+        </div>
+        ${m.role==='대기중'?`
+        <div style="display:flex;gap:6px;">
+          <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">승인</button>
+          <button onclick="rejectUser('${m.id}')" style="background:#fff;color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">거절</button>
+        </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?'관리자':''}</div>`}
+      </div>`).join('');
+  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">오류: ${e.message}</div>`; }
+}
+
+async function approveUser(userId) {
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify({ role: '멤버' }) });
+    toast('승인됐어요!'); showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
+}
+
+async function rejectUser(userId) {
+  if (!confirm('이 회원을 거절하고 삭제할까요?')) return;
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, { method: 'DELETE', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    toast('거절됐어요'); showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
+}
+
+function speak(word) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google US English') || v.name.includes('Aaron') || v.name.includes('Alex') || (v.lang === 'en-US' && v.localService)) || voices.find(v => v.lang === 'en-US');
+  if (preferred) u.voice = preferred;
+  window.speechSynthesis.speak(u);
+}
+
+async function renderStats(root, dock) {
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">나의 학습 기록</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div></div></div>` + dock;
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const stats = await res.json();
+    const el = document.getElementById('stats-inner');
+    if (!stats.length) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 학습 기록이 없어요<br>암기 카드를 완료하면 여기에 기록돼요</div>'; return; }
+    const totalStudied = stats.reduce((n,s) => n + s.total, 0);
+    const totalCorrect = stats.reduce((n,s) => n + s.correct, 0);
+    const avgRate = totalStudied ? Math.round(totalCorrect / totalStudied * 100) : 0;
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:var(--accent);">${totalStudied}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">총 학습 단어</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#27ae60;">${avgRate}%</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">평균 정답률</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#3498db;">${stats.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">총 학습 횟수</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#9b59b6;">${books.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">등록 책 수</div></div>
+      </div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px;">최근 학습 기록</div>
+      ${stats.slice(0,10).map(s => {
+        const book = findBook(s.book_id);
+        const rate = s.total ? Math.round(s.correct/s.total*100) : 0;
+        const date = new Date(s.studied_at).toLocaleDateString('ko-KR');
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--ink-07);"><div><div style="font-size:13px;font-weight:600;">${book?.title||'삭제된 책'}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${date} · ${s.total}개 단어</div></div><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:20px;font-weight:700;color:${rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c'};">${rate}%</div><button onclick="deleteStats('${s.id}')" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">🗑️</button></div></div>`;
+      }).join('')}`;
+  } catch(e) { document.getElementById('stats-inner').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`; }
+}
+
+function renderSearch(root, dock) {
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="영어 또는 한국어로 검색..." oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:#000;outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">단어를 입력하세요</div></div></div>` + dock;
+}
+
+function doWordSearch() {
+  const q = document.getElementById('search-inp')?.value.trim().toLowerCase();
+  const el = document.getElementById('search-results');
+  if (!el) return;
+  if (!q) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">단어를 입력하세요</div>'; return; }
+  const results = [];
+  books.forEach(book => { book.pages.forEach(page => { page.words.forEach(word => { if (word.en.toLowerCase().includes(q) || word.base?.toLowerCase().includes(q) || word.ctx?.toLowerCase().includes(q)) { results.push({ ...word, bookTitle: book.title, pageNum: page.num }); } }); }); });
+  if (!results.length) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">검색 결과가 없어요</div>'; return; }
+  el.innerHTML = results.map(w => `<div style="padding:12px 0;border-bottom:1px solid var(--ink-07);"><div style="display:flex;align-items:center;gap:8px;"><div style="font-size:15px;font-weight:700;">${w.en}</div><button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;">🔊</button></div><div style="font-size:12px;color:var(--ink-60);margin-top:2px;">${w.base}</div><div style="font-size:11px;color:var(--ink-40);margin-top:2px;">📚 ${w.bookTitle} · Page ${w.pageNum}</div></div>`).join('');
+}
+
+async function deleteStats(id) {
+  if (!confirm('이 학습 기록을 삭제할까요?')) return;
+  try {
+    await fetch(SB_URL + `/rest/v1/voca_stats?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    toast('삭제됐어요');
+    // 통계 다시 렌더링
+    const root = document.getElementById('root');
+    const tab = currentTab();
+    const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
+    renderStats(root, dock);
+  } catch(e) { toast('삭제 실패: ' + e.message); }
+}
+
+async function saveStats(bookId, total, correct) {
+  try {
+    await fetch(SB_URL + '/rest/v1/voca_stats', { method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, total, correct }) });
+  } catch(e) {}
+}
+
+async function saveReviewSchedule(bookId, pageNum) {
+  try {
+    const check = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const existing = await check.json();
+    if (existing?.length > 0) return;
+    const now = new Date();
+    const addDays = (d, n) => new Date(d.getTime() + n*24*60*60*1000).toISOString();
+    const res = await fetch(SB_URL + '/rest/v1/voca_review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
+      body: JSON.stringify({
+        user_id: currentUser.id,
+        book_id: bookId,
+        page_num: String(pageNum),
+        first_studied_at: now.toISOString(),
+        review_2d:  addDays(now, 1),
+        review_3d:  addDays(now, 2),
+        review_6d:  addDays(now, 6),
+        review_15d: addDays(now, 15),
+        review_30d: addDays(now, 30),
+        review_60d: addDays(now, 60),
+      })
+    });
+    const data = await res.json();
+    if (data.error || data.code) console.error('[복습 저장 오류]', data);
+    else console.log('[복습 저장 성공]');
+  } catch(e) { console.error('[복습 저장 오류]', e); }
+}
+
+function startQuiz(bookId, scope, pageNum) {
+  const book = findBook(bookId); if (!book) return;
+  let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]) : allWords(book);
+  ws = shuffle([...ws]);
+  window._quiz = { bookId, scope, pageNum, words: ws, idx: 0, correct: 0 };
+  push({ name: 'quiz', bookId, scope, pageNum });
+}
+
+function renderQuiz() {
+  const root = document.getElementById('root');
+  const q = window._quiz;
+  if (!q || q.idx >= q.words.length) {
+    const rate = Math.round(q.correct / q.words.length * 100);
+    saveStats(q.bookId, q.words.length, q.correct);
+    root.innerHTML = `<div class="scr"><div class="done"><div class="label-xs">퀴즈 완료!</div><div class="done__n">${rate}%</div><div class="done__label">${q.correct}/${q.words.length} 정답</div><div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px;"><button class="btn btn-solid" onclick="startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')">다시 풀기</button><button class="btn btn-outline" onclick="goTab('books')">책장으로</button></div></div></div>`;
+    return;
+  }
+  const w = q.words[q.idx];
+  const prog = Math.round(q.idx / q.words.length * 100);
+  const allW = allWords(findBook(q.bookId));
+  const others = shuffle(allW.filter(x => x.en !== w.en)).slice(0, 3);
+  const choices = shuffle([w, ...others]);
+  root.innerHTML = `<div class="scr" style="padding-bottom:20px;">
+    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">퀴즈</span><span class="study__close" onclick="goTab('books')">✕</span></div>
+    <div class="study__bar"><div class="study__fill" style="width:${prog}%"></div></div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0;">
+      <div style="text-align:center;margin-bottom:30px;">
+        <div style="font-size:11px;color:var(--ink-40);margin-bottom:8px;">이 단어의 뜻은?</div>
+        <div style="font-family:var(--font-display);font-size:36px;letter-spacing:-0.04em;color:#000;">${w.en}</div>
+        <button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:18px;margin-top:8px;">🔊</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${choices.map((c,i) => `<button onclick="answerQuiz('${c.en}','${w.en}')" style="padding:14px;border-radius:12px;border:1.5px solid var(--ink-12);background:#fff;font-family:var(--font-body);font-size:14px;cursor:pointer;text-align:left;">${String.fromCharCode(65+i)}. ${c.base}</button>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function answerQuiz(chosen, correct) {
+  const q = window._quiz;
+  const isCorrect = chosen === correct;
+  if (isCorrect) q.correct++;
+  const btns = document.querySelectorAll('.scr button[onclick^="answerQuiz"]');
+  btns.forEach(btn => {
+    btn.disabled = true;
+    const txt = btn.textContent.trim().substring(3);
+    const word = q.words.find(w => w.base === txt);
+    if (word?.en === correct) btn.style.background = '#eafaf1';
+    else if (word?.en === chosen && !isCorrect) btn.style.background = '#fdeaea';
+  });
+  setTimeout(() => { q.idx++; renderQuiz(); }, 800);
+}
+
+// ── 복습 알림 ──
+async function checkReviews() {
+  try {
+    const today = new Date().toISOString();
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&select=*`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const reviews = await res.json();
+    if (!Array.isArray(reviews)) return;
+
+    // 각 페이지별로 가장 오래된 미완료 단계 하나만 선택
+    const due = [];
+    reviews.forEach(r => {
+      const steps = [
+        { key: 'review_2d',  label: '1일차',  date: r.review_2d  },
+        { key: 'review_3d',  label: '2일차',  date: r.review_3d  },
+        { key: 'review_6d',  label: '3일차',  date: r.review_6d  },
+        { key: 'review_15d', label: '6일차',  date: r.review_15d },
+        { key: 'review_30d', label: '15일차', date: r.review_30d },
+        { key: 'review_60d', label: '30일차', date: r.review_60d },
+      ];
+      // 가장 오래된 미완료 단계 하나만
+      const oldest = steps.find(s => s.date && s.date <= today);
+      if (oldest) due.push({ ...r, _stepKey: oldest.key, _stepLabel: oldest.label });
+    });
+
+    if (!due.length) return;
+
+    // 복습 단어 수 계산
+    let totalWords = 0;
+    due.forEach(r => {
+      const book = findBook(r.book_id);
+      const page = book ? findPage(book, r.page_num) : null;
+      if (page) totalWords += page.words.length;
+    });
+
+    window._dueReviews = due;
+
+    // 단계별 카운트
+    const stepCounts = {};
+    due.forEach(r => {
+      stepCounts[r._stepLabel] = (stepCounts[r._stepLabel]||0) + 1;
+    });
+    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}개`).join(' · ');
+
+    document.getElementById('review-banner-desc').textContent =
+      `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
+    document.getElementById('review-banner-step').textContent =
+      `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
+    document.getElementById('review-banner').classList.add('show');
+  } catch(e) {}
+}
+
+function closeReviewBanner() {
+  document.getElementById('review-banner').classList.remove('show');
+}
+
+async function startReviewSession() {
+  closeReviewBanner();
+  const due = window._dueReviews;
+  if (!due?.length) return;
+
+  // 첫 번째 복습 항목으로 이동
+  const first = due[0];
+  const book = findBook(first.book_id);
+  if (!book) return;
+
+  // 복습 완료 처리 (다음 단계로 업데이트)
+  await updateReviewStep(first);
+
+  toast(`${book.title} Page ${first.page_num} 복습 시작!`);
+  initStudy(first.book_id, 'page', first.page_num);
+  stack = [{name:'study-cards', bookId:first.book_id, scope:'page', pageNum:first.page_num}];
+  render();
+}
+
+async function updateReviewStep(review) {
+  try {
+    const patch = {};
+    const key = review._stepKey;
+    if (key === 'review_60d') {
+      patch.review_60d = null;
+      patch.completed = true;
+    } else {
+      patch[key] = null;
+    }
+    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify(patch)
+    });
+  } catch(e) {}
+}
+
+// ── 복습 현황 페이지 ──
+async function renderReviewPage(root, dock) {
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
+      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;">복습 현황</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
+      <span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;font-weight:600;">에빙하우스 망각곡선</span>
+      <span class="muted" style="font-size:11px;">1일·2일·3일·6일·15일·30일·60일</span>
+    </div>
+    <div class="scr-scroll" id="review-list">
+      <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div>
+    </div>
+  </div>` + dock;
+
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&order=first_studied_at.desc`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const reviews = await res.json();
+    const el = document.getElementById('review-list');
+    if (!reviews?.length) {
+      el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 복습 일정이 없어요<br>암기 카드를 완료하면 자동으로 등록돼요</div>';
+      return;
+    }
+
+    const today = new Date().toISOString();
+    const STEPS = [
+      { key: 'review_2d',  label: '1일차'  },
+      { key: 'review_3d',  label: '2일차'  },
+      { key: 'review_6d',  label: '3일차'  },
+      { key: 'review_15d', label: '6일차'  },
+      { key: 'review_30d', label: '15일차' },
+      { key: 'review_60d', label: '30일차' },
+    ];
+
+    // 오늘 복습 / 예정 / 완료로 분류
+    const todayDue = [], upcoming = [], done = [];
+
+    reviews.forEach(r => {
+      if (r.completed) { done.push(r); return; }
+      const overdueStep = STEPS.find(s => r[s.key] && r[s.key] <= today);
+      if (overdueStep) { todayDue.push({ ...r, _stepKey: overdueStep.key, _stepLabel: overdueStep.label }); return; }
+      const nextStep = STEPS.find(s => r[s.key]);
+      if (nextStep) upcoming.push({ ...r, _nextLabel: nextStep.label, _nextDate: r[nextStep.key] });
+    });
+
+    function reviewCard(r, type) {
+      const book = findBook(r.book_id);
+      const page = book ? findPage(book, r.page_num) : null;
+      const wordCount = page?.words.length || 0;
+      const studiedDate = new Date(r.first_studied_at).toLocaleDateString('ko-KR');
+
+      // 진행도 계산
+      const completedSteps = STEPS.filter(s => !r[s.key]).length;
+      const totalSteps = STEPS.length;
+      const progress = Math.round(completedSteps / totalSteps * 100);
+
+      const bgColor = type === 'due' ? '#fff8f5' : type === 'done' ? '#f0faf4' : '#fafafa';
+      const borderColor = type === 'due' ? 'var(--accent)' : type === 'done' ? '#27ae60' : 'var(--ink-12)';
+
+      return `<div style="background:${bgColor};border:1.5px solid ${borderColor};border-radius:14px;padding:14px 16px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;color:#000;">${book?.title||'삭제된 책'}</div>
+            <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}개 단어 · 학습일 ${studiedDate}</div>
+          </div>
+          ${type === 'due' ? `<span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${r._stepLabel} 복습!</span>` :
+            type === 'done' ? `<span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">완료 ✓</span>` :
+            `<span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} 예정</span>`}
+        </div>
+        
+        <!-- 진행도 바 -->
+        <div style="margin-top:10px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--ink-40);">복습 진행도</span>
+            <span style="font-size:10px;color:var(--ink-60);font-weight:600;">${completedSteps}/${totalSteps} 완료</span>
+          </div>
+          <div style="height:6px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${progress}%;background:${type==='done'?'#27ae60':'var(--accent)'};border-radius:99px;transition:width .3s;"></div>
+          </div>
+          <!-- 단계 표시 -->
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'#27ae60':s.key===r._stepKey?'var(--accent)':'var(--ink-40)'};font-weight:${!r[s.key]||s.key===r._stepKey?'700':'400'}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+          </div>
+        </div>
+        
+        ${type === 'due' ? `<button onclick="startSingleReview('${r.book_id}','${r.page_num}','${r.id}','${r._stepKey}')" style="width:100%;margin-top:12px;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">지금 복습하기 →</button>` :
+          type === 'upcoming' ? `<div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 다음 복습: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>` : ''}
+      </div>`;
+    }
+
+    let html = '';
+    if (todayDue.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;">🔔 오늘 복습 (${todayDue.length}개)</div>`;
+      html += todayDue.map(r => reviewCard(r, 'due')).join('');
+    }
+    if (upcoming.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">📅 예정된 복습 (${upcoming.length}개)</div>`;
+      html += upcoming.map(r => reviewCard(r, 'upcoming')).join('');
+    }
+    if (done.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">✅ 완료 (${done.length}개)</div>`;
+      html += done.map(r => reviewCard(r, 'done')).join('');
+    }
+
+    el.innerHTML = html || '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">복습 일정이 없어요</div>';
+  } catch(e) {
+    document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`;
+  }
+}
+
+async function startSingleReview(bookId, pageNum, reviewId, stepKey) {
+  // 해당 복습 단계 완료 처리
+  const patch = {};
+  if (stepKey === 'review_60d') { patch.review_60d = null; patch.completed = true; }
+  else patch[stepKey] = null;
+  
+  try {
+    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${reviewId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify(patch)
+    });
+  } catch(e) {}
+
+  initStudy(bookId, 'page', pageNum);
+  push({ name: 'study-cards', bookId, scope: 'page', pageNum });
+}
+
+// ── 앱 포커스 시 복습 체크 ──
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible' && currentUser) {
+    checkReviews();
+  }
+});
+
+// 1시간마다 자동 체크 (자정 넘어가도 감지)
+setInterval(function() {
+  if (currentUser) checkReviews();
+}, 60 * 60 * 1000);
+
+// 복습 탭 열 때도 최신 데이터 반영
+const _origGoTab = goTab;
+goTab = function(t) {
+  _origGoTab(t);
+  if (t === 'review' && currentUser) checkReviews();
+};
+
+// 스와이프 뒤로가기
+(function() {
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = Math.abs(e.changedTouches[0].clientY - startY);
+    if (dx > 60 && dy < 80 && startX < 40 && stack.length > 1) { back(); }
+  }, { passive: true });
+})();
+
+// ── 홈화면 설치 안내 ──
+(function() {
+  // 이미 설치됐거나 무시했으면 스킵
+  if (localStorage.getItem('imvoca.install.dismissed')) return;
+  if (window.navigator.standalone) return; // 이미 홈화면 앱으로 실행 중
+
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  const isAndroid = /android/i.test(ua);
+
+  if (isIOS) {
+    // iOS: Safari에서만 보여줌 (Chrome 등에선 설치 안됨)
+    const isSafari = /safari/i.test(ua) && !/chrome|crios|fxios/i.test(ua);
+    if (!isSafari) return;
+    setTimeout(() => {
+      document.getElementById('install-title').textContent = '앱처럼 사용하기 📱';
+      document.getElementById('install-desc').innerHTML =
+        'Safari 하단 <strong>공유 버튼(□↑)</strong>을 탭한 후<br><strong>"홈 화면에 추가"</strong>를 선택하세요!';
+      document.getElementById('install-btn-wrap').innerHTML =
+        '<button onclick="dismissInstall()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">확인했어요</button>';
+      document.getElementById('install-banner').classList.add('show');
+    }, 3000);
+  } else if (isAndroid) {
+    // Android: beforeinstallprompt 이벤트 감지
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window._deferredPrompt = e;
+      document.getElementById('install-title').textContent = '앱으로 설치하기 📲';
+      document.getElementById('install-desc').textContent = '홈화면에 추가하면 앱처럼 빠르게 실행할 수 있어요!';
+      document.getElementById('install-btn-wrap').innerHTML =
+        '<div style="display:flex;gap:8px;">' +
+        '<button onclick="doInstall()" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">설치하기</button>' +
+        '<button onclick="dismissInstall()" style="flex:1;padding:10px;background:transparent;color:#000;border:1px solid var(--ink-12);border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">나중에</button>' +
+        '</div>';
+      document.getElementById('install-banner').classList.add('show');
+    });
+  }
+})();
+
+function doInstall() {
+  if (window._deferredPrompt) {
+    window._deferredPrompt.prompt();
+    window._deferredPrompt.userChoice.then(() => {
+      window._deferredPrompt = null;
+      dismissInstall();
+    });
+  }
+}
+
+function dismissInstall() {
+  document.getElementById('install-banner').classList.remove('show');
+  localStorage.setItem('imvoca.install.dismissed', '1');
+}
+
+sbInit();
+</script>
 </body>
 </html>
