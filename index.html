@@ -544,11 +544,25 @@ async function saveApiKeyToDB(key) {
 }
 
 async function sbSignIn(email, pw) {
+  // 로딩 상태 표시
+  const btn = document.querySelector('.btn-solid');
+  const emailEl = document.getElementById('li-em');
+  const pwEl = document.getElementById('li-pw');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>로그인 중...</span>'; }
+  if (emailEl) emailEl.disabled = true;
+  if (pwEl) pwEl.disabled = true;
   try {
     const data = await sbFetch('/auth/v1/token?grant_type=password', 'POST', { email, password: pw }, false);
-    if (data.error || !data.access_token) { toast('로그인 실패: 이메일 또는 비밀번호를 확인해주세요'); return; }
+    if (data.error || !data.access_token) {
+      toast('로그인 실패: 이메일 또는 비밀번호를 확인해주세요');
+      if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
+      if (emailEl) emailEl.disabled = false;
+      if (pwEl) { pwEl.disabled = false; pwEl.value = ''; pwEl.focus(); }
+      return;
+    }
     _authToken = data.access_token; currentUser = data.user;
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
+    if (btn) btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>불러오는 중...</span>';
     await loadApiKey(); await loadUserName();
     if (currentUser.email !== 'koreayjk@gmail.com') {
       try {
@@ -559,12 +573,20 @@ async function sbSignIn(email, pw) {
           toast('아직 승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
           _authToken = null; currentUser = null;
           localStorage.removeItem('imvoca.session');
+          if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
+          if (emailEl) emailEl.disabled = false;
+          if (pwEl) pwEl.disabled = false;
           return;
         }
       } catch(e) {}
     }
     await loadBooksFromDB(); render(); setTimeout(checkReviews, 1000);
-  } catch(e) { toast('로그인 오류: ' + e.message); }
+  } catch(e) {
+    toast('로그인 오류: ' + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
+    if (emailEl) emailEl.disabled = false;
+    if (pwEl) pwEl.disabled = false;
+  }
 }
 
 async function sbSignUp(email, pw, name) {
@@ -647,13 +669,16 @@ function renderLogin(tab='login') {
         <button onclick="renderLogin('signup')" class="login-tab-btn" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='signup'?'2px solid var(--ink-100)':'2px solid transparent'};font-weight:${tab==='signup'?600:400}">회원가입</button>
       </div>
       ${tab==='login'?`
-        <input id="li-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
-        <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px">
+        <input id="li-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px"
+          onkeydown="if(event.key==='Enter'){document.getElementById('li-pw').focus();}">
+        <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px"
+          onkeydown="if(event.key==='Enter'){sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value);}">
         <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">로그인</button>
       `:`
         <input id="su-nm" type="text" placeholder="이름" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
         <input id="su-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
-        <input id="su-pw" type="password" placeholder="비밀번호 (6자 이상)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px">
+        <input id="su-pw" type="password" placeholder="비밀번호 (6자 이상)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px"
+          onkeydown="if(event.key==='Enter'){sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value);}">
         <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value)">가입하기</button>
       `}
       <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">IM Mission 계정으로 로그인하세요</div>
@@ -1761,7 +1786,14 @@ async function saveReviewSchedule(bookId, pageNum) {
     const existing = await check.json();
     if (existing?.length > 0) return;
     const now = new Date();
-    const addDays = (d, n) => new Date(d.getTime() + n*24*60*60*1000).toISOString();
+    // 날짜만 비교하기 위해 자정(00:00:00) 기준으로 저장
+    const toMidnight = (d, n) => {
+      const date = new Date(d);
+      date.setDate(date.getDate() + n);
+      date.setHours(0, 0, 0, 0);
+      return date.toISOString();
+    };
+    const addDays = (d, n) => toMidnight(d, n);
     const res = await fetch(SB_URL + '/rest/v1/voca_review', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
@@ -1828,7 +1860,10 @@ function answerQuiz(chosen, correct) {
 
 async function checkReviews() {
   try {
-    const today = new Date().toISOString();
+    // 오늘 날짜 끝(23:59:59)까지를 today로 설정 → 오늘 복습 대상 모두 포함
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+    const today = todayEnd.toISOString();
     const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&select=*`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const reviews = await res.json();
     if (!Array.isArray(reviews)) return;
@@ -1911,7 +1946,9 @@ async function renderReviewPage(root, dock) {
     const el = document.getElementById('review-list');
     if (!reviews?.length) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 복습 일정이 없어요<br>암기 카드를 완료하면 자동으로 등록돼요</div>'; return; }
 
-    const today = new Date().toISOString();
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+    const today = todayEnd.toISOString();
     const STEPS = [
       { key: 'review_2d',  label: '1일차'  }, { key: 'review_3d',  label: '2일차'  },
       { key: 'review_6d',  label: '3일차'  }, { key: 'review_15d', label: '6일차'  },
