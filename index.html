@@ -647,13 +647,16 @@ function renderLogin(tab='login') {
         <button onclick="renderLogin('signup')" class="login-tab-btn" style="flex:1;padding:10px;border:none;background:none;font-family:var(--font-body);font-size:13px;cursor:pointer;border-bottom:${tab==='signup'?'2px solid var(--ink-100)':'2px solid transparent'};font-weight:${tab==='signup'?600:400}">회원가입</button>
       </div>
       ${tab==='login'?`
-        <input id="li-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
-        <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px">
+        <input id="li-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px"
+          onkeydown="if(event.key==='Enter'){document.getElementById('li-pw').focus();}">
+        <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px"
+          onkeydown="if(event.key==='Enter'){sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value);}">
         <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">로그인</button>
       `:`
         <input id="su-nm" type="text" placeholder="이름" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
         <input id="su-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
-        <input id="su-pw" type="password" placeholder="비밀번호 (6자 이상)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px">
+        <input id="su-pw" type="password" placeholder="비밀번호 (6자 이상)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px"
+          onkeydown="if(event.key==='Enter'){sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value);}">
         <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value)">가입하기</button>
       `}
       <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">IM Mission 계정으로 로그인하세요</div>
