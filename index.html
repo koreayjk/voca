@@ -43,8 +43,7 @@ body.dark h1, body.dark h2, body.dark h3,
 body.dark .h-display, body.dark .book-tile__title,
 body.dark .book-hero__title, body.dark .sect-row__name,
 body.dark .page-row__num, body.dark .word-item__en,
-body.dark .scope-card__name, body.dark .feat-card,
-body.dark .done__n { color: #f0ece4; }
+body.dark .scope-card__name, 
 
 body.dark .muted, body.dark .book-tile__sub,
 body.dark .book-hero__author, body.dark .label-xs,
@@ -103,15 +102,6 @@ body.dark .dock {
 }
 body.dark .dock__btn { color: rgba(240,236,228,0.4); }
 body.dark .dock__btn--active { color: var(--accent); }
-
-/* 업로드 존 */
-body.dark .upload-zone {
-  border-color: rgba(240,236,228,0.15);
-  background: #2e2923;
-  color: #f0ece4;
-}
-body.dark .upload-title { color: #f0ece4; }
-body.dark .upload-sub { color: rgba(240,236,228,0.5); }
 
 /* 단어 선택 화면 */
 body.dark #word-sel-list > div { background: #242019 !important; }
@@ -212,17 +202,11 @@ body.dark .topbar-btn {
 }
 
 /* 스터디 앞면 카드 */
-body.dark .face-front { background: #2e2923 !important; }
 body.dark .card__word { color: #f0ece4 !important; }
 body.dark .card__ipa { color: rgba(240,236,228,0.5) !important; }
 body.dark .card__tap { color: rgba(240,236,228,0.4) !important; }
 
 /* ox 버튼 */
-body.dark .ox-x {
-  background: #2e2923 !important;
-  color: #f0ece4 !important;
-  border-color: rgba(240,236,228,0.2) !important;
-}
 
 /* scope-card 다크 */
 body.dark .scope-card--on { border-color: #f0ece4 !important; }
@@ -237,7 +221,6 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 @media (min-width: 768px) {
   .scr { left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 28px 32px 0; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
-  .h-xxl { font-size: 52px; } .h-xl { font-size: 40px; }
   .book-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .dock { left: 50% !important; transform: translateX(-50%) !important; width: 100% !important; max-width: 480px !important; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
   .overlay { max-width: none; left: 0; transform: none; }
@@ -248,7 +231,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .scr-scroll::-webkit-scrollbar { width: 4px; }
 .scr-scroll::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 2px; }
 .h-display { font-family: var(--font-display); letter-spacing: -0.03em; line-height: 0.97; color: var(--ink-100); }
-.h-xxl { font-size: 40px; } .h-xl { font-size: 30px; } .h-l { font-size: 24px; }
+
 .label-xs { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); font-weight: 500; }
 .muted { color: var(--ink-60); }
 .topnav { display: flex; justify-content: space-between; align-items: center; height: 30px; margin-bottom: 2px; flex-shrink: 0; }
@@ -292,12 +275,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .page-row:last-child { border-bottom: none; }
 .page-row__num { font-size: 13px; font-weight: 500; color: var(--ink-100); }
 .page-row__right { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-60); }
-.upload-zone { border: 1.5px dashed var(--ink-12); border-radius: 14px; padding: 32px 20px; text-align: center; cursor: pointer; position: relative; margin-top: 14px; }
-.upload-icon { font-size: 28px; margin-bottom: 8px; }
-.upload-title { font-size: 14px; font-weight: 500; color: var(--ink-100); }
-.upload-sub { font-size: 11px; color: var(--ink-60); margin-top: 4px; }
-.preview-img { width: 100%; border-radius: 10px; max-height: 160px; object-fit: cover; margin-top: 12px; }
-.scan-btn { width: 100%; margin-top: 10px; padding: 14px; background: var(--accent); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-family: var(--font-body); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
 .scanning { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
 .ring { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--ink-07); border-top-color: var(--ink-100); animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -975,22 +953,7 @@ async function processNextMultiScan() {
     return;
   }
   const currentImg = window._multiQueue[idx];
-  document.getElementById('root').innerHTML = `
-    <div class="scr"><div class="scanning">
-      <div class="ring"></div>
-      <div style="text-align:center">
-        <div class="h-display h-l">단어 인식 중</div>
-        <div class="muted" style="font-size:13px;margin-top:6px;">${idx+1} / ${total}장 분석 중...</div>
-        <div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">
-          ${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<idx?'#27ae60':i===idx?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}
-        </div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;">
-          <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e74c3c;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e74c3c;">상</strong> — 대학/원서 수준 고급 어휘</span></div>
-          <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">중</strong> — 고등학교 수준 어휘</span></div>
-          <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">하</strong> — 중학교 수준 기본 어휘</span></div>
-        </div>
-      </div>
-    </div></div>`;
+  renderScanLoading(idx+1, total);
   let words;
   try {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
@@ -1097,8 +1060,6 @@ async function skipMultiScan(idx, total) {
   await processNextMultiScan();
 }
 
-
-
 function setCaptureMode(mode) {
   window._captureMode = mode; window._addTargetPage = null;
   const newBtn = document.getElementById('mode-new-btn');
@@ -1172,12 +1133,7 @@ async function doScan() {
     window._renamedPageNum = null;
   }
   if (!imgData) { toast('사진을 먼저 선택해주세요'); return; }
-  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">단어를 분석하고 있어요</div>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;">
-      <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e74c3c;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e74c3c;">상</strong> — 대학/원서 수준 고급 어휘</span></div>
-      <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">중</strong> — 고등학교 수준 어휘</span></div>
-      <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">하</strong> — 중학교 수준 기본 어휘</span></div>
-    </div></div></div></div>`;
+  renderScanLoading();
   let words;
   try {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
@@ -1343,11 +1299,22 @@ function initStudy(bookId, scope, pageNum) {
   studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
 }
 
+function renderScanLoading(current=1, total=1) {
+  const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#27ae60':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
+  const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : '단어를 분석하고 있어요';
+  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e74c3c;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e74c3c;">상</strong> — 대학/원서 수준 고급 어휘</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">중</strong> — 고등학교 수준 어휘</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">하</strong> — 중학교 수준 기본 어휘</span></div></div></div></div></div>`;
+}
+
+function buildDock() {
+  const tab = currentTab();
+  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
+}
+
 function render() {
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
-  const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
+  const dock = buildDock();
 
   if (route.name === 'library') {
     root.innerHTML = `
@@ -1778,8 +1745,7 @@ async function deleteStats(id) {
     toast('삭제됐어요');
     const root = document.getElementById('root');
     const tab = currentTab();
-    const dock = `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>게임</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>복습</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>통계</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>검색</span></button></div>`;
-    renderStats(root, dock);
+    renderStats(root, buildDock());
   } catch(e) { toast('삭제 실패: ' + e.message); }
 }
 
