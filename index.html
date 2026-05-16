@@ -23,6 +23,24 @@
   --bg-page: #f5f0e8; --bg-card: #faf7f2; --bg-input: #f0ebe0;
   --accent: #cc5500; --accent-dark: #a84400;
 }
+body.dark {
+  --ink-100: #f0ece4; --ink-60: rgba(240,236,228,0.6); --ink-40: rgba(240,236,228,0.4);
+  --ink-12: rgba(240,236,228,0.12); --ink-07: rgba(240,236,228,0.07); --ink-05: rgba(240,236,228,0.04);
+  --gold-bg: rgba(204,85,0,0.15);
+  --bg-page: #1a1714; --bg-card: #242019; --bg-input: #2e2923;
+  --accent: #e06010; --accent-dark: #cc5500;
+}
+body.dark { background: #111; color: #f0ece4; }
+body.dark .face-front { background: #2e2923; }
+body.dark .scope-card { border-color: rgba(240,236,228,0.15); }
+body.dark .scope-card--on { border-color: #f0ece4; }
+body.dark .sheet { background: #242019; }
+body.dark .action-sheet__menu { background: #242019; }
+body.dark .dock { background: rgba(26,23,20,0.92); border-color: rgba(240,236,228,0.07); }
+body.dark input { background: var(--bg-input) !important; color: #f0ece4 !important; border-color: rgba(240,236,228,0.1) !important; }
+body.dark select { background: var(--bg-input) !important; color: #f0ece4 !important; }
+body.dark .review-banner { background: #242019; border-color: var(--accent); }
+body.dark .install-banner { background: #242019; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #d4cabb; }
 #root { position: fixed; inset: 0; }
@@ -292,6 +310,7 @@ async function sbFetch(path, method='GET', body=null, useAuth=true) {
 }
 
 async function sbInit() {
+  initDarkMode();
   renderLogin();
   const saved = localStorage.getItem('imvoca.session');
   if (saved) {
@@ -950,6 +969,7 @@ function render() {
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button><button onclick="showAdminPanel()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">회원관리</button>`:''}
           <button onclick="window.open('https://koreayjk.github.io/voca/ad.html','_blank')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">앱 소개</button>
+          <button onclick="toggleDarkMode()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ 라이트':'🌙 다크'}</button>
           <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
       </div>` + dock;
@@ -1866,6 +1886,18 @@ async function saveManualWords(bookId) {
   toast(`Page ${pg} 저장 완료 (${words.length}개)`);
   window._manualWords = [];
   replace({ name: 'page-words', bookId, pageNum: pg });
+}
+
+// ── 다크모드 ──
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('imvoca.dark', isDark ? '1' : '0');
+  render();
+}
+
+function initDarkMode() {
+  const saved = localStorage.getItem('imvoca.dark');
+  if (saved === '1') document.body.classList.add('dark');
 }
 
 // ── 앱 포커스 시 복습 체크 ──
