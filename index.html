@@ -297,14 +297,49 @@ async function sbInit() {
   if (saved) {
     try {
       const sess = JSON.parse(saved);
+      if (!sess.access_token || !sess.user) { localStorage.removeItem('imvoca.session'); return; }
+      
+      // 세션 유효성 서버에서 확인
+      const verify = await fetch(SB_URL + '/auth/v1/user', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + sess.access_token }
+      });
+      
+      if (!verify.ok) {
+        // 토큰 만료 or 유효하지 않음
+        localStorage.removeItem('imvoca.session');
+        renderLogin();
+        return;
+      }
+      
+      const userData = await verify.json();
       _authToken = sess.access_token;
-      currentUser = sess.user;
+      currentUser = userData; // 서버에서 최신 유저 정보 사용
+      
+      // 역할 확인 (관리자 아닌 경우)
+      if (currentUser.email !== 'koreayjk@gmail.com') {
+        const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=role`, {
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+        });
+        const roleData = await res.json();
+        const role = roleData[0]?.role;
+        if (role === '대기중') {
+          localStorage.removeItem('imvoca.session');
+          renderLogin();
+          toast('승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
+          return;
+        }
+      }
+      
       await loadApiKey();
       await loadUserName();
       await loadBooksFromDB();
       render();
       setTimeout(checkReviews, 1000);
-    } catch(e) { localStorage.removeItem('imvoca.session'); }
+    } catch(e) { 
+      console.error('세션 복원 실패:', e);
+      localStorage.removeItem('imvoca.session'); 
+      renderLogin();
+    }
   }
 }
 
@@ -869,6 +904,7 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="document.getElementById('modal-api').classList.add('open')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button><button onclick="showAdminPanel()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">회원관리</button>`:''}
+          <button onclick="window.open('https://koreayjk.github.io/voca/ad.html','_blank')" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">앱 소개</button>
           <button onclick="sbSignOut()" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
       </div>` + dock;
@@ -1006,6 +1042,7 @@ function render() {
   else if (route.name === 'search') { renderSearch(root, dock); return; }
 
   else if (route.name === 'review') { renderReviewPage(root, dock); return; }
+
 
   else if (route.name === 'study-setup') {
     window._ss = { bookId: books[0]?.id || null, scope: 'all', page: null };
