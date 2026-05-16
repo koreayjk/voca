@@ -766,6 +766,7 @@ async function addBook() {
 }
 
 async function openCamera() {
+  if (!window._cameraShots) window._cameraShots = [];
   const area = document.getElementById('camera-area');
   const video = document.getElementById('camera-video');
   try {
@@ -777,6 +778,42 @@ async function openCamera() {
       video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
     } catch(e2) { toast('카메라 접근 권한이 필요해요'); }
   }
+  updateCameraCounter();
+}
+
+function updateCameraCounter() {
+  const shots = window._cameraShots || [];
+  const counter = document.getElementById('camera-counter');
+  const captureBtn = document.getElementById('camera-capture-btn');
+  const useBtn = document.getElementById('camera-use-btn');
+  if (counter) {
+    counter.textContent = shots.length > 0 ? `${shots.length}/5장 촬영됨` : '';
+    counter.style.display = shots.length > 0 ? 'block' : 'none';
+  }
+  if (captureBtn) {
+    captureBtn.textContent = shots.length >= 5 ? '📸 최대 5장' : '📸 촬영하기';
+    captureBtn.disabled = shots.length >= 5;
+    captureBtn.style.opacity = shots.length >= 5 ? '0.5' : '1';
+  }
+  if (useBtn) {
+    useBtn.style.display = shots.length > 0 ? 'block' : 'none';
+    useBtn.textContent = shots.length === 1 ? `✅ 이 사진 사용하기` : `✅ ${shots.length}장 사용하기`;
+  }
+  // 썸네일 업데이트
+  const thumbWrap = document.getElementById('camera-thumbs');
+  if (thumbWrap) {
+    thumbWrap.innerHTML = shots.map((d,i) => `
+      <div style="position:relative;flex-shrink:0;">
+        <img src="${d}" style="width:52px;height:52px;object-fit:cover;border-radius:8px;border:2px solid var(--accent);">
+        <button onclick="removeCameraShot(${i})" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#e74c3c;border:none;color:#fff;font-size:10px;cursor:pointer;line-height:18px;text-align:center;padding:0;">✕</button>
+      </div>`).join('');
+    thumbWrap.style.display = shots.length > 0 ? 'flex' : 'none';
+  }
+}
+
+function removeCameraShot(i) {
+  window._cameraShots.splice(i, 1);
+  updateCameraCounter();
 }
 
 function closeCamera() {
@@ -786,13 +823,42 @@ function closeCamera() {
   video.srcObject = null; area.style.display = 'none';
 }
 
+function cancelCamera() {
+  window._cameraShots = [];
+  closeCamera();
+}
+
 function capturePhoto() {
+  if ((window._cameraShots||[]).length >= 5) { toast('최대 5장까지 촬영할 수 있어요'); return; }
   const video = document.getElementById('camera-video');
   const canvas = document.getElementById('camera-canvas');
   canvas.width = video.videoWidth; canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0);
-  imgData = canvas.toDataURL('image/jpeg', 0.92);
-  closeCamera(); renderUploadPreview();
+  const shot = canvas.toDataURL('image/jpeg', 0.92);
+  if (!window._cameraShots) window._cameraShots = [];
+  window._cameraShots.push(shot);
+  // 플래시 효과
+  const flash = document.getElementById('camera-flash');
+  if (flash) { flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0', 150); }
+  toast(`${window._cameraShots.length}장 촬영됨`);
+  updateCameraCounter();
+}
+
+function useCameraShots() {
+  const shots = window._cameraShots || [];
+  if (!shots.length) return;
+  closeCamera();
+  if (shots.length === 1) {
+    imgData = shots[0];
+    window._cameraShots = [];
+    window._multiImgData = null;
+    renderUploadPreview();
+  } else {
+    window._multiImgData = [...shots];
+    window._cameraShots = [];
+    imgData = null;
+    renderMultiPreview(window._multiImgData);
+  }
 }
 
 function handleFileChange(e) {
@@ -1395,11 +1461,22 @@ function render() {
             </div>
             <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
-              <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
-              <div style="display:flex;gap:8px;margin-top:8px;">
-                <button onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">📸 촬영하기</button>
-                <button onclick="closeCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">취소</button>
+              <div style="position:relative;">
+                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
+                <!-- 플래시 효과 -->
+                <div id="camera-flash" style="position:absolute;inset:0;background:#fff;border-radius:10px;opacity:0;pointer-events:none;transition:opacity 0.15s;"></div>
+                <!-- 촬영 수 뱃지 -->
+                <div id="camera-counter" style="display:none;position:absolute;top:8px;right:8px;background:var(--accent);color:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:3px 10px;"></div>
               </div>
+              <!-- 촬영된 썸네일 -->
+              <div id="camera-thumbs" style="display:none;flex-direction:row;gap:8px;margin-top:8px;flex-wrap:wrap;"></div>
+              <!-- 버튼 -->
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <button id="camera-capture-btn" onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">📸 촬영하기</button>
+                <button onclick="cancelCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">취소</button>
+              </div>
+              <button id="camera-use-btn" onclick="useCameraShots()" style="display:none;width:100%;margin-top:8px;padding:12px;background:#27ae60;color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;"></button>
+              <div style="font-size:10px;color:var(--ink-40);margin-top:6px;text-align:center;">최대 5장까지 연속 촬영 가능</div>
             </div>
             <canvas id="camera-canvas" style="display:none;"></canvas>
             <div style="font-size:10px;color:var(--ink-40);margin-top:8px;text-align:center;">JPG · PNG · WEBP · GIF 지원</div>
