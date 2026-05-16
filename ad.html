@@ -11,6 +11,30 @@
 
   /* 히어로 */
   .hero { text-align: center; padding: 32px 0 24px; }
+
+  /* ── 로고 크게, 가운데 ── */
+  .hero-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .hero-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 28px;
+    box-shadow: 0 8px 32px rgba(204,85,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 12px;
+  }
+  .hero-logo-name {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #cc5500;
+  }
+
   .badge { display: inline-block; background: #fff0e8; color: #cc5500; font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 99px; margin-bottom: 16px; border: 1px solid rgba(204,85,0,0.2); letter-spacing: 0.03em; }
   .hero-title { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; color: #1a1511; }
   .hero-title span { color: #cc5500; }
@@ -79,11 +103,16 @@
     <button onclick="window.close();history.back();" style="display:flex;align-items:center;gap:6px;background:none;border:1px solid #eee;border-radius:99px;padding:7px 14px;font-size:12px;color:#888;cursor:pointer;font-family:-apple-system,sans-serif;">
       ← 앱으로 돌아가기
     </button>
-    <img src="https://koreayjk.github.io/voca/2.png" style="width:28px;height:28px;object-fit:contain;">
   </div>
 
   <!-- 히어로 -->
   <div class="hero">
+    <!-- 로고 크게 가운데 -->
+    <div class="hero-logo-wrap">
+      <img src="https://koreayjk.github.io/voca/2.png" class="hero-logo" alt="IM VOCA">
+      <div class="hero-logo-name">IM VOCA</div>
+    </div>
+
     <div class="badge">영어 원서 독자를 위한 AI 단어장</div>
     <div class="hero-title">원서를 읽으며<br><span>자연스럽게 단어를</span> 내 것으로</div>
     <div class="hero-sub">페이지를 찍으면 AI가 어려운 단어를 자동으로 찾아드려요.<br>책의 문맥에 맞는 뜻으로, 에빙하우스 망각곡선으로 완전히 내 것이 됩니다.</div>
