@@ -1801,6 +1801,7 @@ function removeManualWord(i) {
 
 async function fetchWordMeaning(word) {
   try {
+    console.log('[사전] apiKey:', apiKey ? apiKey.substring(0,10) : '없음');
     // Gemini로 한국어 뜻 검색
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
@@ -1817,6 +1818,7 @@ async function fetchWordMeaning(word) {
     const parsed = JSON.parse(clean);
     return { base: parsed.base || '뜻을 찾지 못했어요', ipa: parsed.ipa || '' };
   } catch(e) {
+    console.error('[사전 오류]', e);
     return { base: '뜻을 찾지 못했어요', ipa: '' };
   }
 }
