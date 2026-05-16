@@ -796,20 +796,35 @@ function capturePhoto() {
 }
 
 function handleFileChange(e) {
-  const f = e.target.files[0]; if(!f) return;
-  const img = new Image(), r = new FileReader();
-  r.onload = ev => {
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const MAX = 1600; let w = img.width, h = img.height;
-      if (w > MAX || h > MAX) { if (w > h) { h = Math.round(h*MAX/w); w=MAX; } else { w=Math.round(w*MAX/h); h=MAX; } }
-      canvas.width=w; canvas.height=h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      imgData = canvas.toDataURL('image/jpeg', 0.92); renderUploadPreview();
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  if (files.length > 5) { toast('최대 5장까지만 선택할 수 있어요'); return; }
+  const readers = files.map(f => new Promise(resolve => {
+    const img = new Image(), r = new FileReader();
+    r.onload = ev => {
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 1600; let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) { if (w > h) { h = Math.round(h*MAX/w); w=MAX; } else { w=Math.round(w*MAX/h); h=MAX; } }
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg', 0.92));
+      };
+      img.src = ev.target.result;
     };
-    img.src = ev.target.result;
-  };
-  r.readAsDataURL(f);
+    r.readAsDataURL(f);
+  }));
+  Promise.all(readers).then(dataUrls => {
+    if (dataUrls.length === 1) {
+      imgData = dataUrls[0];
+      window._multiImgData = null;
+      renderUploadPreview();
+    } else {
+      window._multiImgData = dataUrls;
+      imgData = null;
+      renderMultiPreview(dataUrls);
+    }
+  });
 }
 
 function renderUploadPreview() {
@@ -836,6 +851,187 @@ function renderUploadPreview() {
   });
   document.getElementById('scan-preview-btn').addEventListener('click', function(e) { e.stopPropagation(); doScan(); });
 }
+
+// ── 여러 장 프리뷰 ──
+function renderMultiPreview(dataUrls) {
+  const area = document.getElementById('upload-main');
+  if (!area) return;
+  area.style.display = 'none';
+  const oldP = document.getElementById('preview-area');
+  if (oldP) oldP.remove();
+  const preview = document.createElement('div');
+  preview.id = 'preview-area';
+  preview.style.cssText = 'margin-top:12px;';
+  preview.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div style="font-size:13px;font-weight:600;color:var(--ink-100);">📷 ${dataUrls.length}장 선택됨</div>
+      <button id="cancel-multi-btn" style="background:none;border:none;font-size:13px;color:var(--ink-40);cursor:pointer;padding:4px;">취소</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(${Math.min(dataUrls.length,3)},1fr);gap:6px;margin-bottom:10px;">
+      ${dataUrls.map((d,i) => `
+        <div style="position:relative;">
+          <img src="${d}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block;">
+          <div style="position:absolute;top:4px;left:4px;background:var(--accent);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;">${i+1}</div>
+        </div>`).join('')}
+    </div>
+    <div style="font-size:11px;color:var(--ink-60);margin-bottom:10px;text-align:center;">순서대로 1장씩 단어를 추출해요 · 페이지 번호는 각 장마다 입력</div>
+    <button id="scan-multi-btn" style="width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:14px;font-family:var(--font-body);cursor:pointer;font-weight:600;">🔍 ${dataUrls.length}장 순서대로 추출하기</button>`;
+  area.parentNode.insertBefore(preview, area.nextSibling);
+  document.getElementById('cancel-multi-btn').addEventListener('click', function() {
+    window._multiImgData = null;
+    document.getElementById('preview-area').remove();
+    area.style.display = 'block';
+    const fi = document.getElementById('file-input'); if (fi) fi.value = '';
+  });
+  document.getElementById('scan-multi-btn').addEventListener('click', function() { doMultiScan(); });
+}
+
+// ── 여러 장 순서대로 스캔 ──
+async function doMultiScan() {
+  const bId = document.getElementById('up-book-sel')?.value;
+  if (!bId) { toast('책을 먼저 선택해주세요'); return; }
+  const dataUrls = window._multiImgData;
+  if (!dataUrls?.length) return;
+  window._multiQueue = [...dataUrls];
+  window._multiIdx = 0;
+  window._multiBookId = bId;
+  await processNextMultiScan();
+}
+
+async function processNextMultiScan() {
+  const idx = window._multiIdx;
+  const total = window._multiImgData.length;
+  const bId = window._multiBookId;
+  if (idx >= total) {
+    toast(`✅ ${total}장 모두 완료!`);
+    window._multiImgData = null;
+    render();
+    return;
+  }
+  const currentImg = window._multiQueue[idx];
+  document.getElementById('root').innerHTML = `
+    <div class="scr"><div class="scanning">
+      <div class="ring"></div>
+      <div style="text-align:center">
+        <div class="h-display h-l">단어 인식 중</div>
+        <div class="muted" style="font-size:13px;margin-top:6px;">${idx+1} / ${total}장 분석 중...</div>
+        <div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">
+          ${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<idx?'#27ae60':i===idx?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;">
+          <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e74c3c;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e74c3c;">상</strong> — 대학/원서 수준 고급 어휘</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">중</strong> — 고등학교 수준 어휘</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">하</strong> — 중학교 수준 기본 어휘</span></div>
+        </div>
+      </div>
+    </div></div>`;
+  let words;
+  try {
+    const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요. JSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+    });
+    const data = await res.json();
+    if (data.error) {
+      const code = data.error.code;
+      let msg = '잠시 후 다시 시도해주세요';
+      if (code === 429 || data.error.message?.includes('demand') || data.error.message?.includes('quota')) msg = '서버 과부하\n잠시 후 다시 시도해주세요';
+      else if (code === 403) msg = 'API 키를 확인해주세요';
+      toast(msg); render(); return;
+    }
+    if (!data.candidates?.[0]) { toast('응답 오류'); render(); return; }
+    const txt = data.candidates[0].content.parts[0].text;
+    const clean = txt.replace(/```json|```/g,'').trim();
+    let parsed;
+    try { parsed = JSON.parse(clean); }
+    catch(pe) {
+      const fixed = clean.replace(/,?\s*\{[^}]*$/,'').replace(/,\s*$/,'') + ']}';
+      try { parsed = JSON.parse(fixed); }
+      catch(pe2) {
+        const matches = clean.match(/"en"\s*:\s*"([^"]+)"/g)||[];
+        const bases = clean.match(/"base"\s*:\s*"([^"]+)"/g)||[];
+        const ctxs = clean.match(/"ctx"\s*:\s*"([^"]+)"/g)||[];
+        if (matches.length>0) { parsed={words:matches.map((m,i)=>({en:m.match(/"en"\s*:\s*"([^"]+)"/)[1],base:bases[i]?bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1]:'',ctx:ctxs[i]?ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1]:''}))}; }
+        else { toast('단어를 찾지 못했어요'); window._multiIdx++; await processNextMultiScan(); return; }
+      }
+    }
+    words = parsed.words;
+    if (!words?.length) { toast(`${idx+1}번 사진에서 단어를 찾지 못했어요`); window._multiIdx++; await processNextMultiScan(); return; }
+  } catch(e) { toast('네트워크 오류'); render(); return; }
+  pendingW = words; pendingB = bId; pendingP = null;
+  renderWordSelectionMulti(words, idx, total);
+}
+
+function renderWordSelectionMulti(words, idx, total) {
+  const root = document.getElementById('root');
+  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  root.innerHTML = `
+    <div class="scr" style="padding-bottom:140px;">
+      <div class="topnav">
+        <span class="topnav__back" onclick="if(confirm('멀티 스캔을 중단할까요?')){window._multiImgData=null;render();}">✕</span>
+        <span class="topnav__title">단어 선택 (${idx+1}/${total}장)</span>
+        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;margin:8px 0 12px;">
+        ${Array.from({length:total},(_,i)=>`<div style="width:8px;height:8px;border-radius:50%;background:${i<idx?'#27ae60':i===idx?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}
+      </div>
+      <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
+        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}번째 사진의 페이지 번호</div>
+        <input type="text" id="multi-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
+      </div>
+      <div class="muted" style="font-size:12px;margin-bottom:10px;">저장할 단어를 선택해주세요</div>
+      <div class="scr-scroll" id="word-sel-list">
+        ${words.map((w, i) => `
+          <div id="wsel-${i}" onclick="toggleWord(${i})" class="word-sel-card" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:var(--bg-card);cursor:pointer;border:2px solid ${levelColor[w.level]||'#ddd'};">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
+              <div style="width:20px;height:20px;border-radius:50%;background:${levelColor[w.level]||'#999'};"></div>
+              <span style="font-size:10px;font-weight:700;color:${levelColor[w.level]||'#999'};">${w.level||'?'}</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:700;color:var(--ink-100);">${w.en}</div>
+              <div style="font-size:12px;color:var(--ink-60);margin-top:3px;">${w.base}</div>
+              <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${w.ctx}</div>
+            </div>
+            <div id="wsel-check-${i}" style="width:24px;height:24px;border-radius:50%;background:${levelColor[w.level]||'var(--accent)'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;">✓</div>
+          </div>`).join('')}
+      </div>
+      <div class="btn-fixed" style="gap:8px;">
+        <button id="save-words-btn" class="btn btn-solid" onclick="saveMultiWords(${idx},${total})">
+          저장하고 ${idx+1 < total ? `다음 사진 (${idx+2}/${total}장) →` : '완료!'}
+        </button>
+        <button class="btn btn-outline" style="font-size:13px;" onclick="skipMultiScan(${idx},${total})">이 사진 건너뛰기</button>
+      </div>
+    </div>`;
+  window._wordSelected = words.map(() => true);
+}
+
+async function saveMultiWords(idx, total) {
+  const pg = document.getElementById('multi-pg-inp')?.value.trim();
+  if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
+  const btn = document.getElementById('save-words-btn');
+  if (btn?.disabled) return;
+  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
+  const selected = pendingW.filter((_, i) => window._wordSelected[i]);
+  if (!selected.length) { toast('선택한 단어가 없어요'); if (btn) { btn.disabled=false; btn.style.opacity='1'; } return; }
+  const book = findBook(pendingB); if (!book) return;
+  const pid = await savePageWordsToDB(pendingB, pg, selected);
+  const words = selected.map((w,i) => ({...w, id:`${pendingB}-${pg}-${i+1}`}));
+  const ex = findPage(book, pg);
+  if (ex) ex.words = [...ex.words, ...words];
+  else { book.pages.push({num:pg, _pid:pid, words}); book.pages.sort((a,b)=>String(a.num).localeCompare(String(b.num))); }
+  toast(`Page ${pg} 저장 완료 (${words.length}개)`);
+  window._multiIdx = idx + 1;
+  await processNextMultiScan();
+}
+
+async function skipMultiScan(idx, total) {
+  if (!confirm(`${idx+1}번째 사진을 건너뛸까요?`)) return;
+  window._multiIdx = idx + 1;
+  await processNextMultiScan();
+}
+
+
 
 function setCaptureMode(mode) {
   window._captureMode = mode; window._addTargetPage = null;
@@ -1191,13 +1387,13 @@ function render() {
           <div id="upload-main" style="margin-top:14px;">
             <div style="display:flex;gap:8px;margin-bottom:10px;">
               <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                🖼️ 파일 선택
+                🖼️ 파일 선택 (최대 5장)
               </button>
               <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
                 📷 카메라 촬영
               </button>
             </div>
-            <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileChange(event)">
+            <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
               <div style="display:flex;gap:8px;margin-top:8px;">
