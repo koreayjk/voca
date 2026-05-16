@@ -30,17 +30,114 @@ body.dark {
   --bg-page: #1a1714; --bg-card: #242019; --bg-input: #2e2923;
   --accent: #e06010; --accent-dark: #cc5500;
 }
+/* 기본 */
 body.dark { background: #111; color: #f0ece4; }
+body.dark #root { background: #1a1714; }
+
+/* 화면 전체 */
+body.dark .scr { background: #1a1714; color: #f0ece4; }
+body.dark .scr-scroll { color: #f0ece4; }
+
+/* 텍스트 */
+body.dark h1, body.dark h2, body.dark h3,
+body.dark .h-display, body.dark .book-tile__title,
+body.dark .book-hero__title, body.dark .sect-row__name,
+body.dark .page-row__num, body.dark .word-item__en,
+body.dark .scope-card__name, body.dark .feat-card,
+body.dark .done__n { color: #f0ece4; }
+
+body.dark .muted, body.dark .book-tile__sub,
+body.dark .book-hero__author, body.dark .label-xs,
+body.dark .word-item__base, body.dark .word-item__ctx,
+body.dark .page-row__right, body.dark .sect-row__count { color: rgba(240,236,228,0.55); }
+
+/* 카드/배경 */
+body.dark .book-cover { opacity: 0.9; }
 body.dark .face-front { background: #2e2923; }
-body.dark .scope-card { border-color: rgba(240,236,228,0.15); }
+body.dark .back__word, body.dark .back__meaning { color: #f0ece4; }
+body.dark .done__tile { background: #2e2923; border-color: rgba(240,236,228,0.1); }
+body.dark .done__tile-value { color: #f0ece4; }
+
+/* 리스트/행 */
+body.dark .page-row { border-color: rgba(240,236,228,0.07); }
+body.dark .list-row { border-color: rgba(240,236,228,0.07); }
+body.dark .word-item { border-color: rgba(240,236,228,0.07); }
+body.dark .rule { border-color: rgba(240,236,228,0.07); }
+
+/* 입력창 */
+body.dark input, body.dark textarea {
+  background: #2e2923 !important;
+  color: #f0ece4 !important;
+  border-color: rgba(240,236,228,0.1) !important;
+}
+body.dark input::placeholder { color: rgba(240,236,228,0.3) !important; }
+body.dark select {
+  background: #2e2923 !important;
+  color: #f0ece4 !important;
+}
+
+/* 버튼 */
+body.dark .btn-outline { border-color: rgba(240,236,228,0.2); color: #f0ece4; }
+body.dark .ox-x { background: #2e2923; color: #f0ece4; border-color: rgba(240,236,228,0.15); }
+body.dark .topnav__back, body.dark .topnav__title,
+body.dark .topnav__right { color: #f0ece4; }
+
+/* 스코프 카드 */
+body.dark .scope-card { border-color: rgba(240,236,228,0.15); background: #242019; }
 body.dark .scope-card--on { border-color: #f0ece4; }
-body.dark .sheet { background: #242019; }
+body.dark .scope-card__hint { color: rgba(240,236,228,0.5); }
+body.dark .radio { border-color: rgba(240,236,228,0.4); }
+
+/* 시트/모달 */
+body.dark .sheet { background: #242019; color: #f0ece4; }
+body.dark .sheet h3 { color: #f0ece4; }
+body.dark .sheet-note { color: rgba(240,236,228,0.6); }
 body.dark .action-sheet__menu { background: #242019; }
-body.dark .dock { background: rgba(26,23,20,0.92); border-color: rgba(240,236,228,0.07); }
-body.dark input { background: var(--bg-input) !important; color: #f0ece4 !important; border-color: rgba(240,236,228,0.1) !important; }
-body.dark select { background: var(--bg-input) !important; color: #f0ece4 !important; }
-body.dark .review-banner { background: #242019; border-color: var(--accent); }
-body.dark .install-banner { background: #242019; }
+body.dark .action-sheet__item { color: #f0ece4; }
+body.dark .action-sheet__divider { background: rgba(240,236,228,0.07); }
+
+/* 독/네비 */
+body.dark .dock {
+  background: rgba(26,23,20,0.95);
+  border-color: rgba(240,236,228,0.07);
+}
+body.dark .dock__btn { color: rgba(240,236,228,0.4); }
+body.dark .dock__btn--active { color: var(--accent); }
+
+/* 업로드 존 */
+body.dark .upload-zone {
+  border-color: rgba(240,236,228,0.15);
+  background: #2e2923;
+  color: #f0ece4;
+}
+body.dark .upload-title { color: #f0ece4; }
+body.dark .upload-sub { color: rgba(240,236,228,0.5); }
+
+/* 단어 선택 화면 */
+body.dark #word-sel-list > div { background: #242019 !important; }
+body.dark #word-sel-list > div div { color: #f0ece4; }
+
+/* 통계 */
+body.dark .done__grid .done__tile { background: #2e2923; }
+
+/* 검색 */
+body.dark #search-results > div { border-color: rgba(240,236,228,0.07); color: #f0ece4; }
+
+/* 복습 배너 */
+body.dark .review-banner { background: #242019; border-color: var(--accent); color: #f0ece4; }
+
+/* 설치 배너 */
+body.dark .install-banner { background: #242019; color: #f0ece4; }
+
+/* 스크롤바 */
+body.dark .scr-scroll::-webkit-scrollbar-thumb { background: rgba(240,236,228,0.15); }
+
+/* 칩 */
+body.dark .chip { background: #2e2923; border-color: rgba(240,236,228,0.15); color: #f0ece4; }
+
+/* 게임 setup 리스트 */
+body.dark #study-setup-inner .list-row { background: transparent; }
+body.dark #study-setup-inner .list-row div { color: #f0ece4; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #d4cabb; }
 #root { position: fixed; inset: 0; }
