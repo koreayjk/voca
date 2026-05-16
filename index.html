@@ -349,8 +349,8 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .action-sheet__item.danger { color: #c0392b; }
 .action-sheet__divider { height: 1px; background: var(--ink-07); margin: 4px 0; }
 .action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
-.review-banner { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg-card); border-bottom: 2px solid var(--accent); padding: 12px 16px; z-index: 550; display: none; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
-.review-banner.show { display: block; }
+.review-banner { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg-card); border-bottom: 2px solid var(--accent); padding: 12px 16px; z-index: 550; display: none; pointer-events: none; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.review-banner.show { display: block; pointer-events: all; }
 .review-banner__title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
 .review-banner__desc { font-size: 12px; color: var(--ink-60); }
 .review-banner__btns { display: flex; gap: 8px; margin-top: 10px; }
@@ -1854,11 +1854,17 @@ async function checkReviews() {
     const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}개`).join(' · ');
     document.getElementById('review-banner-desc').textContent = `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
     document.getElementById('review-banner-step').textContent = `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
-    document.getElementById('review-banner').classList.add('show');
+    const rb = document.getElementById('review-banner');
+    rb.style.pointerEvents = '';
+    rb.classList.add('show');
   } catch(e) {}
 }
 
-function closeReviewBanner() { document.getElementById('review-banner').classList.remove('show'); }
+function closeReviewBanner() {
+  const banner = document.getElementById('review-banner');
+  banner.classList.remove('show');
+  banner.style.pointerEvents = 'none';
+}
 
 async function startReviewSession() {
   closeReviewBanner();
@@ -1928,37 +1934,80 @@ async function renderReviewPage(root, dock) {
       const completedSteps = STEPS.filter(s => !r[s.key]).length;
       const totalSteps = STEPS.length;
       const progress = Math.round(completedSteps / totalSteps * 100);
-      const bgColor = type === 'due' ? 'var(--gold-bg)' : type === 'done' ? 'rgba(39,174,96,0.08)' : 'var(--bg-card)';
-      const borderColor = type === 'due' ? 'var(--accent)' : type === 'done' ? '#27ae60' : 'var(--ink-12)';
-      return `<div style="background:${bgColor};border:1.5px solid ${borderColor};border-radius:14px;padding:14px 16px;margin-bottom:10px;">
+
+      if (type === 'due') {
+        // 오늘 복습 카드 — 카드 전체 클릭 가능, 강렬한 스타일
+        return `<div onclick="startSingleReview('${r.book_id}','${r.page_num}','${r.id}','${r._stepKey}')"
+          style="background:var(--accent);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;position:relative;overflow:hidden;active:opacity:0.85;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span style="font-size:11px;background:rgba(255,255,255,0.25);color:#fff;border-radius:99px;padding:2px 9px;font-weight:700;">🔥 ${r._stepLabel} 복습!</span>
+              </div>
+              <div style="font-size:15px;font-weight:700;color:#fff;">${book?.title||'삭제된 책'}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.75);margin-top:3px;">Page ${r.page_num} · ${wordCount}개 단어</div>
+            </div>
+            <div style="font-size:28px;opacity:0.4;">→</div>
+          </div>
+          <div style="height:4px;background:rgba(255,255,255,0.2);border-radius:99px;overflow:hidden;margin-bottom:8px;">
+            <div style="height:100%;width:${progress}%;background:#fff;border-radius:99px;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;gap:6px;">
+              ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.9)'};font-weight:${s.key===r._stepKey?'700':'400'};${s.key===r._stepKey?'background:rgba(255,255,255,0.2);border-radius:99px;padding:1px 6px;':''}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+            </div>
+            <span style="font-size:11px;color:rgba(255,255,255,0.7);">학습일 ${studiedDate}</span>
+          </div>
+        </div>`;
+      }
+
+      if (type === 'upcoming') {
+        return `<div style="background:var(--bg-card);border:1.5px solid var(--ink-12);border-radius:14px;padding:14px 16px;margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||'삭제된 책'}</div>
+              <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}개 단어 · 학습일 ${studiedDate}</div>
+            </div>
+            <span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} 예정</span>
+          </div>
+          <div style="margin-top:10px;">
+            <div style="height:4px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
+              <div style="height:100%;width:${progress}%;background:var(--accent);border-radius:99px;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;">
+              ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'#27ae60':'var(--ink-40)'};font-weight:${!r[s.key]?'700':'400'}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+            </div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 다음 복습: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>
+        </div>`;
+      }
+
+      // done
+      return `<div style="background:rgba(39,174,96,0.07);border:1.5px solid #27ae60;border-radius:14px;padding:14px 16px;margin-bottom:10px;opacity:0.75;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div style="flex:1;">
             <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||'삭제된 책'}</div>
             <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}개 단어 · 학습일 ${studiedDate}</div>
           </div>
-          ${type === 'due' ? `<span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${r._stepLabel} 복습!</span>` :
-            type === 'done' ? `<span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">완료 ✓</span>` :
-            `<span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} 예정</span>`}
+          <span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">완료 ✓</span>
         </div>
-        <div style="margin-top:10px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-            <span style="font-size:10px;color:var(--ink-40);">복습 진행도</span>
-            <span style="font-size:10px;color:var(--ink-60);font-weight:600;">${completedSteps}/${totalSteps} 완료</span>
-          </div>
-          <div style="height:6px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
-            <div style="height:100%;width:${progress}%;background:${type==='done'?'#27ae60':'var(--accent)'};border-radius:99px;transition:width .3s;"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-top:6px;">
-            ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'#27ae60':s.key===r._stepKey?'var(--accent)':'var(--ink-40)'};font-weight:${!r[s.key]||s.key===r._stepKey?'700':'400'}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+        <div style="margin-top:8px;">
+          <div style="height:4px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:100%;background:#27ae60;border-radius:99px;"></div>
           </div>
         </div>
-        ${type === 'due' ? `<button onclick="startSingleReview('${r.book_id}','${r.page_num}','${r.id}','${r._stepKey}')" style="width:100%;margin-top:12px;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">지금 복습하기 →</button>` :
-          type === 'upcoming' ? `<div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 다음 복습: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>` : ''}
       </div>`;
     }
 
     let html = '';
-    if (todayDue.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;">🔔 오늘 복습 (${todayDue.length}개)</div>`; html += todayDue.map(r => reviewCard(r, 'due')).join(''); }
+    if (todayDue.length) {
+      html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);">🔥 오늘 복습</div>
+        <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;">${todayDue.length}개</div>
+        <div style="font-size:11px;color:var(--ink-60);">탭해서 바로 시작</div>
+      </div>`;
+      html += todayDue.map(r => reviewCard(r, 'due')).join('');
+    }
     if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">📅 예정된 복습 (${upcoming.length}개)</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
     if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">✅ 완료 (${done.length}개)</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
     el.innerHTML = html || '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">복습 일정이 없어요</div>';
