@@ -1336,6 +1336,9 @@ function buildDock() {
 }
 
 function render() {
+  // 화면 전환 시 복습 배너 항상 숨기기
+  const _rb = document.getElementById('review-banner');
+  if (_rb) { _rb.classList.remove('show'); _rb.style.pointerEvents = 'none'; _rb.style.display = 'none'; }
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
@@ -1891,6 +1894,7 @@ async function checkReviews() {
     document.getElementById('review-banner-step').textContent = `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
     const rb = document.getElementById('review-banner');
     rb.style.pointerEvents = '';
+    rb.style.display = '';
     rb.classList.add('show');
   } catch(e) {}
 }
@@ -1899,6 +1903,7 @@ function closeReviewBanner() {
   const banner = document.getElementById('review-banner');
   banner.classList.remove('show');
   banner.style.pointerEvents = 'none';
+  banner.style.display = 'none';
 }
 
 async function startReviewSession() {
