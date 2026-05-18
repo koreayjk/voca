@@ -2410,7 +2410,15 @@ document.addEventListener('visibilitychange', function() {
 setInterval(function() { if (currentUser) checkReviews(); }, 60 * 60 * 1000);
 
 const _origGoTab = goTab;
-goTab = function(t) { _origGoTab(t); if (t === 'review' && currentUser) checkReviews(); };
+goTab = function(t) {
+  _origGoTab(t);
+  // 모든 탭 전환 시 복습 체크 (암기카드/퀴즈 중 제외)
+  if (currentUser) {
+    const _route = stack[stack.length-1];
+    const _noCheck = ['study-cards', 'quiz', 'study-done'];
+    if (!_noCheck.includes(_route?.name)) checkReviews();
+  }
+};
 
 (function() {
   let startX = 0, startY = 0;
