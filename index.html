@@ -1483,12 +1483,12 @@ function buildDock() {
 }
 
 function render() {
-  // 암기카드/퀴즈 화면일 때만 배너 숨기기 (다른 화면에서는 유지)
+  // 배너 완전 숨김 처리 (화면 전환 시 항상)
   const _rb = document.getElementById('review-banner');
-  const _route = stack[stack.length-1];
-  const _studyScreens = ['study-cards', 'quiz', 'study-done'];
-  if (_rb && _studyScreens.includes(_route.name)) {
-    _rb.classList.remove('show'); _rb.style.pointerEvents = 'none'; _rb.style.display = 'none';
+  if (_rb) {
+    _rb.classList.remove('show');
+    _rb.style.pointerEvents = 'none';
+    _rb.style.display = 'none';
   }
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
@@ -2053,6 +2053,10 @@ async function checkReviews() {
     const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}개`).join(' · ');
     document.getElementById('review-banner-desc').textContent = `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
     document.getElementById('review-banner-step').textContent = `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
+    // 현재 암기카드/퀴즈 중이면 배너 띄우지 않음
+    const _currentRoute = stack[stack.length-1];
+    const _noShowScreens = ['study-cards', 'quiz', 'study-done'];
+    if (_noShowScreens.includes(_currentRoute?.name)) return;
     const rb = document.getElementById('review-banner');
     rb.style.pointerEvents = '';
     rb.style.display = '';
