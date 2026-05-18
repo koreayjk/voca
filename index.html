@@ -1122,7 +1122,7 @@ async function processNextMultiScan() {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
     });
     const data = await res.json();
     if (data.error) {
@@ -1157,7 +1157,7 @@ async function processNextMultiScan() {
 
 function renderWordSelectionMulti(words, idx, total) {
   const root = document.getElementById('root');
-  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
   root.innerHTML = `
     <div class="scr" style="padding-bottom:140px;">
       <div class="topnav">
@@ -1302,7 +1302,7 @@ async function doScan() {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n난이도 기준:\n- 상: 대학/원서 수준의 고급 어휘 (먼저 찾기)\n- 중: 고등학교 수준 어휘\n- 하: 중학교 수준 기본 어휘\n어려운 단어(상)를 먼저 찾고, 그 다음 중, 하 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"상"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
     });
     const data = await res.json();
     if (data.error) {
@@ -1335,7 +1335,7 @@ async function doScan() {
 
 function renderWordSelection(words) {
   const root = document.getElementById('root');
-  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
   root.innerHTML = `
     <div class="scr" style="padding-bottom:100px;">
       <div class="topnav">
@@ -1344,19 +1344,28 @@ function renderWordSelection(words) {
         <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
       </div>
       <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">저장할 단어를 선택해주세요</div>
-      <div style="display:flex;gap:10px;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:6px;background:#fdeaea;border-radius:99px;padding:5px 12px;">
-          <span style="width:12px;height:12px;border-radius:50%;background:#e74c3c;display:inline-block;"></span>
-          <span style="font-size:12px;font-weight:600;color:#e74c3c;">상 — 어려운</span>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(123,45,139,0.1);border-radius:99px;padding:4px 10px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#7b2d8b;display:inline-block;"></span>
+          <span style="font-size:11px;font-weight:700;color:#7b2d8b;">C2</span>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;background:#fef3e2;border-radius:99px;padding:5px 12px;">
-          <span style="width:12px;height:12px;border-radius:50%;background:#e67e22;display:inline-block;"></span>
-          <span style="font-size:12px;font-weight:600;color:#e67e22;">중</span>
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(192,57,43,0.1);border-radius:99px;padding:4px 10px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#c0392b;display:inline-block;"></span>
+          <span style="font-size:11px;font-weight:700;color:#c0392b;">C1</span>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;background:#eafaf1;border-radius:99px;padding:5px 12px;">
-          <span style="width:12px;height:12px;border-radius:50%;background:#27ae60;display:inline-block;"></span>
-          <span style="font-size:12px;font-weight:600;color:#27ae60;">하 — 쉬운</span>
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(230,126,34,0.1);border-radius:99px;padding:4px 10px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#e67e22;display:inline-block;"></span>
+          <span style="font-size:11px;font-weight:700;color:#e67e22;">B2</span>
         </div>
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(41,128,185,0.1);border-radius:99px;padding:4px 10px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#2980b9;display:inline-block;"></span>
+          <span style="font-size:11px;font-weight:700;color:#2980b9;">B1</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(39,174,96,0.1);border-radius:99px;padding:4px 10px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#27ae60;display:inline-block;"></span>
+          <span style="font-size:11px;font-weight:700;color:#27ae60;">A2</span>
+        </div>
+        <div style="margin-left:auto;font-size:10px;color:var(--ink-40);align-self:center;">CEFR 기준</div>
       </div>
       <div class="scr-scroll" id="word-sel-list">
         ${words.map((w, i) => `
@@ -1385,7 +1394,7 @@ function toggleWord(i) {
   const sel = window._wordSelected[i];
   const el = document.getElementById(`wsel-${i}`);
   const check = document.getElementById(`wsel-check-${i}`);
-  const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+  const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
   const level = pendingW[i]?.level || '중';
   if (sel) {
     el.style.border = `2px solid ${levelColor[level]||'#ddd'}`;
@@ -1406,7 +1415,7 @@ function toggleAllWords() {
   window._wordSelected.forEach((sel, i) => {
     const el = document.getElementById(`wsel-${i}`);
     const check = document.getElementById(`wsel-check-${i}`);
-    const levelColor = { '상': '#e74c3c', '중': '#e67e22', '하': '#27ae60' };
+    const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
     const level = pendingW[i]?.level || '중';
     if (el && check) {
       el.style.border = sel ? `2px solid ${levelColor[level]||'#ddd'}` : '2px solid var(--ink-12)';
@@ -1465,7 +1474,7 @@ function initStudy(bookId, scope, pageNum) {
 function renderScanLoading(current=1, total=1) {
   const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#27ae60':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
   const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : '단어를 분석하고 있어요';
-  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e74c3c;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e74c3c;">상</strong> — 대학/원서 수준 고급 어휘</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">중</strong> — 고등학교 수준 어휘</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">하</strong> — 중학교 수준 기본 어휘</span></div></div></div></div></div>`;
+  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — 원어민 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — 대학/원서 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — 고급 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — 초급</span></div></div></div></div></div>`;
 }
 
 function buildDock() {
@@ -1655,7 +1664,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">기본 뜻 + 문맥 뜻</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map(w=>{const lc={'상':'#e74c3c','중':'#e67e22','하':'#27ae60'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
+          ${page.words.map(w=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
         <div class="btn-fixed">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">암기 카드로 보내기</button>
@@ -1941,7 +1950,7 @@ async function saveReviewSchedule(bookId, pageNum) {
     const res = await fetch(SB_URL + '/rest/v1/voca_review', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
-      body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 6), review_15d: addDays(now, 15), review_30d: addDays(now, 30), review_60d: addDays(now, 60) })
+      body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 3), review_15d: addDays(now, 6), review_30d: addDays(now, 15), review_60d: addDays(now, 30) })
     });
     const data = await res.json();
     if (data.error || data.code) console.error('[복습 저장 오류]', data);
@@ -2269,7 +2278,7 @@ function addManualWord() {
   const en = enInput?.value.trim();
   if (!en) { toast('영어 단어를 입력해주세요'); return; }
   if (window._manualWords.find(w => w.en.toLowerCase() === en.toLowerCase())) { toast('이미 추가된 단어예요'); enInput.value=''; enInput.focus(); return; }
-  window._manualWords.push({ en, base: '', ctx: '', level: '중', ipa: '' });
+  window._manualWords.push({ en, base: '', ctx: '', level: 'B1', ipa: '' });
   enInput.value = ''; enInput.focus();
   document.getElementById('manual-word-list').innerHTML = renderManualWordList();
   const saveBtn = document.getElementById('manual-save-btn');
