@@ -1771,7 +1771,16 @@ function advance(isKnown) {
   if (s.idx+1<s.queue.length) { s.idx++; s.xList=newX; s.flipped=false; renderStudyCard(); }
   else if (newX.length===0) {
     saveStats(s.bookId, s.stats.total, s.stats.oCount);
-    if (s.scope === 'page' && s.pageNum) saveReviewSchedule(s.bookId, s.pageNum);
+    if (s.scope === 'page' && s.pageNum) {
+      if (s._reviewId && s._reviewStepKey) {
+        // 복습 모드 - 다음 단계로 업데이트
+        updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey });
+        toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
+      } else {
+        // 일반 학습 - 복습 일정 새로 등록
+        saveReviewSchedule(s.bookId, s.pageNum);
+      }
+    }
     replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total});
   }
   else { s.round++; s.queue=shuffle(newX); s.idx=0; s.xList=[]; s.flipped=false; renderStudyCard(); }
@@ -2065,9 +2074,11 @@ async function startReviewSession() {
   const first = due[0];
   const book = findBook(first.book_id);
   if (!book) return;
-  await updateReviewStep(first);
   toast(`${book.title} Page ${first.page_num} 복습 시작!`);
   initStudy(first.book_id, 'page', first.page_num);
+  // reviewId, stepKey를 studyState에 저장해서 완료 시 업데이트
+  studyState._reviewId = first.id;
+  studyState._reviewStepKey = first._stepKey;
   stack = [{name:'study-cards', bookId:first.book_id, scope:'page', pageNum:first.page_num}];
   render();
 }
@@ -2213,13 +2224,12 @@ async function renderReviewPage(root, dock) {
 }
 
 async function startSingleReview(bookId, pageNum, reviewId, stepKey) {
-  const patch = {};
-  if (stepKey === 'review_60d') { patch.review_60d = null; patch.completed = true; }
-  else patch[stepKey] = null;
-  try {
-    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${reviewId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify(patch) });
-  } catch(e) {}
+  // 바로 업데이트 하지 않고 studyState에 저장
+  // 모든 단어를 ○ 완료해야 다음 단계로 넘어감
   initStudy(bookId, 'page', pageNum);
+  // reviewId, stepKey를 studyState에 저장해서 완료 시 업데이트
+  studyState._reviewId = reviewId;
+  studyState._reviewStepKey = stepKey;
   push({ name: 'study-cards', bookId, scope: 'page', pageNum });
 }
 
