@@ -1474,9 +1474,13 @@ function buildDock() {
 }
 
 function render() {
-  // 화면 전환 시 복습 배너 항상 숨기기
+  // 암기카드/퀴즈 화면일 때만 배너 숨기기 (다른 화면에서는 유지)
   const _rb = document.getElementById('review-banner');
-  if (_rb) { _rb.classList.remove('show'); _rb.style.pointerEvents = 'none'; _rb.style.display = 'none'; }
+  const _route = stack[stack.length-1];
+  const _studyScreens = ['study-cards', 'quiz', 'study-done'];
+  if (_rb && _studyScreens.includes(_route.name)) {
+    _rb.classList.remove('show'); _rb.style.pointerEvents = 'none'; _rb.style.display = 'none';
+  }
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
@@ -2009,6 +2013,8 @@ async function checkReviews() {
     if (!Array.isArray(reviews)) return;
     const due = [];
     reviews.forEach(r => {
+      // 책이 삭제됐으면 복습 알림에서 제외
+      if (!findBook(r.book_id)) return;
       const steps = [
         { key: 'review_2d',  label: '1일차',  date: r.review_2d  },
         { key: 'review_3d',  label: '2일차',  date: r.review_3d  },
@@ -2098,6 +2104,8 @@ async function renderReviewPage(root, dock) {
     ];
     const todayDue = [], upcoming = [], done = [];
     reviews.forEach(r => {
+      // 책이 삭제됐으면 복습 목록에서 제외
+      if (!findBook(r.book_id)) return;
       if (r.completed) { done.push(r); return; }
       const overdueStep = STEPS.find(s => r[s.key] && r[s.key] <= today);
       if (overdueStep) { todayDue.push({ ...r, _stepKey: overdueStep.key, _stepLabel: overdueStep.label }); return; }
@@ -2107,6 +2115,8 @@ async function renderReviewPage(root, dock) {
 
     function reviewCard(r, type) {
       const book = findBook(r.book_id);
+      // 책이 삭제됐으면 카드 표시 안 함
+      if (!book) return '';
       const page = book ? findPage(book, r.page_num) : null;
       const wordCount = page?.words.length || 0;
       const studiedDate = new Date(r.first_studied_at).toLocaleDateString('ko-KR');
