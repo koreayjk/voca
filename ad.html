@@ -179,10 +179,19 @@
       <div class="feat-title">에빙하우스 복습</div>
       <div class="feat-desc">망각 전에 자동 알림으로 장기 기억으로 완성해요</div>
     </div>
-    <div class="feat">
-      <div class="feat-icon">🎓</div>
-      <div class="feat-title">Comprehensible Input</div>
-      <div class="feat-desc">영어 교육학 이론 기반의 자연스러운 단어 습득 방식이에요</div>
+    <div class="feat" style="grid-column:1/-1;background:#fff8f0;border-color:rgba(204,85,0,0.2);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="feat-icon" style="margin-bottom:0;">🎓</div>
+        <div>
+          <div class="feat-title" style="margin-bottom:2px;">Comprehensible Input</div>
+          <div style="font-size:11px;color:#cc5500;font-weight:600;">이해 가능한 입력 이론</div>
+        </div>
+      </div>
+      <div class="feat-desc" style="line-height:1.8;">
+        언어학자 <strong style="color:#1a1511;">크라센(Krashen) 박사</strong>가 제시한 언어 습득 이론이에요.<br>
+        단어를 억지로 암기하는 대신, <strong style="color:#1a1511;">이미 읽고 있는 책의 문맥</strong> 속에서 뜻을 파악하면 훨씬 오래 기억에 남아요.<br>
+        IM VOCA는 이 원리를 그대로 적용해 — 내가 읽는 책에서 나온 단어를, 그 문맥에 맞는 뜻으로 저장해요.
+      </div>
     </div>
     <div class="feat">
       <div class="feat-icon">📱</div>
@@ -195,6 +204,28 @@
   <div class="section-label">에빙하우스 망각곡선</div>
   <div class="ebb">
     <div class="ebb-title">📊 과학적으로 증명된 복습 일정</div>
+
+    <!-- 설명 -->
+    <div style="font-size:13px;color:#555;line-height:1.8;margin-bottom:16px;">
+      19세기 독일 심리학자 <strong style="color:#1a1511;">헤르만 에빙하우스(Hermann Ebbinghaus)</strong>는 사람이 새로 배운 내용을 시간이 지나면서 얼마나 잊는지 연구했어요.<br>
+      실험 결과, 학습 후 <strong style="color:#cc5500;">20분이 지나면 42%, 하루가 지나면 67%, 한 달 후엔 79%</strong>를 잊게 된다는 사실을 발견했어요.<br>
+      하지만 <strong style="color:#1a1511;">망각이 일어나기 직전에 복습하면</strong> 기억이 더 강하게 굳어지고, 다음 망각까지의 시간이 점점 길어져요.
+    </div>
+
+    <!-- 그래프 -->
+    <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid rgba(204,85,0,0.12);">
+      <div style="font-size:11px;font-weight:600;color:#cc5500;margin-bottom:12px;text-align:center;">기억 유지율 변화 (복습 없을 때 vs IM VOCA 복습 시)</div>
+      <div style="position:relative;width:100%;height:180px;">
+        <canvas id="ebbChart" role="img" aria-label="에빙하우스 망각곡선 그래프. 복습 없을 때는 급격히 감소하고 IM VOCA 복습 시 높은 기억률 유지">기억 유지율: 복습 없을 때 급격히 감소, 복습 시 높은 수준 유지</canvas>
+      </div>
+      <div style="display:flex;gap:20px;justify-content:center;margin-top:10px;font-size:11px;color:#888;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#ddd;display:inline-block;border-radius:2px;"></span>복습 없을 때</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#cc5500;display:inline-block;border-radius:2px;"></span>IM VOCA 복습 시</span>
+      </div>
+    </div>
+
+    <!-- 복습 일정 -->
+    <div style="font-size:12px;color:#888;margin-bottom:10px;">IM VOCA 자동 복습 일정</div>
     <div class="ebb-days">
       <span class="ebb-day">학습 당일</span>
       <span class="ebb-day">1일 후</span>
@@ -205,8 +236,78 @@
       <span class="ebb-day">30일 후</span>
       <span class="ebb-day">60일 후</span>
     </div>
-    <div class="ebb-desc">암기 카드를 완료하면 자동으로 복습 일정이 등록돼요. 망각하기 직전에 복습하면 장기 기억으로 완전히 내 것이 됩니다.</div>
+    <div class="ebb-desc" style="margin-top:12px;">암기 카드를 완료하면 자동으로 복습 일정이 등록돼요. 망각하기 직전에 복습하면 장기 기억으로 완전히 내 것이 됩니다.</div>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script>
+  (function() {
+    const ctx = document.getElementById('ebbChart');
+    if (!ctx) return;
+    const labels = ['0일', '1일', '2일', '3일', '6일', '15일', '30일', '60일'];
+    const forgetting = [100, 33, 28, 25, 22, 20, 18, 16];
+    const withReview = [100, 95, 98, 97, 96, 95, 94, 93];
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: '복습 없을 때',
+            data: forgetting,
+            borderColor: '#ccc',
+            backgroundColor: 'rgba(200,200,200,0.08)',
+            borderWidth: 2,
+            borderDash: [5, 4],
+            pointRadius: 3,
+            pointBackgroundColor: '#ccc',
+            fill: true,
+            tension: 0.4,
+          },
+          {
+            label: 'IM VOCA 복습 시',
+            data: withReview,
+            borderColor: '#cc5500',
+            backgroundColor: 'rgba(204,85,0,0.08)',
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: '#cc5500',
+            fill: true,
+            tension: 0.4,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%'
+            }
+          }
+        },
+        scales: {
+          y: {
+            min: 0, max: 110,
+            ticks: {
+              callback: v => v + '%',
+              font: { size: 10 },
+              color: '#999',
+              stepSize: 25,
+            },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          },
+          x: {
+            ticks: { font: { size: 10 }, color: '#999', autoSkip: false },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  })();
+  </script>
 
   <!-- 비교 -->
   <div class="section-label">다른 앱과의 차이</div>
