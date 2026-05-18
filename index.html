@@ -531,14 +531,30 @@ async function sbInit() {
 
 
 // ── 데모 링크로 로그인 ──
-async function loginWithDemoToken(token) {
+async function loginWithDemoToken(code) {
   try {
-    // 토큰 디코딩 (base64)
-    const decoded = JSON.parse(atob(token));
-    const { access_token, expires_at } = decoded;
+    // 로딩 표시
+    document.getElementById('root').innerHTML = `
+      <div class="scr" style="justify-content:center;align-items:center;gap:16px;">
+        <div class="ring"></div>
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:600;color:var(--ink-100);">입장 중...</div>
+          <div class="muted" style="font-size:12px;margin-top:4px;">잠깐만 기다려주세요</div>
+        </div>
+      </div>`;
+
+    // DB에서 코드로 토큰 조회
+    const res = await fetch(SB_URL + `/rest/v1/demo_links?code=eq.${code}&select=*`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    const data = await res.json();
+
+    if (!data?.length) { toast('유효하지 않은 링크예요'); renderLogin(); return; }
+
+    const { access_token, expires_at } = data[0];
 
     // 만료 확인
-    if (!access_token || Date.now() > expires_at) {
+    if (new Date() > new Date(expires_at)) {
       toast('링크가 만료됐어요. 새 링크를 받아주세요');
       renderLogin();
       return;
@@ -554,10 +570,10 @@ async function loginWithDemoToken(token) {
     _authToken = access_token;
     currentUser = userData;
 
-    // 세션 저장 (탭 닫아도 유지)
+    // 세션 저장
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token, user: userData }));
 
-    toast('✅ 데모 링크로 입장했어요!');
+    toast('✅ 입장했어요!');
     await loadApiKey();
     await loadUserName();
     await loadBooksFromDB();
@@ -570,43 +586,74 @@ async function loginWithDemoToken(token) {
 }
 
 // ── 데모 링크 생성 (관리자 전용) ──
-function generateDemoLink() {
+async function generateDemoLink() {
   if (!_authToken) { toast('로그인 상태가 아니에요'); return; }
 
-  // 24시간 후 만료
-  const expires_at = Date.now() + 24 * 60 * 60 * 1000;
-  const payload = { access_token: _authToken, expires_at };
-  const token = btoa(JSON.stringify(payload));
-  const link = `${window.location.origin}${window.location.pathname}?demo=${token}`;
+  toast('링크 생성 중...');
 
-  // 클립보드 복사
-  navigator.clipboard.writeText(link).then(() => {
-    toast('✅ 링크가 복사됐어요! 카톡으로 보내세요');
-  }).catch(() => {
-    // 클립보드 실패 시 직접 보여주기
-    showDemoLinkModal(link);
-  });
+  // 6자리 랜덤 코드 생성
+  const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const expires_at = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
+  try {
+    // Supabase demo_links 테이블에 저장
+    const res = await fetch(SB_URL + '/rest/v1/demo_links', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + _authToken,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ code, access_token: _authToken, expires_at })
+    });
+
+    if (!res.ok) { toast('링크 생성 실패: ' + res.status); return; }
+
+    const link = `https://koreayjk.github.io/voca/?demo=${code}`;
+    showDemoLinkModal(link, code);
+  } catch(e) { toast('오류: ' + e.message); }
 }
 
-function showDemoLinkModal(link) {
+function showDemoLinkModal(link, code) {
   const overlay = document.createElement('div');
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
   overlay.innerHTML = `
     <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;">
-      <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">📎 데모 링크</div>
-      <div style="font-size:11px;color:var(--ink-60);margin-bottom:12px;">아래 링크를 복사해서 카톡으로 보내주세요 · 24시간 유효</div>
-      <div style="background:var(--bg-input);border-radius:10px;padding:12px;font-size:11px;color:var(--ink-100);word-break:break-all;margin-bottom:12px;line-height:1.5;">${link}</div>
-      <button onclick="navigator.clipboard.writeText('${link}').then(()=>toast('복사됐어요!'));this.parentNode.parentNode.remove();"
-        style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;">
+      <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">🔗 데모 링크 생성됨!</div>
+      <div style="font-size:11px;color:var(--ink-60);margin-bottom:16px;">24시간 유효 · 카톡으로 바로 보내세요</div>
+
+      <!-- 링크 표시 -->
+      <div style="background:var(--bg-input);border-radius:12px;padding:14px;margin-bottom:12px;">
+        <div style="font-size:10px;color:var(--ink-40);margin-bottom:6px;">링크</div>
+        <div style="font-size:13px;color:var(--accent);font-weight:600;word-break:break-all;">${link}</div>
+      </div>
+
+      <!-- 복사 버튼 -->
+      <button id="demo-copy-btn" onclick="
+        navigator.clipboard.writeText('${link}').then(()=>{
+          document.getElementById('demo-copy-btn').textContent='✅ 복사됐어요!';
+          setTimeout(()=>document.getElementById('demo-copy-btn').textContent='링크 복사하기',2000);
+        }).catch(()=>{
+          document.getElementById('demo-copy-btn').textContent='✅ 복사됐어요!';
+        });
+        "
+        style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;">
         링크 복사하기
       </button>
-      <button onclick="this.parentNode.parentNode.remove();"
-        style="width:100%;padding:12px;background:none;color:var(--ink-60);border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;margin-top:6px;">
+
+      <button onclick="this.closest('[style*=fixed]').remove();"
+        style="width:100%;padding:12px;background:none;color:var(--ink-60);border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;">
         닫기
       </button>
     </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+
+  // 자동 복사 시도
+  navigator.clipboard.writeText(link).then(() => {
+    toast('✅ 링크가 복사됐어요! 카톡으로 보내세요');
+  }).catch(() => {});
 }
 
 async function loadUserName() {
