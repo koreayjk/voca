@@ -972,12 +972,26 @@ async function openCamera() {
   if (!window._cameraShots) window._cameraShots = [];
   const area = document.getElementById('camera-area');
   const video = document.getElementById('camera-video');
+  // 모바일 감지
+  const isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
+  if (isMobile) {
+    // 모바일: 세로 비율
+    video.style.maxHeight = '520px';
+    video.style.aspectRatio = '9/16';
+  } else {
+    // 노트북: 가로 비율
+    video.style.maxHeight = '280px';
+    video.style.aspectRatio = '';
+  }
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1080 }, height: { ideal: 1440 } } });
+    const constraints = isMobile
+      ? { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1080 }, height: { ideal: 1920 } } }
+      : { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } };
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
     video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
   } catch(e) {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1080 }, height: { ideal: 1440 } } });
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
     } catch(e2) { toast('카메라 접근 권한이 필요해요'); }
   }
