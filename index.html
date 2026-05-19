@@ -963,7 +963,7 @@ async function searchBook() {
     const res = await fetch(`https://imvoca-books.koreayjk.workers.dev/?q=${encodeURIComponent(title)}`);
     const data = await res.json();
     const results = data.books || [];
-    if (!results.length) { listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 결과가 없어요</div>'; return; }
+    if (!results.length) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">${t('noResult')}</div>`; return; }
     window._bookResults = results;
     listEl.innerHTML = results.map((b, i) => `
       <button type="button" onclick="pickBook(${i})" class="book-search-btn" style="display:flex;gap:10px;padding:12px;border-radius:8px;cursor:pointer;border:none;border-bottom:1px solid var(--ink-07);background:transparent;width:100%;text-align:left;font-family:var(--font-body);align-items:center;">
@@ -1580,8 +1580,8 @@ function initStudy(bookId, scope, pageNum) {
 
 function renderScanLoading(current=1, total=1) {
   const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#27ae60':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
-  const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : '단어를 분석하고 있어요';
-  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">단어 인식 중</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — 원어민 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — 대학/원서 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — 고급 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — 초급</span></div></div></div></div></div>`;
+  const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : t('analyzing');
+  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">${t('scanning')}</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — 원어민 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — 대학/원서 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — 고급 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — 초급</span></div></div></div></div></div>`;
 }
 
 function buildDock() {
@@ -1658,13 +1658,13 @@ function render() {
             <div>
               <div class="book-hero__title">${book.title}</div>
               <div class="book-hero__author">${book.author}</div>
-              <div class="book-hero__badge">저장된 책</div>
+              <div class="book-hero__badge">${t('savedBook')}</div>
               <div class="book-hero__desc">${book.desc||''}</div>
             </div>
           </div>
           <div class="rule"></div>
-          <div class="sect-row"><div class="sect-row__name">페이지별 단어</div><div class="sect-row__count">${countWords(book)} words</div></div>
-          ${book.pages.length===0?'<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">아직 저장된 단어가 없어요</div>':
+          <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
+          ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
           book.pages.map(p=>`
             <div class="page-row">
               <span class="page-row__num" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="flex:1;cursor:pointer;">Page ${p.num}</span>
@@ -1676,8 +1676,8 @@ function render() {
             </div>`).join('')}
         </div>
         <div class="btn-fixed" style="flex-direction:row;gap:8px;">
-          <button class="btn btn-solid" style="flex:1;" onclick="push({name:'capture',bookId:'${book.id}'})">📷 페이지 촬영</button>
-          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}'})">✏️ 직접 입력</button>
+          <button class="btn btn-solid" style="flex:1;" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
+          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
         </div>
       </div>`;
   }
@@ -1694,7 +1694,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${t('pageAdd')}</div>
         <div class="muted" style="font-size:12px;margin-top:4px">${t('pageAddDesc')}</div>
         <div class="scr-scroll" style="margin-top:14px">
-          <div class="label-xs">책 선택</div>
+          <div class="label-xs">${t('bookSelect')}</div>
           <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;appearance:none;cursor:pointer">
             ${books.map(b=>`<option value="${b.id}" ${b.id===route.bookId?'selected':''}>${b.title}</option>`).join('')}
           </select>
@@ -1776,7 +1776,7 @@ function render() {
           ${page.words.map(w=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
         <div class="btn-fixed">
-          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">암기 카드로 보내기</button>
+          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${t('sendToCard')}</button>
         </div>
       </div>`;
   }
@@ -1803,16 +1803,16 @@ function render() {
           ${books.map(b=>`<div class="list-row" onclick="ssSelectBook('${b.id}')"><div style="width:38px;height:52px;border-radius:5px;background:${b.color};flex-shrink:0"></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--ink-100);">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div><div class="radio ${s.bookId===b.id?'radio--on':''}">${s.bookId===b.id?'✓':''}</div></div>`).join('')}
         </div>
         ${book?`<div class="label-xs" style="margin-top:16px">범위</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
-          <div class="scope-card ${s.scope==='all'?'scope-card--on':''}" onclick="ssSelectScope('all')"><div class="scope-card__head"><div><div class="scope-card__name">책 전체</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${s.scope==='all'?'radio--on':''}">${s.scope==='all'?'✓':''}</div></div></div>
-          <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">페이지별</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:var(--ink-100);color:var(--bg-page);border-color:var(--ink-100)':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
+          <div class="scope-card ${s.scope==='all'?'scope-card--on':''}" onclick="ssSelectScope('all')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopeAll')}</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${s.scope==='all'?'radio--on':''}">${s.scope==='all'?'✓':''}</div></div></div>
+          <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopePage')}</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:var(--ink-100);color:var(--bg-page);border-color:var(--ink-100)':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
         </div>`:''}
         <div style="height:22px"></div>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">🃏 암기 카드${canStart?` — ${total}개`:''}</button>
-          <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >🎯 퀴즈 모드${canStart?` — ${total}개`:''}</button>
+          <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">${t('flashCard')}${canStart?` — ${total}개`:''}</button>
+          <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >${t('quizModeBtn')}${canStart?` — ${total}개`:''}</button>
         </div>`;
     };
-    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">어느 책의 단어를 외울까요</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
+    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('whichBook')}</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
     ssRender();
   }
 
@@ -1836,7 +1836,7 @@ function render() {
           <div class="done__n">${route.total}</div>
           <div class="done__label">${t('wordsMemorized')}</div>
           ${route.scope==='page'?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
-            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">📊 에빙하우스 망각곡선 복습 등록됨!</div>
+            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">${t('reviewRegistered')}</div>
             <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">1일 · 2일 · 3일 · 6일 · 15일 · 30일 · 60일 후<br>로그인하면 복습 알림이 자동으로 나타나요</div>
           </div>`:''}
           <div class="done__grid">
@@ -1846,7 +1846,7 @@ function render() {
           <div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px">
             <button class="btn btn-solid" onclick="initStudy('${route.bookId}','${route.scope}','${route.pageNum}');push({name:'study-cards',bookId:'${route.bookId}',scope:'${route.scope}',pageNum:'${route.pageNum}'})">${t('studyAgain')}</button>
             <button class="btn btn-outline" onclick="startQuiz('${route.bookId}','${route.scope}','${route.pageNum}')">${t('quizMode')}</button>
-            <button class="btn btn-outline" onclick="goTab('books')">책장으로</button>
+            <button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf2')}</button>
           </div>
         </div>
       </div>`;
@@ -1857,7 +1857,7 @@ function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">🔊 발음 듣기</button></div><div class="card__tap">탭해서 뜻 보기</div></div><div class="face face-back"><div class="back__word">${w.en}</div><div class="back__label">기본 뜻</div><div class="back__meaning">${w.base}</div><div class="back__label">이 페이지에선</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'탭해서 뜻 보기  |  ○✕ 바로 선택 가능'}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'탭해서 뜻 보기  |  ○✕ 바로 선택 가능'}</div></div>`;
 }
 
 function flipCard() {
@@ -2057,7 +2057,7 @@ function speak(word) {
 }
 
 async function renderStats(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">나의 학습 기록</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div></div></div>` + dock;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const stats = await res.json();
@@ -2068,23 +2068,23 @@ async function renderStats(root, dock) {
     const avgRate = totalStudied ? Math.round(totalCorrect / totalStudied * 100) : 0;
     el.innerHTML = `
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:var(--accent);">${totalStudied}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">총 학습 단어</div></div>
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#27ae60;">${avgRate}%</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">평균 정답률</div></div>
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#3498db;">${stats.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">총 학습 횟수</div></div>
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#9b59b6;">${books.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">등록 책 수</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:var(--accent);">${totalStudied}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('totalWords')}</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#27ae60;">${avgRate}%</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('avgRate')}</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#3498db;">${stats.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('totalCount')}</div></div>
+        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#9b59b6;">${books.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('bookCount')}</div></div>
       </div>
-      <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--ink-100);">최근 학습 기록</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--ink-100);">${t('recentRecord')}</div>
       ${stats.slice(0,10).map(s => {
         const book = findBook(s.book_id);
         const rate = s.total ? Math.round(s.correct/s.total*100) : 0;
         const date = new Date(s.studied_at).toLocaleDateString('ko-KR');
-        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--ink-07);"><div><div style="font-size:13px;font-weight:600;color:var(--ink-100);">${book?.title||'삭제된 책'}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${date} · ${s.total}개 단어</div></div><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:20px;font-weight:700;color:${rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c'};">${rate}%</div><button onclick="deleteStats('${s.id}')" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">🗑️</button></div></div>`;
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--ink-07);"><div><div style="font-size:13px;font-weight:600;color:var(--ink-100);">${book?.title||t('deletedBook')}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${date} · ${s.total}개 단어</div></div><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:20px;font-weight:700;color:${rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c'};">${rate}%</div><button onclick="deleteStats('${s.id}')" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">🗑️</button></div></div>`;
       }).join('')}`;
   } catch(e) { document.getElementById('stats-inner').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`; }
 }
 
 function renderSearch(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="영어 또는 한국어로 검색..." oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">단어를 입력하세요</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="영어 또는 한국어로 검색..." oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('wordInput')}</div></div></div>` + dock;
 }
 
 function doWordSearch() {
@@ -2305,7 +2305,7 @@ async function renderReviewPage(root, dock) {
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
       <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
-      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">복습 현황</div>
+      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${t('reviewStatus')}</div>
     </div>
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
       <span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;font-weight:600;">에빙하우스 망각곡선</span>
@@ -2419,9 +2419,9 @@ async function renderReviewPage(root, dock) {
     let html = '';
     if (todayDue.length) {
       html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <div style="font-size:13px;font-weight:700;color:var(--accent);">🔥 오늘 복습</div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent);">${t('todayReview')}</div>
         <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;">${todayDue.length}개</div>
-        <div style="font-size:11px;color:var(--ink-60);">탭해서 바로 시작</div>
+        <div style="font-size:11px;color:var(--ink-60);">${t('tapToStart')}</div>
       </div>`;
       html += todayDue.map(r => reviewCard(r, 'due')).join('');
     }
