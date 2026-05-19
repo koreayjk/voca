@@ -1139,7 +1139,7 @@ function renderMultiPreview(dataUrls) {
     <div style="display:grid;grid-template-columns:repeat(${Math.min(dataUrls.length,3)},1fr);gap:6px;margin-bottom:10px;">
       ${dataUrls.map((d,i) => `
         <div style="position:relative;">
-          <img src="${d}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block;">
+          <img src="${d}" style="width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:8px;display:block;">
           <div style="position:absolute;top:4px;left:4px;background:var(--accent);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;">${i+1}</div>
         </div>`).join('')}
     </div>
