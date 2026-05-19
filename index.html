@@ -810,6 +810,14 @@ async function savePageWordsToDB(bookId, pageNum, words) {
 function renderLogin(tab='login') {
   document.getElementById('root').innerHTML = `
     <div class="scr" style="justify-content:center">
+      <!-- 언어 설정 버튼 -->
+      <div style="text-align:right;margin-bottom:12px;">
+        <button onclick="showLangSettings()" style="background:var(--bg-card);border:1.5px solid var(--ink-12);border-radius:99px;padding:7px 14px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);display:inline-flex;align-items:center;gap:6px;">
+          🌐 <span>${getNativeLang().flag} ${getNativeLang().name}</span>
+          <span style="color:var(--ink-40);">→</span>
+          <span>${getTargetLang().flag} ${getTargetLang().name}</span>
+        </button>
+      </div>
       <div style="text-align:center;margin-bottom:28px">
         <img src="https://koreayjk.github.io/voca/2.png" style="width:140px;height:140px;object-fit:contain;margin-bottom:4px;">
         <div class="muted" style="font-size:12px;margin-top:2px">영어책 단어장</div>
@@ -888,6 +896,115 @@ async function geminiWithRetry(body, maxRetry=7) {
 
 const COLORS = ['#8b4513','#6b5a3e','#7a4a2a','#5a6b3e','#4a3a6b','#6b3a4a','#3e5a4a'];
 let books = [], apiKey = '', userName = '';
+
+// ── 언어 설정 ──
+const LANG_OPTIONS = [
+  { code: 'ko', name: '한국어', flag: '🇰🇷' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷' },
+  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'id', name: 'Bahasa', flag: '🇮🇩' },
+];
+const TARGET_LANG_OPTIONS = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷' },
+];
+
+// 저장된 언어 설정 불러오기 (기본값: 한국어→영어)
+let userNativeLang = localStorage.getItem('imvoca.nativeLang') || 'ko';
+let userTargetLang = localStorage.getItem('imvoca.targetLang') || 'en';
+
+function getNativeLang() { return LANG_OPTIONS.find(l => l.code === userNativeLang) || LANG_OPTIONS[0]; }
+function getTargetLang() { return TARGET_LANG_OPTIONS.find(l => l.code === userTargetLang) || TARGET_LANG_OPTIONS[0]; }
+
+function saveLangSettings(native, target) {
+  userNativeLang = native;
+  userTargetLang = target;
+  localStorage.setItem('imvoca.nativeLang', native);
+  localStorage.setItem('imvoca.targetLang', target);
+}
+
+function showLangSettings() {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;">
+      <div style="width:32px;height:3px;background:var(--ink-12);border-radius:2px;margin:0 auto 18px;"></div>
+      <div style="font-family:var(--font-display);font-size:20px;letter-spacing:-0.03em;margin-bottom:4px;color:var(--ink-100);">언어 설정</div>
+      <div style="font-size:12px;color:var(--ink-60);margin-bottom:20px;">모국어와 공부할 언어를 선택하세요</div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--ink-40);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">내 언어 (모국어)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;" id="native-lang-btns">
+        ${LANG_OPTIONS.map(l => `
+          <button onclick="selectNativeLang('${l.code}')" id="nl-${l.code}"
+            style="padding:8px 14px;border-radius:99px;border:1.5px solid ${userNativeLang===l.code?'var(--accent)':'var(--ink-12)'};background:${userNativeLang===l.code?'var(--gold-bg)':'var(--bg-card)'};font-family:var(--font-body);font-size:13px;cursor:pointer;color:${userNativeLang===l.code?'var(--accent)':'var(--ink-100)'};">
+            ${l.flag} ${l.name}
+          </button>`).join('')}
+      </div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--ink-40);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">공부할 언어</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;" id="target-lang-btns">
+        ${TARGET_LANG_OPTIONS.map(l => `
+          <button onclick="selectTargetLang('${l.code}')" id="tl-${l.code}"
+            style="padding:8px 14px;border-radius:99px;border:1.5px solid ${userTargetLang===l.code?'var(--accent)':'var(--ink-12)'};background:${userTargetLang===l.code?'var(--gold-bg)':'var(--bg-card)'};font-family:var(--font-body);font-size:13px;cursor:pointer;color:${userTargetLang===l.code?'var(--accent)':'var(--ink-100)'};">
+            ${l.flag} ${l.name}
+          </button>`).join('')}
+      </div>
+
+      <button onclick="applyLangSettings()" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;">저장하기</button>
+      <button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;background:none;color:var(--ink-60);border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;">취소</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+
+  window._pendingNative = userNativeLang;
+  window._pendingTarget = userTargetLang;
+}
+
+function selectNativeLang(code) {
+  window._pendingNative = code;
+  document.querySelectorAll('[id^="nl-"]').forEach(btn => {
+    const c = btn.id.replace('nl-','');
+    btn.style.borderColor = c === code ? 'var(--accent)' : 'var(--ink-12)';
+    btn.style.background = c === code ? 'var(--gold-bg)' : 'var(--bg-card)';
+    btn.style.color = c === code ? 'var(--accent)' : 'var(--ink-100)';
+  });
+}
+
+function selectTargetLang(code) {
+  window._pendingTarget = code;
+  document.querySelectorAll('[id^="tl-"]').forEach(btn => {
+    const c = btn.id.replace('tl-','');
+    btn.style.borderColor = c === code ? 'var(--accent)' : 'var(--ink-12)';
+    btn.style.background = c === code ? 'var(--gold-bg)' : 'var(--bg-card)';
+    btn.style.color = c === code ? 'var(--accent)' : 'var(--ink-100)';
+  });
+}
+
+function applyLangSettings() {
+  if (window._pendingNative === window._pendingTarget) {
+    toast('모국어와 학습 언어는 달라야 해요!'); return;
+  }
+  saveLangSettings(window._pendingNative, window._pendingTarget);
+  document.querySelector('[style*="position:fixed"][style*="z-index:9999"]')?.remove();
+  const native = getNativeLang();
+  const target = getTargetLang();
+  toast(`${native.flag} ${native.name} → ${target.flag} ${target.name} 설정됐어요!`);
+  // 로그인 화면이면 renderLogin, 아니면 render
+  if (!currentUser) renderLogin();
+  else render();
+}
 let imgData = null, pendingW = null, pendingB = null, pendingP = null;
 
 function toast(m) { const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
@@ -1204,7 +1321,7 @@ async function processNextMultiScan() {
   let words;
   try {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
-    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
+    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt()}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
     if (data.error) {
       if (data.error.code === 403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
@@ -1337,6 +1454,15 @@ function selectExistingPage(pageNum) {
   if (renameInp) renameInp.placeholder = `예: ${pageNum}-${Number(pageNum)+2 || pageNum+'+'}`; 
 }
 
+
+function buildScanPrompt() {
+  const target = getTargetLang();
+  const native = getNativeLang();
+  const targetName = target.name;
+  const nativeName = native.name;
+  return `이 ${targetName} 책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 고급 어휘 (먼저 찾기)\n- B1~B2: 중상급 어휘\n- A2~B1: 중급 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\n반드시 JSON만 반환 (다른 텍스트 없이):\n{"words":[{"en":"${targetName} 단어","base":"${nativeName} 뜻","ctx":"${nativeName}로 문맥에서의 뜻","level":"C1"}]}`;
+}
+
 // ── 이미 등록된 단어 목록 추출 ──
 function getExistingWordList() {
   const words = [];
@@ -1378,7 +1504,7 @@ async function doScan() {
   let words;
   try {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
-    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
+    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt()}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
     if (data.error) {
       if (data.error.code === 403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
@@ -1597,7 +1723,7 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="showAdminMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">⚙️ 관리</button>`:''}
-          <button onclick="window.open('https://koreayjk.github.io/voca/ad.html','_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">앱 소개</button>
+          <button onclick="showLangSettings()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${getNativeLang().flag}→${getTargetLang().flag}</button><button onclick="window.open('https://koreayjk.github.io/voca/ad.html','_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">앱 소개</button>
           <button onclick="toggleDarkMode()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ 라이트':'🌙 다크'}</button>
           <button onclick="sbSignOut()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
         </div>
@@ -2464,7 +2590,7 @@ async function fetchWordMeaning(word) {
 
     // 2단계: MyMemory로 한국어 번역 (무료, API 키 불필요)
     const mmRes = await fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|ko&de=imvoca@gmail.com`
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${userTargetLang}|${userNativeLang}&de=imvoca@gmail.com`
     );
     const mmData = await mmRes.json();
 
@@ -2475,7 +2601,7 @@ async function fetchWordMeaning(word) {
     // MyMemory 실패 시 단어 자체를 번역 시도
     if (engMeaning) {
       const fallRes = await fetch(
-        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|ko&de=imvoca@gmail.com`
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=${userTargetLang}|${userNativeLang}&de=imvoca@gmail.com`
       );
       const fallData = await fallRes.json();
       if (fallData.responseStatus === 200) {
