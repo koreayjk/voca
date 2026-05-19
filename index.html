@@ -989,7 +989,7 @@ function pickBook(i) {
       <div>
         <div style="font-size:13px;font-weight:600;color:var(--ink-100);">${b.title}</div>
         <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${b.author}</div>
-        <div style="font-size:11px;color:var(--accent);margin-top:4px;">✓ 선택됨</div>
+        <div style="font-size:11px;color:var(--accent);margin-top:4px;">${userNativeLang==='ko'?'✓ 선택됨':'✓ Selected'}</div>
       </div>
     </div>`;
 }
@@ -1040,17 +1040,17 @@ function updateCameraCounter() {
   const captureBtn = document.getElementById('camera-capture-btn');
   const useBtn = document.getElementById('camera-use-btn');
   if (counter) {
-    counter.textContent = shots.length > 0 ? `${shots.length}/5장 촬영됨` : '';
+    counter.textContent = shots.length > 0 ? `${shots.length}/5 ${userNativeLang==='ko'?'장 촬영됨':'shots taken'}` : '';
     counter.style.display = shots.length > 0 ? 'block' : 'none';
   }
   if (captureBtn) {
-    captureBtn.textContent = shots.length >= 5 ? '📸 최대 5장' : '📸 촬영하기';
+    captureBtn.textContent = shots.length >= 5 ? userNativeLang==='ko'?'📸 최대 5장':'📸 Max 5' : userNativeLang==='ko'?'📸 촬영하기':'📸 Capture';
     captureBtn.disabled = shots.length >= 5;
     captureBtn.style.opacity = shots.length >= 5 ? '0.5' : '1';
   }
   if (useBtn) {
     useBtn.style.display = shots.length > 0 ? 'block' : 'none';
-    useBtn.textContent = shots.length === 1 ? `✅ 이 사진 사용하기` : `✅ ${shots.length}장 사용하기`;
+    useBtn.textContent = shots.length === 1 ? userNativeLang==='ko'?'✅ 이 사진 사용하기':'✅ Use This Photo' : userNativeLang==='ko'?`✅ ${shots.length}장 사용하기`:`✅ Use ${shots.length} Photos`;
   }
   // 썸네일 업데이트
   const thumbWrap = document.getElementById('camera-thumbs');
@@ -1160,7 +1160,7 @@ function renderUploadPreview() {
       '<img src="' + imgData + '" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover;display:block;">' +
       '<button id="cancel-preview-btn" style="position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.7);border:none;color:#fff;font-size:18px;cursor:pointer;z-index:10;line-height:32px;text-align:center;">✕</button>' +
     '</div>' +
-    '<button id="scan-preview-btn" style="width:100%;margin-top:10px;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:14px;font-family:var(--font-body);cursor:pointer;">🔍 단어 추출하기</button>';
+    `<button id="scan-preview-btn" style="width:100%;margin-top:10px;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:14px;font-family:var(--font-body);cursor:pointer;">${userNativeLang==='ko'?'🔍 단어 추출하기':'🔍 Extract Words'}</button>`;
   area.parentNode.insertBefore(preview, area.nextSibling);
   document.getElementById('cancel-preview-btn').addEventListener('click', function(e) {
     e.stopPropagation(); imgData = null;
@@ -1183,8 +1183,8 @@ function renderMultiPreview(dataUrls) {
   preview.style.cssText = 'margin-top:12px;';
   preview.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-      <div style="font-size:13px;font-weight:600;color:var(--ink-100);">📷 ${dataUrls.length}장 선택됨</div>
-      <button id="cancel-multi-btn" style="background:none;border:none;font-size:13px;color:var(--ink-40);cursor:pointer;padding:4px;">취소</button>
+      <div style="font-size:13px;font-weight:600;color:var(--ink-100);">📷 ${dataUrls.length}${userNativeLang==='ko'?'장 선택됨':' selected'}</div>
+      <button id="cancel-multi-btn" style="background:none;border:none;font-size:13px;color:var(--ink-40);cursor:pointer;padding:4px;">${userNativeLang==='ko'?'취소':'Cancel'}</button>
     </div>
     <div style="display:grid;grid-template-columns:repeat(${Math.min(dataUrls.length,3)},1fr);gap:6px;margin-bottom:10px;">
       ${dataUrls.map((d,i) => `
@@ -1193,8 +1193,8 @@ function renderMultiPreview(dataUrls) {
           <div style="position:absolute;top:4px;left:4px;background:var(--accent);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:2px 7px;">${i+1}</div>
         </div>`).join('')}
     </div>
-    <div style="font-size:11px;color:var(--ink-60);margin-bottom:10px;text-align:center;">순서대로 1장씩 단어를 추출해요 · 페이지 번호는 각 장마다 입력</div>
-    <button id="scan-multi-btn" style="width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:14px;font-family:var(--font-body);cursor:pointer;font-weight:600;">🔍 ${dataUrls.length}장 순서대로 추출하기</button>`;
+    <div style="font-size:11px;color:var(--ink-60);margin-bottom:10px;text-align:center;">${userNativeLang==='ko'?'순서대로 1장씩 단어를 추출해요 · 페이지 번호는 각 장마다 입력':'Words extracted one by one · Enter page number for each'}</div>
+    <button id="scan-multi-btn" style="width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:14px;font-family:var(--font-body);cursor:pointer;font-weight:600;">🔍 ${dataUrls.length}${userNativeLang==='ko'?'장 순서대로 추출하기':' photos in order'}</button>`;
   area.parentNode.insertBefore(preview, area.nextSibling);
   document.getElementById('cancel-multi-btn').addEventListener('click', function() {
     window._multiImgData = null;
@@ -1268,16 +1268,16 @@ function renderWordSelectionMulti(words, idx, total) {
   root.innerHTML = `
     <div class="scr" style="padding-bottom:140px;">
       <div class="topnav">
-        <span class="topnav__back" onclick="if(confirm('멀티 스캔을 중단할까요?')){window._multiImgData=null;render();}">✕</span>
-        <span class="topnav__title">단어 선택 (${idx+1}/${total}장)</span>
-        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
+        <span class="topnav__back" onclick="if(confirm('${userNativeLang==='ko'?'멀티 스캔을 중단할까요?':'Stop multi scan?'}')){window._multiImgData=null;render();}">✕</span>
+        <span class="topnav__title">${userNativeLang==='ko'?`단어 선택 (${idx+1}/${total}장)`:`Word Select (${idx+1}/${total})`}</span>
+        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">${t('allSelect')}</span>
       </div>
       <div style="display:flex;gap:6px;justify-content:center;margin:8px 0 12px;">
         ${Array.from({length:total},(_,i)=>`<div style="width:8px;height:8px;border-radius:50%;background:${i<idx?'#27ae60':i===idx?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}
       </div>
       <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}번째 사진의 페이지 번호</div>
-        <input type="text" id="multi-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
+        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}${userNativeLang==='ko'?'번째 사진의 페이지 번호':' photo page number'}</div>
+        <input type="text" id="multi-pg-inp" placeholder="${userNativeLang==='ko'?'예: 34, xii, intro':'e.g. 34, xii, intro'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
       </div>
       <div class="muted" style="font-size:12px;margin-bottom:10px;">${t('selectWords')}</div>
       <div class="scr-scroll" id="word-sel-list">
@@ -1297,9 +1297,9 @@ function renderWordSelectionMulti(words, idx, total) {
       </div>
       <div class="btn-fixed" style="gap:8px;">
         <button id="save-words-btn" class="btn btn-solid" onclick="saveMultiWords(${idx},${total})">
-          저장하고 ${idx+1 < total ? `다음 사진 (${idx+2}/${total}장) →` : '완료!'}
+          ${userNativeLang==='ko'?`저장하고 ${idx+1<total?`다음 사진 (${idx+2}/${total}장) →`:'완료!'}`:`Save & ${idx+1<total?`Next (${idx+2}/${total}) →`:'Done!'}`}
         </button>
-        <button class="btn btn-outline" style="font-size:13px;" onclick="skipMultiScan(${idx},${total})">이 사진 건너뛰기</button>
+        <button class="btn btn-outline" style="font-size:13px;" onclick="skipMultiScan(${idx},${total})">${userNativeLang==='ko'?'이 사진 건너뛰기':'Skip this photo'}</button>
       </div>
     </div>`;
   window._wordSelected = words.map(() => true);
@@ -1310,7 +1310,7 @@ async function saveMultiWords(idx, total) {
   if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
   const btn = document.getElementById('save-words-btn');
   if (btn?.disabled) return;
-  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
+  if (btn) { btn.disabled = true; btn.textContent = userNativeLang==='ko'?'저장 중...':'Saving...'; btn.style.opacity = '0.6'; }
   const selected = pendingW.filter((_, i) => window._wordSelected[i]);
   if (!selected.length) { toast('선택한 단어가 없어요'); if (btn) { btn.disabled=false; btn.style.opacity='1'; } return; }
   const book = findBook(pendingB); if (!book) return;
@@ -1450,7 +1450,7 @@ function renderWordSelection(words) {
         <span class="topnav__title">${t('wordSelect')}</span>
         <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
       </div>
-      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">저장할 단어를 선택해주세요</div>
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">${t('selectWords')}</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
         <div style="display:flex;align-items:center;gap:5px;background:rgba(123,45,139,0.1);border-radius:99px;padding:4px 10px;">
           <span style="width:10px;height:10px;border-radius:50%;background:#7b2d8b;display:inline-block;"></span>
@@ -1472,7 +1472,7 @@ function renderWordSelection(words) {
           <span style="width:10px;height:10px;border-radius:50%;background:#27ae60;display:inline-block;"></span>
           <span style="font-size:11px;font-weight:700;color:#27ae60;">A2</span>
         </div>
-        <div style="margin-left:auto;font-size:10px;color:var(--ink-40);align-self:center;">CEFR 기준</div>
+        <div style="margin-left:auto;font-size:10px;color:var(--ink-40);align-self:center;">${userNativeLang==='ko'?'CEFR 기준':'CEFR Level'}</div>
       </div>
       <div class="scr-scroll" id="word-sel-list">
         ${words.map((w, i) => `
@@ -1581,7 +1581,7 @@ function initStudy(bookId, scope, pageNum) {
 function renderScanLoading(current=1, total=1) {
   const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#27ae60':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
   const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : t('analyzing');
-  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">${t('scanning')}</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — 원어민 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — 대학/원서 수준</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — 고급 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — 중급</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — 초급</span></div></div></div></div></div>`;
+  document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">${t('scanning')}</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — ${userNativeLang==='ko'?'원어민 수준':'Native level'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — ${userNativeLang==='ko'?'대학/원서 수준':'Academic level'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — ${userNativeLang==='ko'?'고급 중급':'Upper intermediate'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — ${userNativeLang==='ko'?'중급':'Intermediate'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — ${userNativeLang==='ko'?'초급':'Beginner'}</span></div></div></div></div></div>`;
 }
 
 function buildDock() {
@@ -1771,7 +1771,7 @@ function render() {
       <div class="scr" style="padding-bottom:110px">
         <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book.title} · Page ${page.num}</span><span></span></div>
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
-        <div class="muted" style="font-size:11px;margin-top:4px">기본 뜻 + 문맥 뜻</div>
+        <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
           ${page.words.map(w=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
@@ -2084,7 +2084,7 @@ async function renderStats(root, dock) {
 }
 
 function renderSearch(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="영어 또는 한국어로 검색..." oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('wordInput')}</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="${userNativeLang==='ko'?'영어 또는 한국어로 검색...':'Search words...'}" oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('wordInput')}</div></div></div>` + dock;
 }
 
 function doWordSearch() {
