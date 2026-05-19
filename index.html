@@ -973,11 +973,11 @@ async function openCamera() {
   const area = document.getElementById('camera-area');
   const video = document.getElementById('camera-video');
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } } });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1080 }, height: { ideal: 1440 } } });
     video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
   } catch(e) {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1080 }, height: { ideal: 1440 } } });
       video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
     } catch(e2) { toast('카메라 접근 권한이 필요해요'); }
   }
@@ -1182,10 +1182,7 @@ async function processNextMultiScan() {
   let words;
   try {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
-    let data;
-    try {
-      data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
-    } catch(e) { toast('네트워크 오류'); render(); return; }
+    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
     if (data.error) {
       if (data.error.code === 403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
@@ -1359,10 +1356,7 @@ async function doScan() {
   let words;
   try {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
-    let data;
-    try {
-      data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
-    } catch(e) { toast('네트워크 오류\n잠시 후 다시 시도해주세요'); render(); return; }
+    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
     if (data.error) {
       if (data.error.code === 403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
@@ -1687,7 +1681,7 @@ function render() {
             <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <div style="position:relative;">
-                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
+                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:420px;object-fit:cover;background:#000;display:block;aspect-ratio:3/4;"></video>
                 <!-- 플래시 효과 -->
                 <div id="camera-flash" style="position:absolute;inset:0;background:#fff;border-radius:10px;opacity:0;pointer-events:none;transition:opacity 0.15s;"></div>
                 <!-- 촬영 수 뱃지 -->
