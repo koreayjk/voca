@@ -975,19 +975,22 @@ async function openCamera() {
   // 모바일 감지
   const isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
   if (isMobile) {
-    // 모바일: 세로 비율로 꽉 차게
-    video.style.maxHeight = '70vh';
+    // 모바일: 폰 카메라 기본 세로 비율 3:4
     video.style.width = '100%';
-    video.style.aspectRatio = '9/16';
+    video.style.aspectRatio = '3/4';
+    video.style.maxHeight = '';
     video.style.objectFit = 'cover';
+    video.style.background = '#000';
   } else {
-    // 노트북: 가로 비율
+    // 노트북: 가로 기본
     video.style.maxHeight = '280px';
     video.style.aspectRatio = '';
+    video.style.objectFit = 'cover';
+    video.style.background = '#000';
   }
   try {
     const constraints = isMobile
-      ? { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1080 }, height: { ideal: 1920 } } }
+      ? { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1080 }, height: { ideal: 1440 } } }
       : { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } };
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
@@ -1697,7 +1700,7 @@ function render() {
             <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <div style="position:relative;">
-                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:420px;object-fit:cover;background:#000;display:block;"></video>
+                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:420px;object-fit:contain;background:#000;display:block;"></video>
                 <!-- 플래시 효과 -->
                 <div id="camera-flash" style="position:absolute;inset:0;background:#fff;border-radius:10px;opacity:0;pointer-events:none;transition:opacity 0.15s;"></div>
                 <!-- 촬영 수 뱃지 -->
