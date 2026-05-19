@@ -982,9 +982,10 @@ async function openCamera() {
     video.style.objectFit = 'cover';
     video.style.background = '#000';
   } else {
-    // 노트북: 가로 기본
-    video.style.maxHeight = '280px';
-    video.style.aspectRatio = '';
+    // 노트북: 16:9 가로 비율
+    video.style.width = '100%';
+    video.style.aspectRatio = '16/9';
+    video.style.maxHeight = '';
     video.style.objectFit = 'cover';
     video.style.background = '#000';
   }
