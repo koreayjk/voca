@@ -1695,7 +1695,7 @@ function render() {
             <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <div style="position:relative;">
-                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:420px;object-fit:cover;background:#000;display:block;aspect-ratio:3/4;"></video>
+                <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:420px;object-fit:contain;background:#000;display:block;"></video>
                 <!-- 플래시 효과 -->
                 <div id="camera-flash" style="position:absolute;inset:0;background:#fff;border-radius:10px;opacity:0;pointer-events:none;transition:opacity 0.15s;"></div>
                 <!-- 촬영 수 뱃지 -->
