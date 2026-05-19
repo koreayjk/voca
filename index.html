@@ -629,6 +629,7 @@ async function generateDemoLink() {
 
 function showDemoLinkModal(link, code) {
   const overlay = document.createElement('div');
+  overlay.id = 'lang-settings-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
   overlay.innerHTML = `
     <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;">
@@ -963,7 +964,7 @@ function showLangSettings() {
       </div>
 
       <button onclick="applyLangSettings()" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;">저장하기</button>
-      <button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;background:none;color:var(--ink-60);border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;">취소</button>
+      <button onclick="document.getElementById('lang-settings-overlay').remove()" style="width:100%;padding:12px;background:none;color:var(--ink-60);border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;">취소</button>
     </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
@@ -997,7 +998,7 @@ function applyLangSettings() {
     toast('모국어와 학습 언어는 달라야 해요!'); return;
   }
   saveLangSettings(window._pendingNative, window._pendingTarget);
-  document.querySelector('[style*="position:fixed"][style*="z-index:9999"]')?.remove();
+  document.getElementById('lang-settings-overlay')?.remove();
   const native = getNativeLang();
   const target = getTargetLang();
   toast(`${native.flag} ${native.name} → ${target.flag} ${target.name} 설정됐어요!`);
