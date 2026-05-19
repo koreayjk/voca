@@ -2048,6 +2048,13 @@ async function saveReviewSchedule(bookId, pageNum) {
   } catch(e) { console.error('[복습 저장 오류]', e); }
 }
 
+function startWrongQuiz() {
+  const q = window._quiz;
+  if (!window._wrongWords?.length) return;
+  window._quiz = { bookId: q.bookId, scope: q.scope, pageNum: q.pageNum, words: shuffle([...window._wrongWords]), idx: 0, correct: 0 };
+  push({ name: 'quiz', bookId: q.bookId, scope: q.scope, pageNum: q.pageNum });
+}
+
 function startQuiz(bookId, scope, pageNum) {
   const book = findBook(bookId); if (!book) return;
   let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]) : allWords(book);
@@ -2062,7 +2069,46 @@ function renderQuiz() {
   if (!q || q.idx >= q.words.length) {
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct);
-    root.innerHTML = `<div class="scr"><div class="done"><div class="label-xs">퀴즈 완료!</div><div class="done__n">${rate}%</div><div class="done__label">${q.correct}/${q.words.length} 정답</div><div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px;"><button class="btn btn-solid" onclick="startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')">다시 풀기</button><button class="btn btn-outline" onclick="goTab('books')">책장으로</button></div></div></div>`;
+    const rateColor = rate >= 80 ? '#27ae60' : rate >= 50 ? '#e67e22' : '#e74c3c';
+    const rateMsg = rate >= 80 ? '🎉 훌륭해요!' : rate >= 50 ? '👍 잘 하고 있어요!' : '💪 다시 도전해봐요!';
+    const wrongWords = q.words.filter((_, i) => !q._correct?.includes(i));
+    const wrongCount = q.words.length - q.correct;
+    window._wrongWords = wrongWords;
+    root.innerHTML = `<div class="scr" style="padding-bottom:24px;">
+      <div class="topnav"><span></span><span class="topnav__title">퀴즈 결과</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
+      <div class="done" style="padding-top:0;">
+        <div style="font-size:13px;color:var(--ink-40);">퀴즈 완료!</div>
+        <div class="done__n" style="color:${rateColor};">${rate}%</div>
+        <div style="font-size:13px;color:var(--ink-60);">${q.correct}/${q.words.length} 정답</div>
+        <div style="font-size:14px;color:${rateColor};margin-top:4px;font-weight:600;">${rateMsg}</div>
+        <div class="done__grid" style="margin-top:16px;">
+          <div class="done__tile" style="text-align:center;">
+            <div class="done__tile-label">정답</div>
+            <div class="done__tile-value" style="color:#27ae60;">${q.correct}</div>
+          </div>
+          <div class="done__tile" style="text-align:center;">
+            <div class="done__tile-label">오답</div>
+            <div class="done__tile-value" style="color:#e74c3c;">${wrongCount}</div>
+          </div>
+        </div>
+        ${wrongCount > 0 ? `
+        <div style="width:100%;margin-top:16px;text-align:left;">
+          <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:8px;">❌ 틀린 단어 (${wrongCount}개)</div>
+          <div style="background:var(--bg-card);border-radius:12px;padding:12px;max-height:160px;overflow-y:auto;">
+            ${wrongWords.map(w => `
+              <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ink-07);">
+                <span style="font-size:13px;font-weight:600;color:var(--ink-100);">${w.en}</span>
+                <span style="font-size:12px;color:var(--ink-60);">${w.base}</span>
+              </div>`).join('')}
+          </div>
+        </div>` : ''}
+        <div style="width:100%;margin-top:16px;display:flex;flex-direction:column;gap:10px;">
+          ${wrongCount > 0 ? `<button class="btn btn-solid" onclick="startWrongQuiz()">❌ 틀린 것만 다시 풀기 (${wrongCount}개)</button>` : ''}
+          <button class="btn ${wrongCount > 0 ? 'btn-outline' : 'btn-solid'}" onclick="startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')">🔄 전체 다시 풀기</button>
+          <button class="btn btn-outline" onclick="goTab('books')">책장으로</button>
+        </div>
+      </div>
+    </div>`;
     return;
   }
   const w = q.words[q.idx];
@@ -2089,7 +2135,11 @@ function renderQuiz() {
 function answerQuiz(chosen, correct) {
   const q = window._quiz;
   const isCorrect = chosen === correct;
-  if (isCorrect) q.correct++;
+  if (isCorrect) {
+    q.correct++;
+    if (!q._correct) q._correct = [];
+    q._correct.push(q.idx);
+  }
   const btns = document.querySelectorAll('.scr button[onclick^="answerQuiz"]');
   btns.forEach(btn => {
     btn.disabled = true;
