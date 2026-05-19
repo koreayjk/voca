@@ -114,14 +114,91 @@ body.dark .done__grid .done__tile { background: #2e2923; }
 body.dark #search-results > div { border-color: rgba(240,236,228,0.07); color: #f0ece4; }
 
 /* 복습 배너 */
-body.dark .install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--bg-card); border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
+body.dark .review-banner { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg-card); border-bottom: 2px solid var(--accent); padding: 12px 16px; z-index: 15; display: none; pointer-events: none; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.review-banner.show { display: block; pointer-events: all; }
+.review-banner__title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.review-banner__desc { font-size: 12px; color: var(--ink-60); }
+.review-banner__btns { display: flex; gap: 8px; margin-top: 10px; }
+.review-banner__btn { flex: 1; padding: 8px; border-radius: 8px; border: none; font-family: var(--font-body); font-size: 12px; cursor: pointer; color: var(--ink-100); }
+.install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--bg-card); border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
 .install-banner.show { display: block; }
 .install-banner__title { font-size: 14px; font-weight: 700; color: var(--ink-100); margin-bottom:6px; }
 .install-banner__desc { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
 .install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
 .install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 /* 다크모드 */
-body.dark 
+body.dark .review-banner { background: #242019; border-color: var(--accent); color: #f0ece4; }
+/* 설치 배너 */
+body.dark .install-banner { background: #242019; color: #f0ece4; }
+
+/* 스크롤바 */
+body.dark .scr-scroll::-webkit-scrollbar-thumb { background: rgba(240,236,228,0.15); }
+
+/* 칩 */
+body.dark .chip { background: #2e2923; border-color: rgba(240,236,228,0.15); color: #f0ece4; }
+
+/* 게임 setup 리스트 */
+body.dark #study-setup-inner .list-row { background: transparent; }
+body.dark #study-setup-inner .list-row div { color: #f0ece4; }
+
+/* ── 다크모드 인라인 스타일 보완 ── */
+body.dark .scr input,
+body.dark .scr textarea,
+body.dark .scr select {
+  background: #2e2923 !important;
+  color: #f0ece4 !important;
+  border-color: rgba(240,236,228,0.12) !important;
+}
+body.dark .scr input::placeholder { color: rgba(240,236,228,0.35) !important; }
+
+/* 퀴즈 보기 버튼 */
+body.dark .quiz-choice {
+  background: #242019 !important;
+  color: #f0ece4 !important;
+  border-color: rgba(240,236,228,0.15) !important;
+}
+
+/* 단어 선택 카드 */
+body.dark .word-sel-card {
+  background: #242019 !important;
+  color: #f0ece4 !important;
+}
+body.dark .word-sel-card div { color: #f0ece4 !important; }
+
+/* 책 검색 결과 */
+body.dark .book-search-btn {
+  background: transparent !important;
+  color: #f0ece4 !important;
+  border-color: rgba(240,236,228,0.07) !important;
+}
+body.dark .book-search-btn div:first-child { color: #f0ece4 !important; }
+body.dark .book-search-btn div:last-child { color: rgba(240,236,228,0.5) !important; }
+
+/* 기존 페이지 선택 */
+body.dark [id^="ep-"] {
+  background: #242019 !important;
+  border-color: rgba(240,236,228,0.15) !important;
+  color: #f0ece4 !important;
+}
+body.dark [id^="ep-"] div { color: #f0ece4 !important; }
+
+/* 수동 입력 단어 카드 */
+body.dark #manual-word-list > div {
+  background: #242019 !important;
+  color: #f0ece4 !important;
+}
+body.dark #manual-word-list div { color: #f0ece4 !important; }
+
+/* 로그인 탭 버튼 */
+body.dark .login-tab-btn {
+  color: #f0ece4 !important;
+}
+
+/* 복습 배너 나중에 버튼 */
+body.dark .review-banner__btn {
+  color: #f0ece4 !important;
+}
+
 /* 통계 카드 */
 body.dark #stats-inner > div > div {
   background: #242019 !important;
@@ -284,6 +361,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .action-sheet__item.danger { color: #c0392b; }
 .action-sheet__divider { height: 1px; background: var(--ink-07); margin: 4px 0; }
 .action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
+.review-banner { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg-card); border-bottom: 2px solid var(--accent); padding: 12px 16px; z-index: 15; display: none; pointer-events: none; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.review-banner.show { display: block; pointer-events: all; }
+.review-banner__title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.review-banner__desc { font-size: 12px; color: var(--ink-60); }
+.review-banner__btns { display: flex; gap: 8px; margin-top: 10px; }
+.review-banner__btn { flex: 1; padding: 8px; border-radius: 8px; border: none; font-family: var(--font-body); font-size: 12px; cursor: pointer; color: var(--ink-100); }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--bg-card); border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
@@ -373,7 +456,24 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   <div id="install-btn-wrap" style="margin-top:10px;"></div>
 </div>
 
-
+<!-- REVIEW BANNER -->
+<div class="review-banner" id="review-banner">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <span style="font-size:13px;font-weight:700;color:var(--accent);">🔔 복습할 단어가 있어요!</span>
+        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;">에빙하우스 망각곡선</span>
+      </div>
+      <div class="review-banner__desc" id="review-banner-desc"></div>
+      <div style="font-size:10px;color:var(--ink-40);margin-top:4px;" id="review-banner-step"></div>
+    </div>
+    <button onclick="closeReviewBanner()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-40);padding:0 0 0 8px;">✕</button>
+  </div>
+  <div class="review-banner__btns">
+    <button class="review-banner__btn" onclick="startReviewSession()" style="background:var(--accent);color:#fff;">지금 복습하기</button>
+    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:var(--ink-100);">나중에</button>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -387,70 +487,6 @@ async function sbFetch(path, method='GET', body=null, useAuth=true) {
   headers['Authorization'] = (useAuth && _authToken) ? 'Bearer ' + _authToken : 'Bearer ' + SB_KEY;
   const res = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
   return res.json();
-}
-
-// ── Gemini API 모델 폴백 + 재시도 ──
-const GEMINI_MODELS = [
-  'gemini-2.0-flash',
-  'gemini-2.0-flash-lite',
-  'gemini-1.5-flash',
-  'gemini-1.5-flash-8b',
-];
-let _geminiModelIdx = 0; // 현재 사용 중인 모델 인덱스
-
-function geminiUrl(modelIdx) {
-  const model = GEMINI_MODELS[modelIdx % GEMINI_MODELS.length];
-  return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-}
-
-async function geminiWithRetry(url, body, maxRetry=3) {
-  // url은 무시하고 폴백 모델 순서대로 시도
-  let lastError = null;
-  const totalModels = GEMINI_MODELS.length;
-
-  for (let attempt = 0; attempt < maxRetry + totalModels; attempt++) {
-    const modelIdx = (_geminiModelIdx + attempt) % totalModels;
-    const currentUrl = geminiUrl(modelIdx);
-    const currentModel = GEMINI_MODELS[modelIdx];
-
-    try {
-      const res = await fetch(currentUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const data = await res.json();
-
-      if (data.error) {
-        const code = data.error.code;
-        const msg = data.error.message || '';
-        const isRetryable = code === 429 || code === 503 ||
-          msg.includes('demand') || msg.includes('quota') ||
-          msg.includes('overloaded') || msg.includes('unavailable') ||
-          msg.includes('busy');
-
-        if (isRetryable) {
-          // 다음 모델로 폴백
-          const nextModel = GEMINI_MODELS[(modelIdx + 1) % totalModels];
-          toast(`⚡ ${currentModel} 혼잡 → ${nextModel} 로 전환 중...`);
-          await new Promise(r => setTimeout(r, 2000)); // 2초만 대기
-          continue;
-        }
-        // 재시도 불가 오류 (403 등)
-        return data;
-      }
-
-      // 성공! 이 모델을 기본으로 저장
-      _geminiModelIdx = modelIdx;
-      return data;
-
-    } catch(e) {
-      lastError = e;
-      toast(`네트워크 오류. 재시도 중...`);
-      await new Promise(r => setTimeout(r, 3000));
-    }
-  }
-  throw lastError || new Error('모든 모델 시도 실패');
 }
 
 async function sbInit() {
@@ -496,6 +532,7 @@ async function sbInit() {
       await loadUserName();
       await loadBooksFromDB();
       render();
+      setTimeout(checkReviews, 1000);
     } catch(e) {
       console.error('세션 복원 실패:', e);
       localStorage.removeItem('imvoca.session');
@@ -503,6 +540,7 @@ async function sbInit() {
     }
   }
 }
+
 
 // ── 데모 링크로 로그인 ──
 async function loginWithDemoToken(code) {
@@ -552,6 +590,7 @@ async function loginWithDemoToken(code) {
     await loadUserName();
     await loadBooksFromDB();
     render();
+    setTimeout(checkReviews, 1000);
   } catch(e) {
     toast('링크 오류: ' + e.message);
     renderLogin();
@@ -691,7 +730,7 @@ async function sbSignIn(email, pw) {
         }
       } catch(e) {}
     }
-    await loadBooksFromDB(); render();
+    await loadBooksFromDB(); render(); setTimeout(checkReviews, 1000);
   } catch(e) {
     toast('로그인 오류: ' + e.message);
     if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
@@ -1093,18 +1132,17 @@ async function processNextMultiScan() {
   let words;
   try {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
-    let data;
-    try {
-      data = await geminiWithRetry(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
-        { contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}],
-          generationConfig:{temperature:0.1,maxOutputTokens:4096} }
-      );
-    } catch(e) { toast('네트워크 오류'); render(); return; }
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+    });
+    const data = await res.json();
     if (data.error) {
-      if (data.error.code === 403) { toast('API 키를 확인해주세요'); }
-      else { toast('오류가 발생했어요\n잠시 후 다시 시도해주세요'); }
-      render(); return;
+      const code = data.error.code;
+      let msg = '잠시 후 다시 시도해주세요';
+      if (code === 429 || data.error.message?.includes('demand') || data.error.message?.includes('quota')) msg = '서버 과부하\n잠시 후 다시 시도해주세요';
+      else if (code === 403) msg = 'API 키를 확인해주세요';
+      toast(msg); render(); return;
     }
     if (!data.candidates?.[0]) { toast('응답 오류'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
@@ -1274,18 +1312,17 @@ async function doScan() {
   let words;
   try {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
-    let data;
-    try {
-      data = await geminiWithRetry(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
-        { contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}],
-          generationConfig:{temperature:0.1,maxOutputTokens:4096} }
-      );
-    } catch(e) { toast('네트워크 오류\n잠시 후 다시 시도해주세요'); render(); return; }
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:`이 영어책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 분류해주세요:\n- C1~C2: 대학/원서 수준 고급 어휘 (먼저 찾기)\n- B1~B2: 고등학교 수준 어휘\n- A2~B1: 중학교 수준 기본 어휘\nC1~C2 단어를 먼저 찾고, 그 다음 B1~B2, A2~B1 순서로 채워주세요.${buildExcludePrompt()}\n\nJSON만 반환:\n{"words":[{"en":"단어","base":"한국어뜻","ctx":"문맥에서의 뜻","level":"C1"}]}`}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} })
+    });
+    const data = await res.json();
     if (data.error) {
-      if (data.error.code === 403) { toast('API 키를 확인해주세요'); }
-      else { toast('오류가 발생했어요\n잠시 후 다시 시도해주세요'); }
-      render(); return;
+      const code = data.error.code;
+      let msg = '잠시 후 다시 시도해주세요';
+      if (code === 429 || data.error.message?.includes('demand') || data.error.message?.includes('quota')) msg = '서버에 과부하가 있어요\n잠시 후 다시 시도해주세요';
+      else if (code === 403) msg = 'API 키를 확인해주세요';
+      toast(msg); render(); return;
     }
     if (!data.candidates?.[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
@@ -1458,7 +1495,14 @@ function buildDock() {
 }
 
 function render() {
-
+  // 배너 완전 숨김 처리 (화면 전환 시 항상)
+  const _rb = document.getElementById('review-banner');
+  if (_rb) {
+    _rb.classList.remove('show');
+    _rb.style.pointerEvents = 'none';
+    _rb.style.display = 'none';
+    _rb.style.zIndex = '0';
+  }
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
@@ -1989,6 +2033,85 @@ function answerQuiz(chosen, correct) {
   setTimeout(() => { q.idx++; renderQuiz(); }, 800);
 }
 
+async function checkReviews() {
+  try {
+    // 오늘 날짜 끝(23:59:59)까지를 today로 설정 → 오늘 복습 대상 모두 포함
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+    const today = todayEnd.toISOString();
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&select=*`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const reviews = await res.json();
+    if (!Array.isArray(reviews)) return;
+    const due = [];
+    reviews.forEach(r => {
+      // 책이 삭제됐으면 복습 알림에서 제외
+      if (!findBook(r.book_id)) return;
+      const steps = [
+        { key: 'review_2d',  label: '1일차',  date: r.review_2d  },
+        { key: 'review_3d',  label: '2일차',  date: r.review_3d  },
+        { key: 'review_6d',  label: '3일차',  date: r.review_6d  },
+        { key: 'review_15d', label: '6일차',  date: r.review_15d },
+        { key: 'review_30d', label: '15일차', date: r.review_30d },
+        { key: 'review_60d', label: '30일차', date: r.review_60d },
+      ];
+      const oldest = steps.find(s => s.date && s.date <= today);
+      if (oldest) due.push({ ...r, _stepKey: oldest.key, _stepLabel: oldest.label });
+    });
+    if (!due.length) return;
+    let totalWords = 0;
+    due.forEach(r => { const book = findBook(r.book_id); const page = book ? findPage(book, r.page_num) : null; if (page) totalWords += page.words.length; });
+    window._dueReviews = due;
+    const stepCounts = {};
+    due.forEach(r => { stepCounts[r._stepLabel] = (stepCounts[r._stepLabel]||0) + 1; });
+    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}개`).join(' · ');
+    document.getElementById('review-banner-desc').textContent = `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
+    document.getElementById('review-banner-step').textContent = `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
+    // 현재 암기카드/퀴즈 중이면 배너 띄우지 않음
+    const _currentRoute = stack[stack.length-1];
+    const _noShowScreens = ['study-cards', 'quiz', 'study-done'];
+    if (_noShowScreens.includes(_currentRoute?.name)) return;
+    const rb = document.getElementById('review-banner');
+    rb.style.pointerEvents = '';
+    rb.style.display = '';
+    rb.style.zIndex = '15';
+    rb.classList.add('show');
+  } catch(e) {}
+}
+
+function closeReviewBanner() {
+  const banner = document.getElementById('review-banner');
+  banner.classList.remove('show');
+  banner.style.pointerEvents = 'none';
+  banner.style.display = 'none';
+  banner.style.zIndex = '15';
+}
+
+async function startReviewSession() {
+  closeReviewBanner();
+  const due = window._dueReviews;
+  if (!due?.length) return;
+  const first = due[0];
+  const book = findBook(first.book_id);
+  if (!book) return;
+  toast(`${book.title} Page ${first.page_num} 복습 시작!`);
+  initStudy(first.book_id, 'page', first.page_num);
+  // reviewId, stepKey를 studyState에 저장해서 완료 시 업데이트
+  studyState._reviewId = first.id;
+  studyState._reviewStepKey = first._stepKey;
+  stack = [{name:'study-cards', bookId:first.book_id, scope:'page', pageNum:first.page_num}];
+  render();
+}
+
+async function updateReviewStep(review) {
+  try {
+    const patch = {};
+    const key = review._stepKey;
+    if (key === 'review_60d') { patch.review_60d = null; patch.completed = true; }
+    else { patch[key] = null; }
+    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify(patch) });
+  } catch(e) {}
+}
+
 async function renderReviewPage(root, dock) {
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
@@ -2281,10 +2404,10 @@ function initDarkMode() {
 
 // ── 앱 포커스 시 복습 체크 ──
 document.addEventListener('visibilitychange', function() {
-  if (document.visibilityState === 'visible' && currentUser)
+  if (document.visibilityState === 'visible' && currentUser) checkReviews();
 });
 
-setInterval(function() { }, 60 * 60 * 1000);
+setInterval(function() { if (currentUser) checkReviews(); }, 60 * 60 * 1000);
 
 const _origGoTab = goTab;
 goTab = function(t) {
@@ -2293,7 +2416,7 @@ goTab = function(t) {
   if (currentUser) {
     const _route = stack[stack.length-1];
     const _noCheck = ['study-cards', 'quiz', 'study-done'];
-    if (!_noCheck.includes(_route?.name))
+    if (!_noCheck.includes(_route?.name)) checkReviews();
   }
 };
 
