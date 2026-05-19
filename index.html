@@ -1588,7 +1588,7 @@ function render() {
           </div>
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
-          ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="document.getElementById('modal-api').classList.add('open')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">AI 설정</button><button onclick="showAdminPanel()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">회원관리</button><button onclick="generateDemoLink()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">🔗 데모링크</button>`:''}
+          ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="showAdminMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">⚙️ 관리</button>`:''}
           <button onclick="window.open('https://koreayjk.github.io/voca/ad.html','_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">앱 소개</button>
           <button onclick="toggleDarkMode()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ 라이트':'🌙 다크'}</button>
           <button onclick="sbSignOut()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">로그아웃</button>
@@ -1849,6 +1849,14 @@ function advance(isKnown) {
     replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total});
   }
   else { s.round++; s.queue=shuffle(newX); s.idx=0; s.xList=[]; s.flipped=false; renderStudyCard(); }
+}
+
+function showAdminMenu() {
+  showActionSheet([
+    { icon: '🤖', label: 'AI 설정', action: "document.getElementById('modal-api').classList.add('open')" },
+    { icon: '👥', label: '회원 관리', action: "showAdminPanel()" },
+    { icon: '🔗', label: '데모 링크 생성', action: "generateDemoLink()" },
+  ]);
 }
 
 function showActionSheet(items) {
