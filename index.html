@@ -489,7 +489,7 @@ const UI_TEXT = {
     langSetting:'언어 설정',nativeLang:'내 언어 (모국어)',targetLangLabel:'공부할 언어',langDesc:'모국어와 공부할 언어를 선택하세요',save:'저장하기',cancel:'취소',
     memoryDone:'모두 외웠어요',wordsMemorized:'words memorized',studyAgain:'다시 외우기',quizMode:'퀴즈 모드로',toBookshelf:'책장으로',
     quizDone:'퀴즈 완료!',quizResult:'퀴즈 결과',correct:'정답',wrong:'오답',wrongOnly:'❌ 틀린 것만 다시 풀기',retryAll:'🔄 전체 다시 풀기',
-    sendToCard:'암기 카드로 보내기',adminMenu:'AI 설정',memberMgmt:'회원 관리',demoLink:'데모 링크 생성',
+    sendToCard:'암기 카드로 보내기',reviewStatus:'복습 현황',adminMenu:'AI 설정',memberMgmt:'회원 관리',demoLink:'데모 링크 생성',
   },
   en:{bookshelf:"'s Bookshelf",addBook:'Add Book',appInfo:'About',dark:'Dark',light:'Light',logout:'Logout',manage:'⚙️ Admin',
     game:'Study',review:'Review',stats:'Stats',search:'Search',
@@ -501,7 +501,7 @@ const UI_TEXT = {
     langSetting:'Language Settings',nativeLang:'My Language (Native)',targetLangLabel:'Language to Study',langDesc:'Select your native and study language',save:'Save',cancel:'Cancel',
     memoryDone:'All Memorized!',wordsMemorized:'words memorized',studyAgain:'Study Again',quizMode:'Quiz Mode',toBookshelf:'Bookshelf',
     quizDone:'Quiz Complete!',quizResult:'Quiz Result',correct:'Correct',wrong:'Wrong',wrongOnly:'❌ Retry Wrong Only',retryAll:'🔄 Retry All',
-    sendToCard:'Study with Flashcards',adminMenu:'AI Settings',memberMgmt:'Members',demoLink:'Generate Demo Link',
+    sendToCard:'Study with Flashcards',reviewStatus:'Review Status',adminMenu:'AI Settings',memberMgmt:'Members',demoLink:'Generate Demo Link',
   }
 };
 function t(key){const lang=userNativeLang==='ko'?'ko':'en';return UI_TEXT[lang][key]||UI_TEXT['en'][key]||key;}
@@ -2334,7 +2334,7 @@ async function renderReviewPage(root, dock) {
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <div style="flex:1;">
               <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||t('deletedBook')}</div>
-              <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · 학습일 ${studiedDate}</div>
+              <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · ${t('studiedDate')} ${studiedDate}</div>
             </div>
             <span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} ${t('nextLabel')}</span>
           </div>
@@ -2355,7 +2355,7 @@ async function renderReviewPage(root, dock) {
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div style="flex:1;">
             <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||t('deletedBook')}</div>
-            <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · 학습일 ${studiedDate}</div>
+            <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · ${t('studiedDate')} ${studiedDate}</div>
           </div>
           <span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${t('completedLabel')} ✓</span>
         </div>
