@@ -1560,14 +1560,7 @@ function buildDock() {
 }
 
 function render() {
-  // 배너 완전 숨김 처리 (화면 전환 시 항상)
 
-  if (_rb) {
-    _rb.classList.remove('show');
-    _rb.style.pointerEvents = 'none';
-    _rb.style.display = 'none';
-    _rb.style.zIndex = '0';
-  }
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
   const tab = currentTab();
@@ -2224,23 +2217,14 @@ async function checkReviews() {
     due.forEach(r => { stepCounts[r._stepLabel] = (stepCounts[r._stepLabel]||0) + 1; });
     const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}${userNativeLang==='ko'?'개':''}`).join(' · ');
 
-    // 현재 암기카드/퀴즈 중이면 배너 띄우지 않음
-    const _currentRoute = stack[stack.length-1];
-    const _noShowScreens = ['study-cards', 'quiz', 'study-done'];
-    if (_noShowScreens.includes(_currentRoute?.name)) return;
-    rb.style.pointerEvents = '';
-    rb.style.display = '';
-    rb.style.zIndex = '15';
-    rb.classList.add('show');
+    // 뱃지 업데이트
+    window._reviewBadgeCount = due.length;
+    const dockEl = document.querySelector('.dock');
+    if (dockEl) dockEl.outerHTML = buildDock();
   } catch(e) {}
 }
 
-function closeReviewBanner() {
-  banner.classList.remove('show');
-  banner.style.pointerEvents = 'none';
-  banner.style.display = 'none';
-  banner.style.zIndex = '15';
-}
+function closeReviewBanner() {}
 
 async function startReviewSession() {
   closeReviewBanner();
