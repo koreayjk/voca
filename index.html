@@ -506,6 +506,32 @@ const UI_TEXT = {
 };
 function t(key){const lang=userNativeLang==='ko'?'ko':'en';return UI_TEXT[lang][key]||UI_TEXT['en'][key]||key;}
 
+// ── 페이지 정렬 함수 ──
+function pageSort(a, b) {
+  const ROMAN = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii','xiii','xiv','xv','xvi','xvii','xviii','xix','xx',
+                 'xxi','xxii','xxiii','xxiv','xxv','intro','preface','prologue','foreword','appendix'];
+  const aStr = String(a.num).toLowerCase().trim();
+  const bStr = String(b.num).toLowerCase().trim();
+  const aRoman = ROMAN.indexOf(aStr);
+  const bRoman = ROMAN.indexOf(bStr);
+  const aNum = parseInt(a.num);
+  const bNum = parseInt(b.num);
+  const aIsNum = !isNaN(aNum) && String(aNum) === String(a.num).trim();
+  const bIsNum = !isNaN(bNum) && String(bNum) === String(b.num).trim();
+
+  // 로마숫자/특수단어 → 맨 앞
+  if (aRoman >= 0 && bRoman >= 0) return aRoman - bRoman;
+  if (aRoman >= 0) return -1;
+  if (bRoman >= 0) return 1;
+  // 둘 다 숫자 → 숫자 순
+  if (aIsNum && bIsNum) return aNum - bNum;
+  // 숫자 → 문자 앞
+  if (aIsNum) return -1;
+  if (bIsNum) return 1;
+  // 나머지는 문자열 비교
+  return aStr.localeCompare(bStr);
+}
+
 async function sbInit() {
   initDarkMode();
   renderLogin();
@@ -1287,7 +1313,7 @@ async function saveMultiWords(idx, total) {
   const words = selected.map((w,i) => ({...w, id:`${pendingB}-${pg}-${i+1}`}));
   const ex = findPage(book, pg);
   if (ex) ex.words = [...ex.words, ...words];
-  else { book.pages.push({num:pg, _pid:pid, words}); book.pages.sort((a,b)=>String(a.num).localeCompare(String(b.num))); }
+  else { book.pages.push({num:pg, _pid:pid, words}); book.pages.sort((a,b)=>pageSort(a,b)); }
   toast(`Page ${pg} 저장 완료 (${words.length}개)`);
   window._multiIdx = idx + 1;
   await processNextMultiScan();
@@ -1534,7 +1560,7 @@ async function acceptWords() {
     } else { toast(`Page ${pendingP} 단어 추가 완료`); replace({ name:'page-words', bookId:pendingB, pageNum:pendingP }); }
   } else {
     book.pages.push({num:pendingP, _pid:pid, words});
-    book.pages.sort((a,b)=>String(a.num).localeCompare(String(b.num)));
+    book.pages.sort((a,b)=>pageSort(a,b));
     toast(`Page ${pendingP} 저장 완료`);
     replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
   }
