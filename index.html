@@ -1370,7 +1370,7 @@ function selectExistingPage(pageNum) {
 function buildScanPrompt(useExclude=true) {
   const target = getTargetLang(), native = getNativeLang();
   const exclude = useExclude ? buildExcludePrompt() : '';
-  return `이 ${target.name} 책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준:\n- C1~C2: 고급 어휘 (먼저)\n- B1~B2: 중상급\n- A2~B1: 중급\nC1~C2부터 채워주세요.${exclude}\n\nJSON만 반환:\n{"words":[{"en":"${target.name} 단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
+  return `이 ${target.name} 책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘 (가장 먼저 찾기)\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\nC1~C2 단어를 먼저 찾고, B2, B1 순서로 채워주세요.${exclude}\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"words":[{"en":"단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
 }
 
 // ── 이미 등록된 단어 목록 추출 ──
