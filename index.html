@@ -441,7 +441,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   <div class="sheet" style="max-height:80vh;overflow-y:auto;">
     <div class="sheet-handle"></div>
     <h3>회원 관리</h3>
-    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div></div>
+    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">Loading...</div></div>
     <div class="gap-sm"></div>
     <button class="btn btn-outline" onclick="closeModal('modal-admin')">닫기</button>
   </div>
@@ -451,7 +451,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <div class="install-banner" id="install-banner">
   <button class="install-banner__close" onclick="dismissInstall()">✕</button>
   <div class="install-banner__icon">📲</div>
-  <div class="install-banner__title" id="install-title">${t('installTitle')}</div>
+  <div class="install-banner__title" id="install-title">IM VOCA</div>
   <div class="install-banner__desc" id="install-desc"></div>
   <div id="install-btn-wrap" style="margin-top:10px;"></div>
 </div>
@@ -461,8 +461,8 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   <div style="display:flex;justify-content:space-between;align-items:flex-start;">
     <div style="flex:1;">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-        <span style="font-size:13px;font-weight:700;color:var(--accent);">🔔 복습할 단어가 있어요!</span>
-        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;">${userNativeLang==='ko'?'에빙하우스 망각곡선':'Ebbinghaus Curve'}</span>
+        <span style="font-size:13px;font-weight:700;color:var(--accent);" id="review-banner-title">🔔 복습할 단어가 있어요!</span>
+        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;" id="review-banner-badge">에빙하우스</span>
       </div>
       <div class="review-banner__desc" id="review-banner-desc"></div>
       <div style="font-size:10px;color:var(--ink-40);margin-top:4px;" id="review-banner-step"></div>
@@ -470,8 +470,8 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
     <button onclick="closeReviewBanner()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-40);padding:0 0 0 8px;">✕</button>
   </div>
   <div class="review-banner__btns">
-    <button class="review-banner__btn" onclick="startReviewSession()" style="background:var(--accent);color:#fff;">지금 복습하기</button>
-    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:var(--ink-100);">${t('installDismiss')}</button>
+    <button class="review-banner__btn" onclick="startReviewSession()" style="background:var(--accent);color:#fff;" id="review-banner-start">지금 복습하기</button>
+    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:var(--ink-100);" id="review-banner-dismiss">나중에</button>
   </div>
 </div>
 
@@ -481,6 +481,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
 let currentUser = null, _authToken = null;
+window._reviewBadgeCount = 0;
 
 async function sbFetch(path, method='GET', body=null, useAuth=true) {
   const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY };
@@ -1587,7 +1588,7 @@ function renderScanLoading(current=1, total=1) {
 
 function buildDock() {
   const tab = currentTab();
-  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')"><span style="font-size:22px;line-height:1;">🧠</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>${t('stats')}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button></div>`;
+  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🎮</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="font-size:22px;line-height:1;">🧠</span>${window._reviewBadgeCount>0?`<span style="position:absolute;top:2px;right:50%;transform:translateX(50%);background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;">${window._reviewBadgeCount}</span>`:''}<span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>${t('stats')}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button></div>`;
 }
 
 function render() {
