@@ -441,7 +441,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   <div class="sheet" style="max-height:80vh;overflow-y:auto;">
     <div class="sheet-handle"></div>
     <h3>회원 관리</h3>
-    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">불러오는 중...</div></div>
+    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div></div>
     <div class="gap-sm"></div>
     <button class="btn btn-outline" onclick="closeModal('modal-admin')">닫기</button>
   </div>
@@ -451,7 +451,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <div class="install-banner" id="install-banner">
   <button class="install-banner__close" onclick="dismissInstall()">✕</button>
   <div class="install-banner__icon">📲</div>
-  <div class="install-banner__title" id="install-title">홈화면에 추가하기</div>
+  <div class="install-banner__title" id="install-title">${t('installTitle')}</div>
   <div class="install-banner__desc" id="install-desc"></div>
   <div id="install-btn-wrap" style="margin-top:10px;"></div>
 </div>
@@ -462,7 +462,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
     <div style="flex:1;">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
         <span style="font-size:13px;font-weight:700;color:var(--accent);">🔔 복습할 단어가 있어요!</span>
-        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;">에빙하우스 망각곡선</span>
+        <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 7px;font-weight:600;">${userNativeLang==='ko'?'에빙하우스 망각곡선':'Ebbinghaus Curve'}</span>
       </div>
       <div class="review-banner__desc" id="review-banner-desc"></div>
       <div style="font-size:10px;color:var(--ink-40);margin-top:4px;" id="review-banner-step"></div>
@@ -471,7 +471,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   </div>
   <div class="review-banner__btns">
     <button class="review-banner__btn" onclick="startReviewSession()" style="background:var(--accent);color:#fff;">지금 복습하기</button>
-    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:var(--ink-100);">나중에</button>
+    <button class="review-banner__btn" onclick="closeReviewBanner()" style="background:var(--bg-input);color:var(--ink-100);">${t('installDismiss')}</button>
   </div>
 </div>
 
@@ -958,7 +958,7 @@ async function searchBook() {
   const title = document.getElementById('nb-title').value.trim();
   if (!title) { toast('책 제목을 입력해주세요'); return; }
   const listEl = document.getElementById('book-search-list');
-  listEl.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 중...</div>';
+  listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div>`;
   try {
     const res = await fetch(`https://imvoca-books.koreayjk.workers.dev/?q=${encodeURIComponent(title)}`);
     const data = await res.json();
@@ -1363,7 +1363,7 @@ function selectExistingPage(pageNum) {
   const renameArea = document.getElementById('rename-area');
   const renameInp = document.getElementById('rename-pg-inp');
   if (renameArea) renameArea.style.display = 'block';
-  if (renameInp) renameInp.placeholder = `예: ${pageNum}-${Number(pageNum)+2 || pageNum+'+'}`; 
+  if (renameInp) renameInp.placeholder = userNativeLang==='ko'?`예: ${pageNum}-${Number(pageNum)+2||pageNum+'+'}` : `e.g. ${pageNum}-${Number(pageNum)+2||pageNum+'+'}`; 
 }
 
 
@@ -1449,7 +1449,7 @@ function renderWordSelection(words) {
       <div class="topnav">
         <span class="topnav__back" onclick="render()">←</span>
         <span class="topnav__title">${t('wordSelect')}</span>
-        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">전체선택</span>
+        <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">${t('allSelect')}</span>
       </div>
       <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">${t('selectWords')}</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
@@ -1503,7 +1503,7 @@ function toggleWord(i) {
   const el = document.getElementById(`wsel-${i}`);
   const check = document.getElementById(`wsel-check-${i}`);
   const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
-  const level = pendingW[i]?.level || '중';
+  const level = pendingW[i]?.level || '?';
   if (sel) {
     el.style.border = `2px solid ${levelColor[level]||'#ddd'}`;
     el.style.opacity = '1';
@@ -1524,7 +1524,7 @@ function toggleAllWords() {
     const el = document.getElementById(`wsel-${i}`);
     const check = document.getElementById(`wsel-check-${i}`);
     const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
-    const level = pendingW[i]?.level || '중';
+    const level = pendingW[i]?.level || '?';
     if (el && check) {
       el.style.border = sel ? `2px solid ${levelColor[level]||'#ddd'}` : '2px solid var(--ink-12)';
       el.style.opacity = sel ? '1' : '0.4';
@@ -1537,11 +1537,11 @@ function toggleAllWords() {
 async function saveSelectedWords() {
   const btn = document.getElementById('save-words-btn');
   if (btn?.disabled) return;
-  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; btn.style.opacity = '0.6'; }
+  if (btn) { btn.disabled = true; btn.textContent = t('saving'); btn.style.opacity = '0.6'; }
   const selected = pendingW.filter((_, i) => window._wordSelected[i]);
   if (!selected.length) {
     toast('선택한 단어가 없어요');
-    if (btn) { btn.disabled = false; btn.textContent = '선택한 단어 저장'; btn.style.opacity = '1'; }
+    if (btn) { btn.disabled = false; btn.textContent = t('saveWordsBtn'); btn.style.opacity = '1'; }
     return;
   }
   pendingW = selected;
@@ -1613,7 +1613,7 @@ function render() {
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}권 · ${books.reduce((n,b)=>n+countWords(b),0)} words</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)}${t('wordsCountUnit')}</div>
           </div>
           <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
         </div>
@@ -1704,37 +1704,37 @@ function render() {
             <button id="mode-add-btn" onclick="setCaptureMode('add')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('addToPage')}</button>
           </div>
           <div id="mode-new-area" style="margin-top:14px;">
-            <div class="label-xs">페이지 번호</div>
-            <input type="text" id="up-pg-inp" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px">
+            <div class="label-xs">${t('pageNumLabel')}</div>
+            <input type="text" id="up-pg-inp" placeholder="${t('pageNumPh')}" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px">
           </div>
           <div id="mode-add-area" style="display:none;margin-top:14px;">
-            <div class="label-xs">추가할 페이지 선택</div>
+            <div class="label-xs">${t('selectPageLabel')}</div>
             <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;" id="existing-page-list">
               ${existingPages.length === 0
-                ? '<div style="font-size:13px;color:var(--ink-40);padding:12px 0;">저장된 페이지가 없어요</div>'
+                ? `<div style="font-size:13px;color:var(--ink-40);padding:12px 0;">${t('noSavedPage')}</div>`
                 : existingPages.map(p => `
                   <div onclick="selectExistingPage('${p.num}')" id="ep-${p.num.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:10px;border:2px solid var(--ink-12);background:var(--bg-card);cursor:pointer;">
                     <div>
                       <div style="font-size:13px;font-weight:600;color:var(--ink-100);">Page ${p.num}</div>
-                      <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${p.words.length}개 단어</div>
+                      <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${p.words.length}${t('wordsUnit')}</div>
                     </div>
                     <div id="ep-check-${p.num.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:none;color:var(--accent);font-size:18px;">✓</div>
                   </div>`).join('')
               }
             </div>
             <div id="rename-area" style="display:none;margin-top:14px;">
-              <div class="label-xs">페이지 이름 변경 <span style="color:var(--ink-40);font-weight:400;">(선택사항)</span></div>
-              <input type="text" id="rename-pg-inp" placeholder="예: 1-3, 5-8, Chapter1" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px">
-              <div style="font-size:11px;color:var(--ink-40);margin-top:4px;">비워두면 기존 페이지 이름 유지</div>
+              <div class="label-xs">${t('renameLabel')} <span style="color:var(--ink-40);font-weight:400;">${t('renameOpt')}</span></div>
+              <input type="text" id="rename-pg-inp" placeholder="${t('renamePh')}" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px">
+              <div style="font-size:11px;color:var(--ink-40);margin-top:4px;">${t('renameHint')}</div>
             </div>
           </div>
           <div id="upload-main" style="margin-top:14px;">
             <div style="display:flex;gap:8px;margin-bottom:10px;">
               <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                🖼️ 파일 선택 (최대 5장)
+                ${t('fileSelect')}
               </button>
               <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                📷 카메라 촬영
+                ${t('cameraCapture')}
               </button>
             </div>
             <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
@@ -1750,15 +1750,15 @@ function render() {
               <div id="camera-thumbs" style="display:none;flex-direction:row;gap:8px;margin-top:8px;flex-wrap:wrap;"></div>
               <!-- 버튼 -->
               <div style="display:flex;gap:8px;margin-top:8px;">
-                <button id="camera-capture-btn" onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">📸 촬영하기</button>
-                <button onclick="cancelCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">취소</button>
+                <button id="camera-capture-btn" onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">${userNativeLang==='ko'?'📸 촬영하기':'📸 Capture'}</button>
+                <button onclick="cancelCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">${t('cancelBtn')}</button>
               </div>
               <button id="camera-use-btn" onclick="useCameraShots()" style="display:none;width:100%;margin-top:8px;padding:12px;background:#27ae60;color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;"></button>
-              <div style="font-size:10px;color:var(--ink-40);margin-top:6px;text-align:center;">최대 5장까지 연속 촬영 가능</div>
+              <div style="font-size:10px;color:var(--ink-40);margin-top:6px;text-align:center;">${t('maxShots')}</div>
             </div>
             <canvas id="camera-canvas" style="display:none;"></canvas>
-            <div style="font-size:10px;color:var(--ink-40);margin-top:8px;text-align:center;">JPG · PNG · WEBP · GIF 지원</div>
-            <div style="font-size:10px;color:#e67e22;margin-top:3px;text-align:center;">📱 아이폰은 카메라 설정 → 포맷 → 높은 호환성 선택</div>
+            <div style="font-size:10px;color:var(--ink-40);margin-top:8px;text-align:center;">${t('fileTypes')}</div>
+            <div style="font-size:10px;color:#e67e22;margin-top:3px;text-align:center;">${t('iphoneHint')}</div>
           </div>
         </div>
       </div>`;
@@ -1799,11 +1799,11 @@ function render() {
       const canStart=!!book&&total>0&&(s.scope==='all'||s.page!=null);
       const el=document.getElementById('study-setup-inner'); if(!el)return;
       el.innerHTML=`
-        <div class="label-xs" style="margin-top:20px">책</div>
+        <div class="label-xs" style="margin-top:20px">${t('bookLabel')}</div>
         <div style="margin-top:6px">
           ${books.map(b=>`<div class="list-row" onclick="ssSelectBook('${b.id}')"><div style="width:38px;height:52px;border-radius:5px;background:${b.color};flex-shrink:0"></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--ink-100);">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div><div class="radio ${s.bookId===b.id?'radio--on':''}">${s.bookId===b.id?'✓':''}</div></div>`).join('')}
         </div>
-        ${book?`<div class="label-xs" style="margin-top:16px">범위</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+        ${book?`<div class="label-xs" style="margin-top:16px">${t('scopeLabel')}</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
           <div class="scope-card ${s.scope==='all'?'scope-card--on':''}" onclick="ssSelectScope('all')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopeAll')}</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${s.scope==='all'?'radio--on':''}">${s.scope==='all'?'✓':''}</div></div></div>
           <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopePage')}</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:var(--ink-100);color:var(--bg-page);border-color:var(--ink-100)':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
         </div>`:''}
@@ -1838,7 +1838,7 @@ function render() {
           <div class="done__label">${t('wordsMemorized')}</div>
           ${route.scope==='page'?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
             <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">${t('reviewRegistered')}</div>
-            <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">1일 · 2일 · 3일 · 6일 · 15일 · 30일 · 60일 후<br>로그인하면 복습 알림이 자동으로 나타나요</div>
+            <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">${t('reviewSchedule')}<br>${t('reviewScheduleDesc')}</div>
           </div>`:''}
           <div class="done__grid">
             <div class="done__tile"><div class="done__tile-label">Rounds</div><div class="done__tile-value">${route.rounds}</div></div>
@@ -1965,8 +1965,8 @@ function showActionSheet(items) {
   document.getElementById('action-sheet').classList.add('open');
 }
 function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
-function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:'책 정보 수정',action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:'책 삭제',danger:true,action:`deleteBook('${bookId}')`}]); }
-function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} 삭제`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
+function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:'책 삭제',danger:true,action:`deleteBook('${bookId}')`}]); }
+function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
   const book=findBook(bookId); if(!book)return;
@@ -2011,23 +2011,23 @@ async function deletePage(bookId, pageNum) {
 async function showAdminPanel() {
   document.getElementById('modal-admin').classList.add('open');
   const listEl = document.getElementById('admin-list');
-  listEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">불러오는 중...</div>';
+  listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div>`;
   try {
     const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const members = await res.json();
-    if (!members.length) { listEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">회원이 없어요</div>'; return; }
+    if (!members.length) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('noMembers')}</div>`; return; }
     listEl.innerHTML = members.map(m => `
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--ink-07);">
         <div>
-          <div style="font-size:13px;font-weight:600;color:var(--ink-100);">${m.name||'이름없음'}</div>
+          <div style="font-size:13px;font-weight:600;color:var(--ink-100);">${m.name||t('noName')}</div>
           <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
-          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role||'멤버'}</div>
+          <div style="font-size:11px;margin-top:2px;color:${m.role===t('waitingRole')?'#e67e22':m.role===t('memberRole')?'#27ae60':'var(--ink-40)'};">${m.role||'멤버'}</div>
         </div>
-        ${m.role==='대기중'?`
+        ${m.role===t('waitingRole')?`
         <div style="display:flex;gap:6px;">
-          <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">승인</button>
-          <button onclick="rejectUser('${m.id}')" style="background:var(--bg-card);color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">거절</button>
-        </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?'관리자':''}</div>`}
+          <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('approveUser')}</button>
+          <button onclick="rejectUser('${m.id}')" style="background:var(--bg-card);color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('rejectUser')}</button>
+        </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?t('adminLabel'):''}</div>`}
       </div>`).join('');
   } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">오류: ${e.message}</div>`; }
 }
@@ -2058,12 +2058,12 @@ function speak(word) {
 }
 
 async function renderStats(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const stats = await res.json();
     const el = document.getElementById('stats-inner');
-    if (!stats.length) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 학습 기록이 없어요<br>암기 카드를 완료하면 여기에 기록돼요</div>'; return; }
+    if (!stats.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noStatsYet')}<br>${t('statsSubHint')}</div>`; return; }
     const totalStudied = stats.reduce((n,s) => n + s.total, 0);
     const totalCorrect = stats.reduce((n,s) => n + s.correct, 0);
     const avgRate = totalStudied ? Math.round(totalCorrect / totalStudied * 100) : 0;
@@ -2092,10 +2092,10 @@ function doWordSearch() {
   const q = document.getElementById('search-inp')?.value.trim().toLowerCase();
   const el = document.getElementById('search-results');
   if (!el) return;
-  if (!q) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">단어를 입력하세요</div>'; return; }
+  if (!q) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noSearchResult')}</div>`; return; }
   const results = [];
   books.forEach(book => { book.pages.forEach(page => { page.words.forEach(word => { if (word.en.toLowerCase().includes(q) || word.base?.toLowerCase().includes(q) || word.ctx?.toLowerCase().includes(q)) { results.push({ ...word, bookTitle: book.title, pageNum: page.num }); } }); }); });
-  if (!results.length) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">검색 결과가 없어요</div>'; return; }
+  if (!results.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noSearchFound')}</div>`; return; }
   el.innerHTML = results.map(w => `<div style="padding:12px 0;border-bottom:1px solid var(--ink-07);"><div style="display:flex;align-items:center;gap:8px;"><div style="font-size:15px;font-weight:700;color:var(--ink-100);">${w.en}</div><button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;">🔊</button></div><div style="font-size:12px;color:var(--ink-60);margin-top:2px;">${w.base}</div><div style="font-size:11px;color:var(--ink-40);margin-top:2px;">📚 ${w.bookTitle} · Page ${w.pageNum}</div></div>`).join('');
 }
 
@@ -2163,7 +2163,7 @@ function renderQuiz() {
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct);
     const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
-    const rateMsg = rate>=80?'🎉 훌륭해요!':rate>=50?'👍 잘 하고 있어요!':'💪 다시 도전해봐요!';
+    const rateMsg = rate>=80?t('rateMsg80'):rate>=50?t('rateMsg50'):t('rateMsgBad');
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
     window._wrongWords = wrongWords;
     root.innerHTML = `<div class="scr" style="padding-bottom:24px;">
@@ -2171,13 +2171,13 @@ function renderQuiz() {
       <div class="done" style="padding-top:0;">
         <div style="font-size:13px;color:var(--ink-40);">${t('quizDone')}</div>
         <div class="done__n" style="color:${rateColor};">${rate}%</div>
-        <div style="font-size:13px;color:var(--ink-60);">${q.correct}/${q.words.length} 정답</div>
+        <div style="font-size:13px;color:var(--ink-60);">${q.correct}/${q.words.length} ${t('correctLabel')}</div>
         <div style="font-size:14px;color:${rateColor};margin-top:4px;font-weight:600;">${rateMsg}</div>
         <div class="done__grid" style="margin-top:16px;">
           <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('correct')}</div><div class="done__tile-value" style="color:#27ae60;">${q.correct}</div></div>
           <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('wrong')}</div><div class="done__tile-value" style="color:#e74c3c;">${wrongWords.length}</div></div>
         </div>
-        ${wrongWords.length>0?`<div style="width:100%;margin-top:16px;text-align:left;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:8px;">❌ 틀린 단어 (${wrongWords.length}개)</div><div style="background:var(--bg-card);border-radius:12px;padding:12px;max-height:160px;overflow-y:auto;">${wrongWords.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ink-07);"><span style="font-size:13px;font-weight:600;">${w.en}</span><span style="font-size:12px;color:var(--ink-60);">${w.base}</span></div>`).join('')}</div></div>`:''}
+        ${wrongWords.length>0?`<div style="width:100%;margin-top:16px;text-align:left;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:8px;">${t('wrongWordList')} (${wrongWords.length}${userNativeLang==='ko'?'개':''})</div><div style="background:var(--bg-card);border-radius:12px;padding:12px;max-height:160px;overflow-y:auto;">${wrongWords.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ink-07);"><span style="font-size:13px;font-weight:600;">${w.en}</span><span style="font-size:12px;color:var(--ink-60);">${w.base}</span></div>`).join('')}</div></div>`:''}
         <div style="width:100%;margin-top:16px;display:flex;flex-direction:column;gap:10px;">
           ${wrongWords.length>0?`<button class="btn btn-solid" onclick="startWrongQuiz()">${t('wrongOnly')} (${wrongWords.length}개)</button>`:''}
           <button class="btn ${wrongWords.length>0?'btn-outline':'btn-solid'}" onclick="startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')">${t('retryAll')}</button>
@@ -2193,11 +2193,11 @@ function renderQuiz() {
   const others = shuffle(allW.filter(x => x.en !== w.en)).slice(0, 3);
   const choices = shuffle([w, ...others]);
   root.innerHTML = `<div class="scr" style="padding-bottom:20px;">
-    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">퀴즈</span><span class="study__close" onclick="goTab('books')">✕</span></div>
+    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">${t('quizResult')}</span><span class="study__close" onclick="goTab('books')">✕</span></div>
     <div class="study__bar"><div class="study__fill" style="width:${prog}%"></div></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0;">
       <div style="text-align:center;margin-bottom:30px;">
-        <div style="font-size:11px;color:var(--ink-40);margin-bottom:8px;">이 단어의 뜻은?</div>
+        <div style="font-size:11px;color:var(--ink-40);margin-bottom:8px;">${t('quizQuestion')}</div>
         <div style="font-family:var(--font-display);font-size:36px;letter-spacing:-0.04em;color:var(--ink-100);">${w.en}</div>
         <button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:18px;margin-top:8px;">🔊</button>
       </div>
@@ -2237,12 +2237,12 @@ async function checkReviews() {
       // 책이 삭제됐으면 복습 알림에서 제외
       if (!findBook(r.book_id)) return;
       const steps = [
-        { key: 'review_2d',  label: '1일차',  date: r.review_2d  },
-        { key: 'review_3d',  label: '2일차',  date: r.review_3d  },
-        { key: 'review_6d',  label: '3일차',  date: r.review_6d  },
-        { key: 'review_15d', label: '6일차',  date: r.review_15d },
-        { key: 'review_30d', label: '15일차', date: r.review_30d },
-        { key: 'review_60d', label: '30일차', date: r.review_60d },
+        { key: 'review_2d',  label: t('step1'),  date: r.review_2d  },
+        { key: 'review_3d',  label: t('step2'),  date: r.review_3d  },
+        { key: 'review_6d',  label: t('step3'),  date: r.review_6d  },
+        { key: 'review_15d', label: t('step6'),  date: r.review_15d },
+        { key: 'review_30d', label: t('step15'), date: r.review_30d },
+        { key: 'review_60d', label: t('step30'), date: r.review_60d },
       ];
       const oldest = steps.find(s => s.date && s.date <= today);
       if (oldest) due.push({ ...r, _stepKey: oldest.key, _stepLabel: oldest.label });
@@ -2253,9 +2253,9 @@ async function checkReviews() {
     window._dueReviews = due;
     const stepCounts = {};
     due.forEach(r => { stepCounts[r._stepLabel] = (stepCounts[r._stepLabel]||0) + 1; });
-    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}개`).join(' · ');
-    document.getElementById('review-banner-desc').textContent = `${due.length}개 페이지, 약 ${totalWords}개 단어를 복습할 시간이에요!`;
-    document.getElementById('review-banner-step').textContent = `📊 ${stepText}  |  망각 전에 복습하면 기억이 오래 유지돼요`;
+    const stepText = Object.entries(stepCounts).map(([k,v]) => `${k} ${v}${userNativeLang==='ko'?'개':''}`).join(' · ');
+    document.getElementById('review-banner-desc').textContent = `${due.length}${t('pageAndWords')} ${totalWords}${t('wordsApprox')}를 복습할 시간이에요!`;
+    document.getElementById('review-banner-step').textContent = `📊 ${stepText}  |  ${t('reviewBannerStep')}`;
     // 현재 암기카드/퀴즈 중이면 배너 띄우지 않음
     const _currentRoute = stack[stack.length-1];
     const _noShowScreens = ['study-cards', 'quiz', 'study-done'];
@@ -2309,11 +2309,11 @@ async function renderReviewPage(root, dock) {
       <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${t('reviewStatus')}</div>
     </div>
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
-      <span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;font-weight:600;">에빙하우스 망각곡선</span>
-      <span class="muted" style="font-size:11px;">1일·2일·3일·6일·15일·30일·60일</span>
+      <span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;font-weight:600;">${userNativeLang==='ko'?'에빙하우스 망각곡선':'Ebbinghaus Curve'}</span>
+      <span class="muted" style="font-size:11px;">${t('ebbSchedule')}</span>
     </div>
     <div class="scr-scroll" id="review-list">
-      <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">불러오는 중...</div>
+      <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div>
     </div>
   </div>` + dock;
 
@@ -2321,15 +2321,15 @@ async function renderReviewPage(root, dock) {
     const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&order=first_studied_at.desc`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const reviews = await res.json();
     const el = document.getElementById('review-list');
-    if (!reviews?.length) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 복습 일정이 없어요<br>암기 카드를 완료하면 자동으로 등록돼요</div>'; return; }
+    if (!reviews?.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 ${t('noReviewSchedule')}<br>암기 카드를 완료하면 자동으로 등록돼요</div>`; return; }
 
     const todayEnd = new Date();
     todayEnd.setHours(23, 59, 59, 999);
     const today = todayEnd.toISOString();
     const STEPS = [
-      { key: 'review_2d',  label: '1일차'  }, { key: 'review_3d',  label: '2일차'  },
-      { key: 'review_6d',  label: '3일차'  }, { key: 'review_15d', label: '6일차'  },
-      { key: 'review_30d', label: '15일차' }, { key: 'review_60d', label: '30일차' },
+      { key: 'review_2d',  label: t('step1')  }, { key: 'review_3d',  label: t('step2')  },
+      { key: 'review_6d',  label: t('step3')  }, { key: 'review_15d', label: t('step6')  },
+      { key: 'review_30d', label: t('step15') }, { key: 'review_60d', label: t('step30') },
     ];
     const todayDue = [], upcoming = [], done = [];
     reviews.forEach(r => {
@@ -2360,10 +2360,10 @@ async function renderReviewPage(root, dock) {
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
             <div style="flex:1;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                <span style="font-size:11px;background:rgba(255,255,255,0.25);color:#fff;border-radius:99px;padding:2px 9px;font-weight:700;">🔥 ${r._stepLabel} 복습!</span>
+                <span style="font-size:11px;background:rgba(255,255,255,0.25);color:#fff;border-radius:99px;padding:2px 9px;font-weight:700;">🔥 ${r._stepLabel} ${userNativeLang==='ko'?'복습':'Review'}!</span>
               </div>
-              <div style="font-size:15px;font-weight:700;color:#fff;">${book?.title||'삭제된 책'}</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.75);margin-top:3px;">Page ${r.page_num} · ${wordCount}개 단어</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;">${book?.title||t('deletedBook')}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.75);margin-top:3px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')}</div>
             </div>
             <div style="font-size:28px;opacity:0.4;">→</div>
           </div>
@@ -2374,7 +2374,7 @@ async function renderReviewPage(root, dock) {
             <div style="display:flex;gap:6px;">
               ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.9)'};font-weight:${s.key===r._stepKey?'700':'400'};${s.key===r._stepKey?'background:rgba(255,255,255,0.2);border-radius:99px;padding:1px 6px;':''}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
             </div>
-            <span style="font-size:11px;color:rgba(255,255,255,0.7);">학습일 ${studiedDate}</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.7);">${t('studiedDate')} ${studiedDate}</span>
           </div>
         </div>`;
       }
@@ -2383,10 +2383,10 @@ async function renderReviewPage(root, dock) {
         return `<div style="background:var(--bg-card);border:1.5px solid var(--ink-12);border-radius:14px;padding:14px 16px;margin-bottom:10px;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||'삭제된 책'}</div>
-              <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}개 단어 · 학습일 ${studiedDate}</div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||t('deletedBook')}</div>
+              <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · 학습일 ${studiedDate}</div>
             </div>
-            <span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} 예정</span>
+            <span style="font-size:11px;color:var(--ink-40);flex-shrink:0;margin-left:8px;">${r._nextLabel} ${t('nextLabel')}</span>
           </div>
           <div style="margin-top:10px;">
             <div style="height:4px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
@@ -2396,7 +2396,7 @@ async function renderReviewPage(root, dock) {
               ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'#27ae60':'var(--ink-40)'};font-weight:${!r[s.key]?'700':'400'}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
             </div>
           </div>
-          <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 다음 복습: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>
+          <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 ${t('nextReview')}: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>
         </div>`;
       }
 
@@ -2404,10 +2404,10 @@ async function renderReviewPage(root, dock) {
       return `<div style="background:rgba(39,174,96,0.07);border:1.5px solid #27ae60;border-radius:14px;padding:14px 16px;margin-bottom:10px;opacity:0.75;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div style="flex:1;">
-            <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||'삭제된 책'}</div>
-            <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}개 단어 · 학습일 ${studiedDate}</div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||t('deletedBook')}</div>
+            <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · 학습일 ${studiedDate}</div>
           </div>
-          <span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">완료 ✓</span>
+          <span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${t('completedLabel')} ✓</span>
         </div>
         <div style="margin-top:8px;">
           <div style="height:4px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
@@ -2421,14 +2421,14 @@ async function renderReviewPage(root, dock) {
     if (todayDue.length) {
       html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
         <div style="font-size:13px;font-weight:700;color:var(--accent);">${t('todayReview')}</div>
-        <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;">${todayDue.length}개</div>
+        <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;">${todayDue.length}${userNativeLang==='ko'?'개':''}</div>
         <div style="font-size:11px;color:var(--ink-60);">${t('tapToStart')}</div>
       </div>`;
       html += todayDue.map(r => reviewCard(r, 'due')).join('');
     }
-    if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">📅 예정된 복습 (${upcoming.length}개)</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
-    if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">✅ 완료 (${done.length}개)</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
-    el.innerHTML = html || '<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">복습 일정이 없어요</div>';
+    if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">${t('scheduledTitle')} (${upcoming.length}${userNativeLang==='ko'?'개':''})</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
+    if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">${t('completedTitle')} (${done.length}${userNativeLang==='ko'?'개':''})</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
+    el.innerHTML = html || `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noReviewSchedule')}</div>`;
   } catch(e) { document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`; }
 }
 
@@ -2453,24 +2453,24 @@ function renderManualAdd(root, route) {
         <span class="topnav__title">${book?.title||''}</span>
         <span></span>
       </div>
-      <div class="h-display h-xl" style="margin-top:14px;">단어 직접 입력</div>
-      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">단어만 입력하면 뜻을 자동으로 찾아드려요</div>
-      <div class="label-xs">페이지 번호</div>
-      <input type="text" id="manual-pg" placeholder="예: 34, xii, intro" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;margin-bottom:16px;">
+      <div class="h-display h-xl" style="margin-top:14px;">${t('manualTitle')}</div>
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">${t('manualDesc')}</div>
+      <div class="label-xs">${t('manualPageLabel')}</div>
+      <input type="text" id="manual-pg" placeholder="${t('pageNumPh')}" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;margin-bottom:16px;">
       <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:8px;">단어 입력 <span style="color:var(--ink-40);font-weight:400;">(Enter로 계속 추가)</span></div>
+        <div class="label-xs" style="margin-bottom:8px;">${t('wordInputLabel')} <span style="color:var(--ink-40);font-weight:400;">(Enter로 계속 추가)</span></div>
         <div style="display:flex;gap:8px;">
-          <input type="text" id="manual-en" placeholder="영어 단어"
+          <input type="text" id="manual-en" placeholder="${t('wordPh')}"
             style="flex:1;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;"
             onkeydown="if(event.key==='Enter'){event.preventDefault();addManualWord();}">
-          <button onclick="addManualWord()" style="padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;">추가</button>
+          <button onclick="addManualWord()" style="padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;">${userNativeLang==='ko'?'추가':'Add'}</button>
         </div>
-        <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">뜻은 인터넷 사전에서 자동으로 찾아드려요</div>
+        <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">${t('dictHint')}</div>
       </div>
       <div id="manual-word-list">${renderManualWordList()}</div>
       <div class="btn-fixed">
         <button id="manual-save-btn" class="btn btn-solid" onclick="saveManualWords('${route.bookId}')" style="opacity:${window._manualWords.length>0?1:0.4};">
-          ${window._manualWords.length>0?`뜻 검색 후 저장 (${window._manualWords.length}개)`:'단어를 추가해주세요'}
+          ${window._manualWords.length>0?`${t('saveWithMeaning')} (${window._manualWords.length}${userNativeLang==='ko'?'개':''})`:t('addWordsFirst')}
         </button>
       </div>
     </div>`;
@@ -2479,14 +2479,14 @@ function renderManualAdd(root, route) {
 
 function renderManualWordList() {
   if (!window._manualWords?.length) {
-    return '<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">아직 추가된 단어가 없어요<br>영어 단어를 입력하고 추가 버튼을 눌러주세요</div>';
+    return `<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">${t('noManualWords')}<br>${userNativeLang==='ko'?'영어 단어를 입력하고 추가 버튼을 눌러주세요':'Enter a word and click Add'}</div>`;
   }
   return window._manualWords.map((w, i) => `
     <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-card);border-radius:10px;margin-bottom:6px;">
       <div style="font-size:16px;">📝</div>
       <div style="flex:1;">
         <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${w.en}</div>
-        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">뜻 자동 검색 예정</div>
+        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${t('pendingMeaning')}</div>
       </div>
       <button onclick="removeManualWord(${i})" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">✕</button>
     </div>`).join('');
@@ -2501,7 +2501,7 @@ function addManualWord() {
   enInput.value = ''; enInput.focus();
   document.getElementById('manual-word-list').innerHTML = renderManualWordList();
   const saveBtn = document.getElementById('manual-save-btn');
-  if (saveBtn) { saveBtn.textContent = `뜻 검색 후 저장 (${window._manualWords.length}개)`; saveBtn.style.opacity = '1'; }
+  if (saveBtn) { saveBtn.textContent = `${t('saveWithMeaning')} (${window._manualWords.length}${userNativeLang==='ko'?'개':''})`; saveBtn.style.opacity = '1'; }
 }
 
 function removeManualWord(i) {
@@ -2509,8 +2509,8 @@ function removeManualWord(i) {
   document.getElementById('manual-word-list').innerHTML = renderManualWordList();
   const saveBtn = document.getElementById('manual-save-btn');
   if (saveBtn) {
-    if (window._manualWords.length > 0) { saveBtn.textContent = `뜻 검색 후 저장 (${window._manualWords.length}개)`; saveBtn.style.opacity = '1'; }
-    else { saveBtn.textContent = '단어를 추가해주세요'; saveBtn.style.opacity = '0.4'; }
+    if (window._manualWords.length > 0) { saveBtn.textContent = `${t('saveWithMeaning')} (${window._manualWords.length}${userNativeLang==='ko'?'개':''})`; saveBtn.style.opacity = '1'; }
+    else { saveBtn.textContent = t('addWordsFirst'); saveBtn.style.opacity = '0.4'; }
   }
 }
 
@@ -2542,7 +2542,7 @@ async function fetchWordMeaning(word) {
 
     if (mmData.responseStatus === 200) {
       const translated = mmData.responseData.translatedText;
-      return { base: translated || '뜻을 찾지 못했어요', ipa: '' };
+      return { base: translated || t('noMeaning'), ipa: '' };
     }
     // MyMemory 실패 시 단어 자체를 번역 시도
     if (engMeaning) {
@@ -2551,10 +2551,10 @@ async function fetchWordMeaning(word) {
       );
       const fallData = await fallRes.json();
       if (fallData.responseStatus === 200) {
-        return { base: fallData.responseData.translatedText || '뜻을 찾지 못했어요', ipa: '' };
+        return { base: fallData.responseData.translatedText || t('noMeaning'), ipa: '' };
       }
     }
-    return { base: '뜻을 찾지 못했어요', ipa: '' };
+    return { base: t('noMeaning'), ipa: '' };
   } catch(e) { return { base: '뜻을 찾지 못했어요', ipa: '' }; }
 }
 
@@ -2563,11 +2563,11 @@ async function saveManualWords(bookId) {
   if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
   if (!window._manualWords?.length) { toast('추가된 단어가 없어요'); return; }
   const btn = document.getElementById('manual-save-btn');
-  if (btn) { btn.disabled = true; btn.textContent = '뜻 검색 중...'; btn.style.opacity = '0.6'; }
+  if (btn) { btn.disabled = true; btn.textContent = t('searchingMeaning'); btn.style.opacity = '0.6'; }
   toast('단어 뜻을 검색하는 중이에요...');
   for (let i = 0; i < window._manualWords.length; i++) {
     const w = window._manualWords[i];
-    if (!w.base) { if (btn) btn.textContent = `검색 중 (${i+1}/${window._manualWords.length})...`; const result = await fetchWordMeaning(w.en); w.base = result.base; w.ipa = result.ipa; w.ctx = ''; }
+    if (!w.base) { if (btn) btn.textContent = `${t('searchingMeaning')} (${i+1}/${window._manualWords.length})`; const result = await fetchWordMeaning(w.en); w.base = result.base; w.ipa = result.ipa; w.ctx = ''; }
   }
   const book = findBook(bookId); if (!book) return;
   const pid = await savePageWordsToDB(bookId, pg, window._manualWords);
@@ -2630,20 +2630,20 @@ goTab = function(t) {
     const isSafari = /safari/i.test(ua) && !/chrome|crios|fxios/i.test(ua);
     if (!isSafari) return;
     setTimeout(() => {
-      document.getElementById('install-title').textContent = '앱처럼 사용하기 📱';
-      document.getElementById('install-desc').innerHTML = 'Safari 하단 <strong>공유 버튼(□↑)</strong>을 탭한 후<br><strong>"홈 화면에 추가"</strong>를 선택하세요!';
-      document.getElementById('install-btn-wrap').innerHTML = '<button onclick="dismissInstall()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">확인했어요</button>';
+      document.getElementById('install-title').textContent = t('installTitle');
+      document.getElementById('install-desc').innerHTML = userNativeLang==='ko'?'Safari 하단 <strong>공유 버튼(□↑)</strong>을 탭한 후<br><strong>홈 화면에 추가</strong>를 선택해주세요!':'Tap <strong>Share (□↑)</strong> in Safari then select <strong>Add to Home Screen</strong>';
+      document.getElementById('install-btn-wrap').innerHTML = `<button onclick="dismissInstall()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('installDismiss')}</button>`;
       document.getElementById('install-banner').classList.add('show');
     }, 3000);
   } else if (isAndroid) {
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault(); window._deferredPrompt = e;
-      document.getElementById('install-title').textContent = '앱으로 설치하기 📲';
-      document.getElementById('install-desc').textContent = '홈화면에 추가하면 앱처럼 빠르게 실행할 수 있어요!';
+      document.getElementById('install-title').textContent = t('installTitleAndroid');
+      document.getElementById('install-desc').textContent = t('installDescAndroid');
       document.getElementById('install-btn-wrap').innerHTML =
         '<div style="display:flex;gap:8px;">' +
-        '<button onclick="doInstall()" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">설치하기</button>' +
-        '<button onclick="dismissInstall()" style="flex:1;padding:10px;background:transparent;color:var(--ink-100);border:1px solid var(--ink-12);border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">나중에</button>' +
+        `<button onclick="doInstall()" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('installBtn')}</button>` +
+        `<button onclick="dismissInstall()" style="flex:1;padding:10px;background:transparent;color:var(--ink-100);border:1px solid var(--ink-12);border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('installDismiss')}</button>` +
         '</div>';
       document.getElementById('install-banner').classList.add('show');
     });
