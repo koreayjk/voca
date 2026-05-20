@@ -1983,9 +1983,9 @@ async function showAdminPanel() {
         <div>
           <div style="font-size:13px;font-weight:600;color:var(--ink-100);">${m.name||t('noName')}</div>
           <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
-          <div style="font-size:11px;margin-top:2px;color:${m.role===t('waitingRole')?'#e67e22':m.role===t('memberRole')?'#27ae60':'var(--ink-40)'};">${m.role||'멤버'}</div>
+          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role==='대기중'?t('waitingRole'):m.role==='멤버'?t('memberRole'):m.role||t('memberRole')}</div>
         </div>
-        ${m.role===t('waitingRole')?`
+        ${m.role==='대기중'?`
         <div style="display:flex;gap:6px;">
           <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('approveUser')}</button>
           <button onclick="rejectUser('${m.id}')" style="background:var(--bg-card);color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('rejectUser')}</button>
