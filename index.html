@@ -299,7 +299,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .radio--on { background: var(--ink-100); border-color: var(--ink-100); color: var(--bg-page); }
 .list-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--ink-07); cursor: pointer; }
 .list-row:last-child { border-bottom: none; }
-.study { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 18px 22px 80px; z-index: 25; background: var(--bg-page); overflow: hidden; }
+.study { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 18px 22px calc(100px + env(safe-area-inset-bottom, 0px)); z-index: 25; background: var(--bg-page); overflow: hidden; }
 .study__top { display: flex; justify-content: space-between; align-items: center; }
 .study__info { font-size: 11px; color: var(--ink-60); }
 .study__close { font-size: 16px; cursor: pointer; padding: 4px; color: var(--ink-100); }
@@ -324,7 +324,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .ox-x { border: 1.5px solid var(--ink-12); background: var(--bg-card); color: var(--ink-100); }
 .ox-o { background: var(--accent); color: #fff; }
 .ox-btn:disabled { opacity: 0.3; cursor: default; }
-.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); margin-top: 6px; }
+.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); margin-top: 6px; padding-bottom: 4px; }
 .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
 .done__n { font-family: var(--font-display); font-size: 96px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
 .done__label { font-size: 14px; color: var(--ink-60); }
