@@ -928,7 +928,7 @@ async function loadBooksFromDB() {
         const wd = await sbFetch(`/rest/v1/voca_words?page_id=eq.${p.id}&order=created_at`);
         pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||'',level:w.level||''})) });
       }
-      books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', cover:b.cover_url||'', pages });
+      if (!books.find(x=>x.id===b.id)) books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', cover:b.cover_url||'', pages });
     }
   } catch(e) { console.error('DB load error:', e); }
 }
