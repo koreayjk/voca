@@ -1,8 +1,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="icon" type="image/png" href="https://koreayjk.github.io/voca/2.png">
-<link rel="apple-touch-icon" href="https://koreayjk.github.io/voca/2.png">
+<link rel="icon" type="image/png" href="https://imvoca.app/2.png">
+<link rel="apple-touch-icon" href="https://imvoca.app/2.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#f5f0e8">
 <meta name="mobile-web-app-capable" content="yes">
@@ -708,7 +708,7 @@ function showUpgradePopup() {
         ✓ ${userNativeLang==='ko'?'무제한 단어 저장':'Unlimited word storage'}<br>
         ✓ ${userNativeLang==='ko'?'에빙하우스 복습':'Ebbinghaus review'}
       </div>
-      <button onclick="location.href='https://koreayjk.github.io/voca/pricing.html'"
+      <button onclick="location.href='https://imvoca.app/pricing.html'"
         style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">
         ${userNativeLang==='ko'?'✨ Premium 업그레이드':'✨ Upgrade to Premium'}
       </button>
@@ -850,7 +850,7 @@ async function generateDemoLink() {
 
     if (!res.ok) { toast('링크 생성 실패: ' + res.status); return; }
 
-    const link = `https://koreayjk.github.io/voca/?demo=${code}`;
+    const link = `https://imvoca.app/?demo=${code}`;
     showDemoLinkModal(link, code);
   } catch(e) { toast('오류: ' + e.message); }
 }
@@ -1044,7 +1044,7 @@ function renderLogin(tab='login') {
         </button>
       </div>
       <div style="text-align:center;margin-bottom:28px">
-        <img src="https://koreayjk.github.io/voca/2.png" style="width:140px;height:140px;object-fit:contain;margin-bottom:4px;">
+        <img src="https://imvoca.app/2.png" style="width:140px;height:140px;object-fit:contain;margin-bottom:4px;">
         <div class="muted" style="font-size:12px;margin-top:2px">${t('loginTitle')}</div>
       </div>
       <div style="display:flex;border-bottom:1px solid var(--ink-07);margin-bottom:22px">
@@ -1787,7 +1787,7 @@ function render() {
         <div class="lib-header">
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-              <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
+              <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 ${userNativeLang==='ko'?'사용됨':' used'}`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
@@ -1810,7 +1810,7 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="showAdminMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">${t('manage')}</button>`:''}
-          <button onclick="window.open('https://koreayjk.github.io/voca/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
+          <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showLangSettings()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${getNativeLang().flag}→${getTargetLang().flag}</button>
           <button onclick="toggleDarkMode()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ '+t('light'):'🌙 '+t('dark')}</button>
           <button onclick="sbSignOut()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('logout')}</button>
@@ -1990,7 +1990,7 @@ function render() {
           <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >${t('quizModeBtn')}${canStart?` — ${total}개`:''}</button>
         </div>`;
     };
-    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('whichBook')}</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
+    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('whichBook')}</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
     ssRender();
   }
 
@@ -2285,7 +2285,7 @@ function speak(word) {
 }
 
 async function renderStats(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const stats = await res.json();
@@ -2312,7 +2312,7 @@ async function renderStats(root, dock) {
 }
 
 function renderSearch(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="${userNativeLang==='ko'?'영어 또는 한국어로 검색...':'Search words...'}" oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('wordInput')}</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="${userNativeLang==='ko'?'영어 또는 한국어로 검색...':'Search words...'}" oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('wordInput')}</div></div></div>` + dock;
 }
 
 function doWordSearch() {
@@ -2520,7 +2520,7 @@ async function updateReviewStep(review) {
 async function renderReviewPage(root, dock) {
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-      <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
+      <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
       <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${t('reviewStatus')}</div>
     </div>
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
