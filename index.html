@@ -749,12 +749,7 @@ async function sbInit() {
         });
         const roleData = await res.json();
         const role = roleData[0]?.role;
-        if (role === '대기중') {
-          localStorage.removeItem('imvoca.session');
-          renderLogin();
-          toast('승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
-          return;
-        }
+        // 자동 승인 - 대기중 체크 없음
       }
       await loadApiKey();
       await loadUserName();
@@ -976,10 +971,10 @@ async function sbSignUp(email, pw, name) {
       await fetch(SB_URL + '/rest/v1/members', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ id: data.user.id, name, email, role: '대기중' })
+        body: JSON.stringify({ id: data.user.id, name, email, role: '멤버', plan: 'free', scan_count: 0 })
       });
     }
-    toast('가입 신청 완료! 관리자 승인 후 사용할 수 있어요'); renderLogin('login');
+    toast('가입 완료! 바로 로그인해서 사용할 수 있어요 😊'); renderLogin('login');
   } catch(e) { toast('가입 오류: ' + e.message); }
 }
 
@@ -1072,10 +1067,9 @@ function renderLogin(tab='login') {
 <script>
 // ── Gemini API 모델 폴백 + 재시도 ──
 const GEMINI_MODELS = [
-  'gemini-3-flash-preview',
-  'gemini-2.5-flash',
-  'gemini-2.0-flash',
-  'gemini-2.0-flash-lite',
+  'gemini-2.5-flash',          // 하루 250회 무료
+  'gemini-2.5-flash-lite-preview-06-17', // 하루 1000회 무료
+  'gemini-2.5-flash-preview-05-20', // 폴백
 ];
 let _geminiModelIdx = 0;
 
@@ -1441,6 +1435,7 @@ async function processNextMultiScan() {
     words = parsed.words;
     if (!words?.length) { toast(`${idx+1}번 사진에서 단어를 찾지 못했어요`); window._multiIdx++; await processNextMultiScan(); return; }
   } catch(e) { toast('네트워크 오류'); render(); return; }
+  await incrementScanCount();
   pendingW = words; pendingB = bId; pendingP = null;
   renderWordSelectionMulti(words, idx, total);
 }
@@ -2191,7 +2186,7 @@ async function showAdminPanel() {
   const listEl = document.getElementById('admin-list');
   listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div>`;
   try {
-    const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role,plan,scan_count&order=created_at.desc', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const members = await res.json();
     if (!members.length) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('noMembers')}</div>`; return; }
     listEl.innerHTML = members.map(m => `
@@ -2199,7 +2194,7 @@ async function showAdminPanel() {
         <div>
           <div style="font-size:13px;font-weight:600;color:var(--ink-100);">${m.name||t('noName')}</div>
           <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
-          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role==='대기중'?t('waitingRole'):m.role==='멤버'?t('memberRole'):m.role||t('memberRole')}</div>
+          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role==='대기중'?t('waitingRole'):m.role==='멤버'?t('memberRole'):m.role==='관리자'?t('adminLabel'):t('memberRole')}</div>
         </div>
         <div style="font-size:11px;margin-top:4px;">
           ${m.plan==='premium'?
