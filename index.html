@@ -1786,7 +1786,7 @@ function render() {
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)}${t('wordsCountUnit')}${userPlan==='free'?` · 📷 ${userScanCount}/${FREE_SCAN_LIMIT}`:' · ✨ Premium'}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
           </div>
           <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
         </div>
@@ -1800,7 +1800,7 @@ function render() {
                   <div class="book-cover__author" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.author}</div>
                 </div>
                 <div class="book-tile__title">${b.title}</div>
-                <div class="book-tile__sub">${b.author} · ${countWords(b)} words</div>
+                <div class="book-tile__sub">${b.author} · ${countWords(b)} ${userNativeLang==='ko'?'단어':'words'}</div>
               </div>`).join('')}
           </div>
         </div>
