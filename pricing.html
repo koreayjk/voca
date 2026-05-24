@@ -146,20 +146,26 @@ document.querySelectorAll('.plan').forEach(function(plan) {
   });
 });
 
+function getEmail() {
+  try {
+    var session = JSON.parse(localStorage.getItem('imvoca.session') || '{}');
+    return session.user?.email || '';
+  } catch(e) { return ''; }
+}
+
+function goCheckout(plan) {
+  var link = LINKS[plan];
+  var email = getEmail();
+  if (email) link += '?prefilled_email=' + encodeURIComponent(email);
+  window.location.href = link;
+}
+
 document.getElementById('btn-monthly').addEventListener('click', function() {
-  if (LINKS.monthly === 'MONTHLY_LINK_HERE') {
-    alert('결제 링크 준비 중이에요!');
-    return;
-  }
-  window.location.href = LINKS.monthly;
+  goCheckout('monthly');
 });
 
 document.getElementById('btn-yearly').addEventListener('click', function() {
-  if (LINKS.yearly === 'YEARLY_LINK_HERE') {
-    alert('결제 링크 준비 중이에요!');
-    return;
-  }
-  window.location.href = LINKS.yearly;
+  goCheckout('yearly');
 });
 </script>
 </body>
