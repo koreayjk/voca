@@ -60,7 +60,7 @@
     border: 2px solid transparent;
     transition: all 0.3s;
     position: relative;
-    cursor: pointer;
+    cursor: default;
   }
   .plan:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
   .plan.popular {
@@ -193,7 +193,7 @@
       <li>암기카드 + 퀴즈</li>
       <li>다국어 지원</li>
     </ul>
-    <button class="btn btn-secondary" onclick="checkout('monthly')">월간 구독 시작</button>
+    <button class="btn btn-primary" onclick="checkout('monthly')" style="background:#555;color:#fff;">월간 구독 시작</button>
     <div class="loading" id="loading-monthly">결제 페이지 이동 중...</div>
   </div>
 
@@ -210,7 +210,7 @@
       <li>암기카드 + 퀴즈</li>
       <li>다국어 지원</li>
     </ul>
-    <button class="btn btn-primary" onclick="checkout('yearly')">연간 구독 시작</button>
+    <button class="btn btn-primary" onclick="checkout('yearly')">연간 구독 시작 ⭐</button>
     <div class="loading" id="loading-yearly">결제 페이지 이동 중...</div>
   </div>
 </div>
