@@ -2201,13 +2201,63 @@ async function showAdminPanel() {
           <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
           <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role==='대기중'?t('waitingRole'):m.role==='멤버'?t('memberRole'):m.role||t('memberRole')}</div>
         </div>
+        <div style="font-size:11px;margin-top:4px;">
+          ${m.plan==='premium'?
+            '<span style="background:#f39c12;color:#fff;border-radius:99px;padding:2px 8px;font-weight:700;">✨ Premium</span>':
+            '<span style="background:var(--ink-07);color:var(--ink-60);border-radius:99px;padding:2px 8px;">Free</span>'}
+          <span style="color:var(--ink-40);margin-left:6px;">📷 ${m.scan_count||0}장</span>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+          ${m.plan!=='premium'?
+            `<button onclick="setPremium('${m.id}', true)" style="background:#f39c12;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">✨ Premium 설정</button>`:
+            `<button onclick="setPremium('${m.id}', false)" style="background:var(--bg-card);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">Free로 변경</button>`}
+          <button onclick="resetScanCount('${m.id}')" style="background:var(--bg-card);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">🔄 스캔 초기화</button>
+        </div>
         ${m.role==='대기중'?`
-        <div style="display:flex;gap:6px;">
+        <div style="display:flex;gap:6px;margin-top:6px;">
           <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('approveUser')}</button>
           <button onclick="rejectUser('${m.id}')" style="background:var(--bg-card);color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('rejectUser')}</button>
         </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?t('adminLabel'):''}</div>`}
       </div>`).join('');
   } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">오류: ${e.message}</div>`; }
+}
+
+
+async function setPremium(userId, isPremium) {
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: isPremium ? 'premium' : 'free' })
+    });
+    toast(isPremium ? '✨ Premium으로 업그레이드됐어요!' : 'Free 플랜으로 변경됐어요');
+    showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
+}
+
+async function resetScanCount(userId) {
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scan_count: 0 })
+    });
+    toast('🔄 스캔 카운트가 초기화됐어요!');
+    showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
+}
+
+async function resetAllScanCounts() {
+  if (!confirm('모든 사용자의 스캔 카운트를 초기화할까요?')) return;
+  try {
+    await fetch(SB_URL + `/rest/v1/members?user_id=neq.null`, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scan_count: 0 })
+    });
+    toast('🔄 전체 스캔 카운트 초기화됐어요!');
+    showAdminPanel();
+  } catch(e) { toast('오류: ' + e.message); }
 }
 
 async function approveUser(userId) {
