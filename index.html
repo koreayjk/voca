@@ -450,6 +450,9 @@ const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
+let userPlan = 'free';      // 'free' or 'premium'
+let userScanCount = 0;      // 이번 달 스캔 횟수
+const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한
 
 async function sbFetch(path, method='GET', body=null, useAuth=true) {
   const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY };
@@ -646,6 +649,74 @@ function pageSort(a, b) {
   return aStr.localeCompare(bStr);
 }
 
+
+// ── 플랜/스캔 카운트 로드 ──
+async function loadUserPlan() {
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    if (data[0]) {
+      userPlan = data[0].plan || 'free';
+      userScanCount = data[0].scan_count || 0;
+    }
+  } catch(e) {}
+}
+
+// 스캔 카운트 증가
+async function incrementScanCount() {
+  userScanCount++;
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scan_count: userScanCount })
+    });
+  } catch(e) {}
+}
+
+// 스캔 가능 여부 체크
+function canScan() {
+  if (userPlan === 'premium') return true;
+  return userScanCount < FREE_SCAN_LIMIT;
+}
+
+// 업그레이드 팝업
+function showUpgradePopup() {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:12px;">🚀</div>
+      <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">
+        ${userNativeLang==='ko'?'무료 스캔을 모두 사용했어요':'Free scans used up'}
+      </div>
+      <div style="font-size:14px;color:var(--ink-60);margin-bottom:6px;">
+        ${userNativeLang==='ko'?`무료 플랜은 월 ${FREE_SCAN_LIMIT}장까지 스캔할 수 있어요.`:`Free plan allows ${FREE_SCAN_LIMIT} scans per month.`}
+      </div>
+      <div style="font-size:13px;color:var(--ink-40);margin-bottom:24px;">
+        ${userNativeLang==='ko'?'Premium으로 업그레이드하면 무제한으로 사용할 수 있어요!':'Upgrade to Premium for unlimited scans!'}
+      </div>
+      <div style="background:var(--gold-bg);border-radius:12px;padding:16px;margin-bottom:20px;">
+        <div style="font-size:13px;color:var(--accent);font-weight:700;margin-bottom:4px;">✨ Premium</div>
+        <div style="font-size:24px;font-weight:700;color:var(--ink-100);">$4.99<span style="font-size:14px;font-weight:400;color:var(--ink-60);">/월</span></div>
+        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $39.99 (33% 할인)':'$39.99/year (save 33%)'}</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-40);margin-bottom:16px;">
+        ✓ ${userNativeLang==='ko'?'무제한 AI 스캔':'Unlimited AI scans'}<br>
+        ✓ ${userNativeLang==='ko'?'무제한 단어 저장':'Unlimited word storage'}<br>
+        ✓ ${userNativeLang==='ko'?'에빙하우스 복습':'Ebbinghaus review'}
+      </div>
+      <button onclick="this.closest('[style*=fixed]').remove()" 
+        style="width:100%;padding:14px;background:var(--ink-07);border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;cursor:pointer;color:var(--ink-60);">
+        ${userNativeLang==='ko'?'나중에':'Later'}
+      </button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
+}
+
 async function sbInit() {
   initDarkMode();
   renderLogin();
@@ -745,6 +816,7 @@ async function loginWithDemoToken(code) {
     toast('✅ 입장했어요!');
     await loadApiKey();
     await loadUserName();
+    await loadUserPlan();
     await loadBooksFromDB();
     render();
     setTimeout(checkReviews, 1000);
@@ -1327,6 +1399,8 @@ async function doMultiScan() {
 }
 
 async function processNextMultiScan() {
+  // 스캔 제한 체크 (멀티스캔 첫 장에서만)
+  if (window._multiIdx === 0 && !canScan()) { showUpgradePopup(); return; }
   const idx = window._multiIdx;
   const total = window._multiImgData.length;
   const bId = window._multiBookId;
@@ -1505,6 +1579,8 @@ function buildExcludePrompt() {
 }
 
 async function doScan() {
+  // 스캔 제한 체크
+  if (!canScan()) { showUpgradePopup(); return; }
   const bId = document.getElementById('up-book-sel')?.value;
   if (!bId) { toast('책을 먼저 선택해주세요'); return; }
   let pg;
@@ -1715,7 +1791,7 @@ function render() {
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)}${t('wordsCountUnit')}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)}${t('wordsCountUnit')}${userPlan==='free'?` · 📷 ${userScanCount}/${FREE_SCAN_LIMIT}`:' · ✨ Premium'}</div>
           </div>
           <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
         </div>
