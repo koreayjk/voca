@@ -693,7 +693,7 @@ function showUpgradePopup() {
         ${userNativeLang==='ko'?'무료 스캔을 모두 사용했어요':'Free scans used up'}
       </div>
       <div style="font-size:14px;color:var(--ink-60);margin-bottom:6px;">
-        ${userNativeLang==='ko'?`무료 플랜은 월 ${FREE_SCAN_LIMIT}장까지 스캔할 수 있어요.`:`Free plan allows ${FREE_SCAN_LIMIT} scans per month.`}
+        ${userNativeLang==='ko'?`무료 플랜은 ${FREE_SCAN_LIMIT}장까지 스캔할 수 있어요.`:`Free plan includes ${FREE_SCAN_LIMIT} scans total.`}
       </div>
       <div style="font-size:13px;color:var(--ink-40);margin-bottom:24px;">
         ${userNativeLang==='ko'?'Premium으로 업그레이드하면 무제한으로 사용할 수 있어요!':'Upgrade to Premium for unlimited scans!'}
@@ -708,8 +708,12 @@ function showUpgradePopup() {
         ✓ ${userNativeLang==='ko'?'무제한 단어 저장':'Unlimited word storage'}<br>
         ✓ ${userNativeLang==='ko'?'에빙하우스 복습':'Ebbinghaus review'}
       </div>
+      <button onclick="location.href='https://koreayjk.github.io/voca/pricing.html'"
+        style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">
+        ${userNativeLang==='ko'?'✨ Premium 업그레이드':'✨ Upgrade to Premium'}
+      </button>
       <button onclick="this.closest('[style*=fixed]').remove()" 
-        style="width:100%;padding:14px;background:var(--ink-07);border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;cursor:pointer;color:var(--ink-60);">
+        style="width:100%;padding:12px;background:none;border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">
         ${userNativeLang==='ko'?'나중에':'Later'}
       </button>
     </div>`;
@@ -1786,7 +1790,7 @@ function render() {
               <img src="https://koreayjk.github.io/voca/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 ${userNativeLang==='ko'?'사용됨':' used'}`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
           </div>
           <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
         </div>
