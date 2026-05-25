@@ -432,14 +432,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   </div>
 </div>
 
-<!-- INSTALL BANNER -->
-<div class="install-banner" id="install-banner">
-  <button class="install-banner__close" onclick="dismissInstall()">✕</button>
-  <div class="install-banner__icon">📲</div>
-  <div class="install-banner__title" id="install-title">IM VOCA</div>
-  <div class="install-banner__desc" id="install-desc"></div>
-  <div id="install-btn-wrap" style="margin-top:10px;"></div>
-</div>
+
 
 <!-- REVIEW BANNER -->
 
@@ -753,34 +746,36 @@ function showUpgradePopup() {
 
 // ── 비밀번호 재설정 토큰 감지 ──
 function checkRecoveryToken() {
-  const hash = window.location.hash;
-  if (!hash) return false;
+  // hash와 search 둘 다 확인
+  const hash = window.location.hash || '';
+  const search = window.location.search || '';
+  const raw = hash.startsWith('#') ? hash.substring(1) : hash;
 
-  const params = new URLSearchParams(hash.replace('#', ''));
+  if (!raw) return false;
 
-  // 에러 감지 (만료, 잘못된 링크 등)
+  const params = new URLSearchParams(raw);
+  const type = params.get('type');
   const error = params.get('error');
-  const errorDesc = params.get('error_description');
+
+  // 에러 감지
   if (error) {
-    window.location.hash = '';
+    history.replaceState(null, '', window.location.pathname);
     setTimeout(() => {
       renderLogin();
-      if (error === 'access_denied') {
-        toast('⚠️ 링크가 만료됐어요. 비밀번호 찾기를 다시 시도해주세요.');
-      } else {
-        toast('⚠️ ' + (errorDesc?.replace(/\+/g,' ') || '오류가 발생했어요'));
-      }
+      toast('⚠️ 링크가 만료됐어요. 비밀번호 찾기를 다시 시도해주세요.');
     }, 300);
     return true;
   }
 
-  // 정상 토큰 감지
-  if (!hash.includes('type=recovery')) return false;
+  // recovery 타입 확인
+  if (type !== 'recovery') return false;
+
   const accessToken = params.get('access_token');
   if (!accessToken) return false;
 
+  // URL 깔끔하게
+  history.replaceState(null, '', window.location.pathname);
   _authToken = accessToken;
-  window.location.hash = '';
   showNewPasswordForm();
   return true;
 }
@@ -834,6 +829,10 @@ async function updatePassword() {
 
 async function sbInit() {
   initDarkMode();
+
+  // ── 비밀번호 재설정 토큰 체크 (최우선) ──
+  if (checkRecoveryToken()) return;
+
   renderLogin();
 
   // ── 데모 링크 토큰 감지 ──
@@ -3143,44 +3142,7 @@ goTab = function(t) {
   }, { passive: true });
 })();
 
-(function() {
-  if (localStorage.getItem('imvoca.install.dismissed')) return;
-  if (window.navigator.standalone) return;
-  const ua = navigator.userAgent;
-  const isIOS = /iphone|ipad|ipod/i.test(ua);
-  const isAndroid = /android/i.test(ua);
-  if (isIOS) {
-    const isSafari = /safari/i.test(ua) && !/chrome|crios|fxios/i.test(ua);
-    if (!isSafari) return;
-    setTimeout(() => {
-      document.getElementById('install-title').textContent = t('installTitle');
-      document.getElementById('install-desc').innerHTML = userNativeLang==='ko'?'Safari 하단 <strong>공유 버튼(□↑)</strong>을 탭한 후<br><strong>홈 화면에 추가</strong>를 선택해주세요!':'Tap <strong>Share (□↑)</strong> in Safari then select <strong>Add to Home Screen</strong>';
-      document.getElementById('install-btn-wrap').innerHTML = `<button onclick="dismissInstall()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('installDismiss')}</button>`;
-      document.getElementById('install-banner').classList.add('show');
-    }, 3000);
-  } else if (isAndroid) {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault(); window._deferredPrompt = e;
-      document.getElementById('install-title').textContent = t('installTitleAndroid');
-      document.getElementById('install-desc').textContent = t('installDescAndroid');
-      document.getElementById('install-btn-wrap').innerHTML =
-        '<div style="display:flex;gap:8px;">' +
-        `<button onclick="doInstall()" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('installBtn')}</button>` +
-        `<button onclick="dismissInstall()" style="flex:1;padding:10px;background:transparent;color:var(--ink-100);border:1px solid var(--ink-12);border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;">${t('installDismiss')}</button>` +
-        '</div>';
-      document.getElementById('install-banner').classList.add('show');
-    });
-  }
-})();
 
-function doInstall() {
-  if (window._deferredPrompt) { window._deferredPrompt.prompt(); window._deferredPrompt.userChoice.then(() => { window._deferredPrompt = null; dismissInstall(); }); }
-}
-
-function dismissInstall() {
-  document.getElementById('install-banner').classList.remove('show');
-  localStorage.setItem('imvoca.install.dismissed', '1');
-}
 
 sbInit();
 </script>
