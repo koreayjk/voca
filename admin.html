@@ -71,15 +71,12 @@
   .pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
   .pill.premium{background:var(--amber-soft);color:var(--amber);}
   .pill.free{background:var(--ink-06);color:var(--ink-45);}
-  .pill.wait{background:#fdeee0;color:#d97316;}
   .pill.admin{background:var(--accent-soft);color:var(--accent);}
   .row-name{font-weight:500;}
   .row-email{font-size:12px;color:var(--ink-45);}
   .act-btn{padding:6px 12px;border-radius:8px;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;border:none;}
   .act-btn.up{background:var(--amber);color:#fff;}
   .act-btn.down{background:#fff;color:var(--ink-70);border:1px solid var(--ink-12);}
-  .act-btn.approve{background:var(--green);color:#fff;}
-  .act-btn.reject{background:#fff;color:#dc2626;border:1px solid #f3c0c0;}
   .empty{text-align:center;padding:40px;color:var(--ink-45);font-size:13px;}
   .loading{text-align:center;padding:40px;color:var(--ink-45);font-size:13px;}
 
@@ -138,6 +135,9 @@
 
   <!-- ── 현황 ── -->
   <div class="panel on" id="panel-overview">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
+      <button class="btn-ghost" style="border-color:var(--accent);color:var(--accent);font-weight:700;" onclick="generateDemoLink()">🔗 데모 링크 생성</button>
+    </div>
     <div class="stat-grid" id="stat-grid">
       <div class="loading">불러오는 중...</div>
     </div>
@@ -290,7 +290,6 @@ function renderOverview(){
   const total = _allMembers.length;
   const premium = _allMembers.filter(m=>m.plan==='premium').length;
   const free = total - premium;
-  const waiting = _allMembers.filter(m=>m.role==='대기중').length;
   const mrr = (premium * PRICE_MONTHLY).toFixed(2);
   const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
 
@@ -299,7 +298,6 @@ function renderOverview(){
     <div class="stat accent"><div class="label">Premium 구독</div><div class="num">${premium}</div><div class="sub">유료 회원</div></div>
     <div class="stat"><div class="label">무료 회원</div><div class="num">${free}</div></div>
     <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${mrr}</div><div class="sub">Premium ${premium}명 × $${PRICE_MONTHLY}</div></div>
-    <div class="stat"><div class="label">승인 대기</div><div class="num">${waiting}</div><div class="sub">${waiting>0?'회원 관리 탭에서 처리':'대기 없음'}</div></div>
     <div class="stat"><div class="label">누적 단어 수</div><div class="num">${totalWords.toLocaleString()}</div><div class="sub">전 회원 합계</div></div>
   `;
 }
@@ -329,7 +327,6 @@ function renderMembers(){
     <table><thead><tr><th>회원</th><th>플랜</th><th>스캔</th><th>단어</th><th style="text-align:right;">관리</th></tr></thead><tbody>
     ${list.map(m=>{
       const isAdmin = m.email===ADMIN_EMAIL;
-      const isWaiting = m.role==='대기중';
       return `<tr>
         <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
         <td>${planPill(m)}</td>
@@ -337,9 +334,6 @@ function renderMembers(){
         <td style="color:var(--ink-45);">${(m.total_words||0).toLocaleString()}</td>
         <td style="text-align:right;">
           ${isAdmin ? '<span class="pill admin">관리자</span>' :
-            isWaiting ?
-              `<button class="act-btn approve" onclick="approveMember('${m.id}')">승인</button>
-               <button class="act-btn reject" onclick="rejectMember('${m.id}')">거절</button>` :
             m.plan==='premium' ?
               `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>` :
               `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`}
@@ -361,33 +355,9 @@ async function setPlan(id, toPremium){
   }catch(e){ toast('변경 실패'); }
 }
 
-async function approveMember(id){
-  try{
-    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
-      body:JSON.stringify({role:'멤버'})
-    });
-    toast('승인됐어요');
-    await loadMembers();
-  }catch(e){ toast('승인 실패'); }
-}
-
-async function rejectMember(id){
-  if(!confirm('이 회원을 거절(삭제)할까요?')) return;
-  try{
-    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
-      method:'DELETE',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
-    });
-    toast('거절 처리됐어요');
-    await loadMembers();
-  }catch(e){ toast('처리 실패'); }
-}
-
 // ── 공지 발송 ──
 function copyEmails(){
-  const emails = _allMembers.filter(m=>m.email && m.role!=='대기중').map(m=>m.email);
+  const emails = _allMembers.filter(m=>m.email).map(m=>m.email);
   if(emails.length===0){ toast('회원 이메일이 없어요'); return; }
   const text = emails.join(', ');
   navigator.clipboard.writeText(text).then(()=>{
@@ -438,9 +408,42 @@ function toggleKeyView(){
   el.type = el.type==='password' ? 'text' : 'password';
 }
 
+// ── 데모 링크 생성 ──
+async function generateDemoLink(){
+  if(!_authToken){ toast('로그인 상태가 아니에요'); return; }
+  toast('링크 생성 중...');
+  const code = Math.random().toString(36).substring(2,8).toUpperCase();
+  const expires_at = new Date(Date.now()+24*60*60*1000).toISOString();
+  try{
+    const res = await fetch(SB_URL+'/rest/v1/demo_links',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=minimal'},
+      body:JSON.stringify({code, access_token:_authToken, expires_at})
+    });
+    if(!res.ok){ toast('링크 생성 실패: '+res.status); return; }
+    const link = `https://imvoca.app/?demo=${code}`;
+    navigator.clipboard.writeText(link).then(()=>toast('✅ 데모 링크가 복사됐어요')).catch(()=>{});
+    showDemoModal(link);
+  }catch(e){ toast('오류: '+e.message); }
+}
+
+function showDemoModal(link){
+  const overlay = document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:440px;">
+      <div style="font-size:16px;font-weight:700;margin-bottom:4px;">🔗 데모 링크 생성됨</div>
+      <div style="font-size:12px;color:var(--ink-45);margin-bottom:18px;">24시간 유효 · 로그인 없이 앱 체험 가능 · 카톡으로 바로 보내세요</div>
+      <div style="background:var(--accent-soft);border-radius:10px;padding:14px;margin-bottom:14px;font-size:13px;color:var(--accent);font-weight:600;word-break:break-all;">${esc(link)}</div>
+      <button onclick="navigator.clipboard.writeText('${link}').then(()=>{this.textContent='✅ 복사됐어요!';setTimeout(()=>this.textContent='링크 복사하기',2000)})" style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;">링크 복사하기</button>
+      <button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:11px;background:none;color:var(--ink-45);border:none;font-family:inherit;font-size:13px;cursor:pointer;">닫기</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+}
+
 // ── HELPERS ──
 function planPill(m){
-  if(m.role==='대기중') return '<span class="pill wait">승인 대기</span>';
   if(m.email===ADMIN_EMAIL) return '<span class="pill admin">관리자</span>';
   if(m.plan==='premium') return '<span class="pill premium">✨ Premium</span>';
   return '<span class="pill free">Free</span>';
