@@ -515,7 +515,7 @@ const UI_TEXT = {
     loginTitle:'영어책 단어장',loginBtn:'로그인',signupBtn:'가입하기',loginHint:'IM Mission 계정으로 로그인하세요',
     langSetting:'언어 설정',nativeLang:'내 언어 (모국어)',targetLangLabel:'공부할 언어',langDesc:'모국어와 공부할 언어를 선택하세요',
     save:'저장하기',cancel:'취소',cancelBtn:'취소',saving:'저장 중...',
-    memoryDone:'모두 외웠어요',wordsMemorized:'words memorized',studyAgain:'다시 외우기',quizMode:'퀴즈 모드로',toBookshelf:'책장으로',
+    memoryDone:'모두 외웠어요',wordsMemorized:'words memorized',studyAgain:'다시 외우기',quizMode:'퀴즈 모드로',toBookshelf:'책장으로',toBookshelf2:'책장으로',
     quizDone:'퀴즈 완료!',quizResult:'퀴즈 결과',correct:'정답',wrong:'오답',
     wrongOnly:'❌ 틀린 것만 다시 풀기',retryAll:'🔄 전체 다시 풀기',retryQuiz:'다시 풀기',
     sendToCard:'암기 카드로 보내기',
@@ -584,7 +584,7 @@ const UI_TEXT = {
     loginTitle:'Vocabulary Book',loginBtn:'Login',signupBtn:'Sign Up',loginHint:'Login with your IM Mission account',
     langSetting:'Language Settings',nativeLang:'My Language (Native)',targetLangLabel:'Language to Study',langDesc:'Select your native and study language',
     save:'Save',cancel:'Cancel',cancelBtn:'Cancel',saving:'Saving...',
-    memoryDone:'All Memorized!',wordsMemorized:'words memorized',studyAgain:'Study Again',quizMode:'Quiz Mode',toBookshelf:'Bookshelf',
+    memoryDone:'All Memorized!',wordsMemorized:'words memorized',studyAgain:'Study Again',quizMode:'Quiz Mode',toBookshelf:'Bookshelf',toBookshelf2:'Bookshelf',
     quizDone:'Quiz Complete!',quizResult:'Quiz Result',correct:'Correct',wrong:'Wrong',
     wrongOnly:'❌ Retry Wrong Only',retryAll:'🔄 Retry All',retryQuiz:'Retry',
     sendToCard:'Study with Flashcards',
@@ -2233,8 +2233,9 @@ function render() {
           <div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px">
             <button class="btn btn-solid" onclick="initStudy('${route.bookId}','${route.scope}','${route.pageNum}');push({name:'study-cards',bookId:'${route.bookId}',scope:'${route.scope}',pageNum:'${route.pageNum}'})">${t('studyAgain')}</button>
             <button class="btn btn-outline" onclick="startQuiz('${route.bookId}','${route.scope}','${route.pageNum}')">${t('quizMode')}</button>
-            ${route.isReview ? `<button class="btn btn-solid" style="background:#27ae60;" onclick="goTab('review')">${userNativeLang==='ko'?'📆 복습 목록으로 돌아가기':'📆 Back to Review'}</button>` : ''}
-            <button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf2')}</button>
+            ${route.isReview ?
+              `<button class="btn btn-solid" style="background:#27ae60;" onclick="goTab('review')">${userNativeLang==='ko'?'📆 복습 목록으로 돌아가기':'📆 Back to Review'}</button>` :
+              `<button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>`}
           </div>
         </div>
       </div>`;
