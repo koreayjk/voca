@@ -750,6 +750,69 @@ function showUpgradePopup() {
   overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
 }
 
+
+// ── 비밀번호 재설정 토큰 감지 ──
+function checkRecoveryToken() {
+  const hash = window.location.hash;
+  if (!hash.includes('type=recovery') && !new URLSearchParams(window.location.search).get('type') === 'recovery') return false;
+  
+  // URL에서 access_token 추출
+  const params = new URLSearchParams(hash.replace('#', ''));
+  const accessToken = params.get('access_token');
+  if (!accessToken) return false;
+  
+  _authToken = accessToken;
+  showNewPasswordForm();
+  return true;
+}
+
+function showNewPasswordForm() {
+  document.getElementById('root').innerHTML = `
+    <div class="scr" style="justify-content:center;">
+      <div style="text-align:center;margin-bottom:28px;">
+        <img src="https://imvoca.app/2.png" style="width:100px;height:100px;object-fit:contain;">
+      </div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">🔑 새 비밀번호 설정</div>
+      <div style="font-size:13px;color:var(--ink-60);margin-bottom:24px;">새로운 비밀번호를 입력해주세요.</div>
+      <input id="new-pw" type="password" placeholder="새 비밀번호 (6자 이상)"
+        style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px;">
+      <input id="new-pw2" type="password" placeholder="비밀번호 확인"
+        style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:16px;">
+      <button onclick="updatePassword()"
+        style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;">
+        비밀번호 변경하기
+      </button>
+    </div>`;
+}
+
+async function updatePassword() {
+  const pw = document.getElementById('new-pw')?.value;
+  const pw2 = document.getElementById('new-pw2')?.value;
+  if (!pw || pw.length < 6) { toast('비밀번호는 6자 이상이어야 해요'); return; }
+  if (pw !== pw2) { toast('비밀번호가 일치하지 않아요'); return; }
+  
+  try {
+    const res = await fetch(SB_URL + '/auth/v1/user', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify({ password: pw })
+    });
+    const data = await res.json();
+    if (data.id) {
+      toast('✅ 비밀번호가 변경됐어요! 다시 로그인해주세요');
+      setTimeout(() => {
+        _authToken = null;
+        window.location.hash = '';
+        renderLogin();
+      }, 1500);
+    } else {
+      toast(data.msg || '변경 실패. 다시 시도해주세요');
+    }
+  } catch(e) {
+    toast('오류가 발생했어요');
+  }
+}
+
 async function sbInit() {
   initDarkMode();
   renderLogin();
@@ -1090,6 +1153,7 @@ async function savePageWordsToDB(bookId, pageNum, words) {
 
 function showResetPassword() {
   const overlay = document.createElement('div');
+  overlay.id = 'reset-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
   overlay.innerHTML = `
     <div style="background:var(--bg-page);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;">
@@ -1129,12 +1193,13 @@ async function sendResetEmail() {
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
       body: JSON.stringify({ 
         email,
-        options: { redirectTo: 'https://imvoca.app' }
+        options: { redirectTo: 'https://imvoca.app/?type=recovery' }
       })
     });
     
     if (res.ok || res.status === 200) {
-      document.querySelector('[style*=fixed]')?.remove();
+      // 팝업 닫기
+      document.getElementById('reset-overlay')?.remove();
       toast(userNativeLang==='ko'?'📧 이메일을 보냈어요! 받은 편지함을 확인해주세요':'📧 Email sent! Check your inbox');
     } else {
       const data = await res.json();
