@@ -871,6 +871,7 @@ async function sbInit() {
       }
       await loadApiKey();
       await loadUserName();
+      await loadUserPlan();
       await loadBooksFromDB();
       render();
       setTimeout(checkReviews, 1000);
@@ -1093,7 +1094,7 @@ async function sbSignIn(email, pw) {
         }
       } catch(e) {}
     }
-    await loadBooksFromDB(); render(); setTimeout(checkReviews, 1000);
+    await loadBooksFromDB(); await loadUserPlan(); render(); setTimeout(checkReviews, 1000);
   } catch(e) {
     toast('로그인 오류: ' + e.message);
     if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
