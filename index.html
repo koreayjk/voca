@@ -754,14 +754,33 @@ function showUpgradePopup() {
 // ── 비밀번호 재설정 토큰 감지 ──
 function checkRecoveryToken() {
   const hash = window.location.hash;
-  if (!hash.includes('type=recovery') && !new URLSearchParams(window.location.search).get('type') === 'recovery') return false;
-  
-  // URL에서 access_token 추출
+  if (!hash) return false;
+
   const params = new URLSearchParams(hash.replace('#', ''));
+
+  // 에러 감지 (만료, 잘못된 링크 등)
+  const error = params.get('error');
+  const errorDesc = params.get('error_description');
+  if (error) {
+    window.location.hash = '';
+    setTimeout(() => {
+      renderLogin();
+      if (error === 'access_denied') {
+        toast('⚠️ 링크가 만료됐어요. 비밀번호 찾기를 다시 시도해주세요.');
+      } else {
+        toast('⚠️ ' + (errorDesc?.replace(/\+/g,' ') || '오류가 발생했어요'));
+      }
+    }, 300);
+    return true;
+  }
+
+  // 정상 토큰 감지
+  if (!hash.includes('type=recovery')) return false;
   const accessToken = params.get('access_token');
   if (!accessToken) return false;
-  
+
   _authToken = accessToken;
+  window.location.hash = '';
   showNewPasswordForm();
   return true;
 }
