@@ -1014,6 +1014,29 @@ async function saveBookToDB(title, author, color, desc, cover='') {
   } catch(e) { toast('저장 오류: ' + e.message); return null; }
 }
 
+function calcWordScore(words) {
+  // CEFR 난이도별 가중치
+  const WEIGHTS = { 'A2': 1, 'B1': 2, 'B2': 3, 'C1': 4, 'C2': 5 };
+  return words.reduce((sum, w) => sum + (WEIGHTS[w.level] || 1), 0);
+}
+
+async function updateTotalWords() {
+  try {
+    // 전체 단어 가중치 점수 계산
+    const totalScore = books.reduce((sum, b) =>
+      sum + b.pages.reduce((s, p) =>
+        s + calcWordScore(p.words), 0), 0);
+    // 전체 단어 수도 함께 저장
+    const totalWords = books.reduce((sum, b) =>
+      sum + b.pages.reduce((s, p) => s + p.words.length, 0), 0);
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ total_words: totalScore })
+    });
+  } catch(e) {}
+}
+
 async function savePageWordsToDB(bookId, pageNum, words) {
   try {
     const book = findBook(bookId);
@@ -2061,7 +2084,7 @@ function advance(isKnown) {
     if (s.scope === 'page' && s.pageNum) {
       if (s._reviewId && s._reviewStepKey) {
         // 복습 모드 - 다음 단계로 업데이트
-        updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey });
+        updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
       } else {
         // 일반 학습 - 복습 일정 새로 등록
@@ -2284,7 +2307,21 @@ function speak(word) {
   window.speechSynthesis.speak(u);
 }
 
+async function loadHallOfFame() {
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    return Array.isArray(data) ? data.filter(m => m.total_words > 0) : [];
+  } catch(e) { return []; }
+}
+
 async function renderStats(root, dock) {
+  // 명예의 전당 데이터 미리 로드
+  const hall = await loadHallOfFame();
+  const medals = ['🥇','🥈','🥉'];
+
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
@@ -2507,6 +2544,22 @@ async function startReviewSession() {
   render();
 }
 
+
+async function incrementPerfectReviews() {
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=perfect_reviews`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    const current = data[0]?.perfect_reviews || 0;
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ perfect_reviews: current + 1 })
+    });
+  } catch(e) {}
+}
+
 async function updateReviewStep(review) {
   try {
     const patch = {};
@@ -2528,9 +2581,20 @@ async function updateReviewStep(review) {
     // 현재 단계 null로 지우기
     patch[key] = null;
 
+    // 원래 예정일과 오늘 비교 - 하루 이상 미뤄졌으면 is_perfect = false
+    const scheduled = review._scheduledDate ? new Date(review._scheduledDate) : null;
+    if (scheduled) {
+      const diffDays = Math.floor((now - scheduled) / (1000 * 60 * 60 * 24));
+      if (diffDays > 0) patch.is_perfect = false;
+    }
+
     if (!step || !step.next) {
       // 마지막 단계 → 완료
       patch.completed = true;
+      // 완벽 완료 시 members 테이블 perfect_reviews +1
+      if (patch.is_perfect !== false) {
+        incrementPerfectReviews();
+      }
     } else {
       // 다음 단계 날짜를 오늘 기준으로 재계산
       patch[step.next] = addDays(now, step.days);
@@ -2674,13 +2738,11 @@ async function renderReviewPage(root, dock) {
   } catch(e) { document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`; }
 }
 
-async function startSingleReview(bookId, pageNum, reviewId, stepKey) {
-  // 바로 업데이트 하지 않고 studyState에 저장
-  // 모든 단어를 ○ 완료해야 다음 단계로 넘어감
+async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDate) {
   initStudy(bookId, 'page', pageNum);
-  // reviewId, stepKey를 studyState에 저장해서 완료 시 업데이트
   studyState._reviewId = reviewId;
   studyState._reviewStepKey = stepKey;
+  studyState._scheduledDate = scheduledDate;
   push({ name: 'study-cards', bookId, scope: 'page', pageNum });
 }
 
