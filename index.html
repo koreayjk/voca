@@ -458,7 +458,36 @@ async function sbFetch(path, method='GET', body=null, useAuth=true) {
   const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY };
   headers['Authorization'] = (useAuth && _authToken) ? 'Bearer ' + _authToken : 'Bearer ' + SB_KEY;
   const res = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
+  // 401/403이면 세션 갱신 시도
+  if (res.status === 401 || res.status === 403) {
+    const refreshed = await refreshSession();
+    if (refreshed) {
+      headers['Authorization'] = 'Bearer ' + _authToken;
+      const res2 = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
+      return res2.json();
+    }
+  }
   return res.json();
+}
+
+async function refreshSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem('imvoca.session') || '{}');
+    const refreshToken = session.refresh_token;
+    if (!refreshToken) return false;
+    const res = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+      body: JSON.stringify({ refresh_token: refreshToken })
+    });
+    const data = await res.json();
+    if (data.access_token) {
+      _authToken = data.access_token;
+      localStorage.setItem('imvoca.session', JSON.stringify(data));
+      return true;
+    }
+    return false;
+  } catch(e) { return false; }
 }
 
 // ── 언어 설정 ──
@@ -1058,6 +1087,66 @@ async function savePageWordsToDB(bookId, pageNum, words) {
   } catch(e) { return null; }
 }
 
+
+function showResetPassword() {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-page);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;">
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">
+        ${userNativeLang==='ko'?'🔑 비밀번호 재설정':'🔑 Reset Password'}
+      </div>
+      <div style="font-size:13px;color:var(--ink-60);margin-bottom:20px;line-height:1.6;">
+        ${userNativeLang==='ko'?'가입한 이메일을 입력하면 비밀번호 재설정 링크를 보내드려요.':'Enter your email and we will send you a reset link.'}
+      </div>
+      <input id="reset-email" type="email" 
+        placeholder="${userNativeLang==='ko'?'이메일 입력':'Enter your email'}"
+        style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px;">
+      <button id="reset-btn" onclick="sendResetEmail()" 
+        style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">
+        ${userNativeLang==='ko'?'재설정 이메일 보내기':'Send Reset Email'}
+      </button>
+      <button onclick="this.closest('[style*=fixed]').remove()"
+        style="width:100%;padding:12px;background:none;border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">
+        ${userNativeLang==='ko'?'취소':'Cancel'}
+      </button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
+  setTimeout(() => document.getElementById('reset-email')?.focus(), 100);
+}
+
+async function sendResetEmail() {
+  const email = document.getElementById('reset-email')?.value?.trim();
+  if (!email) { toast(userNativeLang==='ko'?'이메일을 입력해주세요':'Please enter your email'); return; }
+  
+  const btn = document.getElementById('reset-btn');
+  if (btn) { btn.disabled = true; btn.textContent = userNativeLang==='ko'?'보내는 중...':'Sending...'; }
+  
+  try {
+    const res = await fetch(SB_URL + '/auth/v1/recover', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+      body: JSON.stringify({ 
+        email,
+        options: { redirectTo: 'https://imvoca.app' }
+      })
+    });
+    
+    if (res.ok || res.status === 200) {
+      document.querySelector('[style*=fixed]')?.remove();
+      toast(userNativeLang==='ko'?'📧 이메일을 보냈어요! 받은 편지함을 확인해주세요':'📧 Email sent! Check your inbox');
+    } else {
+      const data = await res.json();
+      toast(data.msg || (userNativeLang==='ko'?'이메일 전송 실패':'Failed to send email'));
+      if (btn) { btn.disabled = false; btn.textContent = userNativeLang==='ko'?'재설정 이메일 보내기':'Send Reset Email'; }
+    }
+  } catch(e) {
+    toast(userNativeLang==='ko'?'오류가 발생했어요':'An error occurred');
+    if (btn) { btn.disabled = false; btn.textContent = userNativeLang==='ko'?'재설정 이메일 보내기':'Send Reset Email'; }
+  }
+}
+
 function renderLogin(tab='login') {
   document.getElementById('root').innerHTML = `
     <div class="scr" style="justify-content:center">
@@ -1080,6 +1169,9 @@ function renderLogin(tab='login') {
         <input id="li-pw" type="password" placeholder="비밀번호" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px"
           onkeydown="if(event.key==='Enter'){sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value);}">
         <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">로그인</button>
+        <button onclick="showResetPassword()" style="width:100%;background:none;border:none;font-family:var(--font-body);font-size:12px;color:var(--ink-40);cursor:pointer;padding:10px;margin-top:4px;">
+          ${userNativeLang==='ko'?'비밀번호를 잊으셨나요?':'Forgot your password?'}
+        </button>
       `:`
         <input id="su-nm" type="text" placeholder="이름" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
         <input id="su-em" type="email" placeholder="이메일" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
@@ -2086,12 +2178,11 @@ async function advance(isKnown) {
         // 복습 모드 - 다음 단계로 업데이트
         await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
-        setTimeout(() => {
-          checkReviews();
-          // 복습 페이지에 있으면 새로고침
-          const route = stack[stack.length-1];
-          if (route?.name === 'review') renderReviewPage(document.getElementById('root'), buildDock());
-        }, 800);
+        setTimeout(async () => {
+          await checkReviews();
+          // 복습 페이지로 이동
+          goTab('review');
+        }, 500);
       } else {
         // 일반 학습 - 복습 일정 새로 등록
         saveReviewSchedule(s.bookId, s.pageNum);
