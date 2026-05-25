@@ -299,7 +299,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .radio--on { background: var(--ink-100); border-color: var(--ink-100); color: var(--bg-page); }
 .list-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--ink-07); cursor: pointer; }
 .list-row:last-child { border-bottom: none; }
-.study { position: fixed; inset: 0; height: 100dvh; display: flex; flex-direction: column; padding: 18px 22px 16px; z-index: 25; background: var(--bg-page); overflow: hidden; }
+.study { position: fixed; inset: 0; height: 100dvh; display: flex; flex-direction: column; padding: 18px 22px 16px; z-index: 25; background: var(--bg-page); overflow: hidden; padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)); }
 .study__top { display: flex; justify-content: space-between; align-items: center; }
 .study__info { font-size: 11px; color: var(--ink-60); }
 .study__close { font-size: 16px; cursor: pointer; padding: 4px; color: var(--ink-100); }
@@ -319,12 +319,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .back__word { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #f5ede0; text-align:center; }
 .back__label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245,237,224,0.45); margin-top: 14px; text-align:center; }
 .back__meaning { font-size: 16px; margin-top: 4px; line-height: 1.3; color: #f5ede0; text-align:center; }
-.ox-row { display: flex; gap: 10px; flex-shrink: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.ox-row { display: flex; gap: 10px; position: fixed; bottom: calc(var(--ox-bottom, 90px) + env(safe-area-inset-bottom, 0px)); left: 0; right: 0; padding: 0 22px; z-index: 30; }
 .ox-btn { flex: 1; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; cursor: pointer; border: none; }
 .ox-x { border: 1.5px solid var(--ink-12); background: var(--bg-card); color: var(--ink-100); }
 .ox-o { background: var(--accent); color: #fff; }
 .ox-btn:disabled { opacity: 0.3; cursor: default; }
-.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); margin-top: 6px; flex-shrink: 0; }
+.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); position: fixed; bottom: calc(var(--ox-hint-bottom, 70px) + env(safe-area-inset-bottom, 0px)); left: 0; right: 0; z-index: 30; }
 .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
 .done__n { font-family: var(--font-display); font-size: 96px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
 .done__label { font-size: 14px; color: var(--ink-60); }
@@ -829,6 +829,10 @@ async function updatePassword() {
 
 async function sbInit() {
   initDarkMode();
+  // 앱 모드 vs 브라우저 모드 감지
+  const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  document.documentElement.style.setProperty('--ox-bottom', isStandalone ? '16px' : '90px');
+  document.documentElement.style.setProperty('--ox-hint-bottom', isStandalone ? '0px' : '70px');
 
   // ── 비밀번호 재설정 토큰 체크 (최우선) ──
   if (checkRecoveryToken()) return;
@@ -1078,6 +1082,12 @@ async function sbSignIn(email, pw) {
 }
 
 async function sbSignUp(email, pw, name) {
+  // 입력값 검증
+  if (!name?.trim()) { toast(userNativeLang==='ko'?'이름을 입력해주세요':'Please enter your name'); return; }
+  if (!email?.trim()) { toast(userNativeLang==='ko'?'이메일을 입력해주세요':'Please enter your email'); return; }
+  if (!email.includes('@')) { toast(userNativeLang==='ko'?'올바른 이메일을 입력해주세요':'Please enter a valid email'); return; }
+  if (!pw?.trim()) { toast(userNativeLang==='ko'?'비밀번호를 입력해주세요':'Please enter a password'); return; }
+  if (pw.length < 6) { toast(userNativeLang==='ko'?'비밀번호는 6자 이상이어야 해요':'Password must be at least 6 characters'); return; }
   try {
     const data = await sbFetch('/auth/v1/signup', 'POST', { email, password: pw, data: { name } }, false);
     if (data.error) { toast('가입 실패: ' + data.error.message); return; }
