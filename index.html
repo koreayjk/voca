@@ -2633,7 +2633,11 @@ async function updateReviewStep(review) {
       }
     } else {
       // 다음 단계 날짜를 오늘 기준으로 재계산
-      patch[step.next] = addDays(now, step.days);
+      // addDays 직접 계산 (전역 함수 없음)
+      const nextDate = new Date(now);
+      nextDate.setDate(nextDate.getDate() + step.days);
+      nextDate.setHours(0, 0, 0, 0);
+      patch[step.next] = nextDate.toISOString();
     }
 
     const res = await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
