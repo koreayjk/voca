@@ -1,1 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IM VOCA Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #cc5500; --bg: #f5f0ea; --card: #fff; --ink: #1a1511; --ink-60: rgba(26,21,17,0.6); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; }
+  header { text-align:center; padding:48px 24px 32px; }
+  .logo { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--accent); margin-bottom:16px; }
+  h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,5vw,40px); line-height:1.2; margin-bottom:12px; }
+  h1 em { color:var(--accent); font-style:normal; }
+  .subtitle { font-size:15px; color:var(--ink-60); line-height:1.6; }
+  .plans { display:flex; gap:16px; justify-content:center; padding:32px 24px 48px; flex-wrap:wrap; max-width:800px; margin:0 auto; }
+  .plan { background:var(--card); border-radius:20px; padding:32px 28px; flex:1; min-width:280px; max-width:360px; border:2px solid transparent; display:flex; flex-direction:column; }
+  .plan.popular { border-color:var(--accent); background:linear-gradient(135deg,#fff 0%,#fff8f4 100%); }
+  .plan:hover { border-color:var(--accent); background:linear-gradient(135deg,#fff 0%,#fff8f4 100%); cursor:pointer; }
+  .plan.selected { border-color:var(--accent); background:linear-gradient(135deg,#fff 0%,#fff8f4 100%); }
+  .plan:not(.selected):not(:hover) { border-color:transparent; background:var(--card); }
+  .popular-badge { display:inline-block; background:var(--accent); color:#fff; font-size:11px; font-weight:700; padding:4px 14px; border-radius:99px; margin-bottom:16px; align-self:flex-start; }
+  .plan-name { font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--ink-60); text-transform:uppercase; margin-bottom:8px; }
+  .price { font-family:'Playfair Display',serif; font-size:48px; font-weight:700; line-height:1; margin-bottom:4px; }
+  .price sup { font-size:20px; vertical-align:top; margin-top:8px; }
+  .price span { font-size:16px; font-weight:400; color:var(--ink-60); font-family:'Noto Sans KR'; }
+  .price-note { font-size:12px; color:var(--accent); font-weight:600; margin-bottom:24px; min-height:18px; }
+  .save-badge { background:#fff3e0; color:#e67e22; padding:2px 10px; border-radius:99px; font-size:11px; font-weight:700; }
+  .features { list-style:none; margin-bottom:28px; flex:1; }
+  .features li { font-size:14px; color:var(--ink-60); padding:8px 0; border-bottom:1px solid rgba(0,0,0,0.06); display:flex; align-items:center; gap:8px; }
+  .features li:last-child { border-bottom:none; }
+  .features li::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; }
+  .btn { width:100%; padding:16px; border:none; border-radius:12px; font-family:'Noto Sans KR'; font-size:15px; font-weight:700; cursor:pointer; transition:all 0.2s; display:block; text-align:center; }
+  .btn-accent { background:var(--accent); color:#fff; }
+  .btn-accent:hover { background:#b34a00; }
+  .btn-dark { background:#444; color:#fff; }
+  .btn-dark:hover { background:#222; }
+  .free-plan { text-align:center; padding:0 24px 32px; }
+  .free-card { display:inline-flex; align-items:center; gap:16px; background:var(--card); border-radius:20px; padding:20px 32px; max-width:400px; width:100%; }
+  .free-card .info { text-align:left; }
+  .free-card .info strong { font-size:16px; display:block; margin-bottom:4px; }
+  .free-card .info span { font-size:13px; color:var(--ink-60); }
+  .faq { max-width:600px; margin:0 auto; padding:16px 24px 64px; }
+  .faq h2 { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:24px; text-align:center; }
+  .faq-item { background:var(--card); border-radius:12px; padding:20px; margin-bottom:12px; }
+  .faq-item strong { display:block; margin-bottom:6px; font-size:15px; }
+  .faq-item p { font-size:13px; color:var(--ink-60); line-height:1.6; }
+  .back { display:block; text-align:center; padding:16px; font-size:13px; color:var(--ink-60); text-decoration:none; }
+  .back:hover { color:var(--accent); }
+  .success-banner { display:none; background:#e8f5e9; border:1px solid #4caf50; border-radius:12px; padding:16px 20px; max-width:752px; margin:0 auto 24px; text-align:center; font-size:14px; color:#2e7d32; }
+</style>
+</head>
+<body>
 
+<header>
+  <div class="logo">IM VOCA</div>
+  <h1>원서 독자를 위한<br><em>스마트 단어장</em></h1>
+  <p class="subtitle">AI가 책 페이지에서 직접 단어를 추출하고<br>에빙하우스 복습으로 완전히 내 것으로 만들어요</p>
+</header>
+
+<div class="success-banner" id="success-banner">
+  🎉 결제가 완료됐어요! 앱으로 돌아가서 로그아웃 후 다시 로그인해주세요.
+</div>
+
+<div class="plans">
+  <div class="plan">
+    <div class="plan-name">Monthly</div>
+    <div class="price"><sup>$</sup>3.99<span>/월</span></div>
+    <div class="price-note">매월 자동 결제</div>
+    <ul class="features">
+      <li>무제한 AI 사진 스캔</li>
+      <li>무제한 단어 저장</li>
+      <li>에빙하우스 7단계 복습</li>
+      <li>암기카드 + 퀴즈</li>
+      <li>다국어 지원</li>
+    </ul>
+    <button class="btn btn-dark" id="btn-monthly">월간 구독 시작</button>
+  </div>
+
+  <div class="plan popular">
+    <div class="popular-badge">⭐ 가장 인기</div>
+    <div class="plan-name">Yearly</div>
+    <div class="price"><sup>$</sup>29.99<span>/년</span></div>
+    <div class="price-note"><span class="save-badge">37% 할인 · 월 $2.50</span></div>
+    <ul class="features">
+      <li>무제한 AI 사진 스캔</li>
+      <li>무제한 단어 저장</li>
+      <li>에빙하우스 7단계 복습</li>
+      <li>암기카드 + 퀴즈</li>
+      <li>다국어 지원</li>
+    </ul>
+    <button class="btn btn-accent" id="btn-yearly">연간 구독 시작</button>
+  </div>
+</div>
+
+<div class="free-plan">
+  <div class="free-card">
+    <div style="font-size:32px;">🆓</div>
+    <div class="info">
+      <strong>무료 플랜</strong>
+      <span>AI 스캔 10장 제공 · 복습/퀴즈 무제한</span>
+    </div>
+  </div>
+</div>
+
+<div class="faq">
+  <h2>자주 묻는 질문</h2>
+  <div class="faq-item">
+    <strong>언제든지 취소할 수 있나요?</strong>
+    <p>네, 언제든지 취소 가능해요. 취소 후에도 결제 기간 말까지 Premium을 사용할 수 있어요.</p>
+  </div>
+  <div class="faq-item">
+    <strong>결제 후 바로 사용할 수 있나요?</strong>
+    <p>네! 결제 완료 후 앱에서 로그아웃 → 재로그인하면 바로 Premium이 적용돼요.</p>
+  </div>
+  <div class="faq-item">
+    <strong>어떤 결제 수단을 사용할 수 있나요?</strong>
+    <p>Visa, Mastercard, American Express 등 주요 신용카드를 모두 지원해요.</p>
+  </div>
+  <div class="faq-item">
+    <strong>기존에 저장한 단어는 어떻게 되나요?</strong>
+    <p>플랜에 관계없이 저장된 단어는 영구 보관돼요. 복습과 퀴즈도 무료 플랜에서 계속 사용 가능해요.</p>
+  </div>
+</div>
+
+<a href="https://imvoca.app" class="back">← IM VOCA 앱으로 돌아가기</a>
+
+<script>
+if (new URLSearchParams(location.search).get('success') === 'true') {
+  document.getElementById('success-banner').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+// Stripe Payment Links - 아래에 링크 입력
+var LINKS = {
+  monthly: 'https://buy.stripe.com/3cI5kx3zXb9p7jsejSgIo01',
+  yearly: 'https://buy.stripe.com/dRm28l0nLb9pdHQejSgIo00'
+};
+
+// 카드 클릭 시 선택 효과
+document.querySelectorAll('.plan').forEach(function(plan) {
+  plan.addEventListener('click', function() {
+    document.querySelectorAll('.plan').forEach(function(p) { p.classList.remove('selected'); });
+    this.classList.add('selected');
+  });
+});
+
+function getEmail() {
+  try {
+    var session = JSON.parse(localStorage.getItem('imvoca.session') || '{}');
+    return session.user?.email || '';
+  } catch(e) { return ''; }
+}
+
+function goCheckout(plan) {
+  var link = LINKS[plan];
+  var email = getEmail();
+  if (email) link += '?prefilled_email=' + encodeURIComponent(email);
+  window.location.href = link;
+}
+
+document.getElementById('btn-monthly').addEventListener('click', function() {
+  goCheckout('monthly');
+});
+
+document.getElementById('btn-yearly').addEventListener('click', function() {
+  goCheckout('yearly');
+});
+</script>
+</body>
+</html>
