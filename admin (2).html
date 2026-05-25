@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IM VOCA · 관리자</title>
+<link rel="icon" type="image/png" href="https://imvoca.app/2.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#cc5500; --accent-soft:#fff3ec; --accent-dark:#9e4200;
+    --bg:#f5f0ea; --card:#ffffff; --ink:#1a1511; --ink-70:rgba(26,21,17,0.7);
+    --ink-45:rgba(26,21,17,0.45); --ink-12:rgba(26,21,17,0.12); --ink-06:rgba(26,21,17,0.06);
+    --green:#1d9e75; --green-soft:#e1f5ee; --amber:#b27500; --amber-soft:#faeeda;
+    --radius:16px; --radius-sm:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+  /* ── LOGIN ── */
+  #login{position:fixed;inset:0;background:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:32px;z-index:100;}
+  #login .logo{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:#fff;}
+  #login .logo span{opacity:0.65;font-size:16px;font-weight:500;display:block;letter-spacing:0.15em;margin-top:4px;text-transform:uppercase;}
+  #login .box{background:#fff;border-radius:var(--radius);padding:32px 28px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px;}
+  #login h2{font-size:17px;font-weight:700;text-align:center;}
+  #login p{font-size:13px;color:var(--ink-45);text-align:center;line-height:1.6;margin-top:-8px;}
+  #login input{padding:13px 15px;border:1.5px solid var(--ink-12);border-radius:var(--radius-sm);font-family:inherit;font-size:14px;outline:none;}
+  #login input:focus{border-color:var(--accent);}
+  #login button{padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;}
+  #login button:hover{background:var(--accent-dark);}
+  #login .err{color:#dc2626;font-size:12px;text-align:center;min-height:16px;}
+
+  /* ── LAYOUT ── */
+  #app{display:none;max-width:1100px;margin:0 auto;padding:0 20px 64px;}
+  header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 20px;flex-wrap:wrap;gap:12px;}
+  .brand{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--accent);}
+  .brand span{font-family:'Noto Sans KR';font-size:12px;font-weight:500;color:var(--ink-45);letter-spacing:0.1em;margin-left:8px;text-transform:uppercase;}
+  .header-right{display:flex;align-items:center;gap:10px;}
+  .who{font-size:13px;color:var(--ink-45);}
+  .btn-ghost{padding:8px 16px;background:#fff;border:1px solid var(--ink-12);border-radius:99px;font-family:inherit;font-size:13px;cursor:pointer;color:var(--ink-70);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* ── TABS ── */
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--ink-12);margin-bottom:24px;overflow-x:auto;}
+  .tab{padding:12px 18px;background:none;border:none;border-bottom:2px solid transparent;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-45);cursor:pointer;white-space:nowrap;}
+  .tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
+  .panel{display:none;}
+  .panel.on{display:block;animation:fade 0.25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  /* ── STAT CARDS ── */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px;}
+  .stat{background:var(--card);border-radius:var(--radius);padding:20px 22px;}
+  .stat .label{font-size:12px;color:var(--ink-45);font-weight:500;margin-bottom:8px;letter-spacing:0.02em;}
+  .stat .num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1;}
+  .stat .sub{font-size:12px;color:var(--ink-45);margin-top:6px;}
+  .stat.accent .num{color:var(--accent);}
+  .stat.green .num{color:var(--green);}
+
+  /* ── TABLE ── */
+  .card{background:var(--card);border-radius:var(--radius);padding:8px;overflow:hidden;}
+  .card-head{padding:16px 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .card-head h3{font-size:15px;font-weight:700;}
+  .search{padding:8px 14px;border:1px solid var(--ink-12);border-radius:99px;font-family:inherit;font-size:13px;outline:none;min-width:200px;}
+  .search:focus{border-color:var(--accent);}
+  table{width:100%;border-collapse:collapse;}
+  th{text-align:left;font-size:11px;font-weight:700;color:var(--ink-45);text-transform:uppercase;letter-spacing:0.05em;padding:10px 14px;border-bottom:1px solid var(--ink-12);}
+  td{padding:13px 14px;font-size:13px;border-bottom:1px solid var(--ink-06);vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--accent-soft);}
+  .pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+  .pill.premium{background:var(--amber-soft);color:var(--amber);}
+  .pill.free{background:var(--ink-06);color:var(--ink-45);}
+  .pill.wait{background:#fdeee0;color:#d97316;}
+  .pill.admin{background:var(--accent-soft);color:var(--accent);}
+  .row-name{font-weight:500;}
+  .row-email{font-size:12px;color:var(--ink-45);}
+  .act-btn{padding:6px 12px;border-radius:8px;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;border:none;}
+  .act-btn.up{background:var(--amber);color:#fff;}
+  .act-btn.down{background:#fff;color:var(--ink-70);border:1px solid var(--ink-12);}
+  .act-btn.approve{background:var(--green);color:#fff;}
+  .act-btn.reject{background:#fff;color:#dc2626;border:1px solid #f3c0c0;}
+  .empty{text-align:center;padding:40px;color:var(--ink-45);font-size:13px;}
+  .loading{text-align:center;padding:40px;color:var(--ink-45);font-size:13px;}
+
+  /* ── NOTICE / API ── */
+  .form-card{background:var(--card);border-radius:var(--radius);padding:24px;max-width:640px;}
+  .form-card h3{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .form-card .desc{font-size:13px;color:var(--ink-45);line-height:1.6;margin-bottom:18px;}
+  .form-card label{display:block;font-size:12px;font-weight:500;color:var(--ink-70);margin-bottom:6px;}
+  .form-card input[type=text],.form-card input[type=password],.form-card textarea{width:100%;padding:12px 14px;border:1.5px solid var(--ink-12);border-radius:var(--radius-sm);font-family:inherit;font-size:14px;outline:none;margin-bottom:16px;}
+  .form-card input:focus,.form-card textarea:focus{border-color:var(--accent);}
+  .form-card textarea{min-height:120px;resize:vertical;line-height:1.6;}
+  .form-card button{padding:12px 24px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}
+  .form-card button:hover{background:var(--accent-dark);}
+  .form-card button.sec{background:#fff;color:var(--ink-70);border:1px solid var(--ink-12);}
+  .copy-box{background:var(--accent-soft);border-radius:var(--radius-sm);padding:14px;font-size:12px;color:var(--ink-70);line-height:1.7;word-break:break-all;margin-bottom:14px;max-height:160px;overflow-y:auto;}
+  .hint{font-size:12px;color:var(--ink-45);margin-top:-8px;margin-bottom:16px;line-height:1.6;}
+  .ok-msg{color:var(--green);font-size:13px;font-weight:500;margin-top:10px;min-height:18px;}
+
+  /* ── TOAST ── */
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:99px;font-size:13px;opacity:0;transition:all 0.3s;z-index:200;}
+  #toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="login">
+  <div class="logo">IM VOCA<span>Admin</span></div>
+  <div class="box">
+    <h2>관리자 로그인</h2>
+    <p>관리자 계정으로 로그인하세요</p>
+    <input type="email" id="li-email" placeholder="이메일" autocomplete="username">
+    <input type="password" id="li-pw" placeholder="비밀번호" autocomplete="current-password">
+    <div class="err" id="li-err"></div>
+    <button onclick="doLogin()">로그인</button>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+  <header>
+    <div class="brand">IM VOCA<span>Admin Dashboard</span></div>
+    <div class="header-right">
+      <span class="who" id="who"></span>
+      <button class="btn-ghost" onclick="loadAll()">↻ 새로고침</button>
+      <button class="btn-ghost" onclick="logout()">로그아웃</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab on" onclick="showTab('overview',this)">📊 현황</button>
+    <button class="tab" onclick="showTab('members',this)">👥 회원 관리</button>
+    <button class="tab" onclick="showTab('notice',this)">📢 공지 발송</button>
+    <button class="tab" onclick="showTab('settings',this)">🤖 API 키</button>
+  </div>
+
+  <!-- ── 현황 ── -->
+  <div class="panel on" id="panel-overview">
+    <div class="stat-grid" id="stat-grid">
+      <div class="loading">불러오는 중...</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>최근 가입 회원</h3></div>
+      <div id="recent-members"><div class="loading">불러오는 중...</div></div>
+    </div>
+  </div>
+
+  <!-- ── 회원 관리 ── -->
+  <div class="panel" id="panel-members">
+    <div class="card">
+      <div class="card-head">
+        <h3>전체 회원 <span id="member-count" style="color:var(--ink-45);font-weight:400;"></span></h3>
+        <input class="search" id="member-search" placeholder="이름·이메일 검색" oninput="renderMembers()">
+      </div>
+      <div id="member-table"><div class="loading">불러오는 중...</div></div>
+    </div>
+  </div>
+
+  <!-- ── 공지 발송 ── -->
+  <div class="panel" id="panel-notice">
+    <div class="form-card">
+      <h3>공지사항 발송</h3>
+      <p class="desc">전체 회원에게 보낼 공지 내용을 작성하세요. 아래 "회원 이메일 복사"로 전체 이메일 목록을 복사한 뒤, Gmail 등에서 숨은참조(BCC)로 붙여넣어 발송할 수 있어요.</p>
+      <label>제목</label>
+      <input type="text" id="notice-subject" placeholder="예: IM VOCA 새 기능 안내">
+      <label>내용</label>
+      <textarea id="notice-body" placeholder="공지 내용을 입력하세요..."></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="copyEmails()">📋 회원 이메일 전체 복사</button>
+        <button class="sec" onclick="copyNotice()">📄 제목+내용 복사</button>
+      </div>
+      <div class="ok-msg" id="notice-msg"></div>
+      <div id="email-preview" style="margin-top:16px;"></div>
+    </div>
+  </div>
+
+  <!-- ── API 키 ── -->
+  <div class="panel" id="panel-settings">
+    <div class="form-card">
+      <h3>Gemini API 키 관리</h3>
+      <p class="desc">앱이 사진에서 단어를 추출할 때 사용하는 Gemini API 키예요. 한 번 저장하면 모든 회원이 자동으로 사용해요. 키는 Supabase DB에 저장되어 코드에 노출되지 않아요.</p>
+      <label>Gemini API 키</label>
+      <input type="password" id="api-key" placeholder="AIza...">
+      <div class="hint">발급: <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--accent);">aistudio.google.com/app/apikey</a></div>
+      <div style="display:flex;gap:10px;">
+        <button onclick="saveApiKey()">저장</button>
+        <button class="sec" onclick="toggleKeyView()">👁 보기/숨기기</button>
+      </div>
+      <div class="ok-msg" id="api-msg"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
+const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
+const ADMIN_EMAIL = 'koreayjk@gmail.com';
+const PRICE_MONTHLY = 3.99;   // 월 구독 단가 (USD)
+
+let _authToken = null;
+let _allMembers = [];
+
+// ── TOAST ──
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+
+// ── LOGIN ──
+async function doLogin(){
+  const email = document.getElementById('li-email').value.trim();
+  const pw = document.getElementById('li-pw').value;
+  const err = document.getElementById('li-err');
+  err.textContent = '';
+  if(!email || !pw){ err.textContent='이메일과 비밀번호를 입력하세요'; return; }
+  if(email !== ADMIN_EMAIL){ err.textContent='관리자 계정이 아니에요'; return; }
+  try{
+    const res = await fetch(SB_URL+'/auth/v1/token?grant_type=password',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY},
+      body:JSON.stringify({email,password:pw})
+    });
+    const data = await res.json();
+    if(data.access_token){
+      _authToken = data.access_token;
+      localStorage.setItem('imvoca.adminSession', JSON.stringify(data));
+      enterApp(email);
+    } else {
+      err.textContent = '로그인 실패: 비밀번호를 확인하세요';
+    }
+  }catch(e){ err.textContent='네트워크 오류'; }
+}
+
+function enterApp(email){
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('who').textContent = email;
+  loadAll();
+}
+
+function logout(){
+  localStorage.removeItem('imvoca.adminSession');
+  _authToken = null;
+  location.reload();
+}
+
+// 세션 복원
+(function(){
+  try{
+    const s = JSON.parse(localStorage.getItem('imvoca.adminSession')||'{}');
+    if(s.access_token && s.user?.email === ADMIN_EMAIL){
+      _authToken = s.access_token;
+      enterApp(s.user.email);
+    }
+  }catch(e){}
+})();
+
+// ── TABS ──
+function showTab(name, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('panel-'+name).classList.add('on');
+}
+
+// ── DATA LOAD ──
+async function loadAll(){
+  await loadMembers();
+  await loadApiKey();
+}
+
+async function loadMembers(){
+  try{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,created_at&order=created_at.desc',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
+    });
+    _allMembers = await res.json();
+    if(!Array.isArray(_allMembers)) _allMembers = [];
+    renderOverview();
+    renderMembers();
+    renderRecent();
+  }catch(e){
+    document.getElementById('member-table').innerHTML='<div class="empty">불러오기 실패</div>';
+  }
+}
+
+// ── 현황 ──
+function renderOverview(){
+  const total = _allMembers.length;
+  const premium = _allMembers.filter(m=>m.plan==='premium').length;
+  const free = total - premium;
+  const waiting = _allMembers.filter(m=>m.role==='대기중').length;
+  const mrr = (premium * PRICE_MONTHLY).toFixed(2);
+  const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
+
+  document.getElementById('stat-grid').innerHTML = `
+    <div class="stat"><div class="label">전체 회원</div><div class="num">${total}</div><div class="sub">가입한 모든 회원</div></div>
+    <div class="stat accent"><div class="label">Premium 구독</div><div class="num">${premium}</div><div class="sub">유료 회원</div></div>
+    <div class="stat"><div class="label">무료 회원</div><div class="num">${free}</div></div>
+    <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${mrr}</div><div class="sub">Premium ${premium}명 × $${PRICE_MONTHLY}</div></div>
+    <div class="stat"><div class="label">승인 대기</div><div class="num">${waiting}</div><div class="sub">${waiting>0?'회원 관리 탭에서 처리':'대기 없음'}</div></div>
+    <div class="stat"><div class="label">누적 단어 수</div><div class="num">${totalWords.toLocaleString()}</div><div class="sub">전 회원 합계</div></div>
+  `;
+}
+
+function renderRecent(){
+  const recent = _allMembers.slice(0,8);
+  if(recent.length===0){ document.getElementById('recent-members').innerHTML='<div class="empty">아직 회원이 없어요</div>'; return; }
+  document.getElementById('recent-members').innerHTML = `
+    <table><thead><tr><th>이름</th><th>이메일</th><th>플랜</th><th>가입일</th></tr></thead><tbody>
+    ${recent.map(m=>`<tr>
+      <td class="row-name">${esc(m.name)||'-'}</td>
+      <td class="row-email">${esc(m.email)}</td>
+      <td>${planPill(m)}</td>
+      <td style="color:var(--ink-45);">${fmtDate(m.created_at)}</td>
+    </tr>`).join('')}
+    </tbody></table>`;
+}
+
+// ── 회원 관리 ──
+function renderMembers(){
+  const q = (document.getElementById('member-search')?.value||'').toLowerCase().trim();
+  let list = _allMembers;
+  if(q) list = list.filter(m=>(m.name||'').toLowerCase().includes(q)||(m.email||'').toLowerCase().includes(q));
+  document.getElementById('member-count').textContent = `(${list.length}명)`;
+  if(list.length===0){ document.getElementById('member-table').innerHTML='<div class="empty">결과 없음</div>'; return; }
+  document.getElementById('member-table').innerHTML = `
+    <table><thead><tr><th>회원</th><th>플랜</th><th>스캔</th><th>단어</th><th style="text-align:right;">관리</th></tr></thead><tbody>
+    ${list.map(m=>{
+      const isAdmin = m.email===ADMIN_EMAIL;
+      const isWaiting = m.role==='대기중';
+      return `<tr>
+        <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
+        <td>${planPill(m)}</td>
+        <td style="color:var(--ink-45);">${m.scan_count||0}</td>
+        <td style="color:var(--ink-45);">${(m.total_words||0).toLocaleString()}</td>
+        <td style="text-align:right;">
+          ${isAdmin ? '<span class="pill admin">관리자</span>' :
+            isWaiting ?
+              `<button class="act-btn approve" onclick="approveMember('${m.id}')">승인</button>
+               <button class="act-btn reject" onclick="rejectMember('${m.id}')">거절</button>` :
+            m.plan==='premium' ?
+              `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>` :
+              `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`}
+        </td>
+      </tr>`;
+    }).join('')}
+    </tbody></table>`;
+}
+
+async function setPlan(id, toPremium){
+  try{
+    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      body:JSON.stringify({plan: toPremium?'premium':'free'})
+    });
+    toast(toPremium?'✨ Premium으로 변경됐어요':'Free로 변경됐어요');
+    await loadMembers();
+  }catch(e){ toast('변경 실패'); }
+}
+
+async function approveMember(id){
+  try{
+    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      body:JSON.stringify({role:'멤버'})
+    });
+    toast('승인됐어요');
+    await loadMembers();
+  }catch(e){ toast('승인 실패'); }
+}
+
+async function rejectMember(id){
+  if(!confirm('이 회원을 거절(삭제)할까요?')) return;
+  try{
+    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'DELETE',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
+    });
+    toast('거절 처리됐어요');
+    await loadMembers();
+  }catch(e){ toast('처리 실패'); }
+}
+
+// ── 공지 발송 ──
+function copyEmails(){
+  const emails = _allMembers.filter(m=>m.email && m.role!=='대기중').map(m=>m.email);
+  if(emails.length===0){ toast('회원 이메일이 없어요'); return; }
+  const text = emails.join(', ');
+  navigator.clipboard.writeText(text).then(()=>{
+    document.getElementById('notice-msg').textContent = `✅ ${emails.length}명의 이메일을 복사했어요. Gmail 숨은참조(BCC)에 붙여넣으세요.`;
+    document.getElementById('email-preview').innerHTML = `<div class="copy-box">${esc(text)}</div>`;
+    toast(`${emails.length}명 이메일 복사됨`);
+  });
+}
+
+function copyNotice(){
+  const subject = document.getElementById('notice-subject').value.trim();
+  const body = document.getElementById('notice-body').value.trim();
+  if(!subject && !body){ toast('제목이나 내용을 입력하세요'); return; }
+  const text = `제목: ${subject}\n\n${body}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    document.getElementById('notice-msg').textContent='✅ 제목+내용을 복사했어요.';
+    toast('공지 내용 복사됨');
+  });
+}
+
+// ── API 키 ──
+async function loadApiKey(){
+  try{
+    const res = await fetch(SB_URL+'/rest/v1/voca_settings?id=eq.1&select=gemini_key',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+    });
+    const data = await res.json();
+    if(data[0]?.gemini_key) document.getElementById('api-key').value = data[0].gemini_key;
+  }catch(e){}
+}
+
+async function saveApiKey(){
+  const key = document.getElementById('api-key').value.trim();
+  if(!key){ toast('키를 입력하세요'); return; }
+  try{
+    await fetch(SB_URL+'/rest/v1/voca_settings?id=eq.1',{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      body:JSON.stringify({gemini_key:key, updated_at:new Date().toISOString()})
+    });
+    document.getElementById('api-msg').textContent='✅ API 키가 저장됐어요.';
+    toast('API 키 저장됨');
+  }catch(e){ toast('저장 실패'); }
+}
+
+function toggleKeyView(){
+  const el = document.getElementById('api-key');
+  el.type = el.type==='password' ? 'text' : 'password';
+}
+
+// ── HELPERS ──
+function planPill(m){
+  if(m.role==='대기중') return '<span class="pill wait">승인 대기</span>';
+  if(m.email===ADMIN_EMAIL) return '<span class="pill admin">관리자</span>';
+  if(m.plan==='premium') return '<span class="pill premium">✨ Premium</span>';
+  return '<span class="pill free">Free</span>';
+}
+function fmtDate(s){ if(!s) return '-'; const d=new Date(s); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; }
+function esc(s){ if(s==null) return ''; return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+</script>
+</body>
+</html>
