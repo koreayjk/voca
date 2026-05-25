@@ -2019,6 +2019,7 @@ function render() {
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="showAdminMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">${t('manage')}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
+          ${userPlan==='premium'?`<button onclick="openBillingPortal()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${userNativeLang==='ko'?'💳 구독 관리':'💳 Manage'}</button>`:''}
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showLangSettings()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${getNativeLang().flag}→${getTargetLang().flag}</button>
           <button onclick="toggleDarkMode()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ '+t('light'):'🌙 '+t('dark')}</button>
@@ -2433,6 +2434,29 @@ async function showAdminPanel() {
   } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">오류: ${e.message}</div>`; }
 }
 
+
+async function openBillingPortal() {
+  const email = currentUser?.email;
+  if (!email) { toast(userNativeLang==='ko'?'로그인이 필요해요':'Please log in'); return; }
+  toast(userNativeLang==='ko'?'구독 관리 페이지 여는 중...':'Opening...');
+  try {
+    const res = await fetch(SB_URL + '/functions/v1/create-portal-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (data.url) {
+      location.href = data.url;
+    } else if (data.error === 'no_subscription') {
+      toast(userNativeLang==='ko'?'활성화된 구독을 찾을 수 없어요':'No active subscription found');
+    } else {
+      toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again later');
+    }
+  } catch(e) {
+    toast(userNativeLang==='ko'?'네트워크 오류':'Network error');
+  }
+}
 
 async function setPremium(userId, isPremium) {
   try {
