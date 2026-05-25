@@ -2595,6 +2595,7 @@ async function incrementPerfectReviews() {
 }
 
 async function updateReviewStep(review) {
+  console.log('[updateReviewStep 시작]', review);
   try {
     const patch = {};
     const key = review._stepKey;
@@ -2635,12 +2636,16 @@ async function updateReviewStep(review) {
       patch[step.next] = addDays(now, step.days);
     }
 
-    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
       body: JSON.stringify(patch)
     });
-  } catch(e) {}
+    const result = await res.json();
+    console.log('[updateReviewStep 결과]', res.status, JSON.stringify(result));
+  } catch(e) {
+    console.error('[updateReviewStep 오류]', e);
+  }
 }
 
 async function renderReviewPage(root, dock) {
