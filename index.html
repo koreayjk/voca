@@ -1018,6 +1018,27 @@ async function loadUserName() {
   } catch(e) {}
 }
 
+async function editUserName() {
+  const cur = userName || '';
+  const next = prompt(userNativeLang==='ko'?'새 이름을 입력하세요:':'Enter your new name:', cur);
+  if (next === null) return;
+  const trimmed = next.trim();
+  if (!trimmed) { toast(userNativeLang==='ko'?'이름을 입력해주세요':'Please enter a name'); return; }
+  if (trimmed === cur) return;
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify({ name: trimmed })
+    });
+    userName = trimmed;
+    toast(userNativeLang==='ko'?'이름이 변경됐어요 ✓':'Name updated ✓');
+    render();
+  } catch(e) {
+    toast(userNativeLang==='ko'?'변경 실패, 다시 시도해주세요':'Failed, please try again');
+  }
+}
+
 function saveApi() { const key = document.getElementById("api-in").value.trim(); if(!key){toast("키를 입력해주세요");return;} saveApiKeyToDB(key); }
 
 async function loadApiKey() {
@@ -1997,6 +2018,7 @@ function render() {
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
               <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
+              <button onclick="editUserName()" title="${userNativeLang==='ko'?'이름 변경':'Edit name'}" style="background:none;border:none;cursor:pointer;padding:4px;font-size:15px;opacity:0.45;line-height:1;flex-shrink:0;" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=0.45">✏️</button>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 ${userNativeLang==='ko'?'사용됨':' used'}`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
           </div>
