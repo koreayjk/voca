@@ -2086,7 +2086,12 @@ async function advance(isKnown) {
         // 복습 모드 - 다음 단계로 업데이트
         await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
-        setTimeout(checkReviews, 500);
+        setTimeout(() => {
+          checkReviews();
+          // 복습 페이지에 있으면 새로고침
+          const route = stack[stack.length-1];
+          if (route?.name === 'review') renderReviewPage(document.getElementById('root'), buildDock());
+        }, 800);
       } else {
         // 일반 학습 - 복습 일정 새로 등록
         saveReviewSchedule(s.bookId, s.pageNum);
@@ -2607,8 +2612,9 @@ async function updateReviewStep(review) {
 
     const step = STEPS.find(s => s.key === key);
 
-    // 현재 단계 null로 지우기
+    // 현재 단계 null로 지우기 (복습 완료 표시)
     patch[key] = null;
+    console.log('[복습완료] key:', key, 'patch:', JSON.stringify(patch));
 
     // 원래 예정일과 오늘 비교 - 하루 이상 미뤄졌으면 is_perfect = false
     const scheduled = review._scheduledDate ? new Date(review._scheduledDate) : null;
@@ -2653,7 +2659,7 @@ async function renderReviewPage(root, dock) {
   </div>` + dock;
 
   try {
-    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&order=first_studied_at.desc`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&order=first_studied_at.desc`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const reviews = await res.json();
     const el = document.getElementById('review-list');
     if (!reviews?.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 ${t('noReviewSchedule')}<br>암기 카드를 완료하면 자동으로 등록돼요</div>`; return; }
