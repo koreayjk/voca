@@ -2017,7 +2017,6 @@ function render() {
           </div>
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
-          ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="showAdminMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">${t('manage')}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           ${userPlan==='premium'?`<button onclick="openBillingPortal()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${userNativeLang==='ko'?'💳 구독 관리':'💳 Manage'}</button>`:''}
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
