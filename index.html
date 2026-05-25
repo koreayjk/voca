@@ -2599,9 +2599,18 @@ async function saveStats(bookId, total, correct) {
 
 async function saveReviewSchedule(bookId, pageNum) {
   try {
-    const check = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const check = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id,completed`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const existing = await check.json();
-    if (existing?.length > 0) return;
+    if (existing?.length > 0) {
+      // 복습 일정이 있는데 책장에서 암기한 경우 안내
+      const hasdue = existing.some(r => !r.completed);
+      if (hasdue) {
+        setTimeout(() => {
+          toast(userNativeLang==='ko'?'📆 복습 일정이 있어요! 복습 탭에서 완료해주세요':'📆 You have a review scheduled! Complete it in the Review tab');
+        }, 1500);
+      }
+      return;
+    }
     const now = new Date();
     // 날짜만 비교하기 위해 자정(00:00:00) 기준으로 저장
     const toMidnight = (d, n) => {
