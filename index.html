@@ -2018,6 +2018,7 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser?.email==='koreayjk@gmail.com'?`<button onclick="showAdminMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(204,85,0,0.4);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:var(--accent)">${t('manage')}</button>`:''}
+          ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showLangSettings()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${getNativeLang().flag}→${getTargetLang().flag}</button>
           <button onclick="toggleDarkMode()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ '+t('light'):'🌙 '+t('dark')}</button>
@@ -2232,6 +2233,7 @@ function render() {
           <div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:10px">
             <button class="btn btn-solid" onclick="initStudy('${route.bookId}','${route.scope}','${route.pageNum}');push({name:'study-cards',bookId:'${route.bookId}',scope:'${route.scope}',pageNum:'${route.pageNum}'})">${t('studyAgain')}</button>
             <button class="btn btn-outline" onclick="startQuiz('${route.bookId}','${route.scope}','${route.pageNum}')">${t('quizMode')}</button>
+            ${route.isReview ? `<button class="btn btn-solid" style="background:#27ae60;" onclick="goTab('review')">${userNativeLang==='ko'?'📆 복습 목록으로 돌아가기':'📆 Back to Review'}</button>` : ''}
             <button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf2')}</button>
           </div>
         </div>
@@ -2271,17 +2273,13 @@ async function advance(isKnown) {
         // 복습 모드 - 다음 단계로 업데이트
         await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
-        setTimeout(async () => {
-          await checkReviews();
-          // 복습 페이지로 이동
-          goTab('review');
-        }, 500);
+        await checkReviews();
       } else {
         // 일반 학습 - 복습 일정 새로 등록
         saveReviewSchedule(s.bookId, s.pageNum);
       }
     }
-    replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total});
+    replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total,isReview:!!(s._reviewId)});
   }
   else { s.round++; s.queue=shuffle(newX); s.idx=0; s.xList=[]; s.flipped=false; renderStudyCard(); }
 }
