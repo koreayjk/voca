@@ -2318,50 +2318,78 @@ async function loadHallOfFame() {
 }
 
 async function renderStats(root, dock) {
-  // 명예의 전당 데이터 미리 로드
-  const hall = await loadHallOfFame();
-  const medals = ['🥇','🥈','🥉'];
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
+      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">🏆 ${userNativeLang==='ko'?'명예의 전당':'Hall of Fame'}</div>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:2px;margin-bottom:16px;">
+      ${userNativeLang==='ko'?'A2=1점 · B1=2점 · B2=3점 · C1=4점 · C2=5점 (CEFR 난이도 가중치)':'A2=1pt · B1=2pt · B2=3pt · C1=4pt · C2=5pt (CEFR weighted)'}
+    </div>
+    <div class="scr-scroll" id="hall-inner">
+      <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div>
+    </div>
+  </div>` + dock;
 
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userNativeLang==='ko'?'학습 통계':'My Stats'}</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
+  // 명예의 전당 데이터 로드
   try {
-    const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    const stats = await res.json();
-    const el = document.getElementById('stats-inner');
-    if (!stats.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noStatsYet')}<br>${t('statsSubHint')}</div>`; return; }
-    const totalStudied = stats.reduce((n,s) => n + s.total, 0);
-    const totalCorrect = stats.reduce((n,s) => n + s.correct, 0);
-    const avgRate = totalStudied ? Math.round(totalCorrect / totalStudied * 100) : 0;
+    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    const hall = Array.isArray(data) ? data.filter(m => (m.total_words||0) > 0) : [];
+    const medals = ['🥇','🥈','🥉'];
+    const el = document.getElementById('hall-inner');
+    if (!el) return;
+
+    if (hall.length === 0) {
+      el.innerHTML = `<div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:48px;margin-bottom:16px;">🏆</div>
+        <div style="font-size:15px;color:var(--ink-60);">${userNativeLang==='ko'?'아직 등록된 기록이 없어요':'No records yet'}</div>
+        <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${userNativeLang==='ko'?'단어를 저장하면 순위에 올라가요!':'Save words to appear on the leaderboard!'}</div>
+      </div>`;
+      return;
+    }
+
+    // 내 순위 찾기
+    const myRank = hall.findIndex(m => m.name === userName) + 1;
+
     el.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:var(--accent);">${totalStudied}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('totalWords')}</div></div>
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#27ae60;">${avgRate}%</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('avgRate')}</div></div>
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#3498db;">${stats.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('totalCount')}</div></div>
-        <div style="background:var(--bg-card);border-radius:14px;padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#9b59b6;">${books.length}</div><div style="font-size:11px;color:var(--ink-60);margin-top:4px;">${t('bookCount')}</div></div>
+      ${myRank > 0 ? `
+      <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+        <div style="font-size:20px;">${myRank <= 3 ? medals[myRank-1] : myRank + '위'}</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--accent);">${userNativeLang==='ko'?'내 순위':'My Rank'}</div>
+          <div style="font-size:12px;color:var(--ink-60);">📚 ${hall[myRank-1]?.total_words||0}${userNativeLang==='ko'?'점':'pts'}</div>
+        </div>
+      </div>` : ''}
+
+      <div style="background:var(--bg-card);border-radius:16px;overflow:hidden;">
+        ${hall.map((m, i) => `
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ink-07);${m.name===userName?'background:var(--gold-bg);':''}">
+          <div style="font-size:${i<3?'22px':'14px'};width:32px;text-align:center;font-weight:700;color:${i<3?'inherit':'var(--ink-40)'};">
+            ${i<3?medals[i]:i+1}
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14px;font-weight:${m.name===userName?'700':'500'};color:var(--ink-100);display:flex;align-items:center;gap:6px;">
+              ${m.name||'익명'}
+              ${m.name===userName?`<span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;">${userNativeLang==='ko'?'나':'Me'}</span>`:''}
+            </div>
+            <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">
+              📚 ${m.total_words||0}${userNativeLang==='ko'?'점':'pts'}
+              ${(m.perfect_reviews||0)>0?`&nbsp;·&nbsp;⚡ ${userNativeLang==='ko'?'완벽복습':'Perfect'} ${m.perfect_reviews}${userNativeLang==='ko'?'회':'x'}`:''}
+            </div>
+          </div>
+          ${i===0?'<div style="font-size:20px;">👑</div>':''}
+        </div>`).join('')}
       </div>
-      <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--ink-100);">${t('recentRecord')}</div>
-      ${stats.slice(0,10).map(s => {
-        const book = findBook(s.book_id);
-        const rate = s.total ? Math.round(s.correct/s.total*100) : 0;
-        const date = new Date(s.studied_at).toLocaleDateString('ko-KR');
-        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--ink-07);"><div><div style="font-size:13px;font-weight:600;color:var(--ink-100);">${book?.title||t('deletedBook')}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${date} · ${s.total}개 단어</div></div><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:20px;font-weight:700;color:${rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c'};">${rate}%</div><button onclick="deleteStats('${s.id}')" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">🗑️</button></div></div>`;
-      }).join('')}`;
-  } catch(e) { document.getElementById('stats-inner').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`; }
+    `;
+  } catch(e) {
+    const el = document.getElementById('hall-inner');
+    if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류가 발생했어요</div>`;
+  }
 }
 
-function renderSearch(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">단어 검색</div></div><div style="margin-top:12px;"><input id="search-inp" type="text" placeholder="${userNativeLang==='ko'?'영어 또는 한국어로 검색...':'Search words...'}" oninput="doWordSearch()" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:12px;padding:12px 16px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;"></div><div class="scr-scroll" style="margin-top:12px;" id="search-results"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('wordInput')}</div></div></div>` + dock;
-}
-
-function doWordSearch() {
-  const q = document.getElementById('search-inp')?.value.trim().toLowerCase();
-  const el = document.getElementById('search-results');
-  if (!el) return;
-  if (!q) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noSearchResult')}</div>`; return; }
-  const results = [];
-  books.forEach(book => { book.pages.forEach(page => { page.words.forEach(word => { if (word.en.toLowerCase().includes(q) || word.base?.toLowerCase().includes(q) || word.ctx?.toLowerCase().includes(q)) { results.push({ ...word, bookTitle: book.title, pageNum: page.num }); } }); }); });
-  if (!results.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noSearchFound')}</div>`; return; }
-  el.innerHTML = results.map(w => `<div style="padding:12px 0;border-bottom:1px solid var(--ink-07);"><div style="display:flex;align-items:center;gap:8px;"><div style="font-size:15px;font-weight:700;color:var(--ink-100);">${w.en}</div><button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;">🔊</button></div><div style="font-size:12px;color:var(--ink-60);margin-top:2px;">${w.base}</div><div style="font-size:11px;color:var(--ink-40);margin-top:2px;">📚 ${w.bookTitle} · Page ${w.pageNum}</div></div>`).join('');
-}
 
 async function deleteStats(id) {
   if (!confirm('이 학습 기록을 삭제할까요?')) return;
