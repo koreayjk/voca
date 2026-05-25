@@ -2075,7 +2075,7 @@ document.addEventListener('keydown', function(e) {
   else if (e.code === 'ArrowLeft' || e.code === 'KeyX') { advance(false); }
 });
 
-function advance(isKnown) {
+async function advance(isKnown) {
   const s=studyState; s.stats.seen++; if(isKnown)s.stats.oCount++;
   const newX=isKnown?s.xList:[...s.xList,s.queue[s.idx]];
   if (s.idx+1<s.queue.length) { s.idx++; s.xList=newX; s.flipped=false; renderStudyCard(); }
@@ -2084,8 +2084,9 @@ function advance(isKnown) {
     if (s.scope === 'page' && s.pageNum) {
       if (s._reviewId && s._reviewStepKey) {
         // 복습 모드 - 다음 단계로 업데이트
-        updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
+        await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
+        setTimeout(checkReviews, 500);
       } else {
         // 일반 학습 - 복습 일정 새로 등록
         saveReviewSchedule(s.bookId, s.pageNum);
@@ -2689,7 +2690,7 @@ async function renderReviewPage(root, dock) {
 
       if (type === 'due') {
         // 오늘 복습 카드 — 카드 전체 클릭 가능, 강렬한 스타일
-        return `<div onclick="startSingleReview('${r.book_id}','${r.page_num}','${r.id}','${r._stepKey}')"
+        return `<div onclick="startSingleReview('${r.book_id}','${r.page_num}','${r.id}','${r._stepKey}','${r[r._stepKey]}')"
           style="background:var(--accent);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;position:relative;overflow:hidden;active:opacity:0.85;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
             <div style="flex:1;">
