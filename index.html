@@ -2511,9 +2511,36 @@ async function updateReviewStep(review) {
   try {
     const patch = {};
     const key = review._stepKey;
-    if (key === 'review_60d') { patch.review_60d = null; patch.completed = true; }
-    else { patch[key] = null; }
-    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify(patch) });
+    const now = new Date();
+
+    // 복습 단계 순서 및 다음 단계까지의 간격 (일)
+    const STEPS = [
+      { key: 'review_2d',  next: 'review_3d',  days: 1 },
+      { key: 'review_3d',  next: 'review_6d',  days: 2 },
+      { key: 'review_6d',  next: 'review_15d', days: 5 },
+      { key: 'review_15d', next: 'review_30d', days: 9 },
+      { key: 'review_30d', next: 'review_60d', days: 15 },
+      { key: 'review_60d', next: null,          days: 0 },
+    ];
+
+    const step = STEPS.find(s => s.key === key);
+
+    // 현재 단계 null로 지우기
+    patch[key] = null;
+
+    if (!step || !step.next) {
+      // 마지막 단계 → 완료
+      patch.completed = true;
+    } else {
+      // 다음 단계 날짜를 오늘 기준으로 재계산
+      patch[step.next] = addDays(now, step.days);
+    }
+
+    await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify(patch)
+    });
   } catch(e) {}
 }
 
