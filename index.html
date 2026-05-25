@@ -485,7 +485,7 @@ const UI_TEXT = {
   ko:{
     bookshelf:'님 책장',booksCountUnit:'권',wordsCountUnit:' words',
     addBook:'새 책 추가',appInfo:'앱 소개',dark:'다크',light:'라이트',logout:'로그아웃',manage:'⚙️ 관리',
-    game:'암기',review:'복습',stats:'통계',search:'검색',
+    game:'암기',review:'복습',stats:'명예의 전당',search:'검색',booksTab:'책장',
     pageAdd:'페이지 추가',pageAddDesc:'페이지를 찍으면 AI가 단어를 골라드려요',
     newPage:'새 페이지',addToPage:'기존 페이지에 추가',
     fileSelect:'🖼️ 파일 선택 (최대 5장)',cameraCapture:'📷 카메라 촬영',
@@ -554,7 +554,7 @@ const UI_TEXT = {
   en:{
     bookshelf:"'s Bookshelf",booksCountUnit:' books',wordsCountUnit:' words',
     addBook:'Add Book',appInfo:'About',dark:'Dark',light:'Light',logout:'Logout',manage:'⚙️ Admin',
-    game:'Flashcards',review:'Review',stats:'Stats',search:'Search',
+    game:'Flashcards',review:'Review',stats:'Hall of Fame',search:'Search',booksTab:'Bookshelf',
     pageAdd:'Add Page',pageAddDesc:'Take a photo and AI will extract vocabulary',
     newPage:'New Page',addToPage:'Add to Existing Page',
     fileSelect:'🖼️ Select Files (up to 5)',cameraCapture:'📷 Camera',
@@ -1794,7 +1794,7 @@ function renderScanLoading(current=1, total=1) {
 
 function buildDock() {
   const tab = currentTab();
-  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>책장</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🃏</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">📊</span><span>${t('stats')}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button></div>`;
+  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🃏</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button></div>`;
 }
 
 function render() {
@@ -2322,7 +2322,7 @@ async function renderStats(root, dock) {
   const hall = await loadHallOfFame();
   const medals = ['🥇','🥈','🥉'];
 
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">학습 통계</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
+  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userNativeLang==='ko'?'학습 통계':'My Stats'}</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('myStats')}</div><div class="scr-scroll" style="margin-top:16px;" id="stats-inner"><div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div></div></div>` + dock;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&order=studied_at.desc&limit=50`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const stats = await res.json();
