@@ -799,6 +799,95 @@ function showNewPasswordForm() {
     </div>`;
 }
 
+// My 메뉴 (설정 모음)
+function showMyMenu() {
+  const ko = userNativeLang === 'ko';
+  const isDark = document.body.classList.contains('dark');
+  const overlay = document.createElement('div');
+  overlay.id = 'my-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const row = (icon, label, onclick) => `<button onclick="${onclick}" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;background:none;border:none;border-bottom:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);"><span style="font-size:18px;">${icon}</span><span>${label}</span><span style="margin-left:auto;color:var(--ink-45);">›</span></button>`;
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
+      <div style="font-size:16px;font-weight:700;padding:16px 16px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
+      ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
+      ${userPlan==='premium' ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
+      ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
+      ${row(isDark?'☀️':'🌙', isDark?(ko?'라이트 모드':'Light Mode'):(ko?'다크 모드':'Dark Mode'), "document.getElementById('my-modal').remove();toggleDarkMode()")}
+      ${row('🚪', ko?'로그아웃':'Logout', "document.getElementById('my-modal').remove();sbSignOut()")}
+      <button onclick="document.getElementById('my-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button>
+    </div>`;
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+}
+
+// 개인정보 변경 (이름 + 비밀번호)
+function showMyInfo() {
+  const ko = userNativeLang === 'ko';
+  const overlay = document.createElement('div');
+  overlay.id = 'info-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:24px;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);">
+      <div style="font-size:17px;font-weight:700;margin-bottom:18px;color:var(--ink-100);">👤 ${ko?'개인정보 변경':'My Info'}</div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--ink-45);margin-bottom:6px;">${ko?'이름':'Name'}</div>
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <input id="info-name" type="text" value="${(userName||'').replace(/"/g,'&quot;')}" style="flex:1;padding:11px 13px;border:1px solid rgba(0,0,0,0.15);border-radius:10px;font-size:14px;box-sizing:border-box;">
+        <button onclick="saveMyName()" style="padding:11px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">${ko?'저장':'Save'}</button>
+      </div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--ink-45);margin-bottom:6px;">${ko?'비밀번호 변경':'Change Password'}</div>
+      <input id="info-pw1" type="password" placeholder="${ko?'새 비밀번호 (6자 이상)':'New password (6+)'}" style="width:100%;padding:11px 13px;border:1px solid rgba(0,0,0,0.15);border-radius:10px;font-size:14px;margin-bottom:8px;box-sizing:border-box;">
+      <input id="info-pw2" type="password" placeholder="${ko?'새 비밀번호 확인':'Confirm password'}" style="width:100%;padding:11px 13px;border:1px solid rgba(0,0,0,0.15);border-radius:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;">
+      <button onclick="saveMyPassword()" style="width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:16px;">${ko?'비밀번호 변경':'Change Password'}</button>
+
+      <button onclick="document.getElementById('info-modal').remove()" style="width:100%;padding:10px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;">${ko?'닫기':'Close'}</button>
+    </div>`;
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+}
+
+async function saveMyName() {
+  const ko = userNativeLang === 'ko';
+  const next = (document.getElementById('info-name')?.value || '').trim();
+  if (!next) { toast(ko?'이름을 입력해주세요':'Please enter a name'); return; }
+  if (next === userName) { toast(ko?'이름이 같아요':'Same name'); return; }
+  try {
+    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify({ name: next })
+    });
+    userName = next;
+    toast(ko?'이름이 변경됐어요 ✓':'Name updated ✓');
+    document.getElementById('info-modal')?.remove();
+    render();
+  } catch(e) { toast(ko?'변경 실패, 다시 시도해주세요':'Failed, please try again'); }
+}
+
+async function saveMyPassword() {
+  const ko = userNativeLang === 'ko';
+  const pw = document.getElementById('info-pw1')?.value;
+  const pw2 = document.getElementById('info-pw2')?.value;
+  if (!pw || pw.length < 6) { toast(ko?'비밀번호는 6자 이상이어야 해요':'Password must be 6+ characters'); return; }
+  if (pw !== pw2) { toast(ko?'비밀번호가 일치하지 않아요':'Passwords do not match'); return; }
+  try {
+    const res = await fetch(SB_URL + '/auth/v1/user', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: JSON.stringify({ password: pw })
+    });
+    const data = await res.json();
+    if (data.id) {
+      document.getElementById('info-modal')?.remove();
+      toast(ko?'✅ 비밀번호가 변경됐어요!':'✅ Password changed!');
+    } else {
+      toast(data.msg || (ko?'변경 실패. 다시 시도해주세요':'Failed. Please try again'));
+    }
+  } catch(e) { toast(ko?'오류가 발생했어요':'An error occurred'); }
+}
+
 async function updatePassword() {
   const pw = document.getElementById('new-pw')?.value;
   const pw2 = document.getElementById('new-pw2')?.value;
@@ -1019,32 +1108,12 @@ async function loadUserName() {
   } catch(e) {}
 }
 
-async function editUserName() {
-  const cur = userName || '';
-  const next = prompt(userNativeLang==='ko'?'새 이름을 입력하세요:':'Enter your new name:', cur);
-  if (next === null) return;
-  const trimmed = next.trim();
-  if (!trimmed) { toast(userNativeLang==='ko'?'이름을 입력해주세요':'Please enter a name'); return; }
-  if (trimmed === cur) return;
-  try {
-    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
-      body: JSON.stringify({ name: trimmed })
-    });
-    userName = trimmed;
-    toast(userNativeLang==='ko'?'이름이 변경됐어요 ✓':'Name updated ✓');
-    render();
-  } catch(e) {
-    toast(userNativeLang==='ko'?'변경 실패, 다시 시도해주세요':'Failed, please try again');
-  }
-}
 
 function saveApi() { const key = document.getElementById("api-in").value.trim(); if(!key){toast("키를 입력해주세요");return;} saveApiKeyToDB(key); }
 
 async function loadApiKey() {
   try {
-    const res = await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1&select=gemini_key', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } });
+    const res = await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1&select=gemini_key', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const data = await res.json();
     if (data[0]?.gemini_key) apiKey = data[0].gemini_key;
   } catch(e) {}
@@ -1295,6 +1364,11 @@ function renderLogin(tab='login') {
         <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value)">가입하기</button>
       `}
       <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">${t('loginHint')}</div>
+      <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--ink-40);line-height:1.6">
+        <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${userNativeLang==='ko'?'이용약관':'Terms'}</a> ·
+        <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${userNativeLang==='ko'?'개인정보처리방침':'Privacy'}</a> ·
+        <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${userNativeLang==='ko'?'환불정책':'Refund'}</a>
+      </div>
     </div>`;
 }
 </script>
@@ -2019,7 +2093,6 @@ function render() {
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
               <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
               <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
-              <button onclick="editUserName()" title="${userNativeLang==='ko'?'이름 변경':'Edit name'}" style="background:none;border:none;cursor:pointer;padding:4px;font-size:15px;opacity:0.45;line-height:1;flex-shrink:0;" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=0.45">✏️</button>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 ${userNativeLang==='ko'?'사용됨':' used'}`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
           </div>
@@ -2041,11 +2114,8 @@ function render() {
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
-          ${userPlan==='premium'?`<button onclick="openBillingPortal()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${userNativeLang==='ko'?'💳 구독 관리':'💳 Manage'}</button>`:''}
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
-          <button onclick="showLangSettings()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${getNativeLang().flag}→${getTargetLang().flag}</button>
-          <button onclick="toggleDarkMode()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${document.body.classList.contains('dark')?'☀️ '+t('light'):'🌙 '+t('dark')}</button>
-          <button onclick="sbSignOut()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('logout')}</button>
+          <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
         </div>
       </div>` + dock;
   }
@@ -2673,7 +2743,6 @@ async function saveReviewSchedule(bookId, pageNum) {
     });
     const data = await res.json();
     if (data.error || data.code) console.error('[복습 저장 오류]', data);
-    else console.log('[복습 저장 성공]');
   } catch(e) { console.error('[복습 저장 오류]', e); }
 }
 
@@ -2833,7 +2902,6 @@ async function incrementPerfectReviews() {
 }
 
 async function updateReviewStep(review) {
-  console.log('[updateReviewStep 시작]', review);
   try {
     const patch = {};
     const key = review._stepKey;
@@ -2853,7 +2921,6 @@ async function updateReviewStep(review) {
 
     // 현재 단계 null로 지우기 (복습 완료 표시)
     patch[key] = null;
-    console.log('[복습완료] key:', key, 'patch:', JSON.stringify(patch));
 
     // 원래 예정일과 오늘 비교 - 하루 이상 미뤄졌으면 is_perfect = false
     const scheduled = review._scheduledDate ? new Date(review._scheduledDate) : null;
@@ -2884,7 +2951,6 @@ async function updateReviewStep(review) {
       body: JSON.stringify(patch)
     });
     const result = await res.json();
-    console.log('[updateReviewStep 결과]', res.status, JSON.stringify(result));
   } catch(e) {
     console.error('[updateReviewStep 오류]', e);
   }
