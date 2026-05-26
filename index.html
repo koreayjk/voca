@@ -2540,7 +2540,7 @@ async function advance(isKnown) {
     if (s.scope === 'page' && s.pageNum) {
       if (s._reviewId && s._reviewStepKey) {
         // 복습 모드 - 다음 단계로 업데이트
-        await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate });
+        await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate, book_id: s.bookId, page_num: s.pageNum });
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
         await checkReviews();
       } else {
@@ -2823,11 +2823,16 @@ async function renderStats(root, dock) {
 
   // 명예의 전당 데이터 로드
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews&limit=200`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
-    const hall = Array.isArray(data) ? data.filter(m => (m.total_words||0) > 0) : [];
+    // 복습 점수(perfect_reviews) 기준 내림차순 정렬
+    const hall = (Array.isArray(data) ? data : [])
+      .map(m => ({ ...m, _score: (m.perfect_reviews||0) }))
+      .filter(m => m._score > 0)
+      .sort((a,b) => b._score - a._score)
+      .slice(0, 50);
     const medals = ['🥇','🥈','🥉'];
     const el = document.getElementById('hall-inner');
     if (!el) return;
@@ -2836,7 +2841,7 @@ async function renderStats(root, dock) {
       el.innerHTML = `<div style="text-align:center;padding:60px 20px;">
         <div style="font-size:48px;margin-bottom:16px;">🏆</div>
         <div style="font-size:15px;color:var(--ink-60);">${userNativeLang==='ko'?'아직 등록된 기록이 없어요':'No records yet'}</div>
-        <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${userNativeLang==='ko'?'단어를 저장하면 순위에 올라가요!':'Save words to appear on the leaderboard!'}</div>
+        <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${userNativeLang==='ko'?'복습을 완료하면 순위에 올라가요!':'Complete reviews to appear on the leaderboard!'}</div>
       </div>`;
       return;
     }
@@ -2850,7 +2855,7 @@ async function renderStats(root, dock) {
         <div style="font-size:20px;">${myRank <= 3 ? medals[myRank-1] : myRank + '위'}</div>
         <div>
           <div style="font-size:13px;font-weight:700;color:var(--accent);">${userNativeLang==='ko'?'내 순위':'My Rank'}</div>
-          <div style="font-size:12px;color:var(--ink-60);">📚 ${hall[myRank-1]?.total_words||0}${userNativeLang==='ko'?'점':'pts'}</div>
+          <div style="font-size:12px;color:var(--ink-60);">⚡ ${hall[myRank-1]?._score||0}${userNativeLang==='ko'?'점':'pts'}</div>
         </div>
       </div>` : ''}
 
@@ -2866,8 +2871,7 @@ async function renderStats(root, dock) {
               ${m.name===userName?`<span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;">${userNativeLang==='ko'?'나':'Me'}</span>`:''}
             </div>
             <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">
-              📚 ${m.total_words||0}${userNativeLang==='ko'?'점':'pts'}
-              ${(m.perfect_reviews||0)>0?`&nbsp;·&nbsp;⚡ ${userNativeLang==='ko'?'복습점수':'Review'} ${m.perfect_reviews}${userNativeLang==='ko'?'점':'pt'}`:''}
+              ⚡ ${userNativeLang==='ko'?'복습 점수':'Review'} ${m._score||0}${userNativeLang==='ko'?'점':'pts'}
             </div>
           </div>
           ${i===0?'<div style="font-size:20px;">👑</div>':''}
