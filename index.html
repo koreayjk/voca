@@ -729,12 +729,13 @@ async function loadUserPlan() {
 async function incrementScanCount() {
   userScanCount++;
   try {
-    await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
       method: 'PATCH',
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
       body: JSON.stringify({ scan_count: userScanCount })
     });
-  } catch(e) {}
+    if (!res.ok) { console.error('[scan_count 저장 실패]', res.status, await res.text()); }
+  } catch(e) { console.error('[scan_count 네트워크 오류]', e); }
 }
 
 // 스캔 가능 여부 체크
@@ -2097,6 +2098,7 @@ async function doScan() {
     words = parseWordsRobust(txt);
     if (!words?.length) { toast('단어를 찾지 못했어요'); render(); return; }
   } catch(e) { toast('네트워크 오류\n잠시 후 다시 시도해주세요'); render(); return; }
+  await incrementScanCount();
   pendingW = words; pendingB = bId; pendingP = pg;
   renderWordSelection(words);
 }
