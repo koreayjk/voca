@@ -446,6 +446,7 @@ const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
 let userPlan = 'free';      // 'free' or 'premium'
+let userStripeId = '';      // Stripe 고객 ID (결제한 사람만 있음)
 let userScanCount = 0;      // 이번 달 스캔 횟수
 const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한
 
@@ -677,13 +678,14 @@ function pageSort(a, b) {
 // ── 플랜/스캔 카운트 로드 ──
 async function loadUserPlan() {
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
     if (data[0]) {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
+      userStripeId = data[0].stripe_customer_id || '';
     }
   } catch(e) {}
 }
@@ -813,7 +815,7 @@ function showMyMenu() {
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
-      ${userPlan==='premium' ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
+      ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
       ${row(isDark?'☀️':'🌙', isDark?(ko?'라이트 모드':'Light Mode'):(ko?'다크 모드':'Dark Mode'), "document.getElementById('my-modal').remove();toggleDarkMode()")}
       ${row('🚪', ko?'로그아웃':'Logout', "document.getElementById('my-modal').remove();sbSignOut()")}
