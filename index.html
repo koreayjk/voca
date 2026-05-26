@@ -311,16 +311,16 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .card-wrap { flex: 1; min-height: 0; perspective: 1400px; cursor: pointer; margin: 10px 0 8px; }
 .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.4,0,.2,1); }
 .card--flip { transform: rotateY(180deg); }
-.face { position: absolute; inset: 0; border-radius: 20px; -webkit-backface-visibility: hidden; backface-visibility: hidden; padding: 24px; display: flex; flex-direction: column; }
-.face-front { background: var(--bg-input); }
-.face-back { background: #2a1f15; border: 1px solid rgba(255,255,255,0.06); transform: rotateY(180deg); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-.face-front__center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
-.card__word { font-family: var(--font-display); font-size: 40px; letter-spacing: -0.04em; color: var(--ink-100); text-align: center; line-height: 1; }
-.card__ipa { font-size: 13px; color: var(--ink-40); }
-.card__tap { font-size: 11px; color: var(--ink-40); text-align: center; margin-top: 16px; }
-.back__word { font-family: var(--font-display); font-size: 24px; letter-spacing: -0.04em; color: #f5ede0; text-align:center; }
-.back__label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245,237,224,0.45); margin-top: 14px; text-align:center; }
-.back__meaning { font-size: 16px; margin-top: 4px; line-height: 1.3; color: #f5ede0; text-align:center; }
+.face { position: absolute; inset: 0; border-radius: 22px; -webkit-backface-visibility: hidden; backface-visibility: hidden; padding: 26px; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(70,45,15,0.13), 0 2px 6px rgba(70,45,15,0.08); }
+.face-front { background: #fbf8f2; border: 1px solid rgba(120,90,60,0.1); }
+.face-back { background: linear-gradient(160deg, #3a2c1d 0%, #251a10 100%); border: 1px solid rgba(255,255,255,0.08); transform: rotateY(180deg); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.face-front__center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.card__word { font-family: var(--font-display); font-size: 44px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink-100); text-align: center; line-height: 1.02; }
+.card__ipa { font-size: 14px; color: var(--ink-40); letter-spacing: 0.02em; }
+.card__tap { font-size: 11px; color: var(--ink-40); text-align: center; margin-top: 16px; letter-spacing: 0.02em; }
+.back__word { font-family: var(--font-display); font-size: 27px; font-weight: 500; letter-spacing: -0.02em; color: #f7efe2; text-align:center; }
+.back__label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,239,226,0.42); margin-top: 16px; text-align:center; }
+.back__meaning { font-size: 17px; margin-top: 5px; line-height: 1.4; color: #f7efe2; text-align:center; }
 .ox-row { display: flex; gap: 10px; position: fixed; bottom: calc(var(--ox-bottom, 90px) + env(safe-area-inset-bottom, 0px)); left: 0; right: 0; padding: 0 22px; z-index: 30; }
 .ox-btn { flex: 1; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; cursor: pointer; border: none; }
 .ox-x { border: 1.5px solid var(--ink-12); background: var(--bg-card); color: var(--ink-100); }
@@ -811,7 +811,7 @@ function showMyMenu() {
   const row = (icon, label, onclick) => `<button onclick="${onclick}" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;background:none;border:none;border-bottom:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);"><span style="font-size:18px;">${icon}</span><span>${label}</span><span style="margin-left:auto;color:var(--ink-45);">›</span></button>`;
   overlay.innerHTML = `
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
-      <div style="font-size:16px;font-weight:700;padding:16px 16px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
       ${userPlan==='premium' ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
@@ -831,7 +831,7 @@ function showMyInfo() {
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
   overlay.innerHTML = `
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:24px;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);">
-      <div style="font-size:17px;font-weight:700;margin-bottom:18px;color:var(--ink-100);">👤 ${ko?'개인정보 변경':'My Info'}</div>
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;margin-bottom:18px;color:var(--ink-100);">👤 ${ko?'개인정보 변경':'My Info'}</div>
 
       <div style="font-size:12px;font-weight:600;color:var(--ink-45);margin-bottom:6px;">${ko?'이름':'Name'}</div>
       <div style="display:flex;gap:8px;margin-bottom:20px;">
@@ -2626,9 +2626,9 @@ async function loadHallOfFame() {
 
 async function renderStats(root, dock) {
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-      <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
-      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">🏆 ${userNativeLang==='ko'?'명예의 전당':'Hall of Fame'}</div>
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
+      <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
+      <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🏆 ${userNativeLang==='ko'?'명예의 전당':'Hall of Fame'}</div>
     </div>
     <div class="muted" style="font-size:12px;margin-top:2px;margin-bottom:16px;">
       ${userNativeLang==='ko'?'A2=1점 · B1=2점 · B2=3점 · C1=4점 · C2=5점 (CEFR 난이도 가중치)':'A2=1pt · B1=2pt · B2=3pt · C1=4pt · C2=5pt (CEFR weighted)'}
@@ -2960,9 +2960,9 @@ async function updateReviewStep(review) {
 
 async function renderReviewPage(root, dock) {
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-      <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
-      <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${t('reviewStatus')}</div>
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
+      <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
+      <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${t('reviewStatus')}</div>
     </div>
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
       <span style="font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;font-weight:600;">${userNativeLang==='ko'?'에빙하우스 망각곡선':'Ebbinghaus Curve'}</span>
