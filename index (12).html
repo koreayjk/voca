@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaStarTech — Pre-Coated Surface Film for SPC &amp; LVT Flooring</title>
+<meta name="description" content="NovaStarTech (NST) engineers pre-coated PVC surface film for SPC and LVT flooring. No UV coating line required. Super-matte finish. Production-tested in Vietnam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Archivo+Expanded:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0f12;
+    --bg-2:#13161b;
+    --panel:#181c22;
+    --line:#262b33;
+    --ink:#eef1f4;
+    --ink-soft:#aab2bd;
+    --ink-faint:#6b7480;
+    --accent:#d4af37;        /* refined gold — engineering / premium */
+    --accent-2:#5fb3a3;      /* matte teal — technical accent */
+    --accent-warm:#e08a4c;
+    --maxw:1240px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Sora',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#0d0f12}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .mono{font-family:'Space Mono',monospace}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(13,15,18,.72);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s, background .3s;
+  }
+  header.scrolled{border-bottom-color:var(--line);background:rgba(13,15,18,.92)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:'Archivo Expanded',sans-serif;font-weight:700;letter-spacing:.5px;font-size:1.05rem}
+  .brand .mark{
+    width:34px;height:34px;position:relative;flex:none;
+    display:grid;place-items:center;
+  }
+  .brand .mark svg{width:34px;height:34px}
+  .brand b{color:var(--accent)}
+  .nav-links{display:flex;gap:34px;align-items:center}
+  .nav-links a{font-size:.86rem;color:var(--ink-soft);letter-spacing:.3px;transition:color .2s;position:relative}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--accent);transition:width .25s}
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{border:1px solid var(--line);padding:10px 20px;border-radius:2px;font-size:.82rem !important;color:var(--ink) !important;transition:.25s;background:transparent}
+  .nav-cta:hover{border-color:var(--accent);color:var(--accent) !important}
+  .nav-cta::after{display:none}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:0}
+  .burger span{width:24px;height:2px;background:var(--ink);display:block;transition:.3s}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:74px;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img,.hero-bg svg{width:100%;height:100%;object-fit:cover;opacity:.30;filter:grayscale(.3) contrast(1.05)}
+  .hero-bg svg{opacity:.5;filter:none}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:
+     linear-gradient(180deg, rgba(13,15,18,.55) 0%, rgba(13,15,18,.80) 55%, var(--bg) 100%),
+     radial-gradient(900px 600px at 78% 30%, rgba(212,175,55,.10), transparent 60%);}
+  .hero-grid{position:absolute;inset:0;z-index:1;opacity:.5;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(circle at 70% 40%, #000 0%, transparent 70%);
+    -webkit-mask-image:radial-gradient(circle at 70% 40%, #000 0%, transparent 70%);}
+  .hero-inner{position:relative;z-index:2;width:100%}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:26px;opacity:0;animation:fadeUp .7s .1s forwards}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 10px var(--accent-2)}
+  .hero h1{
+    font-family:'Archivo Expanded',sans-serif;font-weight:800;
+    font-size:clamp(2.5rem,6.4vw,5.3rem);line-height:1.02;letter-spacing:-1px;
+    max-width:16ch;margin-bottom:28px;
+  }
+  .hero h1 .gl{color:var(--accent)}
+  .hero h1 span{display:inline-block;opacity:0;transform:translateY(28px);animation:fadeUp .8s forwards}
+  .hero p.lead{font-size:clamp(1.02rem,1.5vw,1.22rem);color:var(--ink-soft);max-width:54ch;margin-bottom:40px;opacity:0;animation:fadeUp .8s .55s forwards}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .7s forwards}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:2px;font-size:.92rem;font-weight:600;letter-spacing:.3px;transition:.28s;cursor:pointer;border:1px solid transparent}
+  .btn-primary{background:var(--accent);color:#0d0f12}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(212,175,55,.28)}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink-soft);transform:translateY(-2px)}
+  .btn .arr{transition:transform .25s}
+  .btn:hover .arr{transform:translateX(4px)}
+
+  .hero-stats{display:flex;gap:46px;margin-top:64px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .9s forwards}
+  .hero-stats .s b{font-family:'Archivo Expanded',sans-serif;font-size:2rem;color:var(--ink);display:block;line-height:1}
+  .hero-stats .s span{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;display:block}
+  .hero-stats .s b em{color:var(--accent);font-style:normal}
+
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{position:relative}
+  .sec{padding:120px 0}
+  .sec-head{margin-bottom:64px;max-width:62ch}
+  .sec-tag{font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-2);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .sec-tag::before{content:"";width:38px;height:1px;background:var(--accent-2)}
+  .sec h2{font-family:'Archivo Expanded',sans-serif;font-weight:700;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.08;letter-spacing:-.5px;margin-bottom:22px}
+  .sec h2 .gl{color:var(--accent)}
+  .sec .sub{color:var(--ink-soft);font-size:1.05rem}
+
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- WHO / FILM SPECIALIST ---------- */
+  .who{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .who-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+  .who-copy h2{margin-bottom:26px}
+  .who-copy p{color:var(--ink-soft);margin-bottom:18px}
+  .who-copy .pill{display:inline-flex;align-items:center;gap:9px;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:1.2px;color:var(--accent);border:1px solid var(--line);border-radius:40px;padding:7px 16px;margin-top:8px}
+  .who-visual{position:relative}
+  .who-visual .frame{position:relative;border:1px solid var(--line);border-radius:4px;overflow:hidden;aspect-ratio:4/5}
+  .who-visual .frame img,.who-visual .frame svg{width:100%;height:100%;object-fit:cover;filter:grayscale(.15) contrast(1.05)}
+  .who-visual .frame svg{filter:none}
+  .who-visual .badge{position:absolute;left:-22px;bottom:34px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);padding:18px 22px;border-radius:3px;box-shadow:0 24px 50px rgba(0,0,0,.5);max-width:230px}
+  .who-visual .badge .n{font-family:'Archivo Expanded',sans-serif;font-size:1.7rem;color:var(--accent);line-height:1}
+  .who-visual .badge .t{font-size:.8rem;color:var(--ink-soft);margin-top:7px}
+  .corner{position:absolute;width:16px;height:16px;border:1px solid var(--accent);opacity:.6}
+  .corner.tl{top:-1px;left:-1px;border-right:0;border-bottom:0}
+  .corner.br{bottom:-1px;right:-1px;border-left:0;border-top:0}
+
+  /* ---------- VALUE / WHY FILM ---------- */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:34px 30px;position:relative;overflow:hidden;transition:.35s}
+  .card::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--accent),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .card:hover{transform:translateY(-6px);border-color:#33414f}
+  .card:hover::before{transform:scaleX(1)}
+  .card .ico{width:50px;height:50px;border:1px solid var(--line);border-radius:4px;display:grid;place-items:center;margin-bottom:24px;color:var(--accent)}
+  .card .ico svg{width:24px;height:24px}
+  .card h3{font-size:1.18rem;font-weight:600;margin-bottom:12px;letter-spacing:-.2px}
+  .card p{color:var(--ink-soft);font-size:.95rem}
+  .card .kpi{margin-top:18px;font-family:'Space Mono',monospace;font-size:.78rem;color:var(--accent-2);letter-spacing:.5px}
+
+  /* ---------- NO COATING LINE (highlight band) ---------- */
+  .band{background:
+     linear-gradient(135deg,#14171c 0%,#0f1216 100%);
+     border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .band::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+     background-image:repeating-linear-gradient(90deg,transparent 0 78px,rgba(38,43,51,.6) 78px 79px),
+       radial-gradient(600px 400px at 85% 20%,rgba(212,175,55,.06),transparent 60%);}
+  .band-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:2}
+  .compare{display:grid;gap:16px}
+  .crow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:20px 24px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
+  .crow.old{opacity:.7}
+  .crow.old .label{color:var(--ink-faint)}
+  .crow .label{font-size:.96rem}
+  .crow .tag{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:1px;padding:5px 12px;border-radius:30px}
+  .crow.old .tag{background:rgba(224,138,76,.12);color:var(--accent-warm);border:1px solid rgba(224,138,76,.3)}
+  .crow.new{border-color:rgba(95,179,163,.4)}
+  .crow.new .tag{background:rgba(95,179,163,.13);color:var(--accent-2);border:1px solid rgba(95,179,163,.35)}
+  .crow.new .label{font-weight:600}
+  .band-copy h2{margin-bottom:22px}
+  .band-copy p{color:var(--ink-soft);margin-bottom:16px}
+  .save-note{font-family:'Space Mono',monospace;font-size:.8rem;color:var(--accent);border-left:2px solid var(--accent);padding-left:16px;margin-top:8px}
+
+  /* ---------- VIETNAM TESTED ---------- */
+  .viet{position:relative}
+  .viet-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px;align-items:center}
+  .viet-visual{position:relative;border:1px solid var(--line);border-radius:5px;overflow:hidden;aspect-ratio:3/2.4}
+  .viet-visual img,.viet-visual svg{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.95)}
+  .viet-visual svg{filter:none}
+  .viet-visual .stamp{position:absolute;top:22px;right:22px;width:108px;height:108px;border-radius:50%;border:1.5px solid var(--accent);display:grid;place-items:center;text-align:center;background:rgba(13,15,18,.55);backdrop-filter:blur(3px)}
+  .viet-visual .stamp span{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--accent);line-height:1.5;text-transform:uppercase}
+  .viet-copy h2{margin-bottom:24px}
+  .viet-copy>p{color:var(--ink-soft);margin-bottom:30px}
+  .check{display:grid;gap:16px}
+  .check li{list-style:none;display:flex;gap:16px;align-items:flex-start}
+  .check .ck{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--accent-2);display:grid;place-items:center;color:var(--accent-2);margin-top:2px}
+  .check .ck svg{width:13px;height:13px}
+  .check .tx b{display:block;font-weight:600;margin-bottom:3px}
+  .check .tx span{color:var(--ink-soft);font-size:.93rem}
+
+  /* ---------- SPEC TABLE ---------- */
+  .specs{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+  .spec-table{width:100%;border-collapse:collapse;font-size:.94rem}
+  .spec-table tr{border-bottom:1px solid var(--line)}
+  .spec-table td{padding:18px 6px}
+  .spec-table td:first-child{color:var(--ink-soft)}
+  .spec-table td:last-child{text-align:right;font-family:'Space Mono',monospace;color:var(--ink);font-weight:700}
+  .spec-table td:last-child em{color:var(--accent);font-style:normal}
+  .gloss{display:grid;gap:18px}
+  .gloss .g{border:1px solid var(--line);border-radius:5px;padding:24px;background:var(--panel)}
+  .gloss .g .bar{height:8px;border-radius:6px;background:var(--bg);overflow:hidden;margin:14px 0 10px;border:1px solid var(--line)}
+  .gloss .g .fill{height:100%;border-radius:6px}
+  .gloss .g .row{display:flex;justify-content:space-between;font-size:.86rem}
+  .gloss .g .row b{font-family:'Space Mono',monospace}
+  .gloss .lbl{font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint)}
+
+  /* ---------- PRODUCTS / APPLICATIONS ---------- */
+  .apps-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .app{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;min-height:320px;display:flex;align-items:flex-end}
+  .app img,.app .app-svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1);filter:brightness(.62) contrast(1.05)}
+  .app .app-svg{filter:brightness(.9)}
+  .app:hover img,.app:hover .app-svg{transform:scale(1.06)}
+  .app::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,15,18,.92),transparent 65%)}
+  .app .body{position:relative;z-index:2;padding:32px}
+  .app .k{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase}
+  .app h3{font-family:'Archivo Expanded',sans-serif;font-size:1.5rem;margin:10px 0 8px}
+  .app p{color:var(--ink-soft);font-size:.93rem;max-width:42ch}
+
+  /* ---------- PROCESS ---------- */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+  .step{padding:30px 24px;border:1px solid var(--line);border-right:0;position:relative;background:var(--panel)}
+  .step:last-child{border-right:1px solid var(--line)}
+  .step .num{font-family:'Archivo Expanded',sans-serif;font-size:.9rem;color:var(--accent);letter-spacing:1px}
+  .step h4{font-size:1.05rem;margin:16px 0 8px}
+  .step p{font-size:.88rem;color:var(--ink-soft)}
+  .step .arrow{position:absolute;right:-11px;top:50%;transform:translateY(-50%);z-index:3;width:22px;height:22px;background:var(--bg);border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--accent)}
+  .step:last-child .arrow{display:none}
+
+  /* ---------- CTA / CONTACT ---------- */
+  .cta{position:relative;overflow:hidden;border-top:1px solid var(--line)}
+  .cta-bg{position:absolute;inset:0;z-index:0;opacity:.16}
+  .cta-bg img,.cta-bg svg{width:100%;height:100%;object-fit:cover}
+  .cta::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(700px 500px at 30% 50%,rgba(212,175,55,.12),transparent 60%)}
+  .cta-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+  .cta h2{font-family:'Archivo Expanded',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin-bottom:20px}
+  .cta h2 .gl{color:var(--accent)}
+  .cta p{color:var(--ink-soft);font-size:1.05rem;margin-bottom:28px;max-width:46ch}
+  .contact-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:34px}
+  .contact-card .cc-row{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--line)}
+  .contact-card .cc-row:last-child{border-bottom:0;padding-bottom:0}
+  .contact-card .cc-ico{flex:none;width:40px;height:40px;border:1px solid var(--line);border-radius:4px;display:grid;place-items:center;color:var(--accent)}
+  .contact-card .cc-ico svg{width:18px;height:18px}
+  .contact-card .cc-l{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px}
+  .contact-card .cc-v{font-size:.98rem;color:var(--ink);word-break:break-word}
+  .contact-card .cc-v small{color:var(--ink-faint);display:block;font-size:.8rem;margin-top:2px}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--bg-2);border-top:1px solid var(--line);padding:60px 0 34px}
+  .foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:40px;border-bottom:1px solid var(--line)}
+  .foot-brand{max-width:34ch}
+  .foot-brand .brand{margin-bottom:16px}
+  .foot-brand p{color:var(--ink-faint);font-size:.9rem}
+  .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .foot-col h5{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px}
+  .foot-col a{display:block;color:var(--ink-soft);font-size:.9rem;margin-bottom:11px;transition:color .2s}
+  .foot-col a:hover{color:var(--accent)}
+  .foot-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:28px;color:var(--ink-faint);font-size:.8rem}
+  .foot-bot .mono{font-size:.76rem}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .who-grid,.band-grid,.viet-grid,.spec-grid,.cta-inner{grid-template-columns:1fr;gap:48px}
+    .feat-grid{grid-template-columns:1fr}
+    .apps-grid{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr 1fr}
+    .step{border-right:1px solid var(--line)}
+    .step .arrow{display:none}
+    .who-visual .badge{left:16px}
+  }
+  @media(max-width:640px){
+    .wrap{padding:0 20px}
+    .nav-links{position:fixed;inset:74px 0 auto 0;background:var(--bg-2);flex-direction:column;padding:30px 24px;gap:22px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .4s;align-items:flex-start}
+    .nav-links.open{transform:translateY(0)}
+    .burger{display:flex}
+    .sec{padding:80px 0}
+    .flow{grid-template-columns:1fr}
+    .hero-stats{gap:28px}
+    .hero-stats .s b{font-size:1.6rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#top" class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M20 2 L35 11 V29 L20 38 L5 29 V11 Z" stroke="#d4af37" stroke-width="1.5"/>
+          <path d="M13 26 V15 L27 26 V15" stroke="#eef1f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span>NOVA<b>STAR</b>TECH</span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#about">Company</a>
+      <a href="#why">Technology</a>
+      <a href="#tested">Vietnam Tested</a>
+      <a href="#specs">Specs</a>
+      <a href="#applications">Applications</a>
+      <a href="#contact" class="nav-cta">Request Samples</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-label="Matte wood-grain plank surface">
+      <defs>
+        <linearGradient id="hpl" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2a2620"/><stop offset="0.5" stop-color="#221f1a"/><stop offset="1" stop-color="#181613"/>
+        </linearGradient>
+        <filter id="hgrain"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.16" numOctaves="3" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.42  0 0 0 0 0.26  0 0 0 0.5 0"/><feComposite operator="in" in2="SourceGraphic"/></filter>
+      </defs>
+      <rect width="1600" height="1000" fill="url(#hpl)"/>
+      <g opacity="0.55">
+        <rect x="0" y="0" width="1600" height="1000" filter="url(#hgrain)"/>
+      </g>
+      <g stroke="#0d0f12" stroke-width="3" opacity="0.7">
+        <line x1="0" y1="180" x2="1600" y2="160"/><line x1="0" y1="395" x2="1600" y2="378"/>
+        <line x1="0" y1="600" x2="1600" y2="618"/><line x1="0" y1="820" x2="1600" y2="838"/>
+        <line x1="430" y1="0" x2="430" y2="180"/><line x1="980" y1="180" x2="980" y2="395"/>
+        <line x1="600" y1="395" x2="600" y2="600"/><line x1="1180" y1="600" x2="1180" y2="820"/>
+        <line x1="300" y1="820" x2="300" y2="1000"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span>Pre-Coated Surface Film · B2B Supply</span>
+      <h1>
+        <span style="animation-delay:.15s">The surface film</span><br>
+        <span style="animation-delay:.30s">that finishes <span class="gl">SPC &amp; LVT</span></span><br>
+        <span style="animation-delay:.45s">without a coating line.</span>
+      </h1>
+      <p class="lead">NovaStarTech engineers pre-coated PVC surface film for luxury vinyl flooring. Our film arrives already coated — so manufacturers laminate it directly onto SPC and LVT boards. No UV coating line. No stone-powder matting. A clean super-matte finish, every roll.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Request a Sample <span class="arr">→</span></a>
+        <a href="#why" class="btn btn-ghost">How the film works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="s"><b>15<em>+</em></b><span>Years of film R&amp;D</span></div>
+        <div class="s"><b>2M<em>m</em></b><span>Monthly capacity (meters)</span></div>
+        <div class="s"><b>GU 1.5</b><span>Super-matte gloss (Type A)</span></div>
+        <div class="s"><b>0</b><span>Coating lines required</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT / FILM SPECIALIST ================= -->
+<section class="who sec" id="about">
+  <div class="wrap who-grid">
+    <div class="who-copy reveal">
+      <div class="sec-tag">Who we are</div>
+      <h2>A <span class="gl">film specialist</span>, not a flooring brand.</h2>
+      <p>NovaStarTech (NST) is a dedicated surface-film company. For over fifteen years we have developed and refined PVC décor film for hard-surface flooring — following every shift in market trend until the technology reached full maturity.</p>
+      <p>We don't compete with our customers. We supply the one component that defines how a floor looks and wears: the printed, pre-coated top film. Manufacturers of SPC and LVT laminate our film onto their boards and ship a finished, premium-matte product.</p>
+      <p>Because the coating is already built into the film, our customers skip an entire production stage — and the capital it demands.</p>
+      <span class="pill">◆ Specialized · Pre-coated PVC décor film</span>
+    </div>
+    <div class="who-visual reveal">
+      <div class="frame">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-label="Close-up of matte wood-look vinyl surface">
+          <defs>
+            <linearGradient id="wg1" x1="0" y1="0" x2="0.3" y2="1">
+              <stop offset="0" stop-color="#6b5638"/><stop offset="0.5" stop-color="#54422b"/><stop offset="1" stop-color="#3d2f1f"/>
+            </linearGradient>
+            <filter id="wgrain"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.09" numOctaves="4" seed="3"/><feColorMatrix type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.09  0 0 0 0 0.05  0 0 0 0.45 0"/><feComposite operator="in" in2="SourceGraphic"/></filter>
+            <filter id="matte"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9"/><feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0"/><feComposite operator="in" in2="SourceGraphic"/></filter>
+          </defs>
+          <rect width="480" height="600" fill="url(#wg1)"/>
+          <rect width="480" height="600" filter="url(#wgrain)" opacity="0.85"/>
+          <g stroke="#2a2015" stroke-width="2.5" opacity="0.65">
+            <line x1="0" y1="150" x2="480" y2="140"/><line x1="0" y1="310" x2="480" y2="322"/><line x1="0" y1="470" x2="480" y2="458"/>
+          </g>
+          <g stroke="#7d6643" stroke-width="1" opacity="0.4">
+            <path d="M40 0 Q60 300 35 600" fill="none"/><path d="M160 0 Q150 280 175 600" fill="none"/>
+            <path d="M300 0 Q320 320 295 600" fill="none"/><path d="M420 0 Q405 290 430 600" fill="none"/>
+          </g>
+          <rect width="480" height="600" filter="url(#matte)" opacity="0.5"/>
+          <rect x="0" y="0" width="480" height="200" fill="#fff" opacity="0.025"/>
+        </svg>
+      </div>
+      <div class="badge">
+        <div class="n">15 yrs</div>
+        <div class="t">of continuous film development — completed and production-ready.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY FILM / VALUE ================= -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">The technology</div>
+      <h2>One film. Three things <span class="gl">your line no longer needs.</span></h2>
+      <p class="sub">Conventional SPC/LVT production applies a clear top layer, runs a UV coating pass, and blends in stone powder to cut gloss. Our pre-coated film removes all three steps.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="card reveal">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18M3 12h18M3 17h18" stroke-linecap="round"/><circle cx="7" cy="7" r="1.6" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <h3>No UV coating line</h3>
+        <p>The protective coating is laminated into the film itself. You bond it to the board — no separate UV curing pass, no coating equipment on your floor.</p>
+        <div class="kpi">~₩3B capex avoided per line</div>
+      </div>
+      <div class="card reveal">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>No stone-powder matting</h3>
+        <p>Most matte floors lower gloss with stone powder, which scratches white over time. Our film reaches a true super-matte finish without it — so scuffs don't show as bright marks.</p>
+        <div class="kpi">No white scratch bloom</div>
+      </div>
+      <div class="card reveal">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7l8-4 8 4-8 4-8-4Z"/><path d="M4 7v10l8 4 8-4V7" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Supply you control</h3>
+        <p>Because we hold the coated film, output and supply volume stay adjustable. Order by the container, scale as demand grows — a simple, repeatable B2B supply relationship.</p>
+        <div class="kpi">MOQ · one 20ft container</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NO COATING LINE BAND ================= -->
+<section class="band sec">
+  <div class="wrap band-grid">
+    <div class="band-copy reveal">
+      <div class="sec-tag">Conventional vs. NST</div>
+      <h2>Skip the most expensive stage of the line.</h2>
+      <p>A UV coating line is one of the heaviest investments in vinyl flooring production. With pre-coated film, that stage simply disappears from your process map.</p>
+      <p>The result: lower capital cost, fewer variables to control, and a consistent matte surface delivered from the roll.</p>
+      <div class="save-note">// Coating line setup ≈ ₩3,000,000,000 — not required with NST film</div>
+    </div>
+    <div class="compare reveal">
+      <div class="crow old">
+        <span class="label">Print layer → clear coat → <b>UV coating line</b> → stone-powder matting</span>
+        <span class="tag">Conventional</span>
+      </div>
+      <div class="crow new">
+        <span class="label">Laminate NST pre-coated film → finished matte board</span>
+        <span class="tag">NST</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VIETNAM TESTED ================= -->
+<section class="viet sec" id="tested">
+  <div class="wrap viet-grid">
+    <div class="viet-visual reveal">
+      <svg viewBox="0 0 700 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-label="Film lamination production line">
+        <defs>
+          <linearGradient id="vbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b1f25"/><stop offset="1" stop-color="#0f1216"/></linearGradient>
+          <linearGradient id="vfilm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fb3a3"/><stop offset="1" stop-color="#d4af37"/></linearGradient>
+        </defs>
+        <rect width="700" height="560" fill="url(#vbg)"/>
+        <g opacity="0.12" stroke="#5fb3a3"><path d="M0 140h700M0 280h700M0 420h700" stroke-width="1"/></g>
+        <!-- rollers -->
+        <g>
+          <circle cx="150" cy="300" r="60" fill="none" stroke="#2a313b" stroke-width="14"/>
+          <circle cx="150" cy="300" r="60" fill="none" stroke="#3a4350" stroke-width="2"/>
+          <circle cx="150" cy="300" r="8" fill="#d4af37"/>
+          <circle cx="540" cy="300" r="60" fill="none" stroke="#2a313b" stroke-width="14"/>
+          <circle cx="540" cy="300" r="60" fill="none" stroke="#3a4350" stroke-width="2"/>
+          <circle cx="540" cy="300" r="8" fill="#d4af37"/>
+          <circle cx="345" cy="200" r="34" fill="none" stroke="#2a313b" stroke-width="10"/>
+          <circle cx="345" cy="200" r="5" fill="#5fb3a3"/>
+        </g>
+        <!-- film web traveling over rollers -->
+        <path d="M150 240 Q250 240 311 213 L345 200 L379 213 Q440 240 540 240" fill="none" stroke="url(#vfilm)" stroke-width="6"/>
+        <path d="M150 360 Q345 400 540 360" fill="none" stroke="#3a4350" stroke-width="10"/>
+        <!-- board substrate -->
+        <rect x="120" y="430" width="460" height="46" rx="4" fill="#2a313b"/>
+        <rect x="120" y="430" width="460" height="10" rx="4" fill="url(#vfilm)" opacity="0.85"/>
+        <text x="350" y="461" text-anchor="middle" font-family="monospace" font-size="13" fill="#aab2bd" letter-spacing="2">SPC / LVT BOARD</text>
+        <!-- labels -->
+        <g font-family="monospace" font-size="12" fill="#6b7480" letter-spacing="1.5">
+          <text x="150" y="395" text-anchor="middle">UNWIND</text>
+          <text x="345" y="150" text-anchor="middle" fill="#5fb3a3">PRE-COATED FILM</text>
+          <text x="540" y="395" text-anchor="middle">LAMINATE</text>
+        </g>
+        <g opacity="0.5"><rect x="40" y="40" width="60" height="60" fill="none" stroke="#d4af37" stroke-width="1"/></g>
+      </svg>
+      <div class="stamp"><span>Production<br>Tested<br>· Vietnam ·</span></div>
+    </div>
+    <div class="viet-copy reveal">
+      <div class="sec-tag">Proven on the line</div>
+      <h2>Production-tested in <span class="gl">Vietnam.</span></h2>
+      <p>Our film isn't a lab sample. It has been run through real SPC/LVT production in Vietnam — laminated, finished, and verified on live manufacturing equipment. The process is proven and ready to transfer to partner facilities.</p>
+      <ul class="check">
+        <li>
+          <span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="tx"><b>Validated on live equipment</b><span>Run on actual SPC &amp; LVT lines, not bench tests.</span></span>
+        </li>
+        <li>
+          <span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="tx"><b>Cost-competitive sourcing</b><span>Vietnam-based production keeps landed cost low for the US market.</span></span>
+        </li>
+        <li>
+          <span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="tx"><b>Ready to scale</b><span>Process documented and transferable to new partner lines.</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPECS ================= -->
+<section class="specs sec" id="specs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Specifications</div>
+      <h2>Engineered to <span class="gl">measurable</span> tolerances.</h2>
+      <p class="sub">Two standard gloss types, built for the low-sheen finish preferred across North America, Europe, and Korea. Custom décor and specifications available on request.</p>
+    </div>
+    <div class="spec-grid">
+      <table class="spec-table reveal">
+        <tr><td>Product</td><td>Pre-coated PVC décor film</td></tr>
+        <tr><td>Finish</td><td><em>Super-matte</em></td></tr>
+        <tr><td>Gloss — Type A</td><td><em>GU 1.5</em></td></tr>
+        <tr><td>Gloss — Type B</td><td>GU 2.0</td></tr>
+        <tr><td>Coating</td><td>Pre-applied (no UV line)</td></tr>
+        <tr><td>Application</td><td>SPC · LVT lamination</td></tr>
+        <tr><td>Monthly capacity</td><td>up to 2,000,000 m</td></tr>
+        <tr><td>Minimum order</td><td>1 × 20ft container</td></tr>
+        <tr><td>Trade terms</td><td>FOB / CIF</td></tr>
+      </table>
+      <div class="gloss reveal">
+        <div class="g">
+          <div class="lbl">Gloss level — lower is more matte</div>
+          <div class="bar"><div class="fill" style="width:15%;background:linear-gradient(90deg,#d4af37,#5fb3a3)"></div></div>
+          <div class="row"><span>Type A · Super-matte</span><b>GU 1.5</b></div>
+        </div>
+        <div class="g">
+          <div class="lbl">Gloss level — lower is more matte</div>
+          <div class="bar"><div class="fill" style="width:20%;background:linear-gradient(90deg,#d4af37,#5fb3a3)"></div></div>
+          <div class="row"><span>Type B · Matte</span><b>GU 2.0</b></div>
+        </div>
+        <div class="g" style="border-color:rgba(95,179,163,.35)">
+          <div class="lbl" style="color:var(--accent-2)">Why low gloss matters</div>
+          <p style="font-size:.92rem;color:var(--ink-soft);margin-top:8px">Premium markets — the US, Western Europe, Korea — increasingly prefer low-sheen flooring. Our film delivers that look without the stone-powder trade-offs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= APPLICATIONS ================= -->
+<section class="sec" id="applications">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Applications</div>
+      <h2>Built for the floors the <span class="gl">market is buying.</span></h2>
+      <p class="sub">Our film tops both rigid-core and flexible luxury vinyl — the two fastest-moving categories in residential and commercial flooring.</p>
+    </div>
+    <div class="apps-grid">
+      <div class="app reveal">
+        <svg class="app-svg" viewBox="0 0 700 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-label="SPC rigid core flooring cross-section">
+          <defs>
+            <linearGradient id="spcbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#262b33"/><stop offset="1" stop-color="#14171c"/></linearGradient>
+            <filter id="stone"><feTurbulence type="turbulence" baseFrequency="0.5" numOctaves="2" seed="4"/><feColorMatrix type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.52  0 0 0 0 0.55  0 0 0 0.5 0"/><feComposite operator="in" in2="SourceGraphic"/></filter>
+          </defs>
+          <rect width="700" height="360" fill="url(#spcbg)"/>
+          <!-- click-lock planks top view fading to cross section -->
+          <g transform="translate(70,70)">
+            <rect x="0" y="0" width="560" height="44" rx="3" fill="#d4af37" opacity="0.9"/>
+            <rect x="0" y="0" width="560" height="12" fill="#fff" opacity="0.10"/>
+            <text x="280" y="29" text-anchor="middle" font-family="monospace" font-size="13" fill="#0d0f12" letter-spacing="1">NST PRE-COATED FILM</text>
+            <rect x="0" y="50" width="560" height="24" rx="2" fill="#3a4350"/>
+            <text x="280" y="67" text-anchor="middle" font-family="monospace" font-size="11" fill="#aab2bd">PRINT / DÉCOR LAYER</text>
+            <rect x="0" y="80" width="560" height="90" rx="2" fill="#4a4640"/>
+            <rect x="0" y="80" width="560" height="90" filter="url(#stone)" opacity="0.7"/>
+            <text x="280" y="130" text-anchor="middle" font-family="monospace" font-size="13" fill="#eef1f4" letter-spacing="1">STONE-PLASTIC CORE</text>
+            <!-- click lock teeth -->
+            <path d="M0 170 h540 l12 12 l-12 12 H0 Z" fill="#2a313b"/>
+            <path d="M40 170 v24 M120 170 v24 M200 170 v24 M280 170 v24 M360 170 v24 M440 170 v24" stroke="#1b1f25" stroke-width="2"/>
+          </g>
+        </svg>
+        <div class="body">
+          <div class="k">Rigid core</div>
+          <h3>SPC</h3>
+          <p>Stone-Plastic Composite. Rigid, dimensionally stable, click-lock install. Ideal for offline retail and contract supply.</p>
+        </div>
+      </div>
+      <div class="app reveal">
+        <svg class="app-svg" viewBox="0 0 700 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-label="LVT flexible vinyl flooring cross-section">
+          <defs>
+            <linearGradient id="lvtbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#222730"/><stop offset="1" stop-color="#13161b"/></linearGradient>
+          </defs>
+          <rect width="700" height="360" fill="url(#lvtbg)"/>
+          <g transform="translate(70,64)">
+            <!-- flexible plank, slight bend to show resilience -->
+            <path d="M0 10 Q280 -6 560 10 L560 54 Q280 38 0 54 Z" fill="#5fb3a3" opacity="0.9"/>
+            <text x="280" y="38" text-anchor="middle" font-family="monospace" font-size="13" fill="#0d0f12" letter-spacing="1">NST PRE-COATED FILM</text>
+            <path d="M0 60 Q280 44 560 60 L560 86 Q280 70 0 86 Z" fill="#3a4350"/>
+            <text x="280" y="78" text-anchor="middle" font-family="monospace" font-size="11" fill="#aab2bd">PRINT / DÉCOR LAYER</text>
+            <path d="M0 92 Q280 76 560 92 L560 170 Q280 154 0 170 Z" fill="#454b54"/>
+            <text x="280" y="138" text-anchor="middle" font-family="monospace" font-size="13" fill="#eef1f4" letter-spacing="1">FLEXIBLE VINYL CORE</text>
+            <path d="M0 176 Q280 160 560 176 L560 206 Q280 190 0 206 Z" fill="#2a313b"/>
+            <text x="280" y="196" text-anchor="middle" font-family="monospace" font-size="11" fill="#6b7480">BACKING</text>
+          </g>
+          <g opacity="0.4" stroke="#5fb3a3" stroke-width="1"><path d="M40 320 q20 -10 40 0 M100 320 q20 -10 40 0" fill="none"/></g>
+        </svg>
+        <div class="body">
+          <div class="k">Flexible</div>
+          <h3>LVT</h3>
+          <p>Luxury Vinyl Tile. Resilient and durable with corners that survive shipping — well suited to online retail channels.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="specs sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">How we work together</div>
+      <h2>From sample to <span class="gl">container.</span></h2>
+    </div>
+    <div class="flow reveal">
+      <div class="step">
+        <div class="num">01</div>
+        <h4>Request</h4>
+        <p>Tell us your board type and target finish. We send a film sample for your own testing.</p>
+        <div class="arrow"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h4>Validate</h4>
+        <p>Run the film on your line. Confirm lamination, gloss, and surface performance.</p>
+        <div class="arrow"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h4>Order</h4>
+        <p>Place your first order — one 20ft container minimum, FOB or CIF.</p>
+        <div class="arrow"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <h4>Scale</h4>
+        <p>Repeat supply as demand grows. Output stays adjustable on our side.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA / CONTACT ================= -->
+<section class="cta sec" id="contact">
+  <div class="cta-bg">
+    <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="1600" height="700" fill="#13161b"/>
+      <g stroke="#d4af37" stroke-width="1" opacity="0.5">
+        <line x1="0" y1="120" x2="1600" y2="120"/><line x1="0" y1="350" x2="1600" y2="350"/><line x1="0" y1="580" x2="1600" y2="580"/>
+        <line x1="400" y1="0" x2="400" y2="700"/><line x1="800" y1="0" x2="800" y2="700"/><line x1="1200" y1="0" x2="1200" y2="700"/>
+      </g>
+      <circle cx="800" cy="350" r="160" fill="none" stroke="#5fb3a3" stroke-width="1" opacity="0.5"/>
+      <circle cx="800" cy="350" r="240" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="wrap cta-inner">
+    <div class="reveal">
+      <h2>Let's put a sample <span class="gl">on your line.</span></h2>
+      <p>We'll ship film samples for your own testing. Tell us where to send them and which board type you run — we'll handle the rest.</p>
+      <a href="mailto:info@novastartech.com" class="btn btn-primary">Email us <span class="arr">→</span></a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="cc-row">
+        <span class="cc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke-linecap="round"/></svg></span>
+        <div><div class="cc-l">General inquiries</div><div class="cc-v">info@novastartech.com</div></div>
+      </div>
+      <div class="cc-row">
+        <span class="cc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z" opacity="0"/><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4Z" stroke-linejoin="round"/></svg></span>
+        <div><div class="cc-l">US contact</div><div class="cc-v">Sang W. Lee<small>North America — sales &amp; sample coordination</small></div></div>
+      </div>
+      <div class="cc-row">
+        <span class="cc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" /></svg></span>
+        <div><div class="cc-l">Operations</div><div class="cc-v">Korea (HQ) · Vietnam (production) · USA (supply)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="brand">
+          <span class="mark">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M20 2 L35 11 V29 L20 38 L5 29 V11 Z" stroke="#d4af37" stroke-width="1.5"/><path d="M13 26 V15 L27 26 V15" stroke="#eef1f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span>NOVA<b>STAR</b>TECH</span>
+        </a>
+        <p>Pre-coated surface film for SPC &amp; LVT flooring. A dedicated film specialist supplying manufacturers worldwide.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>Company</h5>
+          <a href="#about">Who we are</a>
+          <a href="#why">Technology</a>
+          <a href="#tested">Vietnam tested</a>
+        </div>
+        <div class="foot-col">
+          <h5>Product</h5>
+          <a href="#specs">Specifications</a>
+          <a href="#applications">Applications</a>
+          <a href="#contact">Request samples</a>
+        </div>
+        <div class="foot-col">
+          <h5>Contact</h5>
+          <a href="mailto:info@novastartech.com">info@novastartech.com</a>
+          <a href="#contact">US — Sang W. Lee</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 NovaStarTech (NST). All rights reserved.</span>
+      <span class="mono">B2B SUPPLY · KR · VN · US</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  const hdr=document.getElementById('hdr');
+  window.addEventListener('scroll',()=>{hdr.classList.toggle('scrolled',window.scrollY>20)});
+  // mobile menu
+  const burger=document.getElementById('burger'),navlinks=document.getElementById('navlinks');
+  burger.addEventListener('click',()=>navlinks.classList.toggle('open'));
+  navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navlinks.classList.remove('open')));
+  // reveal on scroll
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*0.08)+'s';io.observe(el)});
+</script>
+</body>
+</html>
