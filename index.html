@@ -4,29 +4,31 @@
 <link rel="icon" type="image/png" href="https://imvoca.app/2.png">
 <link rel="apple-touch-icon" href="https://imvoca.app/2.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#f5f0e8">
+<meta name="theme-color" content="#f3ece0">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="IM VOCA">
 <title>IM VOCA</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
 :root {
-  --font-display: 'Lora', Georgia, serif;
-  --font-body: 'Gowun Dodum', system-ui, sans-serif;
-  --ink-100: #1a1511; --ink-60: rgba(26,21,17,0.6); --ink-40: rgba(26,21,17,0.4);
-  --ink-12: rgba(26,21,17,0.1); --ink-07: rgba(26,21,17,0.07); --ink-05: rgba(26,21,17,0.04);
-  --gold: #cc5500; --gold-bg: rgba(204,85,0,0.09);
-  --bg-page: #f5f0e8; --bg-card: #faf7f2; --bg-input: #f0ebe0;
-  --accent: #cc5500; --accent-dark: #a84400;
+  --font-display: 'Fraunces', 'Noto Serif KR', Georgia, serif;
+  --font-serif-ko: 'Noto Serif KR', 'Fraunces', serif;
+  --font-body: 'Pretendard', -apple-system, system-ui, sans-serif;
+  --ink-100: #2c2118; --ink-60: rgba(44,33,24,0.6); --ink-40: rgba(44,33,24,0.42);
+  --ink-12: rgba(44,33,24,0.1); --ink-07: rgba(44,33,24,0.07); --ink-05: rgba(44,33,24,0.04);
+  --gold: #bd5529; --gold-bg: rgba(189,85,41,0.09);
+  --bg-page: #f3ece0; --bg-card: #faf6ef; --bg-input: #efe7d8;
+  --accent: #bd5529; --accent-dark: #9a3f1c;
 }
 body.dark {
   --ink-100: #f0ece4; --ink-60: rgba(240,236,228,0.6); --ink-40: rgba(240,236,228,0.4);
   --ink-12: rgba(240,236,228,0.12); --ink-07: rgba(240,236,228,0.07); --ink-05: rgba(240,236,228,0.04);
-  --gold-bg: rgba(204,85,0,0.15);
+  --gold-bg: rgba(214,107,61,0.16);
   --bg-page: #1a1714; --bg-card: #242019; --bg-input: #2e2923;
-  --accent: #e06010; --accent-dark: #cc5500;
+  --accent: #d66b3d; --accent-dark: #bd5529;
 }
 /* 기본 */
 body.dark { background: #111; color: #f0ece4; }
@@ -219,7 +221,7 @@ body.dark .scope-card--on .radio--on { background: #f0ece4 !important; border-co
 body.dark .word-item__ctx { color: rgba(240,236,228,0.7) !important; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #d4cabb; }
+html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #e3d9c9; }
 #root { position: fixed; inset: 0; height: 100dvh; }
 .scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 @media (min-width: 768px) {
@@ -258,12 +260,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
 .lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
-.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; margin-top: 20px; }
+.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
 .book-tile { cursor: pointer; }
-.book-cover { width: 100%; aspect-ratio: 2/3; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 12px 14px; color: #fff; font-family: var(--font-display); letter-spacing: -0.04em; line-height: 0.97; overflow: hidden; }
-.book-cover__title { font-size: 18px; } .book-cover__author { font-family: var(--font-body); font-size: 10px; opacity: 0.75; }
-.book-tile__title { font-size: 13px; font-weight: 600; margin-top: 8px; color: var(--ink-100); }
-.book-tile__sub { font-size: 11px; color: var(--ink-60); margin-top: 2px; }
+.book-cover { width: 100%; aspect-ratio: 3/4.3; border-radius: 11px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 8px 22px rgba(70,45,15,0.2), 0 2px 5px rgba(70,45,15,0.14); }
+.book-cover__title { font-size: 19px; font-weight: 500; } .book-cover__author { font-family: var(--font-body); font-size: 10px; opacity: 0.8; letter-spacing: 0.03em; }
+.book-tile__title { font-family: var(--font-display); font-size: 15px; font-weight: 500; margin-top: 13px; color: var(--ink-100); letter-spacing: -0.01em; line-height: 1.2; }
+.book-tile__sub { font-size: 11px; color: var(--ink-60); margin-top: 3px; }
 .book-hero { display: flex; gap: 14px; margin-top: 14px; align-items: flex-start; }
 .book-hero__cover { width: 88px; height: 132px; border-radius: 8px; flex-shrink: 0; }
 .book-hero__title { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.04em; color: var(--ink-100); line-height: 1.1; }
@@ -2091,8 +2093,8 @@ function render() {
         <div class="lib-header">
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-              <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
-              <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
+              <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
+              <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?` · ${userNativeLang==='ko'?`📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 ${userNativeLang==='ko'?'사용됨':' used'}`:`📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`}`:` · ✨ ${userNativeLang==='ko'?'무제한 스캔':'Unlimited'}`}</div>
           </div>
