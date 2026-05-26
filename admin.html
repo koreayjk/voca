@@ -236,6 +236,8 @@ function enterApp(email){
   document.getElementById('login').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('who').textContent = email;
+  const grid = document.getElementById('stat-grid');
+  if(grid) grid.innerHTML = '<div class="stat"><div class="label">불러오는 중…</div></div>';
   loadAll();
 }
 
@@ -270,17 +272,23 @@ async function loadAll(){
   await loadApiKey();
 }
 
-async function loadMembers(){
+async function loadMembers(retry){
   try{
     const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,created_at&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allMembers = await res.json();
     if(!Array.isArray(_allMembers)) _allMembers = [];
+    // 처음 로그인 직후 빈 결과가 오면 토큰 적용 타이밍 문제일 수 있어 한 번 재시도
+    if(_allMembers.length === 0 && !retry && res.ok){
+      await new Promise(r=>setTimeout(r,600));
+      return loadMembers(true);
+    }
     renderOverview();
     renderMembers();
     renderRecent();
   }catch(e){
+    if(!retry){ await new Promise(r=>setTimeout(r,600)); return loadMembers(true); }
     document.getElementById('member-table').innerHTML='<div class="empty">불러오기 실패</div>';
   }
 }
@@ -382,7 +390,7 @@ function copyNotice(){
 async function loadApiKey(){
   try{
     const res = await fetch(SB_URL+'/rest/v1/voca_settings?id=eq.1&select=gemini_key',{
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     const data = await res.json();
     if(data[0]?.gemini_key) document.getElementById('api-key').value = data[0].gemini_key;
