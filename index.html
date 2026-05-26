@@ -236,7 +236,10 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 @media (min-width: 768px) {
   .scr { left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 28px 32px 0; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
+  .scr.scr-wide { max-width: 1100px; padding: 28px 48px 0; }
   .book-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .scr-wide .book-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; gap: 32px 28px !important; }
+  .scr-wide .lib-header { max-width: 100%; }
   .dock { left: 50% !important; transform: translateX(-50%) !important; width: 100% !important; max-width: 480px !important; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
   .overlay { max-width: none; left: 0; transform: none; }
   .sheet { max-width: 480px; margin: 0 auto; }
@@ -656,7 +659,7 @@ const UI_TEXT = {
     saveWordsBtn:'Save Selected',
   }
 };
-function t(key){const lang=userNativeLang==='ko'?'ko':'en';return UI_TEXT[lang][key]||UI_TEXT['en'][key]||key;}
+function t(key){const lang=userNativeLang==='ko'?'ko':'en';const v=UI_TEXT[lang][key];if(v!==undefined)return v;const ev=UI_TEXT['en'][key];if(ev!==undefined)return ev;return key;}
 
 // ── 페이지 정렬 함수 ──
 function pageSort(a, b) {
@@ -2139,7 +2142,7 @@ function render() {
 
   if (route.name === 'library') {
     root.innerHTML = `
-      <div class="scr" style="padding-bottom:90px;padding-top:50px;">
+      <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
