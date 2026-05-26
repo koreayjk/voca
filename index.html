@@ -1395,6 +1395,50 @@ const GEMINI_MODELS = [
 ];
 let _geminiModelIdx = 0;
 
+// Gemini 응답에서 단어 목록을 최대한 견고하게 추출 (JSON이 잘려도 완성된 단어는 모두 살림)
+function parseWordsRobust(rawText) {
+  const clean = (rawText || '').replace(/```json|```/g, '').trim();
+  // 1차: 정상 JSON 시도
+  try {
+    const p = JSON.parse(clean);
+    if (p.words && p.words.length) return p.words;
+  } catch(e) {}
+  // 2차: 마지막 불완전 객체만 잘라내고 닫기
+  try {
+    let fixed = clean.replace(/,?\s*\{[^}]*$/, '').replace(/,\s*$/, '');
+    if (!fixed.endsWith(']}')) {
+      if (!fixed.includes(']')) fixed += ']';
+      if (!fixed.endsWith('}')) fixed += '}';
+    }
+    const p = JSON.parse(fixed);
+    if (p.words && p.words.length) return p.words;
+  } catch(e) {}
+  // 3차: 완성된 단어 객체를 통째로 정규식으로 추출 (가장 견고)
+  const words = [];
+  const objRe = /\{[^{}]*?"en"\s*:\s*"([^"]+)"[^{}]*?\}/g;
+  let m;
+  while ((m = objRe.exec(clean)) !== null) {
+    const block = m[0];
+    const en = (block.match(/"en"\s*:\s*"([^"]+)"/) || [])[1] || '';
+    const base = (block.match(/"base"\s*:\s*"([^"]+)"/) || [])[1] || '';
+    const ctx = (block.match(/"ctx"\s*:\s*"([^"]+)"/) || [])[1] || '';
+    const level = (block.match(/"level"\s*:\s*"([^"]+)"/) || [])[1] || '';
+    if (en) words.push({ en, base, ctx, level });
+  }
+  if (words.length) return words;
+  // 4차: 객체 매칭도 실패하면 en 필드만이라도 순서대로 긁기
+  const ens = clean.match(/"en"\s*:\s*"([^"]+)"/g) || [];
+  const bases = clean.match(/"base"\s*:\s*"([^"]+)"/g) || [];
+  const ctxs = clean.match(/"ctx"\s*:\s*"([^"]+)"/g) || [];
+  const levels = clean.match(/"level"\s*:\s*"([^"]+)"/g) || [];
+  return ens.map((e, i) => ({
+    en: e.match(/"en"\s*:\s*"([^"]+)"/)[1],
+    base: bases[i] ? bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1] : '',
+    ctx: ctxs[i] ? ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1] : '',
+    level: levels[i] ? levels[i].match(/"level"\s*:\s*"([^"]+)"/)[1] : ''
+  }));
+}
+
 async function geminiWithRetry(body, maxRetry=7) {
   const totalModels = GEMINI_MODELS.length;
   let lastError = null;
@@ -1732,7 +1776,7 @@ async function processNextMultiScan() {
   let words;
   try {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
-    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(false)}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
+    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(false)}]}], generationConfig:{temperature:0.1,maxOutputTokens:8192} });
     if (data.error) {
       if (data.error.code===403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
@@ -1740,21 +1784,7 @@ async function processNextMultiScan() {
     }
     if (!data.candidates?.[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
-    const clean = txt.replace(/```json|```/g,'').trim();
-    let parsed;
-    try { parsed = JSON.parse(clean); }
-    catch(pe) {
-      const fixed = clean.replace(/,?\s*\{[^}]*$/,'').replace(/,\s*$/,'') + ']}';
-      try { parsed = JSON.parse(fixed); }
-      catch(pe2) {
-        const matches = clean.match(/"en"\s*:\s*"([^"]+)"/g)||[];
-        const bases = clean.match(/"base"\s*:\s*"([^"]+)"/g)||[];
-        const ctxs = clean.match(/"ctx"\s*:\s*"([^"]+)"/g)||[];
-        if (matches.length>0) { parsed={words:matches.map((m,i)=>({en:m.match(/"en"\s*:\s*"([^"]+)"/)[1],base:bases[i]?bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1]:'',ctx:ctxs[i]?ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1]:''}))}; }
-        else { toast('단어를 찾지 못했어요'); window._multiIdx++; await processNextMultiScan(); return; }
-      }
-    }
-    words = parsed.words;
+    words = parseWordsRobust(txt);
     if (!words?.length) { toast(`${idx+1}번 사진에서 단어를 찾지 못했어요`); window._multiIdx++; await processNextMultiScan(); return; }
   } catch(e) { toast('네트워크 오류'); render(); return; }
   await incrementScanCount();
@@ -1916,7 +1946,7 @@ async function doScan() {
   let words;
   try {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
-    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(true)}]}], generationConfig:{temperature:0.1,maxOutputTokens:4096} });
+    const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(true)}]}], generationConfig:{temperature:0.1,maxOutputTokens:8192} });
     if (data.error) {
       if (data.error.code===403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
@@ -1924,19 +1954,7 @@ async function doScan() {
     }
     if (!data.candidates?.[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
     const txt = data.candidates[0].content.parts[0].text;
-    const clean = txt.replace(/```json|```/g,'').trim();
-    let parsed;
-    try { parsed = JSON.parse(clean); }
-    catch(pe) {
-      const fixed = clean.replace(/,?\s*\{[^}]*$/,'').replace(/,\s*$/,'') + ']}';
-      try { parsed = JSON.parse(fixed); }
-      catch(pe2) {
-        const matches = clean.match(/"en"\s*:\s*"([^"]+)"/g)||[], bases=clean.match(/"base"\s*:\s*"([^"]+)"/g)||[], ctxs=clean.match(/"ctx"\s*:\s*"([^"]+)"/g)||[];
-        if (matches.length>0) { parsed={words:matches.map((m,i)=>({en:m.match(/"en"\s*:\s*"([^"]+)"/)[1],base:bases[i]?bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1]:'',ctx:ctxs[i]?ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1]:''}))}; }
-        else { toast('단어를 찾지 못했어요'); render(); return; }
-      }
-    }
-    words = parsed.words;
+    words = parseWordsRobust(txt);
     if (!words?.length) { toast('단어를 찾지 못했어요'); render(); return; }
   } catch(e) { toast('네트워크 오류\n잠시 후 다시 시도해주세요'); render(); return; }
   pendingW = words; pendingB = bId; pendingP = pg;
