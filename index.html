@@ -525,7 +525,7 @@ const UI_TEXT = {
     newPage:'새 페이지',addToPage:'기존 페이지에 추가',
     fileSelect:'🖼️ 파일 선택 (최대 5장)',cameraCapture:'📷 카메라 촬영',
     wordSelect:'단어 선택',selectWords:'저장할 단어를 선택해주세요',saveWords:'선택한 단어 저장',allSelect:'전체선택',
-    loginTitle:'영어책 단어장',loginBtn:'로그인',signupBtn:'가입하기',loginHint:'IM Mission 계정으로 로그인하세요',
+    loginTitle:'영어책 단어장',loginBtn:'로그인',signupBtn:'가입하기',loginHint:'',
     langSetting:'언어 설정',nativeLang:'내 언어 (모국어)',targetLangLabel:'공부할 언어',langDesc:'모국어와 공부할 언어를 선택하세요',
     save:'저장하기',cancel:'취소',cancelBtn:'취소',saving:'저장 중...',
     memoryDone:'모두 외웠어요',wordsMemorized:'words memorized',studyAgain:'다시 외우기',quizMode:'퀴즈 모드로',toBookshelf:'책장으로',toBookshelf2:'책장으로',
@@ -594,7 +594,7 @@ const UI_TEXT = {
     newPage:'New Page',addToPage:'Add to Existing Page',
     fileSelect:'🖼️ Select Files (up to 5)',cameraCapture:'📷 Camera',
     wordSelect:'Select Words',selectWords:'Choose words to save',saveWords:'Save Selected',allSelect:'Select All',
-    loginTitle:'Vocabulary Book',loginBtn:'Login',signupBtn:'Sign Up',loginHint:'Login with your IM Mission account',
+    loginTitle:'Vocabulary Book',loginBtn:'Login',signupBtn:'Sign Up',loginHint:'',
     langSetting:'Language Settings',nativeLang:'My Language (Native)',targetLangLabel:'Language to Study',langDesc:'Select your native and study language',
     save:'Save',cancel:'Cancel',cancelBtn:'Cancel',saving:'Saving...',
     memoryDone:'All Memorized!',wordsMemorized:'words memorized',studyAgain:'Study Again',quizMode:'Quiz Mode',toBookshelf:'Bookshelf',toBookshelf2:'Bookshelf',
@@ -1377,7 +1377,7 @@ function renderLogin(tab='login') {
           onkeydown="if(event.key==='Enter'){sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value);}">
         <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value)">가입하기</button>
       `}
-      <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">${t('loginHint')}</div>
+      ${t('loginHint') ? `<div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">${t('loginHint')}</div>` : ''}
       <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--ink-40);line-height:1.6">
         <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${userNativeLang==='ko'?'이용약관':'Terms'}</a> ·
         <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${userNativeLang==='ko'?'개인정보처리방침':'Privacy'}</a> ·
