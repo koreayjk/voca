@@ -13,13 +13,13 @@
 <meta name="description" content="영어 원서 단어, AI로 쉽게. 책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와주는 단어장 앱.">
 <meta property="og:title" content="IM VOCA — 영어 원서 단어장">
 <meta property="og:description" content="책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와줘요.">
-<meta property="og:image" content="https://imvoca.app/og-image.png">
-<meta property="og:url" content="https://imvoca.app/">
+<meta property="og:image" content="https://www.imvoca.app/og-image.png">
+<meta property="og:url" content="https://www.imvoca.app/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="IM VOCA — 영어 원서 단어장">
 <meta name="twitter:description" content="책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와줘요.">
-<meta name="twitter:image" content="https://imvoca.app/og-image.png">
+<meta name="twitter:image" content="https://www.imvoca.app/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
@@ -523,7 +523,7 @@ const UI_TEXT = {
     game:'암기',review:'복습',stats:'명예의 전당',search:'검색',booksTab:'책장',
     pageAdd:'페이지 추가',pageAddDesc:'페이지를 찍으면 AI가 단어를 골라드려요',
     newPage:'새 페이지',addToPage:'기존 페이지에 추가',
-    fileSelect:'🖼️ 파일 선택 (최대 5장)',cameraCapture:'📷 카메라 촬영',
+    fileSelect:'🖼️ 파일 선택 (최대 10장)',cameraCapture:'📷 카메라 촬영',
     wordSelect:'단어 선택',selectWords:'저장할 단어를 선택해주세요',saveWords:'선택한 단어 저장',allSelect:'전체선택',
     loginTitle:'영어책 단어장',loginBtn:'로그인',signupBtn:'가입하기',loginHint:'',
     langSetting:'언어 설정',nativeLang:'내 언어 (모국어)',targetLangLabel:'공부할 언어',langDesc:'모국어와 공부할 언어를 선택하세요',
@@ -538,7 +538,7 @@ const UI_TEXT = {
     selectPageLabel:'추가할 페이지 선택',noSavedPage:'저장된 페이지가 없어요',
     wordsUnit:'개 단어',renameLabel:'페이지 이름 변경',renameOpt:'(선택사항)',
     renamePh:'예: 1-3, 5-8, Chapter1',renameHint:'비워두면 기존 페이지 이름 유지',
-    maxShots:'최대 5장까지 연속 촬영 가능',fileTypes:'JPG · PNG · WEBP · GIF 지원',
+    maxShots:'최대 10장까지 연속 촬영 가능',fileTypes:'JPG · PNG · WEBP · GIF 지원',
     iphoneHint:'📱 아이폰은 카메라 설정 → 포맷 → 높은 호환성 선택',
     bookLabel:'책',scopeLabel:'범위',scopeAll:'책 전체',scopePage:'페이지별',
     scopeAllHint:'무작위로 섞기',scopePageHint:'한 페이지씩 끊어서',
@@ -592,7 +592,7 @@ const UI_TEXT = {
     game:'Flashcards',review:'Review',stats:'Hall of Fame',search:'Search',booksTab:'Bookshelf',
     pageAdd:'Add Page',pageAddDesc:'Take a photo and AI will extract vocabulary',
     newPage:'New Page',addToPage:'Add to Existing Page',
-    fileSelect:'🖼️ Select Files (up to 5)',cameraCapture:'📷 Camera',
+    fileSelect:'🖼️ Select Files (up to 10)',cameraCapture:'📷 Camera',
     wordSelect:'Select Words',selectWords:'Choose words to save',saveWords:'Save Selected',allSelect:'Select All',
     loginTitle:'Vocabulary Book',loginBtn:'Login',signupBtn:'Sign Up',loginHint:'',
     langSetting:'Language Settings',nativeLang:'My Language (Native)',targetLangLabel:'Language to Study',langDesc:'Select your native and study language',
@@ -607,7 +607,7 @@ const UI_TEXT = {
     selectPageLabel:'Select Page to Add',noSavedPage:'No saved pages',
     wordsUnit:' words',renameLabel:'Rename Page',renameOpt:'(optional)',
     renamePh:'e.g. 1-3, 5-8, Chapter1',renameHint:'Leave blank to keep original name',
-    maxShots:'Up to 5 consecutive shots',fileTypes:'JPG · PNG · WEBP · GIF supported',
+    maxShots:'Up to 10 consecutive shots',fileTypes:'JPG · PNG · WEBP · GIF supported',
     iphoneHint:'📱 iPhone: Camera Settings → Format → Most Compatible',
     bookLabel:'Book',scopeLabel:'Scope',scopeAll:'Entire Book',scopePage:'By Page',
     scopeAllHint:'shuffle randomly',scopePageHint:'one page at a time',
@@ -1541,9 +1541,9 @@ function updateCameraCounter() {
     counter.style.display = shots.length > 0 ? 'block' : 'none';
   }
   if (captureBtn) {
-    captureBtn.textContent = shots.length >= 5 ? userNativeLang==='ko'?'📸 최대 5장':'📸 Max 5' : userNativeLang==='ko'?'📸 촬영하기':'📸 Capture';
-    captureBtn.disabled = shots.length >= 5;
-    captureBtn.style.opacity = shots.length >= 5 ? '0.5' : '1';
+    captureBtn.textContent = shots.length >= 10 ? userNativeLang==='ko'?'📸 최대 10장':'📸 Max 10' : userNativeLang==='ko'?'📸 촬영하기':'📸 Capture';
+    captureBtn.disabled = shots.length >= 10;
+    captureBtn.style.opacity = shots.length >= 10 ? '0.5' : '1';
   }
   if (useBtn) {
     useBtn.style.display = shots.length > 0 ? 'block' : 'none';
@@ -1579,7 +1579,7 @@ function cancelCamera() {
 }
 
 function capturePhoto() {
-  if ((window._cameraShots||[]).length >= 5) { toast('최대 5장까지 촬영할 수 있어요'); return; }
+  if ((window._cameraShots||[]).length >= 10) { toast('최대 10장까지 촬영할 수 있어요'); return; }
   const video = document.getElementById('camera-video');
   const canvas = document.getElementById('camera-canvas');
   canvas.width = video.videoWidth; canvas.height = video.videoHeight;
@@ -1614,7 +1614,7 @@ function useCameraShots() {
 function handleFileChange(e) {
   const files = Array.from(e.target.files);
   if (!files.length) return;
-  if (files.length > 5) { toast('최대 5장까지만 선택할 수 있어요'); return; }
+  if (files.length > 10) { toast('최대 10장까지만 선택할 수 있어요'); return; }
   const readers = files.map(f => new Promise(resolve => {
     const img = new Image(), r = new FileReader();
     r.onload = ev => {
