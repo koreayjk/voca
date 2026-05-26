@@ -2867,7 +2867,7 @@ async function renderStats(root, dock) {
             </div>
             <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">
               📚 ${m.total_words||0}${userNativeLang==='ko'?'점':'pts'}
-              ${(m.perfect_reviews||0)>0?`&nbsp;·&nbsp;⚡ ${userNativeLang==='ko'?'완벽복습':'Perfect'} ${m.perfect_reviews}${userNativeLang==='ko'?'회':'x'}`:''}
+              ${(m.perfect_reviews||0)>0?`&nbsp;·&nbsp;⚡ ${userNativeLang==='ko'?'복습점수':'Review'} ${m.perfect_reviews}${userNativeLang==='ko'?'점':'pt'}`:''}
             </div>
           </div>
           ${i===0?'<div style="font-size:20px;">👑</div>':''}
@@ -3071,7 +3071,8 @@ async function startReviewSession() {
 }
 
 
-async function incrementPerfectReviews() {
+async function addReviewScore(score) {
+  if (!score || score <= 0) return;
   try {
     const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=perfect_reviews`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
@@ -3081,9 +3082,9 @@ async function incrementPerfectReviews() {
     await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
       method: 'PATCH',
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ perfect_reviews: current + 1 })
+      body: JSON.stringify({ perfect_reviews: current + score })
     });
-  } catch(e) {}
+  } catch(e) { console.error('[복습 점수 저장 실패]', e); }
 }
 
 async function updateReviewStep(review) {
@@ -3117,18 +3118,19 @@ async function updateReviewStep(review) {
     if (!step || !step.next) {
       // 마지막 단계 → 완료
       patch.completed = true;
-      // 완벽 완료 시 members 테이블 perfect_reviews +1
-      if (patch.is_perfect !== false) {
-        incrementPerfectReviews();
-      }
     } else {
       // 다음 단계 날짜를 오늘 기준으로 재계산
-      // addDays 직접 계산 (전역 함수 없음)
       const nextDate = new Date(now);
       nextDate.setDate(nextDate.getDate() + step.days);
       nextDate.setHours(0, 0, 0, 0);
       patch[step.next] = nextDate.toISOString();
     }
+
+    // 복습 단계 하나 완료할 때마다, 그 페이지 단어들의 난이도 점수를 합산해 반영
+    const rbook = findBook(review.book_id);
+    const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
+    const pageScore = rpage ? calcWordScore(rpage.words) : 0;
+    if (pageScore > 0) addReviewScore(pageScore);
 
     const res = await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
       method: 'PATCH',
