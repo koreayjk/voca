@@ -335,7 +335,9 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .study__bar { height: 3px; background: var(--ink-07); border-radius: 99px; margin-top: 10px; overflow: hidden; }
 .study__fill { height: 100%; background: var(--accent); transition: width 250ms ease; }
 .study__round { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); margin-top: 8px; }
-.card-wrap { flex: 1; min-height: 0; perspective: 1400px; cursor: pointer; margin: 10px 0 8px; }
+.card-wrap { flex: 1 1 auto; min-height: 0; perspective: 1400px; cursor: pointer; margin: 10px 0 8px; }
+.ox-row { display: flex; gap: 10px; flex: 0 0 auto; margin-top: 4px; }
+.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); flex: 0 0 auto; margin-top: 8px; }
 .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.4,0,.2,1); }
 .card--flip { transform: rotateY(180deg); }
 .face { position: absolute; inset: 0; border-radius: 22px; -webkit-backface-visibility: hidden; backface-visibility: hidden; padding: 26px; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(70,45,15,0.13), 0 2px 6px rgba(70,45,15,0.08); }
@@ -348,12 +350,10 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .back__word { font-family: var(--font-display); font-size: 27px; font-weight: 500; letter-spacing: -0.02em; color: #f7efe2; text-align:center; }
 .back__label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,239,226,0.42); margin-top: 16px; text-align:center; }
 .back__meaning { font-size: 17px; margin-top: 5px; line-height: 1.4; color: #f7efe2; text-align:center; }
-.ox-row { display: flex; gap: 10px; flex-shrink: 0; margin-top: 4px; }
 .ox-btn { flex: 1; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; cursor: pointer; border: none; }
 .ox-x { border: 1.5px solid var(--ink-12); background: var(--bg-card); color: var(--ink-100); }
 .ox-o { background: var(--accent); color: #fff; }
 .ox-btn:disabled { opacity: 0.3; cursor: default; }
-.ox-hint { text-align: center; font-size: 10px; color: var(--ink-40); flex-shrink: 0; margin-top: 8px; }
 .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
 .done__n { font-family: var(--font-display); font-size: 96px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
 .done__label { font-size: 14px; color: var(--ink-60); }
