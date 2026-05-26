@@ -356,6 +356,13 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .ox-btn:disabled { opacity: 0.3; cursor: default; }
 .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
 .done__n { font-family: var(--font-display); font-size: 96px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+.celebrate-card { width: 100%; background: linear-gradient(160deg, #fff8e8 0%, #fdf0d0 100%); border: 1.5px solid #e8c97a; border-radius: 20px; padding: 24px 20px; margin-bottom: 22px; text-align: center; box-shadow: 0 8px 28px rgba(180,140,40,0.18); }
+.celebrate-coin { font-size: 56px; line-height: 1; animation: coinPop 0.7s cubic-bezier(.34,1.56,.64,1) both, coinFloat 2.4s ease-in-out 0.7s infinite; }
+.celebrate-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #8a6d1a; margin-top: 10px; }
+.celebrate-score { font-family: var(--font-display); font-size: 52px; font-weight: 800; color: #c79a2e; line-height: 1.1; margin-top: 6px; letter-spacing: -0.02em; }
+.celebrate-sub { font-size: 12px; color: #a8862f; margin-top: 4px; }
+@keyframes coinPop { 0% { transform: scale(0) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes coinFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .done__label { font-size: 14px; color: var(--ink-60); }
 .done__grid { margin-top: 24px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .done__tile { border: 1px solid var(--ink-12); border-radius: 13px; padding: 14px; text-align: left; }
@@ -2518,6 +2525,13 @@ function render() {
       <div class="scr">
         <div class="topnav"><span></span><span class="topnav__title">${book?.title||''}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
         <div class="done">
+          ${(route.isReview && window._lastEarnedScore>0)?`
+          <div class="celebrate-card">
+            <div class="celebrate-coin">🪙</div>
+            <div class="celebrate-title">${userNativeLang==='ko'?'축하합니다! 🎉':'Congratulations! 🎉'}</div>
+            <div class="celebrate-score">+${window._lastEarnedScore}<span style="font-size:20px;font-weight:600;">${userNativeLang==='ko'?'점':'pts'}</span></div>
+            <div class="celebrate-sub">${userNativeLang==='ko'?'복습 점수를 획득했어요':'Review points earned'}</div>
+          </div>`:''}
           <div class="label-xs">${t('memoryDone')}</div>
           <div class="done__n">${route.total}</div>
           <div class="done__label">${t('wordsMemorized')}</div>
@@ -3091,6 +3105,7 @@ function closeReviewBanner() {}
 
 async function startReviewSession() {
   closeReviewBanner();
+  window._lastEarnedScore = 0;
   const due = window._dueReviews;
   if (!due?.length) return;
   const first = due[0];
@@ -3165,7 +3180,7 @@ async function updateReviewStep(review) {
     const rbook = findBook(review.book_id);
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
     const pageScore = rpage ? calcWordScore(rpage.words) : 0;
-    if (pageScore > 0) addReviewScore(pageScore);
+    if (pageScore > 0) { addReviewScore(pageScore); window._lastEarnedScore = (window._lastEarnedScore||0) + pageScore; }
     // 이 책의 복습 상태가 바뀌었으니 캐시 리셋 (다음에 책 열면 새로 불러옴)
     if (review.book_id) { _reviewStatusLoaded[review.book_id] = false; }
 
