@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="icon" type="image/png" href="https://imvoca.app/2.png">
 <link rel="apple-touch-icon" href="https://imvoca.app/2.png">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#f3ece0">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,13 +13,13 @@
 <meta name="description" content="영어 원서 단어, AI로 쉽게. 책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와주는 단어장 앱.">
 <meta property="og:title" content="IM VOCA — 영어 원서 단어장">
 <meta property="og:description" content="책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와줘요.">
-<meta property="og:image" content="https://www.imvoca.app/og-image.png">
-<meta property="og:url" content="https://www.imvoca.app/">
+<meta property="og:image" content="https://imvoca.app/og-image.png">
+<meta property="og:url" content="https://imvoca.app/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="IM VOCA — 영어 원서 단어장">
 <meta name="twitter:description" content="책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와줘요.">
-<meta name="twitter:image" content="https://www.imvoca.app/og-image.png">
+<meta name="twitter:image" content="https://imvoca.app/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
@@ -392,6 +392,14 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 </head>
 <body>
 <div id="root"></div>
+
+<div class="install-banner" id="install-banner">
+  <button class="install-banner__close" onclick="dismissInstall()">×</button>
+  <div class="install-banner__icon">📲</div>
+  <div class="install-banner__title" id="install-title">홈 화면에 추가하세요</div>
+  <div class="install-banner__desc" id="install-desc">앱처럼 빠르게 열고, 더 편하게 단어를 공부할 수 있어요.</div>
+  <button id="install-action-btn" class="btn btn-solid" style="margin-top:12px;display:none;" onclick="triggerInstall()">설치하기</button>
+</div>
 
 <!-- ADD BOOK MODAL -->
 <div class="overlay" id="modal-add">
@@ -946,12 +954,74 @@ async function updatePassword() {
   }
 }
 
+let _deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredInstallPrompt = e;
+});
+
+function setupInstallBanner(isStandalone) {
+  // 이미 앱으로 설치해서 쓰는 중이면 안 띄움
+  if (isStandalone) return;
+  // 최근에 닫았으면 7일간 안 띄움
+  const dismissed = localStorage.getItem('imvoca.installDismissed');
+  if (dismissed && (Date.now() - Number(dismissed)) < 7*24*60*60*1000) return;
+
+  const ua = navigator.userAgent || '';
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  const isAndroid = /android/i.test(ua);
+  // 모바일이 아니면(데스크톱) 안내 불필요
+  if (!isIOS && !isAndroid) return;
+
+  const banner = document.getElementById('install-banner');
+  const titleEl = document.getElementById('install-title');
+  const descEl = document.getElementById('install-desc');
+  const btnEl = document.getElementById('install-action-btn');
+  if (!banner) return;
+
+  const ko = userNativeLang !== 'en';
+  if (isIOS) {
+    // 아이폰: 자동 설치 버튼이 없어서 방법을 안내
+    titleEl.textContent = ko ? '📲 홈 화면에 추가하세요' : '📲 Add to Home Screen';
+    descEl.innerHTML = ko
+      ? '사파리 아래쪽 <b>공유 버튼</b>을 누르고<br>“홈 화면에 추가”를 선택하세요.'
+      : 'Tap the <b>Share</b> button below,<br>then “Add to Home Screen”.';
+    btnEl.style.display = 'none';
+  } else {
+    // 안드로이드: 설치 버튼 제공
+    titleEl.textContent = ko ? '📲 앱으로 설치하세요' : '📲 Install the app';
+    descEl.textContent = ko ? '홈 화면에서 앱처럼 빠르게 열 수 있어요.' : 'Open it like an app from your home screen.';
+    btnEl.textContent = ko ? '설치하기' : 'Install';
+    btnEl.style.display = 'block';
+  }
+  // 3초 후 띄우기 (들어오자마자 방해되지 않게)
+  setTimeout(() => { banner.classList.add('show'); }, 3000);
+}
+
+function dismissInstall() {
+  const b = document.getElementById('install-banner');
+  if (b) b.classList.remove('show');
+  localStorage.setItem('imvoca.installDismissed', String(Date.now()));
+}
+
+async function triggerInstall() {
+  if (_deferredInstallPrompt) {
+    _deferredInstallPrompt.prompt();
+    const { outcome } = await _deferredInstallPrompt.userChoice;
+    _deferredInstallPrompt = null;
+    if (outcome === 'accepted') dismissInstall();
+  } else {
+    toast(userNativeLang!=='en' ? '브라우저 메뉴에서 “홈 화면에 추가”를 눌러주세요' : 'Use "Add to Home Screen" in your browser menu');
+  }
+}
+
 async function sbInit() {
   initDarkMode();
   // 앱 모드 vs 브라우저 모드 감지
   const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
   document.documentElement.style.setProperty('--ox-bottom', isStandalone ? '16px' : '90px');
   document.documentElement.style.setProperty('--ox-hint-bottom', isStandalone ? '0px' : '70px');
+  setupInstallBanner(isStandalone);
 
   // ── 비밀번호 재설정 토큰 체크 (최우선) ──
   if (checkRecoveryToken()) return;
@@ -1213,11 +1283,18 @@ async function sbSignUp(email, pw, name) {
     const data = await sbFetch('/auth/v1/signup', 'POST', { email, password: pw, data: { name } }, false);
     if (data.error) { toast('가입 실패: ' + data.error.message); return; }
     if (data.user?.id) {
-      await fetch(SB_URL + '/rest/v1/members', {
+      const mRes = await fetch(SB_URL + '/rest/v1/members', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Prefer': 'return=minimal' },
         body: JSON.stringify({ id: data.user.id, name, email, role: '멤버', plan: 'free', scan_count: 0 })
       });
+      if (!mRes.ok) {
+        const errTxt = await mRes.text();
+        console.error('[members 저장 실패]', mRes.status, errTxt);
+        toast('계정은 생성됐지만 회원정보 저장에 실패했어요. 관리자에게 문의해주세요.');
+      }
+    } else {
+      console.error('[회원가입] user.id 없음 - 이메일 인증 대기 상태일 수 있음', data);
     }
     toast('가입 완료! 바로 로그인해서 사용할 수 있어요 😊'); renderLogin('login');
   } catch(e) { toast('가입 오류: ' + e.message); }
@@ -2642,11 +2719,21 @@ async function openBillingPortal() {
 
 async function setPremium(userId, isPremium) {
   try {
-    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
       method: 'PATCH',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
       body: JSON.stringify({ plan: isPremium ? 'premium' : 'free' })
     });
+    if (!res.ok) {
+      const errTxt = await res.text();
+      toast('변경 실패: ' + (res.status===401||res.status===403 ? '권한 없음(RLS)' : errTxt.slice(0,60)));
+      return;
+    }
+    const updated = await res.json();
+    if (!Array.isArray(updated) || updated.length === 0) {
+      toast('변경 실패: 권한이 없어요 (RLS 정책 확인 필요)');
+      return;
+    }
     toast(isPremium ? '✨ Premium으로 업그레이드됐어요!' : 'Free 플랜으로 변경됐어요');
     showAdminPanel();
   } catch(e) { toast('오류: ' + e.message); }
@@ -3044,6 +3131,54 @@ async function updateReviewStep(review) {
   } catch(e) {
     console.error('[updateReviewStep 오류]', e);
   }
+}
+
+function renderSearch(root, dock) {
+  const total = books.reduce((n,b)=>n+countWords(b),0);
+  root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
+      <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
+      <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🔍 ${userNativeLang==='ko'?'단어 검색':'Search'}</div>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:2px;margin-bottom:16px;">${userNativeLang==='ko'?`저장한 ${total}개 단어에서 검색해요`:`Search ${total} saved words`}</div>
+    <input id="word-search-inp" type="text" oninput="runWordSearch()" placeholder="${userNativeLang==='ko'?'영어 단어나 뜻을 입력하세요':'Type an English word or meaning'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px">
+    <div class="scr-scroll" id="word-search-result">
+      <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'단어를 입력하세요':'Type to search'}</div>
+    </div>
+  </div>` + dock;
+  setTimeout(()=>{ const el=document.getElementById('word-search-inp'); if(el) el.focus(); }, 50);
+}
+
+function runWordSearch() {
+  const q = (document.getElementById('word-search-inp')?.value || '').trim().toLowerCase();
+  const el = document.getElementById('word-search-result');
+  if (!el) return;
+  if (!q) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'단어를 입력하세요':'Type to search'}</div>`; return; }
+  const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
+  const hits = [];
+  books.forEach(b => {
+    (b.pages||[]).forEach(p => {
+      (p.words||[]).forEach(w => {
+        const hay = `${w.en||''} ${w.base||''} ${w.ctx||''}`.toLowerCase();
+        if (hay.includes(q)) hits.push({ ...w, bookTitle:b.title, bookId:b.id, pageNum:p.num });
+      });
+    });
+  });
+  if (!hits.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'검색 결과가 없어요':'No results'}</div>`; return; }
+  el.innerHTML = `<div class="muted" style="font-size:12px;margin-bottom:10px;">${hits.length}${userNativeLang==='ko'?'개 찾음':' found'}</div>` + hits.map(w=>{
+    const lv = w.level||''; const c = levelColor[lv]||'#999';
+    return `<div onclick="push({name:'page-words',bookId:'${w.bookId}',pageNum:'${w.pageNum}'})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:var(--bg-card);cursor:pointer;border-left:3px solid ${c};">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="word-item__en">${w.en||''}</span>
+          ${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${c};border-radius:99px;padding:2px 7px;">${lv}</span>`:''}
+        </div>
+        <div class="word-item__base">${w.base||''}</div>
+        ${w.ctx?`<div class="word-item__ctx">↳ <em>${w.ctx}</em></div>`:''}
+        <div style="font-size:10px;color:var(--ink-40);margin-top:4px;">📖 ${w.bookTitle} · Page ${w.pageNum}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 async function renderReviewPage(root, dock) {
