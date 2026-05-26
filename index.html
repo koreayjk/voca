@@ -727,20 +727,26 @@ async function loadUserPlan() {
 
 // 책별 복습 상태 캐시 { "bookId|pageNum": "done"|"doing" }
 let _reviewStatus = {};
+let _reviewStatusLoaded = {}; // 책별로 이미 불러왔는지
 async function loadReviewStatus(bookId) {
+  if (_reviewStatusLoaded[bookId]) return; // 이미 불러왔으면 다시 안 함
+  _reviewStatusLoaded[bookId] = true;
   try {
     const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&select=page_num,completed`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
+    let changed = false;
     if (Array.isArray(data)) {
       data.forEach(r => {
-        _reviewStatus[bookId + '|' + r.page_num] = r.completed ? 'done' : 'doing';
+        const key = bookId + '|' + r.page_num;
+        const val = r.completed ? 'done' : 'doing';
+        if (_reviewStatus[key] !== val) { _reviewStatus[key] = val; changed = true; }
       });
     }
-    // 책 화면이 떠 있으면 다시 그려서 점 반영
-    if (stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
-  } catch(e) { console.error('[복습 상태 로드 실패]', e); }
+    // 실제로 새 상태가 생겼고, 지금 그 책 화면이면 한 번만 다시 그림
+    if (changed && stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
+  } catch(e) { _reviewStatusLoaded[bookId] = false; console.error('[복습 상태 로드 실패]', e); }
 }
 
 // 스캔 카운트 증가
@@ -3160,6 +3166,8 @@ async function updateReviewStep(review) {
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
     const pageScore = rpage ? calcWordScore(rpage.words) : 0;
     if (pageScore > 0) addReviewScore(pageScore);
+    // 이 책의 복습 상태가 바뀌었으니 캐시 리셋 (다음에 책 열면 새로 불러옴)
+    if (review.book_id) { _reviewStatusLoaded[review.book_id] = false; }
 
     const res = await fetch(SB_URL + `/rest/v1/voca_review?id=eq.${review.id}`, {
       method: 'PATCH',
