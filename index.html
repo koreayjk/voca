@@ -1396,6 +1396,22 @@ const GEMINI_MODELS = [
 let _geminiModelIdx = 0;
 
 // Gemini 응답에서 단어 목록을 최대한 견고하게 추출 (JSON이 잘려도 완성된 단어는 모두 살림)
+// Gemini 응답에서 AI가 읽은 페이지 번호만 추출 (없으면 '')
+function parsePageNum(rawText) {
+  const clean = (rawText || '').replace(/```json|```/g, '').trim();
+  // 정상 JSON에서 page 필드
+  try {
+    const p = JSON.parse(clean);
+    if (p && typeof p.page !== 'undefined' && p.page !== null) return String(p.page).trim();
+  } catch(e) {}
+  // JSON이 깨졌어도 page 필드만 정규식으로
+  const m = clean.match(/"page"\s*:\s*"([^"]*)"/);
+  if (m) return m[1].trim();
+  const m2 = clean.match(/"page"\s*:\s*(\d+)/);
+  if (m2) return m2[1].trim();
+  return '';
+}
+
 function parseWordsRobust(rawText) {
   const clean = (rawText || '').replace(/```json|```/g, '').trim();
   // 1차: 정상 JSON 시도
@@ -1767,6 +1783,9 @@ async function processNextMultiScan() {
   if (idx >= total) {
     toast(`✅ ${total}장 모두 완료!`);
     window._multiImgData = null;
+    window._aiPageNum = '';
+    // 메인(책장) 위에 방금 스캔한 책 상세를 얹어서 단어장으로 자동 이동
+    stack = [{ name:'library' }, { name:'book', bookId:bId }];
     render();
     return;
   }
@@ -1786,6 +1805,7 @@ async function processNextMultiScan() {
     const txt = data.candidates[0].content.parts[0].text;
     words = parseWordsRobust(txt);
     if (!words?.length) { toast(`${idx+1}번 사진에서 단어를 찾지 못했어요`); window._multiIdx++; await processNextMultiScan(); return; }
+    window._aiPageNum = parsePageNum(txt);
   } catch(e) { toast('네트워크 오류'); render(); return; }
   await incrementScanCount();
   pendingW = words; pendingB = bId; pendingP = null;
@@ -1806,8 +1826,8 @@ function renderWordSelectionMulti(words, idx, total) {
         ${Array.from({length:total},(_,i)=>`<div style="width:8px;height:8px;border-radius:50%;background:${i<idx?'#27ae60':i===idx?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}
       </div>
       <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}${userNativeLang==='ko'?'번째 사진의 페이지 번호':' photo page number'}</div>
-        <input type="text" id="multi-pg-inp" placeholder="${userNativeLang==='ko'?'예: 34, xii, intro':'e.g. 34, xii, intro'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
+        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}${userNativeLang==='ko'?'번째 사진의 페이지 번호':' photo page number'}${window._aiPageNum?(userNativeLang==='ko'?' · 🤖 AI가 읽음 (확인·수정)':' · 🤖 AI read (verify)'):''}</div>
+        <input type="text" id="multi-pg-inp" value="${window._aiPageNum||''}" placeholder="${userNativeLang==='ko'?'예: 34, xii, intro':'e.g. 34, xii, intro'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
       </div>
       <div class="muted" style="font-size:12px;margin-bottom:10px;">${t('selectWords')}</div>
       <div class="scr-scroll" id="word-sel-list">
@@ -1900,7 +1920,7 @@ function selectExistingPage(pageNum) {
 function buildScanPrompt(useExclude=true) {
   const target = getTargetLang(), native = getNativeLang();
   const exclude = useExclude ? buildExcludePrompt() : '';
-  return `이 ${target.name} 책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘 (가장 먼저 찾기)\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\nC1~C2 단어를 먼저 찾고, B2, B1 순서로 채워주세요.${exclude}\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"words":[{"en":"단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
+  return `이 ${target.name} 책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\nCEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘 (가장 먼저 찾기)\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\nC1~C2 단어를 먼저 찾고, B2, B1 순서로 채워주세요.${exclude}\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
 }
 
 // ── 이미 등록된 단어 목록 추출 ──
@@ -2177,7 +2197,7 @@ function render() {
           <div class="rule"></div>
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
           ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
-          book.pages.map(p=>`
+          [...book.pages].sort((a,b)=>pageSort(a,b)).map(p=>`
             <div class="page-row">
               <span class="page-row__num" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="flex:1;cursor:pointer;">Page ${p.num}</span>
               <span class="page-row__right">
