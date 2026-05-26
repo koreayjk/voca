@@ -725,6 +725,24 @@ async function loadUserPlan() {
   } catch(e) {}
 }
 
+// 책별 복습 상태 캐시 { "bookId|pageNum": "done"|"doing" }
+let _reviewStatus = {};
+async function loadReviewStatus(bookId) {
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&select=page_num,completed`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      data.forEach(r => {
+        _reviewStatus[bookId + '|' + r.page_num] = r.completed ? 'done' : 'doing';
+      });
+    }
+    // 책 화면이 떠 있으면 다시 그려서 점 반영
+    if (stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
+  } catch(e) { console.error('[복습 상태 로드 실패]', e); }
+}
+
 // 스캔 카운트 증가
 async function incrementScanCount() {
   userScanCount++;
@@ -2298,6 +2316,7 @@ function render() {
   else if (route.name === 'book') {
     const book = findBook(route.bookId);
     if (!book) { back(); return; }
+    loadReviewStatus(book.id);
     root.innerHTML = `
       <div class="scr" style="padding-bottom:110px">
         <div class="topnav">
@@ -2319,9 +2338,15 @@ function render() {
           </div>
           <div class="rule"></div>
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
+          ${book.pages.length>0?`<div style="display:flex;gap:14px;flex-wrap:wrap;padding:2px 0 10px;font-size:11px;color:var(--ink-50);">
+            <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid rgba(44,33,24,0.25);box-sizing:border-box;"></span>${userNativeLang==='ko'?'복습 전':'Not yet'}</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#e23d3d;"></span>${userNativeLang==='ko'?'복습 중':'In progress'}</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#1c3553;"></span>${userNativeLang==='ko'?'복습 완료':'Done'}</span>
+          </div>`:''}
           ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
           [...book.pages].sort((a,b)=>pageSort(a,b)).map(p=>`
             <div class="page-row">
+              ${(()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
               <span class="page-row__num" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="flex:1;cursor:pointer;">Page ${p.num}</span>
               <span class="page-row__right">
                 ${p.words.length} words
