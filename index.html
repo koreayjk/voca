@@ -756,6 +756,11 @@ async function loadReviewStatus(bookId) {
   } catch(e) { _reviewStatusLoaded[bookId] = false; console.error('[복습 상태 로드 실패]', e); }
 }
 
+// 문의하기 — 메일 앱 열기
+function contactSupport() {
+  location.href = 'mailto:imamerica2414@gmail.com';
+}
+
 // 스캔 카운트 증가
 async function incrementScanCount() {
   userScanCount++;
@@ -884,6 +889,7 @@ function showMyMenu() {
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
       ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
+      ${row('✉️', ko?'문의하기':'Contact Us', "document.getElementById('my-modal').remove();contactSupport()")}
       ${row(isDark?'☀️':'🌙', isDark?(ko?'라이트 모드':'Light Mode'):(ko?'다크 모드':'Dark Mode'), "document.getElementById('my-modal').remove();toggleDarkMode()")}
       ${row('🚪', ko?'로그아웃':'Logout', "document.getElementById('my-modal').remove();sbSignOut()")}
       <button onclick="document.getElementById('my-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button>
