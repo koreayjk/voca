@@ -1117,18 +1117,12 @@ async function sbInit() {
       const userData = await verify.json();
       _authToken = sess.access_token;
       currentUser = userData;
-      if (currentUser.email !== 'koreayjk@gmail.com') {
-        const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=role`, {
-          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
-        });
-        const roleData = await res.json();
-        const role = roleData[0]?.role;
-        // 자동 승인 - 대기중 체크 없음
-      }
-      await loadApiKey();
-      await loadUserName();
-      await loadUserPlan();
-      await loadBooksFromDB();
+      await Promise.all([
+        loadApiKey(),
+        loadUserName(),
+        loadUserPlan(),
+        loadBooksFromDB()
+      ]);
       render();
       setTimeout(checkReviews, 1000);
     } catch(e) {
