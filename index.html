@@ -2496,9 +2496,9 @@ function render() {
         <div class="scr-scroll" style="margin-top:12px">
           ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;margin-left:auto;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
-        <div class="btn-fixed" style="display:flex;gap:8px;">
+        <div class="btn-fixed" style="flex-direction:row;gap:8px;">
           <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${t('sendToCard')}</button>
-          <button class="btn btn-outline" style="flex:0 0 auto;padding-left:16px;padding-right:16px;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
+          <button class="btn btn-outline" style="flex:0 0 auto;padding-left:14px;padding-right:14px;white-space:nowrap;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접':'✏️ Add'}</button>
         </div>
       </div>`;
   }
