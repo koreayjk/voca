@@ -1368,18 +1368,21 @@ async function sbSignOut() {
 
 async function loadBooksFromDB() {
   try {
-    const bd = await sbFetch(`/rest/v1/voca_books?user_id=eq.${currentUser.id}&order=created_at`);
+    // 책 + 페이지 + 단어를 한 번에 (embed)
+    const bd = await sbFetch(`/rest/v1/voca_books?user_id=eq.${currentUser.id}&select=*,voca_pages(*,voca_words(*))&order=created_at`);
     if (!Array.isArray(bd)) return;
-    books = [];
-    for (const b of bd) {
-      const pd = await sbFetch(`/rest/v1/voca_pages?book_id=eq.${b.id}&order=page_num`);
-      const pages = [];
-      for (const p of (Array.isArray(pd) ? pd : [])) {
-        const wd = await sbFetch(`/rest/v1/voca_words?page_id=eq.${p.id}&order=created_at`);
-        pages.push({ num:p.page_num, _pid:p.id, words:(Array.isArray(wd)?wd:[]).map(w=>({id:w.id,en:w.en,ipa:w.ipa||'',base:w.base,ctx:w.ctx,sentence:w.sentence||'',level:w.level||''})) });
-      }
-      if (!books.find(x=>x.id===b.id)) books.push({ id:b.id, title:b.title, author:b.author, color:b.color, desc:b.description||'', cover:b.cover_url||'', pages });
-    }
+    books = bd.map(b => ({
+      id: b.id, title: b.title, author: b.author, color: b.color,
+      desc: b.description || '', cover: b.cover_url || '',
+      pages: (b.voca_pages || [])
+        .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
+        .map(p => ({
+          num: p.page_num, _pid: p.id,
+          words: (p.voca_words || [])
+            .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
+            .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'' }))
+        }))
+    }));
   } catch(e) { console.error('DB load error:', e); }
 }
 
@@ -2497,8 +2500,8 @@ function render() {
           ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;margin-left:auto;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
         <div class="btn-fixed" style="flex-direction:row;gap:8px;">
-          <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${t('sendToCard')}</button>
-          <button class="btn btn-outline" style="flex:0 0 auto;padding-left:14px;padding-right:14px;white-space:nowrap;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접':'✏️ Add'}</button>
+          <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
+          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
         </div>
       </div>`;
   }
