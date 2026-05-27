@@ -778,6 +778,100 @@ async function deletePageWord(bookId, pageNum, wordIdx) {
   } catch(e) { toast(ko ? '삭제 실패' : 'Delete failed'); }
 }
 
+// ─── 공지(notices) ───
+let _notices = [];
+async function loadNotices() {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/voca_notices?published=eq.true&order=created_at.desc&limit=50', {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      _notices = data;
+      updateNoticeBadge();
+    }
+  } catch(e) { console.error('[공지 로드 실패]', e); }
+}
+function getLastNoticeView() {
+  return Number(localStorage.getItem('imvoca.lastNoticeView') || 0);
+}
+function unreadNoticeCount() {
+  const last = getLastNoticeView();
+  return _notices.filter(n => new Date(n.created_at).getTime() > last).length;
+}
+function updateNoticeBadge() {
+  const el = document.getElementById('notice-badge');
+  if (!el) return;
+  const cnt = unreadNoticeCount();
+  if (cnt > 0) { el.textContent = cnt > 9 ? '9+' : cnt; el.style.display = 'flex'; }
+  else { el.style.display = 'none'; }
+}
+function toggleNotice(idx) {
+  const item = document.querySelector(`.notice-item[data-idx="${idx}"]`);
+  if (!item) return;
+  const body = item.querySelector('.notice-body');
+  const chev = item.querySelector('.notice-chevron');
+  if (!body) return;
+  const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+  if (isOpen) {
+    body.style.maxHeight = '0px';
+    body.style.marginTop = '0';
+    if (chev) chev.style.transform = 'rotate(0deg)';
+  } else {
+    body.style.maxHeight = 'none';
+    body.style.marginTop = '8px';
+    if (chev) chev.style.transform = 'rotate(180deg)';
+  }
+}
+
+function showNotices() {
+  const ko = userNativeLang === 'ko';
+  const catMap = {
+    notice:   { icon:'📢', label: ko?'공지':'Notice',   color:'#e74c3c' },
+    update:   { icon:'✨', label: ko?'업데이트':'Update', color:'#1c3553' },
+    bugfix:   { icon:'🐛', label: ko?'버그 수정':'Bug Fix', color:'#e67e22' },
+    event:    { icon:'🎉', label: ko?'이벤트':'Event',   color:'#9b59b6' },
+    tip:      { icon:'💡', label: ko?'꿀팁':'Tip',      color:'#27ae60' }
+  };
+  const last = getLastNoticeView();
+  // 모달 열면서 "마지막 본 시간" 갱신
+  localStorage.setItem('imvoca.lastNoticeView', String(Date.now()));
+  updateNoticeBadge();
+  const ov = document.createElement('div');
+  ov.id = 'notice-modal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:60px 16px 16px;overflow-y:auto;';
+  const inner = _notices.length === 0
+    ? `<div style="text-align:center;padding:40px 20px;color:var(--ink-40);font-size:13px;">${ko?'아직 공지가 없어요':'No notices yet'}</div>`
+    : _notices.map((n,i) => {
+        const c = catMap[n.category] || catMap.notice;
+        const isNew = new Date(n.created_at).getTime() > last;
+        const expanded = i === 0; // 최신은 처음부터 펼침
+        const dateStr = new Date(n.created_at).toLocaleDateString(ko?'ko-KR':'en-US', { year:'numeric', month:'short', day:'numeric' });
+        // 본문에서 따옴표·줄바꿈 안전 처리해서 data 속성에 저장
+        const safeBody = (n.body||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return `<div class="notice-item" data-idx="${i}" style="border-bottom:1px solid var(--ink-07);padding:14px 4px;cursor:pointer;" onclick="toggleNotice(${i})">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+            <span style="background:${c.color};color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;">${c.icon} ${c.label}</span>
+            ${isNew?`<span style="background:#e74c3c;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">NEW</span>`:''}
+            <span style="font-size:11px;color:var(--ink-40);margin-left:auto;">${dateStr}</span>
+            <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s;${expanded?'transform:rotate(180deg);':''}">▾</span>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${n.title}</div>
+          <div class="notice-body" style="font-size:12px;color:var(--ink-60);line-height:1.7;white-space:pre-wrap;overflow:hidden;${expanded?'margin-top:8px;max-height:none;':'max-height:0;'}">${safeBody}</div>
+        </div>`;
+      }).join('');
+  ov.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:18px;padding:22px 20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--ink-100);">🔔 ${ko?'공지함':'Notices'}</div>
+        <button onclick="document.getElementById('notice-modal').remove()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--ink-40);padding:0 4px;">×</button>
+      </div>
+      ${inner}
+    </div>`;
+  ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov);
+}
+
 // 문의하기 — 메일 앱 열기
 function contactSupport() {
   location.href = 'mailto:imamerica2414@gmail.com';
@@ -1121,9 +1215,12 @@ async function sbInit() {
         loadApiKey(),
         loadUserName(),
         loadUserPlan(),
-        loadBooksFromDB()
+        loadBooksFromDB(),
+        loadNotices()
       ]);
       render();
+      // 렌더 후 배지 업데이트 (상단 버튼이 그려진 다음)
+      setTimeout(updateNoticeBadge, 100);
       setTimeout(checkReviews, 1000);
     } catch(e) {
       console.error('세션 복원 실패:', e);
@@ -2351,6 +2448,7 @@ function render() {
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">⚙️ 관리</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
+          <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
         </div>
