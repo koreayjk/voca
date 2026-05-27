@@ -1065,7 +1065,13 @@ async function sbInit() {
   // ── 비밀번호 재설정 토큰 체크 (최우선) ──
   if (checkRecoveryToken()) return;
 
-  renderLogin();
+  // 저장된 세션이 있으면 로그인 화면 대신 로딩 표시 (깜빡임 방지)
+  const hasSavedSession = !!localStorage.getItem('imvoca.session');
+  if (hasSavedSession) {
+    document.getElementById('root').innerHTML = '<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg-page);"><div style="font-family:var(--font-display);font-size:24px;color:var(--accent);">IM VOCA</div></div>';
+  } else {
+    renderLogin();
+  }
 
   // ── 데모 링크 토큰 감지 ──
   const urlParams = new URLSearchParams(window.location.search);
