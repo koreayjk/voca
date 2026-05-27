@@ -756,6 +756,28 @@ async function loadReviewStatus(bookId) {
   } catch(e) { _reviewStatusLoaded[bookId] = false; console.error('[복습 상태 로드 실패]', e); }
 }
 
+// 페이지 안 단어 삭제
+async function deletePageWord(bookId, pageNum, wordIdx) {
+  const book = findBook(bookId);
+  const page = book ? findPage(book, pageNum) : null;
+  if (!page) return;
+  const word = page.words[wordIdx];
+  if (!word) return;
+  const ko = userNativeLang === 'ko';
+  if (!confirm(ko ? `"${word.en}" 단어를 삭제할까요?` : `Delete "${word.en}"?`)) return;
+  try {
+    if (word.id) {
+      await fetch(SB_URL + `/rest/v1/voca_words?id=eq.${word.id}`, {
+        method: 'DELETE',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+      });
+    }
+    page.words.splice(wordIdx, 1);
+    render();
+    toast(ko ? '삭제됐어요' : 'Deleted');
+  } catch(e) { toast(ko ? '삭제 실패' : 'Delete failed'); }
+}
+
 // 문의하기 — 메일 앱 열기
 function contactSupport() {
   location.href = 'mailto:imamerica2414@gmail.com';
@@ -2478,10 +2500,11 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map(w=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;margin-left:auto;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
         </div>
-        <div class="btn-fixed">
-          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${t('sendToCard')}</button>
+        <div class="btn-fixed" style="display:flex;gap:8px;">
+          <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${t('sendToCard')}</button>
+          <button class="btn btn-outline" style="flex:0 0 auto;padding-left:16px;padding-right:16px;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
         </div>
       </div>`;
   }
@@ -3413,7 +3436,7 @@ function renderManualAdd(root, route) {
       <div class="h-display h-xl" style="margin-top:14px;">${t('manualTitle')}</div>
       <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">${t('manualDesc')}</div>
       <div class="label-xs">${t('manualPageLabel')}</div>
-      <input type="text" id="manual-pg" placeholder="${t('pageNumPh')}" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;margin-bottom:16px;">
+      <input type="text" id="manual-pg" placeholder="${t('pageNumPh')}" value="${route.pageNum||''}" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;margin-bottom:16px;">
       <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
         <div class="label-xs" style="margin-bottom:8px;">${t('wordInputLabel')} <span style="color:var(--ink-40);font-weight:400;">(Enter로 계속 추가)</span></div>
         <div style="display:flex;gap:8px;">
