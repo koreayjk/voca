@@ -2547,7 +2547,7 @@ function render() {
           </div>
         </div>
         <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
-          ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">⚙️ 관리</button>`:''}
+          ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
@@ -2736,7 +2736,7 @@ function render() {
           <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >${t('quizModeBtn')}${canStart?` — ${total}개`:''}</button>
         </div>`;
     };
-    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">게임</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('whichBook')}</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
+    root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;"><div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${userNativeLang==='ko'?'암기 카드':'Flashcards'}</div></div><div class="muted" style="font-size:12px;margin-top:2px;">${t('whichBook')}</div><div class="scr-scroll" id="study-setup-inner"></div></div>` + dock;
     ssRender();
   }
 
@@ -2898,7 +2898,7 @@ function showActionSheet(items) {
   document.getElementById('action-sheet').classList.add('open');
 }
 function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
-function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:'책 삭제',danger:true,action:`deleteBook('${bookId}')`}]); }
+function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:userNativeLang==='ko'?'책 삭제':'Delete book',danger:true,action:`deleteBook('${bookId}')`}]); }
 function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
