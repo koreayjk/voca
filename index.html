@@ -2320,7 +2320,7 @@ function buildScanPrompt(useExclude=true) {
   const levelGuide = isEnglish
     ? `CEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘 (가장 먼저 찾기)\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\nC1~C2 단어를 먼저 찾고, B2, B1 순서로 채워주세요.`
     : `각 단어의 난이도를 5단계로 분류하세요. 사용 빈도가 낮고 어려울수록 높은 등급입니다:\n- C2: 매우 어려움 (전문·희귀 어휘)\n- C1: 어려움 (고급 어휘, 가장 먼저 찾기)\n- B2: 중상급\n- B1: 중급\n- A2: 초급 (기초 어휘)\n어려운 단어(C1~C2)를 먼저 찾고, B2, B1 순서로 채워주세요.`;
-  return `이 ${target.name} 책 페이지에서 어려운 단어를 우선으로 최대 20개 추출해주세요.\n${levelGuide}${exclude}\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
+  return `이 ${target.name} 책 페이지에서 어려운 ${target.name} 단어를 우선으로 최대 20개 추출해주세요.\n${levelGuide}${exclude}\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n중요: "en" 필드에는 ${target.name} 단어를 넣고, "base"와 "ctx" 필드에는 ${native.name}로 된 뜻을 넣어주세요. "en"이라는 이름이지만 실제로는 ${target.name} 단어가 들어갑니다.\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"${target.name} 단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
 }
 
 // ── 이미 등록된 단어 목록 추출 ──
