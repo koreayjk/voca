@@ -161,8 +161,28 @@
   <!-- ── 공지 발송 ── -->
   <div class="panel" id="panel-notice">
     <div class="form-card">
-      <h3>공지사항 발송</h3>
-      <p class="desc">전체 회원에게 보낼 공지 내용을 작성하세요. 아래 "회원 이메일 복사"로 전체 이메일 목록을 복사한 뒤, Gmail 등에서 숨은참조(BCC)로 붙여넣어 발송할 수 있어요.</p>
+      <h3>📱 앱 공지함에 올리기</h3>
+      <p class="desc">여기에 작성하면 앱 안 🔔 공지함에 바로 올라가요. 모든 회원이 앱에서 확인할 수 있고, 새 공지엔 빨간 알림이 떠요.</p>
+      <label>카테고리</label>
+      <select id="nx-category" style="width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:10px;font-size:14px;margin-bottom:6px;">
+        <option value="update">✨ 업데이트 (새 기능·개선)</option>
+        <option value="notice">📢 공지 (중요 안내)</option>
+        <option value="bugfix">🐛 버그 수정</option>
+        <option value="event">🎉 이벤트</option>
+        <option value="tip">💡 꿀팁 (활용법)</option>
+      </select>
+      <label>제목</label>
+      <input type="text" id="nx-title" placeholder="예: IM VOCA 새 단장 🎉">
+      <label>내용</label>
+      <textarea id="nx-body" placeholder="공지 내용을 입력하세요. 줄바꿈도 그대로 보여요."></textarea>
+      <button onclick="publishNotice()">📤 공지 올리기</button>
+      <div class="ok-msg" id="nx-msg"></div>
+      <div id="nx-list" style="margin-top:20px;"></div>
+    </div>
+
+    <div class="form-card">
+      <h3>📧 이메일로도 보내기 (선택)</h3>
+      <p class="desc">앱 공지함과 별개로, 이메일로도 알리고 싶을 때만 쓰세요. "회원 이메일 복사" 후 Gmail에서 숨은참조(BCC)로 붙여넣어 발송하세요.</p>
       <label>제목</label>
       <input type="text" id="notice-subject" placeholder="예: IM VOCA 새 기능 안내">
       <label>내용</label>
@@ -264,6 +284,7 @@ function showTab(name, btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('panel-'+name).classList.add('on');
+  if(name==='notice') loadNoticeList();
 }
 
 // ── DATA LOAD ──
@@ -364,6 +385,60 @@ async function setPlan(id, toPremium){
 }
 
 // ── 공지 발송 ──
+// ── 앱 공지함 (voca_notices) ──
+async function publishNotice(){
+  const category = document.getElementById('nx-category').value;
+  const title = document.getElementById('nx-title').value.trim();
+  const body = document.getElementById('nx-body').value.trim();
+  const msg = document.getElementById('nx-msg');
+  if(!title || !body){ msg.style.color='#c0392b'; msg.textContent='제목과 내용을 모두 입력해주세요.'; return; }
+  try{
+    const res = await fetch(SB_URL+'/rest/v1/voca_notices',{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Content-Type':'application/json','Prefer':'return=representation'},
+      body:JSON.stringify({category,title,body,published:true})
+    });
+    if(!res.ok){ const t=await res.text(); msg.style.color='#c0392b'; msg.textContent='실패: '+t; return; }
+    msg.style.color='#27ae60'; msg.textContent='✅ 공지가 올라갔어요! 앱에서 확인할 수 있어요.';
+    document.getElementById('nx-title').value='';
+    document.getElementById('nx-body').value='';
+    loadNoticeList();
+  }catch(e){ msg.style.color='#c0392b'; msg.textContent='오류: '+e.message; }
+}
+
+async function loadNoticeList(){
+  const el = document.getElementById('nx-list');
+  if(!el) return;
+  try{
+    const res = await fetch(SB_URL+'/rest/v1/voca_notices?order=created_at.desc&limit=30',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
+    });
+    const data = await res.json();
+    if(!Array.isArray(data) || data.length===0){ el.innerHTML='<p class="desc" style="margin-top:8px;">아직 올린 공지가 없어요.</p>'; return; }
+    const cat={notice:'📢 공지',update:'✨ 업데이트',bugfix:'🐛 버그수정',event:'🎉 이벤트',tip:'💡 꿀팁'};
+    el.innerHTML = '<label style="margin-top:8px;display:block;">올린 공지 목록</label>' + data.map(n=>{
+      const d=new Date(n.created_at).toLocaleDateString('ko-KR',{month:'short',day:'numeric'});
+      return `<div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #eee;font-size:13px;">
+        <span style="color:#888;">${cat[n.category]||n.category}</span>
+        <span style="flex:1;font-weight:600;">${n.title}</span>
+        <span style="color:#aaa;font-size:11px;">${d}</span>
+        <button class="sec" style="padding:4px 10px;font-size:12px;" onclick="deleteNotice('${n.id}')">삭제</button>
+      </div>`;
+    }).join('');
+  }catch(e){ el.innerHTML='<p class="desc">목록 로드 실패</p>'; }
+}
+
+async function deleteNotice(id){
+  if(!confirm('이 공지를 삭제할까요?')) return;
+  try{
+    await fetch(SB_URL+`/rest/v1/voca_notices?id=eq.${id}`,{
+      method:'DELETE',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
+    });
+    loadNoticeList();
+  }catch(e){ alert('삭제 실패: '+e.message); }
+}
+
 function copyEmails(){
   const emails = _allMembers.filter(m=>m.email).map(m=>m.email);
   if(emails.length===0){ toast('회원 이메일이 없어요'); return; }
