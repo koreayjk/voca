@@ -327,7 +327,7 @@ async function loadAll(){
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,created_at&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allMembers = await res.json();
@@ -425,14 +425,26 @@ async function setPlan(id, toPremium){
     } else {
       body = JSON.stringify({plan:'free', premium_until:null});
     }
-    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+    await refreshToken(); // 토큰 갱신 (만료 방지)
+    const res = await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
       method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
       body
     });
+    if(!res.ok){
+      const t = await res.text();
+      console.error('[플랜 변경 실패]', res.status, t);
+      toast('변경 실패: ' + (res.status===403?'권한 없음(다시 로그인)':t.slice(0,60)));
+      return;
+    }
+    const updated = await res.json();
+    if(!updated || updated.length===0){
+      toast('변경 실패: 회원을 못 찾거나 권한 없음');
+      return;
+    }
     toast(toPremium?'✨ Premium으로 변경됐어요':'Free로 변경됐어요');
     await loadMembers();
-  }catch(e){ toast('변경 실패'); }
+  }catch(e){ console.error('[플랜 변경 오류]', e); toast('변경 실패: '+e.message); }
 }
 
 // ── 공지 발송 ──
@@ -610,7 +622,10 @@ function showDemoModal(link){
 function planPill(m){
   if(m.email===ADMIN_EMAIL) return '<span class="pill admin">관리자</span>';
   if(m.plan==='premium'){
-    if(m.stripe_customer_id) return '<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#27ae60;margin-top:2px;">💳 결제</div>';
+    if(m.stripe_customer_id){
+      const interval = m.billing_interval==='year' ? '연간' : (m.billing_interval==='month' ? '월간' : '');
+      return `<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#27ae60;margin-top:2px;">💳 결제${interval?' · '+interval:''}</div>`;
+    }
     if(m.premium_until) return `<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#888;margin-top:2px;">~${fmtDate(m.premium_until)}</div>`;
     return '<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#888;margin-top:2px;">무기한</div>';
   }
