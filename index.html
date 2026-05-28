@@ -362,6 +362,10 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .celebrate-coin { font-size: 44px; line-height: 1; animation: coinPop 0.7s cubic-bezier(.34,1.56,.64,1) both, coinFloat 2.4s ease-in-out 0.7s infinite; }
 .celebrate-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #8a6d1a; margin-top: 8px; }
 .celebrate-score { font-family: var(--font-display); font-size: 42px; font-weight: 800; color: #c79a2e; line-height: 1.1; margin-top: 4px; letter-spacing: -0.02em; }
+.celebrate-card--master { background: linear-gradient(160deg, #fff4d6 0%, #ffe9a8 55%, #ffd97a 100%); border: 2px solid #d4af37; box-shadow: 0 10px 36px rgba(180,140,40,0.35); }
+.celebrate-bonus { display: inline-block; margin-top: 8px; background: #d4af37; color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 99px; box-shadow: 0 2px 8px rgba(180,140,40,0.4); animation: bonusPulse 1.5s ease-in-out infinite; }
+.celebrate-hint { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(180,140,40,0.35); font-size: 11px; font-weight: 600; color: #b8860b; }
+@keyframes bonusPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 .celebrate-sub { font-size: 12px; color: #a8862f; margin-top: 4px; }
 @keyframes coinPop { 0% { transform: scale(0) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
 @keyframes coinFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
@@ -859,7 +863,7 @@ function showNotices() {
             <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s;${expanded?'transform:rotate(180deg);':''}">▾</span>
           </div>
           <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${n.title}</div>
-          <div class="notice-body" style="font-size:12px;color:var(--ink-60);line-height:1.7;white-space:pre-wrap;overflow:hidden;${expanded?'margin-top:8px;max-height:none;':'max-height:0;'}">${safeBody}</div>
+          <div class="notice-body" style="font-size:12px;color:var(--ink-60);line-height:1.7;white-space:pre-wrap;overflow:hidden;${expanded?'margin-top:8px;max-height:none;':'max-height:0;'}">${n.image_url?`<img src="${n.image_url}" style="width:100%;border-radius:10px;margin-bottom:8px;display:block;">`:''}${safeBody}</div>
         </div>`;
       }).join('');
   ov.innerHTML = `
@@ -2760,13 +2764,23 @@ function render() {
       <div class="scr">
         <div class="topnav"><span></span><span class="topnav__title">${book?.title||''}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
         <div class="done">
-          ${(route.isReview && window._lastEarnedScore>0)?`
+          ${(route.isReview && window._lastEarnedScore>0)?(
+            window._lastReviewFinished ? `
+          <div class="celebrate-card celebrate-card--master">
+            <div class="celebrate-coin">🏆</div>
+            <div class="celebrate-title" style="color:#b8860b;">${userNativeLang==='ko'?'완벽하게 마스터했어요! 🎉':'Fully Mastered! 🎉'}</div>
+            <div class="celebrate-score" style="color:#d4af37;">+${window._lastEarnedScore}<span style="font-size:20px;font-weight:600;">${userNativeLang==='ko'?'점':'pts'}</span></div>
+            <div class="celebrate-bonus">${userNativeLang==='ko'?`🔥 완주 보너스 2배! (${window._lastBaseScore} × 2)`:`🔥 Completion bonus ×2! (${window._lastBaseScore} × 2)`}</div>
+            <div class="celebrate-sub" style="margin-top:6px;">${userNativeLang==='ko'?'모든 복습 단계를 끝까지 완주했어요!':'You completed every review stage!'}</div>
+          </div>` : `
           <div class="celebrate-card">
             <div class="celebrate-coin">🪙</div>
             <div class="celebrate-title">${userNativeLang==='ko'?'축하합니다! 🎉':'Congratulations! 🎉'}</div>
             <div class="celebrate-score">+${window._lastEarnedScore}<span style="font-size:20px;font-weight:600;">${userNativeLang==='ko'?'점':'pts'}</span></div>
             <div class="celebrate-sub">${userNativeLang==='ko'?'복습 점수를 획득했어요':'Review points earned'}</div>
-          </div>`:''}
+            <div class="celebrate-hint">${userNativeLang==='ko'?'🔥 마지막 단계까지 완주하면 점수 2배!':'🔥 Finish all stages for double points!'}</div>
+          </div>`
+          ):''}
           <div class="label-xs">${t('memoryDone')}</div>
           <div class="done__n">${route.total}</div>
           <div class="done__label">${t('wordsMemorized')}</div>
@@ -3349,6 +3363,7 @@ function closeReviewBanner() {}
 async function startReviewSession() {
   closeReviewBanner();
   window._lastEarnedScore = 0;
+  window._lastReviewFinished = false;
   const due = window._dueReviews;
   if (!due?.length) return;
   const first = due[0];
@@ -3422,7 +3437,11 @@ async function updateReviewStep(review) {
     // 복습 단계 하나 완료할 때마다, 그 페이지 단어들의 난이도 점수를 합산해 반영
     const rbook = findBook(review.book_id);
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
-    const pageScore = rpage ? calcWordScore(rpage.words) : 0;
+    const baseScore = rpage ? calcWordScore(rpage.words) : 0;
+    const isFinalStep = (!step || !step.next); // 마지막 단계(60일차) 완주
+    const pageScore = isFinalStep ? baseScore * 2 : baseScore; // 완주 시 2배 보너스
+    window._lastReviewFinished = isFinalStep; // 축하 화면 분기용
+    window._lastBaseScore = baseScore; // 기본 점수 (보너스 표시용)
     if (pageScore > 0) { addReviewScore(pageScore); window._lastEarnedScore = pageScore; }
     // 이 책의 복습 상태가 바뀌었으니 캐시 리셋 (다음에 책 열면 새로 불러옴)
     if (review.book_id) { _reviewStatusLoaded[review.book_id] = false; }
