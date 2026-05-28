@@ -357,11 +357,11 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .ox-o { background: var(--accent); color: #fff; }
 .ox-btn:disabled { opacity: 0.3; cursor: default; }
 .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 0 8px; }
-.done__n { font-family: var(--font-display); font-size: 64px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
-.celebrate-card { width: 100%; background: linear-gradient(160deg, #fff8e8 0%, #fdf0d0 100%); border: 1.5px solid #e8c97a; border-radius: 20px; padding: 24px 20px; margin-bottom: 22px; text-align: center; box-shadow: 0 8px 28px rgba(180,140,40,0.18); }
-.celebrate-coin { font-size: 56px; line-height: 1; animation: coinPop 0.7s cubic-bezier(.34,1.56,.64,1) both, coinFloat 2.4s ease-in-out 0.7s infinite; }
-.celebrate-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #8a6d1a; margin-top: 10px; }
-.celebrate-score { font-family: var(--font-display); font-size: 52px; font-weight: 800; color: #c79a2e; line-height: 1.1; margin-top: 6px; letter-spacing: -0.02em; }
+.done__n { font-family: var(--font-display); font-size: 44px; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+.celebrate-card { width: 100%; background: linear-gradient(160deg, #fff8e8 0%, #fdf0d0 100%); border: 1.5px solid #e8c97a; border-radius: 18px; padding: 18px 20px; margin-bottom: 16px; text-align: center; box-shadow: 0 8px 28px rgba(180,140,40,0.18); }
+.celebrate-coin { font-size: 44px; line-height: 1; animation: coinPop 0.7s cubic-bezier(.34,1.56,.64,1) both, coinFloat 2.4s ease-in-out 0.7s infinite; }
+.celebrate-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #8a6d1a; margin-top: 8px; }
+.celebrate-score { font-family: var(--font-display); font-size: 42px; font-weight: 800; color: #c79a2e; line-height: 1.1; margin-top: 4px; letter-spacing: -0.02em; }
 .celebrate-sub { font-size: 12px; color: #a8862f; margin-top: 4px; }
 @keyframes coinPop { 0% { transform: scale(0) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
 @keyframes coinFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
@@ -3070,9 +3070,17 @@ async function rejectUser(userId) {
 function speak(word) {
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(word);
-  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1;
+  // 학습 언어에 맞는 발음 언어 코드
+  const ttsMap = { en:'en-US', ko:'ko-KR', es:'es-ES', zh:'zh-CN', ja:'ja-JP', fr:'fr-FR', de:'de-DE', pt:'pt-BR', vi:'vi-VN', id:'id-ID' };
+  const tcode = (typeof getTargetLang === 'function' && getTargetLang()?.code) || 'en';
+  const ttsLang = ttsMap[tcode] || 'en-US';
+  u.lang = ttsLang; u.rate = 0.85; u.pitch = 1;
   const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google US English') || v.name.includes('Aaron') || v.name.includes('Alex') || (v.lang === 'en-US' && v.localService)) || voices.find(v => v.lang === 'en-US');
+  // 해당 언어 음성 우선, 없으면 영어
+  const langPrefix = ttsLang.split('-')[0];
+  const preferred = voices.find(v => v.lang === ttsLang && v.localService)
+    || voices.find(v => v.lang === ttsLang)
+    || voices.find(v => v.lang && v.lang.startsWith(langPrefix));
   if (preferred) u.voice = preferred;
   window.speechSynthesis.speak(u);
 }
@@ -3415,7 +3423,7 @@ async function updateReviewStep(review) {
     const rbook = findBook(review.book_id);
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
     const pageScore = rpage ? calcWordScore(rpage.words) : 0;
-    if (pageScore > 0) { addReviewScore(pageScore); window._lastEarnedScore = (window._lastEarnedScore||0) + pageScore; }
+    if (pageScore > 0) { addReviewScore(pageScore); window._lastEarnedScore = pageScore; }
     // 이 책의 복습 상태가 바뀌었으니 캐시 리셋 (다음에 책 열면 새로 불러옴)
     if (review.book_id) { _reviewStatusLoaded[review.book_id] = false; }
 
