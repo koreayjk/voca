@@ -1390,7 +1390,7 @@ async function sbSignIn(email, pw) {
   const btn = document.querySelector('.btn-solid');
   const emailEl = document.getElementById('li-em');
   const pwEl = document.getElementById('li-pw');
-  if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'로그인 중...':'Logging in...'}</span>'; }
+  if (btn) { btn.disabled = true; btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'로그인 중...':'Logging in...'}</span>`; }
   if (emailEl) emailEl.disabled = true;
   if (pwEl) pwEl.disabled = true;
   try {
@@ -1404,7 +1404,7 @@ async function sbSignIn(email, pw) {
     }
     _authToken = data.access_token; currentUser = data.user;
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
-    if (btn) btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'불러오는 중...':'Loading...'}</span>';
+    if (btn) btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'불러오는 중...':'Loading...'}</span>`;
     await loadApiKey(); await loadUserName();
     if (currentUser.email !== 'koreayjk@gmail.com') {
       try {
