@@ -281,6 +281,26 @@ function logout(){
   }catch(e){}
 })();
 
+// 토큰 갱신 (만료 방지) - refresh_token으로 새 access_token 발급
+async function refreshToken(){
+  try{
+    const s = JSON.parse(localStorage.getItem('imvoca.adminSession')||'{}');
+    if(!s.refresh_token) return false;
+    const res = await fetch(SB_URL+'/auth/v1/token?grant_type=refresh_token',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY},
+      body:JSON.stringify({refresh_token:s.refresh_token})
+    });
+    const data = await res.json();
+    if(data.access_token){
+      _authToken = data.access_token;
+      localStorage.setItem('imvoca.adminSession', JSON.stringify(data));
+      return true;
+    }
+  }catch(e){ console.error('[토큰 갱신 실패]', e); }
+  return false;
+}
+
 // ── TABS ──
 function showTab(name, btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
@@ -405,6 +425,8 @@ async function publishNotice(){
   const body = document.getElementById('nx-body').value.trim();
   const msg = document.getElementById('nx-msg');
   if(!title || !body){ msg.style.color='#c0392b'; msg.textContent='제목과 내용을 모두 입력해주세요.'; return; }
+  // 토큰 갱신 (만료된 토큰으로 업로드 실패 방지)
+  await refreshToken();
   try{
     // 이미지가 선택됐으면 먼저 Storage에 업로드
     let imageUrl = '';
