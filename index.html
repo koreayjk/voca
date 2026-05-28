@@ -413,18 +413,18 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <div class="overlay" id="modal-add">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <h3>새 책 추가</h3>
+    <h3 data-i18n="새 책 추가">새 책 추가</h3>
     <div style="display:flex;gap:8px;margin-bottom:10px">
-      <input type="text" id="nb-title" placeholder="책 제목 (영어)" style="flex:1;margin-bottom:0">
-      <button onclick="searchBook()" style="padding:0 14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;white-space:nowrap;">검색</button>
+      <input type="text" id="nb-title" placeholder="책 제목 (영어)" data-i18n-ph="책 제목 (영어)" style="flex:1;margin-bottom:0">
+      <button onclick="searchBook()" data-i18n="검색" style="padding:0 14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;white-space:nowrap;">검색</button>
     </div>
     <div id="book-search-list" style="max-height:220px;overflow-y:auto;margin-bottom:10px;"></div>
     <input type="hidden" id="nb-author">
     <input type="hidden" id="nb-desc">
     <input type="hidden" id="nb-cover">
-    <button class="btn btn-solid" onclick="addBook()" style="margin-top:4px;">추가하기</button>
+    <button class="btn btn-solid" onclick="addBook()" data-i18n="추가하기" style="margin-top:4px;">추가하기</button>
     <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-add')">취소</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-add')" data-i18n="취소">취소</button>
   </div>
 </div>
 
@@ -432,12 +432,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <div class="overlay" id="modal-api">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <h3>Gemini AI 연동</h3>
-    <p class="sheet-note">구글 Gemini API 키를 입력하면 사진에서 단어를 <strong>자동 추출</strong>해요.<br><br>발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key</p>
+    <h3 data-i18n="Gemini AI 연동">Gemini AI 연동</h3>
+    <p class="sheet-note" data-i18n-html="api-note">구글 Gemini API 키를 입력하면 사진에서 단어를 <strong>자동 추출</strong>해요.<br><br>발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key</p>
     <input type="password" id="api-in" placeholder="AIza...">
-    <button class="btn btn-solid" onclick="saveApi()" style="margin-top:4px;">저장</button>
+    <button class="btn btn-solid" onclick="saveApi()" data-i18n="저장" style="margin-top:4px;">저장</button>
     <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-api')">닫기</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-api')" data-i18n="닫기">닫기</button>
   </div>
 </div>
 
@@ -454,14 +454,14 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <div class="overlay" id="modal-edit">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <h3>책 수정</h3>
-    <input type="text" id="edit-title" placeholder="책 제목">
-    <input type="text" id="edit-author" placeholder="저자">
-    <input type="text" id="edit-desc" placeholder="책 소개">
+    <h3 data-i18n="책 수정">책 수정</h3>
+    <input type="text" id="edit-title" placeholder="책 제목" data-i18n-ph="책 제목">
+    <input type="text" id="edit-author" placeholder="저자" data-i18n-ph="저자">
+    <input type="text" id="edit-desc" placeholder="책 소개" data-i18n-ph="책 소개">
     <input type="hidden" id="edit-book-id">
-    <button class="btn btn-solid" onclick="saveEditBook()" style="margin-top:4px;">저장</button>
+    <button class="btn btn-solid" onclick="saveEditBook()" data-i18n="저장" style="margin-top:4px;">저장</button>
     <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-edit')">취소</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-edit')" data-i18n="취소">취소</button>
   </div>
 </div>
 
@@ -469,10 +469,10 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <div class="overlay" id="modal-admin">
   <div class="sheet" style="max-height:80vh;overflow-y:auto;">
     <div class="sheet-handle"></div>
-    <h3>회원 관리</h3>
+    <h3 data-i18n="회원 관리">회원 관리</h3>
     <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">Loading...</div></div>
     <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-admin')">닫기</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-admin')" data-i18n="닫기">닫기</button>
   </div>
 </div>
 
@@ -546,7 +546,7 @@ let userNativeLang = localStorage.getItem('imvoca.nativeLang')||'ko';
 let userTargetLang = localStorage.getItem('imvoca.targetLang')||'en';
 function getNativeLang(){return LANG_OPTIONS.find(l=>l.code===userNativeLang)||LANG_OPTIONS[0];}
 function getTargetLang(){return TARGET_LANG_OPTIONS.find(l=>l.code===userTargetLang)||TARGET_LANG_OPTIONS[0];}
-function saveLangSettings(native,target){userNativeLang=native;userTargetLang=target;localStorage.setItem('imvoca.nativeLang',native);localStorage.setItem('imvoca.targetLang',target);}
+function saveLangSettings(native,target){userNativeLang=native;userTargetLang=target;localStorage.setItem('imvoca.nativeLang',native);localStorage.setItem('imvoca.targetLang',target);if(typeof applyStaticI18n==='function')applyStaticI18n();}
 
 const UI_TEXT = {
   ko:{
@@ -973,20 +973,21 @@ function checkRecoveryToken() {
 }
 
 function showNewPasswordForm() {
+  const _ko = (localStorage.getItem('imvoca.nativeLang')||'ko')==='ko';
   document.getElementById('root').innerHTML = `
     <div class="scr" style="justify-content:center;">
       <div style="text-align:center;margin-bottom:28px;">
         <img src="https://imvoca.app/2.png" style="width:100px;height:100px;object-fit:contain;">
       </div>
-      <div style="font-size:20px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">🔑 새 비밀번호 설정</div>
-      <div style="font-size:13px;color:var(--ink-60);margin-bottom:24px;">새로운 비밀번호를 입력해주세요.</div>
-      <input id="new-pw" type="password" placeholder="새 비밀번호 (6자 이상)"
+      <div style="font-size:20px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">🔑 ${_ko?'새 비밀번호 설정':'Set New Password'}</div>
+      <div style="font-size:13px;color:var(--ink-60);margin-bottom:24px;">${_ko?'새로운 비밀번호를 입력해주세요.':'Please enter your new password.'}</div>
+      <input id="new-pw" type="password" placeholder="${_ko?'새 비밀번호 (6자 이상)':'New password (6+ characters)'}"
         style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px;">
-      <input id="new-pw2" type="password" placeholder="비밀번호 확인"
+      <input id="new-pw2" type="password" placeholder="${_ko?'비밀번호 확인':'Confirm password'}"
         style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:16px;">
       <button onclick="updatePassword()"
         style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;">
-        비밀번호 변경하기
+        ${_ko?'비밀번호 변경하기':'Change Password'}
       </button>
     </div>`;
 }
@@ -1819,6 +1820,36 @@ const _toastDict = {
   '🔄 전체 스캔 카운트 초기화됐어요!':'🔄 All scan counts reset!',
   '책 제목을 입력해주세요':'Please enter the book title'
 };
+// 정적 HTML 요소 다국어 적용 (data-i18n 속성)
+const _staticI18n = {
+  '새 책 추가':'Add New Book',
+  '검색':'Search',
+  '추가하기':'Add',
+  '취소':'Cancel',
+  '저장':'Save',
+  '닫기':'Close',
+  '책 수정':'Edit Book',
+  '회원 관리':'Members',
+  'Gemini AI 연동':'Connect Gemini AI',
+  '책 제목 (영어)':'Book title (English)',
+  '책 제목':'Book title',
+  '저자':'Author',
+  '책 소개':'Description'
+};
+function applyStaticI18n() {
+  if (typeof userNativeLang === 'undefined' || userNativeLang === 'ko') return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (_staticI18n[k]) el.textContent = _staticI18n[k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    if (_staticI18n[k]) el.placeholder = _staticI18n[k];
+  });
+  const apiNote = document.querySelector('[data-i18n-html="api-note"]');
+  if (apiNote) apiNote.innerHTML = 'Enter your Google Gemini API key to <strong>auto-extract</strong> words from photos.<br><br>Get one: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key';
+}
+
 function toast(m) {
   if (typeof userNativeLang !== 'undefined' && userNativeLang !== 'ko' && _toastDict[m]) m = _toastDict[m];
   const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);
@@ -3752,6 +3783,8 @@ goTab = function(t) {
 
 
 sbInit();
+// 정적 모달 다국어 적용 (언어 로드 후)
+setTimeout(applyStaticI18n, 300);
 </script>
 </body>
 </html>
