@@ -64,8 +64,16 @@
   .search{padding:8px 14px;border:1px solid var(--ink-12);border-radius:99px;font-family:inherit;font-size:13px;outline:none;min-width:200px;}
   .search:focus{border-color:var(--accent);}
   table{width:100%;border-collapse:collapse;}
+  #member-table, #review-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #member-table table, #review-table table { min-width: 480px; }
   th{text-align:left;font-size:11px;font-weight:700;color:var(--ink-45);text-transform:uppercase;letter-spacing:0.05em;padding:10px 14px;border-bottom:1px solid var(--ink-12);}
   td{padding:13px 14px;font-size:13px;border-bottom:1px solid var(--ink-06);vertical-align:middle;}
+  @media (max-width: 600px) {
+    th { padding: 9px 8px; font-size: 10px; }
+    td { padding: 11px 8px; font-size: 12px; }
+    .scroll-hint { display: block; }
+  }
+  .scroll-hint { display: none; font-size: 11px; color: var(--ink-45); text-align: center; margin-bottom: 8px; }
   tr:last-child td{border-bottom:none;}
   tr:hover td{background:var(--accent-soft);}
   .pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
@@ -154,6 +162,7 @@
         <h3>전체 회원 <span id="member-count" style="color:var(--ink-45);font-weight:400;"></span></h3>
         <input class="search" id="member-search" placeholder="이름·이메일 검색" oninput="renderMembers()">
       </div>
+      <div class="scroll-hint">← 좌우로 밀어서 전체 보기 →</div>
       <div id="member-table"><div class="loading">불러오는 중...</div></div>
     </div>
   </div>
