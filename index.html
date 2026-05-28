@@ -298,7 +298,9 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .book-hero__title { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.04em; color: var(--ink-100); line-height: 1.1; }
 .book-hero__author { font-size: 12px; color: var(--ink-60); margin-top: 5px; }
 .book-hero__badge { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-40); margin-top: 10px; }
-.book-hero__desc { font-size: 11px; color: var(--ink-60); line-height: 1.55; margin-top: 4px; }
+.book-hero__desc { font-size: 11px; color: var(--ink-60); line-height: 1.55; margin-top: 4px; max-height: 170px; overflow-y: auto; padding-right: 6px; }
+.book-hero__desc::-webkit-scrollbar { width: 4px; }
+.book-hero__desc::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 4px; }
 .rule { margin-top: 16px; border-top: 1px solid var(--ink-07); }
 .sect-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
 .sect-row__name { font-size: 13px; font-weight: 600; color: var(--ink-100); }
