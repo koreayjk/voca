@@ -313,6 +313,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .scanning { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
 .ring { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--ink-07); border-top-color: var(--ink-100); animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes imvocaPulse { 0%,100% { transform: scale(1); opacity: 0.85; } 50% { transform: scale(1.08); opacity: 1; } }
 .chip-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .chip { font-size: 11px; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ink-12); color: var(--ink-100); background: var(--bg-card); }
 .word-item { padding: 10px 0; border-bottom: 1px solid var(--ink-07); }
@@ -1201,7 +1202,7 @@ async function sbInit() {
   // 저장된 세션이 있으면 로그인 화면 대신 로딩 표시 (깜빡임 방지)
   const hasSavedSession = !!localStorage.getItem('imvoca.session');
   if (hasSavedSession) {
-    document.getElementById('root').innerHTML = '<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg-page);"><div style="font-family:var(--font-display);font-size:24px;color:var(--accent);">IM VOCA</div></div>';
+    document.getElementById('root').innerHTML = '<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-page);gap:18px;"><img src="https://imvoca.app/2.png" style="width:96px;height:96px;object-fit:contain;border-radius:22px;box-shadow:0 6px 24px rgba(28,53,83,0.15);animation:imvocaPulse 1.6s ease-in-out infinite;"><div style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--accent);letter-spacing:0.02em;">IM VOCA</div></div>';
   } else {
     renderLogin();
   }
