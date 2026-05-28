@@ -175,6 +175,9 @@
       <input type="text" id="nx-title" placeholder="예: IM VOCA 새 단장 🎉">
       <label>내용</label>
       <textarea id="nx-body" placeholder="공지 내용을 입력하세요. 줄바꿈도 그대로 보여요."></textarea>
+      <label>이미지 (선택)</label>
+      <input type="file" id="nx-image" accept="image/*" style="margin-bottom:6px;font-size:13px;">
+      <div id="nx-image-preview" style="margin-bottom:10px;"></div>
       <button onclick="publishNotice()">📤 공지 올리기</button>
       <div class="ok-msg" id="nx-msg"></div>
       <div id="nx-list" style="margin-top:20px;"></div>
@@ -386,6 +389,16 @@ async function setPlan(id, toPremium){
 
 // ── 공지 발송 ──
 // ── 앱 공지함 (voca_notices) ──
+// 이미지 선택 시 미리보기
+document.addEventListener('change', function(e){
+  if(e.target && e.target.id==='nx-image'){
+    const prev=document.getElementById('nx-image-preview');
+    const f=e.target.files&&e.target.files[0];
+    if(f){ const url=URL.createObjectURL(f); prev.innerHTML=`<img src="${url}" style="max-width:200px;max-height:150px;border-radius:8px;border:1px solid #ddd;">`; }
+    else prev.innerHTML='';
+  }
+});
+
 async function publishNotice(){
   const category = document.getElementById('nx-category').value;
   const title = document.getElementById('nx-title').value.trim();
@@ -393,15 +406,33 @@ async function publishNotice(){
   const msg = document.getElementById('nx-msg');
   if(!title || !body){ msg.style.color='#c0392b'; msg.textContent='제목과 내용을 모두 입력해주세요.'; return; }
   try{
+    // 이미지가 선택됐으면 먼저 Storage에 업로드
+    let imageUrl = '';
+    const fileInput = document.getElementById('nx-image');
+    const file = fileInput && fileInput.files && fileInput.files[0];
+    if(file){
+      msg.style.color='#555'; msg.textContent='이미지 업로드 중...';
+      const ext = (file.name.split('.').pop()||'png').toLowerCase();
+      const path = `notice_${Date.now()}.${ext}`;
+      const upRes = await fetch(SB_URL+`/storage/v1/object/notice-images/${path}`,{
+        method:'POST',
+        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Content-Type':file.type||'image/png','x-upsert':'true'},
+        body:file
+      });
+      if(!upRes.ok){ const t=await upRes.text(); msg.style.color='#c0392b'; msg.textContent='이미지 업로드 실패: '+t; return; }
+      imageUrl = `${SB_URL}/storage/v1/object/public/notice-images/${path}`;
+    }
     const res = await fetch(SB_URL+'/rest/v1/voca_notices',{
       method:'POST',
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Content-Type':'application/json','Prefer':'return=representation'},
-      body:JSON.stringify({category,title,body,published:true})
+      body:JSON.stringify({category,title,body,image_url:imageUrl||null,published:true})
     });
     if(!res.ok){ const t=await res.text(); msg.style.color='#c0392b'; msg.textContent='실패: '+t; return; }
     msg.style.color='#27ae60'; msg.textContent='✅ 공지가 올라갔어요! 앱에서 확인할 수 있어요.';
     document.getElementById('nx-title').value='';
     document.getElementById('nx-body').value='';
+    if(fileInput) fileInput.value='';
+    document.getElementById('nx-image-preview').innerHTML='';
     loadNoticeList();
   }catch(e){ msg.style.color='#c0392b'; msg.textContent='오류: '+e.message; }
 }
