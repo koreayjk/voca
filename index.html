@@ -415,7 +415,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
     <div class="sheet-handle"></div>
     <h3 data-i18n="새 책 추가">새 책 추가</h3>
     <div style="display:flex;gap:8px;margin-bottom:10px">
-      <input type="text" id="nb-title" placeholder="책 제목 (영어)" data-i18n-ph="책 제목 (영어)" style="flex:1;margin-bottom:0">
+      <input type="text" id="nb-title" placeholder="책 제목" data-i18n-ph="책 제목" style="flex:1;margin-bottom:0">
       <button onclick="searchBook()" data-i18n="검색" style="padding:0 14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;white-space:nowrap;">검색</button>
     </div>
     <div id="book-search-list" style="max-height:220px;overflow-y:auto;margin-bottom:10px;"></div>
@@ -1883,7 +1883,9 @@ async function searchBook() {
   listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div>`;
   try {
     // 구글북스 API 직접 호출 (전 세계 모든 언어 책 지원)
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=20&printType=books`);
+    const gbKey = 'AIzaSyCbQUEsU6rrwW4Wp_AFOIYSto0QtDkqT4I'; // 구글북스 API 키 (imvoca.app 도메인 제한)
+    const keyParam = (gbKey && gbKey !== 'GOOGLE_BOOKS_API_KEY') ? `&key=${gbKey}` : '';
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=20&printType=books${keyParam}`);
     const data = await res.json();
     const items = data.items || [];
     const results = items.map(it => {
