@@ -1135,7 +1135,7 @@ function setupInstallBanner(isStandalone) {
   const btnEl = document.getElementById('install-action-btn');
   if (!banner) return;
 
-  const ko = userNativeLang !== 'en';
+  const ko = userNativeLang === 'ko';
   if (isIOS) {
     // 아이폰: 자동 설치 버튼이 없어서 방법을 안내
     titleEl.textContent = ko ? '📲 홈 화면에 추가하세요' : '📲 Add to Home Screen';
@@ -1167,7 +1167,7 @@ async function triggerInstall() {
     _deferredInstallPrompt = null;
     if (outcome === 'accepted') dismissInstall();
   } else {
-    toast(userNativeLang!=='en' ? '브라우저 메뉴에서 “홈 화면에 추가”를 눌러주세요' : 'Use "Add to Home Screen" in your browser menu');
+    toast(userNativeLang==='ko' ? '브라우저 메뉴에서 “홈 화면에 추가”를 눌러주세요' : 'Use "Add to Home Screen" in your browser menu');
   }
 }
 
@@ -1240,8 +1240,8 @@ async function loginWithDemoToken(code) {
       <div class="scr" style="justify-content:center;align-items:center;gap:16px;">
         <div class="ring"></div>
         <div style="text-align:center">
-          <div style="font-size:15px;font-weight:600;color:var(--ink-100);">입장 중...</div>
-          <div class="muted" style="font-size:12px;margin-top:4px;">잠깐만 기다려주세요</div>
+          <div style="font-size:15px;font-weight:600;color:var(--ink-100);">${userNativeLang==='ko'?'입장 중...':'Entering...'}</div>
+          <div class="muted" style="font-size:12px;margin-top:4px;">${userNativeLang==='ko'?'잠깐만 기다려주세요':'Please wait a moment'}</div>
         </div>
       </div>`;
 
@@ -1390,7 +1390,7 @@ async function sbSignIn(email, pw) {
   const btn = document.querySelector('.btn-solid');
   const emailEl = document.getElementById('li-em');
   const pwEl = document.getElementById('li-pw');
-  if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>로그인 중...</span>'; }
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'로그인 중...':'Logging in...'}</span>'; }
   if (emailEl) emailEl.disabled = true;
   if (pwEl) pwEl.disabled = true;
   try {
@@ -1404,7 +1404,7 @@ async function sbSignIn(email, pw) {
     }
     _authToken = data.access_token; currentUser = data.user;
     localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
-    if (btn) btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>불러오는 중...</span>';
+    if (btn) btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'불러오는 중...':'Loading...'}</span>';
     await loadApiKey(); await loadUserName();
     if (currentUser.email !== 'koreayjk@gmail.com') {
       try {
@@ -1895,7 +1895,7 @@ async function searchBook() {
           <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${b.author}</div>
         </div>
       </button>`).join('');
-  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">검색 오류: ${e.message}</div>`; }
+  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">${userNativeLang==='ko'?'검색 오류':'Search error'}: ${e.message}</div>`; }
 }
 
 function pickBook(i) {
@@ -2716,7 +2716,7 @@ function render() {
         </div>
         ${book?`<div class="label-xs" style="margin-top:16px">${t('scopeLabel')}</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
           <div class="scope-card ${s.scope==='all'?'scope-card--on':''}" onclick="ssSelectScope('all')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopeAll')}</div><div class="scope-card__hint">${countWords(book)} words · 무작위로 섞기</div></div><div class="radio ${s.scope==='all'?'radio--on':''}">${s.scope==='all'?'✓':''}</div></div></div>
-          <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopePage')}</div><div class="scope-card__hint">한 페이지씩 끊어서</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:var(--ink-100);color:var(--bg-page);border-color:var(--ink-100)':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
+          <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopePage')}</div><div class="scope-card__hint">${userNativeLang==='ko'?'한 페이지씩 끊어서':'One page at a time'}</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:var(--ink-100);color:var(--bg-page);border-color:var(--ink-100)':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
         </div>`:''}
         <div style="height:22px"></div>
         <div style="display:flex;flex-direction:column;gap:10px;">
@@ -2778,7 +2778,7 @@ function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:${w.en.length>20?20:w.en.length>16?24:w.en.length>13?30:w.en.length>10?36:44}px;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:${w.en.length>20?14:w.en.length>16?17:w.en.length>13?20:w.en.length>10?23:27}px;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'탭해서 뜻 보기  |  ○✕ 바로 선택 가능'}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:${w.en.length>20?20:w.en.length>16?24:w.en.length>13?30:w.en.length>10?36:44}px;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:${w.en.length>20?14:w.en.length>16?17:w.en.length>13?20:w.en.length>10?23:27}px;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
 }
 
 function flipCard() {
@@ -2952,7 +2952,7 @@ async function showAdminPanel() {
         </div>
         <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
           ${m.plan!=='premium'?
-            `<button onclick="setPremium('${m.id}', true)" style="background:#f39c12;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">✨ Premium 설정</button>`:
+            `<button onclick="setPremium('${m.id}', true)" style="background:#f39c12;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${userNativeLang==='ko'?'✨ Premium 설정':'✨ Set Premium'}</button>`:
             `<button onclick="setPremium('${m.id}', false)" style="background:var(--bg-card);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">Free로 변경</button>`}
           <button onclick="resetScanCount('${m.id}')" style="background:var(--bg-card);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">🔄 스캔 초기화</button>
         </div>
@@ -2962,7 +2962,7 @@ async function showAdminPanel() {
           <button onclick="rejectUser('${m.id}')" style="background:var(--bg-card);color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('rejectUser')}</button>
         </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?t('adminLabel'):''}</div>`}
       </div>`).join('');
-  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">오류: ${e.message}</div>`; }
+  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
 }
 
 
@@ -3144,7 +3144,7 @@ async function renderStats(root, dock) {
     `;
   } catch(e) {
     const el = document.getElementById('hall-inner');
-    if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류가 발생했어요</div>`;
+    if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류가 발생했어요':'An error occurred'}</div>`;
   }
 }
 
@@ -3487,7 +3487,7 @@ async function renderReviewPage(root, dock) {
       reviews = await res.json();
     }
     const el = document.getElementById('review-list');
-    if (!reviews?.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">아직 ${t('noReviewSchedule')}<br>암기 카드를 완료하면 자동으로 등록돼요</div>`; return; }
+    if (!reviews?.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'아직 '+t('noReviewSchedule')+'<br>암기 카드를 완료하면 자동으로 등록돼요':t('noReviewSchedule')+'<br>Complete flashcards to register automatically'}</div>`; return; }
 
     const todayEnd = new Date();
     todayEnd.setHours(23, 59, 59, 999);
@@ -3595,7 +3595,7 @@ async function renderReviewPage(root, dock) {
     if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">${t('scheduledTitle')} (${upcoming.length}${userNativeLang==='ko'?'개':''})</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
     if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">${t('completedTitle')} (${done.length}${userNativeLang==='ko'?'개':''})</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
     el.innerHTML = html || `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noReviewSchedule')}</div>`;
-  } catch(e) { document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">오류: ${e.message}</div>`; }
+  } catch(e) { document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
 }
 
 async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDate) {
