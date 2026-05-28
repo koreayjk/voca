@@ -447,7 +447,7 @@ async function publishNotice(){
     const res = await fetch(SB_URL+'/rest/v1/voca_notices',{
       method:'POST',
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Content-Type':'application/json','Prefer':'return=representation'},
-      body:JSON.stringify({category,title,body,image_url:imageUrl||null,published:true})
+      body:JSON.stringify({category,title,body,image_url:imageUrl||null,published:true,created_at:new Date().toISOString()})
     });
     if(!res.ok){ const t=await res.text(); msg.style.color='#c0392b'; msg.textContent='실패: '+t; return; }
     msg.style.color='#27ae60'; msg.textContent='✅ 공지가 올라갔어요! 앱에서 확인할 수 있어요.';
