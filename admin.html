@@ -318,7 +318,7 @@ async function loadAll(){
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,created_at&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,created_at&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allMembers = await res.json();
@@ -342,14 +342,16 @@ function renderOverview(){
   const total = _allMembers.length;
   const premium = _allMembers.filter(m=>m.plan==='premium').length;
   const free = total - premium;
-  const mrr = (premium * PRICE_MONTHLY).toFixed(2);
+  // 진짜 Stripe 결제자만 (stripe_customer_id가 있는 사람) - 수동 업그레이드 제외
+  const paying = _allMembers.filter(m=>m.plan==='premium' && m.stripe_customer_id).length;
+  const mrr = (paying * PRICE_MONTHLY).toFixed(2);
   const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
 
   document.getElementById('stat-grid').innerHTML = `
     <div class="stat"><div class="label">전체 회원</div><div class="num">${total}</div><div class="sub">가입한 모든 회원</div></div>
-    <div class="stat accent"><div class="label">Premium 구독</div><div class="num">${premium}</div><div class="sub">유료 회원</div></div>
+    <div class="stat accent"><div class="label">Premium 구독</div><div class="num">${premium}</div><div class="sub">결제 ${paying}명 · 무료제공 ${premium-paying}명</div></div>
     <div class="stat"><div class="label">무료 회원</div><div class="num">${free}</div></div>
-    <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${mrr}</div><div class="sub">Premium ${premium}명 × $${PRICE_MONTHLY}</div></div>
+    <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${mrr}</div><div class="sub">실결제 ${paying}명 × $${PRICE_MONTHLY}</div></div>
     <div class="stat"><div class="label">누적 단어 수</div><div class="num">${totalWords.toLocaleString()}</div><div class="sub">전 회원 합계</div></div>
   `;
 }
@@ -397,10 +399,27 @@ function renderMembers(){
 
 async function setPlan(id, toPremium){
   try{
+    let body;
+    if(toPremium){
+      // 무료 제공 기간 선택
+      const months = prompt('몇 개월간 무료 Premium을 제공할까요?\n\n숫자만 입력 (예: 1 = 1개월, 3 = 3개월)\n무기한은 0 입력');
+      if(months===null) return; // 취소
+      const m = parseInt(months);
+      if(isNaN(m) || m<0){ toast('숫자를 올바르게 입력해주세요'); return; }
+      let premiumUntil = null;
+      if(m>0){
+        const d = new Date();
+        d.setMonth(d.getMonth()+m);
+        premiumUntil = d.toISOString();
+      }
+      body = JSON.stringify({plan:'premium', premium_until:premiumUntil});
+    } else {
+      body = JSON.stringify({plan:'free', premium_until:null});
+    }
     await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
       method:'PATCH',
       headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
-      body:JSON.stringify({plan: toPremium?'premium':'free'})
+      body
     });
     toast(toPremium?'✨ Premium으로 변경됐어요':'Free로 변경됐어요');
     await loadMembers();
@@ -581,7 +600,11 @@ function showDemoModal(link){
 // ── HELPERS ──
 function planPill(m){
   if(m.email===ADMIN_EMAIL) return '<span class="pill admin">관리자</span>';
-  if(m.plan==='premium') return '<span class="pill premium">✨ Premium</span>';
+  if(m.plan==='premium'){
+    if(m.stripe_customer_id) return '<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#27ae60;margin-top:2px;">💳 결제</div>';
+    if(m.premium_until) return `<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#888;margin-top:2px;">~${fmtDate(m.premium_until)}</div>`;
+    return '<span class="pill premium">✨ Premium</span><div style="font-size:10px;color:#888;margin-top:2px;">무기한</div>';
+  }
   return '<span class="pill free">Free</span>';
 }
 function fmtDate(s){ if(!s) return '-'; const d=new Date(s); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; }
