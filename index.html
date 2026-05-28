@@ -2515,6 +2515,8 @@ async function acceptWords() {
 let studyState = null;
 function initStudy(bookId, scope, pageNum) {
   const book = findBook(bookId); if (!book) return;
+  window._lastEarnedScore = 0;
+  window._lastReviewFinished = false;
   let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book);
   studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
 }
@@ -2774,7 +2776,7 @@ function render() {
       <div class="scr">
         <div class="topnav"><span></span><span class="topnav__title">${book?.title||''}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
         <div class="done">
-          ${(route.isReview && window._lastEarnedScore>0)?(
+          ${(window._lastEarnedScore>0)?(
             window._lastReviewFinished ? `
           <div class="celebrate-card celebrate-card--master">
             <div class="celebrate-coin">🏆</div>
@@ -2848,8 +2850,8 @@ async function advance(isKnown) {
         toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
         await checkReviews();
       } else {
-        // 일반 학습 - 복습 일정 새로 등록
-        saveReviewSchedule(s.bookId, s.pageNum);
+        // 일반 학습 - 복습 일정 새로 등록 (첫날 암기 점수 포함)
+        await saveReviewSchedule(s.bookId, s.pageNum);
       }
     }
     replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total,isReview:!!(s._reviewId)});
@@ -3243,7 +3245,16 @@ async function saveReviewSchedule(bookId, pageNum) {
       body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 3), review_15d: addDays(now, 6), review_30d: addDays(now, 15), review_60d: addDays(now, 30) })
     });
     const data = await res.json();
-    if (data.error || data.code) console.error('[복습 저장 오류]', data);
+    if (data.error || data.code) { console.error('[복습 저장 오류]', data); return; }
+    // 첫날 암기 완료(복습 일정 첫 등록) 시 점수 지급
+    const rbook = findBook(bookId);
+    const rpage = rbook?.pages.find(p => String(p.num) === String(pageNum));
+    const firstScore = rpage ? calcWordScore(rpage.words) : 0;
+    if (firstScore > 0) {
+      addReviewScore(firstScore);
+      window._lastEarnedScore = firstScore;
+      window._lastReviewFinished = false;
+    }
   } catch(e) { console.error('[복습 저장 오류]', e); }
 }
 
