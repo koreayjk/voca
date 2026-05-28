@@ -788,10 +788,18 @@ async function deletePageWord(bookId, pageNum, wordIdx) {
 let _notices = [];
 async function loadNotices() {
   try {
-    const res = await fetch(SB_URL + '/rest/v1/voca_notices?published=eq.true&order=created_at.desc&limit=50', {
+    let res = await fetch(SB_URL + '/rest/v1/voca_notices?published=eq.true&order=created_at.desc&limit=50', {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
-    const data = await res.json();
+    let data = await res.json();
+    // 로그인 직후 토큰 타이밍 문제로 빈 결과가 올 수 있어 한 번 재시도
+    if (Array.isArray(data) && data.length === 0) {
+      await new Promise(r => setTimeout(r, 600));
+      res = await fetch(SB_URL + '/rest/v1/voca_notices?published=eq.true&order=created_at.desc&limit=50', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+      });
+      data = await res.json();
+    }
     if (Array.isArray(data)) {
       _notices = data;
       updateNoticeBadge();
@@ -830,7 +838,9 @@ function toggleNotice(idx) {
   }
 }
 
-function showNotices() {
+async function showNotices() {
+  // 공지가 아직 없으면 한 번 불러오고 연다 (빈 화면 방지)
+  if (!_notices || _notices.length === 0) { await loadNotices(); }
   const ko = userNativeLang === 'ko';
   const catMap = {
     notice:   { icon:'📢', label: ko?'공지':'Notice',   color:'#e74c3c' },
