@@ -3854,6 +3854,14 @@ goTab = function(t) {
 sbInit();
 // 정적 모달 다국어 적용 (언어 로드 후)
 setTimeout(applyStaticI18n, 300);
+// Service Worker 등록 (오프라인 지원 + 속도 향상)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('[SW] 등록됨'))
+      .catch((e) => console.warn('[SW] 등록 실패:', e));
+  });
+}
 </script>
 </body>
 </html>
