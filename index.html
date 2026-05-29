@@ -866,10 +866,10 @@ async function loadNoticeReactions(noticeIds) {
 function reactionBar(notice) {
   const nid = String(notice.id);
   const data = _noticeReactions[nid] || {};
-  return `<div class="notice-reactions" data-nid="${nid}" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;" onclick="event.stopPropagation()">
+  return `<div class="notice-reactions" data-nid="${nid}" style="display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;" onclick="event.stopPropagation()">
     ${NOTICE_EMOJIS.map(em => {
       const r = data[em] || { count:0, mine:false };
-      return `<button onclick="toggleReaction('${nid}','${em}')" style="display:inline-flex;align-items:center;gap:4px;border:1px solid ${r.mine?'var(--accent)':'var(--ink-12)'};background:${r.mine?'var(--gold-bg)':'var(--bg-card)'};border-radius:99px;padding:5px 11px;font-size:14px;cursor:pointer;font-family:var(--font-body);line-height:1;">${em}${r.count>0?`<span style="font-size:11px;font-weight:700;color:${r.mine?'var(--accent)':'var(--ink-60)'};">${r.count}</span>`:''}</button>`;
+      return `<button onclick="toggleReaction('${nid}','${em}')" style="display:inline-flex;align-items:center;gap:3px;border:1px solid ${r.mine?'var(--accent)':'var(--ink-12)'};background:${r.mine?'var(--gold-bg)':'var(--bg-card)'};border-radius:99px;padding:3px 8px;font-size:10px;cursor:pointer;font-family:var(--font-body);line-height:1;">${em}${r.count>0?`<span style="font-size:10px;font-weight:700;color:${r.mine?'var(--accent)':'var(--ink-60)'};">${r.count}</span>`:''}</button>`;
     }).join('')}
   </div>`;
 }
@@ -2235,6 +2235,8 @@ async function doMultiScan() {
   window._multiQueue = [...dataUrls];
   window._multiIdx = 0;
   window._multiBookId = bId;
+  window._multiAccumWords = [];
+  window._multiPageNums = [];
   await processNextMultiScan();
 }
 
@@ -2245,12 +2247,7 @@ async function processNextMultiScan() {
   const total = window._multiImgData.length;
   const bId = window._multiBookId;
   if (idx >= total) {
-    toast(userNativeLang==='ko'?`✅ ${total}장 모두 완료!`:`✅ All ${total} photos done!`);
-    window._multiImgData = null;
-    window._aiPageNum = '';
-    // 메인(책장) 위에 방금 스캔한 책 상세를 얹어서 단어장으로 자동 이동
-    stack = [{ name:'library' }, { name:'book', bookId:bId }];
-    render();
+    await finalizeMultiScan();
     return;
   }
   const currentImg = window._multiQueue[idx];
@@ -2282,7 +2279,7 @@ function renderWordSelectionMulti(words, idx, total) {
   root.innerHTML = `
     <div class="scr" style="padding-bottom:140px;">
       <div class="topnav">
-        <span class="topnav__back" onclick="if(confirm('${userNativeLang==='ko'?'멀티 스캔을 중단할까요?':'Stop multi scan?'}')){window._multiImgData=null;render();}">✕</span>
+        <span class="topnav__back" onclick="if(confirm('${userNativeLang==='ko'?'멀티 스캔을 중단할까요?':'Stop multi scan?'}')){window._multiImgData=null;window._multiAccumWords=[];window._multiPageNums=[];render();}">✕</span>
         <span class="topnav__title">${userNativeLang==='ko'?`단어 선택 (${idx+1}/${total}장)`:`Word Select (${idx+1}/${total})`}</span>
         <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">${t('allSelect')}</span>
       </div>
@@ -2290,7 +2287,7 @@ function renderWordSelectionMulti(words, idx, total) {
         ${Array.from({length:total},(_,i)=>`<div style="width:8px;height:8px;border-radius:50%;background:${i<idx?'#27ae60':i===idx?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}
       </div>
       <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}${userNativeLang==='ko'?'번째 사진의 페이지 번호':' photo page number'}${window._aiPageNum?(userNativeLang==='ko'?' · 🤖 AI가 읽음 (확인·수정)':' · 🤖 AI read (verify)'):''}</div>
+        <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}${userNativeLang==='ko'?'번째 사진 페이지 · 여러 장은 한 페이지로 묶여요':' photo page · all merged into one'}${window._aiPageNum?(userNativeLang==='ko'?' · 🤖AI':' · 🤖AI'):''}</div>
         <input type="text" id="multi-pg-inp" value="${window._aiPageNum||''}" placeholder="${userNativeLang==='ko'?'예: 34, xii, intro':'e.g. 34, xii, intro'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
       </div>
       <div class="muted" style="font-size:12px;margin-bottom:10px;">${t('selectWords')}</div>
@@ -2311,7 +2308,7 @@ function renderWordSelectionMulti(words, idx, total) {
       </div>
       <div class="btn-fixed" style="gap:8px;">
         <button id="save-words-btn" class="btn btn-solid" onclick="saveMultiWords(${idx},${total})">
-          ${userNativeLang==='ko'?`저장하고 ${idx+1<total?`다음 사진 (${idx+2}/${total}장) →`:'완료!'}`:`Save & ${idx+1<total?`Next (${idx+2}/${total}) →`:'Done!'}`}
+          ${userNativeLang==='ko'?`${idx+1<total?`다음 사진 (${idx+2}/${total}장) →`:'✅ 완료 · 한 페이지로 저장'}`:`${idx+1<total?`Next (${idx+2}/${total}) →`:'✅ Done · save as one page'}`}
         </button>
         <button class="btn btn-outline" style="font-size:13px;" onclick="skipMultiScan(${idx},${total})">${userNativeLang==='ko'?'이 사진 건너뛰기':'Skip this photo'}</button>
       </div>
@@ -2320,23 +2317,50 @@ function renderWordSelectionMulti(words, idx, total) {
 }
 
 async function saveMultiWords(idx, total) {
-  const pg = document.getElementById('multi-pg-inp')?.value.trim();
-  if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
   const btn = document.getElementById('save-words-btn');
   if (btn?.disabled) return;
-  if (btn) { btn.disabled = true; btn.textContent = userNativeLang==='ko'?'저장 중...':'Saving...'; btn.style.opacity = '0.6'; }
+  const pg = document.getElementById('multi-pg-inp')?.value.trim();
   const selected = pendingW.filter((_, i) => window._wordSelected[i]);
-  if (!selected.length) { toast('선택한 단어가 없어요'); if (btn) { btn.disabled=false; btn.style.opacity='1'; } return; }
-  const book = findBook(pendingB); if (!book) return;
-  const pid = await savePageWordsToDB(pendingB, pg, selected);
-  const words = selected.map((w,i) => ({...w, id:`${pendingB}-${pg}-${i+1}`}));
-  const ex = findPage(book, pg);
-  if (ex) ex.words = [...ex.words, ...words];
-  else { book.pages.push({num:pg, _pid:pid, words}); book.pages.sort((a,b)=>pageSort(a,b)); }
-  toast(userNativeLang==='ko'?`Page ${pg} 저장 완료 (${words.length}개)`:`Page ${pg} saved (${words.length} words)`);
-  updateTotalWords();
+  // 페이지마다 저장하지 않고, 고른 단어를 모았다가 마지막에 한 페이지로 합침
+  window._multiAccumWords = window._multiAccumWords || [];
+  window._multiPageNums = window._multiPageNums || [];
+  if (selected.length) window._multiAccumWords.push(...selected);
+  if (pg) window._multiPageNums.push(pg);
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
   window._multiIdx = idx + 1;
   await processNextMultiScan();
+}
+
+// 멀티 스캔 마무리: 모은 단어를 하나의 페이지(범위 제목)로 저장
+async function finalizeMultiScan() {
+  const bId = window._multiBookId;
+  const all = window._multiAccumWords || [];
+  const book = findBook(bId);
+  if (!all.length || !book) {
+    toast(userNativeLang==='ko'?'저장된 단어가 없어요':'No words saved');
+    window._multiImgData=null; window._multiAccumWords=[]; window._multiPageNums=[]; window._aiPageNum='';
+    stack = [{ name:'library' }, { name:'book', bookId:bId }];
+    render(); return;
+  }
+  // 입력된 페이지 번호로 범위 제목 만들기 (처음-끝)
+  const nums = (window._multiPageNums||[]).filter(x=>x);
+  let title;
+  if (nums.length >= 2 && nums[0] !== nums[nums.length-1]) title = `${nums[0]}-${nums[nums.length-1]}`;
+  else if (nums.length >= 1) title = `${nums[0]}`;
+  else title = userNativeLang==='ko' ? '묶음' : 'group';
+  // 같은 제목이 이미 있으면 뒤에 번호
+  let finalTitle = title, n = 2;
+  while (book.pages.some(p => String(p.num) === finalTitle)) finalTitle = `${title}-${n++}`;
+  renderScanLoading();
+  const pid = await savePageWordsToDB(bId, finalTitle, all);
+  const words = all.map((w,i) => ({...w, id:`${bId}-${finalTitle}-${i+1}`}));
+  book.pages.push({ num: finalTitle, _pid: pid, words });
+  book.pages.sort((a,b)=>pageSort(a,b));
+  updateTotalWords();
+  window._multiImgData=null; window._multiAccumWords=[]; window._multiPageNums=[]; window._aiPageNum='';
+  toast(userNativeLang==='ko'?`✅ Page ${finalTitle} 저장 완료 (${words.length}개)`:`✅ Page ${finalTitle} saved (${words.length})`);
+  stack = [{ name:'library' }, { name:'book', bookId:bId }, { name:'page-words', bookId:bId, pageNum:finalTitle }];
+  render();
 }
 
 async function skipMultiScan(idx, total) {
@@ -3066,7 +3090,30 @@ function showBookMenu(bookId) {
   items.push('divider',{icon:'🗑️',label:userNativeLang==='ko'?'책 삭제':'Delete book',danger:true,action:`deleteBook('${bookId}')`});
   showActionSheet(items);
 }
-function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
+async function renamePage(bookId, pageNum) {
+  const book = findBook(bookId);
+  const page = book ? findPage(book, pageNum) : null;
+  if (!page) return;
+  const cur = String(page.num);
+  const next = prompt(userNativeLang==='ko'?'새 페이지 이름 (예: 15-20)':'New page name (e.g. 15-20)', cur);
+  if (next === null) return;
+  const name = next.trim();
+  if (!name || name === cur) return;
+  if (book.pages.some(p => String(p.num) === name)) { toast(userNativeLang==='ko'?'같은 이름의 페이지가 있어요':'A page with that name already exists'); return; }
+  try {
+    if (page._pid) {
+      const opt = { method:'PATCH', headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }, body: JSON.stringify({ page_num: name }) };
+      let res = await fetch(SB_URL+`/rest/v1/voca_pages?id=eq.${page._pid}`, opt);
+      if ((res.status===401||res.status===403) && await refreshSession()) { opt.headers.Authorization='Bearer '+_authToken; res = await fetch(SB_URL+`/rest/v1/voca_pages?id=eq.${page._pid}`, opt); }
+      if (!res.ok) throw new Error('rename failed '+res.status);
+    }
+    page.num = name;
+    book.pages.sort((a,b)=>pageSort(a,b));
+    render();
+    toast(userNativeLang==='ko'?`페이지 이름이 '${name}'(으)로 바뀌었어요`:`Renamed to '${name}'`);
+  } catch(e) { toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시 시도':'Rename failed, try later'); }
+}
+function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'✏️',label:userNativeLang==='ko'?'페이지 이름 변경':'Rename page',action:`renamePage('${bookId}','${pageNum}')`},'divider',{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
   const book=findBook(bookId); if(!book)return;
