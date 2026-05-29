@@ -968,13 +968,8 @@ function contactSupport() {
 async function incrementScanCount() {
   userScanCount++;
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
-      method: 'PATCH',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ scan_count: userScanCount })
-    });
-    if (!res.ok) { console.error('[scan_count 저장 실패]', res.status, await res.text()); }
-  } catch(e) { console.error('[scan_count 네트워크 오류]', e); }
+    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { scan_count: userScanCount });
+  } catch(e) { console.error('[scan_count 저장 오류]', e); }
 }
 
 // 스캔 가능 여부 체크
@@ -1001,8 +996,8 @@ function showUpgradePopup() {
       </div>
       <div style="background:var(--gold-bg);border-radius:12px;padding:16px;margin-bottom:20px;">
         <div style="font-size:13px;color:var(--accent);font-weight:700;margin-bottom:4px;">✨ Premium</div>
-        <div style="font-size:24px;font-weight:700;color:var(--ink-100);">$4.99<span style="font-size:14px;font-weight:400;color:var(--ink-60);">/월</span></div>
-        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $39.99 (33% 할인)':'$39.99/year (save 33%)'}</div>
+        <div style="font-size:24px;font-weight:700;color:var(--ink-100);">$3.99<span style="font-size:14px;font-weight:400;color:var(--ink-60);">/월</span></div>
+        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $29.99 (37% 할인)':'$29.99/year (save 37%)'}</div>
       </div>
       <div style="font-size:12px;color:var(--ink-40);margin-bottom:16px;">
         ✓ ${userNativeLang==='ko'?'무제한 AI 스캔':'Unlimited AI scans'}<br>
@@ -2242,7 +2237,13 @@ async function doMultiScan() {
 
 async function processNextMultiScan() {
   // 스캔 제한 체크 (멀티스캔 첫 장에서만)
-  if (window._multiIdx === 0 && !canScan()) { showUpgradePopup(); return; }
+  // 무료 스캔 제한: 매 장마다 확인 (멀티에서 제한 우회 방지)
+  if (!canScan()) {
+    if ((window._multiAccumWords||[]).length) { await finalizeMultiScan(); }
+    else { window._multiImgData = null; window._multiAccumWords = []; window._multiPageNums = []; }
+    showUpgradePopup();
+    return;
+  }
   const idx = window._multiIdx;
   const total = window._multiImgData.length;
   const bId = window._multiBookId;
