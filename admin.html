@@ -327,7 +327,7 @@ async function loadAll(){
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allMembers = await res.json();
@@ -380,6 +380,7 @@ function renderRecent(){
 }
 
 // ── 회원 관리 ──
+function fmtSeen(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-'; return (d.getMonth()+1)+'.'+d.getDate(); }catch(e){ return '-'; } }
 function renderMembers(){
   const q = (document.getElementById('member-search')?.value||'').toLowerCase().trim();
   let list = _allMembers;
@@ -387,7 +388,7 @@ function renderMembers(){
   document.getElementById('member-count').textContent = `(${list.length}명)`;
   if(list.length===0){ document.getElementById('member-table').innerHTML='<div class="empty">결과 없음</div>'; return; }
   document.getElementById('member-table').innerHTML = `
-    <table><thead><tr><th>회원</th><th>플랜</th><th>스캔</th><th>단어</th><th style="text-align:right;">관리</th></tr></thead><tbody>
+    <table><thead><tr><th>회원</th><th>플랜</th><th>스캔</th><th>단어</th><th>접속</th><th style="text-align:right;">관리</th></tr></thead><tbody>
     ${list.map(m=>{
       const isAdmin = m.email===ADMIN_EMAIL;
       return `<tr>
@@ -395,6 +396,7 @@ function renderMembers(){
         <td>${planPill(m)}</td>
         <td style="color:var(--ink-45);">${m.scan_count||0}</td>
         <td style="color:var(--ink-45);">${(m.total_words||0).toLocaleString()}</td>
+        <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}</td>
         <td style="text-align:right;">
           ${isAdmin ? '<span class="pill admin">관리자</span>' :
             m.plan==='premium' ?
