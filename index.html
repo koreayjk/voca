@@ -3058,7 +3058,14 @@ function showActionSheet(items) {
   document.getElementById('action-sheet').classList.add('open');
 }
 function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
-function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`},{icon:'✨',label:userNativeLang==='ko'?'예문 채우기':'Fill examples',action:`backfillSentences('${bookId}')`},'divider',{icon:'🗑️',label:userNativeLang==='ko'?'책 삭제':'Delete book',danger:true,action:`deleteBook('${bookId}')`}]); }
+function showBookMenu(bookId) {
+  const _b = findBook(bookId);
+  const _needsExamples = _b ? _b.pages.some(p => p.words.some(w => w.id && !w.sentence)) : false;
+  const items = [{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`}];
+  if (_needsExamples) items.push({icon:'✨',label:userNativeLang==='ko'?'예문 채우기':'Fill examples',action:`backfillSentences('${bookId}')`});
+  items.push('divider',{icon:'🗑️',label:userNativeLang==='ko'?'책 삭제':'Delete book',danger:true,action:`deleteBook('${bookId}')`});
+  showActionSheet(items);
+}
 function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
