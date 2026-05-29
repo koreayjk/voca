@@ -499,17 +499,18 @@ let userStripeId = '';      // Stripe 고객 ID (결제한 사람만 있음)
 let userScanCount = 0;      // 이번 달 스캔 횟수
 const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한
 
-async function sbFetch(path, method='GET', body=null, useAuth=true) {
-  const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY };
-  headers['Authorization'] = (useAuth && _authToken) ? 'Bearer ' + _authToken : 'Bearer ' + SB_KEY;
-  const res = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
-  // 401/403이면 세션 갱신 시도
+async function sbFetch(path, method='GET', body=null, useAuth=true, extraHeaders={}) {
+  const buildHeaders = () => {
+    const h = { 'Content-Type': 'application/json', 'apikey': SB_KEY, ...extraHeaders };
+    h['Authorization'] = (useAuth && _authToken) ? 'Bearer ' + _authToken : 'Bearer ' + SB_KEY;
+    return h;
+  };
+  let res = await fetch(SB_URL + path, { method, headers: buildHeaders(), body: body ? JSON.stringify(body) : null });
+  // 401/403이면 세션 갱신 후 재시도
   if (res.status === 401 || res.status === 403) {
     const refreshed = await refreshSession();
     if (refreshed) {
-      headers['Authorization'] = 'Bearer ' + _authToken;
-      const res2 = await fetch(SB_URL + path, { method, headers, body: body ? JSON.stringify(body) : null });
-      return res2.json();
+      res = await fetch(SB_URL + path, { method, headers: buildHeaders(), body: body ? JSON.stringify(body) : null });
     }
   }
   return res.json();
@@ -1503,9 +1504,9 @@ async function loadBooksFromDB() {
 
 async function saveBookToDB(title, author, color, desc, cover='') {
   try {
-    const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
-    const res = await fetch(SB_URL + '/rest/v1/voca_books', { method:'POST', headers, body: JSON.stringify({ user_id:currentUser.id, title, author, color, description:desc, cover_url:cover }) });
-    const data = await res.json();
+    const data = await sbFetch('/rest/v1/voca_books', 'POST',
+      { user_id:currentUser.id, title, author, color, description:desc, cover_url:cover },
+      true, { 'Prefer': 'return=representation' });
     if (data.code || data.error) { toast('DB 오류: ' + (data.message || data.error)); return null; }
     return Array.isArray(data) ? data[0] : data;
   } catch(e) { toast('저장 오류: ' + e.message); return null; }
@@ -1541,15 +1542,15 @@ async function savePageWordsToDB(bookId, pageNum, words) {
     const ex = book?.pages.find(p => String(p.num) === String(pageNum));
     if (ex?._pid) { pageId = ex._pid; }
     else {
-      const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' };
-      const res = await fetch(SB_URL + '/rest/v1/voca_pages', { method:'POST', headers, body: JSON.stringify({ book_id:bookId, page_num:String(pageNum) }) });
-      const data = await res.json();
+      const data = await sbFetch('/rest/v1/voca_pages', 'POST',
+        { book_id:bookId, page_num:String(pageNum) },
+        true, { 'Prefer': 'return=representation' });
       pageId = (Array.isArray(data) ? data[0] : data)?.id;
     }
     if (!pageId) return null;
     for (const w of words) {
-      const headers = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken };
-      await fetch(SB_URL + '/rest/v1/voca_words', { method:'POST', headers, body: JSON.stringify({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' }) });
+      await sbFetch('/rest/v1/voca_words', 'POST',
+        { page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' });
     }
     return pageId;
   } catch(e) { return null; }
