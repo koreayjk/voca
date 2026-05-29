@@ -728,7 +728,7 @@ function pageSort(a, b) {
 // ── 플랜/스캔 카운트 로드 ──
 async function loadUserPlan() {
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
@@ -736,6 +736,14 @@ async function loadUserPlan() {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
       userStripeId = data[0].stripe_customer_id || '';
+      // 하루 1회 접속 기록 (마지막 접속일 + 누적 접속수)
+      const today = new Date().toISOString().slice(0,10);
+      if (localStorage.getItem('imvoca.lastVisitDay') !== today) {
+        localStorage.setItem('imvoca.lastVisitDay', today);
+        sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH',
+          { visit_count: (data[0].visit_count||0) + 1, last_seen_at: new Date().toISOString() }
+        ).catch(()=>{});
+      }
     }
   } catch(e) {}
 }
@@ -2978,7 +2986,7 @@ async function showAdminPanel() {
   const listEl = document.getElementById('admin-list');
   listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div>`;
   try {
-    const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role,plan,scan_count&order=created_at.desc', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role,plan,scan_count,last_seen_at,visit_count&order=created_at.desc', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const members = await res.json();
     if (!members.length) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('noMembers')}</div>`; return; }
     listEl.innerHTML = members.map(m => `
@@ -2993,6 +3001,8 @@ async function showAdminPanel() {
             '<span style="background:#f39c12;color:#fff;border-radius:99px;padding:2px 8px;font-weight:700;">✨ Premium</span>':
             '<span style="background:var(--ink-07);color:var(--ink-60);border-radius:99px;padding:2px 8px;">Free</span>'}
           <span style="color:var(--ink-40);margin-left:6px;">📷 ${m.scan_count||0}장</span>
+          ${m.last_seen_at?`<span style="color:var(--ink-40);margin-left:6px;">📅 ${fmtScoreDate(m.last_seen_at)}</span>`:''}
+          ${m.visit_count?`<span style="color:var(--ink-40);margin-left:6px;">🔁 ${m.visit_count}회</span>`:''}
         </div>
         <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
           ${m.plan!=='premium'?
