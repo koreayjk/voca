@@ -1,15 +1,17 @@
 {
   "id": "https://imvoca.app/",
-  "name": "IM VOCA",
+  "name": "IM VOCA - 원서 단어장",
   "short_name": "IM VOCA",
-  "description": "영어 원서 단어, AI로 쉽게. 사진 한 장이면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지 도와줘요.",
+  "description": "원서 한 페이지를 사진 찍으면 AI가 어려운 단어를 골라 뜻과 함께 정리해드려요. 에빙하우스 망각곡선 복습으로 오래 기억하세요. 영어·한국어·일본어·스페인어 등 다국어 지원.",
   "start_url": "https://imvoca.app/",
   "scope": "https://imvoca.app/",
   "display": "standalone",
   "background_color": "#f3ece0",
-  "theme_color": "#f3ece0",
+  "theme_color": "#1c3553",
   "orientation": "portrait",
   "lang": "ko",
+  "dir": "ltr",
+  "categories": ["education", "books", "productivity"],
   "icons": [
     {
       "src": "https://imvoca.app/2.png",
@@ -28,6 +30,20 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "책장",
+      "short_name": "책장",
+      "description": "내 책장 바로 가기",
+      "url": "https://imvoca.app/"
+    },
+    {
+      "name": "복습하기",
+      "short_name": "복습",
+      "description": "오늘 복습할 단어 확인",
+      "url": "https://imvoca.app/"
     }
   ]
 }
