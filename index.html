@@ -3123,6 +3123,14 @@ async function loadHallOfFame() {
   } catch(e) { return []; }
 }
 
+function fmtScoreDate(iso) {
+  try {
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    return (d.getMonth()+1) + '.' + d.getDate();
+  } catch(e) { return ''; }
+}
+
 async function renderStats(root, dock) {
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
@@ -3139,7 +3147,7 @@ async function renderStats(root, dock) {
 
   // 명예의 전당 데이터 로드
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews&limit=200`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews,last_scored_at&limit=200`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
@@ -3190,7 +3198,10 @@ async function renderStats(root, dock) {
               ⚡ ${userNativeLang==='ko'?'복습 점수':'Review'} ${m._score||0}${userNativeLang==='ko'?'점':'pts'}
             </div>
           </div>
-          ${i===0?'<div style="font-size:20px;">👑</div>':''}
+<div style="text-align:right;flex-shrink:0;font-size:11px;color:var(--ink-40);line-height:1.6;">
+            ${i===0?'<div style="font-size:20px;">👑</div>':''}
+            ${m.last_scored_at ? '📅 ' + fmtScoreDate(m.last_scored_at) : ''}
+          </div>
         </div>`).join('')}
       </div>
     `;
@@ -3413,7 +3424,7 @@ async function addReviewScore(score) {
     await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}`, {
       method: 'PATCH',
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ perfect_reviews: current + score })
+      body: JSON.stringify({ perfect_reviews: current + score, last_scored_at: new Date().toISOString() })
     });
   } catch(e) { console.error('[복습 점수 저장 실패]', e); }
 }
