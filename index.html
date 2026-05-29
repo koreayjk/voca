@@ -1565,7 +1565,7 @@ async function loadBooksFromDB() {
           num: p.page_num, _pid: p.id,
           words: (p.voca_words || [])
             .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
-            .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'' }))
+            .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false }))
         }))
 }));
     updateTotalWords();
@@ -1802,7 +1802,8 @@ function parseWordsRobust(rawText) {
     const base = (block.match(/"base"\s*:\s*"([^"]+)"/) || [])[1] || '';
     const ctx = (block.match(/"ctx"\s*:\s*"([^"]+)"/) || [])[1] || '';
     const level = (block.match(/"level"\s*:\s*"([^"]+)"/) || [])[1] || '';
-    if (en) words.push({ en, base, ctx, level });
+    const sentence = (block.match(/"sentence"\s*:\s*"([^"]+)"/) || [])[1] || '';
+    if (en) words.push({ en, base, ctx, sentence, level });
   }
   if (words.length) return words;
   // 4차: 객체 매칭도 실패하면 en 필드만이라도 순서대로 긁기
@@ -1810,10 +1811,12 @@ function parseWordsRobust(rawText) {
   const bases = clean.match(/"base"\s*:\s*"([^"]+)"/g) || [];
   const ctxs = clean.match(/"ctx"\s*:\s*"([^"]+)"/g) || [];
   const levels = clean.match(/"level"\s*:\s*"([^"]+)"/g) || [];
+  const sents = clean.match(/"sentence"\s*:\s*"([^"]+)"/g) || [];
   return ens.map((e, i) => ({
     en: e.match(/"en"\s*:\s*"([^"]+)"/)[1],
     base: bases[i] ? bases[i].match(/"base"\s*:\s*"([^"]+)"/)[1] : '',
     ctx: ctxs[i] ? ctxs[i].match(/"ctx"\s*:\s*"([^"]+)"/)[1] : '',
+    sentence: sents[i] ? sents[i].match(/"sentence"\s*:\s*"([^"]+)"/)[1] : '',
     level: levels[i] ? levels[i].match(/"level"\s*:\s*"([^"]+)"/)[1] : ''
   }));
 }
@@ -2386,7 +2389,7 @@ function buildScanPrompt(useExclude=true) {
   const levelGuide = isEnglish
     ? `CEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘 (가장 먼저 찾기)\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\nC1~C2 단어를 먼저 찾고, B2, B1 순서로 채워주세요.`
     : `각 단어의 난이도를 5단계로 분류하세요. 사용 빈도가 낮고 어려울수록 높은 등급입니다:\n- C2: 매우 어려움 (전문·희귀 어휘)\n- C1: 어려움 (고급 어휘, 가장 먼저 찾기)\n- B2: 중상급\n- B1: 중급\n- A2: 초급 (기초 어휘)\n어려운 단어(C1~C2)를 먼저 찾고, B2, B1 순서로 채워주세요.`;
-  return `이 ${target.name} 책 페이지에서 어려운 ${target.name} 단어를 우선으로 최대 20개 추출해주세요.\n${levelGuide}${exclude}\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n중요: "en" 필드에는 ${target.name} 단어를 넣고, "base"와 "ctx" 필드에는 ${native.name}로 된 뜻을 넣어주세요. "en"이라는 이름이지만 실제로는 ${target.name} 단어가 들어갑니다.\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"${target.name} 단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","level":"C1"}]}`;
+  return `이 ${target.name} 책 페이지에서 어려운 ${target.name} 단어를 우선으로 최대 20개 추출해주세요.\n${levelGuide}${exclude}\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n중요: "en" 필드에는 ${target.name} 단어를 넣고, "base"와 "ctx" 필드에는 ${native.name}로 된 뜻을 넣어주세요. "en"이라는 이름이지만 실제로는 ${target.name} 단어가 들어갑니다. 또한 각 단어를 사용한 짧고 자연스러운 ${target.name} 예문 한 문장을 "sentence" 필드에 넣어주세요.\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"${target.name} 단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","sentence":"그 단어를 사용한 짧은 ${target.name} 예문","level":"C1"}]}`;
 }
 
 // ── 이미 등록된 단어 목록 추출 ──
@@ -2581,11 +2584,68 @@ async function acceptWords() {
 }
 
 let studyState = null;
-function initStudy(bookId, scope, pageNum) {
+// 모든 책의 즐겨찾기 단어 모으기
+function allFavoriteWords() {
+  const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>{ if(w.fav) out.push({...w, pageNum:p.num, bookId:b.id}); }))); return out;
+}
+// 모든 책의 전체 단어 (퀴즈 보기용)
+function allWordsGlobal() {
+  const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>out.push({...w})))); return out;
+}
+
+async function toggleFavorite(bookId, pageNum, wordIdx) {
+  const book = findBook(bookId);
+  const page = book ? findPage(book, pageNum) : null;
+  const word = page?.words[wordIdx];
+  if (!word) return;
+  const next = !word.fav;
+  word.fav = next;
+  render();
+  try {
+    if (word.id) await sbFetch(`/rest/v1/voca_words?id=eq.${word.id}`, 'PATCH', { is_favorite: next });
+  } catch(e) { word.fav = !next; render(); toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again'); }
+}
+
+// 예문 일괄 채우기 (묶음 호출, 1회성) - 책 메뉴에서 실행
+async function backfillSentences(bookId) {
+  if (!apiKey) { toast(userNativeLang==='ko'?'먼저 AI(API) 키 설정이 필요해요':'API key required first'); return; }
   const book = findBook(bookId); if (!book) return;
+  const targets = [];
+  book.pages.forEach(p => p.words.forEach(w => { if (w.id && !w.sentence) targets.push(w); }));
+  if (!targets.length) { toast(userNativeLang==='ko'?'이미 모든 단어에 예문이 있어요':'All words already have examples'); return; }
+  if (!confirm(userNativeLang==='ko'?`예문 없는 단어 ${targets.length}개에 AI로 예문을 채울까요?`:`Generate examples for ${targets.length} words?`)) return;
+  const target = getTargetLang();
+  const BATCH = 20; let done = 0;
+  for (let i=0; i<targets.length; i+=BATCH) {
+    const chunk = targets.slice(i, i+BATCH);
+    toast(userNativeLang==='ko'?`예문 생성 중... (${done}/${targets.length})`:`Generating... (${done}/${targets.length})`);
+    const wordList = chunk.map(w => w.en).join(', ');
+    const prompt = `다음 ${target.name} 단어 각각에 대해 그 단어를 사용한 짧고 자연스러운 ${target.name} 예문을 하나씩 만들어주세요. 단어: ${wordList}\n\n반드시 JSON만 반환: {"sentences":{"단어":"예문"}}`;
+    let map = {};
+    try {
+      const data = await geminiWithRetry({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.3,maxOutputTokens:4096} });
+      const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const clean = txt.replace(/```json|```/g,'').trim();
+      try { map = JSON.parse(clean).sentences || {}; }
+      catch(e2) { const re=/"([^"]+)"\s*:\s*"([^"]+)"/g; let m; while((m=re.exec(clean))!==null){ if(m[1]!=='sentences') map[m[1]]=m[2]; } }
+    } catch(e) { toast(userNativeLang==='ko'?'생성 실패, 잠시 후 다시 시도':'Failed, try later'); render(); return; }
+    for (const w of chunk) {
+      const key = Object.keys(map).find(k => k.toLowerCase() === w.en.toLowerCase());
+      const sent = key ? map[key] : '';
+      if (sent) { w.sentence = sent; try { await sbFetch(`/rest/v1/voca_words?id=eq.${w.id}`, 'PATCH', { sentence: sent }); } catch(e){} }
+      done++;
+    }
+  }
+  render();
+  toast(userNativeLang==='ko'?`✅ 예문 ${done}개 채웠어요!`:`✅ Filled ${done} examples!`);
+}
+
+function initStudy(bookId, scope, pageNum) {
   window._lastEarnedScore = 0;
   window._lastReviewFinished = false;
-  let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book);
+  let ws;
+  if (scope === 'favorite') { ws = allFavoriteWords(); }
+  else { const book = findBook(bookId); if (!book) return; ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book); }
   studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
 }
 
@@ -2784,7 +2844,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;margin-left:auto;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div></div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed" style="flex-direction:row;gap:8px;">
           <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
@@ -2810,6 +2870,7 @@ function render() {
       const canStart=!!book&&total>0&&(s.scope==='all'||s.page!=null);
       const el=document.getElementById('study-setup-inner'); if(!el)return;
       el.innerHTML=`
+        ${(()=>{ const favN=allFavoriteWords().length; return favN>0?`<div class="scope-card" style="border-color:#f39c12;margin-top:16px;"><div class="scope-card__head"><div><div class="scope-card__name">⭐ ${userNativeLang==='ko'?'즐겨찾기 모아 외우기':'Study favorites'}</div><div class="scope-card__hint">${userNativeLang==='ko'?`별 단 단어 ${favN}개 · 모든 책 통합`:`${favN} starred · all books`}</div></div></div><div style="display:flex;gap:8px;margin-top:12px;"><button class="btn btn-solid" style="flex:1;padding:11px;font-size:13px;" onclick="initStudy('__fav__','favorite');push({name:'study-cards',bookId:'__fav__',scope:'favorite'})">${t('flashCard')}</button><button class="btn btn-outline" style="flex:1;padding:11px;font-size:13px;" onclick="startQuiz('__fav__','favorite')">${t('quizModeBtn')}</button></div></div>`:''; })()}
         <div class="label-xs" style="margin-top:20px">${t('bookLabel')}</div>
         <div style="margin-top:6px">
           ${books.map(b=>`<div class="list-row" onclick="ssSelectBook('${b.id}')"><div style="width:38px;height:52px;border-radius:5px;background:${b.color};flex-shrink:0"></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--ink-100);">${b.title}</div><div style="font-size:11px;color:var(--ink-60);margin-top:2px">${b.author} · ${countWords(b)} words</div></div><div class="radio ${s.bookId===b.id?'radio--on':''}">${s.bookId===b.id?'✓':''}</div></div>`).join('')}
@@ -2888,7 +2949,7 @@ function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${findBook(s.bookId)?.title||''}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:${w.en.length>20?20:w.en.length>16?24:w.en.length>13?30:w.en.length>10?36:44}px;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:${w.en.length>20?14:w.en.length>16?17:w.en.length>13?20:w.en.length>10?23:27}px;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div></div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:${w.en.length>20?20:w.en.length>16?24:w.en.length>13?30:w.en.length>10?36:44}px;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:${w.en.length>20?14:w.en.length>16?17:w.en.length>13?20:w.en.length>10?23:27}px;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>${w.sentence?`<div class="back__label">${userNativeLang==='ko'?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:''}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
 }
 
 function flipCard() {
@@ -2988,7 +3049,7 @@ function showActionSheet(items) {
   document.getElementById('action-sheet').classList.add('open');
 }
 function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
-function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`},'divider',{icon:'🗑️',label:userNativeLang==='ko'?'책 삭제':'Delete book',danger:true,action:`deleteBook('${bookId}')`}]); }
+function showBookMenu(bookId) { showActionSheet([{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`},{icon:'✨',label:userNativeLang==='ko'?'예문 채우기':'Fill examples',action:`backfillSentences('${bookId}')`},'divider',{icon:'🗑️',label:userNativeLang==='ko'?'책 삭제':'Delete book',danger:true,action:`deleteBook('${bookId}')`}]); }
 function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
@@ -3239,8 +3300,9 @@ function startWrongQuiz() {
 }
 
 function startQuiz(bookId, scope, pageNum) {
-  const book = findBook(bookId); if (!book) return;
-  let ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]) : allWords(book);
+  let ws;
+  if (scope === 'favorite') { ws = allFavoriteWords(); }
+  else { const book = findBook(bookId); if (!book) return; ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]) : allWords(book); }
   ws = shuffle([...ws]);
   window._quiz = { bookId, scope, pageNum, words: ws, idx: 0, correct: 0 };
   push({ name: 'quiz', bookId, scope, pageNum });
@@ -3279,7 +3341,7 @@ function renderQuiz() {
   }
   const w = q.words[q.idx];
   const prog = Math.round(q.idx / q.words.length * 100);
-  const allW = allWords(findBook(q.bookId));
+  const allW = q.scope==='favorite' ? allWordsGlobal() : (allWords(findBook(q.bookId))||[]);
   const others = shuffle(allW.filter(x => x.en !== w.en)).slice(0, 3);
   const choices = shuffle([w, ...others]);
   root.innerHTML = `<div class="scr" style="padding-bottom:20px;">
