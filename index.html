@@ -2598,11 +2598,20 @@ async function toggleFavorite(bookId, pageNum, wordIdx) {
   const page = book ? findPage(book, pageNum) : null;
   const word = page?.words[wordIdx];
   if (!word) return;
+  if (!word.id) { toast(userNativeLang==='ko'?'새로고침 후 즐겨찾기를 쓸 수 있어요':'Reload to favorite this word'); return; }
   const next = !word.fav;
   word.fav = next;
   render();
+  const url = `/rest/v1/voca_words?id=eq.${word.id}`;
+  const send = async () => {
+    const opt = { method:'PATCH', headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }, body: JSON.stringify({ is_favorite: next }) };
+    let res = await fetch(SB_URL + url, opt);
+    if ((res.status===401||res.status===403) && await refreshSession()) { opt.headers.Authorization = 'Bearer '+_authToken; res = await fetch(SB_URL + url, opt); }
+    return res;
+  };
   try {
-    if (word.id) await sbFetch(`/rest/v1/voca_words?id=eq.${word.id}`, 'PATCH', { is_favorite: next });
+    const res = await send();
+    if (!res.ok) throw new Error('fav write failed ' + res.status);
   } catch(e) { word.fav = !next; render(); toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again'); }
 }
 
