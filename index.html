@@ -724,14 +724,15 @@ async function loadUserPlan() {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
       userStripeId = data[0].stripe_customer_id || '';
-      // 하루 1회 접속 기록 (마지막 접속일 + 누적 접속수)
+      // 최종 접속 시각(last_seen_at)은 매번 갱신, 누적 접속수(visit_count)는 하루 1회만 증가
       const today = new Date().toISOString().slice(0,10);
-      if (localStorage.getItem('imvoca.lastVisitDay') !== today) {
-        localStorage.setItem('imvoca.lastVisitDay', today);
-        sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH',
-          { visit_count: (data[0].visit_count||0) + 1, last_seen_at: new Date().toISOString() }
-        ).catch(()=>{});
-      }
+      const isNewDay = localStorage.getItem('imvoca.lastVisitDay') !== today;
+      const visitPatch = { last_seen_at: new Date().toISOString() };
+      if (isNewDay) visitPatch.visit_count = (data[0].visit_count||0) + 1;
+      sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', visitPatch,
+        true, { 'Prefer': 'return=representation' })
+        .then(r => { if (isNewDay && Array.isArray(r) && r.length) localStorage.setItem('imvoca.lastVisitDay', today); })
+        .catch(()=>{});
     }
   } catch(e) {}
 }
@@ -837,9 +838,79 @@ function toggleNotice(idx) {
   }
 }
 
+// ─── 공지 이모지 반응 ───
+const NOTICE_EMOJIS = ['👍','❤️','🎉','👏','🔥'];
+let _noticeReactions = {}; // { noticeId: { emoji: { count, mine } } }
+
+async function loadNoticeReactions(noticeIds) {
+  _noticeReactions = {};
+  const ids = (noticeIds||[]).filter(x => x!=null);
+  if (!ids.length) return;
+  try {
+    const inList = ids.map(id => `"${String(id)}"`).join(',');
+    const res = await fetch(SB_URL + `/rest/v1/voca_notice_reactions?notice_id=in.(${inList})&select=notice_id,user_id,emoji`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    const rows = await res.json();
+    if (!Array.isArray(rows)) return;
+    rows.forEach(r => {
+      const nid = String(r.notice_id);
+      (_noticeReactions[nid] = _noticeReactions[nid] || {});
+      const slot = (_noticeReactions[nid][r.emoji] = _noticeReactions[nid][r.emoji] || { count:0, mine:false });
+      slot.count++;
+      if (r.user_id === currentUser?.id) slot.mine = true;
+    });
+  } catch(e) {}
+}
+
+function reactionBar(notice) {
+  const nid = String(notice.id);
+  const data = _noticeReactions[nid] || {};
+  return `<div class="notice-reactions" data-nid="${nid}" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;" onclick="event.stopPropagation()">
+    ${NOTICE_EMOJIS.map(em => {
+      const r = data[em] || { count:0, mine:false };
+      return `<button onclick="toggleReaction('${nid}','${em}')" style="display:inline-flex;align-items:center;gap:4px;border:1px solid ${r.mine?'var(--accent)':'var(--ink-12)'};background:${r.mine?'var(--gold-bg)':'var(--bg-card)'};border-radius:99px;padding:5px 11px;font-size:14px;cursor:pointer;font-family:var(--font-body);line-height:1;">${em}${r.count>0?`<span style="font-size:11px;font-weight:700;color:${r.mine?'var(--accent)':'var(--ink-60)'};">${r.count}</span>`:''}</button>`;
+    }).join('')}
+  </div>`;
+}
+
+function updateReactionBarUI(nid) {
+  const bar = document.querySelector(`.notice-reactions[data-nid="${nid}"]`);
+  if (bar) bar.outerHTML = reactionBar({ id: nid });
+}
+
+async function toggleReaction(noticeId, emoji) {
+  if (!currentUser) { toast(userNativeLang==='ko'?'로그인이 필요해요':'Please log in'); return; }
+  const nid = String(noticeId);
+  (_noticeReactions[nid] = _noticeReactions[nid] || {});
+  const r = (_noticeReactions[nid][emoji] = _noticeReactions[nid][emoji] || { count:0, mine:false });
+  const wasMine = r.mine;
+  r.mine = !wasMine; r.count = Math.max(0, r.count + (wasMine ? -1 : 1));
+  updateReactionBarUI(nid);
+  const baseHdr = () => ({ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken });
+  const doFetch = async (path, opts) => {
+    let res = await fetch(SB_URL + path, opts);
+    if ((res.status===401||res.status===403) && await refreshSession()) { opts.headers.Authorization = 'Bearer '+_authToken; res = await fetch(SB_URL + path, opts); }
+    return res;
+  };
+  try {
+    let res;
+    if (wasMine) {
+      res = await doFetch(`/rest/v1/voca_notice_reactions?notice_id=eq.${encodeURIComponent(nid)}&user_id=eq.${currentUser.id}&emoji=eq.${encodeURIComponent(emoji)}`, { method:'DELETE', headers: baseHdr() });
+    } else {
+      res = await doFetch('/rest/v1/voca_notice_reactions', { method:'POST', headers: { ...baseHdr(), 'Prefer':'return=minimal' }, body: JSON.stringify({ notice_id: nid, user_id: currentUser.id, emoji }) });
+    }
+    if (!res.ok) throw new Error('reaction write failed');
+  } catch(e) {
+    r.mine = wasMine; r.count = Math.max(0, r.count + (wasMine ? 1 : -1)); updateReactionBarUI(nid);
+    toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again');
+  }
+}
+
 async function showNotices() {
   // 공지가 아직 없으면 한 번 불러오고 연다 (빈 화면 방지)
   if (!_notices || _notices.length === 0) { await loadNotices(); }
+  await loadNoticeReactions(_notices.map(n => n.id));
   const ko = userNativeLang === 'ko';
   const catMap = {
     notice:   { icon:'📢', label: ko?'공지':'Notice',   color:'#e74c3c' },
@@ -873,6 +944,7 @@ async function showNotices() {
           </div>
           <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${n.title}</div>
           <div class="notice-body" style="font-size:12px;color:var(--ink-60);line-height:1.7;white-space:pre-wrap;overflow:hidden;${expanded?'margin-top:8px;max-height:none;':'max-height:0;'}">${n.image_url?`<img src="${n.image_url}" style="width:100%;border-radius:10px;margin-bottom:8px;display:block;">`:''}${safeBody}</div>
+          ${reactionBar(n)}
         </div>`;
       }).join('');
   ov.innerHTML = `
