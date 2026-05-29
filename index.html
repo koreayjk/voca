@@ -472,18 +472,6 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   </div>
 </div>
 
-<!-- ADMIN MODAL -->
-<div class="overlay" id="modal-admin">
-  <div class="sheet" style="max-height:80vh;overflow-y:auto;">
-    <div class="sheet-handle"></div>
-    <h3 data-i18n="회원 관리">회원 관리</h3>
-    <div id="admin-list"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">Loading...</div></div>
-    <div class="gap-sm"></div>
-    <button class="btn btn-outline" onclick="closeModal('modal-admin')" data-i18n="닫기">닫기</button>
-  </div>
-</div>
-
-
 
 <!-- REVIEW BANNER -->
 
@@ -2925,14 +2913,6 @@ function applyLangSettings() {
   if (!currentUser) renderLogin(); else render();
 }
 
-function showAdminMenu() {
-  showActionSheet([
-    {icon:'🤖',label:t('adminMenu'),action:"document.getElementById('modal-api').classList.add('open')"},
-    {icon:'👥',label:t('memberMgmt'),action:"showAdminPanel()"},
-    {icon:'🔗',label:t('demoLink'),action:"generateDemoLink()"},
-  ]);
-}
-
 function showActionSheet(items) {
   document.getElementById('action-sheet-items').innerHTML = items.map(item=>item==='divider'?'<div class="action-sheet__divider"></div>':`<button class="action-sheet__item ${item.danger?'danger':''}" onclick="closeActionSheet();${item.action}">${item.icon} ${item.label}</button>`).join('');
   document.getElementById('action-sheet').classList.add('open');
@@ -2981,45 +2961,6 @@ async function deletePage(bookId, pageNum) {
   } catch(e) { toast('삭제 실패: '+e.message); }
 }
 
-async function showAdminPanel() {
-  document.getElementById('modal-admin').classList.add('open');
-  const listEl = document.getElementById('admin-list');
-  listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('memberLoading')}</div>`;
-  try {
-    const res = await fetch(SB_URL + '/rest/v1/members?select=id,name,email,role,plan,scan_count,last_seen_at,visit_count&order=created_at.desc', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    const members = await res.json();
-    if (!members.length) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${t('noMembers')}</div>`; return; }
-    listEl.innerHTML = members.map(m => `
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--ink-07);">
-        <div>
-          <div style="font-size:13px;font-weight:600;color:var(--ink-100);">${m.name||t('noName')}</div>
-          <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">${m.email}</div>
-          <div style="font-size:11px;margin-top:2px;color:${m.role==='대기중'?'#e67e22':m.role==='멤버'?'#27ae60':'var(--ink-40)'};">${m.role==='대기중'?t('waitingRole'):m.role==='멤버'?t('memberRole'):m.role==='관리자'?t('adminLabel'):t('memberRole')}</div>
-        </div>
-        <div style="font-size:11px;margin-top:4px;">
-          ${m.plan==='premium'?
-            '<span style="background:#f39c12;color:#fff;border-radius:99px;padding:2px 8px;font-weight:700;">✨ Premium</span>':
-            '<span style="background:var(--ink-07);color:var(--ink-60);border-radius:99px;padding:2px 8px;">Free</span>'}
-          <span style="color:var(--ink-40);margin-left:6px;">📷 ${m.scan_count||0}장</span>
-          ${m.last_seen_at?`<span style="color:var(--ink-40);margin-left:6px;">📅 ${fmtScoreDate(m.last_seen_at)}</span>`:''}
-          ${m.visit_count?`<span style="color:var(--ink-40);margin-left:6px;">🔁 ${m.visit_count}회</span>`:''}
-        </div>
-        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
-          ${m.plan!=='premium'?
-            `<button onclick="setPremium('${m.id}', true)" style="background:#f39c12;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${userNativeLang==='ko'?'✨ Premium 설정':'✨ Set Premium'}</button>`:
-            `<button onclick="setPremium('${m.id}', false)" style="background:var(--bg-card);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">Free로 변경</button>`}
-          <button onclick="resetScanCount('${m.id}')" style="background:var(--bg-card);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">🔄 스캔 초기화</button>
-        </div>
-        ${m.role==='대기중'?`
-        <div style="display:flex;gap:6px;margin-top:6px;">
-          <button onclick="approveUser('${m.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('approveUser')}</button>
-          <button onclick="rejectUser('${m.id}')" style="background:var(--bg-card);color:#c0392b;border:1px solid #c0392b;border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;">${t('rejectUser')}</button>
-        </div>`:`<div style="font-size:11px;color:var(--ink-40);">${m.email==='koreayjk@gmail.com'?t('adminLabel'):''}</div>`}
-      </div>`).join('');
-  } catch(e) { listEl.innerHTML = `<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink-60)">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
-}
-
-
 async function openBillingPortal() {
   const email = currentUser?.email;
   if (!email) { toast(userNativeLang==='ko'?'로그인이 필요해요':'Please log in'); return; }
@@ -3041,68 +2982,6 @@ async function openBillingPortal() {
   } catch(e) {
     toast(userNativeLang==='ko'?'네트워크 오류':'Network error');
   }
-}
-
-async function setPremium(userId, isPremium) {
-  try {
-    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
-      method: 'PATCH',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
-      body: JSON.stringify({ plan: isPremium ? 'premium' : 'free' })
-    });
-    if (!res.ok) {
-      const errTxt = await res.text();
-      toast('변경 실패: ' + (res.status===401||res.status===403 ? '권한 없음(RLS)' : errTxt.slice(0,60)));
-      return;
-    }
-    const updated = await res.json();
-    if (!Array.isArray(updated) || updated.length === 0) {
-      toast('변경 실패: 권한이 없어요 (RLS 정책 확인 필요)');
-      return;
-    }
-    toast(isPremium ? '✨ Premium으로 업그레이드됐어요!' : 'Free 플랜으로 변경됐어요');
-    showAdminPanel();
-  } catch(e) { toast('오류: ' + e.message); }
-}
-
-async function resetScanCount(userId) {
-  try {
-    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, {
-      method: 'PATCH',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ scan_count: 0 })
-    });
-    toast('🔄 스캔 카운트가 초기화됐어요!');
-    showAdminPanel();
-  } catch(e) { toast('오류: ' + e.message); }
-}
-
-async function resetAllScanCounts() {
-  if (!confirm(userNativeLang==='ko'?'모든 사용자의 스캔 카운트를 초기화할까요?':'Reset scan count for all users?')) return;
-  try {
-    await fetch(SB_URL + `/rest/v1/members?user_id=neq.null`, {
-      method: 'PATCH',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ scan_count: 0 })
-    });
-    toast('🔄 전체 스캔 카운트 초기화됐어요!');
-    showAdminPanel();
-  } catch(e) { toast('오류: ' + e.message); }
-}
-
-async function approveUser(userId) {
-  try {
-    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify({ role: '멤버' }) });
-    toast('승인됐어요!'); showAdminPanel();
-  } catch(e) { toast('오류: ' + e.message); }
-}
-
-async function rejectUser(userId) {
-  if (!confirm(userNativeLang==='ko'?'이 회원을 거절하고 삭제할까요?':'Reject and delete this member?')) return;
-  try {
-    await fetch(SB_URL + `/rest/v1/members?id=eq.${userId}`, { method: 'DELETE', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    toast('거절됐어요'); showAdminPanel();
-  } catch(e) { toast('오류: ' + e.message); }
 }
 
 function speak(word) {
