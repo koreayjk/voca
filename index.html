@@ -2232,6 +2232,7 @@ async function doMultiScan() {
   window._multiBookId = bId;
   window._multiAccumWords = [];
   window._multiPageNums = [];
+  window._multiLastPage = '';
   await processNextMultiScan();
 }
 
@@ -2240,7 +2241,7 @@ async function processNextMultiScan() {
   // 무료 스캔 제한: 매 장마다 확인 (멀티에서 제한 우회 방지)
   if (!canScan()) {
     if ((window._multiAccumWords||[]).length) { await finalizeMultiScan(); }
-    else { window._multiImgData = null; window._multiAccumWords = []; window._multiPageNums = []; }
+    else { window._multiImgData = null; window._multiAccumWords = []; window._multiPageNums = []; window._multiLastPage = ''; }
     showUpgradePopup();
     return;
   }
@@ -2280,7 +2281,7 @@ function renderWordSelectionMulti(words, idx, total) {
   root.innerHTML = `
     <div class="scr" style="padding-bottom:140px;">
       <div class="topnav">
-        <span class="topnav__back" onclick="if(confirm('${userNativeLang==='ko'?'멀티 스캔을 중단할까요?':'Stop multi scan?'}')){window._multiImgData=null;window._multiAccumWords=[];window._multiPageNums=[];render();}">✕</span>
+        <span class="topnav__back" onclick="if(confirm('${userNativeLang==='ko'?'멀티 스캔을 중단할까요?':'Stop multi scan?'}')){window._multiImgData=null;window._multiAccumWords=[];window._multiPageNums=[];window._multiLastPage='';render();}">✕</span>
         <span class="topnav__title">${userNativeLang==='ko'?`단어 선택 (${idx+1}/${total}장)`:`Word Select (${idx+1}/${total})`}</span>
         <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">${t('allSelect')}</span>
       </div>
@@ -2289,7 +2290,7 @@ function renderWordSelectionMulti(words, idx, total) {
       </div>
       <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
         <div class="label-xs" style="margin-bottom:6px;">📄 ${idx+1}${userNativeLang==='ko'?'번째 사진 페이지 · 여러 장은 한 페이지로 묶여요':' photo page · all merged into one'}${window._aiPageNum?(userNativeLang==='ko'?' · 🤖AI':' · 🤖AI'):''}</div>
-        <input type="text" id="multi-pg-inp" value="${window._aiPageNum||''}" placeholder="${userNativeLang==='ko'?'예: 34, xii, intro':'e.g. 34, xii, intro'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
+        <input type="text" id="multi-pg-inp" value="${window._multiLastPage || window._aiPageNum || ''}" placeholder="${userNativeLang==='ko'?'예: 34, xii, intro':'e.g. 34, xii, intro'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
       </div>
       <div class="muted" style="font-size:12px;margin-bottom:10px;">${t('selectWords')}</div>
       <div class="scr-scroll" id="word-sel-list">
@@ -2326,7 +2327,7 @@ async function saveMultiWords(idx, total) {
   window._multiAccumWords = window._multiAccumWords || [];
   window._multiPageNums = window._multiPageNums || [];
   if (selected.length) window._multiAccumWords.push(...selected);
-  if (pg) window._multiPageNums.push(pg);
+  if (pg) { window._multiPageNums.push(pg); window._multiLastPage = pg; }
   if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
   window._multiIdx = idx + 1;
   await processNextMultiScan();
@@ -2835,11 +2836,9 @@ function render() {
           <div id="upload-main" style="margin-top:14px;">
             <div style="display:flex;gap:8px;margin-bottom:10px;">
               <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                ${t('fileSelect')}
+                ${/iphone|ipad|ipod|android/i.test(navigator.userAgent) ? (userNativeLang==='ko'?'📷 촬영 / 사진 선택':'📷 Camera / Photos') : t('fileSelect')}
               </button>
-              <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                ${t('cameraCapture')}
-              </button>
+              ${/iphone|ipad|ipod|android/i.test(navigator.userAgent) ? '' : `<button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('cameraCapture')}</button>`}
             </div>
             <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
