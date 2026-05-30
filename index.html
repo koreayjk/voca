@@ -2103,7 +2103,7 @@ function capturePhoto() {
   const canvas = document.getElementById('camera-canvas');
   canvas.width = video.videoWidth; canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0);
-  const shot = canvas.toDataURL('image/jpeg', 0.92);
+  const shot = canvas.toDataURL('image/jpeg', 0.82);
   if (!window._cameraShots) window._cameraShots = [];
   window._cameraShots.push(shot);
   // 플래시 효과
@@ -2143,7 +2143,7 @@ function handleFileChange(e) {
         if (w > MAX || h > MAX) { if (w > h) { h = Math.round(h*MAX/w); w=MAX; } else { w=Math.round(w*MAX/h); h=MAX; } }
         canvas.width=w; canvas.height=h;
         canvas.getContext('2d').drawImage(img,0,0,w,h);
-        resolve(canvas.toDataURL('image/jpeg', 0.92));
+        resolve(canvas.toDataURL('image/jpeg', 0.82));
       };
       img.src = ev.target.result;
     };
@@ -2228,6 +2228,8 @@ async function doMultiScan() {
   const dataUrls = window._multiImgData;
   if (!dataUrls?.length) return;
   window._multiQueue = [...dataUrls];
+  window._multiTotal = dataUrls.length;
+  window._multiImgData = null; // 원본 배열 참조 해제 → 장을 처리할 때마다 메모리 회수됨
   window._multiIdx = 0;
   window._multiBookId = bId;
   window._multiAccumWords = [];
@@ -2246,7 +2248,7 @@ async function processNextMultiScan() {
     return;
   }
   const idx = window._multiIdx;
-  const total = window._multiImgData.length;
+  const total = window._multiTotal || 0;
   const bId = window._multiBookId;
   if (idx >= total) {
     await finalizeMultiScan();
@@ -2260,16 +2262,16 @@ async function processNextMultiScan() {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
     const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(false)}]}], generationConfig:{temperature:0.1,maxOutputTokens:8192} });
     if (data.error) {
-      if (data.error.code===403) toast('API 키를 확인해주세요');
-      else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
-      render(); return;
+      if (data.error.code===403) { toast('API 키를 확인해주세요'); render(); return; }
+      toast(userNativeLang==='ko'?`${idx+1}번 사진 처리 실패, 건너뛰어요`:`Photo ${idx+1} failed, skipping`);
+      window._multiIdx++; await processNextMultiScan(); return;
     }
-    if (!data.candidates?.[0]) { toast('응답 오류, 다시 시도해주세요'); render(); return; }
+    if (!data.candidates?.[0]) { toast(userNativeLang==='ko'?`${idx+1}번 사진 응답 오류, 건너뛰어요`:`Photo ${idx+1} no response, skipping`); window._multiIdx++; await processNextMultiScan(); return; }
     const txt = data.candidates[0].content.parts[0].text;
     words = parseWordsRobust(txt);
-    if (!words?.length) { toast(userNativeLang==='ko'?`${idx+1}번 사진에서 단어를 찾지 못했어요`:`No words found in photo ${idx+1}`); window._multiIdx++; await processNextMultiScan(); return; }
+    if (!words?.length) { toast(userNativeLang==='ko'?`${idx+1}번 사진에서 단어를 찾지 못했어요, 건너뛰어요`:`No words in photo ${idx+1}, skipping`); window._multiIdx++; await processNextMultiScan(); return; }
     window._aiPageNum = parsePageNum(txt);
-  } catch(e) { toast('네트워크 오류'); render(); return; }
+  } catch(e) { toast(userNativeLang==='ko'?`${idx+1}번 사진 네트워크 오류, 건너뛰어요`:`Photo ${idx+1} network error, skipping`); window._multiIdx++; await processNextMultiScan(); return; }
   await incrementScanCount();
   pendingW = words; pendingB = bId; pendingP = null;
   renderWordSelectionMulti(words, idx, total);
