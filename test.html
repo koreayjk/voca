@@ -1156,7 +1156,7 @@ async function loadOrgStudents(){
   if (!box || !userOrg) return;
   const ko = userNativeLang==='ko';
   try {
-    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status&order=total_words.desc`);
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role&order=total_words.desc`);
     if (!Array.isArray(list)) { box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
     // 복습 완료 집계 (RLS 있으면 동작, 없으면 생략)
     let reviewByUser = {};
@@ -1174,8 +1174,8 @@ async function loadOrgStudents(){
 
 function renderOrgStudentsHTML(list, reviewByUser){
   const ko = userNativeLang==='ko';
-  const pending = list.filter(m=>(m.org_status||'')==='pending');
-  const approved = list.filter(m=>(m.org_status||'')==='approved');
+  const pending = list.filter(m=>(m.org_status||'')==='pending' && m.org_role!=='owner');
+  const approved = list.filter(m=>(m.org_status||'')==='approved' && m.org_role!=='owner');
   let html = '';
   if (pending.length){
     html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">⏳ ${ko?'승인 대기 학생':'Pending'} (${pending.length})</div>`;
@@ -3516,7 +3516,7 @@ function speak(word) {
 async function loadHallOfFame() {
   try {
     let q;
-    if (userOrgId) q = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`;
+    if (userOrgId) q = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&org_role=eq.student&select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`;
     else q = `/rest/v1/members?org_id=is.null&select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`;
     const res = await fetch(SB_URL + q, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
