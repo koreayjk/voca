@@ -173,6 +173,7 @@
     <div class="card">
       <div class="card-head">
         <h3>단체 관리자 <span id="orgadmin-count" style="color:var(--ink-45);font-weight:400;"></span></h3>
+        <input class="search" id="orgadmin-search" placeholder="이름·이메일·단체명 검색" oninput="renderOrgAdmins()">
       </div>
       <div class="scroll-hint">← 좌우로 밀어서 전체 보기 →</div>
       <div id="orgadmin-table"><div class="loading">불러오는 중...</div></div>
@@ -486,7 +487,12 @@ async function loadOrgs(){
 function renderOrgAdmins(){
   const el = document.getElementById('orgadmin-table');
   if(!el) return;
-  const owners = _allMembers.filter(m=>m.org_role==='owner');
+  let owners = _allMembers.filter(m=>m.org_role==='owner');
+  const q = (document.getElementById('orgadmin-search')?.value||'').toLowerCase().trim();
+  if(q) owners = owners.filter(m=>{
+    const org = _allOrgs.find(o=>o.owner_id===m.id);
+    return (m.name||'').toLowerCase().includes(q) || (m.email||'').toLowerCase().includes(q) || (org && (org.name||'').toLowerCase().includes(q));
+  });
   const cnt = document.getElementById('orgadmin-count');
   if(cnt) cnt.textContent = `(${owners.length}명)`;
   if(owners.length===0){ el.innerHTML='<div class="empty">단체 관리자 신청이 없어요</div>'; return; }
