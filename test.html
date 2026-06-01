@@ -1167,6 +1167,7 @@ async function loadOrgStudents(){
         if (Array.isArray(rv)) rv.forEach(r=>{ if(!reviewByUser[r.user_id]) reviewByUser[r.user_id]={done:0,total:0}; reviewByUser[r.user_id].total++; if(r.completed) reviewByUser[r.user_id].done++; });
       } catch(e){}
     }
+    window._orgStudentsList = list;
     box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
   } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
@@ -1195,13 +1196,13 @@ function renderOrgStudentsHTML(list, reviewByUser){
       const seen = m.last_seen_at ? fmtSeenShort(m.last_seen_at) : '-';
       const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
       return `
-      <div style="display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+      <div onclick="openStudentDetail('${m.id}')" style="display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;" title="${ko?'학생 상세 보기':'View detail'}">
         <div style="width:26px;text-align:center;font-weight:700;color:var(--ink-60);font-size:14px;flex-shrink:0;">${medal}</div>
         <div style="flex:1;min-width:0;">
           <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
           <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}</div>
         </div>
-        <button onclick="removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>
+        <button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>
       </div>`;
     }).join('');
   }
@@ -1236,6 +1237,51 @@ async function removeStudent(id){
     toast(userNativeLang==='ko'?'학생을 내보냈어요':'Removed');
     loadOrgStudents();
   } catch(e){ toast(userNativeLang==='ko'?'실패':'Failed'); }
+}
+
+async function openStudentDetail(id){
+  const ko = userNativeLang==='ko';
+  const meCache = (window._orgStudentsList||[]).find(x=>x.id===id);
+  const name = meCache ? meCache.name : '';
+  const overlay = document.createElement('div');
+  overlay.id = 'student-detail-modal';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';
+  overlay.innerHTML = `<div style="background:var(--bg-card);border-radius:18px;max-width:460px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;"><div style="text-align:center;color:var(--ink-60);font-size:13px;padding:30px;">${ko?'불러오는 중...':'Loading...'}</div></div>`;
+  overlay.onclick = (e)=>{ if(e.target===overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+  const card = overlay.firstElementChild;
+  try {
+    const books = await sbFetch(`/rest/v1/voca_books?user_id=eq.${id}&select=*,voca_pages(*,voca_words(*))&order=created_at`);
+    let reviews = [];
+    try { const rv = await sbFetch(`/rest/v1/voca_review?user_id=eq.${id}&select=book_id,page_num,completed`); if(Array.isArray(rv)) reviews=rv; } catch(e){}
+    const revMap = {}; reviews.forEach(r=>{ revMap[r.book_id+'|'+r.page_num] = r.completed?'done':'doing'; });
+    const list = Array.isArray(books)?books:[];
+    const totalWords = list.reduce((n,b)=>n+(b.voca_pages||[]).reduce((mm,p)=>mm+(p.voca_words||[]).length,0),0);
+    let bodyHtml;
+    if (!list.length) bodyHtml = `<div style="text-align:center;color:var(--ink-45);font-size:13px;padding:24px;">${ko?'아직 등록한 책이 없어요':'No books yet'}</div>`;
+    else bodyHtml = list.map(b=>{
+      const pages = (b.voca_pages||[]).slice().sort((x,y)=>(x.page_num+'').localeCompare(y.page_num+'',undefined,{numeric:true}));
+      const wc = pages.reduce((mm,p)=>mm+(p.voca_words||[]).length,0);
+      const donePages = pages.filter(p=>revMap[b.id+'|'+p.page_num]==='done').length;
+      return `
+        <div style="border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+          <div style="font-weight:700;color:var(--ink-100);font-size:14px;">${esc(b.title||(ko?'(제목없음)':'(untitled)'))}</div>
+          <div class="muted" style="font-size:11px;margin-bottom:8px;">${esc(b.author||'')}${b.author?' · ':''}${ko?'단어':'Words'} ${wc} · ${ko?'복습완료':'Done'} ${donePages}/${pages.length}p</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;">
+            ${pages.map(p=>{ const st=revMap[b.id+'|'+p.page_num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'var(--ink-12)'; const tc= st?'#fff':'var(--ink-60)'; return `<span style="font-size:9px;padding:2px 6px;border-radius:99px;background:${c};color:${tc};">${esc(String(p.page_num))}·${(p.voca_words||[]).length}</span>`; }).join('')}
+          </div>
+        </div>`;
+    }).join('');
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>
+        <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;">✕</button>
+      </div>
+      <div class="muted" style="font-size:12px;margin-bottom:14px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
+      ${bodyHtml}`;
+  } catch(e){
+    card.innerHTML = `<div style="text-align:center;color:var(--ink-45);font-size:13px;padding:24px;">${ko?'불러오지 못했어요 (권한 정책 확인)':'Failed to load'}</div><div style="text-align:center;"><button onclick="document.getElementById('student-detail-modal').remove()" style="margin-top:10px;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button></div>`;
+  }
 }
 
 function renderOrgAdminPage(root) {
