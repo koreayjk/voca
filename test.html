@@ -1122,6 +1122,73 @@ async function createOrg() {
   } catch(e) { toast('오류: ' + e.message); }
 }
 
+function esc(s){ if(s==null) return ''; return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtSeenShort(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-'; return (d.getMonth()+1)+'.'+d.getDate(); }catch(e){ return '-'; } }
+
+async function loadOrgStudents(){
+  const box = document.getElementById('org-students');
+  if (!box || !userOrg) return;
+  const ko = userNativeLang==='ko';
+  try {
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status&order=total_words.desc`);
+    if (!Array.isArray(list)) { box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
+    // 복습 완료 집계 (RLS 있으면 동작, 없으면 생략)
+    let reviewByUser = {};
+    const ids = list.map(m=>m.id);
+    if (ids.length) {
+      try {
+        const rv = await sbFetch(`/rest/v1/voca_review?user_id=in.(${ids.join(',')})&select=user_id,completed`);
+        if (Array.isArray(rv)) rv.forEach(r=>{ if(!reviewByUser[r.user_id]) reviewByUser[r.user_id]={done:0,total:0}; reviewByUser[r.user_id].total++; if(r.completed) reviewByUser[r.user_id].done++; });
+      } catch(e){}
+    }
+    box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
+  } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
+}
+
+function renderOrgStudentsHTML(list, reviewByUser){
+  const ko = userNativeLang==='ko';
+  const pending = list.filter(m=>(m.org_status||'')==='pending');
+  const approved = list.filter(m=>(m.org_status||'')==='approved');
+  let html = '';
+  if (pending.length){
+    html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">⏳ ${ko?'승인 대기 학생':'Pending'} (${pending.length})</div>`;
+    html += pending.map(m=>`
+      <div style="display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+        <div style="flex:1;min-width:0;"><div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div><div class="muted" style="font-size:11px;">${esc(m.email||'')}</div></div>
+        <button onclick="setStudentStatus('${m.id}','approved')" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-body);">${ko?'승인':'OK'}</button>
+        <button onclick="setStudentStatus('${m.id}','rejected')" style="background:var(--bg-input);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:var(--font-body);">${ko?'거절':'No'}</button>
+      </div>`).join('');
+  }
+  html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:14px 0 8px;">👥 ${ko?'학생':'Students'} (${approved.length})</div>`;
+  if (!approved.length){
+    html += `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'아직 승인된 학생이 없어요. 학생들에게 코드를 알려주세요.':'No approved students yet.'}</div>`;
+  } else {
+    html += approved.map((m,i)=>{
+      const rv = reviewByUser[m.id];
+      const rvTxt = rv && rv.total ? `${rv.done}/${rv.total}` : '-';
+      const seen = m.last_seen_at ? fmtSeenShort(m.last_seen_at) : '-';
+      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+      return `
+      <div style="display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+        <div style="width:26px;text-align:center;font-weight:700;color:var(--ink-60);font-size:14px;flex-shrink:0;">${medal}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
+          <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  return html;
+}
+
+async function setStudentStatus(id, status){
+  try{
+    await sbFetch(`/rest/v1/members?id=eq.${id}`, 'PATCH', { org_status: status }, true, {'Prefer':'return=representation'});
+    toast(status==='approved'?(userNativeLang==='ko'?'학생을 승인했어요':'Approved'):(userNativeLang==='ko'?'거절했어요':'Rejected'));
+    loadOrgStudents();
+  }catch(e){ toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시':'Failed'); }
+}
+
 function renderOrgAdminPage(root) {
   const ko = userNativeLang==='ko';
   const status = userOrgStatus || 'pending';
@@ -1154,9 +1221,7 @@ function renderOrgAdminPage(root) {
           </div>
           <div class="muted" style="font-size:12px;margin-top:10px;line-height:1.5;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 코드를 입력하면 우리 단체에 들어와요.':'Share this code. Students enter it at signup to join.'}</div>
         </div>
-        <div style="background:var(--bg-card);border:1px dashed var(--ink-12);border-radius:14px;padding:18px;text-align:center;color:var(--ink-45);font-size:13px;">
-          ${ko?'👥 학생 관리 · 진도/랭킹 대시보드는 곧 추가됩니다':'👥 Student management & dashboard coming soon'}
-        </div>
+        <div id="org-students"><div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오는 중...':'Loading students...'}</div></div>
       </div>`;
   }
   root.innerHTML = `
@@ -1170,6 +1235,7 @@ function renderOrgAdminPage(root) {
       </div>
       <div class="scr-scroll">${inner}</div>
     </div>`;
+  if (status==='approved' && userOrg) setTimeout(loadOrgStudents, 0);
 }
 
 // My 메뉴 (설정 모음)
