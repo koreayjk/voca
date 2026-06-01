@@ -356,6 +356,7 @@ async function loadMembers(retry){
     renderOverview();
     renderMembers();
     renderRecent();
+    if(typeof renderOrgAdmins==='function') renderOrgAdmins();
   }catch(e){
     if(!retry){ await new Promise(r=>setTimeout(r,600)); return loadMembers(true); }
     document.getElementById('member-table').innerHTML='<div class="empty">불러오기 실패</div>';
@@ -528,6 +529,12 @@ function renderOrgAdmins(){
       if(st==='approved') actions = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
       else if(st==='rejected') actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
       else actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button> <button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">거절</button>`;
+      // 플랜 버튼 (개인회원과 동일하게 Premium 개월수 / Free)
+      const planBtn = m.email===ADMIN_EMAIL ? '' :
+        (m.plan==='premium'
+          ? `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>`
+          : `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`);
+      actions = planBtn + ' ' + actions;
       return `<tr>
         <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
         <td>${stBadge}</td>
