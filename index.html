@@ -3550,7 +3550,10 @@ async function renderStats(root, dock) {
 
   // 명예의 전당 데이터 로드
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews,last_scored_at&limit=200`, {
+    let hq;
+    if (userOrgId) hq = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&org_role=eq.student&select=name,total_words,perfect_reviews,last_scored_at&limit=200`;
+    else hq = `/rest/v1/members?org_id=is.null&select=name,total_words,perfect_reviews,last_scored_at&limit=200`;
+    const res = await fetch(SB_URL + hq, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
