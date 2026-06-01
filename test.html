@@ -716,7 +716,7 @@ function pageSort(a, b) {
 // ── 플랜/스캔 카운트 로드 ──
 async function loadUserPlan() {
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count`, {
+    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status`, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
@@ -724,6 +724,10 @@ async function loadUserPlan() {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
       userStripeId = data[0].stripe_customer_id || '';
+      userOrgId = data[0].org_id || null;
+      userOrgRole = data[0].org_role || null;
+      userOrgStatus = data[0].org_status || null;
+      if (userOrgRole === 'owner') { await loadMyOrg(); }
       // 최종 접속 시각(last_seen_at)은 매번 갱신, 누적 접속수(visit_count)는 하루 1회만 증가
       const today = new Date().toISOString().slice(0,10);
       const isNewDay = localStorage.getItem('imvoca.lastVisitDay') !== today;
@@ -1074,6 +1078,100 @@ function showNewPasswordForm() {
     </div>`;
 }
 
+let userOrgId = null, userOrgRole = null, userOrgStatus = null, userOrg = null;
+
+// ── 단체(조직) ──
+async function loadMyOrg() {
+  try {
+    const d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code&limit=1`);
+    userOrg = (Array.isArray(d) && d[0]) ? d[0] : null;
+  } catch(e) { userOrg = null; }
+}
+
+function applyEntryStack() {
+  if (userOrgRole === 'owner') stack = [{ name:'org-admin' }];
+  else stack = [{ name:'library' }];
+}
+
+function goPersonalApp() { stack = [{ name:'library' }]; render(); }
+function goOrgAdmin() { stack = [{ name:'org-admin' }]; render(); }
+
+function copyOrgCode() {
+  if (!userOrg) return;
+  navigator.clipboard.writeText(userOrg.code).then(()=>toast(userNativeLang==='ko'?'코드를 복사했어요':'Code copied')).catch(()=>{});
+}
+
+async function createOrg() {
+  const nameEl = document.getElementById('org-name-inp');
+  const name = (nameEl?.value||'').trim();
+  if (!name) { toast(userNativeLang==='ko'?'단체 이름을 입력해주세요':'Enter a name'); return; }
+  let code = 'IMV-' + Math.random().toString(36).substring(2,7).toUpperCase();
+  try {
+    let created = await sbFetch('/rest/v1/orgs','POST',{ name, code, owner_id: currentUser.id }, true, {'Prefer':'return=representation'});
+    if (created && created.message && created.code) { // 코드 중복 등 → 한 번 더
+      code = 'IMV-' + Math.random().toString(36).substring(2,7).toUpperCase();
+      created = await sbFetch('/rest/v1/orgs','POST',{ name, code, owner_id: currentUser.id }, true, {'Prefer':'return=representation'});
+    }
+    const org = Array.isArray(created) ? created[0] : null;
+    if (!org || !org.id) { toast(userNativeLang==='ko'?'단체 생성 실패, 다시 시도해주세요':'Create failed'); return; }
+    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id }, true, {'Prefer':'return=representation'});
+    userOrg = { id: org.id, name: org.name, code: org.code };
+    userOrgId = org.id;
+    toast(userNativeLang==='ko'?'✅ 단체가 만들어졌어요!':'✅ Organization created!');
+    stack = [{ name:'org-admin' }]; render();
+  } catch(e) { toast('오류: ' + e.message); }
+}
+
+function renderOrgAdminPage(root) {
+  const ko = userNativeLang==='ko';
+  const status = userOrgStatus || 'pending';
+  let inner;
+  if (status !== 'approved') {
+    inner = `
+      <div style="text-align:center;padding:30px 0;">
+        <div style="font-size:40px;margin-bottom:12px;">⏳</div>
+        <div style="font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${status==='rejected'?(ko?'승인이 거절되었어요':'Not approved'):(ko?'단체 관리자 승인 대기 중':'Awaiting approval')}</div>
+        <div class="muted" style="font-size:13px;line-height:1.6;">${status==='rejected'?(ko?'관리자에게 문의해주세요.':'Please contact the admin.'):(ko?'관리자 승인 후 단체를 만들 수 있어요.<br>승인되면 여기서 바로 만들 수 있어요.':'You can create your organization after admin approval.')}</div>
+      </div>`;
+  } else if (!userOrg) {
+    inner = `
+      <div style="padding:10px 0;">
+        <div style="font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">${ko?'단체 만들기':'Create your organization'}</div>
+        <div class="muted" style="font-size:13px;line-height:1.6;margin-bottom:18px;">${ko?'학원·학교 등 단체 이름을 입력하면 학생 초대용 코드가 자동으로 만들어져요.':'Enter your organization name; a join code is generated automatically.'}</div>
+        <input id="org-name-inp" type="text" placeholder="${ko?'단체 이름 (예: OO영어학원)':'Organization name'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:13px 14px;font-family:var(--font-body);font-size:15px;color:var(--ink-100);outline:none;margin-bottom:14px;">
+        <button class="btn btn-solid" onclick="createOrg()">${ko?'단체 만들기':'Create'}</button>
+      </div>`;
+  } else {
+    inner = `
+      <div style="padding:6px 0;">
+        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:18px;margin-bottom:16px;">
+          <div class="muted" style="font-size:12px;margin-bottom:4px;">${ko?'단체 이름':'Organization'}</div>
+          <div style="font-size:20px;font-weight:700;color:var(--ink-100);margin-bottom:14px;">${userOrg.name}</div>
+          <div class="muted" style="font-size:12px;margin-bottom:6px;">${ko?'학생 초대 코드':'Student join code'}</div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div style="font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:0.05em;color:var(--accent);">${userOrg.code}</div>
+            <button onclick="copyOrgCode()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;color:var(--ink-100);font-family:var(--font-body);">${ko?'복사':'Copy'}</button>
+          </div>
+          <div class="muted" style="font-size:12px;margin-top:10px;line-height:1.5;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 코드를 입력하면 우리 단체에 들어와요.':'Share this code. Students enter it at signup to join.'}</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px dashed var(--ink-12);border-radius:14px;padding:18px;text-align:center;color:var(--ink-45);font-size:13px;">
+          ${ko?'👥 학생 관리 · 진도/랭킹 대시보드는 곧 추가됩니다':'👥 Student management & dashboard coming soon'}
+        </div>
+      </div>`;
+  }
+  root.innerHTML = `
+    <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <img src="https://imvoca.app/2.png" style="width:36px;height:36px;object-fit:contain;">
+        <div style="font-family:var(--font-body);font-weight:500;letter-spacing:-0.02em;font-size:24px;color:var(--ink-100);">${ko?'단체 관리':'Org Admin'}</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+        <button onclick="goPersonalApp()" style="background:var(--ink-100);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:12px;font-family:var(--font-body);cursor:pointer;font-weight:700;">${ko?'📚 단어장으로 →':'📚 To app →'}</button>
+      </div>
+      <div class="scr-scroll">${inner}</div>
+    </div>`;
+}
+
 // My 메뉴 (설정 모음)
 function showMyMenu() {
   const ko = userNativeLang === 'ko';
@@ -1086,6 +1184,7 @@ function showMyMenu() {
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
+      ${userOrgRole==='owner' ? row('🏫', ko?'단체 관리':'Org Admin', "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
       ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
       ${row('✉️', ko?'문의하기':'Contact Us', "document.getElementById('my-modal').remove();contactSupport()")}
@@ -1301,6 +1400,7 @@ async function sbInit() {
         loadBooksFromDB(),
         loadNotices()
       ]);
+      applyEntryStack();
       render();
       // 렌더 후 배지 업데이트 (상단 버튼이 그려진 다음)
       setTimeout(updateNoticeBadge, 100);
@@ -1362,6 +1462,7 @@ async function loginWithDemoToken(code) {
     await loadUserName();
     await loadUserPlan();
     await loadBooksFromDB();
+    applyEntryStack();
     render();
     setTimeout(checkReviews, 1000);
   } catch(e) {
@@ -1504,7 +1605,7 @@ async function sbSignIn(email, pw) {
         }
       } catch(e) {}
     }
-    await loadBooksFromDB(); await loadUserPlan(); render(); setTimeout(checkReviews, 1000);
+    await loadBooksFromDB(); await loadUserPlan(); applyEntryStack(); render(); setTimeout(checkReviews, 1000);
   } catch(e) {
     toast('로그인 오류: ' + e.message);
     if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
@@ -2735,6 +2836,8 @@ function render() {
   const route = stack[stack.length-1];
   const tab = currentTab();
   const dock = buildDock();
+
+  if (route.name === 'org-admin') { renderOrgAdminPage(root); return; }
 
   if (route.name === 'library') {
     root.innerHTML = `
