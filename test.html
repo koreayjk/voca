@@ -2950,8 +2950,10 @@ function render() {
               ${userOrg ? `
                 ${userOrg.logo_url ? `<img src="${userOrg.logo_url}" style="width:42px;height:42px;object-fit:contain;border-radius:11px;background:#fff;border:1px solid var(--ink-07);">` : `<img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">`}
                 <div>
-                  <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:22px;color:var(--ink-100);line-height:1.15;">${esc(userOrg.name)}</div>
-                  <div style="font-size:12px;color:var(--ink-60);margin-top:1px;">${userName||''}${t('bookshelf')}</div>
+                  <div style="display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;">
+                    <span style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:22px;color:var(--ink-100);line-height:1.15;">${esc(userOrg.name)}</span>
+                    ${userName?`<span style="font-size:13px;color:var(--ink-60);font-weight:500;">${esc(userName)}${userNativeLang==='ko'?'님':''}</span>`:''}
+                  </div>
                   <div style="font-size:9px;color:var(--ink-40);margin-top:1px;letter-spacing:0.02em;">powered by IM VOCA</div>
                 </div>
               ` : `
