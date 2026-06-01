@@ -1133,7 +1133,7 @@ async function uploadOrgLogo(ev){
   try {
     const ext = (file.name.split('.').pop()||'png').toLowerCase();
     const path = `orglogo_${userOrg.id}_${Date.now()}.${ext}`;
-    const doUp = () => fetch(SB_URL+`/storage/v1/object/notice-images/${path}`, {
+    const doUp = () => fetch(SB_URL+`/storage/v1/object/org-logos/${path}`, {
       method:'POST',
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Content-Type':file.type||'image/png','x-upsert':'true'},
       body:file
@@ -1141,7 +1141,7 @@ async function uploadOrgLogo(ev){
     let upRes = await doUp();
     if ((upRes.status===401||upRes.status===403) && await refreshSession()) upRes = await doUp();
     if (!upRes.ok) { toast(ko?'로고 업로드 실패 (저장소 권한 확인)':'Upload failed'); return; }
-    const url = `${SB_URL}/storage/v1/object/public/notice-images/${path}`;
+    const url = `${SB_URL}/storage/v1/object/public/org-logos/${path}`;
     await sbFetch(`/rest/v1/orgs?id=eq.${userOrg.id}`, 'PATCH', { logo_url: url }, true, {'Prefer':'return=representation'});
     userOrg.logo_url = url;
     toast(ko?'✅ 로고가 등록됐어요':'✅ Logo saved');
