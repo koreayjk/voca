@@ -1201,6 +1201,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
           <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
           <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}</div>
         </div>
+        <button onclick="removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>
       </div>`;
     }).join('');
   }
@@ -1213,6 +1214,28 @@ async function setStudentStatus(id, status){
     toast(status==='approved'?(userNativeLang==='ko'?'학생을 승인했어요':'Approved'):(userNativeLang==='ko'?'거절했어요':'Rejected'));
     loadOrgStudents();
   }catch(e){ toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시':'Failed'); }
+}
+
+async function regenerateOrgCode(){
+  if (!userOrg) return;
+  if (!confirm(userNativeLang==='ko'?'새 코드를 발급할까요?\n기존 코드로는 더 이상 가입할 수 없어요. (이미 가입한 학생은 그대로예요)':'Regenerate code? The old code will stop working.')) return;
+  const code = 'IMV-' + Math.random().toString(36).substring(2,7).toUpperCase();
+  try {
+    const r = await sbFetch(`/rest/v1/orgs?id=eq.${userOrg.id}`, 'PATCH', { code }, true, {'Prefer':'return=representation'});
+    if (!(Array.isArray(r) && r[0])) { toast(userNativeLang==='ko'?'재발급 실패':'Failed'); return; }
+    userOrg.code = code;
+    toast(userNativeLang==='ko'?'✅ 새 코드가 발급됐어요':'New code issued');
+    stack=[{name:'org-admin'}]; render();
+  } catch(e){ toast('오류: '+e.message); }
+}
+
+async function removeStudent(id){
+  if (!confirm(userNativeLang==='ko'?'이 학생을 단체에서 내보낼까요?\n(학생 계정과 단어는 유지되고, 단체 소속만 해제돼요)':'Remove this student from the org?')) return;
+  try {
+    await sbFetch(`/rest/v1/members?id=eq.${id}`, 'PATCH', { org_id: null, org_role: null, org_status: 'approved' }, true, {'Prefer':'return=representation'});
+    toast(userNativeLang==='ko'?'학생을 내보냈어요':'Removed');
+    loadOrgStudents();
+  } catch(e){ toast(userNativeLang==='ko'?'실패':'Failed'); }
 }
 
 function renderOrgAdminPage(root) {
@@ -1244,6 +1267,7 @@ function renderOrgAdminPage(root) {
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div style="font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:0.05em;color:var(--accent);">${userOrg.code}</div>
             <button onclick="copyOrgCode()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;color:var(--ink-100);font-family:var(--font-body);">${ko?'복사':'Copy'}</button>
+            <button onclick="regenerateOrgCode()" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'재발급':'New'}</button>
           </div>
           <div class="muted" style="font-size:12px;margin-top:10px;line-height:1.5;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 코드를 입력하면 우리 단체에 들어와요.':'Share this code. Students enter it at signup to join.'}</div>
         </div>
@@ -3449,7 +3473,10 @@ function speak(word) {
 
 async function loadHallOfFame() {
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`, {
+    let q;
+    if (userOrgId) q = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`;
+    else q = `/rest/v1/members?org_id=is.null&select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`;
+    const res = await fetch(SB_URL + q, {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
     const data = await res.json();
@@ -3472,7 +3499,7 @@ async function renderStats(root, dock) {
       <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🏆 ${userNativeLang==='ko'?'명예의 전당':'Hall of Fame'}</div>
     </div>
     <div class="muted" style="font-size:12px;margin-top:2px;margin-bottom:16px;">
-      ${userNativeLang==='ko'?'A2=1점 · B1=2점 · B2=3점 · C1=4점 · C2=5점 (CEFR 난이도 가중치)':'A2=1pt · B1=2pt · B2=3pt · C1=4pt · C2=5pt (CEFR weighted)'}
+      ${userOrg?`<div style="color:var(--accent);font-weight:600;margin-bottom:3px;">🏫 ${esc(userOrg.name)} ${userNativeLang==='ko'?'안에서의 순위':'ranking'}</div>`:''}${userNativeLang==='ko'?'A2=1점 · B1=2점 · B2=3점 · C1=4점 · C2=5점 (CEFR 난이도 가중치)':'A2=1pt · B1=2pt · B2=3pt · C1=4pt · C2=5pt (CEFR weighted)'}
     </div>
     <div class="scr-scroll" id="hall-inner">
       <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div>
