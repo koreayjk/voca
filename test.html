@@ -485,7 +485,10 @@ window._reviewBadgeCount = 0;
 let userPlan = 'free';      // 'free' or 'premium'
 let userStripeId = '';      // Stripe 고객 ID (결제한 사람만 있음)
 let userScanCount = 0;      // 이번 달 스캔 횟수
-const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한
+const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한 (총 누적)
+let userDailyScanCount = 0; // 오늘 스캔 횟수 (단체 학생용)
+let userDailyScanDate = null; // 오늘 스캔 기준 날짜
+const STUDENT_DAILY_LIMIT = 20; // 단체 소속 학생 일일 스캔 제한
 
 async function sbFetch(path, method='GET', body=null, useAuth=true, extraHeaders={}) {
   const buildHeaders = () => {
@@ -723,6 +726,8 @@ async function loadUserPlan() {
     if (data[0]) {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
+      userDailyScanCount = data[0].daily_scan_count || 0;
+      userDailyScanDate = data[0].daily_scan_date || null;
       userStripeId = data[0].stripe_customer_id || '';
       userOrgId = data[0].org_id || null;
       userOrgRole = data[0].org_role || null;
@@ -971,15 +976,32 @@ function contactSupport() {
 // 스캔 카운트 증가
 async function incrementScanCount() {
   userScanCount++;
+  // 일일 카운트 (날짜 바뀌면 리셋)
+  const today = _todayStr();
+  if (userDailyScanDate !== today) { userDailyScanDate = today; userDailyScanCount = 0; }
+  userDailyScanCount++;
   try {
-    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { scan_count: userScanCount });
+    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { scan_count: userScanCount, daily_scan_count: userDailyScanCount, daily_scan_date: userDailyScanDate });
   } catch(e) { console.error('[scan_count 저장 오류]', e); }
 }
 
 // 스캔 가능 여부 체크
+function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved'); }
+function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDailyScanCount : 0; }
 function canScan() {
   if (userPlan === 'premium') return true;
+  // 단체 소속(승인) 학생: 총 누적 제한 면제, 일일 제한만 적용
+  if (isOrgStudentActive()) return dailyScansToday() < STUDENT_DAILY_LIMIT;
   return userScanCount < FREE_SCAN_LIMIT;
+}
+// 차단 사유에 맞는 안내 (학생 일일 한도 vs 무료 한도)
+function handleScanBlocked() {
+  if (isOrgStudentActive()) {
+    toast(userNativeLang==='ko'?`오늘 학습 한도(${STUDENT_DAILY_LIMIT}장)에 도달했어요. 내일 다시 이용할 수 있어요 😊`:`Daily limit (${STUDENT_DAILY_LIMIT}) reached. Try again tomorrow 😊`);
+  } else {
+    showUpgradePopup();
+  }
 }
 
 // 업그레이드 팝업
@@ -1572,6 +1594,7 @@ async function sbInit() {
         loadBooksFromDB(),
         loadNotices()
       ]);
+      await maybeSeedSampleBook();
       applyEntryStack();
       render();
       // 렌더 후 배지 업데이트 (상단 버튼이 그려진 다음)
@@ -1777,7 +1800,7 @@ async function sbSignIn(email, pw) {
         }
       } catch(e) {}
     }
-    await loadBooksFromDB(); await loadUserPlan(); applyEntryStack(); render(); setTimeout(checkReviews, 1000);
+    await loadBooksFromDB(); await loadUserPlan(); await maybeSeedSampleBook(); applyEntryStack(); render(); setTimeout(checkReviews, 1000);
   } catch(e) {
     toast('로그인 오류: ' + e.message);
     if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
@@ -1791,6 +1814,43 @@ async function lookupOrgByCode(code) {
     const data = await sbFetch(`/rest/v1/orgs?code=eq.${encodeURIComponent(code)}&active=eq.true&select=id,name`, 'GET', null, false);
     return (Array.isArray(data) && data[0]) ? data[0] : null;
   } catch(e) { return null; }
+}
+
+// ===== 신규 가입자 온보딩 샘플 책 =====
+const _SAMPLE_EN_WORDS = [{"en": "shore", "ipa": "/ʃɔːr/", "lv": "B1", "s": "They walked along the shore at dawn.", "ko": "해안, 물가", "kc": "바닷가", "eg": "the land along the edge of the sea", "ec": "seaside"}, {"en": "lantern", "ipa": "/ˈlæntərn/", "lv": "B1", "s": "He lit the lantern before night fell.", "ko": "랜턴, 등불", "kc": "손등불", "eg": "a lamp inside a case", "ec": "portable light"}, {"en": "distant", "ipa": "/ˈdɪstənt/", "lv": "B1", "s": "A distant ship appeared on the horizon.", "ko": "먼, 멀리 있는", "kc": "멀리 있는", "eg": "far away", "ec": "far off"}, {"en": "wander", "ipa": "/ˈwɑːndər/", "lv": "B1", "s": "She liked to wander near the cliffs.", "ko": "거닐다, 헤매다", "kc": "정처 없이 걷다", "eg": "to walk slowly with no goal", "ec": "roam"}, {"en": "silence", "ipa": "/ˈsaɪləns/", "lv": "A2", "s": "The silence of the sea calmed him.", "ko": "침묵, 고요", "kc": "고요함", "eg": "complete quiet", "ec": "quiet"}, {"en": "gentle", "ipa": "/ˈdʒentl/", "lv": "A2", "s": "A gentle wind touched her face.", "ko": "부드러운, 잔잔한", "kc": "잔잔한", "eg": "soft and mild", "ec": "mild"}, {"en": "ordinary", "ipa": "/ˈɔːrdneri/", "lv": "B1", "s": "It was an ordinary winter evening.", "ko": "평범한", "kc": "보통의", "eg": "normal, usual", "ec": "usual"}, {"en": "duty", "ipa": "/ˈduːti/", "lv": "B1", "s": "Keeping the light was his duty.", "ko": "의무, 임무", "kc": "맡은 일", "eg": "something you must do", "ec": "responsibility"}, {"en": "weary", "ipa": "/ˈwɪri/", "lv": "B2", "s": "He felt weary after the long night.", "ko": "지친, 피곤한", "kc": "몹시 지친", "eg": "very tired", "ec": "tired"}, {"en": "faint", "ipa": "/feɪnt/", "lv": "B2", "s": "A faint glow spread over the water.", "ko": "희미한", "kc": "어렴풋한", "eg": "not clear or strong", "ec": "dim"}, {"en": "coast", "ipa": "/koʊst/", "lv": "A2", "s": "Fishing boats lined the coast.", "ko": "해안", "kc": "바닷가", "eg": "land next to the sea", "ec": "seaside"}, {"en": "steady", "ipa": "/ˈstedi/", "lv": "B1", "s": "He kept a steady hand on the wheel.", "ko": "꾸준한, 안정된", "kc": "흔들림 없는", "eg": "firm and stable", "ec": "stable"}, {"en": "horizon", "ipa": "/həˈraɪzn/", "lv": "B1", "s": "The sun sank below the horizon.", "ko": "수평선, 지평선", "kc": "하늘과 바다의 경계", "eg": "line where sky meets sea", "ec": "skyline"}, {"en": "fragile", "ipa": "/ˈfrædʒl/", "lv": "B2", "s": "The old lamp was fragile.", "ko": "부서지기 쉬운", "kc": "깨지기 쉬운", "eg": "easily broken", "ec": "delicate"}, {"en": "linger", "ipa": "/ˈlɪŋɡər/", "lv": "B2", "s": "The fog lingered until noon.", "ko": "오래 머물다", "kc": "가시지 않고 남다", "eg": "to stay longer", "ec": "remain"}, {"en": "murmur", "ipa": "/ˈmɜːrmər/", "lv": "B2", "s": "She heard the murmur of the waves.", "ko": "속삭임, 웅성거림", "kc": "나직한 소리", "eg": "a soft low sound", "ec": "soft sound"}, {"en": "solitude", "ipa": "/ˈsɑːlətuːd/", "lv": "C1", "s": "He had grown used to solitude.", "ko": "고독", "kc": "홀로 있음", "eg": "the state of being alone", "ec": "aloneness"}, {"en": "vast", "ipa": "/væst/", "lv": "B2", "s": "The vast ocean stretched before them.", "ko": "광대한", "kc": "끝없이 넓은", "eg": "extremely large", "ec": "huge"}, {"en": "glimmer", "ipa": "/ˈɡlɪmər/", "lv": "C1", "s": "A glimmer of hope returned.", "ko": "희미한 빛, 기미", "kc": "가느다란 빛", "eg": "a faint light or sign", "ec": "faint light"}, {"en": "restless", "ipa": "/ˈrestləs/", "lv": "B2", "s": "The restless sea never slept.", "ko": "쉼 없는, 안절부절못하는", "kc": "쉼 없는", "eg": "unable to rest", "ec": "never still"}, {"en": "shelter", "ipa": "/ˈʃeltər/", "lv": "B1", "s": "They found shelter from the storm.", "ko": "피난처, 은신처", "kc": "몸을 피하는 곳", "eg": "a safe covered place", "ec": "refuge"}, {"en": "drift", "ipa": "/drɪft/", "lv": "B2", "s": "The small boat began to drift.", "ko": "표류하다", "kc": "떠내려가다", "eg": "to float slowly", "ec": "float along"}, {"en": "weathered", "ipa": "/ˈweðərd/", "lv": "C1", "s": "His weathered hands were strong.", "ko": "풍화된, 거칠어진", "kc": "비바람에 닳은", "eg": "worn by weather", "ec": "worn"}, {"en": "dusk", "ipa": "/dʌsk/", "lv": "B2", "s": "At dusk the tower glowed.", "ko": "황혼, 땅거미", "kc": "해질 무렵", "eg": "the time after sunset", "ec": "twilight"}, {"en": "relentless", "ipa": "/rɪˈlentləs/", "lv": "C1", "s": "The relentless wind howled all night.", "ko": "가차없는, 끈질긴", "kc": "수그러들지 않는", "eg": "never stopping", "ec": "unstopping"}, {"en": "serene", "ipa": "/səˈriːn/", "lv": "C1", "s": "By morning the bay was serene.", "ko": "고요한, 평온한", "kc": "잔잔한", "eg": "calm and peaceful", "ec": "peaceful"}, {"en": "perilous", "ipa": "/ˈperələs/", "lv": "C1", "s": "The perilous rocks sank many ships.", "ko": "위험천만한", "kc": "매우 위험한", "eg": "very dangerous", "ec": "dangerous"}, {"en": "solace", "ipa": "/ˈsɑːləs/", "lv": "C1", "s": "The light gave sailors solace.", "ko": "위안", "kc": "마음의 위로", "eg": "comfort in sadness", "ec": "comfort"}, {"en": "luminous", "ipa": "/ˈluːmɪnəs/", "lv": "C1", "s": "A luminous beam swept the sea.", "ko": "빛나는", "kc": "환히 빛나는", "eg": "giving off light", "ec": "glowing"}, {"en": "desolate", "ipa": "/ˈdesələt/", "lv": "C1", "s": "The desolate coast had no houses.", "ko": "황량한", "kc": "쓸쓸한", "eg": "empty and lonely", "ec": "bleak"}, {"en": "tempest", "ipa": "/ˈtempɪst/", "lv": "C2", "s": "A tempest rose without warning.", "ko": "폭풍우", "kc": "사나운 비바람", "eg": "a violent storm", "ec": "violent storm"}, {"en": "unwavering", "ipa": "/ʌnˈweɪvərɪŋ/", "lv": "C2", "s": "His unwavering watch saved them.", "ko": "흔들림 없는", "kc": "확고한", "eg": "steady and firm", "ec": "steadfast"}, {"en": "ephemeral", "ipa": "/ɪˈfemərəl/", "lv": "C2", "s": "The calm was ephemeral.", "ko": "덧없는, 순간적인", "kc": "잠시뿐인", "eg": "lasting a very short time", "ec": "fleeting"}, {"en": "resilient", "ipa": "/rɪˈzɪliənt/", "lv": "C1", "s": "The keeper was resilient and calm.", "ko": "회복력 있는", "kc": "잘 견디는", "eg": "able to recover quickly", "ec": "tough"}, {"en": "profound", "ipa": "/prəˈfaʊnd/", "lv": "C1", "s": "He felt a profound peace.", "ko": "깊은, 심오한", "kc": "매우 깊은", "eg": "very deep", "ec": "deep"}, {"en": "beacon", "ipa": "/ˈbiːkən/", "lv": "B2", "s": "The beacon guided them home.", "ko": "봉화, 등댓불", "kc": "길잡이 불빛", "eg": "a guiding light", "ec": "guiding light"}];
+const _SAMPLE_KO_WORDS = [{"ko": "안녕하세요", "rom": "annyeonghaseyo", "lv": "A2", "base": "hello (polite)", "ctx": "polite greeting", "s": "처음 만나서 안녕하세요."}, {"ko": "감사합니다", "rom": "gamsahamnida", "lv": "A2", "base": "thank you", "ctx": "polite thanks", "s": "도와줘서 감사합니다."}, {"ko": "친구", "rom": "chingu", "lv": "A2", "base": "friend", "ctx": "friend", "s": "제 친구를 소개할게요."}, {"ko": "학교", "rom": "hakgyo", "lv": "A2", "base": "school", "ctx": "school", "s": "학교에 갑니다."}, {"ko": "음식", "rom": "eumsik", "lv": "A2", "base": "food", "ctx": "food", "s": "한국 음식을 좋아해요."}, {"ko": "시간", "rom": "sigan", "lv": "A2", "base": "time, hour", "ctx": "time", "s": "시간이 없어요."}, {"ko": "날씨", "rom": "nalssi", "lv": "A2", "base": "weather", "ctx": "weather", "s": "오늘 날씨가 좋아요."}, {"ko": "사랑", "rom": "sarang", "lv": "A2", "base": "love", "ctx": "love", "s": "가족을 사랑해요."}, {"ko": "가족", "rom": "gajok", "lv": "A2", "base": "family", "ctx": "family", "s": "우리 가족은 네 명이에요."}, {"ko": "행복", "rom": "haengbok", "lv": "B1", "base": "happiness", "ctx": "happiness", "s": "행복을 느껴요."}, {"ko": "여행", "rom": "yeohaeng", "lv": "B1", "base": "travel, trip", "ctx": "a trip", "s": "여행을 떠나요."}, {"ko": "마음", "rom": "maeum", "lv": "B1", "base": "heart, mind", "ctx": "feelings", "s": "마음이 따뜻해요."}, {"ko": "약속", "rom": "yaksok", "lv": "B1", "base": "promise, appointment", "ctx": "a plan", "s": "친구와 약속이 있어요."}, {"ko": "걱정", "rom": "geokjeong", "lv": "B1", "base": "worry", "ctx": "worry", "s": "너무 걱정하지 마세요."}, {"ko": "추억", "rom": "chueok", "lv": "B2", "base": "fond memory", "ctx": "cherished memory", "s": "좋은 추억이 많아요."}, {"ko": "노력", "rom": "noryeok", "lv": "B1", "base": "effort", "ctx": "effort", "s": "노력하면 잘 될 거예요."}, {"ko": "기억", "rom": "gieok", "lv": "B1", "base": "memory", "ctx": "remembering", "s": "그날을 기억해요."}, {"ko": "느낌", "rom": "neukkim", "lv": "B1", "base": "feeling", "ctx": "impression", "s": "느낌이 좋아요."}, {"ko": "풍경", "rom": "punggyeong", "lv": "B2", "base": "scenery", "ctx": "landscape", "s": "풍경이 아름다워요."}, {"ko": "분위기", "rom": "bunwigi", "lv": "B2", "base": "atmosphere, mood", "ctx": "mood", "s": "분위기가 좋아요."}, {"ko": "그리움", "rom": "geurium", "lv": "C1", "base": "longing", "ctx": "yearning", "s": "고향에 대한 그리움."}, {"ko": "위로", "rom": "wiro", "lv": "B2", "base": "comfort, consolation", "ctx": "comfort", "s": "위로가 필요해요."}, {"ko": "용기", "rom": "yonggi", "lv": "B1", "base": "courage", "ctx": "courage", "s": "용기를 내세요."}, {"ko": "변화", "rom": "byeonhwa", "lv": "B2", "base": "change", "ctx": "change", "s": "큰 변화가 있었어요."}, {"ko": "깨닫다", "rom": "kkaedatda", "lv": "B2", "base": "to realize", "ctx": "realize", "s": "중요함을 깨달았어요."}, {"ko": "견디다", "rom": "gyeondida", "lv": "B2", "base": "to endure", "ctx": "endure", "s": "어려움을 견뎠어요."}, {"ko": "그윽하다", "rom": "geuukhada", "lv": "C1", "base": "deep and mellow", "ctx": "profound, mellow", "s": "향기가 그윽해요."}, {"ko": "애틋하다", "rom": "aeteutada", "lv": "C1", "base": "tender and longing", "ctx": "bittersweet affection", "s": "애틋한 마음이 들어요."}, {"ko": "어렴풋하다", "rom": "eoryeompusada", "lv": "C1", "base": "faint, vague", "ctx": "dim", "s": "기억이 어렴풋해요."}, {"ko": "한결같다", "rom": "hangyeolgatda", "lv": "C1", "base": "constant, unchanging", "ctx": "steadfast", "s": "한결같은 사랑."}, {"ko": "묵묵하다", "rom": "mukmukhada", "lv": "C1", "base": "quietly steadfast", "ctx": "silent and steady", "s": "묵묵히 일했어요."}, {"ko": "아련하다", "rom": "aryeonhada", "lv": "C2", "base": "faintly nostalgic", "ctx": "dimly nostalgic", "s": "아련한 추억."}, {"ko": "의연하다", "rom": "uiyeonhada", "lv": "C2", "base": "composed, undaunted", "ctx": "steadfast", "s": "의연하게 견뎠어요."}, {"ko": "간절하다", "rom": "ganjeolhada", "lv": "C1", "base": "earnest, eager", "ctx": "heartfelt", "s": "간절히 바랐어요."}, {"ko": "헤아리다", "rom": "hearida", "lv": "C1", "base": "to fathom, to consider", "ctx": "to understand deeply", "s": "마음을 헤아려요."}, {"ko": "빛나다", "rom": "binnada", "lv": "B1", "base": "to shine", "ctx": "to shine", "s": "별이 빛나요."}];
+function _chunk(a,n){const r=[];for(let i=0;i<a.length;i+=n)r.push(a.slice(i,i+n));return r;}
+function sampleBookData(nativeLang){
+  if(nativeLang==='en'){
+    return {
+      title:'A Day in Korea (한국에서의 하루)', author:'IM VOCA',
+      color:'#2f6f57',
+      desc:'A gentle starter reader for learning Korean. Browse by page, flip flashcards, and try the quiz. Delete it anytime.',
+      pages:_chunk(_SAMPLE_KO_WORDS,12).map((ws,i)=>({num:String(i+1), words:ws.map(w=>({en:w.ko, ipa:w.rom, base:w.base, ctx:w.ctx, sentence:w.s, level:w.lv}))}))
+    };
+  }
+  const useKo=(nativeLang==='ko');
+  return {
+    title:'The Lighthouse Keeper', author:'IM VOCA',
+    color:'#1c3553',
+    desc: useKo?'영어 단어 학습용 샘플 책이에요. 페이지별로 단어를 보고 암기 카드·퀴즈도 해보세요. 필요 없으면 삭제하셔도 돼요.':'A sample English vocabulary book. Browse by page, flip flashcards, and try the quiz. Delete it anytime.',
+    pages:_chunk(_SAMPLE_EN_WORDS,12).map((ws,i)=>({num:String(i+1), words:ws.map(w=>({en:w.en, ipa:w.ipa, base:(useKo?w.ko:w.eg), ctx:(useKo?w.kc:w.ec), sentence:w.s, level:w.lv}))}))
+  };
+}
+async function maybeSeedSampleBook(){
+  try{
+    if(!currentUser||!currentUser.id) return;
+    if(Array.isArray(books)&&books.length>0) return;
+    const flag='imvoca.seeded.'+currentUser.id;
+    if(localStorage.getItem(flag)) return;
+    localStorage.setItem(flag,'1');
+    const pack=sampleBookData(userNativeLang||'ko');
+    const bookRes=await sbFetch('/rest/v1/voca_books','POST',{user_id:currentUser.id,title:pack.title,author:pack.author,color:pack.color,description:pack.desc,cover_url:''},true,{'Prefer':'return=representation'});
+    const book=Array.isArray(bookRes)?bookRes[0]:bookRes;
+    if(!book||!book.id) return;
+    for(const pg of pack.pages){ await savePageWordsToDB(book.id, pg.num, pg.words); }
+    await loadBooksFromDB();
+  }catch(e){ console.warn('[sample seed]',e); }
 }
 
 async function sbSignUp(email, pw, name, acctType='personal', orgCode='') {
@@ -2545,7 +2605,7 @@ async function processNextMultiScan() {
   if (!canScan()) {
     if ((window._multiAccumWords||[]).length) { await finalizeMultiScan(); }
     else { window._multiImgData = null; window._multiAccumWords = []; window._multiPageNums = []; window._multiLastPage = ''; }
-    showUpgradePopup();
+    handleScanBlocked();
     return;
   }
   const idx = window._multiIdx;
@@ -2745,7 +2805,7 @@ function buildExcludePrompt() {
 
 async function doScan() {
   // 스캔 제한 체크
-  if (!canScan()) { showUpgradePopup(); return; }
+  if (!canScan()) { handleScanBlocked(); return; }
   const bId = document.getElementById('up-book-sel')?.value;
   if (!bId) { toast('책을 먼저 선택해주세요'); return; }
   let pg;
@@ -3027,7 +3087,7 @@ function render() {
                 <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
               `}
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='free'?(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`):(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`)}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='premium'?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
           </div>
           <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
         </div>
