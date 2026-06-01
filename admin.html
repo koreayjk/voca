@@ -64,8 +64,8 @@
   .search{padding:8px 14px;border:1px solid var(--ink-12);border-radius:99px;font-family:inherit;font-size:13px;outline:none;min-width:200px;}
   .search:focus{border-color:var(--accent);}
   table{width:100%;border-collapse:collapse;}
-  #member-table, #review-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  #member-table table, #review-table table { min-width: 480px; }
+  #member-table, #review-table, #orgadmin-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #member-table table, #review-table table, #orgadmin-table table { min-width: 480px; }
   th{text-align:left;font-size:11px;font-weight:700;color:var(--ink-45);text-transform:uppercase;letter-spacing:0.05em;padding:10px 14px;border-bottom:1px solid var(--ink-12);}
   td{padding:13px 14px;font-size:13px;border-bottom:1px solid var(--ink-06);vertical-align:middle;}
   @media (max-width: 600px) {
@@ -136,7 +136,8 @@
 
   <div class="tabs">
     <button class="tab on" onclick="showTab('overview',this)">📊 현황</button>
-    <button class="tab" onclick="showTab('members',this)">👥 회원 관리</button>
+    <button class="tab" onclick="showTab('members',this)">👥 개인 회원</button>
+    <button class="tab" onclick="showTab('orgadmins',this)">🏫 단체 관리자</button>
     <button class="tab" onclick="showTab('notice',this)">📢 공지 발송</button>
     <button class="tab" onclick="showTab('settings',this)">🤖 API 키</button>
   </div>
@@ -159,11 +160,23 @@
   <div class="panel" id="panel-members">
     <div class="card">
       <div class="card-head">
-        <h3>전체 회원 <span id="member-count" style="color:var(--ink-45);font-weight:400;"></span></h3>
+        <h3>개인 회원 <span id="member-count" style="color:var(--ink-45);font-weight:400;"></span></h3>
         <input class="search" id="member-search" placeholder="이름·이메일 검색" oninput="renderMembers()">
       </div>
       <div class="scroll-hint">← 좌우로 밀어서 전체 보기 →</div>
       <div id="member-table"><div class="loading">불러오는 중...</div></div>
+    </div>
+  </div>
+
+  <!-- ── 단체 관리자 ── -->
+  <div class="panel" id="panel-orgadmins">
+    <div class="card">
+      <div class="card-head">
+        <h3>단체 관리자 <span id="orgadmin-count" style="color:var(--ink-45);font-weight:400;"></span></h3>
+        <input class="search" id="orgadmin-search" placeholder="이름·이메일·단체명 검색" oninput="renderOrgAdmins()">
+      </div>
+      <div class="scroll-hint">← 좌우로 밀어서 전체 보기 →</div>
+      <div id="orgadmin-table"><div class="loading">불러오는 중...</div></div>
     </div>
   </div>
 
@@ -235,6 +248,7 @@ const PRICE_MONTHLY = 3.99;   // 월 구독 단가 (USD)
 
 let _authToken = null;
 let _allMembers = [];
+let _allOrgs = [];
 
 // ── TOAST ──
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
@@ -317,17 +331,19 @@ function showTab(name, btn){
   btn.classList.add('on');
   document.getElementById('panel-'+name).classList.add('on');
   if(name==='notice') loadNoticeList();
+  if(name==='orgadmins') renderOrgAdmins();
 }
 
 // ── DATA LOAD ──
 async function loadAll(){
   await loadMembers();
+  await loadOrgs();
   await loadApiKey();
 }
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allMembers = await res.json();
@@ -355,6 +371,10 @@ function renderOverview(){
   const paying = _allMembers.filter(m=>m.plan==='premium' && m.stripe_customer_id).length;
   const mrr = (paying * PRICE_MONTHLY).toFixed(2);
   const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
+  const owners = _allMembers.filter(m=>m.org_role==='owner');
+  const ownerApproved = owners.filter(m=>(m.org_status||'')==='approved').length;
+  const ownerPending = owners.filter(m=>(m.org_status||'pending')==='pending').length;
+  const orgCount = _allOrgs.length;
 
   document.getElementById('stat-grid').innerHTML = `
     <div class="stat"><div class="label">전체 회원</div><div class="num">${total}</div><div class="sub">가입한 모든 회원</div></div>
@@ -362,6 +382,8 @@ function renderOverview(){
     <div class="stat"><div class="label">무료 회원</div><div class="num">${free}</div></div>
     <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${mrr}</div><div class="sub">실결제 ${paying}명 × $${PRICE_MONTHLY}</div></div>
     <div class="stat"><div class="label">누적 단어 수</div><div class="num">${totalWords.toLocaleString()}</div><div class="sub">전 회원 합계</div></div>
+    <div class="stat"><div class="label">단체 관리자</div><div class="num">${ownerApproved}</div><div class="sub">승인 ${ownerApproved} · 대기 ${ownerPending}</div></div>
+    <div class="stat"><div class="label">단체 수</div><div class="num">${orgCount}</div><div class="sub">생성된 단체</div></div>
   `;
 }
 
@@ -383,7 +405,7 @@ function renderRecent(){
 function fmtSeen(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-'; return (d.getMonth()+1)+'.'+d.getDate(); }catch(e){ return '-'; } }
 function renderMembers(){
   const q = (document.getElementById('member-search')?.value||'').toLowerCase().trim();
-  let list = _allMembers;
+  let list = _allMembers.filter(m=>!m.org_role);
   if(q) list = list.filter(m=>(m.name||'').toLowerCase().includes(q)||(m.email||'').toLowerCase().includes(q));
   document.getElementById('member-count').textContent = `(${list.length}명)`;
   if(list.length===0){ document.getElementById('member-table').innerHTML='<div class="empty">결과 없음</div>'; return; }
@@ -447,6 +469,71 @@ async function setPlan(id, toPremium){
     toast(toPremium?'✨ Premium으로 변경됐어요':'Free로 변경됐어요');
     await loadMembers();
   }catch(e){ console.error('[플랜 변경 오류]', e); toast('변경 실패: '+e.message); }
+}
+
+// ── 단체 관리자 ──
+async function loadOrgs(){
+  try{
+    const res = await fetch(SB_URL+'/rest/v1/orgs?select=id,name,code,owner_id,active,created_at&order=created_at.desc',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
+    });
+    _allOrgs = await res.json();
+    if(!Array.isArray(_allOrgs)) _allOrgs = [];
+  }catch(e){ _allOrgs=[]; }
+  renderOverview();
+  renderOrgAdmins();
+}
+
+function renderOrgAdmins(){
+  const el = document.getElementById('orgadmin-table');
+  if(!el) return;
+  let owners = _allMembers.filter(m=>m.org_role==='owner');
+  const q = (document.getElementById('orgadmin-search')?.value||'').toLowerCase().trim();
+  if(q) owners = owners.filter(m=>{
+    const org = _allOrgs.find(o=>o.owner_id===m.id);
+    return (m.name||'').toLowerCase().includes(q) || (m.email||'').toLowerCase().includes(q) || (org && (org.name||'').toLowerCase().includes(q));
+  });
+  const cnt = document.getElementById('orgadmin-count');
+  if(cnt) cnt.textContent = `(${owners.length}명)`;
+  if(owners.length===0){ el.innerHTML='<div class="empty">단체 관리자 신청이 없어요</div>'; return; }
+  el.innerHTML = `
+    <table><thead><tr><th>관리자</th><th>상태</th><th>단체 / 코드 / 학생</th><th style="text-align:right;">관리</th></tr></thead><tbody>
+    ${owners.map(m=>{
+      const org = _allOrgs.find(o=>o.owner_id===m.id);
+      const students = org ? _allMembers.filter(x=>x.org_id===org.id && x.org_role==='student').length : 0;
+      const st = m.org_status||'pending';
+      const stBadge = st==='approved' ? '<span class="pill" style="background:var(--green-soft);color:var(--green);">승인됨</span>'
+                    : st==='rejected' ? '<span class="pill free">거절됨</span>'
+                    : '<span class="pill" style="background:var(--amber-soft);color:var(--amber);">승인 대기</span>';
+      const orgInfo = org ? `<div class="row-name">${esc(org.name)}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명</div>` : '<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>';
+      let actions='';
+      if(st==='approved') actions = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
+      else if(st==='rejected') actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
+      else actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button> <button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">거절</button>`;
+      return `<tr>
+        <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
+        <td>${stBadge}</td>
+        <td>${orgInfo}</td>
+        <td style="text-align:right;">${actions}</td>
+      </tr>`;
+    }).join('')}
+    </tbody></table>`;
+}
+
+async function setOwnerStatus(id, status){
+  try{
+    await refreshToken();
+    const res = await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      body:JSON.stringify({org_status:status})
+    });
+    if(!res.ok){ const t=await res.text(); toast('변경 실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,60))); return; }
+    const updated = await res.json();
+    if(!updated || updated.length===0){ toast('변경 실패: 권한 없음'); return; }
+    toast(status==='approved'?'✅ 단체 관리자 승인됨':status==='rejected'?'거절/취소됨':'변경됨');
+    await loadMembers(); await loadOrgs();
+  }catch(e){ toast('변경 실패: '+e.message); }
 }
 
 // ── 공지 발송 ──
