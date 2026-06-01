@@ -2051,11 +2051,7 @@ function renderLogin(tab='login') {
 </script>
 <script>
 // ── Gemini API 모델 폴백 + 재시도 ──
-const GEMINI_MODELS = [
-  'gemini-2.5-flash',          // 하루 250회 무료
-  'gemini-2.5-flash-lite-preview-06-17', // 하루 1000회 무료
-  'gemini-2.5-flash-preview-05-20', // 폴백
-];
+const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
 let _geminiModelIdx = 0;
 
 // Gemini 응답에서 단어 목록을 최대한 견고하게 추출 (JSON이 잘려도 완성된 단어는 모두 살림)
