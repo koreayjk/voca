@@ -420,14 +420,32 @@ function renderMembers(){
         <td style="color:var(--ink-45);">${(m.total_words||0).toLocaleString()}</td>
         <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}</td>
         <td style="text-align:right;">
-          ${isAdmin ? '<span class="pill admin">관리자</span>' :
-            m.plan==='premium' ?
+          ${isAdmin ? '<span class="pill admin">관리자</span>' : `
+            ${m.plan==='premium' ?
               `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>` :
               `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`}
+            <button class="act-btn up" onclick="promoteToOwner('${m.id}','${esc(m.name)||esc(m.email)}')">단체관리자로</button>`}
         </td>
       </tr>`;
     }).join('')}
     </tbody></table>`;
+}
+
+async function promoteToOwner(id, label){
+  if(!confirm(`'${label}' 님을 단체 관리자로 올릴까요?\n\n승격되면 다음 로그인 때 '단체 만들기' 화면으로 이동해요. (기존 책·단어는 그대로 유지)`)) return;
+  try{
+    await refreshToken();
+    const res = await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      body:JSON.stringify({org_role:'owner', org_status:'approved'})
+    });
+    if(!res.ok){ const t=await res.text(); toast('승격 실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,60))); return; }
+    const updated = await res.json();
+    if(!updated || updated.length===0){ toast('승격 실패: 권한 없음'); return; }
+    toast('✅ 단체 관리자로 승격했어요');
+    await loadMembers(); await loadOrgs();
+  }catch(e){ toast('승격 실패: '+e.message); }
 }
 
 async function setPlan(id, toPremium){
