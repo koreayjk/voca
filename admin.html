@@ -425,8 +425,7 @@ function renderMembers(){
             ${m.plan==='premium' ?
               `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>` :
               `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`}
-            <button class="act-btn up" onclick="promoteToOwner('${m.id}','${esc(m.name)||esc(m.email)}')">새단체관리자</button>
-            <button class="act-btn up" onclick="promoteToCoAdmin('${m.id}','${esc(m.name)||esc(m.email)}')">공동관리자로</button>`}
+            <button class="act-btn down" onclick="openOrgAssignMenu('${m.id}','${esc(m.name)||esc(m.email)}')">단체…</button>`}
         </td>
       </tr>`;
     }).join('')}
@@ -472,6 +471,63 @@ async function promoteToCoAdmin(id, label){
     toast(`✅ '${org.name}' 공동 관리자로 추가했어요`);
     await loadMembers(); await loadOrgs();
   }catch(e){ toast('추가 실패: '+e.message); }
+}
+
+function openOrgAssignMenu(id, label){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  const card=document.createElement('div');
+  card.style.cssText='background:#fff;border-radius:16px;max-width:380px;width:100%;max-height:80vh;overflow-y:auto;padding:22px;';
+  overlay.appendChild(card);
+  overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+  const close=()=>overlay.remove();
+  function head(sub){ return `<div style="font-weight:700;font-size:16px;margin-bottom:2px;">${label}</div><div style="color:var(--ink-45);font-size:12px;margin-bottom:16px;">${sub}</div>`; }
+  function renderChoice(){
+    card.innerHTML = head('단체 지정') +
+      `<button class="act-btn up" style="width:100%;padding:12px;margin-bottom:8px;text-align:left;" data-act="newowner">🏫 새 단체 관리자<div style="font-weight:400;font-size:11px;opacity:.85;margin-top:2px;">새 단체를 직접 만들 사람</div></button>
+       <button class="act-btn up" style="width:100%;padding:12px;margin-bottom:8px;text-align:left;" data-act="coadmin">🤝 공동 관리자로<div style="font-weight:400;font-size:11px;opacity:.85;margin-top:2px;">기존 단체에 관리자로 합류</div></button>
+       <button class="act-btn down" style="width:100%;padding:12px;margin-bottom:8px;text-align:left;" data-act="student">🎓 단체 소속으로<div style="font-weight:400;font-size:11px;opacity:.7;margin-top:2px;">기존 단체에 학생으로 넣기</div></button>
+       <button class="act-btn down" style="width:100%;padding:10px;margin-top:6px;" data-act="cancel">취소</button>`;
+    card.querySelector('[data-act=newowner]').onclick=()=>{ close(); promoteToOwner(id,label); };
+    card.querySelector('[data-act=coadmin]').onclick=()=>renderOrgList('owner');
+    card.querySelector('[data-act=student]').onclick=()=>renderOrgList('student');
+    card.querySelector('[data-act=cancel]').onclick=close;
+  }
+  function renderOrgList(role){
+    if(!_allOrgs||_allOrgs.length===0){ toast('생성된 단체가 없어요'); return; }
+    const title = role==='owner'?'공동 관리자로 추가할 단체를 선택':'학생으로 넣을 단체를 선택';
+    card.innerHTML = head(title) + `<div id="org-pick-list"></div><button class="act-btn down" style="width:100%;padding:10px;margin-top:8px;" id="org-back">← 뒤로</button>`;
+    const list=card.querySelector('#org-pick-list');
+    list.innerHTML=_allOrgs.map(o=>{
+      const cnt=_allMembers.filter(x=>x.org_id===o.id && x.org_role==='student').length;
+      return `<button class="org-pick" data-id="${o.id}" data-name="${esc(o.name)}" style="display:block;width:100%;text-align:left;background:#f7f7f7;border:1px solid var(--ink-12);border-radius:10px;padding:11px 13px;margin-bottom:7px;cursor:pointer;font-family:inherit;">
+        <div style="font-weight:600;font-size:14px;color:var(--ink);">${esc(o.name)}</div>
+        <div style="color:var(--ink-45);font-size:11px;">코드 ${esc(o.code)} · 학생 ${cnt}명</div></button>`;
+    }).join('');
+    list.querySelectorAll('.org-pick').forEach(b=>{
+      b.onclick=()=>{ const oid=b.getAttribute('data-id'); const onm=b.getAttribute('data-name'); close(); assignToOrg(id,label,oid,onm,role); };
+    });
+    card.querySelector('#org-back').onclick=renderChoice;
+  }
+  renderChoice();
+}
+
+async function assignToOrg(id,label,orgId,orgName,role){
+  const roleTxt = role==='owner'?'공동 관리자':'학생';
+  if(!confirm(`'${label}' 님을 '${orgName}' 단체에 ${roleTxt}(으)로 넣을까요?`)) return;
+  try{
+    await refreshToken();
+    const res=await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      body:JSON.stringify({org_role:role, org_status:'approved', org_id:orgId})
+    });
+    if(!res.ok){ const t=await res.text(); toast('실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,60))); return; }
+    const u=await res.json(); if(!u||u.length===0){ toast('실패: 권한 없음'); return; }
+    toast(`✅ '${orgName}'에 ${roleTxt}(으)로 추가했어요`);
+    await loadMembers(); await loadOrgs();
+  }catch(e){ toast('실패: '+e.message); }
 }
 
 async function setPlan(id, toPremium){
