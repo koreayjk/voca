@@ -425,7 +425,8 @@ function renderMembers(){
             ${m.plan==='premium' ?
               `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>` :
               `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`}
-            <button class="act-btn up" onclick="promoteToOwner('${m.id}','${esc(m.name)||esc(m.email)}')">단체관리자로</button>`}
+            <button class="act-btn up" onclick="promoteToOwner('${m.id}','${esc(m.name)||esc(m.email)}')">새단체관리자</button>
+            <button class="act-btn up" onclick="promoteToCoAdmin('${m.id}','${esc(m.name)||esc(m.email)}')">공동관리자로</button>`}
         </td>
       </tr>`;
     }).join('')}
@@ -447,6 +448,30 @@ async function promoteToOwner(id, label){
     toast('✅ 단체 관리자로 승격했어요');
     await loadMembers(); await loadOrgs();
   }catch(e){ toast('승격 실패: '+e.message); }
+}
+
+async function promoteToCoAdmin(id, label){
+  if(!_allOrgs || _allOrgs.length===0){ toast('먼저 생성된 단체가 없어요'); return; }
+  const lines = _allOrgs.map((o,i)=>`${i+1}) ${o.name} (${o.code})`).join('\n');
+  const pick = prompt(`'${label}' 님을 어느 단체의 공동 관리자로 추가할까요?\n아래 번호를 입력하세요:\n\n${lines}`);
+  if(pick===null) return;
+  const idx = parseInt(pick,10)-1;
+  if(isNaN(idx)||idx<0||idx>=_allOrgs.length){ toast('잘못된 번호예요'); return; }
+  const org = _allOrgs[idx];
+  if(!confirm(`'${label}' 님을 '${org.name}' 단체의 공동 관리자로 추가할까요?\n\n이 사람은 다음 로그인 때 그 단체 관리 화면으로 들어가 학생 승인·관리를 함께 할 수 있어요.`)) return;
+  try{
+    await refreshToken();
+    const res = await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      body:JSON.stringify({org_role:'owner', org_status:'approved', org_id: org.id})
+    });
+    if(!res.ok){ const t=await res.text(); toast('추가 실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,60))); return; }
+    const updated = await res.json();
+    if(!updated || updated.length===0){ toast('추가 실패: 권한 없음'); return; }
+    toast(`✅ '${org.name}' 공동 관리자로 추가했어요`);
+    await loadMembers(); await loadOrgs();
+  }catch(e){ toast('추가 실패: '+e.message); }
 }
 
 async function setPlan(id, toPremium){
@@ -518,13 +543,15 @@ function renderOrgAdmins(){
   el.innerHTML = `
     <table><thead><tr><th>관리자</th><th>상태</th><th>단체 / 코드 / 학생</th><th style="text-align:right;">관리</th></tr></thead><tbody>
     ${owners.map(m=>{
-      const org = _allOrgs.find(o=>o.owner_id===m.id);
+      let org = _allOrgs.find(o=>o.owner_id===m.id);
+      let isCo=false;
+      if(!org && m.org_id){ org = _allOrgs.find(o=>o.id===m.org_id); isCo = !!org; }
       const students = org ? _allMembers.filter(x=>x.org_id===org.id && x.org_role==='student').length : 0;
       const st = m.org_status||'pending';
       const stBadge = st==='approved' ? '<span class="pill" style="background:var(--green-soft);color:var(--green);">승인됨</span>'
                     : st==='rejected' ? '<span class="pill free">거절됨</span>'
                     : '<span class="pill" style="background:var(--amber-soft);color:var(--amber);">승인 대기</span>';
-      const orgInfo = org ? `<div class="row-name">${esc(org.name)}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명</div>` : '<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>';
+      const orgInfo = org ? `<div class="row-name">${esc(org.name)}${isCo?' <span style="color:var(--ink-45);font-weight:400;font-size:11px;">(공동)</span>':''}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명</div>` : '<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>';
       let actions='';
       if(st==='approved') actions = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
       else if(st==='rejected') actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
