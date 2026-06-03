@@ -1106,8 +1106,12 @@ let userOrgId = null, userOrgRole = null, userOrgStatus = null, userOrg = null;
 async function loadMyOrg() {
   try {
     let d;
-    if (userOrgRole === 'owner') d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code,logo_url&limit=1`);
-    else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url&limit=1`);
+    if (userOrgRole === 'owner') {
+      // 공동 관리자 포함: 본인 org_id로 단체를 찾고, 없으면(주 관리자 레거시) owner_id로 폴백
+      if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id&limit=1`);
+      else d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code,logo_url,owner_id&limit=1`);
+    }
+    else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id&limit=1`);
     userOrg = (Array.isArray(d) && d[0]) ? d[0] : null;
   } catch(e) { userOrg = null; }
 }
@@ -1139,7 +1143,7 @@ async function createOrg() {
     const org = Array.isArray(created) ? created[0] : null;
     if (!org || !org.id) { toast(userNativeLang==='ko'?'단체 생성 실패, 다시 시도해주세요':'Create failed'); return; }
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id }, true, {'Prefer':'return=representation'});
-    userOrg = { id: org.id, name: org.name, code: org.code };
+    userOrg = { id: org.id, name: org.name, code: org.code, owner_id: currentUser.id };
     userOrgId = org.id;
     toast(userNativeLang==='ko'?'✅ 단체가 만들어졌어요!':'✅ Organization created!');
     stack = [{ name:'org-admin' }]; render();
@@ -1178,7 +1182,7 @@ async function loadOrgStudents(){
   if (!box || !userOrg) return;
   const ko = userNativeLang==='ko';
   try {
-    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role&order=total_words.desc`);
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=in.(student,owner)&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role&order=total_words.desc`);
     if (!Array.isArray(list)) { box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
     // 복습 완료 집계 (RLS 있으면 동작, 없으면 생략)
     let reviewByUser = {};
@@ -1198,7 +1202,24 @@ function renderOrgStudentsHTML(list, reviewByUser){
   const ko = userNativeLang==='ko';
   const pending = list.filter(m=>(m.org_status||'')==='pending' && m.org_role!=='owner');
   const approved = list.filter(m=>(m.org_status||'')==='approved' && m.org_role!=='owner');
+  const owners = list.filter(m=>m.org_role==='owner');
+  const myId = currentUser && currentUser.id;
+  const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id===myId);
   let html = '';
+  // 🛡️ 관리자 섹션 (주/공동)
+  html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">🛡️ ${ko?'관리자':'Admins'} (${owners.length})</div>`;
+  html += owners.map(m=>{
+    const isPrim = userOrg && m.id===userOrg.owner_id;
+    const tag = isPrim ? (ko?'주 관리자':'Primary') : (ko?'공동 관리자':'Co-admin');
+    const showDemote = isPrimary && !isPrim;
+    return `<div style="display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}${m.id===myId?` <span class="muted" style="font-size:11px;">(${ko?'나':'me'})</span>`:''}</div>
+        <div class="muted" style="font-size:11px;">${isPrim?'👑 ':''}${tag} · ${esc(m.email||'')}</div>
+      </div>
+      ${showDemote?`<button onclick="demoteCoAdmin('${m.id}')" style="background:var(--bg-input);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;font-family:var(--font-body);flex-shrink:0;">${ko?'해지':'Remove'}</button>`:''}
+    </div>`;
+  }).join('');
   if (pending.length){
     html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">⏳ ${ko?'승인 대기 학생':'Pending'} (${pending.length})</div>`;
     html += pending.map(m=>`
@@ -1224,6 +1245,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
           <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
           <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}</div>
         </div>
+        ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
         <button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>
       </div>`;
     }).join('');
@@ -1237,6 +1259,26 @@ async function setStudentStatus(id, status){
     toast(status==='approved'?(userNativeLang==='ko'?'학생을 승인했어요':'Approved'):(userNativeLang==='ko'?'거절했어요':'Rejected'));
     loadOrgStudents();
   }catch(e){ toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시':'Failed'); }
+}
+
+async function promoteStudentToCoAdmin(id){
+  const ko=userNativeLang==='ko';
+  if(!confirm(ko?'이 학생을 공동 관리자로 임명할까요?\n\n학생 승인·관리 권한을 함께 갖게 돼요. (단어장은 그대로 사용 가능)':'Make this student a co-admin?')) return;
+  try{
+    await sbFetch(`/rest/v1/members?id=eq.${id}`,'PATCH',{org_role:'owner',org_status:'approved'},true,{'Prefer':'return=representation'});
+    toast(ko?'✅ 공동 관리자로 임명했어요':'Promoted to co-admin');
+    loadOrgStudents();
+  }catch(e){ toast(ko?'임명 실패 (주 관리자만 가능)':'Failed'); }
+}
+
+async function demoteCoAdmin(id){
+  const ko=userNativeLang==='ko';
+  if(!confirm(ko?'이 공동 관리자를 해지할까요?\n\n다시 일반 학생으로 돌아가요. (계정·단어는 유지)':'Remove this co-admin?')) return;
+  try{
+    await sbFetch(`/rest/v1/members?id=eq.${id}`,'PATCH',{org_role:'student',org_status:'approved'},true,{'Prefer':'return=representation'});
+    toast(ko?'공동 관리자를 해지했어요':'Removed');
+    loadOrgStudents();
+  }catch(e){ toast(ko?'해지 실패 (주 관리자만 가능)':'Failed'); }
 }
 
 async function regenerateOrgCode(){
