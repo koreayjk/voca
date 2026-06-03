@@ -366,25 +366,74 @@ async function loadMembers(retry){
 // ── 현황 ──
 function renderOverview(){
   const total = _allMembers.length;
-  const premium = _allMembers.filter(m=>m.plan==='premium').length;
-  const free = total - premium;
-  // 진짜 Stripe 결제자만 (stripe_customer_id가 있는 사람) - 수동 업그레이드 제외
-  const paying = _allMembers.filter(m=>m.plan==='premium' && m.stripe_customer_id).length;
-  const mrr = (paying * PRICE_MONTHLY).toFixed(2);
-  const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
-  const owners = _allMembers.filter(m=>m.org_role==='owner');
-  const ownerApproved = owners.filter(m=>(m.org_status||'')==='approved').length;
-  const ownerPending = owners.filter(m=>(m.org_status||'pending')==='pending').length;
+
+  // 분류 (org_role 기준, 상호 배타)
+  const individuals = _allMembers.filter(m=>!m.org_role);            // 개인 (단체 미소속)
+  const students    = _allMembers.filter(m=>m.org_role==='student'); // 단체 학생
+  const owners      = _allMembers.filter(m=>m.org_role==='owner');   // 단체 관리자(주+공동)
+
+  const ind = individuals.length;
+  const stu = students.length;
+  const own = owners.length;
+
+  // 개인 Premium/무료
+  const indPremium = individuals.filter(m=>m.plan==='premium').length;
+  const indFree = ind - indPremium;
+  const payingInd = individuals.filter(m=>m.plan==='premium' && m.stripe_customer_id).length;
+
+  // 학생 승인/대기
+  const stuApproved = students.filter(m=>(m.org_status||'')==='approved').length;
+  const stuPending  = students.filter(m=>(m.org_status||'pending')==='pending').length;
+
+  // 관리자 주/공동
+  const primaryOwners = owners.filter(m=>_allOrgs.some(o=>o.owner_id===m.id)).length;
+  const coOwners = own - primaryOwners;
+  const ownPending = owners.filter(m=>(m.org_status||'pending')==='pending').length;
+
+  // 단체: 결제중 / 무료 / 비활성
+  let orgPaying=0, orgFree=0, orgMrr=0;
+  _allOrgs.forEach(o=>{
+    const appr = _allMembers.filter(x=>x.org_id===o.id && x.org_role==='student' && (x.org_status||'')==='approved').length;
+    if(o.stripe_subscription_id){ orgPaying++; orgMrr += appr*1.99; }
+    else if(o.billing_active){ orgFree++; }
+  });
   const orgCount = _allOrgs.length;
 
+  // 매출
+  const indMrr = payingInd * PRICE_MONTHLY;
+  const totalMrr = (indMrr + orgMrr).toFixed(2);
+
+  const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
+
+  // 구성 막대 비율
+  const denom = total || 1;
+  const pInd = (ind/denom*100).toFixed(1);
+  const pStu = (stu/denom*100).toFixed(1);
+  const pOwn = (own/denom*100).toFixed(1);
+  const chip = (c)=>`<span style="display:inline-block;width:10px;height:10px;background:${c};border-radius:2px;margin-right:4px;vertical-align:middle;"></span>`;
+
   document.getElementById('stat-grid').innerHTML = `
-    <div class="stat"><div class="label">전체 회원</div><div class="num">${total}</div><div class="sub">가입한 모든 회원</div></div>
-    <div class="stat accent"><div class="label">Premium 구독</div><div class="num">${premium}</div><div class="sub">결제 ${paying}명 · 무료제공 ${premium-paying}명</div></div>
-    <div class="stat"><div class="label">무료 회원</div><div class="num">${free}</div></div>
-    <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${mrr}</div><div class="sub">실결제 ${paying}명 × $${PRICE_MONTHLY}</div></div>
+    <div class="stat" style="grid-column:1/-1;">
+      <div class="label">전체 인원 구성 · 총 ${total}명</div>
+      <div style="display:flex;height:22px;border-radius:6px;overflow:hidden;margin:10px 0 8px;background:var(--ink-07);">
+        <div style="width:${pInd}%;background:#6b7cff;"></div>
+        <div style="width:${pStu}%;background:#37b24d;"></div>
+        <div style="width:${pOwn}%;background:#f59f00;"></div>
+      </div>
+      <div style="display:flex;gap:16px;font-size:12px;color:var(--ink-70);flex-wrap:wrap;">
+        <span>${chip('#6b7cff')}개인 <b>${ind}</b></span>
+        <span>${chip('#37b24d')}단체 학생 <b>${stu}</b></span>
+        <span>${chip('#f59f00')}단체 관리자 <b>${own}</b></span>
+      </div>
+    </div>
+
+    <div class="stat"><div class="label">개인 회원</div><div class="num">${ind}</div><div class="sub">Premium ${indPremium} · 무료 ${indFree}</div></div>
+    <div class="stat green"><div class="label">단체 학생</div><div class="num">${stu}</div><div class="sub">승인 ${stuApproved} · 대기 ${stuPending}</div></div>
+    <div class="stat accent"><div class="label">단체 관리자</div><div class="num">${own}</div><div class="sub">주 ${primaryOwners} · 공동 ${coOwners}${ownPending?` · 대기 ${ownPending}`:''}</div></div>
+
+    <div class="stat"><div class="label">단체 수</div><div class="num">${orgCount}</div><div class="sub">결제중 ${orgPaying} · 무료 ${orgFree}</div></div>
+    <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${totalMrr}</div><div class="sub">개인 $${indMrr.toFixed(2)} · 단체 $${orgMrr.toFixed(2)}</div></div>
     <div class="stat"><div class="label">누적 단어 수</div><div class="num">${totalWords.toLocaleString()}</div><div class="sub">전 회원 합계</div></div>
-    <div class="stat"><div class="label">단체 관리자</div><div class="num">${ownerApproved}</div><div class="sub">승인 ${ownerApproved} · 대기 ${ownerPending}</div></div>
-    <div class="stat"><div class="label">단체 수</div><div class="num">${orgCount}</div><div class="sub">생성된 단체</div></div>
   `;
 }
 
@@ -660,7 +709,8 @@ function renderOrgAdmins(){
           ? `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>`
           : `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`);
       let freeBtn='';
-      if(org && !org.stripe_subscription_id){
+      // 무료 버튼은 "주 관리자 행"(이 사람이 그 단체의 owner_id)에만 — 공동 관리자 행 중복 방지
+      if(org && !isCo && !org.stripe_subscription_id){
         freeBtn = org.billing_active
           ? `<button class="act-btn down" onclick="revokeFreeOrg('${org.id}','${esc(org.name)}')">무료해제</button>`
           : `<button class="act-btn up" onclick="grantFreeOrg('${org.id}','${esc(org.name)}')">🎁 무료부여</button>`;
