@@ -473,6 +473,42 @@ async function promoteToCoAdmin(id, label){
   }catch(e){ toast('추가 실패: '+e.message); }
 }
 
+async function grantFreeOrg(orgId, orgName){
+  const m = prompt(`'${orgName}' 단체에 무료를 몇 개월 줄까요?\n개월 수를 입력하세요 (예: 1, 3):`, '1');
+  if(m===null) return;
+  const months = parseInt(m,10);
+  if(isNaN(months)||months<=0){ toast('개월 수가 올바르지 않아요'); return; }
+  const until = new Date(); until.setMonth(until.getMonth()+months);
+  const untilStr = until.toISOString().slice(0,10);
+  if(!confirm(`'${orgName}' 단체를 ${untilStr}까지 무료로 활성화할까요?\n(학생 전원 무제한, 카드 등록 없이)`)) return;
+  try{
+    await refreshToken();
+    const res = await fetch(SB_URL+`/rest/v1/orgs?id=eq.${orgId}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      body:JSON.stringify({ billing_active:true, free_until:untilStr })
+    });
+    if(!res.ok){ const t=await res.text(); toast('실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,60))); return; }
+    toast(`🎁 '${orgName}' ${untilStr}까지 무료 활성화`);
+    await loadOrgs();
+  }catch(e){ toast('실패: '+e.message); }
+}
+
+async function revokeFreeOrg(orgId, orgName){
+  if(!confirm(`'${orgName}' 단체의 무료를 해제할까요?\n(학생들이 일반 사용자로 돌아가요)`)) return;
+  try{
+    await refreshToken();
+    const res = await fetch(SB_URL+`/rest/v1/orgs?id=eq.${orgId}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      body:JSON.stringify({ billing_active:false, free_until:null })
+    });
+    if(!res.ok){ const t=await res.text(); toast('실패: '+t.slice(0,60)); return; }
+    toast(`'${orgName}' 무료 해제됨`);
+    await loadOrgs();
+  }catch(e){ toast('실패: '+e.message); }
+}
+
 function openOrgAssignMenu(id, label){
   const overlay=document.createElement('div');
   overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
@@ -574,7 +610,7 @@ async function setPlan(id, toPremium){
 // ── 단체 관리자 ──
 async function loadOrgs(){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/orgs?select=id,name,code,owner_id,active,created_at&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/orgs?select=id,name,code,owner_id,active,created_at,billing_active,free_until,stripe_subscription_id&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allOrgs = await res.json();
@@ -607,7 +643,13 @@ function renderOrgAdmins(){
       const stBadge = st==='approved' ? '<span class="pill" style="background:var(--green-soft);color:var(--green);">승인됨</span>'
                     : st==='rejected' ? '<span class="pill free">거절됨</span>'
                     : '<span class="pill" style="background:var(--amber-soft);color:var(--amber);">승인 대기</span>';
-      const orgInfo = org ? `<div class="row-name">${esc(org.name)}${isCo?' <span style="color:var(--ink-45);font-weight:400;font-size:11px;">(공동)</span>':''}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명</div>` : '<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>';
+      let billTag='';
+      if(org){
+        if(org.stripe_subscription_id) billTag = ' <span style="color:var(--green);font-weight:600;font-size:11px;">· 💳 결제중</span>';
+        else if(org.billing_active && org.free_until) billTag = ` <span style="color:var(--amber);font-weight:600;font-size:11px;">· 🎁 무료 ~${esc(org.free_until)}</span>`;
+        else if(org.billing_active) billTag = ' <span style="color:var(--green);font-weight:600;font-size:11px;">· ✨ 활성</span>';
+      }
+      const orgInfo = org ? `<div class="row-name">${esc(org.name)}${isCo?' <span style="color:var(--ink-45);font-weight:400;font-size:11px;">(공동)</span>':''}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명${billTag}</div>` : '<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>';
       let actions='';
       if(st==='approved') actions = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
       else if(st==='rejected') actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
@@ -617,7 +659,13 @@ function renderOrgAdmins(){
         (m.plan==='premium'
           ? `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>`
           : `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`);
-      actions = planBtn + ' ' + actions;
+      let freeBtn='';
+      if(org && !org.stripe_subscription_id){
+        freeBtn = org.billing_active
+          ? `<button class="act-btn down" onclick="revokeFreeOrg('${org.id}','${esc(org.name)}')">무료해제</button>`
+          : `<button class="act-btn up" onclick="grantFreeOrg('${org.id}','${esc(org.name)}')">🎁 무료부여</button>`;
+      }
+      actions = planBtn + ' ' + freeBtn + ' ' + actions;
       return `<tr>
         <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
         <td>${stBadge}</td>
