@@ -810,6 +810,19 @@ page.words.splice(wordIdx, 1);
 
 // ─── 공지(notices) ───
 let _notices = [];
+function shareNotice(id){
+  const ko = (typeof userNativeLang!=='undefined') && userNativeLang==='ko';
+  const url = 'https://imvoca.app/notice.html?id=' + id;
+  const n = _notices.find(x=>String(x.id)===String(id));
+  const title = n ? (n.title||'IM VOCA') : 'IM VOCA';
+  if (navigator.share) {
+    navigator.share({ title, text: title, url }).catch(()=>{});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(()=>toast(ko?'공지 링크가 복사됐어요 📋':'Link copied 📋')).catch(()=>toast(url));
+  } else {
+    toast(url);
+  }
+}
 async function loadNotices() {
   try {
     let res = await fetch(SB_URL + '/rest/v1/voca_notices?published=eq.true&order=created_at.desc&limit=50', {
@@ -964,6 +977,7 @@ async function showNotices() {
             <span style="background:${c.color};color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;">${c.icon} ${c.label}</span>
             ${isNew?`<span style="background:#e74c3c;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">NEW</span>`:''}
             <span style="font-size:11px;color:var(--ink-40);margin-left:auto;">${dateStr}</span>
+            <button onclick="event.stopPropagation();shareNotice('${n.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-45);padding:2px 4px;" title="${ko?'공유':'Share'}">🔗</button>
             <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s;${expanded?'transform:rotate(180deg);':''}">▾</span>
           </div>
           <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${n.title}</div>
