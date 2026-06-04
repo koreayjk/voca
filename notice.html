@@ -76,9 +76,17 @@ async function load(){
   }
 
   try{
-    const res = await fetch(`${SB_URL}/rest/v1/voca_notices?id=eq.${encodeURIComponent(id)}&published=eq.true&select=id,title,body,image_url,created_at,category`, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-    });
+    const url = `${SB_URL}/rest/v1/voca_notices?id=eq.${encodeURIComponent(id)}&published=eq.true&select=*`;
+    let res = await fetch(url, { headers: { 'apikey': SB_KEY } });
+    if (!res.ok) {
+      // 폴백: Authorization 헤더 추가해서 재시도
+      res = await fetch(url, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } });
+    }
+    if (!res.ok) {
+      console.error('notice fetch status', res.status, await res.text());
+      card.innerHTML = `<div class="err">공지를 불러오지 못했어요. (${res.status})</div>` + ctaBlock('IM VOCA 시작하기');
+      return;
+    }
     const data = await res.json();
     if(!Array.isArray(data) || data.length===0){
       card.innerHTML = `<div class="err">공지를 찾을 수 없어요.</div>` + ctaBlock('IM VOCA 시작하기');
