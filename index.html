@@ -527,6 +527,21 @@ async function refreshSession() {
   } catch(e) { return false; }
 }
 
+// 토큰 자동 갱신: 만료(약 1시간) 전에 미리 갱신 + 앱으로 돌아올 때 갱신
+let _lastTokenRefresh = Date.now();
+async function autoRefreshToken() {
+  if (!_authToken) return;
+  const ok = await refreshSession();
+  if (ok) _lastTokenRefresh = Date.now();
+}
+setInterval(autoRefreshToken, 45 * 60 * 1000); // 45분마다
+document.addEventListener('visibilitychange', () => {
+  // 다시 화면을 볼 때, 5분 이상 백그라운드였으면 토큰 갱신
+  if (document.visibilityState === 'visible' && _authToken && (Date.now() - _lastTokenRefresh > 5 * 60 * 1000)) {
+    autoRefreshToken();
+  }
+});
+
 // ── 언어 설정 ──
 const LANG_OPTIONS = [
   {code:'ko',name:'한국어',flag:'🇰🇷'},{code:'en',name:'English',flag:'🇺🇸'},
