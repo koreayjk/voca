@@ -527,6 +527,21 @@ async function refreshSession() {
   } catch(e) { return false; }
 }
 
+// 토큰 자동 갱신: 만료(약 1시간) 전에 미리 갱신 + 앱으로 돌아올 때 갱신
+let _lastTokenRefresh = Date.now();
+async function autoRefreshToken() {
+  if (!_authToken) return;
+  const ok = await refreshSession();
+  if (ok) _lastTokenRefresh = Date.now();
+}
+setInterval(autoRefreshToken, 45 * 60 * 1000); // 45분마다
+document.addEventListener('visibilitychange', () => {
+  // 다시 화면을 볼 때, 5분 이상 백그라운드였으면 토큰 갱신
+  if (document.visibilityState === 'visible' && _authToken && (Date.now() - _lastTokenRefresh > 5 * 60 * 1000)) {
+    autoRefreshToken();
+  }
+});
+
 // ── 언어 설정 ──
 const LANG_OPTIONS = [
   {code:'ko',name:'한국어',flag:'🇰🇷'},{code:'en',name:'English',flag:'🇺🇸'},
@@ -795,6 +810,20 @@ page.words.splice(wordIdx, 1);
 
 // ─── 공지(notices) ───
 let _notices = [];
+function shareNotice(id){
+  const ko = (typeof userNativeLang!=='undefined') && userNativeLang==='ko';
+  const url = 'https://imvoca.app/notice.html?id=' + id;
+  const n = _notices.find(x=>String(x.id)===String(id));
+  const title = n ? (n.title||'IM VOCA') : 'IM VOCA';
+  if (navigator.share) {
+    // text에 제목을 넣으면 일부 앱이 url과 합쳐 깨지므로 url만 공유
+    navigator.share({ title, url }).catch(()=>{});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(()=>toast(ko?'공지 링크가 복사됐어요 📋':'Link copied 📋')).catch(()=>toast(url));
+  } else {
+    toast(url);
+  }
+}
 async function loadNotices() {
   try {
     let res = await fetch(SB_URL + '/rest/v1/voca_notices?published=eq.true&order=created_at.desc&limit=50', {
@@ -949,6 +978,7 @@ async function showNotices() {
             <span style="background:${c.color};color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;">${c.icon} ${c.label}</span>
             ${isNew?`<span style="background:#e74c3c;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">NEW</span>`:''}
             <span style="font-size:11px;color:var(--ink-40);margin-left:auto;">${dateStr}</span>
+            <button onclick="event.stopPropagation();shareNotice('${n.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-45);padding:2px 4px;" title="${ko?'공유':'Share'}">🔗</button>
             <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s;${expanded?'transform:rotate(180deg);':''}">▾</span>
           </div>
           <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${n.title}</div>
@@ -987,11 +1017,14 @@ async function incrementScanCount() {
 
 // 스캔 가능 여부 체크
 function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved'); }
+function isOrgBillingActive(){ return !!(userOrg && userOrg.billing_active); }
+function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved' && isOrgBillingActive()); }
 function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDailyScanCount : 0; }
 function canScan() {
   if (userPlan === 'premium') return true;
-  // 단체 소속(승인) 학생: 총 누적 제한 면제, 일일 제한만 적용
+  // 결제중 학원의 관리자(owner): 무제한
+  if (userOrgRole==='owner' && isOrgBillingActive()) return true;
+  // 결제중 학원의 승인 학생: 총 누적 제한 면제, 일일 제한만 적용
   if (isOrgStudentActive()) return dailyScansToday() < STUDENT_DAILY_LIMIT;
   return userScanCount < FREE_SCAN_LIMIT;
 }
@@ -1106,8 +1139,12 @@ let userOrgId = null, userOrgRole = null, userOrgStatus = null, userOrg = null;
 async function loadMyOrg() {
   try {
     let d;
-    if (userOrgRole === 'owner') d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code,logo_url&limit=1`);
-    else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url&limit=1`);
+    if (userOrgRole === 'owner') {
+      // 공동 관리자 포함: 본인 org_id로 단체를 찾고, 없으면(주 관리자 레거시) owner_id로 폴백
+      if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
+      else d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
+    }
+    else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
     userOrg = (Array.isArray(d) && d[0]) ? d[0] : null;
   } catch(e) { userOrg = null; }
 }
@@ -1118,6 +1155,24 @@ function applyEntryStack() {
 }
 
 function goPersonalApp() { stack = [{ name:'library' }]; render(); }
+
+async function startOrgBilling(){
+  const ko = userNativeLang==='ko';
+  if (!userOrg) return;
+  if (!confirm(ko?'학원 프리미엄 결제를 시작할까요?\n\n현재 승인된 학생 수만큼 매월 $1.99/명으로 청구돼요. 결제하면 학생 전원이 무제한이 돼요.':'Start academy billing? $1.99 per approved student per month. All students become unlimited.')) return;
+  try{
+    toast(ko?'결제 페이지로 이동 중...':'Redirecting to checkout...');
+    const res = await fetch(SB_URL+'/functions/v1/create-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      body:JSON.stringify({ org_id: userOrg.id, success_url: location.origin+'/?org_paid=1', cancel_url: location.href })
+    });
+    const data = await res.json().catch(()=>({}));
+    if (data && data.url){ location.href = data.url; return; }
+    if (data && data.error==='already_active'){ toast(ko?'이미 결제 중이에요':'Already active'); return; }
+    toast(ko?('결제 시작 실패: '+(data.error||'잠시 후 다시')):'Failed: '+(data.error||'try again'));
+  }catch(e){ toast('오류: '+e.message); }
+}
 function goOrgAdmin() { stack = [{ name:'org-admin' }]; render(); }
 
 function copyOrgCode() {
@@ -1139,7 +1194,7 @@ async function createOrg() {
     const org = Array.isArray(created) ? created[0] : null;
     if (!org || !org.id) { toast(userNativeLang==='ko'?'단체 생성 실패, 다시 시도해주세요':'Create failed'); return; }
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id }, true, {'Prefer':'return=representation'});
-    userOrg = { id: org.id, name: org.name, code: org.code };
+    userOrg = { id: org.id, name: org.name, code: org.code, owner_id: currentUser.id };
     userOrgId = org.id;
     toast(userNativeLang==='ko'?'✅ 단체가 만들어졌어요!':'✅ Organization created!');
     stack = [{ name:'org-admin' }]; render();
@@ -1178,7 +1233,7 @@ async function loadOrgStudents(){
   if (!box || !userOrg) return;
   const ko = userNativeLang==='ko';
   try {
-    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role&order=total_words.desc`);
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=in.(student,owner)&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role&order=total_words.desc`);
     if (!Array.isArray(list)) { box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
     // 복습 완료 집계 (RLS 있으면 동작, 없으면 생략)
     let reviewByUser = {};
@@ -1191,6 +1246,9 @@ async function loadOrgStudents(){
     }
     window._orgStudentsList = list;
     box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
+    const _appr = list.filter(m=>(m.org_status||'')==='approved' && m.org_role==='student').length;
+    const _est = document.getElementById('org-bill-est');
+    if (_est) _est.textContent = '$'+(_appr*1.99).toFixed(2)+(ko?` (학생 ${_appr}명)`:` (${_appr})`);
   } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
@@ -1198,7 +1256,24 @@ function renderOrgStudentsHTML(list, reviewByUser){
   const ko = userNativeLang==='ko';
   const pending = list.filter(m=>(m.org_status||'')==='pending' && m.org_role!=='owner');
   const approved = list.filter(m=>(m.org_status||'')==='approved' && m.org_role!=='owner');
+  const owners = list.filter(m=>m.org_role==='owner');
+  const myId = currentUser && currentUser.id;
+  const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id===myId);
   let html = '';
+  // 🛡️ 관리자 섹션 (주/공동)
+  html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">🛡️ ${ko?'관리자':'Admins'} (${owners.length})</div>`;
+  html += owners.map(m=>{
+    const isPrim = userOrg && m.id===userOrg.owner_id;
+    const tag = isPrim ? (ko?'주 관리자':'Primary') : (ko?'공동 관리자':'Co-admin');
+    const showDemote = isPrimary && !isPrim;
+    return `<div style="display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}${m.id===myId?` <span class="muted" style="font-size:11px;">(${ko?'나':'me'})</span>`:''}</div>
+        <div class="muted" style="font-size:11px;">${isPrim?'👑 ':''}${tag} · ${esc(m.email||'')}</div>
+      </div>
+      ${showDemote?`<button onclick="demoteCoAdmin('${m.id}')" style="background:var(--bg-input);color:var(--ink-60);border:1px solid var(--ink-12);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;font-family:var(--font-body);flex-shrink:0;">${ko?'해지':'Remove'}</button>`:''}
+    </div>`;
+  }).join('');
   if (pending.length){
     html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">⏳ ${ko?'승인 대기 학생':'Pending'} (${pending.length})</div>`;
     html += pending.map(m=>`
@@ -1224,6 +1299,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
           <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
           <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}</div>
         </div>
+        ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
         <button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>
       </div>`;
     }).join('');
@@ -1237,6 +1313,44 @@ async function setStudentStatus(id, status){
     toast(status==='approved'?(userNativeLang==='ko'?'학생을 승인했어요':'Approved'):(userNativeLang==='ko'?'거절했어요':'Rejected'));
     loadOrgStudents();
   }catch(e){ toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시':'Failed'); }
+}
+
+async function promoteStudentToCoAdmin(id){
+  const ko=userNativeLang==='ko';
+  if(!confirm(ko?'이 학생을 공동 관리자로 임명할까요?\n\n학생 승인·관리 권한을 함께 갖게 돼요. (단어장은 그대로 사용 가능)':'Make this student a co-admin?')) return;
+  try{
+    await sbFetch(`/rest/v1/members?id=eq.${id}`,'PATCH',{org_role:'owner',org_status:'approved'},true,{'Prefer':'return=representation'});
+    toast(ko?'✅ 공동 관리자로 임명했어요':'Promoted to co-admin');
+    loadOrgStudents();
+  }catch(e){ toast(ko?'임명 실패 (주 관리자만 가능)':'Failed'); }
+}
+
+async function demoteCoAdmin(id){
+  const ko=userNativeLang==='ko';
+  if(!confirm(ko?'이 공동 관리자를 해지할까요?\n\n다시 일반 학생으로 돌아가요. (계정·단어는 유지)':'Remove this co-admin?')) return;
+  try{
+    await sbFetch(`/rest/v1/members?id=eq.${id}`,'PATCH',{org_role:'student',org_status:'approved'},true,{'Prefer':'return=representation'});
+    toast(ko?'공동 관리자를 해지했어요':'Removed');
+    loadOrgStudents();
+  }catch(e){ toast(ko?'해지 실패 (주 관리자만 가능)':'Failed'); }
+}
+
+async function renameOrg(){
+  const ko = userNativeLang==='ko';
+  if (!userOrg) return;
+  const cur = userOrg.name || '';
+  const name = prompt(ko?'단체 이름을 입력하세요':'Enter organization name', cur);
+  if (name===null) return;
+  const trimmed = name.trim();
+  if (!trimmed) { toast(ko?'이름을 입력해주세요':'Please enter a name'); return; }
+  if (trimmed === cur) return;
+  try{
+    const res = await sbFetch(`/rest/v1/orgs?id=eq.${userOrg.id}`, 'PATCH', { name: trimmed }, true, {'Prefer':'return=representation'});
+    if (!res || (Array.isArray(res) && res.length===0)) { toast(ko?'변경 실패 (권한 확인)':'Update failed'); return; }
+    userOrg.name = trimmed;
+    toast(ko?'단체 이름을 변경했어요':'Organization renamed');
+    render();
+  }catch(e){ toast((ko?'변경 실패: ':'Failed: ')+e.message); }
 }
 
 async function regenerateOrgCode(){
@@ -1330,7 +1444,10 @@ function renderOrgAdminPage(root) {
       <div style="padding:6px 0;">
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:18px;margin-bottom:16px;">
           <div class="muted" style="font-size:12px;margin-bottom:4px;">${ko?'단체 이름':'Organization'}</div>
-          <div style="font-size:20px;font-weight:700;color:var(--ink-100);margin-bottom:14px;">${userOrg.name}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:20px;font-weight:700;color:var(--ink-100);">${esc(userOrg.name)}</div>
+            <button onclick="renameOrg()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'✏️ 변경':'✏️ Rename'}</button>
+          </div>
           <div class="muted" style="font-size:12px;margin-bottom:6px;">${ko?'학생 초대 코드':'Student join code'}</div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div style="font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:0.05em;color:var(--accent);">${userOrg.code}</div>
@@ -1338,6 +1455,16 @@ function renderOrgAdminPage(root) {
             <button onclick="regenerateOrgCode()" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'재발급':'New'}</button>
           </div>
           <div class="muted" style="font-size:12px;margin-top:10px;line-height:1.5;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 코드를 입력하면 우리 단체에 들어와요.':'Share this code. Students enter it at signup to join.'}</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
+          ${userOrg.billing_active ? `
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">✨ ${ko?'프리미엄 활성':'Premium active'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
+            <div class="muted" style="font-size:12px;line-height:1.6;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 학생 수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved student.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+          ` : `
+            <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
+            <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'결제하면 우리 학원 학생 전원이 무제한이 돼요. 학생 1명당 월 $1.99, 매달 학생 수만큼 자동으로 청구돼요.':'Pay to give all your students unlimited access. $1.99 per student / month, billed automatically.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+            <button class="btn btn-solid" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>
+          `}
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
           <div class="muted" style="font-size:12px;margin-bottom:8px;">${ko?'단체 로고 (학생 화면 상단에 표시돼요)':'Logo (shown to students)'}</div>
@@ -1366,6 +1493,58 @@ function renderOrgAdminPage(root) {
   if (status==='approved' && userOrg) setTimeout(loadOrgStudents, 0);
 }
 
+// ── 자주 묻는 질문(FAQ) ──
+// 항목 추가/수정은 아래 배열에 { q, a } 한 줄씩 넣으면 됩니다.
+const FAQ_ITEMS = [
+  { q: '단어는 어떻게 추가하나요?',
+    a: '영어책이나 교재 페이지를 사진으로 찍으면 AI가 어려운 단어를 골라 자동으로 단어장에 추가해요.' },
+  { q: '무료로 얼마나 쓸 수 있나요?',
+    a: '가입하면 사진 스캔을 무료로 10번 할 수 있어요. 그 후에는 프리미엄으로 업그레이드하면 무제한으로 사용할 수 있어요.' },
+  { q: '복습은 어떻게 되나요?',
+    a: '망각곡선에 따라 복습할 단어를 자동으로 알려드려요. 잊어버릴 때쯤 다시 보여줘서 오래 기억에 남게 도와줘요.' },
+  { q: '단어 뜻이 책 내용과 다르게 나와요.',
+    a: 'AI가 문맥을 분석해 뜻을 제시하지만 가끔 다를 수 있어요. 단어를 눌러 직접 수정할 수 있어요.' },
+  { q: '사진이 잘 안 읽혀요.',
+    a: '글자가 선명하게 보이도록 밝은 곳에서, 페이지를 평평하게 펴서 찍어주세요.' },
+  { q: '구글·카카오로 로그인할 수 있나요?',
+    a: '네, 구글과 카카오 간편 로그인을 지원해요. 기존에 같은 이메일로 가입했다면 구글은 자동으로 연결돼요.' },
+  { q: '기기를 바꿔도 데이터가 유지되나요?',
+    a: '네, 같은 계정으로 로그인하면 어느 기기에서든 단어장이 그대로 유지돼요.' },
+  { q: '학원·학교에서 단체로 쓸 수 있나요?',
+    a: "네! 회원가입 시 '단체'를 선택하면 단체장(관리자)으로 가입할 수 있어요. 전용 코드로 학생들을 받고, 진도와 순위를 관리할 수 있어요." },
+  { q: '단체 코드는 어디서 받나요?',
+    a: '단체장이 단체를 만들면 전용 코드가 자동으로 생성돼요. 학생들은 가입할 때 그 코드를 입력하면 단체에 들어와요.' },
+  { q: '개인으로 먼저 가입했는데 단체장으로 변경할 수 있나요?',
+    a: "네, 가능해요. '문의하기'를 통해 가입하신 아이디(이메일)와 이름, 변경 요청 내용을 보내주시면 단체장으로 변경해 드려요." },
+  { q: '단체 요금은 어떻게 되나요?',
+    a: '학생 1인당 월정액으로, 학생 수만큼 매달 청구돼요. 단체장(관리자)은 무료로 사용할 수 있어요.' },
+  { q: '문의는 어디로 하나요?',
+    a: "앱 내 '문의하기'를 통해 연락해 주세요." },
+];
+
+function showFaq() {
+  const ko = userNativeLang === 'ko';
+  const overlay = document.createElement('div');
+  overlay.id = 'faq-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const items = FAQ_ITEMS.map((it, i) => `
+    <div style="border-bottom:1px solid var(--ink-12,rgba(0,0,0,0.07));">
+      <button onclick="(function(b){var p=b.nextElementSibling;var open=p.style.display==='block';p.style.display=open?'none':'block';b.querySelector('.faq-arrow').style.transform=open?'rotate(0deg)':'rotate(180deg)';})(this)" style="display:flex;align-items:center;gap:10px;width:100%;padding:14px 18px;background:none;border:none;font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);font-weight:600;">
+        <span style="flex:1;">${esc(it.q)}</span>
+        <span class="faq-arrow" style="color:var(--ink-45);transition:transform 0.2s;font-size:12px;">▾</span>
+      </button>
+      <div style="display:none;padding:0 18px 16px;font-size:13px;line-height:1.7;color:var(--ink-70);">${esc(it.a)}</div>
+    </div>`).join('');
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;max-width:380px;width:100%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);flex-shrink:0;">${ko?'자주 묻는 질문':'FAQ'}</div>
+      <div style="overflow-y:auto;flex:1;">${items}</div>
+      <button onclick="document.getElementById('faq-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;border-top:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:13px;cursor:pointer;font-family:var(--font-body);flex-shrink:0;">${ko?'닫기':'Close'}</button>
+    </div>`;
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+}
+
 // My 메뉴 (설정 모음)
 function showMyMenu() {
   const ko = userNativeLang === 'ko';
@@ -1381,6 +1560,7 @@ function showMyMenu() {
       ${userOrgRole==='owner' ? row('🏫', ko?'단체 관리':'Org Admin', "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
       ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
+      ${row('❓', ko?'자주 묻는 질문':'FAQ', "document.getElementById('my-modal').remove();showFaq()")}
       ${row('✉️', ko?'문의하기':'Contact Us', "document.getElementById('my-modal').remove();contactSupport()")}
       ${row(isDark?'☀️':'🌙', isDark?(ko?'라이트 모드':'Light Mode'):(ko?'다크 모드':'Dark Mode'), "document.getElementById('my-modal').remove();toggleDarkMode()")}
       ${row('🚪', ko?'로그아웃':'Logout', "document.getElementById('my-modal').remove();sbSignOut()")}
@@ -1557,12 +1737,23 @@ async function sbInit() {
   // ── 비밀번호 재설정 토큰 체크 (최우선) ──
   if (checkRecoveryToken()) return;
 
+  // ── 소셜 로그인 리다이렉트 처리 ──
+  if (await handleOAuthRedirect()) return;
+
   // 저장된 세션이 있으면 로그인 화면 대신 로딩 표시 (깜빡임 방지)
   const hasSavedSession = !!localStorage.getItem('imvoca.session');
   if (hasSavedSession) {
     document.getElementById('root').innerHTML = '<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-page);gap:18px;"><img src="https://imvoca.app/2.png" style="width:96px;height:96px;object-fit:contain;border-radius:22px;box-shadow:0 6px 24px rgba(28,53,83,0.15);animation:imvocaPulse 1.6s ease-in-out infinite;"><div style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--accent);letter-spacing:0.02em;">IM VOCA</div></div>';
   } else {
-    renderLogin();
+    // 광고·단체코드로 처음 온 사람은 '회원가입' 탭 먼저
+    const _p = new URLSearchParams(window.location.search);
+    const _code = (_p.get('code') || '').trim();
+    if (_p.get('signup') === '1' || _code) {
+      if (_code) { window._suType = 'student'; window._prefillCode = _code.toUpperCase(); }
+      renderLogin('signup');
+    } else {
+      renderLogin();
+    }
   }
 
   // ── 데모 링크 토큰 감지 ──
@@ -1763,6 +1954,121 @@ async function saveApiKeyToDB(key) {
   } catch(e) { toast('저장 실패: ' + e.message); }
 }
 
+// 가입 경로 수집 (단체장)
+function collectSignupSource(){
+  const sel = window._signupSource || '';
+  if (sel === 'referral') { const n=(document.getElementById('su-referral')?.value||'').trim(); return n ? ('지인소개: '+n) : '지인소개'; }
+  if (sel === 'other') { const o=(document.getElementById('su-other')?.value||'').trim(); return o ? ('기타: '+o) : '기타'; }
+  return sel || '';
+}
+function pickSource(v){ window._signupSource = v; renderLogin('signup'); }
+
+// ── 소셜 로그인 (구글/카카오) ──
+function signInWithProvider(provider){
+  try{
+    // 가입 탭에서 입력한 이름/단체코드/유형을 저장 (구글 갔다와도 유지)
+    const ko = userNativeLang==='ko';
+    const onSignupTab = !!document.getElementById('su-nm');
+    const nameEl = document.getElementById('su-nm');
+    const name = nameEl ? (nameEl.value||'').trim() : '';
+    // 회원가입 탭에서 소셜 가입 시 이름 필수
+    if (onSignupTab && !name) {
+      toast(ko?'이름을 먼저 입력해주세요':'Please enter your name first');
+      if (nameEl) nameEl.focus();
+      return;
+    }
+    const codeEl = document.getElementById('su-code');
+    const code = codeEl ? (codeEl.value||'').trim().toUpperCase() : '';
+    const suType = window._suType || 'personal';
+    if (onSignupTab && suType === 'student' && !code) {
+      toast(ko?'단체 코드를 입력해주세요':'Please enter the org code');
+      if (codeEl) codeEl.focus();
+      return;
+    }
+    // 가입 경로 수집 (모든 유형)
+    let source = '';
+    if (onSignupTab) {
+      const srcSel = window._signupSource || '';
+      if (srcSel === 'referral') { const refn=(document.getElementById('su-referral')?.value||'').trim(); source = refn ? ('지인소개: '+refn) : '지인소개'; }
+      else if (srcSel === 'other') { const oth=(document.getElementById('su-other')?.value||'').trim(); source = oth ? ('기타: '+oth) : '기타'; }
+      else if (srcSel) source = srcSel;
+    }
+    const pending = { suType, code, name, source };
+    try { localStorage.setItem('imvoca.oauthPending', JSON.stringify(pending)); } catch(e){}
+    const redirect = encodeURIComponent(location.origin + location.pathname);
+    location.href = SB_URL + '/auth/v1/authorize?provider=' + provider + '&redirect_to=' + redirect;
+  }catch(e){ toast('로그인 이동 실패: ' + e.message); }
+}
+
+// 소셜 로그인 후 돌아왔을 때 (#access_token=... 처리)
+async function handleOAuthRedirect(){
+  const h = window.location.hash || '';
+  if (h.indexOf('access_token=') === -1) return false;
+  const hp = new URLSearchParams(h.replace(/^#/,''));
+  const access_token = hp.get('access_token');
+  const refresh_token = hp.get('refresh_token');
+  if (!access_token) return false;
+  history.replaceState({}, '', window.location.pathname);
+  try{
+    const res = await fetch(SB_URL + '/auth/v1/user', { headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+access_token }});
+    if(!res.ok){ renderLogin(); return true; }
+    const user = await res.json();
+    _authToken = access_token; currentUser = user;
+    localStorage.setItem('imvoca.session', JSON.stringify({ access_token, refresh_token, user }));
+    await ensureMemberRow(user);
+    // 승인 대기(단체 학생/관리자) 체크
+    if (user.email !== 'koreayjk@gmail.com') {
+      try{
+        const r = await fetch(SB_URL + `/rest/v1/members?id=eq.${user.id}&select=org_status,org_role`, { headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }});
+        const md = await r.json();
+        if (md[0] && md[0].org_status === 'pending') {
+          toast(userNativeLang==='ko'?'아직 승인 대기 중이에요. 관리자 승인 후 사용 가능해요':'Pending approval.');
+          _authToken=null; currentUser=null; localStorage.removeItem('imvoca.session');
+          renderLogin(); return true;
+        }
+      }catch(e){}
+    }
+    await Promise.all([ loadApiKey(), loadUserName(), loadUserPlan(), loadBooksFromDB(), loadNotices() ]);
+    await maybeSeedSampleBook();
+    applyEntryStack(); render();
+    setTimeout(updateNoticeBadge, 100); setTimeout(checkReviews, 1000);
+  }catch(e){ console.error('OAuth 처리 실패:', e); renderLogin(); }
+  return true;
+}
+
+// 소셜 첫 로그인 시 members 행 없으면 생성
+async function ensureMemberRow(user){
+  try{
+    const r = await fetch(SB_URL + `/rest/v1/members?id=eq.${user.id}&select=id`, { headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }});
+    const rows = await r.json();
+    if (Array.isArray(rows) && rows.length>0) return; // 이미 있음(기존/연결 계정)
+    const meta = user.user_metadata || {};
+    // 가입 직전 저장해둔 이름/단체코드/유형
+    let pending = null;
+    try { pending = JSON.parse(localStorage.getItem('imvoca.oauthPending')||'null'); } catch(e){}
+    try { localStorage.removeItem('imvoca.oauthPending'); } catch(e){}
+    // 이메일 (카카오는 없을 수 있음)
+    const emailVal = user.email || meta.email || null;
+    // 사용자가 입력한 이름 우선, 없으면 소셜 계정 이름/닉네임
+    const nm = (pending && pending.name) ? pending.name
+      : (meta.name || meta.full_name || meta.nickname || meta.user_name || (emailVal ? emailVal.split('@')[0] : '사용자'));
+    const body = { id:user.id, name:nm, role:'멤버', plan:'free', scan_count:0 };
+    if (emailVal) body.email = emailVal;  // 이메일 있을 때만 저장 (카카오 무이메일 대비)
+    if (pending && pending.source) body.signup_source = pending.source;
+    if (pending && pending.suType === 'owner') {
+      body.org_role = 'owner'; body.org_status = 'approved'; // 단체장 자동 승인
+    } else if (pending && (pending.suType === 'student' || pending.code) && pending.code) {
+      const org = await lookupOrgByCode(pending.code);
+      if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
+    }
+    await fetch(SB_URL + '/rest/v1/members', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken, 'Prefer':'return=minimal' },
+      body: JSON.stringify(body)
+    });
+  }catch(e){ console.error('member 생성 실패:', e); }
+}
+
 async function sbSignIn(email, pw) {
   // 로딩 상태 표시
   const btn = document.querySelector('.btn-solid');
@@ -1853,7 +2159,7 @@ async function maybeSeedSampleBook(){
   }catch(e){ console.warn('[sample seed]',e); }
 }
 
-async function sbSignUp(email, pw, name, acctType='personal', orgCode='') {
+async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source='') {
   // 입력값 검증
   if (!name?.trim()) { toast(userNativeLang==='ko'?'이름을 입력해주세요':'Please enter your name'); return; }
   if (!email?.trim()) { toast(userNativeLang==='ko'?'이메일을 입력해주세요':'Please enter your email'); return; }
@@ -1863,7 +2169,11 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='') {
   // 학생용 학원 코드가 있으면 먼저 확인 (학원장 가입은 코드 불필요)
   let org = null;
   const codeTrim = (orgCode||'').trim().toUpperCase();
-  if (acctType !== 'owner' && codeTrim) {
+  if (acctType === 'student') {
+    if (!codeTrim) { toast(userNativeLang==='ko'?'단체 코드를 입력해주세요':'Please enter the org code'); return; }
+    org = await lookupOrgByCode(codeTrim);
+    if (!org) { toast(userNativeLang==='ko'?'단체 코드를 찾을 수 없어요. 코드를 확인해주세요':'Org code not found. Please check the code.'); return; }
+  } else if (acctType !== 'owner' && codeTrim) {
     org = await lookupOrgByCode(codeTrim);
     if (!org) { toast(userNativeLang==='ko'?'단체 코드를 찾을 수 없어요. 코드를 확인해주세요':'Org code not found. Please check the code.'); return; }
   }
@@ -1872,7 +2182,8 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='') {
     if (data.error) { toast('가입 실패: ' + data.error.message); return; }
     if (data.user?.id) {
       const body = { id: data.user.id, name, email, role: '멤버', plan: 'free', scan_count: 0 };
-      if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'pending'; }
+      if (source) body.signup_source = source;
+      if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'approved'; } // 단체장 자동 승인
       else if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
       const mRes = await fetch(SB_URL + '/rest/v1/members', {
         method: 'POST',
@@ -1888,7 +2199,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='') {
       console.error('[회원가입] user.id 없음 - 이메일 인증 대기 상태일 수 있음', data);
     }
     let msg;
-    if (acctType === 'owner') msg = userNativeLang==='ko'?'단체 관리자 가입 신청 완료! 승인 후 단체를 만들 수 있어요 😊':'Org admin signup submitted! Create your organization after approval.';
+    if (acctType === 'owner') msg = userNativeLang==='ko'?'단체장 가입 완료! 로그인 후 바로 단체를 만들 수 있어요 😊':'Owner signup complete! Log in and create your organization.';
     else if (org) msg = userNativeLang==='ko'?`가입 완료! '${org.name}' 승인 후 이용할 수 있어요 😊`:`Signed up! Active after '${org.name}' approves you.`;
     else msg = userNativeLang==='ko'?'가입 완료! 바로 로그인해서 사용할 수 있어요 😊':'Signed up! Log in to start.';
     toast(msg);
@@ -2045,14 +2356,24 @@ function renderLogin(tab='login') {
     ['🔁','Forgetting-curve review'],
     ['📊','Automatic CEFR levels'],
   ];
-  const welcome = userNativeLang==='ko' ? (tab==='login'?'빡공합시다 📚':'함께 시작해요 📚') : (tab==='login'?'Welcome back 📚':'Let\'s get started 📚');
+  const welcome = userNativeLang==='ko' ? (tab==='login'?'빡공합시다 📚':'30초면 시작해요 📚') : (tab==='login'?'Welcome back 📚':'Start in 30 seconds 📚');
+  const gkBtns = `
+    <button type="button" onclick="signInWithProvider('google')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid var(--ink-12);border-radius:10px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:500;color:#1f1f1f;cursor:pointer;margin-bottom:10px;">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4.5 24 4.5 16.3 4.5 9.7 8.9 6.3 14.7z"/><path fill="#4CAF50" d="M24 43.5c5.4 0 10.3-2.1 14-5.4l-6.5-5.5c-2 1.5-4.6 2.4-7.5 2.4-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.6 39 16.2 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.5 5.5c-.5.4 7-5.1 7-15.1 0-1.2-.1-2.3-.4-3.5z"/></svg>
+      ${userNativeLang==='ko'?'Google로 계속하기':'Continue with Google'}
+    </button>
+    <button type="button" onclick="signInWithProvider('kakao')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEE500;border:none;border-radius:10px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:600;color:#191600;cursor:pointer;">
+      <span style="font-size:16px;">💬</span>${userNativeLang==='ko'?'카카오로 계속하기':'Continue with Kakao'}
+    </button>`;
+  const dividerOr = `<div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;"><div style="flex:1;height:1px;background:var(--ink-07);"></div><div style="font-size:11px;color:var(--ink-40);">${userNativeLang==='ko'?'또는':'or'}</div><div style="flex:1;height:1px;background:var(--ink-07);"></div></div>`;
+  const dividerEmail = `<div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;"><div style="flex:1;height:1px;background:var(--ink-07);"></div><div style="font-size:11px;color:var(--ink-40);">${userNativeLang==='ko'?'또는 이메일로':'or with email'}</div><div style="flex:1;height:1px;background:var(--ink-07);"></div></div>`;
   document.getElementById('root').innerHTML = `
     <div class="auth-screen">
       <div class="auth-card">
         <div class="auth-aside">
           <img src="https://imvoca.app/2.png" style="width:88px;height:88px;object-fit:contain;border-radius:18px;background:#fff;padding:8px;margin-bottom:18px;">
           <div style="font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing:-0.01em;">IM VOCA</div>
-          <div style="font-size:14px;color:rgba(243,236,224,0.7);margin-top:8px;line-height:1.6;">${userNativeLang==='ko'?'영어 원서 단어, AI로 쉽게.<br>읽고, 찍고, 기억하세요.':'English book vocab, made easy with AI.<br>Read. Capture. Remember.'}</div>
+          <div style="font-size:14px;color:rgba(243,236,224,0.7);margin-top:8px;line-height:1.6;">${userNativeLang==='ko'?'교재를 찍으면 끝.<br>단어장은 <b style=\"color:#f0a830;\">AI</b>가 만들어 드려요.':'Just snap your book.<br><b style=\"color:#f0a830;\">AI</b> builds your vocab list.'}</div>
           <div style="margin-top:14px;">
             ${feats.map(f=>`<div class="auth-feat"><span class="ic">${f[0]}</span><span>${f[1]}</span></div>`).join('')}
           </div>
@@ -2074,29 +2395,50 @@ function renderLogin(tab='login') {
           <div style="font-family:var(--font-serif-ko);font-size:24px;font-weight:600;color:var(--ink-100);margin-bottom:6px;">${welcome}</div>
           <div class="muted" style="font-size:13px;margin-bottom:20px;">${userNativeLang==='ko'?'이메일과 비밀번호로 로그인하세요':'Sign in with your email and password'}</div>
           ${tab==='login'?`
+            ${gkBtns}
+            ${dividerEmail}
             <input id="li-em" type="email" placeholder="${userNativeLang==='ko'?'이메일':'Email'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px"
               onkeydown="if(event.key==='Enter'){document.getElementById('li-pw').focus();}">
             <input id="li-pw" type="password" placeholder="${userNativeLang==='ko'?'비밀번호':'Password'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px"
               onkeydown="if(event.key==='Enter'){sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value);}">
-            <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">${userNativeLang==='ko'?'로그인':'Log In'}</button>
+            <button class="btn btn-solid" onclick="sbSignIn(document.getElementById('li-em').value,document.getElementById('li-pw').value)">${userNativeLang==='ko'?'이메일로 로그인':'Log in with email'}</button>
             <button onclick="showResetPassword()" style="width:100%;background:none;border:none;font-family:var(--font-body);font-size:12px;color:var(--ink-40);cursor:pointer;padding:10px;margin-top:4px;">
               ${userNativeLang==='ko'?'비밀번호를 잊으셨나요?':'Forgot your password?'}
             </button>
           `:`
-            <input id="su-nm" type="text" placeholder="${userNativeLang==='ko'?'이름':'Name'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
+            ${(()=>{ const t0=window._suType||'personal'; const cat=(t0==='student'||t0==='owner')?'org':'personal'; return `
+            <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${userNativeLang==='ko'?'가입 유형':'Account type'}</div>
+            <div style="display:flex;gap:8px;margin-bottom:14px;">
+              <button type="button" onclick="window._suType='personal';renderLogin('signup')" style="flex:1;padding:11px;border:1.5px solid ${cat==='personal'?'var(--accent)':'var(--ink-12)'};background:${cat==='personal'?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);font-weight:${cat==='personal'?600:400};">${userNativeLang==='ko'?'👤 개인':'👤 Personal'}</button>
+              <button type="button" onclick="window._suType='student';renderLogin('signup')" style="flex:1;padding:11px;border:1.5px solid ${cat==='org'?'var(--accent)':'var(--ink-12)'};background:${cat==='org'?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);font-weight:${cat==='org'?600:400};">${userNativeLang==='ko'?'🏫 단체':'🏫 Organization'}</button>
+            </div>
+            ${cat==='org'?`
+              <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${userNativeLang==='ko'?'역할':'Role'}</div>
+              <div style="display:flex;gap:8px;margin-bottom:14px;">
+                <button type="button" onclick="window._suType='student';renderLogin('signup')" style="flex:1;padding:10px;border:1.5px solid ${t0==='student'?'var(--accent)':'var(--ink-12)'};background:${t0==='student'?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);font-weight:${t0==='student'?600:400};">${userNativeLang==='ko'?'👥 멤버':'👥 Member'}</button>
+                <button type="button" onclick="window._suType='owner';renderLogin('signup')" style="flex:1;padding:10px;border:1.5px solid ${t0==='owner'?'var(--accent)':'var(--ink-12)'};background:${t0==='owner'?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);font-weight:${t0==='owner'?600:400};">${userNativeLang==='ko'?'🛡️ 단체장':'🛡️ Owner'}</button>
+              </div>
+            `:''}
+            <input id="su-nm" type="text" placeholder="${userNativeLang==='ko'?'이름 (필수)':'Name (required)'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
+            ${t0==='student'?`
+              <input id="su-code" type="text" value="${window._prefillCode||''}" placeholder="${userNativeLang==='ko'?'단체 코드 (필수)':'Org code (required)'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;text-transform:uppercase;">
+              <div style="font-size:11px;color:var(--ink-45);margin-bottom:8px;">${userNativeLang==='ko'?'단체에서 받은 코드를 입력하세요. 관리자 승인 후 이용할 수 있어요.':'Enter the code from your organization. Active after admin approval.'}</div>
+            `:''}
+            ${t0==='owner'?`
+              <div style="background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--ink-60);line-height:1.5;margin-bottom:12px;">${userNativeLang==='ko'?'단체장으로 가입하면 바로 단체(학원·학교·모임 등)를 만들고 전용 코드로 멤버를 받을 수 있어요.':'Create your organization and invite members with a code.'}</div>
+            `:''}
+            <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${userNativeLang==='ko'?'가입 경로 (어떻게 알게 되셨나요?)':'How did you hear about us?'}</div>
+            ${(()=>{ const src=window._signupSource||''; const opts=[['ad','📱 '+(userNativeLang==='ko'?'인스타·페북 광고':'Instagram/FB ad')],['search','🔍 '+(userNativeLang==='ko'?'검색 (구글·네이버)':'Search')],['referral','👥 '+(userNativeLang==='ko'?'지인·동료 소개':'Referral')],['community','🏫 '+(userNativeLang==='ko'?'모임·커뮤니티':'Community')],['other','✏️ '+(userNativeLang==='ko'?'기타':'Other')]];
+              return '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'+opts.map(o=>`<button type="button" onclick="pickSource('${o[0]}')" style="padding:8px 12px;border:1.5px solid ${src===o[0]?'var(--accent)':'var(--ink-12)'};background:${src===o[0]?'var(--gold-bg)':'var(--bg-input)'};border-radius:999px;font-family:var(--font-body);font-size:12px;cursor:pointer;color:var(--ink-100);font-weight:${src===o[0]?600:400};">${o[1]}</button>`).join('')+'</div>'; })()}
+            ${(window._signupSource==='referral')?`<input id="su-referral" type="text" placeholder="${userNativeLang==='ko'?'소개해주신 분 이름':'Who referred you?'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
+            ${(window._signupSource==='other')?`<input id="su-other" type="text" placeholder="${userNativeLang==='ko'?'직접 입력':'Please specify'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
+            ${gkBtns}
+            ${dividerEmail}
             <input id="su-em" type="email" placeholder="${userNativeLang==='ko'?'이메일':'Email'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
             <input id="su-pw" type="password" placeholder="${userNativeLang==='ko'?'비밀번호 (6자 이상)':'Password (6+ characters)'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:12px"
-              onkeydown="if(event.key==='Enter'){sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'');}">
-            <div style="display:flex;gap:8px;margin-bottom:12px;">
-              <button type="button" onclick="window._suType='personal';renderLogin('signup')" style="flex:1;padding:10px;border:1.5px solid ${(window._suType||'personal')==='personal'?'var(--accent)':'var(--ink-12)'};background:${(window._suType||'personal')==='personal'?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);font-weight:${(window._suType||'personal')==='personal'?600:400};">${userNativeLang==='ko'?'개인':'Personal'}</button>
-              <button type="button" onclick="window._suType='owner';renderLogin('signup')" style="flex:1;padding:10px;border:1.5px solid ${(window._suType||'personal')==='owner'?'var(--accent)':'var(--ink-12)'};background:${(window._suType||'personal')==='owner'?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-100);font-weight:${(window._suType||'personal')==='owner'?600:400};">${userNativeLang==='ko'?'단체 관리자':'Org admin'}</button>
-            </div>
-            ${(window._suType||'personal')==='personal'?`
-              <input id="su-code" type="text" placeholder="${userNativeLang==='ko'?'단체 코드 (있으면 입력)':'Org code (optional)'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:14px;text-transform:uppercase;">
-            `:`
-              <div style="background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--ink-60);line-height:1.5;margin-bottom:14px;">${userNativeLang==='ko'?'단체 관리자로 가입하면 승인 후 단체(학원·학교 등)를 만들고 소속 학생을 관리할 수 있어요.':'After approval, you can create an organization (academy, school, etc.) and manage its students.'}</div>
-            `}
-            <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'')">${userNativeLang==='ko'?'가입하기':'Sign Up'}</button>
+              onkeydown="if(event.key==='Enter'){sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'',collectSignupSource());}">
+            <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'',collectSignupSource())">${userNativeLang==='ko'?'이메일로 가입하기':'Sign up with email'}</button>
+            `; })()}
           `}
           ${t('loginHint') ? `<div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">${t('loginHint')}</div>` : ''}
           <div style="text-align:center;margin-top:18px;font-size:10px;color:var(--ink-40);line-height:1.6">
@@ -3595,88 +3937,146 @@ function fmtScoreDate(iso) {
 }
 
 async function renderStats(root, dock) {
+  const ko = userNativeLang==='ko';
   root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
       <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
-      <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🏆 ${userNativeLang==='ko'?'명예의 전당':'Hall of Fame'}</div>
+      <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🏆 ${ko?'명예의 전당':'Hall of Fame'}</div>
     </div>
     <div class="muted" style="font-size:12px;margin-top:2px;margin-bottom:16px;">
-      ${userOrg?`<div style="color:var(--accent);font-weight:600;margin-bottom:3px;">🏫 ${esc(userOrg.name)} ${userNativeLang==='ko'?'안에서의 순위':'ranking'}</div>`:''}${userNativeLang==='ko'?'A2=1점 · B1=2점 · B2=3점 · C1=4점 · C2=5점 (CEFR 난이도 가중치)':'A2=1pt · B1=2pt · B2=3pt · C1=4pt · C2=5pt (CEFR weighted)'}
+      ${ko?'A2=1점 · B1=2점 · B2=3점 · C1=4점 · C2=5점 (CEFR 난이도 가중치)':'A2=1pt · B1=2pt · B2=3pt · C1=4pt · C2=5pt (CEFR weighted)'}
     </div>
     <div class="scr-scroll" id="hall-inner">
       <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div>
     </div>
   </div>` + dock;
 
-  // 명예의 전당 데이터 로드
+  const medals = ['🥇','🥈','🥉'];
   try {
-    let hq;
-    if (userOrgId) hq = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&org_role=eq.student&select=name,total_words,perfect_reviews,last_scored_at&limit=200`;
-    else hq = `/rest/v1/members?org_id=is.null&select=name,total_words,perfect_reviews,last_scored_at&limit=200`;
-    const res = await fetch(SB_URL + hq, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
-    });
+    // 전체 사용자 로드 (개인 + 단체 소속 모두) — 개인전용
+    const hq = `/rest/v1/members?select=name,total_words,perfect_reviews,last_scored_at,org_id,org_role,org_status&limit=1000`;
+    const res = await fetch(SB_URL + hq, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
     const data = await res.json();
-    // 복습 점수(perfect_reviews) 기준 내림차순 정렬
-    const hall = (Array.isArray(data) ? data : [])
+    const all = Array.isArray(data) ? data : [];
+
+    // ── 개인전: 모든 사용자 (단체 소속자도 개인으로 포함) ──
+    const indiv = all
       .map(m => ({ ...m, _score: (m.perfect_reviews||0) }))
       .filter(m => m._score > 0)
       .sort((a,b) => b._score - a._score)
       .slice(0, 50);
-    const medals = ['🥇','🥈','🥉'];
+    const myRank = indiv.findIndex(m => m.name === userName) + 1;
+
+    // ── 단체전: 단체별 점수 합산 ──
+    const orgMap = {}; // org_id -> {score, members}
+    all.forEach(m => {
+      if (m.org_id && m.org_status === 'approved' && m.org_role === 'student') {
+        const sc = (m.perfect_reviews||0);
+        if (!orgMap[m.org_id]) orgMap[m.org_id] = { score:0, count:0 };
+        orgMap[m.org_id].score += sc;
+        if (sc>0) orgMap[m.org_id].count += 1;
+      }
+    });
+    const orgIds = Object.keys(orgMap).filter(id => orgMap[id].score > 0);
+    // 단체 이름 매핑
+    let orgNames = {};
+    if (orgIds.length) {
+      try {
+        const inList = orgIds.join(',');
+        const ores = await fetch(SB_URL + `/rest/v1/orgs?id=in.(${inList})&select=id,name`, { headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken } });
+        const odata = await ores.json();
+        (Array.isArray(odata)?odata:[]).forEach(o => { orgNames[o.id] = o.name; });
+      } catch(e){}
+    }
+    const teams = orgIds
+      .map(id => ({ id, name: orgNames[id] || (ko?'단체':'Org'), score: orgMap[id].score, count: orgMap[id].count }))
+      .sort((a,b) => b.score - a.score)
+      .slice(0, 50);
+    const myTeamRank = userOrgId ? (teams.findIndex(tm => tm.id === userOrgId) + 1) : 0;
+
     const el = document.getElementById('hall-inner');
     if (!el) return;
 
-    if (hall.length === 0) {
+    if (indiv.length === 0 && teams.length === 0) {
       el.innerHTML = `<div style="text-align:center;padding:60px 20px;">
         <div style="font-size:48px;margin-bottom:16px;">🏆</div>
-        <div style="font-size:15px;color:var(--ink-60);">${userNativeLang==='ko'?'아직 등록된 기록이 없어요':'No records yet'}</div>
-        <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${userNativeLang==='ko'?'복습을 완료하면 순위에 올라가요!':'Complete reviews to appear on the leaderboard!'}</div>
+        <div style="font-size:15px;color:var(--ink-60);">${ko?'아직 등록된 기록이 없어요':'No records yet'}</div>
+        <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${ko?'복습을 완료하면 순위에 올라가요!':'Complete reviews to appear on the leaderboard!'}</div>
       </div>`;
       return;
     }
 
-    // 내 순위 찾기
-    const myRank = hall.findIndex(m => m.name === userName) + 1;
-
-    el.innerHTML = `
+    // ── 개인전 렌더 ──
+    const indivHtml = indiv.length === 0
+      ? `<div style="text-align:center;padding:30px;color:var(--ink-40);font-size:13px;">${ko?'아직 개인 기록이 없어요':'No records yet'}</div>`
+      : `
       ${myRank > 0 ? `
-      <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
-        <div style="font-size:20px;">${myRank <= 3 ? medals[myRank-1] : myRank + '위'}</div>
+      <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        <div style="font-size:20px;">${myRank <= 3 ? medals[myRank-1] : myRank + (ko?'위':'')}</div>
         <div>
-          <div style="font-size:13px;font-weight:700;color:var(--accent);">${userNativeLang==='ko'?'내 순위':'My Rank'}</div>
-          <div style="font-size:12px;color:var(--ink-60);">⚡ ${hall[myRank-1]?._score||0}${userNativeLang==='ko'?'점':'pts'}</div>
+          <div style="font-size:13px;font-weight:700;color:var(--accent);">${ko?'내 순위':'My Rank'}</div>
+          <div style="font-size:12px;color:var(--ink-60);">⚡ ${indiv[myRank-1]?._score||0}${ko?'점':'pts'}</div>
         </div>
       </div>` : ''}
-
       <div style="background:var(--bg-card);border-radius:16px;overflow:hidden;">
-        ${hall.map((m, i) => `
+        ${indiv.map((m, i) => `
         <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ink-07);${m.name===userName?'background:var(--gold-bg);':''}">
-          <div style="font-size:${i<3?'22px':'14px'};width:32px;text-align:center;font-weight:700;color:${i<3?'inherit':'var(--ink-40)'};">
-            ${i<3?medals[i]:i+1}
-          </div>
+          <div style="font-size:${i<3?'22px':'14px'};width:32px;text-align:center;font-weight:700;color:${i<3?'inherit':'var(--ink-40)'};">${i<3?medals[i]:i+1}</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:14px;font-weight:${m.name===userName?'700':'500'};color:var(--ink-100);display:flex;align-items:center;gap:6px;">
-              ${m.name||'익명'}
-              ${m.name===userName?`<span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;">${userNativeLang==='ko'?'나':'Me'}</span>`:''}
+              ${esc(m.name||(ko?'익명':'Anon'))}
+              ${m.name===userName?`<span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;">${ko?'나':'Me'}</span>`:''}
             </div>
-            <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">
-              ⚡ ${userNativeLang==='ko'?'복습 점수':'Review'} ${m._score||0}${userNativeLang==='ko'?'점':'pts'}
-            </div>
+            <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">⚡ ${ko?'복습 점수':'Review'} ${m._score||0}${ko?'점':'pts'}</div>
           </div>
-<div style="text-align:right;flex-shrink:0;font-size:11px;color:var(--ink-40);line-height:1.6;">
+          <div style="text-align:right;flex-shrink:0;font-size:11px;color:var(--ink-40);line-height:1.6;">
             ${i===0?'<div style="font-size:20px;">👑</div>':''}
             ${m.last_scored_at ? '📅 ' + fmtScoreDate(m.last_scored_at) : ''}
           </div>
         </div>`).join('')}
-      </div>
+      </div>`;
+
+    // ── 단체전 렌더 ──
+    const teamHtml = teams.length === 0
+      ? `<div style="text-align:center;padding:30px;color:var(--ink-40);font-size:13px;">${ko?'아직 단체 기록이 없어요':'No team records yet'}</div>`
+      : `
+      ${myTeamRank > 0 ? `
+      <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        <div style="font-size:20px;">${myTeamRank <= 3 ? medals[myTeamRank-1] : myTeamRank + (ko?'위':'')}</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--accent);">${ko?'우리 단체 순위':'My Team'}</div>
+          <div style="font-size:12px;color:var(--ink-60);">⚡ ${teams[myTeamRank-1]?.score||0}${ko?'점':'pts'}</div>
+        </div>
+      </div>` : ''}
+      <div style="background:var(--bg-card);border-radius:16px;overflow:hidden;">
+        ${teams.map((tm, i) => `
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ink-07);${tm.id===userOrgId?'background:var(--gold-bg);':''}">
+          <div style="font-size:${i<3?'22px':'14px'};width:32px;text-align:center;font-weight:700;color:${i<3?'inherit':'var(--ink-40)'};">${i<3?medals[i]:i+1}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14px;font-weight:${tm.id===userOrgId?'700':'500'};color:var(--ink-100);display:flex;align-items:center;gap:6px;">
+              🏫 ${esc(tm.name)}
+              ${tm.id===userOrgId?`<span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;">${ko?'우리':'Mine'}</span>`:''}
+            </div>
+            <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">⚡ ${tm.score}${ko?'점':'pts'} · 👥 ${tm.count}${ko?'명':''}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">${i===0?'<div style="font-size:20px;">👑</div>':''}</div>
+        </div>`).join('')}
+      </div>`;
+
+    const sectionTitle = (txt) => `<div style="font-size:15px;font-weight:700;color:var(--ink-100);margin:6px 2px 12px;display:flex;align-items:center;gap:6px;">${txt}</div>`;
+
+    el.innerHTML = `
+      ${sectionTitle((ko?'👤 개인전':'👤 Individuals'))}
+      ${indivHtml}
+      <div style="height:26px;"></div>
+      ${sectionTitle((ko?'🏫 단체전':'🏫 Teams'))}
+      ${teamHtml}
     `;
   } catch(e) {
     const el = document.getElementById('hall-inner');
-    if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류가 발생했어요':'An error occurred'}</div>`;
+    if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${ko?'오류가 발생했어요':'An error occurred'}</div>`;
   }
 }
-
 
 async function deleteStats(id) {
   if (!confirm(userNativeLang==='ko'?'이 학습 기록을 삭제할까요?':'Delete this study record?')) return;
