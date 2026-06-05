@@ -434,6 +434,57 @@ function renderOverview(){
     <div class="stat"><div class="label">단체 수</div><div class="num">${orgCount}</div><div class="sub">결제중 ${orgPaying} · 무료 ${orgFree}</div></div>
     <div class="stat green"><div class="label">예상 월 매출 (MRR)</div><div class="num">$${totalMrr}</div><div class="sub">개인 $${indMrr.toFixed(2)} · 단체 $${orgMrr.toFixed(2)}</div></div>
     <div class="stat"><div class="label">누적 단어 수</div><div class="num">${totalWords.toLocaleString()}</div><div class="sub">전 회원 합계</div></div>
+
+    ${(()=>{
+      // ── 가입 경로 통계 ──
+      const SRC_DEFS = [
+        ['ad',        '📱 인스타·페북 광고', '#e8590c'],
+        ['search',    '🔍 검색',            '#1c7ed6'],
+        ['referral',  '👥 지인·동료 소개',   '#37b24d'],
+        ['community', '🏫 모임·커뮤니티',     '#9c36b5'],
+        ['other',     '✏️ 기타',            '#868e96'],
+      ];
+      // signup_source 값 분류: 'ad' / 'search' / '지인소개: 홍길동' / '기타: ...' / 'referral' 등
+      function classify(raw){
+        if(!raw) return null;
+        const v = String(raw).trim();
+        if(v.startsWith('지인소개')) return 'referral';
+        if(v.startsWith('기타')) return 'other';
+        if(['ad','search','referral','community','other'].includes(v)) return v;
+        return 'other';
+      }
+      const counts = {ad:0,search:0,referral:0,community:0,other:0};
+      let known = 0;
+      const referralNames = [];
+      _allMembers.forEach(m=>{
+        const c = classify(m.signup_source);
+        if(c){ counts[c]++; known++; if(c==='referral'){ const nm=String(m.signup_source).split(':')[1]; if(nm) referralNames.push(nm.trim()); } }
+      });
+      const unknown = total - known;
+      if(known===0){
+        return `<div class="stat" style="grid-column:1/-1;"><div class="label">가입 경로</div><div class="sub" style="margin-top:8px;">아직 경로 데이터가 없어요. (이 기능 적용 후 가입한 회원부터 집계됩니다)</div></div>`;
+      }
+      const maxc = Math.max(...Object.values(counts), 1);
+      const bars = SRC_DEFS.map(([key,label,color])=>{
+        const c = counts[key];
+        const pct = known? (c/known*100):0;
+        const w = (c/maxc*100);
+        return `<div style="margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-70);margin-bottom:3px;">
+            <span>${label}</span><span><b>${c}</b>명 · ${pct.toFixed(0)}%</span>
+          </div>
+          <div style="height:14px;background:var(--ink-07);border-radius:5px;overflow:hidden;">
+            <div style="width:${w}%;height:100%;background:${color};border-radius:5px;transition:width .3s;"></div>
+          </div>
+        </div>`;
+      }).join('');
+      const refNote = referralNames.length? `<div style="font-size:11px;color:var(--ink-45);margin-top:6px;">소개자: ${referralNames.slice(0,10).map(n=>esc(n)).join(', ')}${referralNames.length>10?' 외 '+(referralNames.length-10)+'명':''}</div>` : '';
+      return `<div class="stat" style="grid-column:1/-1;">
+        <div class="label">가입 경로 · 응답 ${known}명${unknown>0?` (미응답 ${unknown})`:''}</div>
+        <div style="margin-top:12px;">${bars}</div>
+        ${refNote}
+      </div>`;
+    })()}
   `;
 }
 
