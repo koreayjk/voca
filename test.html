@@ -3437,10 +3437,10 @@ function render() {
           <div class="book-grid">
             ${books.map(b=>`
               <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
-                <div class="book-cover" style="background:${b.color};position:relative;overflow:hidden;">
-                  ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:''}
-                  <div class="book-cover__title" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.title}</div>
-                  <div class="book-cover__author" style="${b.cover?'text-shadow:0 1px 4px rgba(0,0,0,0.6)':''}">${b.author}</div>
+                <div class="book-cover" style="background:${bookCoverBg(b)};position:relative;overflow:hidden;">
+                  ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:bookCoverDeco(b)}
+                  <div class="book-cover__title" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${b.title}</div>
+                  <div class="book-cover__author" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${b.author}</div>
                 </div>
                 <div class="book-tile__title">${b.title}</div>
                 <div class="book-tile__sub">${b.author} · ${countWords(b)} ${userNativeLang==='ko'?'단어':'words'}</div>
@@ -3470,8 +3470,8 @@ function render() {
         </div>
         <div class="scr-scroll">
           <div class="book-hero">
-            <div class="book-hero__cover" style="background:${book.color};overflow:hidden;position:relative;">
-              ${book.cover?`<img src="${book.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">`:''}
+            <div class="book-hero__cover" style="background:${bookCoverBg(book)};overflow:hidden;position:relative;">
+              ${book.cover?`<img src="${book.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">`:bookCoverDeco(book)}
             </div>
             <div>
               <div class="book-hero__title">${book.title}</div>
@@ -3926,6 +3926,47 @@ async function loadHallOfFame() {
     const data = await res.json();
     return Array.isArray(data) ? data.filter(m => m.total_words > 0) : [];
   } catch(e) { return []; }
+}
+
+// ── 책 표지: id 기반 고정 랜덤 (색 + 일러스트) ──
+const _COVER_GRADS = [
+  ['#6b2c3e','#9a4259'], ['#2d4a6b','#3f6690'], ['#3a5a40','#5a8268'],
+  ['#5e4b8b','#8268b0'], ['#8a5a2b','#b5824a'], ['#7a3346','#a04862'],
+  ['#2b5f5a','#3f8a82'], ['#7a2d4d','#a8456f'], ['#3d4a7a','#5d6cb0'],
+  ['#704a2a','#9c6b3f'], ['#4a3a6b','#6b54a0'], ['#2f6b4a','#46a06b'],
+];
+function _coverHash(str){ let h=0; str=String(str||''); for(let i=0;i<str.length;i++){ h=((h<<5)-h+str.charCodeAt(i))|0; } return Math.abs(h); }
+function _coverIllust(kind, op){
+  // op: 흰색 일러스트 SVG (그라데이션 위에 얹음)
+  const W='rgba(255,255,255,';
+  if(kind===0){ // 펼친 책
+    return `<svg viewBox="0 0 100 100" style="${op}"><path d="M50 28 C40 22 22 22 14 26 L14 72 C22 68 40 68 50 74 C60 68 78 68 86 72 L86 26 C78 22 60 22 50 28 Z" fill="${W}0.16)" stroke="${W}0.7)" stroke-width="2.5"/><line x1="50" y1="28" x2="50" y2="74" stroke="${W}0.7)" stroke-width="2.5"/><line x1="22" y1="38" x2="40" y2="37" stroke="${W}0.45)" stroke-width="2"/><line x1="22" y1="48" x2="40" y2="47" stroke="${W}0.45)" stroke-width="2"/><line x1="60" y1="37" x2="78" y2="38" stroke="${W}0.45)" stroke-width="2"/><line x1="60" y1="47" x2="78" y2="48" stroke="${W}0.45)" stroke-width="2"/></svg>`;
+  } else if(kind===1){ // 알파벳 블록
+    return `<svg viewBox="0 0 100 100" style="${op}"><rect x="20" y="44" width="26" height="26" rx="4" fill="${W}0.18)" stroke="${W}0.7)" stroke-width="2"/><text x="33" y="63" font-size="16" font-weight="800" fill="#fff" text-anchor="middle" font-family="sans-serif">A</text><rect x="50" y="32" width="26" height="26" rx="4" fill="${W}0.12)" stroke="${W}0.6)" stroke-width="2" transform="rotate(8 63 45)"/><text x="63" y="51" font-size="15" font-weight="800" fill="#fff" text-anchor="middle" font-family="sans-serif" transform="rotate(8 63 45)">B</text></svg>`;
+  } else if(kind===2){ // 연필+별
+    return `<svg viewBox="0 0 100 100" style="${op}"><rect x="40" y="20" width="13" height="50" rx="2" fill="${W}0.18)" stroke="${W}0.7)" stroke-width="2" transform="rotate(32 46 45)"/><path d="M62 58 L70 66 L58 72 Z" fill="${W}0.8)"/><path d="M24 30 l3 6 l6 1 l-4.5 4.5 l1 6.5 l-5.5 -3 l-5.5 3 l1 -6.5 l-4.5 -4.5 l6 -1 Z" fill="${W}0.55)"/></svg>`;
+  } else if(kind===3){ // 원형 패턴 + 책더미
+    return `<svg viewBox="0 0 100 100" style="${op}"><circle cx="74" cy="30" r="30" fill="none" stroke="${W}0.22)" stroke-width="2"/><circle cx="22" cy="74" r="20" fill="none" stroke="${W}0.18)" stroke-width="2"/><rect x="40" y="44" width="34" height="8" rx="2" fill="${W}0.25)"/><rect x="44" y="54" width="34" height="8" rx="2" fill="${W}0.18)"/><rect x="38" y="64" width="34" height="8" rx="2" fill="${W}0.12)"/></svg>`;
+  } else if(kind===4){ // 언어 말풍선
+    return `<svg viewBox="0 0 100 100" style="${op}"><rect x="14" y="30" width="46" height="34" rx="8" fill="${W}0.16)" stroke="${W}0.7)" stroke-width="2.5"/><path d="M24 64 l0 12 l12 -12 Z" fill="${W}0.16)" stroke="${W}0.7)" stroke-width="2.5"/><text x="37" y="53" font-size="17" font-weight="800" fill="#fff" text-anchor="middle" font-family="sans-serif">A</text><circle cx="76" cy="46" r="15" fill="${W}0.1)" stroke="${W}0.5)" stroke-width="2"/><text x="76" y="52" font-size="13" font-weight="800" fill="#fff" text-anchor="middle" font-family="sans-serif">あ</text></svg>`;
+  } else { // 졸업모자
+    return `<svg viewBox="0 0 100 100" style="${op}"><path d="M50 34 L82 46 L50 58 L18 46 Z" fill="${W}0.18)" stroke="${W}0.7)" stroke-width="2.5"/><path d="M32 52 L32 66 C40 72 60 72 68 66 L68 52" fill="none" stroke="${W}0.6)" stroke-width="2.5"/><line x1="82" y1="46" x2="82" y2="64" stroke="${W}0.6)" stroke-width="2"/><circle cx="82" cy="66" r="3" fill="#fff"/></svg>`;
+  }
+}
+// 책 표지 배경 스타일 (그라데이션) — 사용자가 색을 따로 지정했으면 그것도 살림
+function bookCoverBg(b){
+  const h = _coverHash(b.id || b.title);
+  const g = _COVER_GRADS[h % _COVER_GRADS.length];
+  return `linear-gradient(135deg, ${g[0]}, ${g[1]})`;
+}
+// 책 표지 위에 얹을 장식(책등 그림자 + 일러스트). 사용자 업로드 표지(cover)면 생략
+function bookCoverDeco(b){
+  if (b.cover) return '';
+  const h = _coverHash(b.id || b.title);
+  const kind = h % 6;
+  const illustStyle = "position:absolute;right:7px;bottom:24px;width:46%;height:46%;opacity:0.9;pointer-events:none;";
+  const spine = '<div style="position:absolute;left:0;top:0;bottom:0;width:8px;background:linear-gradient(90deg,rgba(0,0,0,0.28),rgba(0,0,0,0));pointer-events:none;"></div>';
+  return spine + _coverIllust(kind, illustStyle);
 }
 
 function fmtScoreDate(iso) {
