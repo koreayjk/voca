@@ -343,7 +343,7 @@ async function loadAll(){
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     _allMembers = await res.json();
@@ -698,7 +698,8 @@ function renderOrgAdmins(){
         else if(org.billing_active && org.free_until) billTag = ` <span style="color:var(--amber);font-weight:600;font-size:11px;">· 🎁 무료 ~${esc(org.free_until)}</span>`;
         else if(org.billing_active) billTag = ' <span style="color:var(--green);font-weight:600;font-size:11px;">· ✨ 활성</span>';
       }
-      const orgInfo = org ? `<div class="row-name">${esc(org.name)}${isCo?' <span style="color:var(--ink-45);font-weight:400;font-size:11px;">(공동)</span>':''}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명${billTag}</div>` : '<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>';
+      const srcTag = (m.signup_source) ? `<div style="font-size:11px;color:var(--ink-45);margin-top:2px;">📍 ${esc(m.signup_source)}</div>` : '';
+      const orgInfo = org ? `<div class="row-name">${esc(org.name)}${isCo?' <span style="color:var(--ink-45);font-weight:400;font-size:11px;">(공동)</span>':''}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명${billTag}</div>${srcTag}` : `<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>${srcTag}`;
       let actions='';
       if(st==='approved') actions = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
       else if(st==='rejected') actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
