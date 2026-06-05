@@ -816,7 +816,8 @@ function shareNotice(id){
   const n = _notices.find(x=>String(x.id)===String(id));
   const title = n ? (n.title||'IM VOCA') : 'IM VOCA';
   if (navigator.share) {
-    navigator.share({ title, text: title, url }).catch(()=>{});
+    // text에 제목을 넣으면 일부 앱이 url과 합쳐 깨지므로 url만 공유
+    navigator.share({ title, url }).catch(()=>{});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(()=>toast(ko?'공지 링크가 복사됐어요 📋':'Link copied 📋')).catch(()=>toast(url));
   } else {
