@@ -1335,6 +1335,24 @@ async function demoteCoAdmin(id){
   }catch(e){ toast(ko?'해지 실패 (주 관리자만 가능)':'Failed'); }
 }
 
+async function renameOrg(){
+  const ko = userNativeLang==='ko';
+  if (!userOrg) return;
+  const cur = userOrg.name || '';
+  const name = prompt(ko?'단체 이름을 입력하세요':'Enter organization name', cur);
+  if (name===null) return;
+  const trimmed = name.trim();
+  if (!trimmed) { toast(ko?'이름을 입력해주세요':'Please enter a name'); return; }
+  if (trimmed === cur) return;
+  try{
+    const res = await sbFetch(`/rest/v1/orgs?id=eq.${userOrg.id}`, 'PATCH', { name: trimmed }, true, {'Prefer':'return=representation'});
+    if (!res || (Array.isArray(res) && res.length===0)) { toast(ko?'변경 실패 (권한 확인)':'Update failed'); return; }
+    userOrg.name = trimmed;
+    toast(ko?'단체 이름을 변경했어요':'Organization renamed');
+    render();
+  }catch(e){ toast((ko?'변경 실패: ':'Failed: ')+e.message); }
+}
+
 async function regenerateOrgCode(){
   if (!userOrg) return;
   if (!confirm(userNativeLang==='ko'?'새 코드를 발급할까요?\n기존 코드로는 더 이상 가입할 수 없어요. (이미 가입한 학생은 그대로예요)':'Regenerate code? The old code will stop working.')) return;
@@ -1426,7 +1444,10 @@ function renderOrgAdminPage(root) {
       <div style="padding:6px 0;">
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:18px;margin-bottom:16px;">
           <div class="muted" style="font-size:12px;margin-bottom:4px;">${ko?'단체 이름':'Organization'}</div>
-          <div style="font-size:20px;font-weight:700;color:var(--ink-100);margin-bottom:14px;">${userOrg.name}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:20px;font-weight:700;color:var(--ink-100);">${esc(userOrg.name)}</div>
+            <button onclick="renameOrg()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'✏️ 변경':'✏️ Rename'}</button>
+          </div>
           <div class="muted" style="font-size:12px;margin-bottom:6px;">${ko?'학생 초대 코드':'Student join code'}</div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div style="font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:0.05em;color:var(--accent);">${userOrg.code}</div>
@@ -1911,9 +1932,9 @@ function signInWithProvider(provider){
       if (codeEl) codeEl.focus();
       return;
     }
-    // 단체장 가입 경로 수집
+    // 가입 경로 수집 (모든 유형)
     let source = '';
-    if (onSignupTab && suType === 'owner') {
+    if (onSignupTab) {
       const srcSel = window._signupSource || '';
       if (srcSel === 'referral') { const refn=(document.getElementById('su-referral')?.value||'').trim(); source = refn ? ('지인소개: '+refn) : '지인소개'; }
       else if (srcSel === 'other') { const oth=(document.getElementById('su-other')?.value||'').trim(); source = oth ? ('기타: '+oth) : '기타'; }
@@ -2352,12 +2373,12 @@ function renderLogin(tab='login') {
             `:''}
             ${t0==='owner'?`
               <div style="background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--ink-60);line-height:1.5;margin-bottom:12px;">${userNativeLang==='ko'?'단체장으로 가입하면 바로 단체(학원·학교·모임 등)를 만들고 전용 코드로 멤버를 받을 수 있어요.':'Create your organization and invite members with a code.'}</div>
-              <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${userNativeLang==='ko'?'가입 경로 (어떻게 알게 되셨나요?)':'How did you hear about us?'}</div>
-              ${(()=>{ const src=window._signupSource||''; const opts=[['ad','📱 '+(userNativeLang==='ko'?'인스타·페북 광고':'Instagram/FB ad')],['search','🔍 '+(userNativeLang==='ko'?'검색 (구글·네이버)':'Search')],['referral','👥 '+(userNativeLang==='ko'?'지인·동료 소개':'Referral')],['community','🏫 '+(userNativeLang==='ko'?'모임·커뮤니티':'Community')],['other','✏️ '+(userNativeLang==='ko'?'기타':'Other')]];
-                return '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'+opts.map(o=>`<button type="button" onclick="pickSource('${o[0]}')" style="padding:8px 12px;border:1.5px solid ${src===o[0]?'var(--accent)':'var(--ink-12)'};background:${src===o[0]?'var(--gold-bg)':'var(--bg-input)'};border-radius:999px;font-family:var(--font-body);font-size:12px;cursor:pointer;color:var(--ink-100);font-weight:${src===o[0]?600:400};">${o[1]}</button>`).join('')+'</div>'; })()}
-              ${(window._signupSource==='referral')?`<input id="su-referral" type="text" placeholder="${userNativeLang==='ko'?'소개해주신 분 이름':'Who referred you?'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
-              ${(window._signupSource==='other')?`<input id="su-other" type="text" placeholder="${userNativeLang==='ko'?'직접 입력':'Please specify'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
             `:''}
+            <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${userNativeLang==='ko'?'가입 경로 (어떻게 알게 되셨나요?)':'How did you hear about us?'}</div>
+            ${(()=>{ const src=window._signupSource||''; const opts=[['ad','📱 '+(userNativeLang==='ko'?'인스타·페북 광고':'Instagram/FB ad')],['search','🔍 '+(userNativeLang==='ko'?'검색 (구글·네이버)':'Search')],['referral','👥 '+(userNativeLang==='ko'?'지인·동료 소개':'Referral')],['community','🏫 '+(userNativeLang==='ko'?'모임·커뮤니티':'Community')],['other','✏️ '+(userNativeLang==='ko'?'기타':'Other')]];
+              return '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'+opts.map(o=>`<button type="button" onclick="pickSource('${o[0]}')" style="padding:8px 12px;border:1.5px solid ${src===o[0]?'var(--accent)':'var(--ink-12)'};background:${src===o[0]?'var(--gold-bg)':'var(--bg-input)'};border-radius:999px;font-family:var(--font-body);font-size:12px;cursor:pointer;color:var(--ink-100);font-weight:${src===o[0]?600:400};">${o[1]}</button>`).join('')+'</div>'; })()}
+            ${(window._signupSource==='referral')?`<input id="su-referral" type="text" placeholder="${userNativeLang==='ko'?'소개해주신 분 이름':'Who referred you?'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
+            ${(window._signupSource==='other')?`<input id="su-other" type="text" placeholder="${userNativeLang==='ko'?'직접 입력':'Please specify'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
             ${gkBtns}
             ${dividerEmail}
             <input id="su-em" type="email" placeholder="${userNativeLang==='ko'?'이메일':'Email'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
