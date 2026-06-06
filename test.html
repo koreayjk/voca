@@ -289,7 +289,14 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
 .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
 .book-tile { cursor: pointer; }
-.book-cover { width: 100%; aspect-ratio: 3/4.3; border-radius: 11px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 8px 22px rgba(70,45,15,0.2), 0 2px 5px rgba(70,45,15,0.14); }
+.book-cover { width: 100%; aspect-ratio: 30/43; border-radius: 11px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 8px 22px rgba(70,45,15,0.2), 0 2px 5px rgba(70,45,15,0.14); }
+/* aspect-ratio 미지원 안드로이드 폴백 */
+@supports not (aspect-ratio: 1/1) {
+  .book-tile { position: relative; }
+  .book-cover { height: 0; padding-bottom: 143%; position: relative; }
+  .book-cover__title { position: absolute; top: 14px; left: 13px; right: 13px; }
+  .book-cover__author { position: absolute; bottom: 15px; left: 13px; right: 13px; }
+}
 .book-cover__title { font-size: 19px; font-weight: 500; } .book-cover__author { font-family: var(--font-body); font-size: 10px; opacity: 0.8; letter-spacing: 0.03em; }
 .book-tile__title { font-family: var(--font-display); font-size: 15px; font-weight: 500; margin-top: 13px; color: var(--ink-100); letter-spacing: -0.01em; line-height: 1.2; }
 .book-tile__sub { font-size: 11px; color: var(--ink-60); margin-top: 3px; }
