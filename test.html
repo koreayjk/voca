@@ -2274,12 +2274,41 @@ async function savePageWordsToDB(bookId, pageNum, words) {
       pageId = (Array.isArray(data) ? data[0] : data)?.id;
     }
     if (!pageId) return null;
-    for (const w of words) {
-      await sbFetch('/rest/v1/voca_words', 'POST',
-        { page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' });
+    if (!words || !words.length) return { pageId, savedRows: [] };
+
+    // 행 배열로 한 번에 INSERT (원자적 · 빠름 · 누락 방지)
+    const rows = words.map(w => ({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' }));
+    const resp = await sbFetch('/rest/v1/voca_words', 'POST', rows, true, { 'Prefer': 'return=representation' });
+    // (정상) 저장 검증: 반환된 행 수가 보낸 수와 같은지 확인
+    let savedRows = Array.isArray(resp) ? resp.slice() : [];
+    if (savedRows.length === rows.length) return { pageId, savedRows };
+
+    // 일부/전체 실패 → 개별 재시도 (실패한 것만 다시)
+    const failed = [];
+    for (let i = savedRows.length; i < rows.length; i++) {
+      try {
+        const one = await sbFetch('/rest/v1/voca_words', 'POST', rows[i], true, { 'Prefer': 'return=representation' });
+        const row = Array.isArray(one) ? one[0] : one;
+        if (row?.id) savedRows.push(row);
+        else failed.push(rows[i]);
+      } catch(e) { failed.push(rows[i]); }
     }
-    return pageId;
-  } catch(e) { return null; }
+    if (failed.length > 0) {
+      toast(userNativeLang==='ko'
+        ? `⚠️ 단어 ${failed.length}개 저장 실패 — 다시 시도해주세요`
+        : `⚠️ ${failed.length} word(s) failed to save — please retry`);
+      window._failedWords = { bookId, pageNum, words: failed };
+    }
+    return { pageId, savedRows };
+  } catch(e) {
+    toast(userNativeLang==='ko' ? '⚠️ 단어 저장 중 오류가 발생했어요' : '⚠️ Error saving words');
+    return null;
+  }
+}
+
+// 저장된 DB 행을 메모리 단어 객체로 변환
+function _dbRowToWord(w) {
+  return { id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false };
 }
 
 
@@ -3068,8 +3097,10 @@ async function finalizeMultiScan() {
   let finalTitle = title, n = 2;
   while (book.pages.some(p => String(p.num) === finalTitle)) finalTitle = `${title}-${n++}`;
   renderScanLoading();
-  const pid = await savePageWordsToDB(bId, finalTitle, all);
-  const words = all.map((w,i) => ({...w, id:`${bId}-${finalTitle}-${i+1}`}));
+  const saveRes = await savePageWordsToDB(bId, finalTitle, all);
+  const pid = saveRes?.pageId || null;
+  // DB에 실제 저장된 행만 메모리에 반영 (진짜 id 사용)
+  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
   book.pages.push({ num: finalTitle, _pid: pid, words });
   book.pages.sort((a,b)=>pageSort(a,b));
   updateTotalWords();
@@ -3301,8 +3332,9 @@ async function saveSelectedWords() {
 
 async function acceptWords() {
   const book = findBook(pendingB); if (!book) return;
-  const pid = await savePageWordsToDB(pendingB, pendingP, pendingW);
-  const words = pendingW.map((w,i) => ({...w, id:`${pendingB}-${pendingP}-${i+1}`}));
+  const saveRes = await savePageWordsToDB(pendingB, pendingP, pendingW);
+  const pid = saveRes?.pageId || null;
+  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
   const ex = findPage(book, pendingP);
   const newName = window._renamedPageNum;
   if (ex) {
@@ -4749,8 +4781,9 @@ async function saveManualWords(bookId) {
     if (!w.base) { if (btn) btn.textContent = `${t('searchingMeaning')} (${i+1}/${window._manualWords.length})`; const result = await fetchWordMeaning(w.en); w.base = result.base; w.ipa = result.ipa; w.ctx = ''; }
   }
   const book = findBook(bookId); if (!book) return;
-  const pid = await savePageWordsToDB(bookId, pg, window._manualWords);
-  const words = window._manualWords.map((w, i) => ({ ...w, id: `${bookId}-${pg}-m${i+1}` }));
+  const saveRes = await savePageWordsToDB(bookId, pg, window._manualWords);
+  const pid = saveRes?.pageId || null;
+  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
   const ex = findPage(book, pg);
   if (ex) ex.words = [...ex.words, ...words];
   else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b) => String(a.num).localeCompare(String(b.num))); }
