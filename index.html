@@ -2274,12 +2274,41 @@ async function savePageWordsToDB(bookId, pageNum, words) {
       pageId = (Array.isArray(data) ? data[0] : data)?.id;
     }
     if (!pageId) return null;
-    for (const w of words) {
-      await sbFetch('/rest/v1/voca_words', 'POST',
-        { page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' });
+    if (!words || !words.length) return { pageId, savedRows: [] };
+
+    // 행 배열로 한 번에 INSERT (원자적 · 빠름 · 누락 방지)
+    const rows = words.map(w => ({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' }));
+    const resp = await sbFetch('/rest/v1/voca_words', 'POST', rows, true, { 'Prefer': 'return=representation' });
+    // (정상) 저장 검증: 반환된 행 수가 보낸 수와 같은지 확인
+    let savedRows = Array.isArray(resp) ? resp.slice() : [];
+    if (savedRows.length === rows.length) return { pageId, savedRows };
+
+    // 일부/전체 실패 → 개별 재시도 (실패한 것만 다시)
+    const failed = [];
+    for (let i = savedRows.length; i < rows.length; i++) {
+      try {
+        const one = await sbFetch('/rest/v1/voca_words', 'POST', rows[i], true, { 'Prefer': 'return=representation' });
+        const row = Array.isArray(one) ? one[0] : one;
+        if (row?.id) savedRows.push(row);
+        else failed.push(rows[i]);
+      } catch(e) { failed.push(rows[i]); }
     }
-    return pageId;
-  } catch(e) { return null; }
+    if (failed.length > 0) {
+      toast(userNativeLang==='ko'
+        ? `⚠️ 단어 ${failed.length}개 저장 실패 — 다시 시도해주세요`
+        : `⚠️ ${failed.length} word(s) failed to save — please retry`);
+      window._failedWords = { bookId, pageNum, words: failed };
+    }
+    return { pageId, savedRows };
+  } catch(e) {
+    toast(userNativeLang==='ko' ? '⚠️ 단어 저장 중 오류가 발생했어요' : '⚠️ Error saving words');
+    return null;
+  }
+}
+
+// 저장된 DB 행을 메모리 단어 객체로 변환
+function _dbRowToWord(w) {
+  return { id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false };
 }
 
 
@@ -2748,7 +2777,14 @@ async function openCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
-    } catch(e2) { toast('카메라 접근 권한이 필요해요'); }
+    } catch(e2) {
+      // 라이브 카메라 실패(안드로이드 인앱브라우저 등) → OS 기본 카메라(1장)로 폴백
+      area.style.display = 'none';
+      const camInput = document.getElementById('camera-input');
+      if (camInput) { camInput.value = ''; camInput.click(); }
+      else { toast('카메라 접근 권한이 필요해요'); }
+      return;
+    }
   }
   updateCameraCounter();
 }
@@ -2759,7 +2795,7 @@ function updateCameraCounter() {
   const captureBtn = document.getElementById('camera-capture-btn');
   const useBtn = document.getElementById('camera-use-btn');
   if (counter) {
-    counter.textContent = shots.length > 0 ? `${shots.length}/5 ${userNativeLang==='ko'?'장 촬영됨':'shots taken'}` : '';
+    counter.textContent = shots.length > 0 ? `${shots.length}/10 ${userNativeLang==='ko'?'장 촬영됨':'shots taken'}` : '';
     counter.style.display = shots.length > 0 ? 'block' : 'none';
   }
   if (captureBtn) {
@@ -2862,6 +2898,8 @@ function handleFileChange(e) {
       imgData = null;
       renderMultiPreview(dataUrls);
     }
+    // 같은 파일을 다시 선택해도 onchange가 동작하도록 초기화
+    if (e.target) e.target.value = '';
   });
 }
 
@@ -3059,8 +3097,10 @@ async function finalizeMultiScan() {
   let finalTitle = title, n = 2;
   while (book.pages.some(p => String(p.num) === finalTitle)) finalTitle = `${title}-${n++}`;
   renderScanLoading();
-  const pid = await savePageWordsToDB(bId, finalTitle, all);
-  const words = all.map((w,i) => ({...w, id:`${bId}-${finalTitle}-${i+1}`}));
+  const saveRes = await savePageWordsToDB(bId, finalTitle, all);
+  const pid = saveRes?.pageId || null;
+  // DB에 실제 저장된 행만 메모리에 반영 (진짜 id 사용)
+  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
   book.pages.push({ num: finalTitle, _pid: pid, words });
   book.pages.sort((a,b)=>pageSort(a,b));
   updateTotalWords();
@@ -3292,8 +3332,9 @@ async function saveSelectedWords() {
 
 async function acceptWords() {
   const book = findBook(pendingB); if (!book) return;
-  const pid = await savePageWordsToDB(pendingB, pendingP, pendingW);
-  const words = pendingW.map((w,i) => ({...w, id:`${pendingB}-${pendingP}-${i+1}`}));
+  const saveRes = await savePageWordsToDB(pendingB, pendingP, pendingW);
+  const pid = saveRes?.pageId || null;
+  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
   const ex = findPage(book, pendingP);
   const newName = window._renamedPageNum;
   if (ex) {
@@ -3553,12 +3594,19 @@ function render() {
           </div>
           <div id="upload-main" style="margin-top:14px;">
             <div style="display:flex;gap:8px;margin-bottom:10px;">
-              <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                ${/iphone|ipad|ipod|android/i.test(navigator.userAgent) ? (userNativeLang==='ko'?'📷 촬영 / 사진 선택':'📷 Camera / Photos') : t('fileSelect')}
-              </button>
-              ${/iphone|ipad|ipod|android/i.test(navigator.userAgent) ? '' : `<button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('cameraCapture')}</button>`}
+              ${/android/i.test(navigator.userAgent) ? `
+                <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'📷 카메라 촬영':'📷 Camera'}</button>
+                <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'🖼️ 사진 선택':'🖼️ Photos'}</button>
+              ` : /iphone|ipad|ipod/i.test(navigator.userAgent) ? `
+                <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'📷 카메라 촬영':'📷 Camera'}</button>
+                <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'🖼️ 사진 선택':'🖼️ Photos'}</button>
+              ` : `
+                <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('fileSelect')}</button>
+                <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('cameraCapture')}</button>
+              `}
             </div>
             <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
+            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <div style="position:relative;">
                 <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
@@ -4733,8 +4781,9 @@ async function saveManualWords(bookId) {
     if (!w.base) { if (btn) btn.textContent = `${t('searchingMeaning')} (${i+1}/${window._manualWords.length})`; const result = await fetchWordMeaning(w.en); w.base = result.base; w.ipa = result.ipa; w.ctx = ''; }
   }
   const book = findBook(bookId); if (!book) return;
-  const pid = await savePageWordsToDB(bookId, pg, window._manualWords);
-  const words = window._manualWords.map((w, i) => ({ ...w, id: `${bookId}-${pg}-m${i+1}` }));
+  const saveRes = await savePageWordsToDB(bookId, pg, window._manualWords);
+  const pid = saveRes?.pageId || null;
+  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
   const ex = findPage(book, pg);
   if (ex) ex.words = [...ex.words, ...words];
   else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b) => String(a.num).localeCompare(String(b.num))); }
