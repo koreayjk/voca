@@ -2748,7 +2748,14 @@ async function openCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
-    } catch(e2) { toast('카메라 접근 권한이 필요해요'); }
+    } catch(e2) {
+      // 라이브 카메라 실패(안드로이드 인앱브라우저 등) → OS 기본 카메라(1장)로 폴백
+      area.style.display = 'none';
+      const camInput = document.getElementById('camera-input');
+      if (camInput) { camInput.value = ''; camInput.click(); }
+      else { toast('카메라 접근 권한이 필요해요'); }
+      return;
+    }
   }
   updateCameraCounter();
 }
@@ -2759,7 +2766,7 @@ function updateCameraCounter() {
   const captureBtn = document.getElementById('camera-capture-btn');
   const useBtn = document.getElementById('camera-use-btn');
   if (counter) {
-    counter.textContent = shots.length > 0 ? `${shots.length}/5 ${userNativeLang==='ko'?'장 촬영됨':'shots taken'}` : '';
+    counter.textContent = shots.length > 0 ? `${shots.length}/10 ${userNativeLang==='ko'?'장 촬영됨':'shots taken'}` : '';
     counter.style.display = shots.length > 0 ? 'block' : 'none';
   }
   if (captureBtn) {
@@ -2862,6 +2869,8 @@ function handleFileChange(e) {
       imgData = null;
       renderMultiPreview(dataUrls);
     }
+    // 같은 파일을 다시 선택해도 onchange가 동작하도록 초기화
+    if (e.target) e.target.value = '';
   });
 }
 
@@ -3553,12 +3562,19 @@ function render() {
           </div>
           <div id="upload-main" style="margin-top:14px;">
             <div style="display:flex;gap:8px;margin-bottom:10px;">
-              <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">
-                ${/iphone|ipad|ipod|android/i.test(navigator.userAgent) ? (userNativeLang==='ko'?'📷 촬영 / 사진 선택':'📷 Camera / Photos') : t('fileSelect')}
-              </button>
-              ${/iphone|ipad|ipod|android/i.test(navigator.userAgent) ? '' : `<button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('cameraCapture')}</button>`}
+              ${/android/i.test(navigator.userAgent) ? `
+                <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'📷 카메라 촬영':'📷 Camera'}</button>
+                <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'🖼️ 사진 선택':'🖼️ Photos'}</button>
+              ` : /iphone|ipad|ipod/i.test(navigator.userAgent) ? `
+                <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'📷 카메라 촬영':'📷 Camera'}</button>
+                <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${userNativeLang==='ko'?'🖼️ 사진 선택':'🖼️ Photos'}</button>
+              ` : `
+                <button onclick="document.getElementById('file-input').click()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('fileSelect')}</button>
+                <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('cameraCapture')}</button>
+              `}
             </div>
             <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
+            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <div style="position:relative;">
                 <video id="camera-video" autoplay playsinline style="width:100%;border-radius:10px;max-height:220px;object-fit:cover;background:#000;display:block;"></video>
