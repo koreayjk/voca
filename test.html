@@ -303,7 +303,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   .sheet { max-width: 520px; margin: 0 auto; }
   /* 하단 버튼: 사이드바 오른쪽 영역 하단에 고정, 가운데 정렬 */
   .btn-fixed { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; width: auto !important; flex-direction: row !important; justify-content: center !important; gap: 10px !important; padding: 14px 40px calc(14px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07); z-index: 15; }
-  .btn-fixed .btn { flex: 0 1 300px !important; width: auto !important; max-width: 300px !important; }
+  .btn-fixed .btn, .btn-fixed--row .btn { flex: 0 1 300px !important; width: auto !important; max-width: 300px !important; }
   /* 암기/설정 화면의 시작 버튼바도 하단 고정 */
   .study-start-bar { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; flex-direction: row !important; justify-content: center !important; gap: 10px !important; padding: 14px 40px calc(14px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07); margin-top: 0 !important; z-index: 15; }
   .study-start-bar .btn { flex: 0 1 300px !important; width: auto !important; max-width: 300px !important; }
@@ -351,6 +351,8 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .btn-solid { background: var(--accent); color: #fff; }
 .btn-outline { background: transparent; color: var(--ink-100); border: 1.5px solid var(--ink-12); }
 .btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
+.btn-fixed--row { flex-direction: row; gap: 8px; }
+.btn-fixed--row .btn { flex: 1; }
 .lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
 .topbar-actions { align-items: flex-start; }
 /* 좁은 화면: 상단 버튼이 작아지고 줄바꿈되며, 제목은 그 아래로 내려와 겹침 방지 */
@@ -3751,9 +3753,9 @@ function render() {
         <div class="scr-scroll" style="margin-top:12px">
           ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}</div>`;}).join('')}
         </div>
-        <div class="btn-fixed" style="flex-direction:row;gap:8px;">
-          <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
-          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
+        <div class="btn-fixed btn-fixed--row">
+          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
+          <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
         </div>
       </div>`;
   }
