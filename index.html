@@ -236,7 +236,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 @media (min-width: 768px) {
   /* ===== PC 최적화: 좌측 사이드바 + 넓은 콘텐츠 + 가운데 정렬 ===== */
-  :root { --sidebar-w: 232px; }
+  :root { --sidebar-w: 264px; }
 
   /* 하단 탭바 → 좌측 세로 사이드바 */
   .dock {
@@ -244,7 +244,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
     transform: none !important;
     width: var(--sidebar-w) !important; max-width: var(--sidebar-w) !important; height: 100vh !important;
     flex-direction: column !important; justify-content: flex-start !important; align-items: stretch !important;
-    gap: 6px; padding: 30px 16px !important;
+    gap: 8px; padding: 34px 18px !important;
     border-top: none !important; border-right: 1px solid var(--ink-12) !important;
     background: var(--bg-card) !important;
     backdrop-filter: none !important;
@@ -252,19 +252,20 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   /* 사이드바 상단 로고 영역 */
   .dock::before {
     content: "IM VOCA";
-    font-family: var(--font-display); font-size: 21px; font-weight: 700;
+    font-family: var(--font-display); font-size: 25px; font-weight: 700;
     color: var(--accent); letter-spacing: -0.02em;
-    padding: 0 14px 22px; margin-bottom: 8px;
+    padding: 0 16px 26px; margin-bottom: 12px;
     border-bottom: 1px solid var(--ink-07);
   }
   .dock__btn {
-    flex-direction: row; justify-content: flex-start; align-items: center; gap: 13px;
-    padding: 13px 14px; font-size: 14.5px; border-radius: 11px;
-    width: 100%; transition: background .15s, color .15s;
+    flex-direction: row !important; justify-content: flex-start !important; align-items: center !important; gap: 16px !important;
+    padding: 16px 18px !important; font-size: 17px !important; font-weight: 600 !important; border-radius: 13px;
+    width: 100% !important; height: auto !important; transition: background .15s, color .15s;
   }
   .dock__btn:hover { background: var(--bg-input); }
   .dock__btn--active { background: var(--gold-bg); }
-  .dock__btn span:first-child { font-size: 20px !important; width: 24px; text-align: center; }
+  .dock__btn span:first-child { font-size: 26px !important; width: 30px !important; text-align: center; }
+  .dock__btn span:last-child { font-size: 16px !important; }
 
   /* 콘텐츠 영역: 사이드바 오른쪽 전체, 내부에서 가운데 정렬 */
   .scr {
@@ -278,7 +279,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   .scr > * { width: 100%; max-width: 720px; }
   .scr-scroll {
     width: 100%; max-width: 720px;
-    margin: 0 auto;
+    margin-left: auto !important; margin-right: auto !important;
     padding: 40px 40px 60px !important;
     min-height: 100%;
     display: flex; flex-direction: column;
@@ -288,14 +289,13 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   .scr { justify-content: flex-start; }
   .scr::before, .scr::after { content: none; }
 
-  /* 책장/리스트가 들어가는 화면은 더 넓게 */
-  .scr.scr-wide { }
-  .scr.scr-wide > * { max-width: 1000px; }
-  .scr.scr-wide .scr-scroll { max-width: 1000px; }
+  /* 책장/리스트가 들어가는 화면은 더 넓게 + 확실히 가운데 */
+  .scr.scr-wide > * { max-width: 1180px !important; margin-left: auto !important; margin-right: auto !important; }
+  .scr.scr-wide .scr-scroll { max-width: 1180px !important; margin-left: auto !important; margin-right: auto !important; padding: 44px 44px 80px !important; }
 
   /* 책장 격자: 넓은 화면이니 여러 열 자동 채움 */
-  .book-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important; gap: 30px 26px !important; }
-  .scr-wide .book-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)) !important; gap: 34px 28px !important; }
+  .book-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)) !important; gap: 30px 26px !important; }
+  .scr-wide .book-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; gap: 36px 30px !important; }
   .scr-wide .lib-header { max-width: 100%; }
 
   /* 모달/시트/오버레이는 화면 전체 기준 가운데 */
