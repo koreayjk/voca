@@ -325,6 +325,16 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   .auth-mobile-logo { display: none; }
   .auth-feat { display: flex; align-items: center; gap: 12px; margin-top: 18px; font-size: 14px; color: rgba(243,236,224,0.92); }
   .auth-feat .ic { font-size: 20px; width: 26px; text-align: center; flex-shrink: 0; }
+  /* PC: 사이드바 하단 액션 영역 (관리/Premium/알림/앱소개/My) */
+  .dock-bottom { display: flex !important; flex-direction: column; gap: 4px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--ink-07); }
+  .dock-mini { background: none; border: none; border-radius: 10px; padding: 11px 14px; font-family: var(--font-body); font-size: 13.5px; font-weight: 600; color: var(--ink-60); cursor: pointer; text-align: left; transition: background .15s; }
+  .dock-mini:hover { background: var(--bg-input); }
+  .dock-mini--accent { color: var(--accent); }
+  /* PC에선 책장 상단 우측 버튼(관리/My 등) 숨김 — 사이드바 하단으로 이동 */
+  .topbar-actions { display: none !important; }
+  /* 책 추가 버튼: 제목 아래 왼쪽으로 */
+  .scr-wide .lib-header { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+  .scr-wide .lib-add-btn { align-self: flex-start !important; }
 }
 .scr-scroll::-webkit-scrollbar { width: 4px; }
 .scr-scroll::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 2px; }
@@ -362,16 +372,6 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   .topbar-actions .topbar-btn { padding: 4px 8px !important; font-size: 10px !important; }
   .scr-wide.scr { padding-top: 96px !important; }
   .scr-wide .lib-header { margin-top: 0; }
-  /* PC: 사이드바 하단 액션 영역 */
-  .dock-bottom { display: flex !important; flex-direction: column; gap: 4px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--ink-07); }
-  .dock-mini { background: none; border: none; border-radius: 10px; padding: 11px 14px; font-family: var(--font-body); font-size: 13.5px; font-weight: 600; color: var(--ink-60); cursor: pointer; text-align: left; transition: background .15s; }
-  .dock-mini:hover { background: var(--bg-input); }
-  .dock-mini--accent { color: var(--accent); }
-  /* PC에선 책장 상단 우측 버튼(관리/My 등)을 숨김 — 사이드바 하단으로 이동했으므로 */
-  .topbar-actions { display: none !important; }
-  /* 책 추가 버튼: 제목 아래 왼쪽으로 (관리버튼과 안 겹치게) */
-  .scr-wide .lib-header { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .scr-wide .lib-add-btn { align-self: flex-start; }
 }
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
 .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
