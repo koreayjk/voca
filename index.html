@@ -240,13 +240,14 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 
   /* 하단 탭바 → 좌측 세로 사이드바 */
   .dock {
-    top: 0; bottom: 0; left: 0; right: auto;
+    top: 0 !important; bottom: 0 !important; left: 0 !important; right: auto !important;
     transform: none !important;
     width: var(--sidebar-w) !important; max-width: var(--sidebar-w) !important; height: 100vh !important;
-    flex-direction: column; justify-content: flex-start; align-items: stretch;
+    flex-direction: column !important; justify-content: flex-start !important; align-items: stretch !important;
     gap: 6px; padding: 30px 16px !important;
-    border-top: none; border-right: 1px solid var(--ink-12);
-    background: var(--bg-card);
+    border-top: none !important; border-right: 1px solid var(--ink-12) !important;
+    background: var(--bg-card) !important;
+    backdrop-filter: none !important;
   }
   /* 사이드바 상단 로고 영역 */
   .dock::before {
@@ -267,10 +268,10 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 
   /* 콘텐츠 영역: 사이드바 오른쪽 전체, 내부에서 가운데 정렬 */
   .scr {
-    left: var(--sidebar-w); right: 0; width: auto; max-width: none;
-    transform: none;
-    padding: 0; border: none;
-    align-items: center;            /* 좌우 가운데 */
+    left: var(--sidebar-w) !important; right: 0 !important; width: auto !important; max-width: none !important;
+    transform: none !important;
+    padding: 0 !important; border: none !important;
+    align-items: center;
     overflow-y: auto;
   }
   /* 실제 내용은 적당한 폭으로 가운데, 내용 적으면 위아래도 가운데 */
