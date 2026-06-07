@@ -301,7 +301,9 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   /* 모달/시트/오버레이는 화면 전체 기준 가운데 */
   .overlay { left: 0; right: 0; max-width: none; transform: none; }
   .sheet { max-width: 520px; margin: 0 auto; }
-  .btn-fixed { position: static !important; left: auto !important; right: auto !important; width: 100%; margin-top: 8px; }
+  /* 하단 버튼: 사이드바 오른쪽 영역 하단 가운데에 고정 (스크롤 없이 바로 보이게) */
+  .btn-fixed { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; width: auto !important; flex-direction: row !important; justify-content: center !important; padding: 14px 40px calc(14px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07); z-index: 15; }
+  .btn-fixed .btn { max-width: 340px; }
   /* 상단 우측 버튼이 제목과 안 겹치게: 제목 영역에 오른쪽 여백 */
   .scr-wide .lib-header { padding-right: 0; }
 }
@@ -3572,7 +3574,7 @@ function render() {
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='premium'?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
           </div>
-          <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
+          <button class="lib-add-btn" onclick="document.getElementById('modal-add').classList.add('open')" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${userNativeLang==='ko'?'책 추가':'Add Book'}</button>
         </div>
         <div class="scr-scroll">
           <div class="book-grid">
