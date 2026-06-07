@@ -303,10 +303,10 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   .sheet { max-width: 520px; margin: 0 auto; }
   /* 하단 버튼: 사이드바 오른쪽 영역 하단에 고정, 가운데 정렬 */
   .btn-fixed { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; width: auto !important; flex-direction: row !important; justify-content: center !important; gap: 10px !important; padding: 14px 40px calc(14px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07); z-index: 15; }
-  .btn-fixed .btn { flex: 0 1 300px; max-width: 300px; }
+  .btn-fixed .btn { flex: 0 1 300px !important; width: auto !important; max-width: 300px !important; }
   /* 암기/설정 화면의 시작 버튼바도 하단 고정 */
   .study-start-bar { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; flex-direction: row !important; justify-content: center !important; gap: 10px !important; padding: 14px 40px calc(14px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07); margin-top: 0 !important; z-index: 15; }
-  .study-start-bar .btn { flex: 0 1 300px; max-width: 300px; }
+  .study-start-bar .btn { flex: 0 1 300px !important; width: auto !important; max-width: 300px !important; }
   #study-setup-inner { padding-bottom: 90px !important; }
   /* 상단 우측 버튼이 제목과 안 겹치게: 제목 영역에 오른쪽 여백 */
   .scr-wide .lib-header { padding-right: 0; }
