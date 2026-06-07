@@ -335,6 +335,8 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   /* 책 추가 버튼: 제목 아래 왼쪽으로 */
   .scr-wide .lib-header { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
   .scr-wide .lib-add-btn { align-self: flex-start !important; }
+  /* 상세화면(book 등) PC 사이드바 표시 */
+  .dock--detail { display: flex !important; }
 }
 .scr-scroll::-webkit-scrollbar { width: 4px; }
 .scr-scroll::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 2px; }
@@ -365,6 +367,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .btn-fixed--row .btn { flex: 1; }
 .lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
 .dock-bottom { display: none; }
+.dock--detail { display: none; }  /* 상세화면 사이드바는 모바일에서 숨김 */
 .topbar-actions { align-items: flex-start; }
 /* 좁은 화면: 상단 버튼이 작아지고 줄바꿈되며, 제목은 그 아래로 내려와 겹침 방지 */
 @media (max-width: 640px) {
@@ -3563,6 +3566,11 @@ function buildDock() {
 }
 
 // PC 사이드바 하단: 관리/프리미엄/알림/앱소개/My (데스크탑에서만 표시)
+// 상세 화면(book/capture 등)용 PC 전용 사이드바 (모바일에선 숨김)
+function pcSidebar() {
+  return buildDock().replace('class="dock"', 'class="dock dock--detail"');
+}
+
 function buildDockBottom() {
   const ko = userNativeLang==='ko';
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
@@ -3674,11 +3682,11 @@ function render() {
               </span>
             </div>`).join('')}
         </div>
-        <div class="btn-fixed" style="flex-direction:row;gap:8px;">
-          <button class="btn btn-solid" style="flex:1;" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
-          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
+        <div class="btn-fixed btn-fixed--row">
+          <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
+          <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
         </div>
-      </div>`;
+      </div>` + pcSidebar();
   }
 
   else if (route.name === 'capture') {
