@@ -540,7 +540,7 @@ function renderMembers(){
         <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
         <td>${planPill(m)}</td>
         <td style="color:var(--ink-45);">${m.scan_count||0}</td>
-        <td style="color:var(--ink-45);">${(m.total_words||0).toLocaleString()}</td>
+        <td style="color:var(--ink-45);">${((window._wordCountsByUser && window._wordCountsByUser[m.id]) || 0).toLocaleString()}</td>
         <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}</td>
         <td style="text-align:right;">
           ${isAdmin ? '<span class="pill admin">관리자</span>' : `
@@ -742,62 +742,164 @@ async function loadOrgs(){
   renderOrgAdmins();
 }
 
+window._expandedOrgs = window._expandedOrgs || {};
+function toggleOrg(orgKey){
+  window._expandedOrgs[orgKey] = !window._expandedOrgs[orgKey];
+  renderOrgAdmins();
+}
 function renderOrgAdmins(){
   const el = document.getElementById('orgadmin-table');
   if(!el) return;
-  let owners = _allMembers.filter(m=>m.org_role==='owner');
+  const allOwners = _allMembers.filter(m=>m.org_role==='owner');
   const q = (document.getElementById('orgadmin-search')?.value||'').toLowerCase().trim();
-  if(q) owners = owners.filter(m=>{
-    const org = _allOrgs.find(o=>o.owner_id===m.id);
-    return (m.name||'').toLowerCase().includes(q) || (m.email||'').toLowerCase().includes(q) || (org && (org.name||'').toLowerCase().includes(q));
+
+  // ── 단체별로 그룹핑 ──
+  // 그룹 1: 단체가 있는 owner들 (org.id 기준 묶음)
+  // 그룹 2: 단체가 아직 없는 owner들 (맨 아래)
+  const groups = new Map(); // org.id → { org, primary, coOwners[] }
+  const orphans = []; // 단체 없는 owner들
+
+  for(const m of allOwners){
+    // 이 owner가 주관리자인 단체
+    let primaryOrg = _allOrgs.find(o=>o.owner_id===m.id);
+    if(primaryOrg){
+      if(!groups.has(primaryOrg.id)) groups.set(primaryOrg.id, { org: primaryOrg, primary: m, coOwners: [] });
+      else groups.get(primaryOrg.id).primary = m;
+      continue;
+    }
+    // 공동관리자: org_id로 단체 찾기
+    if(m.org_id){
+      const coOrg = _allOrgs.find(o=>o.id===m.org_id);
+      if(coOrg){
+        if(!groups.has(coOrg.id)) groups.set(coOrg.id, { org: coOrg, primary: null, coOwners: [m] });
+        else groups.get(coOrg.id).coOwners.push(m);
+        continue;
+      }
+    }
+    orphans.push(m);
+  }
+
+  // 검색 필터
+  const matchesQ = (name,email,orgName) => {
+    if(!q) return true;
+    return (name||'').toLowerCase().includes(q) || (email||'').toLowerCase().includes(q) || (orgName||'').toLowerCase().includes(q);
+  };
+  let groupList = Array.from(groups.values()).filter(g=>{
+    const orgName = g.org?.name || '';
+    if(matchesQ(orgName,'',orgName)) return true;
+    if(g.primary && matchesQ(g.primary.name, g.primary.email, orgName)) return true;
+    return g.coOwners.some(c=>matchesQ(c.name, c.email, orgName));
   });
+  let orphanList = orphans.filter(m=>matchesQ(m.name, m.email, ''));
+
+  // ── 정렬: 단체 이름순(가나다/abc), 이름 없으면 마지막 ──
+  groupList.sort((a,b)=>{
+    const na = (a.org.name||'').trim();
+    const nb = (b.org.name||'').trim();
+    if(!na && nb) return 1;
+    if(na && !nb) return -1;
+    return na.localeCompare(nb, 'ko');
+  });
+
   const cnt = document.getElementById('orgadmin-count');
-  if(cnt) cnt.textContent = `(${owners.length}명)`;
-  if(owners.length===0){ el.innerHTML='<div class="empty">단체 관리자 신청이 없어요</div>'; return; }
-  el.innerHTML = `
-    <table><thead><tr><th>관리자</th><th>상태</th><th>단체 / 코드 / 학생</th><th style="text-align:right;">관리</th></tr></thead><tbody>
-    ${owners.map(m=>{
-      let org = _allOrgs.find(o=>o.owner_id===m.id);
-      let isCo=false;
-      if(!org && m.org_id){ org = _allOrgs.find(o=>o.id===m.org_id); isCo = !!org; }
-      const students = org ? _allMembers.filter(x=>x.org_id===org.id && x.org_role==='student').length : 0;
+  if(cnt) cnt.textContent = `(단체 ${groupList.length}개${orphanList.length?` · 미생성 ${orphanList.length}명`:''})`;
+
+  if(groupList.length===0 && orphanList.length===0){
+    el.innerHTML='<div class="empty">단체 관리자 신청이 없어요</div>'; return;
+  }
+
+  // 단체 카드 렌더
+  const renderOwnerLine = (m, label) => {
+    const st = m.org_status||'pending';
+    const stBadge = st==='approved' ? '<span class="pill" style="background:var(--green-soft);color:var(--green);">승인됨</span>'
+                  : st==='rejected' ? '<span class="pill free">거절됨</span>'
+                  : '<span class="pill" style="background:var(--amber-soft);color:var(--amber);">승인 대기</span>';
+    const planBtn = m.email===ADMIN_EMAIL ? '' :
+      (m.plan==='premium'
+        ? `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>`
+        : `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`);
+    let stBtn='';
+    if(st==='approved') stBtn = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
+    else if(st==='rejected') stBtn = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
+    else stBtn = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button> <button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">거절</button>`;
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--ink-12);">
+      <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+        <span style="font-size:11px;font-weight:700;color:${label==='주'?'var(--accent)':'var(--ink-45)'};background:${label==='주'?'rgba(28,53,83,0.1)':'var(--bg-input)'};border-radius:99px;padding:3px 9px;flex-shrink:0;">${label==='주'?'👑 주':'🤝 공동'}</span>
+        <div style="min-width:0;">
+          <div class="row-name">${esc(m.name)||'이름없음'}</div>
+          <div class="row-email">${esc(m.email)}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        ${stBadge} ${planBtn} ${stBtn}
+      </div>
+    </div>`;
+  };
+
+  let html = '';
+  for(const g of groupList){
+    const org = g.org;
+    const orgKey = org.id;
+    const expanded = !!window._expandedOrgs[orgKey];
+    const students = _allMembers.filter(x=>x.org_id===org.id && x.org_role==='student').length;
+    const orgName = (org.name||'').trim() || '<span style="color:var(--ink-45);">(이름 미설정)</span>';
+
+    // 결제/무료 상태
+    let billStatus = '';
+    let freeBtn = '';
+    if(org.stripe_subscription_id){
+      billStatus = '<span style="color:var(--green);font-weight:700;font-size:12px;">💳 결제중</span>';
+    } else if(org.billing_active){
+      const until = org.free_until ? ` ~${esc(org.free_until)}까지` : '';
+      billStatus = `<span style="color:var(--amber);font-weight:700;font-size:12px;">🎁 무료 활성${until}</span>`;
+      // 이미 무료부여됨 → 무료해제 버튼만
+      freeBtn = `<button class="act-btn down" onclick="event.stopPropagation();revokeFreeOrg('${org.id}','${esc(org.name||'')}')">무료해제</button>`;
+    } else {
+      billStatus = '<span style="color:var(--ink-45);font-size:12px;">⚪ 비활성</span>';
+      freeBtn = `<button class="act-btn up" onclick="event.stopPropagation();grantFreeOrg('${org.id}','${esc(org.name||'')}')">🎁 무료부여</button>`;
+    }
+
+    html += `<div style="background:var(--bg-card);border:1px solid var(--ink-12);border-radius:12px;margin-bottom:10px;overflow:hidden;">
+      <div onclick="toggleOrg('${orgKey}')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
+          <span style="font-size:14px;color:var(--ink-45);width:14px;flex-shrink:0;">${expanded?'▼':'▶'}</span>
+          <div style="min-width:0;">
+            <div class="row-name" style="font-size:15px;">${orgName}</div>
+            <div class="row-email">코드 ${esc(org.code||'-')} · 학생 ${students}명 · 관리자 ${1+g.coOwners.length}명</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">${billStatus} ${freeBtn}</div>
+      </div>
+      ${expanded ? (
+        (g.primary ? renderOwnerLine(g.primary, '주') : '<div style="padding:10px 14px;color:var(--ink-45);font-size:12px;border-top:1px solid var(--ink-12);">주 관리자 정보 없음</div>')
+        + g.coOwners.map(c=>renderOwnerLine(c,'공동')).join('')
+      ) : ''}
+    </div>`;
+  }
+
+  // 단체 미생성 owner들 (맨 아래)
+  if(orphanList.length){
+    html += `<div style="margin-top:18px;font-size:12px;font-weight:700;color:var(--ink-45);padding:0 4px;">단체 미생성 (${orphanList.length}명)</div>`;
+    for(const m of orphanList){
       const st = m.org_status||'pending';
       const stBadge = st==='approved' ? '<span class="pill" style="background:var(--green-soft);color:var(--green);">승인됨</span>'
                     : st==='rejected' ? '<span class="pill free">거절됨</span>'
                     : '<span class="pill" style="background:var(--amber-soft);color:var(--amber);">승인 대기</span>';
-      let billTag='';
-      if(org){
-        if(org.stripe_subscription_id) billTag = ' <span style="color:var(--green);font-weight:600;font-size:11px;">· 💳 결제중</span>';
-        else if(org.billing_active && org.free_until) billTag = ` <span style="color:var(--amber);font-weight:600;font-size:11px;">· 🎁 무료 ~${esc(org.free_until)}</span>`;
-        else if(org.billing_active) billTag = ' <span style="color:var(--green);font-weight:600;font-size:11px;">· ✨ 활성</span>';
-      }
-      const srcTag = (m.signup_source) ? `<div style="font-size:11px;color:var(--ink-45);margin-top:2px;">📍 ${esc(m.signup_source)}</div>` : '';
-      const orgInfo = org ? `<div class="row-name">${esc(org.name)}${isCo?' <span style="color:var(--ink-45);font-weight:400;font-size:11px;">(공동)</span>':''}</div><div class="row-email">코드 ${esc(org.code)} · 학생 ${students}명${billTag}</div>${srcTag}` : `<span style="color:var(--ink-45);font-size:12px;">아직 단체 미생성</span>${srcTag}`;
-      let actions='';
-      if(st==='approved') actions = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
-      else if(st==='rejected') actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
-      else actions = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button> <button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">거절</button>`;
-      // 플랜 버튼 (개인회원과 동일하게 Premium 개월수 / Free)
-      const planBtn = m.email===ADMIN_EMAIL ? '' :
-        (m.plan==='premium'
-          ? `<button class="act-btn down" onclick="setPlan('${m.id}',false)">Free로</button>`
-          : `<button class="act-btn up" onclick="setPlan('${m.id}',true)">Premium</button>`);
-      let freeBtn='';
-      // 무료 버튼은 "주 관리자 행"(이 사람이 그 단체의 owner_id)에만 — 공동 관리자 행 중복 방지
-      if(org && !isCo && !org.stripe_subscription_id){
-        freeBtn = org.billing_active
-          ? `<button class="act-btn down" onclick="revokeFreeOrg('${org.id}','${esc(org.name)}')">무료해제</button>`
-          : `<button class="act-btn up" onclick="grantFreeOrg('${org.id}','${esc(org.name)}')">🎁 무료부여</button>`;
-      }
-      actions = planBtn + ' ' + freeBtn + ' ' + actions;
-      return `<tr>
-        <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
-        <td>${stBadge}</td>
-        <td>${orgInfo}</td>
-        <td style="text-align:right;">${actions}</td>
-      </tr>`;
-    }).join('')}
-    </tbody></table>`;
+      let stBtn = '';
+      if(st==='approved') stBtn = `<button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">승인취소</button>`;
+      else if(st==='rejected') stBtn = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button>`;
+      else stBtn = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button> <button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">거절</button>`;
+      html += `<div style="background:var(--bg-card);border:1px dashed var(--ink-12);border-radius:10px;padding:12px 14px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div style="min-width:0;">
+          <div class="row-name">${esc(m.name)||'이름없음'}</div>
+          <div class="row-email">${esc(m.email)} · <span style="color:var(--ink-45);">아직 단체 미생성</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">${stBadge} ${stBtn}</div>
+      </div>`;
+    }
+  }
+
+  el.innerHTML = html;
 }
 
 async function setOwnerStatus(id, status){
