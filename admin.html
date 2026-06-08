@@ -341,7 +341,29 @@ async function loadAll(){
   await loadApiKey();
 }
 
+// 회원별 실제 단어 개수 집계 (voca_books → voca_pages → voca_words)
+window._wordCountsByUser = {};
+async function fetchWordCountsByUser() {
+  try {
+    const r = await fetch(SB_URL + '/rest/v1/voca_books?select=user_id,voca_pages(voca_words(count))', {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
+    });
+    if (!r.ok) return;
+    const data = await r.json();
+    const counts = {};
+    for (const b of (data || [])) {
+      const wc = (b.voca_pages || []).reduce((s, p) => s + ((p.voca_words && p.voca_words[0] && p.voca_words[0].count) || 0), 0);
+      counts[b.user_id] = (counts[b.user_id] || 0) + wc;
+    }
+    window._wordCountsByUser = counts;
+    if (typeof renderMembers === 'function' && document.getElementById('member-table')) {
+      renderMembers();
+    }
+  } catch(e) { console.warn('단어수 집계 실패', e); }
+}
+
 async function loadMembers(retry){
+  fetchWordCountsByUser(); // 실제 단어 개수 집계를 병렬로 시작
   try{
     const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
