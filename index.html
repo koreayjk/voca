@@ -235,15 +235,83 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 #root { position: fixed; inset: 0; height: 100dvh; }
 .scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
 @media (min-width: 768px) {
-  .scr { left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 28px 32px 0; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
-  .scr.scr-wide { max-width: 1100px; padding: 28px 48px 0; }
-  .book-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .scr-wide .book-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; gap: 32px 28px !important; }
+  /* ===== PC 최적화: 좌측 사이드바 + 넓은 콘텐츠 + 가운데 정렬 ===== */
+  :root { --sidebar-w: 264px; }
+
+  /* 하단 탭바 → 좌측 세로 사이드바 */
+  .dock {
+    top: 0 !important; bottom: 0 !important; left: 0 !important; right: auto !important;
+    transform: none !important;
+    width: var(--sidebar-w) !important; max-width: var(--sidebar-w) !important; height: 100vh !important;
+    flex-direction: column !important; justify-content: flex-start !important; align-items: stretch !important;
+    gap: 8px; padding: 34px 18px !important;
+    border-top: none !important; border-right: 1px solid var(--ink-12) !important;
+    background: var(--bg-card) !important;
+    backdrop-filter: none !important;
+  }
+  /* 사이드바 상단 로고 영역 */
+  .dock::before {
+    content: "IM VOCA";
+    font-family: var(--font-display); font-size: 25px; font-weight: 700;
+    color: var(--accent); letter-spacing: -0.02em;
+    padding: 0 16px 26px; margin-bottom: 12px;
+    border-bottom: 1px solid var(--ink-07);
+  }
+  .dock__btn {
+    flex-direction: row !important; justify-content: flex-start !important; align-items: center !important; gap: 16px !important;
+    padding: 16px 18px !important; font-size: 17px !important; font-weight: 600 !important; border-radius: 13px;
+    width: 100% !important; height: auto !important; transition: background .15s, color .15s;
+  }
+  .dock__btn:hover { background: var(--bg-input); }
+  .dock__btn--active { background: var(--gold-bg); }
+  .dock__btn span:first-child { font-size: 26px !important; width: 30px !important; text-align: center; }
+  .dock__btn span:last-child { font-size: 16px !important; }
+
+  /* 콘텐츠 영역: 사이드바 오른쪽 전체, 내부에서 가운데 정렬 */
+  .scr {
+    left: var(--sidebar-w) !important; right: 0 !important; width: auto !important; max-width: none !important;
+    transform: none !important;
+    padding: 0 !important; border: none !important;
+    align-items: center;
+    overflow-y: auto;
+  }
+  /* 실제 내용은 적당한 폭으로 가운데, 내용 적으면 위아래도 가운데 */
+  .scr > *:not(.btn-fixed):not(.dock):not(.study-start-bar) { width: 100%; max-width: 720px; }
+  .scr-scroll {
+    width: 100%; max-width: 720px;
+    margin-left: auto !important; margin-right: auto !important;
+    padding: 40px 40px 60px !important;
+    min-height: 100%;
+    display: block;
+  }
+  /* scr-scroll 직속 자식이 flex로 찌그러지지 않게 (복습 카드 등) */
+  .scr-scroll > * { flex-shrink: 0; }
+  /* 내용이 적을 때 세로 가운데 정렬되도록: 스크롤 컨테이너를 flex로 채움 */
+  .scr { justify-content: flex-start; }
+  .scr::before, .scr::after { content: none; }
+
+  /* 책장/리스트가 들어가는 화면은 더 넓게 + 확실히 가운데 */
+  .scr.scr-wide > * { max-width: 1180px !important; margin-left: auto !important; margin-right: auto !important; }
+  .scr.scr-wide .scr-scroll { max-width: 1180px !important; margin-left: auto !important; margin-right: auto !important; padding: 44px 44px 80px !important; }
+
+  /* 책장 격자: 넓은 화면이니 여러 열 자동 채움 */
+  .book-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)) !important; gap: 30px 26px !important; }
+  .scr-wide .book-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; gap: 36px 30px !important; }
   .scr-wide .lib-header { max-width: 100%; }
-  .dock { left: 50% !important; transform: translateX(-50%) !important; width: 100% !important; max-width: 480px !important; border-left: 1px solid var(--ink-12); border-right: 1px solid var(--ink-12); }
-  .overlay { max-width: none; left: 0; transform: none; }
-  .sheet { max-width: 480px; margin: 0 auto; }
-  .btn-fixed { left: 48px !important; right: 48px !important; }
+
+  /* 모달/시트/오버레이는 화면 전체 기준 가운데 */
+  .overlay { left: 0; right: 0; max-width: none; transform: none; }
+  .sheet { max-width: 520px; margin: 0 auto; }
+  /* 하단 버튼: 사이드바 오른쪽 영역 하단에 고정, 가운데 정렬 */
+  .btn-fixed { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; top: auto !important; width: auto !important; max-width: none !important; min-width: 0 !important; margin: 0 !important; align-self: auto !important; display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 12px !important; padding: 16px 40px calc(16px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07) !important; z-index: 100 !important; box-sizing: border-box !important; }
+  .btn-fixed .btn, .btn-fixed--row .btn { flex: 0 1 280px !important; width: auto !important; max-width: 280px !important; }
+
+  /* 암기/설정 화면의 시작 버튼바도 하단 고정 */
+  .study-start-bar { position: fixed !important; left: var(--sidebar-w) !important; right: 0 !important; bottom: 0 !important; top: auto !important; max-width: none !important; flex-direction: row !important; justify-content: center !important; gap: 12px !important; margin: 0 !important; padding: 16px 40px calc(16px + env(safe-area-inset-bottom,0px)) !important; background: var(--bg-page) !important; border-top: 1px solid var(--ink-07); z-index: 100 !important; box-sizing: border-box !important; }
+  .study-start-bar .btn { flex: 0 1 300px !important; width: auto !important; max-width: 300px !important; }
+  #study-setup-inner { padding-bottom: 90px !important; }
+  /* 상단 우측 버튼이 제목과 안 겹치게: 제목 영역에 오른쪽 여백 */
+  .scr-wide .lib-header { padding-right: 0; }
 }
 .scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
 
@@ -259,6 +327,18 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   .auth-mobile-logo { display: none; }
   .auth-feat { display: flex; align-items: center; gap: 12px; margin-top: 18px; font-size: 14px; color: rgba(243,236,224,0.92); }
   .auth-feat .ic { font-size: 20px; width: 26px; text-align: center; flex-shrink: 0; }
+  /* PC: 사이드바 하단 액션 영역 (관리/Premium/알림/앱소개/My) */
+  .dock-bottom { display: flex !important; flex-direction: column; gap: 4px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--ink-07); }
+  .dock-mini { background: none; border: none; border-radius: 10px; padding: 11px 14px; font-family: var(--font-body); font-size: 13.5px; font-weight: 600; color: var(--ink-60); cursor: pointer; text-align: left; transition: background .15s; }
+  .dock-mini:hover { background: var(--bg-input); }
+  .dock-mini--accent { color: var(--accent); }
+  /* PC에선 책장 상단 우측 버튼(관리/My 등) 숨김 — 사이드바 하단으로 이동 */
+  .topbar-actions { display: none !important; }
+  /* 책 추가 버튼: 제목 아래 왼쪽으로 */
+  .scr-wide .lib-header { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+  .scr-wide .lib-add-btn { align-self: flex-start !important; }
+  /* 상세화면(book 등) PC 사이드바 표시 */
+  .dock--detail { display: flex !important; }
 }
 .scr-scroll::-webkit-scrollbar { width: 4px; }
 .scr-scroll::-webkit-scrollbar-thumb { background: var(--ink-12); border-radius: 2px; }
@@ -285,7 +365,19 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .btn-solid { background: var(--accent); color: #fff; }
 .btn-outline { background: transparent; color: var(--ink-100); border: 1.5px solid var(--ink-12); }
 .btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
+.btn-fixed--row { flex-direction: row; gap: 8px; }
+.btn-fixed--row .btn { flex: 1; }
 .lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
+.dock-bottom { display: none; }
+.dock--detail { display: none; }  /* 상세화면 사이드바는 모바일에서 숨김 */
+.topbar-actions { align-items: flex-start; }
+/* 좁은 화면: 상단 버튼이 작아지고 줄바꿈되며, 제목은 그 아래로 내려와 겹침 방지 */
+@media (max-width: 640px) {
+  .topbar-actions { max-width: 70% !important; gap: 4px !important; }
+  .topbar-actions .topbar-btn { padding: 4px 8px !important; font-size: 10px !important; }
+  .scr-wide.scr { padding-top: 96px !important; }
+  .scr-wide .lib-header { margin-top: 0; }
+}
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
 .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
 .book-tile { cursor: pointer; }
@@ -487,6 +579,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <script>
 const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
+const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 OFF (true로 바꾸면 복구)
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
 let userPlan = 'free';      // 'free' or 'premium'
@@ -2039,7 +2132,13 @@ async function handleOAuthRedirect(){
     await maybeSeedSampleBook();
     applyEntryStack(); render();
     setTimeout(updateNoticeBadge, 100); setTimeout(checkReviews, 1000);
-  }catch(e){ console.error('OAuth 처리 실패:', e); renderLogin(); }
+  }catch(e){
+    console.error('OAuth 처리 실패:', e);
+    toast((userNativeLang==='ko'?'가입/로그인 오류: ':'Signup/login error: ') + (e.message||e), 6000);
+    _authToken=null; currentUser=null;
+    try{ localStorage.removeItem('imvoca.session'); }catch(_){}
+    renderLogin();
+  }
   return true;
 }
 
@@ -2068,12 +2167,24 @@ async function ensureMemberRow(user){
       const org = await lookupOrgByCode(pending.code);
       if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
     }
-    await fetch(SB_URL + '/rest/v1/members', {
+    const ins = await fetch(SB_URL + '/rest/v1/members', {
       method:'POST',
-      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken, 'Prefer':'return=minimal' },
+      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken, 'Prefer':'return=representation' },
       body: JSON.stringify(body)
     });
-  }catch(e){ console.error('member 생성 실패:', e); }
+    if (!ins.ok) {
+      const errTxt = await ins.text().catch(()=> '');
+      console.error('member 생성 실패:', ins.status, errTxt);
+      // 이메일 중복(409) 등은 이미 계정이 있다는 뜻 → 통과시킴(연결)
+      if (ins.status === 409 || /duplicate|unique/i.test(errTxt)) {
+        return; // 이미 존재 → 정상 진행
+      }
+      throw new Error('가입 처리 오류 ('+ins.status+'): '+ (errTxt||'알 수 없는 오류'));
+    }
+  }catch(e){
+    console.error('member 생성 실패:', e);
+    throw e; // 상위(handleOAuthRedirect)에서 사용자에게 표시
+  }
 }
 
 async function sbSignIn(email, pw) {
@@ -2398,9 +2509,9 @@ function renderLogin(tab='login') {
       <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4.5 24 4.5 16.3 4.5 9.7 8.9 6.3 14.7z"/><path fill="#4CAF50" d="M24 43.5c5.4 0 10.3-2.1 14-5.4l-6.5-5.5c-2 1.5-4.6 2.4-7.5 2.4-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.6 39 16.2 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.5 5.5c-.5.4 7-5.1 7-15.1 0-1.2-.1-2.3-.4-3.5z"/></svg>
       ${userNativeLang==='ko'?'Google로 계속하기':'Continue with Google'}
     </button>
-    <button type="button" onclick="signInWithProvider('kakao')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEE500;border:none;border-radius:10px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:600;color:#191600;cursor:pointer;">
+    ${KAKAO_LOGIN_ENABLED ? `<button type="button" onclick="signInWithProvider('kakao')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEE500;border:none;border-radius:10px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:600;color:#191600;cursor:pointer;">
       <span style="font-size:16px;">💬</span>${userNativeLang==='ko'?'카카오로 계속하기':'Continue with Kakao'}
-    </button>`;
+    </button>` : ''}`;
   const dividerOr = `<div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;"><div style="flex:1;height:1px;background:var(--ink-07);"></div><div style="font-size:11px;color:var(--ink-40);">${userNativeLang==='ko'?'또는':'or'}</div><div style="flex:1;height:1px;background:var(--ink-07);"></div></div>`;
   const dividerEmail = `<div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;"><div style="flex:1;height:1px;background:var(--ink-07);"></div><div style="font-size:11px;color:var(--ink-40);">${userNativeLang==='ko'?'또는 이메일로':'or with email'}</div><div style="flex:1;height:1px;background:var(--ink-07);"></div></div>`;
   document.getElementById('root').innerHTML = `
@@ -2465,7 +2576,11 @@ function renderLogin(tab='login') {
             `:''}
             <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${userNativeLang==='ko'?'가입 경로 (어떻게 알게 되셨나요?)':'How did you hear about us?'}</div>
             ${(()=>{ const src=window._signupSource||''; const opts=[['ad','📱 '+(userNativeLang==='ko'?'인스타·페북 광고':'Instagram/FB ad')],['search','🔍 '+(userNativeLang==='ko'?'검색 (구글·네이버)':'Search')],['referral','👥 '+(userNativeLang==='ko'?'지인·동료 소개':'Referral')],['community','🏫 '+(userNativeLang==='ko'?'모임·커뮤니티':'Community')],['other','✏️ '+(userNativeLang==='ko'?'기타':'Other')]];
-              return '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'+opts.map(o=>`<button type="button" onclick="pickSource('${o[0]}')" style="padding:8px 12px;border:1.5px solid ${src===o[0]?'var(--accent)':'var(--ink-12)'};background:${src===o[0]?'var(--gold-bg)':'var(--bg-input)'};border-radius:999px;font-family:var(--font-body);font-size:12px;cursor:pointer;color:var(--ink-100);font-weight:${src===o[0]?600:400};">${o[1]}</button>`).join('')+'</div>'; })()}
+              const ph = userNativeLang==='ko'?'선택해주세요':'Please select';
+              return `<select onchange="pickSource(this.value)" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:${src?'var(--ink-100)':'var(--ink-40)'};outline:none;margin-bottom:10px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'12\\' height=\\'12\\' viewBox=\\'0 0 12 12\\'><path fill=\\'%23999\\' d=\\'M6 8L2 4h8z\\'/></svg>');background-repeat:no-repeat;background-position:right 14px center;">`
+                + `<option value="" ${!src?'selected':''} disabled>${ph}</option>`
+                + opts.map(o=>`<option value="${o[0]}" ${src===o[0]?'selected':''}>${o[1]}</option>`).join('')
+                + `</select>`; })()}
             ${(window._signupSource==='referral')?`<input id="su-referral" type="text" placeholder="${userNativeLang==='ko'?'소개해주신 분 이름':'Who referred you?'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
             ${(window._signupSource==='other')?`<input id="su-other" type="text" placeholder="${userNativeLang==='ko'?'직접 입력':'Please specify'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:8px;">`:''}
             ${gkBtns}
@@ -2669,9 +2784,11 @@ function applyStaticI18n() {
   if (apiNote) apiNote.innerHTML = 'Enter your Google Gemini API key to <strong>auto-extract</strong> words from photos.<br><br>Get one: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key';
 }
 
-function toast(m) {
+function toast(m, dur) {
   if (typeof userNativeLang !== 'undefined' && userNativeLang !== 'ko' && _toastDict[m]) m = _toastDict[m];
-  const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);
+  const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), dur||2600);
 }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
@@ -3445,7 +3562,27 @@ function renderScanLoading(current=1, total=1) {
 
 function buildDock() {
   const tab = currentTab();
-  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🃏</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button></div>`;
+  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🃏</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button>`
+    + buildDockBottom()
+    + `</div>`;
+}
+
+// PC 사이드바 하단: 관리/프리미엄/알림/앱소개/My (데스크탑에서만 표시)
+// 상세 화면(book/capture 등)용 PC 전용 사이드바 (모바일에선 숨김)
+function pcSidebar() {
+  return buildDock().replace('class="dock"', 'class="dock dock--detail"');
+}
+
+function buildDockBottom() {
+  const ko = userNativeLang==='ko';
+  const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
+  return `<div class="dock-bottom">`
+    + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
+    + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
+    + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${ko?'알림':'Notices'}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
+    + `<button class="dock-mini" onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')">${ko?'📖 앱 소개':'📖 About'}</button>`
+    + `<button class="dock-mini" onclick="showMyMenu()">${ko?'👤 마이페이지':'👤 My'}</button>`
+    + `</div>`;
 }
 
 function render() {
@@ -3479,7 +3616,7 @@ function render() {
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='premium'?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
           </div>
-          <div class="lib-plus" onclick="document.getElementById('modal-add').classList.add('open')">＋</div>
+          <button class="lib-add-btn" onclick="document.getElementById('modal-add').classList.add('open')" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${userNativeLang==='ko'?'책 추가':'Add Book'}</button>
         </div>
         <div class="scr-scroll">
           <div class="book-grid">
@@ -3495,7 +3632,7 @@ function render() {
               </div>`).join('')}
           </div>
         </div>
-        <div style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px">
+        <div class="topbar-actions" style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:60%;">
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
@@ -3547,11 +3684,11 @@ function render() {
               </span>
             </div>`).join('')}
         </div>
-        <div class="btn-fixed" style="flex-direction:row;gap:8px;">
-          <button class="btn btn-solid" style="flex:1;" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
-          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
+        <div class="btn-fixed btn-fixed--row">
+          <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
+          <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
         </div>
-      </div>`;
+      </div>` + pcSidebar();
   }
 
   else if (route.name === 'capture') {
@@ -3652,9 +3789,9 @@ function render() {
         <div class="scr-scroll" style="margin-top:12px">
           ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}</div>`;}).join('')}
         </div>
-        <div class="btn-fixed" style="flex-direction:row;gap:8px;">
-          <button class="btn btn-solid" style="flex:1;" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
-          <button class="btn btn-outline" style="flex:1;" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
+        <div class="btn-fixed btn-fixed--row">
+          <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
+          <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
         </div>
       </div>`;
   }
@@ -3686,7 +3823,7 @@ function render() {
           <div class="scope-card ${s.scope==='page'?'scope-card--on':''}" onclick="ssSelectScope('page')"><div class="scope-card__head"><div><div class="scope-card__name">${t('scopePage')}</div><div class="scope-card__hint">${userNativeLang==='ko'?'한 페이지씩 끊어서':'One page at a time'}</div></div><div class="radio ${s.scope==='page'?'radio--on':''}">${s.scope==='page'?'✓':''}</div></div>${s.scope==='page'?`<div class="chip-wrap" style="margin-top:12px">${book.pages.map(p=>`<span class="chip" style="${String(s.page)===String(p.num)?'background:var(--ink-100);color:var(--bg-page);border-color:var(--ink-100)':''}" onclick="event.stopPropagation();window._ss.page='${p.num}';ssRender()">Page ${p.num} · ${p.words.length}</span>`).join('')}</div>`:''}</div>
         </div>`:''}
         <div style="height:22px"></div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="study-start-bar" style="position:sticky;bottom:0;background:linear-gradient(to top,var(--bg-page) 75%,transparent);padding:12px 0 14px;display:flex;flex-direction:column;gap:10px;margin-top:8px;">
           <button class="btn ${canStart?'btn-solid':'btn-outline'}" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?'ssStart()':''}">${t('flashCard')}${canStart?` — ${total}개`:''}</button>
           <button class="btn btn-outline" style="opacity:${canStart?1:0.4};cursor:${canStart?'pointer':'default'}" onclick="${canStart?`startQuiz('${s.bookId}','${s.scope}','${s.page}')`:''}" >${t('quizModeBtn')}${canStart?` — ${total}개`:''}</button>
         </div>`;
@@ -4653,7 +4790,22 @@ async function renderReviewPage(root, dock) {
 }
 
 async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDate) {
+  // 1차: 로컬 books에서 시도
   initStudy(bookId, 'page', pageNum);
+  // 큐가 비었으면 DB에서 fresh 로드 시도 (로컬 books가 누락된 경우 대비)
+  if (!studyState || !studyState.queue || studyState.queue.length === 0) {
+    try {
+      toast(userNativeLang==='ko' ? '단어 불러오는 중...' : 'Loading words...');
+      await loadBooksFromDB();
+      initStudy(bookId, 'page', pageNum);
+    } catch(e) { console.warn('복습 단어 재로드 실패:', e); }
+  }
+  if (!studyState || !studyState.queue || studyState.queue.length === 0) {
+    toast(userNativeLang==='ko'
+      ? '⚠️ 단어를 불러올 수 없어요. 책장에서 책을 열어 확인 후 다시 시도해주세요'
+      : '⚠️ Could not load words. Please open the book in the bookshelf to verify, then retry', 5000);
+    return;
+  }
   studyState._reviewId = reviewId;
   studyState._reviewStepKey = stepKey;
   studyState._scheduledDate = scheduledDate;
