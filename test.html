@@ -2354,7 +2354,7 @@ async function loadBooksFromDB() {
     if (!Array.isArray(bd)) return;
     books = bd.map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
-      desc: b.description || '', cover: b.cover_url || '',
+      desc: b.description || '', cover: b.cover_url || '', category: b.category || 'general',
       pages: (b.voca_pages || [])
         .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
         .map(p => ({
@@ -2897,6 +2897,90 @@ function openAddBookModal() {
       catCustom.style.display = (this.value === 'custom') ? 'block' : 'none';
     };
   }
+}
+
+// 카테고리 키 → 사용자에게 보일 라벨
+function categoryLabel(cat) {
+  if (!cat || cat === 'general') return userNativeLang==='ko' ? '일반/원서' : 'General';
+  if (cat.startsWith('custom:')) return cat.slice(7) || (userNativeLang==='ko' ? '직접 입력' : 'Custom');
+  const labels = {
+    'suneung': userNativeLang==='ko' ? '수능 영단어' : 'Suneung',
+    'sat_toefl': 'SAT/TOEFL/IELTS',
+    'business': userNativeLang==='ko' ? '비즈니스 영어' : 'Business',
+    'medical': userNativeLang==='ko' ? '의학 영어' : 'Medical',
+    'legal': userNativeLang==='ko' ? '법률 영어' : 'Legal',
+    'it': 'IT',
+    'daily': userNativeLang==='ko' ? '일상 회화' : 'Daily',
+  };
+  return labels[cat] || (userNativeLang==='ko' ? '일반/원서' : 'General');
+}
+
+// 카테고리 변경 모달 열기
+window._editingBookId = null;
+function openCategoryModal(bookId) {
+  const book = findBook(bookId);
+  if (!book) return;
+  window._editingBookId = bookId;
+  const cur = book.category || 'general';
+  const isCustom = cur.startsWith('custom:');
+  const curKey = isCustom ? 'custom' : cur;
+  const customText = isCustom ? cur.slice(7) : '';
+  // 모달이 없으면 생성
+  let modal = document.getElementById('modal-category');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-category';
+    modal.className = 'overlay';
+    modal.innerHTML = `<div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3>📚 ${userNativeLang==='ko' ? '책 종류 바꾸기' : 'Change Category'}</h3>
+      <div style="font-size:12px;color:var(--ink-60);margin-bottom:12px;">${userNativeLang==='ko' ? '직접 입력한 단어의 뜻을 더 정확하게 찾기 위해 사용해요. 변경 후 추가하는 단어부터 적용됩니다.' : 'Used to find more accurate meanings for manually added words. Applies to words added after change.'}</div>
+      <select id="cat-edit-sel" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'><path fill=\'%23999\' d=\'M6 8L2 4h8z\'/></svg>');background-repeat:no-repeat;background-position:right 14px center;">
+        <option value="general">📖 ${userNativeLang==='ko' ? '일반 / 원서 (기본)' : 'General / Original Book'}</option>
+        <option value="suneung">🇰🇷 ${userNativeLang==='ko' ? '수능 영단어' : 'Suneung (Korean SAT)'}</option>
+        <option value="sat_toefl">🎓 SAT / TOEFL / IELTS</option>
+        <option value="business">💼 ${userNativeLang==='ko' ? '비즈니스 영어' : 'Business English'}</option>
+        <option value="medical">⚕️ ${userNativeLang==='ko' ? '의학 영어' : 'Medical English'}</option>
+        <option value="legal">⚖️ ${userNativeLang==='ko' ? '법률 영어' : 'Legal English'}</option>
+        <option value="it">💻 IT / ${userNativeLang==='ko' ? '컴퓨터' : 'Computer'}</option>
+        <option value="daily">🗣️ ${userNativeLang==='ko' ? '일상 회화' : 'Daily Conversation'}</option>
+        <option value="custom">✏️ ${userNativeLang==='ko' ? '직접 입력 (아래에 종류 적기)' : 'Custom'}</option>
+      </select>
+      <input type="text" id="cat-edit-custom" placeholder="${userNativeLang==='ko' ? '예: 의학 전문 용어, 우주 과학 용어 등' : 'e.g. Medical terminology, Space science...'}" style="display:none;width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:8px;">
+      <button class="btn btn-solid" onclick="saveCategoryChange()" style="margin-top:14px;">${userNativeLang==='ko' ? '저장' : 'Save'}</button>
+      <div class="gap-sm"></div>
+      <button class="btn btn-outline" onclick="closeModal('modal-category')">${userNativeLang==='ko' ? '취소' : 'Cancel'}</button>
+    </div>`;
+    document.body.appendChild(modal);
+  }
+  // 값 세팅
+  const sel = modal.querySelector('#cat-edit-sel');
+  const custom = modal.querySelector('#cat-edit-custom');
+  sel.value = curKey;
+  custom.style.display = (curKey === 'custom') ? 'block' : 'none';
+  custom.value = customText;
+  sel.onchange = function() { custom.style.display = (this.value === 'custom') ? 'block' : 'none'; };
+  modal.classList.add('open');
+}
+
+async function saveCategoryChange() {
+  const bookId = window._editingBookId;
+  if (!bookId) return;
+  const book = findBook(bookId);
+  if (!book) return;
+  const sel = document.getElementById('cat-edit-sel');
+  const custom = document.getElementById('cat-edit-custom');
+  const key = sel.value;
+  const customText = custom.value.trim();
+  if (key === 'custom' && !customText) { toast(userNativeLang==='ko'?'직접 입력 종류를 적어주세요':'Please specify'); return; }
+  const newCategory = (key === 'custom') ? `custom:${customText}` : key;
+  try {
+    await sbFetch(`/rest/v1/voca_books?id=eq.${bookId}`, 'PATCH', { category: newCategory });
+    book.category = newCategory;
+    closeModal('modal-category');
+    toast(userNativeLang==='ko' ? `📚 책 종류가 '${categoryLabel(newCategory)}'(으)로 바뀌었어요` : `Category changed to ${categoryLabel(newCategory)}`);
+    render();
+  } catch(e) { toast('저장 실패: ' + e.message); }
 }
 
 // 카테고리 키 → Gemini가 이해할 수 있는 문맥 설명으로 변환
@@ -3716,7 +3800,12 @@ function render() {
             <div>
               <div class="book-hero__title">${book.title}</div>
               <div class="book-hero__author">${book.author}</div>
-              <div class="book-hero__badge">${t('savedBook')}</div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;">
+                <div class="book-hero__badge">${t('savedBook')}</div>
+                <div onclick="openCategoryModal('${book.id}')" style="display:inline-flex;align-items:center;gap:4px;background:var(--gold-bg);color:var(--accent);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;border:1px dashed rgba(28,53,83,0.3);">
+                  📚 ${categoryLabel(book.category)} <span style="font-size:9px;opacity:0.7;">✏️</span>
+                </div>
+              </div>
               <div class="book-hero__desc">${book.desc||''}</div>
             </div>
           </div>
@@ -4965,9 +5054,7 @@ async function fetchWordMeaning(word, categoryContext='') {
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: { temperature: 0, maxOutputTokens: 500 }
     }, 3);
-    console.log('[fetchWordMeaning] Gemini 응답:', word, data);
     let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    if (!text) console.warn('[fetchWordMeaning] 응답 text 비어있음:', data);
     // 마크다운 코드 블록 제거 (```json ... ```)
     text = text.replace(/```json\s*/gi, '').replace(/```/g, '').trim();
     // JSON 추출
@@ -4989,7 +5076,6 @@ async function fetchWordMeaning(word, categoryContext='') {
       // 닫는 따옴표 없이 잘린 경우: "base":"은행, 둑\n...
       baseMatch = text.match(/"base"\s*:\s*"([^"\n,}]+)/);
     }
-    if (!baseMatch) console.warn('[fetchWordMeaning] JSON/base 매칭 실패 text:', text);
     return {
       base: baseMatch ? baseMatch[1] : '(뜻을 찾지 못했어요)',
       ipa: '',
