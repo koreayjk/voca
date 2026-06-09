@@ -348,8 +348,11 @@ async function fetchWordCountsByUser() {
     const r = await fetch(SB_URL + '/rest/v1/voca_books?select=user_id,voca_pages(voca_words(count))', {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
     });
-    if (!r.ok) return;
+    console.log('[fetchWordCountsByUser] status:', r.status);
+    if (!r.ok) { console.warn('[fetchWordCountsByUser] failed:', await r.text()); return; }
     const data = await r.json();
+    console.log('[fetchWordCountsByUser] 받은 책 수:', data?.length, '유저 수:', new Set((data||[]).map(b=>b.user_id)).size);
+    console.log('[fetchWordCountsByUser] 첫 책 샘플:', data?.[0]);
     const counts = {};
     for (const b of (data || [])) {
       const wc = (b.voca_pages || []).reduce((s, p) => s + ((p.voca_words && p.voca_words[0] && p.voca_words[0].count) || 0), 0);
