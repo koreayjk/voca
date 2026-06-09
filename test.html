@@ -4790,7 +4790,22 @@ async function renderReviewPage(root, dock) {
 }
 
 async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDate) {
+  // 1차: 로컬 books에서 시도
   initStudy(bookId, 'page', pageNum);
+  // 큐가 비었으면 DB에서 fresh 로드 시도 (로컬 books가 누락된 경우 대비)
+  if (!studyState || !studyState.queue || studyState.queue.length === 0) {
+    try {
+      toast(userNativeLang==='ko' ? '단어 불러오는 중...' : 'Loading words...');
+      await loadBooksFromDB();
+      initStudy(bookId, 'page', pageNum);
+    } catch(e) { console.warn('복습 단어 재로드 실패:', e); }
+  }
+  if (!studyState || !studyState.queue || studyState.queue.length === 0) {
+    toast(userNativeLang==='ko'
+      ? '⚠️ 단어를 불러올 수 없어요. 책장에서 책을 열어 확인 후 다시 시도해주세요'
+      : '⚠️ Could not load words. Please open the book in the bookshelf to verify, then retry', 5000);
+    return;
+  }
   studyState._reviewId = reviewId;
   studyState._reviewStepKey = stepKey;
   studyState._scheduledDate = scheduledDate;
