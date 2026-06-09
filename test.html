@@ -4963,11 +4963,13 @@ async function fetchWordMeaning(word, categoryContext='') {
   try {
     const data = await geminiWithRetry({
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0, maxOutputTokens: 200 }
+      generationConfig: { temperature: 0, maxOutputTokens: 500 }
     }, 3);
     console.log('[fetchWordMeaning] Gemini 응답:', word, data);
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     if (!text) console.warn('[fetchWordMeaning] 응답 text 비어있음:', data);
+    // 마크다운 코드 블록 제거 (```json ... ```)
+    text = text.replace(/```json\s*/gi, '').replace(/```/g, '').trim();
     // JSON 추출
     const m = text.match(/\{[\s\S]*?\}/);
     if (m) {
@@ -4980,8 +4982,13 @@ async function fetchWordMeaning(word, categoryContext='') {
         };
       } catch(e) {}
     }
-    // JSON 파싱 실패 시 텍스트에서 뜻만 긁기
-    const baseMatch = text.match(/"base"\s*:\s*"([^"]+)"/);
+    // JSON 파싱 실패 시 텍스트에서 base 값만 긁기 (응답이 잘렸을 때도 대응)
+    // 정상: "base":"은행" 또는 잘림: "base":"은행 또는 "base":"
+    let baseMatch = text.match(/"base"\s*:\s*"([^"]+)"/);
+    if (!baseMatch) {
+      // 닫는 따옴표 없이 잘린 경우: "base":"은행, 둑\n...
+      baseMatch = text.match(/"base"\s*:\s*"([^"\n,}]+)/);
+    }
     if (!baseMatch) console.warn('[fetchWordMeaning] JSON/base 매칭 실패 text:', text);
     return {
       base: baseMatch ? baseMatch[1] : '(뜻을 찾지 못했어요)',
