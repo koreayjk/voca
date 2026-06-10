@@ -3597,7 +3597,18 @@ async function acceptWords() {
   const book = findBook(pendingB); if (!book) return;
   const saveRes = await savePageWordsToDB(pendingB, pendingP, pendingW);
   const pid = saveRes?.pageId || null;
-  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
+  let words = (saveRes?.savedRows||[]).map(_dbRowToWord);
+  // 안전장치 1: 저장 후 DB에서 이 페이지의 모든 단어를 다시 가져와 메모리와 동기화 (다른 기기에서 추가한 단어 보존)
+  if (pid) {
+    try {
+      const fresh = await sbFetch(`/rest/v1/voca_words?page_id=eq.${pid}&order=created_at`);
+      if (Array.isArray(fresh) && fresh.length >= words.length) {
+        // DB에서 가져온 게 우선 (다른 기기에서 추가한 것 포함)
+        words = fresh.map(_dbRowToWord);
+        console.log('[acceptWords] DB 동기화: ' + words.length + '개 단어 확인');
+      }
+    } catch(e) { console.warn('[acceptWords] DB 동기화 실패, 로컬 사용', e); }
+  }
   const ex = findPage(book, pendingP);
   const newName = window._renamedPageNum;
   if (ex) {
@@ -3925,6 +3936,24 @@ function render() {
     const book = findBook(route.bookId);
     const page = book ? findPage(book, route.pageNum) : null;
     if (!page) { back(); return; }
+    // 안전장치: 이 페이지의 단어를 DB에서 fresh 로드 (백그라운드, 다른 기기 동기화)
+    if (page._pid && !page._lastSync) {
+      page._lastSync = Date.now();
+      sbFetch(`/rest/v1/voca_words?page_id=eq.${page._pid}&order=created_at`).then(fresh => {
+        if (Array.isArray(fresh)) {
+          // DB가 로컬보다 많으면 (다른 기기에서 추가됨) → DB로 업데이트
+          // DB가 로컬과 같거나 적으면 → 로컬 유지 (방금 추가한 게 아직 반영 안 됐을 수도)
+          if (fresh.length > (page.words?.length || 0)) {
+            page.words = fresh.map(_dbRowToWord);
+            console.log('[page-words] DB가 더 많음, 로컬 업데이트: ' + fresh.length + '개');
+            // 현재 페이지가 여전히 이 화면이면 다시 렌더
+            if (route.name === 'page-words' && route.bookId === book.id && String(route.pageNum) === String(page.num)) {
+              render();
+            }
+          }
+        }
+      }).catch(e => console.warn('[page-words] DB fresh 로드 실패', e));
+    }
     root.innerHTML = `
       <div class="scr" style="padding-bottom:110px">
         <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book.title} · Page ${page.num}</span><span></span></div>
@@ -5117,7 +5146,17 @@ async function saveManualWords(bookId) {
   const book = findBook(bookId); if (!book) return;
   const saveRes = await savePageWordsToDB(bookId, pg, window._manualWords);
   const pid = saveRes?.pageId || null;
-  const words = (saveRes?.savedRows||[]).map(_dbRowToWord);
+  let words = (saveRes?.savedRows||[]).map(_dbRowToWord);
+  // 안전장치: 저장 후 DB에서 단어 다시 가져와 동기화
+  if (pid) {
+    try {
+      const fresh = await sbFetch(`/rest/v1/voca_words?page_id=eq.${pid}&order=created_at`);
+      if (Array.isArray(fresh) && fresh.length >= words.length) {
+        words = fresh.map(_dbRowToWord);
+        console.log('[saveManualWords] DB 동기화: ' + words.length + '개');
+      }
+    } catch(e) { console.warn('[saveManualWords] DB 동기화 실패', e); }
+  }
   const ex = findPage(book, pg);
   if (ex) ex.words = [...ex.words, ...words];
   else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b) => String(a.num).localeCompare(String(b.num))); }
