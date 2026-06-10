@@ -2361,7 +2361,7 @@ async function loadBooksFromDB() {
           num: p.page_num, _pid: p.id,
           words: (p.voca_words || [])
             .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
-            .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false }))
+            .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: w.analysis || null }))
         }))
 }));
     updateTotalWords();
@@ -2413,7 +2413,11 @@ async function savePageWordsToDB(bookId, pageNum, words) {
     if (!words || !words.length) return { pageId, savedRows: [] };
 
     // 행 배열로 한 번에 INSERT (원자적 · 빠름 · 누락 방지)
-    const rows = words.map(w => ({ page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' }));
+    const rows = words.map(w => {
+      const r = { page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' };
+      if (w.analysis && typeof w.analysis === 'object') r.analysis = w.analysis;
+      return r;
+    });
     const resp = await sbFetch('/rest/v1/voca_words', 'POST', rows, true, { 'Prefer': 'return=representation' });
     // (정상) 저장 검증: 반환된 행 수가 보낸 수와 같은지 확인
     let savedRows = Array.isArray(resp) ? resp.slice() : [];
@@ -2444,7 +2448,7 @@ async function savePageWordsToDB(bookId, pageNum, words) {
 
 // 저장된 DB 행을 메모리 단어 객체로 변환
 function _dbRowToWord(w) {
-  return { id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false };
+  return { id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: w.analysis || null };
 }
 
 
@@ -2981,6 +2985,13 @@ async function saveCategoryChange() {
     toast(userNativeLang==='ko' ? `📚 책 종류가 '${categoryLabel(newCategory)}'(으)로 바뀌었어요` : `Category changed to ${categoryLabel(newCategory)}`);
     render();
   } catch(e) { toast('저장 실패: ' + e.message); }
+}
+
+// 시험 카테고리인지 (심화 분석 대상)
+function isExamCategory(cat) {
+  if (!cat) return false;
+  if (cat === 'suneung' || cat === 'sat_toefl') return true;
+  return false;
 }
 
 // 카테고리 키 → Gemini가 이해할 수 있는 문맥 설명으로 변환
@@ -3627,6 +3638,106 @@ async function acceptWords() {
     replace({ name:'page-words', bookId:pendingB, pageNum:pendingP });
   }
   window._renamedPageNum = null;
+
+  // 시험 카테고리 책이면 백그라운드로 심화 분석 자동 채우기
+  if (isExamCategory(book.category) && pid) {
+    enrichExamWords(book.id, pid).catch(e => console.warn('[enrichExamWords] 실패', e));
+  }
+}
+
+// 단어 심화 분석 (analysis JSONB) 렌더 — 접기/펴기
+window._analysisExpanded = window._analysisExpanded || {};
+function toggleAnalysis(bookId, pageNum, wordIdx) {
+  const key = bookId + '|' + pageNum + '|' + wordIdx;
+  window._analysisExpanded[key] = !window._analysisExpanded[key];
+  render();
+}
+function renderWordAnalysis(a, bookId, pageNum, wordIdx) {
+  if (!a) return '';
+  const ko = userNativeLang === 'ko';
+  const key = bookId + '|' + pageNum + '|' + wordIdx;
+  const open = !!window._analysisExpanded[key];
+  const hasContent = (a.nuance || (a.synonyms&&a.synonyms.length) || (a.antonyms&&a.antonyms.length) || (a.confusing&&a.confusing.length) || a.example);
+  if (!hasContent) return '';
+
+  // 닫힘: 간단한 토글 버튼만
+  if (!open) {
+    return `<div style="margin-top:8px;"><button onclick="event.stopPropagation();toggleAnalysis('${bookId}','${pageNum}',${wordIdx})" style="background:var(--gold-bg);color:var(--accent);border:none;border-radius:99px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;">📖 ${ko?'심화 분석 보기':'See deep analysis'}</button></div>`;
+  }
+
+  // 열림: 모든 내용 표시
+  let html = `<div style="margin-top:10px;padding:12px;background:var(--gold-bg);border-radius:10px;border-left:3px solid var(--accent);">`;
+
+  // 뉘앙스
+  if (a.nuance) {
+    html += `<div style="margin-bottom:10px;"><div style="font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:3px;">💡 ${ko?'뉘앙스 · 상황':'Nuance'}</div><div style="font-size:12.5px;color:var(--ink-100);line-height:1.5;">${esc(a.nuance)}</div></div>`;
+  }
+
+  // 유의어
+  if (a.synonyms && a.synonyms.length) {
+    html += `<div style="margin-bottom:10px;"><div style="font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:4px;">＝ ${ko?'유의어':'Synonyms'}</div><div style="display:flex;flex-wrap:wrap;gap:4px;">`;
+    for (const w of a.synonyms) html += `<span style="background:var(--bg-card);font-size:11px;font-weight:600;color:var(--ink-100);border-radius:99px;padding:3px 9px;">${esc(w)}</span>`;
+    html += `</div></div>`;
+  }
+
+  // 반의어
+  if (a.antonyms && a.antonyms.length) {
+    html += `<div style="margin-bottom:10px;"><div style="font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:4px;">≠ ${ko?'반의어':'Antonyms'}</div><div style="display:flex;flex-wrap:wrap;gap:4px;">`;
+    for (const w of a.antonyms) html += `<span style="background:var(--bg-card);font-size:11px;font-weight:600;color:var(--ink-100);border-radius:99px;padding:3px 9px;">${esc(w)}</span>`;
+    html += `</div></div>`;
+  }
+
+  // 헷갈리는 단어
+  if (a.confusing && a.confusing.length) {
+    html += `<div style="margin-bottom:10px;"><div style="font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:5px;">⚠️ ${ko?'헷갈리는 단어':'Confusing with'}</div>`;
+    for (const c of a.confusing) {
+      html += `<div style="margin-bottom:4px;font-size:12px;"><span style="font-weight:700;color:var(--ink-100);">${esc(c.word||'')}:</span> <span style="color:var(--ink-60);">${esc(c.diff||'')}</span></div>`;
+    }
+    html += `</div>`;
+  }
+
+  // 예문
+  if (a.example) {
+    html += `<div style="margin-bottom:6px;"><div style="font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:3px;">📝 ${ko?'예문':'Example'}</div><div style="font-size:13px;color:var(--ink-100);font-style:italic;line-height:1.45;">"${esc(a.example)}"</div>${a.example_kr?`<div style="font-size:11.5px;color:var(--ink-60);margin-top:3px;">${esc(a.example_kr)}</div>`:''}</div>`;
+  }
+
+  // 접기 버튼
+  html += `<button onclick="event.stopPropagation();toggleAnalysis('${bookId}','${pageNum}',${wordIdx})" style="background:none;border:1px solid var(--ink-12);color:var(--ink-60);border-radius:99px;padding:4px 12px;font-size:10.5px;font-weight:600;cursor:pointer;margin-top:6px;">${ko?'접기':'Collapse'}</button>`;
+  html += `</div>`;
+  return html;
+}
+
+// 시험용 단어 심화 분석을 백그라운드로 채워넣기
+async function enrichExamWords(bookId, pageId) {
+  const book = findBook(bookId);
+  if (!book) return;
+  const page = book.pages.find(p => p._pid === pageId);
+  if (!page || !page.words) return;
+  // analysis 없는 단어만 (이미 있는 건 스킵)
+  const targets = page.words.filter(w => w.id && !w.analysis);
+  if (targets.length === 0) return;
+  const bookCat = book.category || 'general';
+  let categoryContext = '';
+  if (bookCat && bookCat !== 'general') {
+    if (bookCat.startsWith('custom:')) categoryContext = categoryToContext('custom', bookCat.slice(7));
+    else categoryContext = categoryToContext(bookCat, '');
+  }
+  for (const w of targets) {
+    try {
+      const result = await fetchWordMeaning(w.en, categoryContext, true);
+      if (result.analysis) {
+        w.analysis = result.analysis;
+        // DB에도 저장
+        try {
+          await sbFetch(`/rest/v1/voca_words?id=eq.${w.id}`, 'PATCH', { analysis: result.analysis });
+        } catch(e) { console.warn('[enrichExamWords] DB 저장 실패', w.en, e); }
+      }
+    } catch(e) { console.warn('[enrichExamWords] 분석 실패', w.en, e); }
+  }
+  // 현재 페이지를 보고 있으면 다시 렌더 (사용자가 그동안 그 화면에 있으면 분석 보이게)
+  if (typeof render === 'function' && route && route.name === 'page-words' && String(route.pageNum) === String(page.num)) {
+    render();
+  }
 }
 
 let studyState = null;
@@ -3960,7 +4071,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
@@ -5057,8 +5168,8 @@ function removeManualWord(i) {
   }
 }
 
-async function fetchWordMeaning(word, categoryContext='') {
-  // Gemini로 단어 뜻 찾기 (정확도 ↑, 카테고리 문맥 반영)
+async function fetchWordMeaning(word, categoryContext='', isExam=false) {
+  // Gemini로 단어 뜻 찾기 (정확도 ↑, 카테고리 문맥 반영, 시험 단어는 심화 분석 포함)
   if (!apiKey) {
     console.warn('[fetchWordMeaning] apiKey 없음! voca_settings.gemini_key 확인 필요');
     if (window._wordMeaningWarned !== true) { window._wordMeaningWarned = true; toast('⚠️ Gemini API 키가 없어요. 관리자에게 문의해주세요', 5000); }
@@ -5066,7 +5177,28 @@ async function fetchWordMeaning(word, categoryContext='') {
   }
   const native = (userNativeLang === 'ko') ? '한국어' : (userNativeLang === 'ja' ? '일본어' : 'Korean');
   const ctxLine = categoryContext ? `\n중요: 이 단어는 "${categoryContext}"로 가장 적합한 뜻을 골라줘.` : '';
-  const prompt = `다음 영어 단어의 가장 흔하게 쓰이는 ${native} 뜻을 알려줘.${ctxLine}
+
+  // 시험 단어용 심화 분석 프롬프트
+  const examPrompt = `다음 영어 단어를 시험 학습자(${native} 사용자)를 위해 자세히 분석해줘.${ctxLine}
+
+단어: ${word}
+
+다음 JSON 형식으로만 답해. 다른 설명 없이 JSON만 (각 필드는 모두 ${native}로):
+{
+  "base": "핵심 뜻 1~2개 (쉼표로 구분, 간결하게)",
+  "ipa": "발음기호",
+  "level": "CEFR 난이도 (A2/B1/B2/C1/C2)",
+  "nuance": "뉘앙스와 사용 상황을 2~3문장으로 (긍정/부정/중립, 어떤 맥락에서 쓰는지)",
+  "synonyms": ["유의어1", "유의어2", "유의어3"],
+  "antonyms": ["반의어1", "반의어2"],
+  "confusing": [{"word":"헷갈리는 단어1","diff":"이 단어와 어떻게 다른지 1문장"}, {"word":"헷갈리는 단어2","diff":"차이점 1문장"}],
+  "example": "이 단어가 자연스럽게 쓰인 영어 예문 1개 (시험에 나올법한 수준)",
+  "example_kr": "예문의 ${native} 번역"
+}
+
+각 필드 모두 채워줘. 헷갈리는 단어가 없으면 빈 배열 []로. 시험 학습자에게 도움 되는 핵심 정보만 간결하게.`;
+
+  const simplePrompt = `다음 영어 단어의 가장 흔하게 쓰이는 ${native} 뜻을 알려줘.${ctxLine}
 
 단어: ${word}
 
@@ -5078,25 +5210,39 @@ async function fetchWordMeaning(word, categoryContext='') {
 - "operation" + "의학 영어" → {"base":"수술","ipa":"/ˌɒpəˈreɪʃən/","level":"B2"}
 - "ubiquitous" + "" → {"base":"어디에나 있는, 편재하는","ipa":"/juːˈbɪkwɪtəs/","level":"C1"}`;
 
+  const prompt = isExam ? examPrompt : simplePrompt;
+
   try {
     const data = await geminiWithRetry({
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0, maxOutputTokens: 500 }
+      generationConfig: { temperature: 0, maxOutputTokens: isExam ? 1500 : 500 }
     }, 3);
     let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     // 마크다운 코드 블록 제거 (```json ... ```)
     text = text.replace(/```json\s*/gi, '').replace(/```/g, '').trim();
-    // JSON 추출
-    const m = text.match(/\{[\s\S]*?\}/);
+    // JSON 추출 (시험용은 중첩 객체/배열이라 greedy로, 일반은 non-greedy로)
+    const m = isExam ? text.match(/\{[\s\S]*\}/) : text.match(/\{[\s\S]*?\}/);
     if (m) {
       try {
         const parsed = JSON.parse(m[0]);
-        return {
+        const result = {
           base: parsed.base || '(뜻을 찾지 못했어요)',
           ipa: parsed.ipa || '',
           level: parsed.level || 'B1'
         };
-      } catch(e) {}
+        // 시험용: 심화 분석 필드 같이 반환
+        if (isExam) {
+          result.analysis = {
+            nuance: parsed.nuance || '',
+            synonyms: Array.isArray(parsed.synonyms) ? parsed.synonyms : [],
+            antonyms: Array.isArray(parsed.antonyms) ? parsed.antonyms : [],
+            confusing: Array.isArray(parsed.confusing) ? parsed.confusing : [],
+            example: parsed.example || '',
+            example_kr: parsed.example_kr || ''
+          };
+        }
+        return result;
+      } catch(e) { console.warn('[fetchWordMeaning] JSON 파싱 실패, 부분추출 시도', e); }
     }
     // JSON 파싱 실패 시 텍스트에서 base 값만 긁기 (응답이 잘렸을 때도 대응)
     // 정상: "base":"은행" 또는 잘림: "base":"은행 또는 "base":"
@@ -5134,13 +5280,15 @@ async function saveManualWords(bookId) {
       categoryContext = categoryToContext(bookCat, '');
     }
   }
+  const examMode = isExamCategory(bookCat);
   for (let i = 0; i < window._manualWords.length; i++) {
     const w = window._manualWords[i];
     if (!w.base) {
       if (btn) btn.textContent = `${t('searchingMeaning')} (${i+1}/${window._manualWords.length})`;
-      const result = await fetchWordMeaning(w.en, categoryContext);
+      const result = await fetchWordMeaning(w.en, categoryContext, examMode);
       w.base = result.base; w.ipa = result.ipa; w.ctx = '';
       if (result.level) w.level = result.level;
+      if (result.analysis) w.analysis = result.analysis;
     }
   }
   const book = findBook(bookId); if (!book) return;
