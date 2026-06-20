@@ -2056,11 +2056,8 @@ async function loadUserName() {
 function saveApi() { const key = document.getElementById("api-in").value.trim(); if(!key){toast("키를 입력해주세요");return;} saveApiKeyToDB(key); }
 
 async function loadApiKey() {
-  try {
-    const res = await fetch(SB_URL + '/rest/v1/voca_settings?id=eq.1&select=gemini_key', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    const data = await res.json();
-    if (data[0]?.gemini_key) apiKey = data[0].gemini_key;
-  } catch(e) {}
+  // Gemini 키는 서버(Edge Function 'gemini-proxy')의 Secret에서만 사용 — 클라이언트로 내려받지 않음
+  apiKey = 'server-managed';
 }
 
 async function saveApiKeyToDB(key) {
@@ -2399,18 +2396,26 @@ async function updateTotalWords() {
 
 async function savePageWordsToDB(bookId, pageNum, words) {
   try {
+    // 단어 0개면 페이지 자체를 만들지 않음 (빈 유령 페이지 방지)
+    if (!words || !words.length) return { pageId: null, savedRows: [] };
     const book = findBook(bookId);
     let pageId;
     const ex = book?.pages.find(p => String(p.num) === String(pageNum));
     if (ex?._pid) { pageId = ex._pid; }
-    else {
+    if (!pageId) {
+      // DB에 같은 책+페이지번호가 이미 있는지 확인 (중복 페이지 방지)
+      try {
+        const found = await sbFetch(`/rest/v1/voca_pages?book_id=eq.${bookId}&page_num=eq.${encodeURIComponent(String(pageNum))}&select=id&limit=1`);
+        if (Array.isArray(found) && found[0]?.id) pageId = found[0].id;
+      } catch(e) {}
+    }
+    if (!pageId) {
       const data = await sbFetch('/rest/v1/voca_pages', 'POST',
         { book_id:bookId, page_num:String(pageNum) },
         true, { 'Prefer': 'return=representation' });
       pageId = (Array.isArray(data) ? data[0] : data)?.id;
     }
     if (!pageId) return null;
-    if (!words || !words.length) return { pageId, savedRows: [] };
 
     // 행 배열로 한 번에 INSERT (원자적 · 빠름 · 누락 방지)
     const rows = words.map(w => {
@@ -2698,9 +2703,9 @@ async function geminiWithRetry(body, maxRetry=7) {
   for (let attempt = 0; attempt < maxRetry; attempt++) {
     const modelIdx = (_geminiModelIdx + attempt) % totalModels;
     const model = GEMINI_MODELS[modelIdx];
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     try {
-      const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+      // Gemini 키는 서버(Edge Function 'gemini-proxy')에서만 사용 — 클라이언트에 노출 안 됨
+      const res = await fetch(SB_URL + '/functions/v1/gemini-proxy', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(_authToken||SB_KEY)}, body:JSON.stringify({ model, body }) });
       const data = await res.json();
       if (data.error) {
         const code = data.error.code, msg = data.error.message||'';
@@ -3807,6 +3812,7 @@ async function backfillSentences(bookId) {
 }
 
 function initStudy(bookId, scope, pageNum) {
+  if (bookId && bookId !== '__fav__') { try { localStorage.setItem('imvoca.lastBookId', bookId); } catch(e){} }
   window._lastEarnedScore = 0;
   window._lastReviewFinished = false;
   let ws;
@@ -3939,7 +3945,7 @@ function render() {
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#1c3553;"></span>${userNativeLang==='ko'?'복습 완료':'Done'}</span>
           </div>`:''}
           ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
-          [...book.pages].sort((a,b)=>pageSort(a,b)).map(p=>`
+          [...book.pages].filter(p=>(p.words&&p.words.length>0)).sort((a,b)=>pageSort(a,b)).map(p=>`
             <div class="page-row">
               ${(()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
               <span class="page-row__num" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="flex:1;cursor:pointer;">Page ${p.num}</span>
@@ -4086,7 +4092,9 @@ function render() {
   else if (route.name === 'manual-add') { renderManualAdd(root, route); return; }
 
   else if (route.name === 'study-setup') {
-    window._ss = { bookId: books[0]?.id || null, scope: 'all', page: null };
+    const _lastBookId = (function(){ try { return localStorage.getItem('imvoca.lastBookId'); } catch(e){ return null; } })();
+    const _defaultBookId = (books.find(b => b.id === _lastBookId) ? _lastBookId : (books[0]?.id || null));
+    window._ss = { bookId: _defaultBookId, scope: 'all', page: null };
     window.ssSelectBook = id => { window._ss.bookId=id; window._ss.page=null; ssRender(); };
     window.ssSelectScope = s => { window._ss.scope=s; window._ss.page=null; ssRender(); };
     window.ssSelectPage = n => { window._ss.page=n; ssRender(); };
@@ -4176,7 +4184,7 @@ function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:${w.en.length>20?20:w.en.length>16?24:w.en.length>13?30:w.en.length>10?36:44}px;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:${w.en.length>20?14:w.en.length>16?17:w.en.length>13?20:w.en.length>10?23:27}px;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>${w.sentence?`<div class="back__label">${userNativeLang==='ko'?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:''}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>${w.sentence?`<div class="back__label">${userNativeLang==='ko'?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:''}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
 }
 
 function flipCard() {
@@ -4307,7 +4315,56 @@ async function renamePage(bookId, pageNum) {
     toast(userNativeLang==='ko'?`페이지 이름이 '${name}'(으)로 바뀌었어요`:`Renamed to '${name}'`);
   } catch(e) { toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시 시도':'Rename failed, try later'); }
 }
-function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'✏️',label:userNativeLang==='ko'?'페이지 이름 변경':'Rename page',action:`renamePage('${bookId}','${pageNum}')`},'divider',{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
+
+// ── 페이지 병합 (merge) ──
+function mergePage(bookId, pageNum) {
+  const book = findBook(bookId);
+  const src = book ? findPage(book, pageNum) : null;
+  if (!src) return;
+  const others = book.pages.filter(p => String(p.num) !== String(pageNum));
+  if (!others.length) { toast(userNativeLang==='ko'?'합칠 다른 페이지가 없어요':'No other page to merge'); return; }
+  const ov = document.createElement('div');
+  ov.id = 'merge-modal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+  ov.innerHTML = `<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:20px 22px 36px;width:100%;max-width:480px;">
+    <div class="sheet-handle"></div>
+    <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:6px;color:var(--ink-100);">📑 Page ${esc(String(pageNum))} ${userNativeLang==='ko'?'합치기':'Merge'}</h3>
+    <div style="font-size:12px;color:var(--ink-60);margin-bottom:14px;">${userNativeLang==='ko'?`이 페이지의 단어(${src.words.length}개)를 선택한 페이지로 옮기고, 이 페이지는 삭제돼요.`:`Move ${src.words.length} words into the selected page; this page will be deleted.`}</div>
+    <div style="max-height:50vh;overflow-y:auto;">
+      ${others.map(p=>`<button onclick="doMergePage('${bookId}','${String(pageNum).replace(/'/g,"\\'")}','${String(p.num).replace(/'/g,"\\'")}')" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px;border:1px solid var(--ink-12);border-radius:12px;margin-bottom:8px;background:var(--bg-input);cursor:pointer;font-family:var(--font-body);text-align:left;">
+        <span style="font-size:14px;font-weight:600;color:var(--ink-100);">→ Page ${esc(String(p.num))}</span>
+        <span style="font-size:12px;color:var(--ink-60);">${p.words.length} words</span></button>`).join('')}
+    </div>
+    <button onclick="document.getElementById('merge-modal').remove()" style="width:100%;padding:12px;margin-top:6px;background:none;border:none;color:var(--ink-60);font-family:var(--font-body);font-size:13px;cursor:pointer;">${userNativeLang==='ko'?'취소':'Cancel'}</button>
+  </div>`;
+  ov.onclick = (e)=>{ if(e.target===ov) ov.remove(); };
+  document.body.appendChild(ov);
+}
+
+async function doMergePage(bookId, srcNum, dstNum) {
+  document.getElementById('merge-modal')?.remove();
+  const book = findBook(bookId);
+  const src = book ? findPage(book, srcNum) : null;
+  const dst = book ? findPage(book, dstNum) : null;
+  if (!src || !dst || !dst._pid) { toast(userNativeLang==='ko'?'페이지 오류':'Page error'); return; }
+  toast(userNativeLang==='ko'?'합치는 중...':'Merging...');
+  try {
+    if (src._pid) {
+      const opt = { method:'PATCH', headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }, body: JSON.stringify({ page_id: dst._pid }) };
+      let res = await fetch(SB_URL + `/rest/v1/voca_words?page_id=eq.${src._pid}`, opt);
+      if ((res.status===401||res.status===403) && await refreshSession()) { opt.headers.Authorization='Bearer '+_authToken; res = await fetch(SB_URL + `/rest/v1/voca_words?page_id=eq.${src._pid}`, opt); }
+      if (!res.ok) throw new Error('move failed '+res.status);
+      await fetch(SB_URL + `/rest/v1/voca_pages?id=eq.${src._pid}`, { method:'DELETE', headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken } });
+      await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${encodeURIComponent(String(srcNum))}`, { method:'DELETE', headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken } });
+    }
+    dst.words = [...dst.words, ...src.words];
+    book.pages = book.pages.filter(p => String(p.num) !== String(srcNum));
+    updateTotalWords(); render();
+    toast(userNativeLang==='ko'?`✅ Page ${srcNum} → Page ${dstNum} 합쳤어요 (${dst.words.length}개)`:`✅ Merged into Page ${dstNum} (${dst.words.length})`);
+  } catch(e) { toast(userNativeLang==='ko'?'합치기 실패: '+e.message:'Merge failed: '+e.message); }
+}
+
+function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'📑',label:userNativeLang==='ko'?'다른 페이지와 합치기':'Merge into another page',action:`mergePage('${bookId}','${pageNum}')`},{icon:'✏️',label:userNativeLang==='ko'?'페이지 이름 변경':'Rename page',action:`renamePage('${bookId}','${pageNum}')`},'divider',{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
 
 function openEditBook(bookId) {
   const book=findBook(bookId); if(!book)return;
@@ -4676,6 +4733,7 @@ function startWrongQuiz() {
 }
 
 function startQuiz(bookId, scope, pageNum) {
+  if (bookId && bookId !== '__fav__') { try { localStorage.setItem('imvoca.lastBookId', bookId); } catch(e){} }
   let ws;
   if (scope === 'favorite') { ws = allFavoriteWords(); }
   else { const book = findBook(bookId); if (!book) return; ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]) : allWords(book); }
@@ -4718,7 +4776,16 @@ function renderQuiz() {
   const w = q.words[q.idx];
   const prog = Math.round(q.idx / q.words.length * 100);
   const allW = q.scope==='favorite' ? allWordsGlobal() : (allWords(findBook(q.bookId))||[]);
-  const others = shuffle(allW.filter(x => x.en !== w.en)).slice(0, 3);
+  // 보기(뜻) 중복 방지: 정답 뜻과 다르고 서로 겹치지 않는 뜻만 후보로
+  const seenBases = new Set([(w.base||'').trim()]);
+  const pool = shuffle(allW.filter(x => x.en !== w.en));
+  const others = [];
+  for (const cand of pool) {
+    const b = (cand.base||'').trim();
+    if (!b || seenBases.has(b)) continue;
+    seenBases.add(b); others.push(cand);
+    if (others.length >= 3) break;
+  }
   const choices = shuffle([w, ...others]);
   root.innerHTML = `<div class="scr" style="padding-bottom:20px;">
     <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">${t('quizResult')}</span><span class="study__close" onclick="goTab('books')">✕</span></div>
