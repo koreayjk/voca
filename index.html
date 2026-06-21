@@ -199,8 +199,6 @@ body.dark .login-tab-btn {
 
 /* 복습 배너 나중에 버튼 */
 /* removed */
-  color: #f0ece4 !important;
-}
 
 /* 통계 카드 */
 body.dark #stats-inner > div > div {
@@ -1318,6 +1316,8 @@ async function createOrg() {
 }
 
 function esc(s){ if(s==null) return ''; return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+// JS 단일따옴표 문자열을 HTML 속성 안에 안전하게 넣기 위한 이스케이프 (예: don't, o'clock)
+function jsq(s){ if(s==null) return ''; return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/[\r\n]+/g,' '); }
 async function uploadOrgLogo(ev){
   const file = ev.target.files && ev.target.files[0];
   if (!file || !userOrg) return;
@@ -2817,7 +2817,7 @@ function toast(m, dur) {
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(()=>t.classList.remove('show'), dur||2600);
 }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('open'); }
 
 let stack = [{ name:'library' }];
 function push(r) { stack.push(r); render(); }
@@ -2862,7 +2862,7 @@ async function searchBook() {
         cover
       };
     }).filter(b => b.title);
-    if (!results.length) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">${t('noResult')}</div>`; return; }
+    if (!results.length) { listEl.innerHTML = `<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink-60)">${t('noSearchFound')}</div>`; return; }
     window._bookResults = results;
     listEl.innerHTML = results.map((b, i) => `
       <button type="button" onclick="pickBook(${i})" class="book-search-btn" style="display:flex;gap:10px;padding:12px;border-radius:8px;cursor:pointer;border:none;border-bottom:1px solid var(--ink-07);background:transparent;width:100%;text-align:left;font-family:var(--font-body);align-items:center;">
@@ -3975,7 +3975,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${t('pageAdd')}</div>
         <div class="muted" style="font-size:12px;margin-top:4px">${t('pageAddDesc')}</div>
         <div class="scr-scroll" style="margin-top:14px">
-          <div class="label-xs">${t('bookSelect')}</div>
+          <div class="label-xs">${t('bookLabel')}</div>
           <select id="up-book-sel" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;appearance:none;cursor:pointer">
             ${books.map(b=>`<option value="${b.id}" ${b.id===route.bookId?'selected':''}>${b.title}</option>`).join('')}
           </select>
@@ -4077,7 +4077,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${book.id}','${page.num}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${jsq(w.en)}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
@@ -4182,9 +4182,9 @@ function render() {
 
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
-  if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s.round,total:s.stats.total}); return; }
+  if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s?s.round:1,total:s?s.stats.total:0}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${w.en}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>${w.sentence?`<div class="back__label">${userNativeLang==='ko'?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:''}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>${w.sentence?`<div class="back__label">${userNativeLang==='ko'?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:''}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
 }
 
 function flipCard() {
@@ -4745,7 +4745,8 @@ function startQuiz(bookId, scope, pageNum) {
 function renderQuiz() {
   const root = document.getElementById('root');
   const q = window._quiz;
-  if (!q || q.idx >= q.words.length) {
+  if (!q) { goTab('books'); return; }
+  if (q.idx >= q.words.length) {
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct);
     const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
@@ -4794,10 +4795,10 @@ function renderQuiz() {
       <div style="text-align:center;margin-bottom:30px;">
         <div style="font-size:11px;color:var(--ink-40);margin-bottom:8px;">${t('quizQuestion')}</div>
         <div style="font-family:var(--font-display);font-size:36px;letter-spacing:-0.04em;color:var(--ink-100);">${w.en}</div>
-        <button onclick="speak('${w.en}')" style="background:none;border:none;cursor:pointer;font-size:18px;margin-top:8px;">🔊</button>
+        <button onclick="speak('${jsq(w.en)}')" style="background:none;border:none;cursor:pointer;font-size:18px;margin-top:8px;">🔊</button>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        ${choices.map((c,i) => `<button onclick="answerQuiz('${c.en}','${w.en}')" class="quiz-choice" style="padding:14px;border-radius:12px;border:1.5px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);font-family:var(--font-body);font-size:14px;cursor:pointer;text-align:left;">${String.fromCharCode(65+i)}. ${c.base}</button>`).join('')}
+        ${choices.map((c,i) => `<button onclick="answerQuiz('${jsq(c.en)}','${jsq(w.en)}')" class="quiz-choice" style="padding:14px;border-radius:12px;border:1.5px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);font-family:var(--font-body);font-size:14px;cursor:pointer;text-align:left;">${String.fromCharCode(65+i)}. ${c.base}</button>`).join('')}
       </div>
     </div>
   </div>`;
@@ -5128,7 +5129,7 @@ async function renderReviewPage(root, dock) {
     let html = '';
     if (todayDue.length) {
       html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <div style="font-size:13px;font-weight:700;color:var(--accent);">${t('todayReview')}</div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent);">${t('todayReviewTitle')}</div>
         <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;">${todayDue.length}${userNativeLang==='ko'?'개':''}</div>
         <div style="font-size:11px;color:var(--ink-60);">${t('tapToStart')}</div>
       </div>`;
