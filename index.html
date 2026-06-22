@@ -1373,9 +1373,9 @@ async function loadOrgStudents(){
     }
     window._orgStudentsList = list;
     box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
-    const _appr = list.filter(m=>(m.org_status||'')==='approved' && m.org_role==='student').length;
+    const _appr = list.filter(m=>(m.org_status||'')==='approved' && m.id!==(userOrg&&userOrg.owner_id)).length;
     const _est = document.getElementById('org-bill-est');
-    if (_est) _est.textContent = '$'+(_appr*2.99).toFixed(2)+(ko?` (학생 ${_appr}명)`:` (${_appr})`);
+    if (_est) _est.textContent = '$'+(_appr*2.99).toFixed(2)+(ko?` (선생님·학생 ${_appr}명)`:` (${_appr})`);
   } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
