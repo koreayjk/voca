@@ -1360,7 +1360,7 @@ async function loadOrgStudents(){
   if (!box || !userOrg) return;
   const ko = userNativeLang==='ko';
   try {
-    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=in.(student,owner)&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role&order=total_words.desc`);
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=in.(student,owner)&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role,teacher_id&order=total_words.desc`);
     if (!Array.isArray(list)) { box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
     // 복습 완료 집계 (RLS 있으면 동작, 없으면 생략)
     let reviewByUser = {};
@@ -1379,13 +1379,60 @@ async function loadOrgStudents(){
   } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
+function teacherSelectHTML(studentId, currentTid, owners){
+  const ko = userNativeLang==='ko';
+  const opts = [`<option value="">${ko?'담당 미지정':'No teacher'}</option>`].concat(
+    owners.map(o=>`<option value="${esc(o.id)}" ${o.id===currentTid?'selected':''}>${esc(o.name||o.email||(ko?'선생님':'Teacher'))}</option>`)
+  ).join('');
+  return `<select onclick="event.stopPropagation();" onchange="event.stopPropagation();setStudentTeacher('${jsq(studentId)}', this.value)" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:11px;color:var(--ink-100);font-family:var(--font-body);max-width:120px;flex-shrink:0;">${opts}</select>`;
+}
+async function setStudentTeacher(id, tid){
+  const ko = userNativeLang==='ko';
+  if (!orgIsPrimary()) { toast(ko?'담당 지정은 주 관리자만 가능해요':'Primary admin only'); return; }
+  try {
+    await sbFetch(`/rest/v1/members?id=eq.${id}`, 'PATCH', { teacher_id: tid||null }, true, {'Prefer':'return=representation'});
+    toast(ko?'담당 선생님을 지정했어요':'Teacher assigned');
+    loadOrgStudents();
+  } catch(e){ toast(ko?'지정 실패':'Failed'); }
+}
 function renderOrgStudentsHTML(list, reviewByUser){
   const ko = userNativeLang==='ko';
-  const pending = list.filter(m=>(m.org_status||'')==='pending' && m.org_role!=='owner');
-  const approved = list.filter(m=>(m.org_status||'')==='approved' && m.org_role!=='owner');
-  const owners = list.filter(m=>m.org_role==='owner');
   const myId = currentUser && currentUser.id;
   const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id===myId);
+  const owners = list.filter(m=>m.org_role==='owner');
+  const teacherName = (tid)=>{ const t=owners.find(o=>o.id===tid); return t? (t.name||t.email||(ko?'선생님':'Teacher')) : null; };
+  const studentRow = (m,i)=>{
+    const rv = reviewByUser[m.id];
+    const rvTxt = rv && rv.total ? `${rv.done}/${rv.total}` : '-';
+    const seen = m.last_seen_at ? fmtSeenShort(m.last_seen_at) : '-';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+    const tname = teacherName(m.teacher_id);
+    return `
+      <div onclick="openStudentDetail('${m.id}')" style="display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;" title="${ko?'학생 상세 보기':'View detail'}">
+        <div style="width:26px;text-align:center;font-weight:700;color:var(--ink-60);font-size:14px;flex-shrink:0;">${medal}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
+          <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}${!isPrimary&&tname?'':(tname?` · 👩‍🏫 ${esc(tname)}`:(isPrimary?` · <span style="color:#c0392b;">${ko?'담당 미지정':'No teacher'}</span>`:''))}</div>
+        </div>
+        ${isPrimary?teacherSelectHTML(m.id, m.teacher_id, owners):''}
+        ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
+        ${isPrimary?`<button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>`:''}
+      </div>`;
+  };
+
+  // ===== 공동 관리자(선생님): 내 담당 학생만 =====
+  if (!isPrimary) {
+    const mine = list.filter(m=>(m.org_status||'')==='approved' && m.org_role==='student' && m.teacher_id===myId)
+                     .sort((a,b)=>(b.total_words||0)-(a.total_words||0));
+    let h = `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">👥 ${ko?'내 담당 학생':'My students'} (${mine.length})</div>`;
+    if (!mine.length) h += `<div class="muted" style="font-size:13px;text-align:center;padding:16px;line-height:1.6;">${ko?'아직 배정된 담당 학생이 없어요.<br>주 관리자에게 담당 학생 지정을 요청하세요.':'No students assigned to you yet.'}</div>`;
+    else h += mine.map((m,i)=>studentRow(m,i)).join('');
+    return h;
+  }
+
+  // ===== 주 관리자: 전체 =====
+  const pending = list.filter(m=>(m.org_status||'')==='pending' && m.org_role!=='owner');
+  const approved = list.filter(m=>(m.org_status||'')==='approved' && m.org_role!=='owner');
   let html = '';
   // 🛡️ 관리자 섹션 (주/공동)
   html += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">🛡️ ${ko?'관리자':'Admins'} (${owners.length})</div>`;
@@ -1414,22 +1461,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
   if (!approved.length){
     html += `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'아직 승인된 학생이 없어요. 학생들에게 코드를 알려주세요.':'No approved students yet.'}</div>`;
   } else {
-    html += approved.map((m,i)=>{
-      const rv = reviewByUser[m.id];
-      const rvTxt = rv && rv.total ? `${rv.done}/${rv.total}` : '-';
-      const seen = m.last_seen_at ? fmtSeenShort(m.last_seen_at) : '-';
-      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
-      return `
-      <div onclick="openStudentDetail('${m.id}')" style="display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;" title="${ko?'학생 상세 보기':'View detail'}">
-        <div style="width:26px;text-align:center;font-weight:700;color:var(--ink-60);font-size:14px;flex-shrink:0;">${medal}</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
-          <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}</div>
-        </div>
-        ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
-        <button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>
-      </div>`;
-    }).join('');
+    html += approved.map((m,i)=>studentRow(m,i)).join('');
   }
   return html;
 }
@@ -4417,7 +4449,8 @@ async function assignBook(bookId, pageNum){
   // 승인된 학생 목록 로드
   let students = [];
   try {
-    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email&order=name`);
+    const teacherFilter = orgIsPrimary() ? '' : `&teacher_id=eq.${currentUser.id}`;
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved${teacherFilter}&select=id,name,email&order=name`);
     if (Array.isArray(list)) students = list;
   } catch(e){}
   window._assignStudents = students;
@@ -4432,7 +4465,7 @@ async function assignBook(bookId, pageNum){
       <div class="muted" style="font-size:12px;margin-bottom:16px;">${esc(titleSnap)}</div>
       <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:6px;">${ko?'대상':'Target'}</div>
       <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
-        <input type="radio" name="assign-target" value="all" checked onchange="var e=document.getElementById('assign-students');if(e)e.style.display='none'"> ${ko?'학원 전체 승인 학생':'All approved students'} (${students.length})
+        <input type="radio" name="assign-target" value="all" checked onchange="var e=document.getElementById('assign-students');if(e)e.style.display='none'"> ${orgIsPrimary()?(ko?'학원 전체 승인 학생':'All approved students'):(ko?'내 담당 학생 전체':'All my students')} (${students.length})
       </label>
       <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
         <input type="radio" name="assign-target" value="selected" onchange="var e=document.getElementById('assign-students');if(e)e.style.display='block'"> ${ko?'학생 선택':'Select students'}
@@ -4455,12 +4488,17 @@ async function doAssign(bookId, pageNum){
   const ko = userNativeLang==='ko';
   if (!orgIsAdmin() || !userOrg) { toast(ko?'관리자만 배정할 수 있어요':'Admins only'); return; }
   const book = findBook(bookId);
-  const target = (document.querySelector('input[name="assign-target"]:checked')||{}).value || 'all';
+  let target = (document.querySelector('input[name="assign-target"]:checked')||{}).value || 'all';
   const due = (document.getElementById('assign-due')||{}).value || null;
   let studentIds = [];
   if (target==='selected'){
     studentIds = [...document.querySelectorAll('.assign-stu:checked')].map(c=>c.value);
     if (!studentIds.length){ toast(ko?'학생을 한 명 이상 선택해주세요':'Select at least one student'); return; }
+  } else if (!orgIsPrimary()) {
+    // 공동 관리자의 '전체' = 자기 담당 학생 전체를 지정 배정
+    studentIds = (window._assignStudents||[]).map(s=>s.id);
+    if (!studentIds.length){ toast(ko?'담당 학생이 없어요. 주 관리자에게 배정을 요청하세요.':'No students assigned to you.'); return; }
+    target = 'selected';
   }
   const hasPage = (pageNum!=null && pageNum!=='null');
   const titleSnap = (book?book.title:'') + (hasPage?` · p.${pageNum}`:'');

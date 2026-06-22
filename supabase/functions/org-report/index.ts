@@ -93,6 +93,10 @@ Deno.serve(async (req) => {
       return json({ error: 'forbidden' }, 403)
     }
 
+    // 주 관리자 여부 (단체 owner_id == 호출자). 공동 관리자는 담당 학생만.
+    const { data: orgRow } = await svc.from('orgs').select('owner_id').eq('id', org_id).single()
+    const isPrimary = !!(orgRow && orgRow.owner_id === uid)
+
     // 대상 배정 결정
     let assignQuery = svc
       .from('voca_assignments')
@@ -106,10 +110,11 @@ Deno.serve(async (req) => {
     // 대상 학생들
     let stuQuery = svc
       .from('members')
-      .select('id, name, email')
+      .select('id, name, email, teacher_id')
       .eq('org_id', org_id)
       .eq('org_role', 'student')
       .eq('org_status', 'approved')
+    if (!isPrimary) stuQuery = stuQuery.eq('teacher_id', uid)  // 공동 관리자: 담당 학생만
     if (student_id) stuQuery = stuQuery.eq('id', student_id)
     const { data: students } = await stuQuery
     const studentList = students || []
