@@ -501,7 +501,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
 .install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 </style>
-<script src="https://t1.kakao.com/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -596,7 +596,7 @@ const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
 // 카카오톡 공유용 JavaScript 키 (developers.kakao.com → 내 앱 → 앱 키 → JavaScript 키).
 // 비워두면 학부모 카드는 자동으로 '복사/공유' 방식으로 동작합니다.
-const KAKAO_JS_KEY = '';
+const KAKAO_JS_KEY = '3dd23d57fa02271fab74897b38ecfeff';
 const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 OFF (true로 바꾸면 복구)
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
@@ -4622,44 +4622,73 @@ function shareParentCard(ai, si){
   const ko = userNativeLang==='ko';
   const a = (window._lastReport||[])[ai]; if(!a) return;
   const s = (a.students||[])[si]; if(!s) return;
-  const lines = [];
-  lines.push('[IM VOCA '+(ko?'학습 리포트':'Learning Report')+'] 📚');
-  lines.push((s.name||'')+(ko?'님의 단어 학습':"'s vocabulary study"));
-  lines.push('• '+(ko?'과제':'Assignment')+': '+(a.title||''));
+  const orgName = (userOrg && userOrg.name) ? userOrg.name : 'IM VOCA';
+  const title = orgName + ' ' + (ko?'학습 리포트':'Learning Report');
+  const body = [];
+  body.push((s.name||'')+(ko?'님의 단어 학습':"'s vocabulary study"));
+  body.push('• '+(ko?'과제':'Assignment')+': '+(a.title||''));
   if (!s.exists){
-    lines.push('• '+(ko?'아직 학습을 시작하지 않았어요. 첫 페이지부터 가볍게 함께 시작해볼까요?':'Not started yet — let us begin with the first page!'));
+    body.push('• '+(ko?'아직 학습을 시작하지 않았어요. 첫 페이지부터 가볍게 함께 시작해볼까요?':'Not started yet — let us begin with the first page!'));
   } else if (s.completed){
-    lines.push('• '+(ko?'복습을 모두 완주했어요! 망각곡선을 끝까지 따라왔습니다 🎉':'Completed all reviews! 🎉'));
+    body.push('• '+(ko?'복습을 모두 완주했어요! 망각곡선을 끝까지 따라왔습니다 🎉':'Completed all reviews! 🎉'));
   } else {
-    lines.push('• '+(ko?('현재 '+s.stageLabel+' — 망각곡선을 잘 따라오고 있어요!'):('Currently '+s.stageLabel+' — following the curve well!')));
-    lines.push('• '+(ko?('제때 복습: '+(s.onTime?'잘 지키고 있어요':'조금 늦었지만 따라오고 있어요')):('On-time: '+(s.onTime?'great':'a bit late but catching up'))));
-    if (s.nextReviewDate){ const d=String(s.nextReviewDate).slice(0,10); lines.push('• '+(ko?'다음 복습 예정':'Next review')+': '+d); }
+    body.push('• '+(ko?('현재 '+s.stageLabel+' — 망각곡선을 잘 따라오고 있어요!'):('Currently '+s.stageLabel+' — following the curve well!')));
+    body.push('• '+(ko?('제때 복습: '+(s.onTime?'잘 지키고 있어요':'조금 늦었지만 따라오고 있어요')):('On-time: '+(s.onTime?'great':'a bit late but catching up'))));
+    if (s.nextReviewDate){ const d=String(s.nextReviewDate).slice(0,10); body.push('• '+(ko?'다음 복습 예정':'Next review')+': '+d); }
   }
-  lines.push(ko?'꾸준함이 실력이 됩니다 💪':'Consistency builds mastery 💪');
-  const text = lines.join('\n');
-  // 1순위: 카카오톡 공유 (JS 키가 설정돼 있을 때)
+  body.push(ko?'꾸준함이 실력이 됩니다 💪':'Consistency builds mastery 💪');
+  const bodyText = body.join('\n');
+  // 미리보기·편집 모달 → 확인/수정 후 카카오톡 전송
+  const ov = document.createElement('div');
+  ov.id = 'pcard-overlay';
+  ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+  ov.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:88vh;overflow:auto;">
+      <div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">📤 ${ko?'학부모에게 보내기':'Send to parent'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:14px;">${ko?'내용을 확인·수정한 뒤 카카오톡으로 보내세요.':'Review and edit, then send via KakaoTalk.'}</div>
+      <div style="font-size:11px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">${ko?'제목 (단체명)':'Title'}</div>
+      <input id="pcard-title" value="${esc(title)}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:10px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);box-sizing:border-box;margin-bottom:12px;">
+      <div style="font-size:11px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">${ko?'내용':'Message'}</div>
+      <textarea id="pcard-body" rows="7" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 13px;font-family:var(--font-body);font-size:13px;line-height:1.6;color:var(--ink-100);box-sizing:border-box;resize:vertical;">${esc(bodyText)}</textarea>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="var o=document.getElementById('pcard-overlay');if(o)o.remove()">${ko?'취소':'Cancel'}</button>
+        <button class="btn" style="flex:1;background:#FEE500;color:#191600;border:none;font-weight:700;" onclick="sendParentCard()">${ko?'카카오톡으로 보내기':'Send via KakaoTalk'}</button>
+      </div>
+    </div>`;
+  ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
+  document.body.appendChild(ov);
+}
+
+function sendParentCard(){
+  const ko = userNativeLang==='ko';
+  const title = ((document.getElementById('pcard-title')||{}).value || 'IM VOCA').trim();
+  const desc = (document.getElementById('pcard-body')||{}).value || '';
+  const ov = document.getElementById('pcard-overlay'); if (ov) ov.remove();
+  const link = { mobileWebUrl: 'https://imvoca.app', webUrl: 'https://imvoca.app' };
+  // 1순위: 카카오톡 공유 (feed 템플릿 — 이미지+제목+설명+버튼)
   if (window.Kakao && KAKAO_JS_KEY) {
     try { if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY); } catch(e){}
     try {
       if (Kakao.isInitialized() && Kakao.Share) {
         Kakao.Share.sendDefault({
-          objectType: 'text',
-          text: text.slice(0, 195),
-          link: { mobileWebUrl: 'https://imvoca.app', webUrl: 'https://imvoca.app' },
-          buttonTitle: ko ? '앱 열기' : 'Open app'
+          objectType: 'feed',
+          content: {
+            title: title,
+            description: desc.slice(0, 190),
+            imageUrl: (userOrg && userOrg.logo_url) ? userOrg.logo_url : 'https://imvoca.app/og-image.png',
+            link: link
+          },
+          buttons: [{ title: ko?'앱에서 보기':'Open app', link: link }]
         });
         return;
       }
-    } catch(e){ /* 실패 시 아래 폴백 */ }
+    } catch(e){ /* 폴백 */ }
   }
   // 폴백: 시스템 공유 시트 / 클립보드 복사
-  if (navigator.share){
-    navigator.share({ text }).catch(()=>{});
-  } else if (navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(()=>toast(ko?'리포트를 복사했어요 (카톡에 붙여넣기)':'Copied — paste into chat')).catch(()=>alert(text));
-  } else {
-    alert(text);
-  }
+  const full = '['+title+'] 📚\n'+desc;
+  if (navigator.share){ navigator.share({ text: full }).catch(()=>{}); }
+  else if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(full).then(()=>toast(ko?'복사했어요 (카톡에 붙여넣기)':'Copied — paste into chat')).catch(()=>alert(full)); }
+  else { alert(full); }
 }
 
 function openEditBook(bookId) {
