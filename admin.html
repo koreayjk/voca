@@ -418,7 +418,7 @@ function renderOverview(){
   // 단체: 결제중 / 무료 / 비활성
   let orgPaying=0, orgFree=0, orgMrr=0;
   _allOrgs.forEach(o=>{
-    const appr = _allMembers.filter(x=>x.org_id===o.id && x.org_role==='student' && (x.org_status||'')==='approved').length;
+    const appr = _allMembers.filter(x=>x.org_id===o.id && (x.org_status||'')==='approved' && x.id!==o.owner_id).length;
     if(o.stripe_subscription_id){ orgPaying++; orgMrr += appr*2.99; }
     else if(o.billing_active){ orgFree++; }
   });
