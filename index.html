@@ -501,6 +501,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
 .install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 </style>
+<script src="https://t1.kakao.com/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -593,6 +594,9 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 <script>
 const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
+// 카카오톡 공유용 JavaScript 키 (developers.kakao.com → 내 앱 → 앱 키 → JavaScript 키).
+// 비워두면 학부모 카드는 자동으로 '복사/공유' 방식으로 동작합니다.
+const KAKAO_JS_KEY = '';
 const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 OFF (true로 바꾸면 복구)
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
@@ -901,6 +905,7 @@ async function loadReviewStatus(bookId) {
 
 // 페이지 안 단어 삭제
 async function deletePageWord(bookId, pageNum, wordIdx) {
+  if (isAssignedReadonly(bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); return; }
   const book = findBook(bookId);
   const page = book ? findPage(book, pageNum) : null;
   if (!page) return;
@@ -1270,9 +1275,15 @@ function applyEntryStack() {
 
 function goPersonalApp() { stack = [{ name:'library' }]; render(); }
 
+// 주 관리자 여부(단체를 만든 사람). 공동 관리자는 owner지만 isPrimary가 아님.
+function orgIsPrimary(){ return !!(userOrg && userOrg.owner_id && currentUser && userOrg.owner_id === currentUser.id); }
+// 배정·리포트 노출 조건(주+공동 관리자 모두)
+function orgIsAdmin(){ return userOrgRole === 'owner' && userOrgStatus === 'approved'; }
+
 async function startOrgBilling(){
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
+  if (!orgIsPrimary()) { toast(ko?'결제는 주 관리자만 할 수 있어요':'Only the primary admin can manage billing'); return; }
   if (!confirm(ko?'학원 프리미엄 결제를 시작할까요?\n\n현재 승인된 학생 수만큼 매월 $2.99/명으로 청구돼요. 결제하면 학생 전원이 무제한이 돼요.':'Start academy billing? $2.99 per approved student per month. All students become unlimited.')) return;
   try{
     toast(ko?'결제 페이지로 이동 중...':'Redirecting to checkout...');
@@ -1579,7 +1590,9 @@ function renderOrgAdminPage(root) {
           ` : `
             <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
             <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'결제하면 우리 학원 학생 전원이 무제한이 돼요. 학생 1명당 월 $2.99, 매달 학생 수만큼 자동으로 청구돼요.':'Pay to give all your students unlimited access. $2.99 per student / month, billed automatically.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
-            <button class="btn btn-solid" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>
+            ${orgIsPrimary()
+              ? `<button class="btn btn-solid" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>`
+              : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${ko?'결제는 주 관리자만 진행할 수 있어요.':'Only the primary admin can start billing.'}</div>`}
           `}
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
@@ -1591,6 +1604,11 @@ function renderOrgAdminPage(root) {
               <input type="file" accept="image/*" style="display:none;" onchange="uploadOrgLogo(event)">
             </label>
           </div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
+          <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">📊 ${ko?'과제 리포트':'Assignment report'}</div>
+          <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'배정한 과제별로 학생들의 복습 진행(며칠차)을 확인하고, 학부모 카드를 보낼 수 있어요.':'See each student\'s review progress per assignment and share a parent card.'}</div>
+          <button class="btn btn-solid" onclick="push({name:'report'})">${ko?'📊 리포트 보기':'📊 View report'}</button>
         </div>
         <div id="org-students"><div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오는 중...':'Loading students...'}</div></div>
       </div>`;
@@ -2341,7 +2359,9 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
 
 async function sbSignOut() {
   localStorage.removeItem('imvoca.session');
-  _authToken = null; currentUser = null; books = []; renderLogin();
+  _authToken = null; currentUser = null; books = [];
+  _assignLoaded = false; window._assignList = [];
+  renderLogin();
 }
 
 async function loadBooksFromDB() {
@@ -3860,8 +3880,11 @@ function render() {
   const dock = buildDock();
 
   if (route.name === 'org-admin') { renderOrgAdminPage(root); return; }
+  if (route.name === 'report') { renderReportPage(root); return; }
 
   if (route.name === 'library') {
+    loadAssignments();
+    const myBooks = books.filter(b=>!b._assigned);
     root.innerHTML = `
       <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
@@ -3881,13 +3904,14 @@ function render() {
                 <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
               `}
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${books.length}${t('booksCountUnit')} · ${books.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='premium'?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='premium'?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
           </div>
           <button class="lib-add-btn" onclick="openAddBookModal()" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${userNativeLang==='ko'?'책 추가':'Add Book'}</button>
         </div>
         <div class="scr-scroll">
+          ${assignmentBannerHTML()}
           <div class="book-grid">
-            ${books.map(b=>`
+            ${myBooks.map(b=>`
               <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
                 <div class="book-cover" style="background:${bookCoverBg(b)};position:relative;overflow:hidden;">
                   ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:bookCoverDeco(b)}
@@ -3918,7 +3942,7 @@ function render() {
         <div class="topnav">
           <span class="topnav__back" onclick="back()">←</span>
           <span class="topnav__title">${book.title}</span>
-          <span class="topnav__right" onclick="showBookMenu('${book.id}')">⋯</span>
+          ${book._readonly ? `<span class="topnav__right"></span>` : `<span class="topnav__right" onclick="showBookMenu('${book.id}')">⋯</span>`}
         </div>
         <div class="scr-scroll">
           <div class="book-hero">
@@ -3938,6 +3962,9 @@ function render() {
             </div>
           </div>
           <div class="rule"></div>
+          ${book._readonly
+            ? `<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">📌 ${userNativeLang==='ko'?'학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요':'Assigned by your academy (read-only) · tap a page to study'}</div>`
+            : (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:'')}
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
           ${book.pages.length>0?`<div style="display:flex;gap:14px;flex-wrap:wrap;padding:2px 0 10px;font-size:11px;color:var(--ink-50);">
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid rgba(44,33,24,0.25);box-sizing:border-box;"></span>${userNativeLang==='ko'?'복습 전':'Not yet'}</span>
@@ -3952,19 +3979,20 @@ function render() {
               <span class="page-row__right">
                 ${p.words.length} words
                 <span onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="font-size:16px;color:var(--ink-40);cursor:pointer;">›</span>
-                <span onclick="showPageMenu('${book.id}','${p.num}')" style="font-size:16px;color:var(--ink-40);cursor:pointer;padding:0 4px;">⋯</span>
+                ${book._readonly ? '' : `<span onclick="showPageMenu('${book.id}','${p.num}')" style="font-size:16px;color:var(--ink-40);cursor:pointer;padding:0 4px;">⋯</span>`}
               </span>
             </div>`).join('')}
         </div>
-        <div class="btn-fixed btn-fixed--row">
+        ${book._readonly ? '' : `<div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
           <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
-        </div>
+        </div>`}
       </div>` + pcSidebar();
   }
 
   else if (route.name === 'capture') {
     const book = findBook(route.bookId);
+    if (book && book._readonly) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); back(); return; }
     imgData = null;
     window._captureMode = 'new';
     window._addTargetPage = null;
@@ -4077,11 +4105,11 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${jsq(w.en)}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button></div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${jsq(w.en)}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button>${book._readonly ? `<span style="margin-left:auto;"></span>` : `<button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button>`}</div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
-          <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>
+          ${book._readonly ? '' : `<button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>`}
         </div>
       </div>`;
   }
@@ -4285,6 +4313,7 @@ function showActionSheet(items) {
 }
 function closeActionSheet() { document.getElementById('action-sheet').classList.remove('open'); }
 function showBookMenu(bookId) {
+  if (isAssignedReadonly(bookId)) return;
   const _b = findBook(bookId);
   const _needsExamples = _b ? _b.pages.some(p => p.words.some(w => w.id && !w.sentence)) : false;
   const items = [{icon:'✏️',label:t('editBook'),action:`openEditBook('${bookId}')`}];
@@ -4293,6 +4322,7 @@ function showBookMenu(bookId) {
   showActionSheet(items);
 }
 async function renamePage(bookId, pageNum) {
+  if (isAssignedReadonly(bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); return; }
   const book = findBook(bookId);
   const page = book ? findPage(book, pageNum) : null;
   if (!page) return;
@@ -4318,6 +4348,7 @@ async function renamePage(bookId, pageNum) {
 
 // ── 페이지 병합 (merge) ──
 function mergePage(bookId, pageNum) {
+  if (isAssignedReadonly(bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); return; }
   const book = findBook(bookId);
   const src = book ? findPage(book, pageNum) : null;
   if (!src) return;
@@ -4364,7 +4395,272 @@ async function doMergePage(bookId, srcNum, dstNum) {
   } catch(e) { toast(userNativeLang==='ko'?'합치기 실패: '+e.message:'Merge failed: '+e.message); }
 }
 
-function showPageMenu(bookId, pageNum) { showActionSheet([{icon:'📑',label:userNativeLang==='ko'?'다른 페이지와 합치기':'Merge into another page',action:`mergePage('${bookId}','${pageNum}')`},{icon:'✏️',label:userNativeLang==='ko'?'페이지 이름 변경':'Rename page',action:`renamePage('${bookId}','${pageNum}')`},'divider',{icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}]); }
+function showPageMenu(bookId, pageNum) {
+  const items = [];
+  if (orgIsAdmin()) items.push({icon:'🏫',label:userNativeLang==='ko'?'이 페이지 배정':'Assign this page',action:`assignBook('${jsq(bookId)}','${jsq(String(pageNum))}')`});
+  items.push(
+    {icon:'📑',label:userNativeLang==='ko'?'다른 페이지와 합치기':'Merge into another page',action:`mergePage('${bookId}','${pageNum}')`},
+    {icon:'✏️',label:userNativeLang==='ko'?'페이지 이름 변경':'Rename page',action:`renamePage('${bookId}','${pageNum}')`},
+    'divider',
+    {icon:'🗑️',label:`Page ${pageNum} ${t('deletePageMenu')}`,danger:true,action:`deletePage('${bookId}','${pageNum}')`}
+  );
+  showActionSheet(items);
+}
+
+// ===== 학원 과제 배정 (Phase 2) =====
+async function assignBook(bookId, pageNum){
+  const ko = userNativeLang==='ko';
+  if (!orgIsAdmin() || !userOrg) { toast(ko?'관리자만 배정할 수 있어요':'Admins only'); return; }
+  const book = findBook(bookId);
+  if (!book) { toast(ko?'책을 찾을 수 없어요':'Book not found'); return; }
+  closeActionSheet();
+  // 승인된 학생 목록 로드
+  let students = [];
+  try {
+    const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email&order=name`);
+    if (Array.isArray(list)) students = list;
+  } catch(e){}
+  window._assignStudents = students;
+  const titleSnap = book.title + (pageNum!=null && pageNum!=='null' ? ` · p.${pageNum}` : '');
+  const pnArg = (pageNum!=null && pageNum!=='null') ? `'${jsq(String(pageNum))}'` : 'null';
+  const overlay = document.createElement('div');
+  overlay.id = 'assign-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:85vh;overflow:auto;">
+      <div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">🏫 ${ko?'학원생에게 배정':'Assign to students'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:16px;">${esc(titleSnap)}</div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:6px;">${ko?'대상':'Target'}</div>
+      <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
+        <input type="radio" name="assign-target" value="all" checked onchange="var e=document.getElementById('assign-students');if(e)e.style.display='none'"> ${ko?'학원 전체 승인 학생':'All approved students'} (${students.length})
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
+        <input type="radio" name="assign-target" value="selected" onchange="var e=document.getElementById('assign-students');if(e)e.style.display='block'"> ${ko?'학생 선택':'Select students'}
+      </label>
+      <div id="assign-students" style="display:none;max-height:200px;overflow:auto;border:1px solid var(--ink-07);border-radius:10px;padding:6px 10px;margin:6px 0;">
+        ${students.length ? students.map(s=>`<label style="display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:var(--ink-100);cursor:pointer;"><input type="checkbox" class="assign-stu" value="${esc(s.id)}"> ${esc(s.name||s.email||'학생')}</label>`).join('') : `<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'승인된 학생이 없어요':'No approved students'}</div>`}
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin:14px 0 6px;">${ko?'마감일 (선택)':'Due date (optional)'}</div>
+      <input type="date" id="assign-due" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);box-sizing:border-box;">
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="var o=document.getElementById('assign-overlay');if(o)o.remove()">${ko?'취소':'Cancel'}</button>
+        <button class="btn btn-solid" style="flex:1;" onclick="doAssign('${jsq(bookId)}', ${pnArg})">${ko?'배정하기':'Assign'}</button>
+      </div>
+    </div>`;
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
+async function doAssign(bookId, pageNum){
+  const ko = userNativeLang==='ko';
+  if (!orgIsAdmin() || !userOrg) { toast(ko?'관리자만 배정할 수 있어요':'Admins only'); return; }
+  const book = findBook(bookId);
+  const target = (document.querySelector('input[name="assign-target"]:checked')||{}).value || 'all';
+  const due = (document.getElementById('assign-due')||{}).value || null;
+  let studentIds = [];
+  if (target==='selected'){
+    studentIds = [...document.querySelectorAll('.assign-stu:checked')].map(c=>c.value);
+    if (!studentIds.length){ toast(ko?'학생을 한 명 이상 선택해주세요':'Select at least one student'); return; }
+  }
+  const hasPage = (pageNum!=null && pageNum!=='null');
+  const titleSnap = (book?book.title:'') + (hasPage?` · p.${pageNum}`:'');
+  try {
+    const rows = await sbFetch('/rest/v1/voca_assignments','POST',{
+      org_id: userOrg.id, assigned_by: currentUser.id, book_id: bookId,
+      page_num: hasPage?String(pageNum):null, title: titleSnap,
+      due_date: due||null, target_type: target, active: true
+    }, true, {'Prefer':'return=representation'});
+    const row = Array.isArray(rows)?rows[0]:null;
+    if (!row || !row.id){ toast(ko?'배정 실패, 잠시 후 다시':'Assign failed'); return; }
+    let n = (window._assignStudents||[]).length;
+    if (target==='selected' && studentIds.length){
+      await sbFetch('/rest/v1/voca_assignment_students','POST', studentIds.map(sid=>({assignment_id:row.id, student_id:sid})), true, {'Prefer':'return=representation'});
+      n = studentIds.length;
+    }
+    const ov = document.getElementById('assign-overlay'); if (ov) ov.remove();
+    toast(ko?`✅ ${n}명에게 배정했어요`:`✅ Assigned to ${n}`);
+  } catch(e){ toast((ko?'배정 오류: ':'Error: ')+(e&&e.message||e)); }
+}
+
+// ===== 학생: 배정받은 과제 수신 (Phase 3) =====
+let _assignLoaded = false;
+function isAssignedReadonly(bookId){ const b = findBook(bookId); return !!(b && b._readonly); }
+async function loadAssignments(force){
+  if (_assignLoaded && !force) return;
+  if (!(userOrgId && userOrgStatus === 'approved' && _authToken)) { _assignLoaded = true; return; }
+  _assignLoaded = true;
+  try {
+    const res = await fetch(SB_URL + '/functions/v1/assignments-for-student', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken },
+      body:'{}'
+    });
+    const data = await res.json().catch(()=>({}));
+    const assignments = Array.isArray(data.assignments) ? data.assignments : [];
+    const rawBooks = Array.isArray(data.books) ? data.books : [];
+    window._assignList = assignments;
+    // 받은 책을 메모리 books 에 읽기전용 주입 (원본 참조 유지, DB 저장 안 함)
+    const existingIds = new Set(books.map(b=>b.id));
+    rawBooks.forEach(b=>{
+      if (existingIds.has(b.id)) { const eb = findBook(b.id); if (eb){ eb._assigned=true; eb._readonly=true; } return; }
+      books.push({
+        id:b.id, title:b.title, author:b.author||'', color:b.color,
+        desc:b.description||'', cover:b.cover_url||'', category:b.category||'general',
+        _assigned:true, _readonly:true,
+        pages:(b.voca_pages||[])
+          .sort((a,c)=>(a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric:true }))
+          .map(p=>({ num:p.page_num, _pid:p.id, words:(p.voca_words||[])
+            .sort((a,c)=>new Date(a.created_at)-new Date(c.created_at))
+            .map(w=>({ id:w.id, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'', fav:w.is_favorite||false, analysis:w.analysis||null })) }))
+      });
+      existingIds.add(b.id);
+    });
+    // 배정 책 복습 상태 미리 로드(배지용)
+    [...new Set(assignments.map(a=>a.book_id))].forEach(bid=>{ try{ loadReviewStatus(bid); }catch(e){} });
+    const top = stack[stack.length-1];
+    if (top && top.name === 'library') render();
+  } catch(e){ console.warn('[loadAssignments]', e); }
+}
+function _assignBadge(a){
+  const ko = userNativeLang==='ko';
+  let status='none';
+  if (a.page_num != null) {
+    status = _reviewStatus[a.book_id+'|'+a.page_num] || 'none';
+  } else {
+    const bk = findBook(a.book_id);
+    const ss = bk ? bk.pages.map(p=>_reviewStatus[a.book_id+'|'+p.num]) : [];
+    if (ss.some(s=>s==='doing')) status='doing';
+    else if (ss.length && ss.every(s=>s==='done')) status='done';
+    else if (ss.some(s=>s==='done')) status='doing';
+    else status='none';
+  }
+  if (status==='done') return { label: ko?'복습 완료':'Done', color:'#1c7c3c', bg:'#e6f4ea' };
+  if (status==='doing') return { label: ko?'복습 중':'Reviewing', color:'#b35900', bg:'#fff3e0' };
+  return { label: ko?'시작 전':'Not started', color:'#c0392b', bg:'#fdecea' };
+}
+function assignmentBannerHTML(){
+  const list = window._assignList || [];
+  if (!list.length) return '';
+  const ko = userNativeLang==='ko';
+  const today = new Date(); today.setHours(0,0,0,0);
+  const items = list.map(a=>{
+    const b = _assignBadge(a);
+    const nav = a.page_num != null
+      ? `push({name:'page-words',bookId:'${jsq(a.book_id)}',pageNum:'${jsq(String(a.page_num))}'})`
+      : `push({name:'book',bookId:'${jsq(a.book_id)}'})`;
+    let due = '';
+    if (a.due_date){
+      const dd = new Date(a.due_date+'T00:00:00'); const over = dd < today;
+      due = `<div style="margin-top:2px;font-size:10px;color:${over?'#c0392b':'var(--ink-40)'};">${over?(ko?'기한 지남 · ':'Overdue · '):''}${ko?'마감':'Due'} ${esc(a.due_date)}</div>`;
+    }
+    return `<div onclick="${nav}" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--ink-07);border-radius:10px;background:var(--bg-card);cursor:pointer;margin-bottom:8px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:700;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(a.title||(ko?'과제':'Assignment'))}</div>
+        ${due}
+      </div>
+      <span style="font-size:10px;font-weight:700;color:${b.color};background:${b.bg};border-radius:99px;padding:3px 9px;white-space:nowrap;">${b.label}</span>
+    </div>`;
+  }).join('');
+  return `<div style="margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:9px;">
+      <span style="font-size:14px;font-weight:800;color:var(--accent);">📌 ${ko?'과제':'Assignments'}</span>
+      <span style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:99px;padding:1px 8px;">${list.length}</span>
+    </div>
+    ${items}
+  </div>`;
+}
+
+// ===== 교사 리포트 + 학부모 카드 (Phase 4) =====
+async function renderReportPage(root){
+  const ko = userNativeLang==='ko';
+  if (!orgIsAdmin() || !userOrg) { back(); return; }
+  root.innerHTML = `
+    <div class="scr" style="padding-bottom:90px;padding-top:20px;">
+      <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">📊 ${ko?'과제 리포트':'Report'}</span><span></span></div>
+      <div id="report-body" class="scr-scroll" style="margin-top:12px;"><div class="muted" style="text-align:center;padding:36px;font-size:13px;">${ko?'불러오는 중…':'Loading…'}</div></div>
+    </div>`;
+  try {
+    const res = await fetch(SB_URL+'/functions/v1/org-report', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken },
+      body: JSON.stringify({ org_id: userOrg.id })
+    });
+    const data = await res.json().catch(()=>({}));
+    const report = Array.isArray(data.report) ? data.report : [];
+    window._lastReport = report;
+    const box = document.getElementById('report-body');
+    if (!box) return;
+    if (!report.length){ box.innerHTML = `<div class="muted" style="text-align:center;padding:36px;font-size:13px;">${ko?'아직 배정한 과제가 없어요':'No assignments yet'}</div>`; return; }
+    box.innerHTML = report.map((a,i)=>reportSectionHTML(a,i)).join('');
+  } catch(e){
+    const box=document.getElementById('report-body');
+    if(box) box.innerHTML = `<div class="muted" style="text-align:center;padding:36px;font-size:13px;">${(ko?'리포트 로드 실패: ':'Failed: ')+esc(e&&e.message||String(e))}</div>`;
+  }
+}
+function reportSectionHTML(a, ai){
+  const ko = userNativeLang==='ko';
+  const students = a.students||[];
+  const rows = students.map((s,si)=>{
+    const started = s.exists;
+    const stageColor = !started ? '#c0392b' : (s.completed ? '#1c7c3c' : '#b35900');
+    const stageBg = !started ? '#fdecea' : (s.completed ? '#e6f4ea' : '#fff3e0');
+    const fidelity = !started ? '—' : (s.onTime ? (ko?'제때 ✅':'On time ✅') : (ko?'늦음 ⚠️':'Late ⚠️'));
+    return `<div style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--ink-07);">
+      <div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name)}</div>
+      <span style="font-size:11px;font-weight:700;color:${stageColor};background:${stageBg};border-radius:99px;padding:3px 9px;white-space:nowrap;">${esc(s.stageLabel)}</span>
+      <span style="font-size:11px;color:var(--ink-60);width:60px;text-align:center;flex-shrink:0;">${fidelity}</span>
+      <button onclick="shareParentCard(${ai},${si})" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);white-space:nowrap;flex-shrink:0;">📤 ${ko?'카드':'Card'}</button>
+    </div>`;
+  }).join('');
+  return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:14px 16px;margin-bottom:14px;">
+    <div style="font-size:14px;font-weight:700;color:var(--ink-100);margin-bottom:2px;">${esc(a.title||(ko?'과제':'Assignment'))}</div>
+    <div class="muted" style="font-size:11px;margin-bottom:10px;">${a.target_type==='all'?(ko?'전체 학생':'All students'):(ko?'지정 학생':'Selected')}${a.due_date?` · ${ko?'마감':'Due'} ${esc(a.due_date)}`:''} · ${students.length}${ko?'명':''}</div>
+    ${students.length?rows:`<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'대상 학생이 없어요':'No students'}</div>`}
+  </div>`;
+}
+function shareParentCard(ai, si){
+  const ko = userNativeLang==='ko';
+  const a = (window._lastReport||[])[ai]; if(!a) return;
+  const s = (a.students||[])[si]; if(!s) return;
+  const lines = [];
+  lines.push('[IM VOCA '+(ko?'학습 리포트':'Learning Report')+'] 📚');
+  lines.push((s.name||'')+(ko?'님의 단어 학습':"'s vocabulary study"));
+  lines.push('• '+(ko?'과제':'Assignment')+': '+(a.title||''));
+  if (!s.exists){
+    lines.push('• '+(ko?'아직 학습을 시작하지 않았어요. 첫 페이지부터 가볍게 함께 시작해볼까요?':'Not started yet — let us begin with the first page!'));
+  } else if (s.completed){
+    lines.push('• '+(ko?'복습을 모두 완주했어요! 망각곡선을 끝까지 따라왔습니다 🎉':'Completed all reviews! 🎉'));
+  } else {
+    lines.push('• '+(ko?('현재 '+s.stageLabel+' — 망각곡선을 잘 따라오고 있어요!'):('Currently '+s.stageLabel+' — following the curve well!')));
+    lines.push('• '+(ko?('제때 복습: '+(s.onTime?'잘 지키고 있어요':'조금 늦었지만 따라오고 있어요')):('On-time: '+(s.onTime?'great':'a bit late but catching up'))));
+    if (s.nextReviewDate){ const d=String(s.nextReviewDate).slice(0,10); lines.push('• '+(ko?'다음 복습 예정':'Next review')+': '+d); }
+  }
+  lines.push(ko?'꾸준함이 실력이 됩니다 💪':'Consistency builds mastery 💪');
+  const text = lines.join('\n');
+  // 1순위: 카카오톡 공유 (JS 키가 설정돼 있을 때)
+  if (window.Kakao && KAKAO_JS_KEY) {
+    try { if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY); } catch(e){}
+    try {
+      if (Kakao.isInitialized() && Kakao.Share) {
+        Kakao.Share.sendDefault({
+          objectType: 'text',
+          text: text.slice(0, 195),
+          link: { mobileWebUrl: 'https://imvoca.app', webUrl: 'https://imvoca.app' },
+          buttonTitle: ko ? '앱 열기' : 'Open app'
+        });
+        return;
+      }
+    } catch(e){ /* 실패 시 아래 폴백 */ }
+  }
+  // 폴백: 시스템 공유 시트 / 클립보드 복사
+  if (navigator.share){
+    navigator.share({ text }).catch(()=>{});
+  } else if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>toast(ko?'리포트를 복사했어요 (카톡에 붙여넣기)':'Copied — paste into chat')).catch(()=>alert(text));
+  } else {
+    alert(text);
+  }
+}
 
 function openEditBook(bookId) {
   const book=findBook(bookId); if(!book)return;
@@ -4389,6 +4685,7 @@ async function saveEditBook() {
 }
 
 async function deleteBook(bookId) {
+  if (isAssignedReadonly(bookId)) { toast(userNativeLang==='ko'?'과제 책은 삭제할 수 없어요':'Assigned books are read-only'); return; }
   if (!confirm(userNativeLang==='ko'?'이 책을 삭제할까요? 저장된 단어도 모두 삭제돼요.':'Delete this book? All saved words will be deleted too.')) return;
   try {
     await fetch(SB_URL+`/rest/v1/voca_books?id=eq.${bookId}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}});
@@ -4397,6 +4694,7 @@ async function deleteBook(bookId) {
 }
 
 async function deletePage(bookId, pageNum) {
+  if (isAssignedReadonly(bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); return; }
   if (!confirm(userNativeLang==='ko'?`Page ${pageNum}을 삭제할까요?`:`Delete Page ${pageNum}?`)) return;
   try {
     const book=findBook(bookId), page=findPage(book,pageNum);
@@ -5165,6 +5463,7 @@ async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDa
 }
 
 function renderManualAdd(root, route) {
+  if (isAssignedReadonly(route.bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); back(); return; }
   const book = findBook(route.bookId);
   window._manualWords = window._manualWords || [];
   window._manualBookId = route.bookId;
@@ -5331,6 +5630,7 @@ async function fetchWordMeaning(word, categoryContext='', isExam=false) {
 }
 
 async function saveManualWords(bookId) {
+  if (isAssignedReadonly(bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); return; }
   const pg = document.getElementById('manual-pg')?.value.trim();
   if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
   if (!window._manualWords?.length) { toast('추가된 단어가 없어요'); return; }
