@@ -1,0 +1,87 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 7,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": ".DS_Store",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 11,
+      "metrics": {}
+    },
+    {
+      "path": ".nojekyll",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 36,
+      "metrics": {}
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "sections": [
+        {
+          "heading": "outputLanguage",
+          "level": 1,
+          "line": 2
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": ".well-known/assetlinks.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 8,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": "CNAME",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {}
+    },
+    {
+      "path": "sw.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 100,
+      "nonEmptyLines": 91,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

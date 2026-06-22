@@ -1,0 +1,133 @@
+{
+  "name": "IM VOCA",
+  "description": "원서 한 페이지를 사진 찍으면 AI가 어려운 단어를 골라 뜻과 함께 정리해주는 영어 단어 학습용 클라이언트 사이드 웹 앱(PWA)입니다. 에빙하우스 망각곡선 기반 복습과 다국어를 지원하며, Supabase 및 Stripe와 fetch로 연동되는 빌드 시스템 없는 vanilla JS 정적 앱입니다.",
+  "languages": [
+    "html",
+    "javascript",
+    "json"
+  ],
+  "frameworks": [
+    "Supabase",
+    "Stripe",
+    "PWA (service worker)"
+  ],
+  "files": [
+    {
+      "path": ".DS_Store",
+      "language": "unknown",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".nojekyll",
+      "language": "unknown",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".well-known/assetlinks.json",
+      "language": "json",
+      "sizeLines": 8,
+      "fileCategory": "config"
+    },
+    {
+      "path": "ad_en.html",
+      "language": "html",
+      "sizeLines": 650,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "ad_ko.html",
+      "language": "html",
+      "sizeLines": 653,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "admin.html",
+      "language": "html",
+      "sizeLines": 1164,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "CNAME",
+      "language": "unknown",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "index.html",
+      "language": "html",
+      "sizeLines": 5440,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "lp.html",
+      "language": "html",
+      "sizeLines": 498,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "manifest.json",
+      "language": "json",
+      "sizeLines": 80,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notice.html",
+      "language": "html",
+      "sizeLines": 137,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "pricing.html",
+      "language": "html",
+      "sizeLines": 198,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "sw.js",
+      "language": "javascript",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "terms.html",
+      "language": "html",
+      "sizeLines": 258,
+      "fileCategory": "markup"
+    }
+  ],
+  "totalFiles": 16,
+  "filteredByIgnore": 7,
+  "estimatedComplexity": "small",
+  "importMap": {
+    ".DS_Store": [],
+    ".nojekyll": [],
+    ".understand-anything/.understandignore": [],
+    ".understand-anything/config.json": [],
+    ".well-known/assetlinks.json": [],
+    "ad_en.html": [],
+    "ad_ko.html": [],
+    "admin.html": [],
+    "CNAME": [],
+    "index.html": [],
+    "lp.html": [],
+    "manifest.json": [],
+    "notice.html": [],
+    "pricing.html": [],
+    "sw.js": [],
+    "terms.html": []
+  }
+}

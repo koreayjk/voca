@@ -1,0 +1,174 @@
+{
+  "nodes": [
+    {
+      "id": "file:index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "index.html",
+      "summary": "IM VOCA의 메인 SPA로, 책장/단어장 관리, AI 사진 스캔(Gemini), 암기카드, 퀴즈, 에빙하우스 복습, 조직/그룹 결제를 인라인 HTML/CSS/JS로 구현한다. Supabase REST·Edge Function(create-checkout, create-portal-session, gemini-proxy)과 Stripe를 호출한다.",
+      "tags": ["entry-point", "spa", "pwa", "supabase", "stripe"],
+      "complexity": "complex",
+      "languageNotes": "빌드 시스템 없는 vanilla JS 단일 파일 SPA(약 5,400줄). service worker 등록(/sw.js)과 manifest 연결로 PWA를 구성한다."
+    },
+    {
+      "id": "file:admin.html",
+      "type": "file",
+      "name": "admin.html",
+      "filePath": "admin.html",
+      "summary": "관리자 대시보드로 사용자·조직 통계와 MRR 등 운영 지표를 Supabase 데이터 기반으로 표시한다.",
+      "tags": ["admin", "dashboard", "supabase", "monitoring", "spa"],
+      "complexity": "complex",
+      "languageNotes": "인라인 JS로 Supabase에서 집계 데이터를 조회해 대시보드를 렌더링한다."
+    },
+    {
+      "id": "file:pricing.html",
+      "type": "file",
+      "name": "pricing.html",
+      "filePath": "pricing.html",
+      "summary": "Stripe Payment Link로 연결되는 요금제 안내 페이지로, 결제 플랜 비교와 약관 페이지 링크를 제공한다.",
+      "tags": ["pricing", "stripe", "marketing", "payment"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lp.html",
+      "type": "file",
+      "name": "lp.html",
+      "filePath": "lp.html",
+      "summary": "앱으로 유입을 유도하는 마케팅 랜딩 페이지로, 앱(imvoca.app)·요금제·광고 페이지로 연결되는 CTA를 제공한다.",
+      "tags": ["landing-page", "marketing", "funnel"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ad_ko.html",
+      "type": "file",
+      "name": "ad_ko.html",
+      "filePath": "ad_ko.html",
+      "summary": "한국어 광고용 마케팅 랜딩 페이지로, IM VOCA 앱(imvoca.app)으로 유입을 유도한다.",
+      "tags": ["landing-page", "marketing", "advertising", "korean"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ad_en.html",
+      "type": "file",
+      "name": "ad_en.html",
+      "filePath": "ad_en.html",
+      "summary": "영어 광고용 마케팅 랜딩 페이지로, IM VOCA 앱(imvoca.app)으로 유입을 유도한다.",
+      "tags": ["landing-page", "marketing", "advertising", "english"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:terms.html",
+      "type": "file",
+      "name": "terms.html",
+      "filePath": "terms.html",
+      "summary": "서비스 이용약관을 안내하는 법적 고지 페이지.",
+      "tags": ["legal", "terms", "documentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notice.html",
+      "type": "file",
+      "name": "notice.html",
+      "filePath": "notice.html",
+      "summary": "서비스 공지사항을 안내하는 정적 페이지.",
+      "tags": ["legal", "notice", "documentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:manifest.json",
+      "type": "config",
+      "name": "manifest.json",
+      "filePath": "manifest.json",
+      "summary": "IM VOCA PWA 매니페스트로, 앱 이름·아이콘·시작 URL(https://imvoca.app/)·테마 색상·바로가기(shortcuts)·스크린샷을 정의해 설치형 웹 앱 동작을 구성한다.",
+      "tags": ["configuration", "pwa", "manifest", "deployment"],
+      "complexity": "simple",
+      "languageNotes": "standalone display와 shortcuts(책장·복습)·screenshots를 포함한 설치형 PWA 매니페스트."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:manifest.json",
+      "target": "file:index.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:pricing.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:terms.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:admin.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:ad_ko.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:ad_en.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:pricing.html",
+      "target": "file:terms.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:lp.html",
+      "target": "file:index.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lp.html",
+      "target": "file:pricing.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:lp.html",
+      "target": "file:ad_ko.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:ad_ko.html",
+      "target": "file:index.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:ad_en.html",
+      "target": "file:index.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

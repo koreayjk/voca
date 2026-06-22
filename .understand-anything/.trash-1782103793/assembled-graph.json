@@ -1,0 +1,475 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "IM VOCA",
+    "languages": [
+      "html",
+      "javascript",
+      "json"
+    ],
+    "frameworks": [
+      "Supabase",
+      "Stripe",
+      "PWA"
+    ],
+    "description": "사진으로 찍은 책 페이지에서 AI가 영단어를 추출하고, 에빙하우스 복습·암기카드·퀴즈로 학습하는 클라이언트 사이드 단어 학습 PWA. Supabase(인증·DB·Edge Functions)와 Stripe(개인·연간·그룹 결제)를 연동하며 GitHub Pages로 배포된다.",
+    "analyzedAt": "2026-06-22T04:49:08.863Z",
+    "gitCommitHash": "a3415bcb69251e55bc4bd391cb85d4f6c311fbd6"
+  },
+  "nodes": [
+    {
+      "id": "file:index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "index.html",
+      "summary": "IM VOCA의 메인 SPA로, 책장/단어장 관리, AI 사진 스캔(Gemini), 암기카드, 퀴즈, 에빙하우스 복습, 조직/그룹 결제를 인라인 HTML/CSS/JS로 구현한다. Supabase REST·Edge Function(create-checkout, create-portal-session, gemini-proxy)과 Stripe를 호출한다.",
+      "tags": [
+        "entry-point",
+        "spa",
+        "pwa",
+        "supabase",
+        "stripe"
+      ],
+      "complexity": "complex",
+      "languageNotes": "빌드 시스템 없는 vanilla JS 단일 파일 SPA(약 5,400줄). service worker 등록(/sw.js)과 manifest 연결로 PWA를 구성한다."
+    },
+    {
+      "id": "file:admin.html",
+      "type": "file",
+      "name": "admin.html",
+      "filePath": "admin.html",
+      "summary": "관리자 대시보드로 사용자·조직 통계와 MRR 등 운영 지표를 Supabase 데이터 기반으로 표시한다.",
+      "tags": [
+        "admin",
+        "dashboard",
+        "supabase",
+        "monitoring",
+        "spa"
+      ],
+      "complexity": "complex",
+      "languageNotes": "인라인 JS로 Supabase에서 집계 데이터를 조회해 대시보드를 렌더링한다."
+    },
+    {
+      "id": "file:pricing.html",
+      "type": "file",
+      "name": "pricing.html",
+      "filePath": "pricing.html",
+      "summary": "Stripe Payment Link로 연결되는 요금제 안내 페이지로, 결제 플랜 비교와 약관 페이지 링크를 제공한다.",
+      "tags": [
+        "pricing",
+        "stripe",
+        "marketing",
+        "payment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lp.html",
+      "type": "file",
+      "name": "lp.html",
+      "filePath": "lp.html",
+      "summary": "앱으로 유입을 유도하는 마케팅 랜딩 페이지로, 앱(imvoca.app)·요금제·광고 페이지로 연결되는 CTA를 제공한다.",
+      "tags": [
+        "landing-page",
+        "marketing",
+        "funnel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ad_ko.html",
+      "type": "file",
+      "name": "ad_ko.html",
+      "filePath": "ad_ko.html",
+      "summary": "한국어 광고용 마케팅 랜딩 페이지로, IM VOCA 앱(imvoca.app)으로 유입을 유도한다.",
+      "tags": [
+        "landing-page",
+        "marketing",
+        "advertising",
+        "korean"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ad_en.html",
+      "type": "file",
+      "name": "ad_en.html",
+      "filePath": "ad_en.html",
+      "summary": "영어 광고용 마케팅 랜딩 페이지로, IM VOCA 앱(imvoca.app)으로 유입을 유도한다.",
+      "tags": [
+        "landing-page",
+        "marketing",
+        "advertising",
+        "english"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:terms.html",
+      "type": "file",
+      "name": "terms.html",
+      "filePath": "terms.html",
+      "summary": "서비스 이용약관을 안내하는 법적 고지 페이지.",
+      "tags": [
+        "legal",
+        "terms",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notice.html",
+      "type": "file",
+      "name": "notice.html",
+      "filePath": "notice.html",
+      "summary": "서비스 공지사항을 안내하는 정적 페이지.",
+      "tags": [
+        "legal",
+        "notice",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:manifest.json",
+      "type": "config",
+      "name": "manifest.json",
+      "filePath": "manifest.json",
+      "summary": "IM VOCA PWA 매니페스트로, 앱 이름·아이콘·시작 URL(https://imvoca.app/)·테마 색상·바로가기(shortcuts)·스크린샷을 정의해 설치형 웹 앱 동작을 구성한다.",
+      "tags": [
+        "configuration",
+        "pwa",
+        "manifest",
+        "deployment"
+      ],
+      "complexity": "simple",
+      "languageNotes": "standalone display와 shortcuts(책장·복습)·screenshots를 포함한 설치형 PWA 매니페스트."
+    },
+    {
+      "id": "file:.DS_Store",
+      "type": "file",
+      "name": ".DS_Store",
+      "filePath": ".DS_Store",
+      "summary": "macOS Finder가 생성하는 디렉터리 메타데이터 바이너리 파일로, 프로젝트 기능과 무관합니다.",
+      "tags": [
+        "macos",
+        "metadata",
+        "non-project"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.nojekyll",
+      "type": "file",
+      "name": ".nojekyll",
+      "filePath": ".nojekyll",
+      "summary": "GitHub Pages의 Jekyll 빌드 처리를 비활성화하여 정적 파일을 그대로 서빙하도록 하는 빈 마커 파일입니다.",
+      "tags": [
+        "github-pages",
+        "deployment",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-Anything 분석 도구가 무시할 경로를 지정하는 내부 설정 파일로, 앱 기능과 무관합니다.",
+      "tags": [
+        "tooling",
+        "ignore-rules",
+        "non-project"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand-Anything 도구의 출력 언어(outputLanguage)를 지정하는 내부 설정 파일입니다.",
+      "tags": [
+        "tooling",
+        "configuration",
+        "non-project"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.well-known/assetlinks.json",
+      "type": "config",
+      "name": "assetlinks.json",
+      "filePath": ".well-known/assetlinks.json",
+      "summary": "Android App Links(Digital Asset Links) 설정으로, 웹 도메인과 Android 앱 간의 연결을 검증하여 링크가 앱에서 직접 열리도록 합니다.",
+      "tags": [
+        "android",
+        "app-links",
+        "configuration",
+        "deep-linking"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Digital Asset Links 표준 형식으로 패키지명과 SHA-256 인증서 지문을 선언합니다."
+    },
+    {
+      "id": "config:CNAME",
+      "type": "config",
+      "name": "CNAME",
+      "filePath": "CNAME",
+      "summary": "GitHub Pages 호스팅에서 사용할 커스텀 도메인을 지정하는 설정 파일입니다.",
+      "tags": [
+        "github-pages",
+        "deployment",
+        "configuration",
+        "dns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:sw.js",
+      "type": "file",
+      "name": "sw.js",
+      "filePath": "sw.js",
+      "summary": "IM VOCA PWA의 service worker로, HTML은 네트워크 우선, 정적 자원은 캐시 우선(stale-while-revalidate) 전략으로 오프라인 캐싱을 처리하며 Supabase·Stripe 등 API 요청은 캐싱에서 제외합니다.",
+      "tags": [
+        "service-worker",
+        "pwa",
+        "caching",
+        "offline",
+        "entry-point"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "install/activate/fetch 이벤트 리스너 기반의 표준 service worker 패턴으로, 버전드 캐시(imvoca-v2)와 cache.addAll 프리캐싱, 백그라운드 재검증을 사용합니다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:manifest.json",
+      "target": "file:index.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:pricing.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:terms.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:admin.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:ad_ko.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:ad_en.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:pricing.html",
+      "target": "file:terms.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:lp.html",
+      "target": "file:index.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lp.html",
+      "target": "file:pricing.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:lp.html",
+      "target": "file:ad_ko.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:ad_ko.html",
+      "target": "file:index.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:ad_en.html",
+      "target": "file:index.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:sw.js",
+      "target": "file:index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:index.html",
+      "target": "file:notice.html",
+      "type": "routes",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:core-app",
+      "name": "핵심 앱",
+      "description": "단어 학습의 메인 SPA로 책장/단어장 관리, AI 사진 스캔(Gemini), 암기카드, 퀴즈, 에빙하우스 복습, 결제 흐름을 담당하며 모든 유입 경로의 도착점이다.",
+      "nodeIds": [
+        "file:index.html"
+      ]
+    },
+    {
+      "id": "layer:admin",
+      "name": "관리자",
+      "description": "사용자·조직 통계와 MRR 등 운영 지표를 보여주는 관리자 대시보드 페이지다.",
+      "nodeIds": [
+        "file:admin.html"
+      ]
+    },
+    {
+      "id": "layer:marketing",
+      "name": "마케팅·유입",
+      "description": "랜딩·광고·요금제 페이지로 사용자를 핵심 앱과 Stripe 결제로 유도하는 퍼널 진입점들이다.",
+      "nodeIds": [
+        "file:lp.html",
+        "file:ad_ko.html",
+        "file:ad_en.html",
+        "file:pricing.html"
+      ]
+    },
+    {
+      "id": "layer:legal",
+      "name": "법적·고지",
+      "description": "이용약관과 공지사항 등 서비스 정책을 안내하는 정적 고지 페이지들이다.",
+      "nodeIds": [
+        "file:terms.html",
+        "file:notice.html"
+      ]
+    },
+    {
+      "id": "layer:infrastructure",
+      "name": "PWA·배포 인프라",
+      "description": "PWA 매니페스트와 service worker, GitHub Pages·커스텀 도메인·Android App Links 설정 및 분석 도구·OS 메타데이터 등 배포와 운영을 지탱하는 비페이지 자산들이다.",
+      "nodeIds": [
+        "config:manifest.json",
+        "file:sw.js",
+        "config:CNAME",
+        "file:.nojekyll",
+        "config:.well-known/assetlinks.json",
+        "file:.DS_Store",
+        "file:.understand-anything/.understandignore",
+        "config:.understand-anything/config.json"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "메인 앱 진입점",
+      "description": "IM VOCA의 심장인 index.html에서 투어를 시작합니다. 이 파일 하나에 책장/단어장 관리, AI 사진 스캔(Gemini), 암기카드, 퀴즈, 에빙하우스 복습, 조직/그룹 결제까지 모든 학습 기능이 인라인 HTML/CSS/JS로 담겨 있습니다. 그래프 분석 결과 fan-in 5·fan-out 6으로 프로젝트에서 가장 많이 연결된 허브이며, 모든 마케팅 페이지가 결국 이곳으로 사용자를 유입시킵니다.",
+      "nodeIds": [
+        "file:index.html"
+      ],
+      "languageLesson": "이 앱은 빌드 도구나 프레임워크 없이 단일 HTML 파일에 로직을 인라인으로 작성한 클라이언트 사이드 SPA입니다. 백엔드 호출은 Supabase REST와 Edge Function(create-checkout, create-portal-session, gemini-proxy)으로 위임해 서버 코드 없이 동작합니다."
+    },
+    {
+      "order": 2,
+      "title": "마케팅 유입 퍼널",
+      "description": "1단계의 메인 앱으로 사용자를 끌어오는 마케팅 랜딩 페이지입니다. lp.html이 퍼널의 최상단으로서 앱(imvoca.app)·요금제·광고 페이지로 향하는 CTA를 제공하며, ad_ko.html과 ad_en.html은 각각 한국어·영어 광고 트래픽을 받아 index.html로 라우팅합니다. 그래프에서 이 세 페이지는 모두 메인 앱을 가리키는 routes 엣지를 가져, 독립적인 진입 통로이면서도 동일한 목적지를 공유하는 구조임을 보여줍니다.",
+      "nodeIds": [
+        "file:lp.html",
+        "file:ad_ko.html",
+        "file:ad_en.html"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "요금제와 Stripe 결제",
+      "description": "2단계의 랜딩 페이지와 1단계 메인 앱 양쪽에서 연결되는 수익화 지점입니다. pricing.html은 결제 플랜을 비교해 보여주고 Stripe Payment Link로 사용자를 연결하며, index.html은 별도로 Edge Function(create-checkout, create-portal-session)을 호출해 인앱 결제와 구독 관리를 처리합니다. 결제 페이지는 약관 페이지로의 링크도 함께 제공해 법적 고지와 자연스럽게 이어집니다.",
+      "nodeIds": [
+        "file:pricing.html"
+      ],
+      "languageLesson": "Stripe Payment Link는 서버 코드 없이 사전 생성된 결제 URL로 바로 연결하는 방식이고, Edge Function(create-checkout)은 동적으로 체크아웃 세션을 만드는 방식입니다. 이 앱은 단순 안내 페이지에는 Payment Link를, 앱 내 조직 결제에는 Edge Function을 사용해 두 방식을 함께 씁니다."
+    },
+    {
+      "order": 4,
+      "title": "핵심 학습 기능 재조명",
+      "description": "마케팅·결제 흐름을 본 뒤, 사용자가 실제로 머무는 메인 앱의 학습 기능을 다시 깊이 들여다봅니다. index.html은 사진을 찍으면 Gemini가 단어를 추출해 단어장에 채우고, 추출된 단어로 암기카드와 퀴즈를 만들며, 에빙하우스 망각 곡선에 따라 복습 일정을 관리합니다. 이 모든 상태와 데이터는 Supabase REST로 영속화되어 기기 간에 동기화됩니다.",
+      "nodeIds": [
+        "file:index.html"
+      ],
+      "languageLesson": "에빙하우스 복습은 단어를 본 직후·1일·3일·7일 식으로 간격을 늘려가며 다시 노출하는 간격 반복(spaced repetition) 알고리즘입니다. 각 단어의 다음 복습 시점을 데이터에 저장해 두고, 앱 로드 시 기한이 된 단어만 골라 복습 큐를 구성합니다."
+    },
+    {
+      "order": 5,
+      "title": "관리자 운영 대시보드",
+      "description": "메인 앱이 사용자용이라면 admin.html은 운영자용 창구입니다. Supabase에 쌓인 사용자·조직 데이터를 집계해 가입자 통계와 MRR(월 반복 매출) 같은 핵심 운영 지표를 보여줍니다. index.html에서 related 엣지로 연결되지만 일반 사용자 동선과는 분리된, 별도 권한의 백오피스 화면입니다.",
+      "nodeIds": [
+        "file:admin.html"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "법적 고지와 공지",
+      "description": "서비스 운영에 필요한 정적 안내 페이지들입니다. terms.html은 이용약관을 담고 있으며 메인 앱과 요금제 페이지 양쪽에서 documents 엣지로 참조되어, 결제 직전 사용자가 약관을 확인할 수 있게 합니다. notice.html은 공지사항을 전달하는 페이지로 index.html에서 라우팅됩니다.",
+      "nodeIds": [
+        "file:terms.html",
+        "file:notice.html"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "PWA 구성: 매니페스트와 Service Worker",
+      "description": "IM VOCA를 설치형 앱처럼 동작하게 만드는 PWA 핵심 구성입니다. manifest.json은 앱 이름·아이콘·시작 URL·테마 색상·shortcuts·스크린샷을 정의해 홈 화면 설치를 가능하게 하고, sw.js는 service worker로 오프라인 캐싱을 처리합니다. 단, Supabase·Stripe API 호출은 항상 최신 데이터가 필요하므로 캐싱에서 의도적으로 제외합니다.",
+      "nodeIds": [
+        "config:manifest.json",
+        "file:sw.js"
+      ],
+      "languageLesson": "Service worker는 브라우저와 네트워크 사이에 끼어드는 프록시로, fetch 이벤트를 가로채 캐시에서 응답하거나 네트워크로 넘깁니다. 여기서는 정적 자산은 캐싱하되 Supabase·Stripe 요청은 캐시를 우회시켜, 오프라인 동작과 실시간 데이터 정확성을 동시에 확보합니다."
+    },
+    {
+      "order": 8,
+      "title": "배포·도메인·App Links",
+      "description": "투어의 마지막은 앱을 실제 인터넷에 올리는 배포 인프라입니다. CNAME은 GitHub Pages에 커스텀 도메인(imvoca.app)을 연결하고, .well-known/assetlinks.json은 Android App Links를 설정해 도메인 링크가 네이티브 앱처럼 열리도록 합니다. 빌드 서버 없이 정적 호스팅과 도메인 설정만으로 7단계의 PWA가 사용자에게 전달되는 전체 그림이 여기서 완성됩니다.",
+      "nodeIds": [
+        "config:CNAME",
+        "config:.well-known/assetlinks.json"
+      ],
+      "languageLesson": "Digital Asset Links(assetlinks.json)는 웹 도메인과 Android 앱의 소유권이 같음을 증명하는 JSON 파일로, .well-known/ 경로에 둬야 합니다. 이를 통해 사용자가 도메인 링크를 누르면 브라우저 대신 설치된 앱이 바로 열리는 검증된 딥링크가 동작합니다."
+    }
+  ]
+}

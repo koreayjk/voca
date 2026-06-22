@@ -1,0 +1,53 @@
+[
+  {
+    "id": "layer:core-app",
+    "name": "핵심 앱",
+    "description": "단어 학습의 메인 SPA로 책장/단어장 관리, AI 사진 스캔(Gemini), 암기카드, 퀴즈, 에빙하우스 복습, 결제 흐름을 담당하며 모든 유입 경로의 도착점이다.",
+    "nodeIds": [
+      "file:index.html"
+    ]
+  },
+  {
+    "id": "layer:admin",
+    "name": "관리자",
+    "description": "사용자·조직 통계와 MRR 등 운영 지표를 보여주는 관리자 대시보드 페이지다.",
+    "nodeIds": [
+      "file:admin.html"
+    ]
+  },
+  {
+    "id": "layer:marketing",
+    "name": "마케팅·유입",
+    "description": "랜딩·광고·요금제 페이지로 사용자를 핵심 앱과 Stripe 결제로 유도하는 퍼널 진입점들이다.",
+    "nodeIds": [
+      "file:lp.html",
+      "file:ad_ko.html",
+      "file:ad_en.html",
+      "file:pricing.html"
+    ]
+  },
+  {
+    "id": "layer:legal",
+    "name": "법적·고지",
+    "description": "이용약관과 공지사항 등 서비스 정책을 안내하는 정적 고지 페이지들이다.",
+    "nodeIds": [
+      "file:terms.html",
+      "file:notice.html"
+    ]
+  },
+  {
+    "id": "layer:infrastructure",
+    "name": "PWA·배포 인프라",
+    "description": "PWA 매니페스트와 service worker, GitHub Pages·커스텀 도메인·Android App Links 설정 및 분석 도구·OS 메타데이터 등 배포와 운영을 지탱하는 비페이지 자산들이다.",
+    "nodeIds": [
+      "config:manifest.json",
+      "file:sw.js",
+      "config:CNAME",
+      "file:.nojekyll",
+      "config:.well-known/assetlinks.json",
+      "file:.DS_Store",
+      "file:.understand-anything/.understandignore",
+      "config:.understand-anything/config.json"
+    ]
+  }
+]

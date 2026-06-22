@@ -1,0 +1,78 @@
+{
+  "nodes": [
+    {
+      "id": "file:.DS_Store",
+      "type": "file",
+      "name": ".DS_Store",
+      "filePath": ".DS_Store",
+      "summary": "macOS Finder가 생성하는 디렉터리 메타데이터 바이너리 파일로, 프로젝트 기능과 무관합니다.",
+      "tags": ["macos", "metadata", "non-project"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.nojekyll",
+      "type": "file",
+      "name": ".nojekyll",
+      "filePath": ".nojekyll",
+      "summary": "GitHub Pages의 Jekyll 빌드 처리를 비활성화하여 정적 파일을 그대로 서빙하도록 하는 빈 마커 파일입니다.",
+      "tags": ["github-pages", "deployment", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-Anything 분석 도구가 무시할 경로를 지정하는 내부 설정 파일로, 앱 기능과 무관합니다.",
+      "tags": ["tooling", "ignore-rules", "non-project"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand-Anything 도구의 출력 언어(outputLanguage)를 지정하는 내부 설정 파일입니다.",
+      "tags": ["tooling", "configuration", "non-project"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.well-known/assetlinks.json",
+      "type": "config",
+      "name": "assetlinks.json",
+      "filePath": ".well-known/assetlinks.json",
+      "summary": "Android App Links(Digital Asset Links) 설정으로, 웹 도메인과 Android 앱 간의 연결을 검증하여 링크가 앱에서 직접 열리도록 합니다.",
+      "tags": ["android", "app-links", "configuration", "deep-linking"],
+      "complexity": "simple",
+      "languageNotes": "Digital Asset Links 표준 형식으로 패키지명과 SHA-256 인증서 지문을 선언합니다."
+    },
+    {
+      "id": "config:CNAME",
+      "type": "config",
+      "name": "CNAME",
+      "filePath": "CNAME",
+      "summary": "GitHub Pages 호스팅에서 사용할 커스텀 도메인을 지정하는 설정 파일입니다.",
+      "tags": ["github-pages", "deployment", "configuration", "dns"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:sw.js",
+      "type": "file",
+      "name": "sw.js",
+      "filePath": "sw.js",
+      "summary": "IM VOCA PWA의 service worker로, HTML은 네트워크 우선, 정적 자원은 캐시 우선(stale-while-revalidate) 전략으로 오프라인 캐싱을 처리하며 Supabase·Stripe 등 API 요청은 캐싱에서 제외합니다.",
+      "tags": ["service-worker", "pwa", "caching", "offline", "entry-point"],
+      "complexity": "moderate",
+      "languageNotes": "install/activate/fetch 이벤트 리스너 기반의 표준 service worker 패턴으로, 버전드 캐시(imvoca-v2)와 cache.addAll 프리캐싱, 백그라운드 재검증을 사용합니다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:sw.js",
+      "target": "file:index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

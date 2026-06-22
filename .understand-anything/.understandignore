@@ -1,0 +1,39 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+# Lines below are suggestions — uncomment to activate.
+# Use ! prefix to force-include something excluded by defaults.
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, obj/, *.lock, *.min.js, etc.
+#
+
+# --- Test file patterns (uncomment to exclude) ---
+
+# JS / TS
+# *.test.*
+# *.spec.*
+# *.snap
+# C# / .NET
+# **/*Tests.cs
+# **/*Test.cs
+# **/*Fixture.cs
+# **/*.Tests.csproj
+# Java / Kotlin
+# **/src/test/**
+# **/*Test.java
+# **/*IT.java
+# **/*Spec.kt
+# Go
+# **/*_test.go
+
+# --- 추천 제외: voca 프로젝트의 백업/테스트 중복 파일 ---
+# index.html 의 옛 복사본·테스트본 (실제 앱과 거의 동일한 중복)
+test.html
+test1.html
+test2.html
+index_old.html
+# 관리자 페이지 테스트본 (admin.html 의 복사본)
+admin-test.html
+# voca 와 무관한 다른 작업물
+fbcnormangee-v3.html
+novastar.html

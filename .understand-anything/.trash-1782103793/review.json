@@ -1,0 +1,27 @@
+{
+  "issues": [],
+  "warnings": [
+    "Orphan node file:.DS_Store",
+    "Orphan node file:.nojekyll",
+    "Orphan node file:.understand-anything/.understandignore",
+    "Orphan node config:.understand-anything/config.json",
+    "Orphan node config:.well-known/assetlinks.json",
+    "Orphan node config:CNAME"
+  ],
+  "stats": {
+    "totalNodes": 16,
+    "totalEdges": 14,
+    "totalLayers": 5,
+    "tourSteps": 8,
+    "nodeTypes": {
+      "file": 12,
+      "config": 4
+    },
+    "edgeTypes": {
+      "configures": 1,
+      "related": 7,
+      "documents": 2,
+      "routes": 4
+    }
+  }
+}
