@@ -1170,7 +1170,7 @@ function showUpgradePopup() {
       <div style="background:var(--gold-bg);border-radius:12px;padding:16px;margin-bottom:20px;">
         <div style="font-size:13px;color:var(--accent);font-weight:700;margin-bottom:4px;">✨ Premium</div>
         <div style="font-size:24px;font-weight:700;color:var(--ink-100);">$3.99<span style="font-size:14px;font-weight:400;color:var(--ink-60);">/월</span></div>
-        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $29.99 (37% 할인)':'$29.99/year (save 37%)'}</div>
+        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $39.99 (16% 할인)':'$39.99/year (save 16%)'}</div>
       </div>
       <div style="font-size:12px;color:var(--ink-40);margin-bottom:16px;">
         ✓ ${userNativeLang==='ko'?'무제한 AI 스캔':'Unlimited AI scans'}<br>
@@ -1273,7 +1273,7 @@ function goPersonalApp() { stack = [{ name:'library' }]; render(); }
 async function startOrgBilling(){
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
-  if (!confirm(ko?'학원 프리미엄 결제를 시작할까요?\n\n현재 승인된 학생 수만큼 매월 $1.99/명으로 청구돼요. 결제하면 학생 전원이 무제한이 돼요.':'Start academy billing? $1.99 per approved student per month. All students become unlimited.')) return;
+  if (!confirm(ko?'학원 프리미엄 결제를 시작할까요?\n\n현재 승인된 학생 수만큼 매월 $2.99/명으로 청구돼요. 결제하면 학생 전원이 무제한이 돼요.':'Start academy billing? $2.99 per approved student per month. All students become unlimited.')) return;
   try{
     toast(ko?'결제 페이지로 이동 중...':'Redirecting to checkout...');
     const res = await fetch(SB_URL+'/functions/v1/create-checkout',{
@@ -1364,7 +1364,7 @@ async function loadOrgStudents(){
     box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
     const _appr = list.filter(m=>(m.org_status||'')==='approved' && m.org_role==='student').length;
     const _est = document.getElementById('org-bill-est');
-    if (_est) _est.textContent = '$'+(_appr*1.99).toFixed(2)+(ko?` (학생 ${_appr}명)`:` (${_appr})`);
+    if (_est) _est.textContent = '$'+(_appr*2.99).toFixed(2)+(ko?` (학생 ${_appr}명)`:` (${_appr})`);
   } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
@@ -1578,7 +1578,7 @@ function renderOrgAdminPage(root) {
             <div class="muted" style="font-size:12px;line-height:1.6;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 학생 수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved student.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
           ` : `
             <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
-            <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'결제하면 우리 학원 학생 전원이 무제한이 돼요. 학생 1명당 월 $1.99, 매달 학생 수만큼 자동으로 청구돼요.':'Pay to give all your students unlimited access. $1.99 per student / month, billed automatically.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+            <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'결제하면 우리 학원 학생 전원이 무제한이 돼요. 학생 1명당 월 $2.99, 매달 학생 수만큼 자동으로 청구돼요.':'Pay to give all your students unlimited access. $2.99 per student / month, billed automatically.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
             <button class="btn btn-solid" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>
           `}
         </div>

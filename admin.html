@@ -419,7 +419,7 @@ function renderOverview(){
   let orgPaying=0, orgFree=0, orgMrr=0;
   _allOrgs.forEach(o=>{
     const appr = _allMembers.filter(x=>x.org_id===o.id && x.org_role==='student' && (x.org_status||'')==='approved').length;
-    if(o.stripe_subscription_id){ orgPaying++; orgMrr += appr*1.99; }
+    if(o.stripe_subscription_id){ orgPaying++; orgMrr += appr*2.99; }
     else if(o.billing_active){ orgFree++; }
   });
   const orgCount = _allOrgs.length;
