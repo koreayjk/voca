@@ -52,6 +52,11 @@
     .cta-primary { display: inline-block; background: var(--accent); color: #16202b; font-size: 16px; font-weight: 800; letter-spacing: -0.2px; font-family: var(--sans); padding: 17px 32px; border-radius: 15px; border: none; cursor: pointer; box-shadow: 0 12px 30px rgba(0,0,0,0.4); text-decoration: none; transition: transform 0.15s; width: 100%; max-width: 330px; }
     .cta-primary:active { transform: translateY(1px); }
     .cta-note { display: block; font-size: 12px; color: var(--ink-40); margin-top: 12px; }
+    .signup-hint { max-width: 360px; margin: 22px auto 0; text-align: left; background: rgba(255,255,255,0.05); border: 1px solid var(--ink-12); border-radius: 14px; padding: 16px 18px; }
+    .signup-hint-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .signup-hint-row { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--ink-60); line-height: 1.5; padding: 4px 0; }
+    .signup-hint-row b { color: var(--accent); font-weight: 700; }
+    .signup-hint-num { flex-shrink: 0; width: 19px; height: 19px; border-radius: 50%; background: var(--accent); color: #16202b; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
 
     section { padding: 46px 0; }
     .section-label { font-size: 11.5px; font-weight: 800; letter-spacing: 2.5px; color: var(--gold); text-align: center; margin-bottom: 10px; }
@@ -90,6 +95,24 @@
     footer { background: var(--accent-dark); color: rgba(255,255,255,0.45); text-align: center; padding: 28px 22px; font-size: 11px; line-height: 1.8; border-top: 1px solid rgba(255,255,255,0.08); }
     footer a { color: rgba(255,255,255,0.72); text-decoration: none; margin: 0 8px; }
     @media (max-width: 360px){ .hero h1 { font-size: 29px; } .section-title { font-size: 23px; } }
+    @media (min-width: 820px){
+      .wrap { max-width: 1000px; }
+      .nav { padding: 26px 0 6px; }
+      .nav img { width: 36px; height: 36px; }
+      .nav span { font-size: 20px; }
+      .hero { padding: 60px 0 26px; }
+      .hero h1 { font-size: 48px; }
+      .hero-sub { font-size: 17px; max-width: 620px; margin-left: auto; margin-right: auto; }
+      section { padding: 66px 0; }
+      .section-title { font-size: 34px; margin-bottom: 40px; }
+      .price-card { max-width: 560px; margin: 0 auto; }
+      .feature-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; align-items: stretch; }
+      .feature { display: flex; flex-direction: column; }
+      .steps { flex-direction: row; gap: 16px; }
+      .step { flex: 1; flex-direction: column; align-items: flex-start; }
+      .final-cta { padding: 88px 0; }
+      .final-cta h2 { font-size: 36px; }
+    }
   </style>
 </head>
 <body>
@@ -106,6 +129,12 @@
     <div class="free-pill reveal">🎁 원장님(단체장)은 무료</div>
     <div class="reveal"><a href="https://imvoca.app/" class="cta-primary" onclick="trackClick('group-hero')">무료로 우리 학원 만들기 →</a></div>
     <span class="cta-note reveal">카드 등록 없음 · 30초 가입 · 원장 무료</span>
+    <div class="signup-hint reveal">
+      <div class="signup-hint-title">💡 가입은 이렇게 하세요</div>
+      <div class="signup-hint-row"><span class="signup-hint-num">1</span> 회원가입 화면에서 계정 유형을 <b>‘단체(학원)’</b> 로 선택</div>
+      <div class="signup-hint-row"><span class="signup-hint-num">2</span> 역할을 <b>‘단체장(원장)’</b> 으로 선택하고 학원 이름 입력</div>
+      <div class="signup-hint-row"><span class="signup-hint-num">3</span> 완료! 가입 코드가 생기면 학생에게 공유하세요</div>
+    </div>
   </header>
 
   <section>
@@ -113,12 +142,14 @@
       <div class="section-label reveal">비용</div>
       <h2 class="section-title reveal">부담 없는 <em>합리적인 가격</em></h2>
       <div class="price-card reveal">
+        <div style="display:inline-block;background:rgba(84,180,135,0.16);border:1px solid rgba(84,180,135,0.4);color:#9fe1c4;font-size:11.5px;font-weight:800;letter-spacing:0.3px;padding:5px 13px;border-radius:99px;margin-bottom:14px;">🎉 단체 특가 · 개인가 대비 25% 할인</div>
         <div class="price-free">$0<small>원장님(단체장) 계정은 무료</small></div>
         <div class="price-divider"></div>
         <div class="price-line"><span>원장님(단체장)</span><span class="v green">무료</span></div>
-        <div class="price-line"><span>선생님 · 학생</span><span class="v">1명당 월 $2.99</span></div>
+        <div class="price-line"><span>선생님 · 학생</span><span class="v"><s style="color:var(--ink-40);font-weight:500;margin-right:6px;">$3.99</s><b style="color:var(--accent);">$2.99</b> <small style="font-weight:500;color:var(--ink-60);">/월 · 1명당</small></span></div>
+        <div class="price-line"><span style="color:#7fd3ab;font-weight:700;">↳ 할인율</span><span class="v green">25% 할인 🎉</span></div>
         <div class="price-line"><span>결제 방식</span><span class="v">원장 제외 인원수만큼</span></div>
-        <div class="price-foot">결제하면 우리 학원 <b>전원이 무제한</b>으로 AI 스캔·복습을 사용해요. <b>원장님만 무료</b>이고, 선생님·학생은 1명당 월 $2.99 — 인원이 늘면 그만큼만, 줄면 줄어든 만큼만 자동 청구됩니다.</div>
+        <div class="price-foot">개인 프리미엄은 월 <s>$3.99</s>인데, <b style="color:var(--accent);">단체는 1명당 $2.99</b>로 약 25% 더 저렴해요. 결제하면 우리 학원 <b>전원이 무제한</b>으로 AI 스캔·복습을 사용하고, <b>원장님만 무료</b>입니다. 인원이 늘면 그만큼만, 줄면 줄어든 만큼만 자동 청구돼요.</div>
       </div>
     </div>
   </section>
