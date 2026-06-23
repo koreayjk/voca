@@ -81,7 +81,7 @@ function render(){
   } else {
     const meanings=(w.meanings||[]).map((m,i)=>`<div><span class="num">${'①②③④'[i]||'·'}</span> <span class="p">${esc(m.pos)}</span> ${esc(m.ko)}</div>`).join('');
     const m0=(w.meanings||[])[0]||{};
-    const src=ex.tested?`<div class="src">🎯 기출 ${ex.exams}개 시험 · 최근 ${esc(ex.recentYear)}</div>`:'';
+    const src=m0.src?`<div class="src">🎯 ${esc(m0.src)} 기출변형</div>`:(ex.tested?`<div class="src">🎯 기출 ${ex.exams}개 시험 · 최근 ${esc(ex.recentYear)}</div>`:'');
     const chips=[ (w.syn&&w.syn.length)?`<span class="chip">동의어 ${w.syn.map(esc).join(' · ')}</span>`:'', (w.deriv&&w.deriv.length)?`<span class="chip">파생 ${w.deriv.map(esc).join(' · ')}</span>`:'' ].join('');
     const etym=w.etymHint?`<div class="etym"><div class="lbl2">어원</div><div class="t">${esc(w.etymHint)}</div></div>`:'';
     c.innerHTML=`<div class="bk-head"><span class="w">${esc(w.en)}</span><span class="i">${esc(w.ipa)}</span></div>

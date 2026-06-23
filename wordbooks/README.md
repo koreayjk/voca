@@ -12,10 +12,16 @@
 ## 데이터 (이미 생성됨)
 - `suneung-frequency.json` — 기출 전체 빈도표(상위 3000, surface form). 코퍼스 57개 시험(2009~2027 수능+6·9월 모평).
 - `suneung-selection.json` — 정제 선택 풀 1,925개(기능어·기초어 제외, 기출 빈도순, ★등급).
-- `suneung-basic-day1.json` — 수능 기본 Day 1(40단어) 샘플. **단, 예문은 임시 자체생성 → 아래 규칙으로 교체 필요.**
+- `suneung-basic-day1.json` — 수능 기본 Day 1(40단어). **예문 교체 완료**: 각 단어 meanings[0]에 `ex`(기출변형 재작성)·`tr`·`src`("YYYY 회차 NN번"). 40단어 전부 서로 다른 시험(2009~2025) 배정.
 - `suneung-core-day1.json` — 초기 핸드픽 샘플(참고용).
 - 기출 원본 PDF: `../../test/` 폴더 (EBSi 다운로드, 67개·중복포함). `pdftotext`로 추출, python은 `/opt/homebrew/bin/python3`(3.14).
 - ★ 기준: ★★★ ≥20개 시험 · ★★ 8~19 · ★ 1~7.
+
+## 파서 도구 (`tools/`, 재사용) — 문항단위 파서 완성
+- `extract_corpus.py` → `corpus/index.json`(48개 시험 라벨식별: 연도+회차) + `corpus/<label>.txt`. 나머지 9개는 헤더가 이미지라 자동 라벨 실패(빈 PDF 3개 포함). 48개로 충분.
+- `find_occurrences.py <book.json>` → `corpus/occurrences.json`. **핵심 발견: `pdftotext -raw`가 2단 편집을 읽기순서대로 뽑아 문항번호(18~45)가 단조증가** → 줄머리 `NN.` 앵커로 문항 분리하면 단어↔문항 매핑 정확. (-layout은 컬럼이 줄단위로 섞여 실패. README 우려 해소.)
+- `assign_sources.py` → `corpus/assigned.json`. 회차 골고루(40단어=40시험), 정확단어·깨끗한 완결문장 우선.
+- `merge_examples.py` — 재작성 예문/해석을 단어에 병합(src는 assigned.json에서 가져와 정합성 보장). **대량 생성 시 EX dict 부분을 Gemini/Claude 생성으로 대체하면 됨.**
 
 ## 단어 1개 포맷 (JSON)
 `en · ipa · pos · meanings[]{pos,ko,ex,tr}(다의어는 빈출 뜻 2~3개) · syn[] · deriv[] · roots[]/etymHint(어근분해만, 스토리형 금지) · level(CEFR) · exam{count,exams,recentYear,stars}`
@@ -34,7 +40,11 @@
 `wordbook-preview.html` 참고. 앞면(단어·발음·품사·기출★배지·CEFR·발음듣기) / 뒷면(뜻①②·기출출처+예문+해석·동의어·파생·어원). 전체화면, 하단 버튼 고정.
 
 ## 다음 단계 순서
-1. 시험 문항단위 파서 제작 → 단어별 기출 occurrence + 문항번호 매핑
-2. Gemini API로 회차 골고루 기출변형 예문 + 출처 생성 → Day 재생성(수능 기본부터)
-3. Day 단위 대량 생성(7권)
-4. 앱 통합: 공식 단어장 등록(유료 잠금) + 학습카드 풀포맷 UI
+1. ✅ 시험 문항단위 파서 제작 (tools/, `-raw` 방식). 단어별 기출 occurrence + 문항번호 매핑 완료.
+2. ✅ 회차 골고루 기출변형 예문 + 출처 생성 → 수능 기본 Day1 재생성 완료(품질 기준 확정). 카드 출처배지 "🎯 YYYY 회차 NN번 기출변형" 표시(wordbook-preview.html).
+3. ⬜ Day 단위 대량 생성(7권): suneung-selection.json을 Day(40단어)로 분할 → tools 파이프라인 돌려 예문 생성(EX dict를 API 생성으로 대체) → 검수. 수능 기본 Day2부터.
+4. ⬜ 앱 통합: 공식 단어장 등록(유료 잠금) + 학습카드 풀포맷 UI.
+
+## 품질 기준 (Day1에서 확정)
+- 예문: 실제 기출 지문을 CEFR(B1~B2)로 재작성(복제 X). 출처는 `meanings[0].src` = "2017 수능 40번".
+- 한 Day 40단어 = 40개 서로 다른 시험(회차 골고루). 정확단어 등장 문항 우선, 빈칸/슬래시선택지 문장 회피.

@@ -1,1426 +1,1467 @@
 {
-  "book": "수능 기본",
-  "code": "SUN-BASIC",
-  "day": 1,
-  "words": [
+ "book": "수능 기본",
+ "code": "SUN-BASIC",
+ "day": 1,
+ "words": [
+  {
+   "en": "public",
+   "ipa": "/ˈpʌblɪk/",
+   "pos": "adj./n.",
+   "meanings": [
     {
-      "en": "public",
-      "ipa": "/ˈpʌblɪk/",
-      "pos": "adj./n.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "대중의, 공공의",
-          "ex": "The new park is open to the public.",
-          "tr": "새 공원은 대중에게 개방되어 있다."
-        },
-        {
-          "pos": "n.",
-          "ko": "대중, 일반인"
-        }
-      ],
-      "syn": [
-        "communal",
-        "general"
-      ],
-      "deriv": [
-        "publicly (adv.)",
-        "publicity (n.)"
-      ],
-      "roots": [
-        {
-          "part": "pub",
-          "mean": "사람들"
-        }
-      ],
-      "etymHint": "pub(사람들) → 사람들의 → 대중의",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 138,
-        "exams": 47,
-        "recentYear": "2027",
-        "stars": 3
-      }
+     "pos": "adj.",
+     "ko": "대중의, 공공의",
+     "ex": "Good tourism can improve the roads and public facilities that local residents use.",
+     "tr": "좋은 관광은 지역 주민이 이용하는 도로와 공공시설을 개선할 수 있다.",
+     "src": "2017 수능 40번"
     },
     {
-      "en": "form",
-      "ipa": "/fɔːrm/",
-      "pos": "n./v.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "형태, 형식",
-          "ex": "Water can take the form of ice or steam.",
-          "tr": "물은 얼음이나 수증기의 형태를 띨 수 있다."
-        },
-        {
-          "pos": "v.",
-          "ko": "형성하다, 이루다"
-        }
-      ],
-      "syn": [
-        "shape",
-        "create"
-      ],
-      "deriv": [
-        "formation (n.)",
-        "formal (adj.)"
-      ],
-      "roots": [
-        {
-          "part": "form",
-          "mean": "모양"
-        }
-      ],
-      "etymHint": "form(모양) → 모양을 갖춤 → 형태/형성하다",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 163,
-        "exams": 53,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "provide",
-      "ipa": "/prəˈvaɪd/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "제공하다, 공급하다",
-          "ex": "The school provides free meals for students.",
-          "tr": "그 학교는 학생들에게 무료 급식을 제공한다."
-        }
-      ],
-      "syn": [
-        "supply",
-        "offer"
-      ],
-      "deriv": [
-        "provision (n.)",
-        "provider (n.)"
-      ],
-      "roots": [
-        {
-          "part": "pro-",
-          "mean": "앞서"
-        },
-        {
-          "part": "vid",
-          "mean": "보다"
-        }
-      ],
-      "etymHint": "pro(앞서)+vid(보다) → 앞서 내다보고 준비하다 → 제공하다",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 188,
-        "exams": 53,
-        "recentYear": "2026",
-        "stars": 3
-      }
-    },
-    {
-      "en": "various",
-      "ipa": "/ˈveriəs/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "다양한, 여러 가지의",
-          "ex": "The store sells various kinds of bread.",
-          "tr": "그 가게는 여러 종류의 빵을 판다."
-        }
-      ],
-      "syn": [
-        "diverse",
-        "varied"
-      ],
-      "deriv": [
-        "variety (n.)",
-        "vary (v.)"
-      ],
-      "roots": [
-        {
-          "part": "vari",
-          "mean": "다른"
-        }
-      ],
-      "etymHint": "vari(다른) → 서로 다른 여럿 → 다양한",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 78,
-        "exams": 43,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "behavior",
-      "ipa": "/bɪˈheɪvjər/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "행동, 행위",
-          "ex": "Scientists study animal behavior in the wild.",
-          "tr": "과학자들은 야생에서 동물의 행동을 연구한다."
-        }
-      ],
-      "syn": [
-        "conduct",
-        "manner"
-      ],
-      "deriv": [
-        "behave (v.)",
-        "behavioral (adj.)"
-      ],
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 148,
-        "exams": 47,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "nature",
-      "ipa": "/ˈneɪtʃər/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "자연",
-          "ex": "We should protect nature for future generations.",
-          "tr": "우리는 미래 세대를 위해 자연을 보호해야 한다."
-        },
-        {
-          "pos": "n.",
-          "ko": "본성, 천성"
-        }
-      ],
-      "syn": [
-        "environment",
-        "character"
-      ],
-      "deriv": [
-        "natural (adj.)",
-        "naturally (adv.)"
-      ],
-      "roots": [
-        {
-          "part": "nat",
-          "mean": "태어나다"
-        }
-      ],
-      "etymHint": "nat(태어나다) → 태어난 그대로 → 자연/본성",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 138,
-        "exams": 43,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "reason",
-      "ipa": "/ˈriːzn/",
-      "pos": "n./v.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "이유, 까닭",
-          "ex": "There is no clear reason for his decision.",
-          "tr": "그의 결정에는 명확한 이유가 없다."
-        },
-        {
-          "pos": "n.",
-          "ko": "이성, 사고력"
-        }
-      ],
-      "syn": [
-        "cause",
-        "motive"
-      ],
-      "deriv": [
-        "reasonable (adj.)",
-        "reasoning (n.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 139,
-        "exams": 51,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "tend",
-      "ipa": "/tend/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "(~하는) 경향이 있다",
-          "ex": "People tend to remember the first thing they learn.",
-          "tr": "사람들은 처음 배운 것을 기억하는 경향이 있다."
-        }
-      ],
-      "syn": [
-        "incline",
-        "be apt to"
-      ],
-      "deriv": [
-        "tendency (n.)"
-      ],
-      "roots": [
-        {
-          "part": "tend",
-          "mean": "뻗다"
-        }
-      ],
-      "etymHint": "tend(뻗다) → 마음이 한쪽으로 뻗다 → 경향이 있다",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 95,
-        "exams": 49,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "value",
-      "ipa": "/ˈvæljuː/",
-      "pos": "n./v.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "가치, 값어치",
-          "ex": "The painting has great artistic value.",
-          "tr": "그 그림은 큰 예술적 가치를 지닌다."
-        },
-        {
-          "pos": "v.",
-          "ko": "소중히 여기다, 평가하다"
-        }
-      ],
-      "syn": [
-        "worth",
-        "appreciate"
-      ],
-      "deriv": [
-        "valuable (adj.)",
-        "invaluable (adj.)"
-      ],
-      "roots": [
-        {
-          "part": "val",
-          "mean": "가치 있다"
-        }
-      ],
-      "etymHint": "val(가치 있다) → 가치",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 180,
-        "exams": 50,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "role",
-      "ipa": "/roʊl/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "역할, 임무",
-          "ex": "Teachers play an important role in society.",
-          "tr": "교사는 사회에서 중요한 역할을 한다."
-        }
-      ],
-      "syn": [
-        "part",
-        "function"
-      ],
-      "deriv": [],
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 112,
-        "exams": 48,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "research",
-      "ipa": "/rɪˈsɜːrtʃ/",
-      "pos": "n./v.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "연구, 조사",
-          "ex": "Recent research shows that sleep improves memory.",
-          "tr": "최근 연구는 수면이 기억력을 향상시킨다는 것을 보여준다."
-        },
-        {
-          "pos": "v.",
-          "ko": "연구하다, 조사하다"
-        }
-      ],
-      "syn": [
-        "study",
-        "investigation"
-      ],
-      "deriv": [
-        "researcher (n.)"
-      ],
-      "roots": [
-        {
-          "part": "re-",
-          "mean": "다시"
-        },
-        {
-          "part": "search",
-          "mean": "찾다"
-        }
-      ],
-      "etymHint": "re(다시)+search(찾다) → 거듭 찾다 → 연구하다",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 102,
-        "exams": 42,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "personal",
-      "ipa": "/ˈpɜːrsənl/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "개인의, 사적인",
-          "ex": "She keeps her personal life private.",
-          "tr": "그녀는 사생활을 비밀로 한다."
-        }
-      ],
-      "syn": [
-        "private",
-        "individual"
-      ],
-      "deriv": [
-        "personally (adv.)",
-        "personality (n.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 84,
-        "exams": 42,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "develop",
-      "ipa": "/dɪˈveləp/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "발전시키다, 개발하다",
-          "ex": "The company developed a new kind of battery.",
-          "tr": "그 회사는 새로운 종류의 배터리를 개발했다."
-        },
-        {
-          "pos": "v.",
-          "ko": "(능력·병이) 생기다, 자라다"
-        }
-      ],
-      "syn": [
-        "create",
-        "expand"
-      ],
-      "deriv": [
-        "development (n.)",
-        "developer (n.)"
-      ],
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 159,
-        "exams": 51,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "future",
-      "ipa": "/ˈfjuːtʃər/",
-      "pos": "n./adj.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "미래, 장래",
-          "ex": "No one can predict the future.",
-          "tr": "누구도 미래를 예측할 수 없다."
-        },
-        {
-          "pos": "adj.",
-          "ko": "미래의"
-        }
-      ],
-      "syn": [
-        "tomorrow",
-        "prospect"
-      ],
-      "deriv": [],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 125,
-        "exams": 41,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "skill",
-      "ipa": "/skɪl/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "기술, 솜씨, 능력",
-          "ex": "Communication is an essential skill at work.",
-          "tr": "의사소통은 직장에서 필수적인 능력이다."
-        }
-      ],
-      "syn": [
-        "ability",
-        "talent"
-      ],
-      "deriv": [
-        "skilled (adj.)",
-        "skillful (adj.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 121,
-        "exams": 46,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "attention",
-      "ipa": "/əˈtenʃn/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "주의, 주목, 관심",
-          "ex": "The bright sign caught everyone's attention.",
-          "tr": "밝은 표지판이 모두의 주의를 끌었다."
-        }
-      ],
-      "syn": [
-        "notice",
-        "focus"
-      ],
-      "deriv": [
-        "attentive (adj.)",
-        "attend (v.)"
-      ],
-      "roots": [
-        {
-          "part": "at-",
-          "mean": "~로"
-        },
-        {
-          "part": "tent",
-          "mean": "뻗다"
-        }
-      ],
-      "etymHint": "at(~로)+tent(뻗다) → 마음을 ~로 뻗음 → 주의",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 100,
-        "exams": 41,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "century",
-      "ipa": "/ˈsentʃəri/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "세기, 100년",
-          "ex": "The building was made in the 19th century.",
-          "tr": "그 건물은 19세기에 지어졌다."
-        }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": [
-        {
-          "part": "cent",
-          "mean": "100"
-        }
-      ],
-      "etymHint": "cent(100) → 100년 → 세기",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 97,
-        "exams": 42,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "modern",
-      "ipa": "/ˈmɑːdərn/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "현대의, 근대의",
-          "ex": "Modern technology has changed how we live.",
-          "tr": "현대 기술은 우리가 사는 방식을 바꿔 놓았다."
-        }
-      ],
-      "syn": [
-        "contemporary",
-        "current"
-      ],
-      "deriv": [
-        "modernize (v.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 94,
-        "exams": 41,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "control",
-      "ipa": "/kənˈtroʊl/",
-      "pos": "v./n.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "통제하다, 조절하다",
-          "ex": "It is hard to control your emotions when angry.",
-          "tr": "화가 났을 때 감정을 통제하기는 어렵다."
-        },
-        {
-          "pos": "n.",
-          "ko": "통제(력), 지배"
-        }
-      ],
-      "syn": [
-        "manage",
-        "regulate"
-      ],
-      "deriv": [
-        "controller (n.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 91,
-        "exams": 43,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "particular",
-      "ipa": "/pərˈtɪkjələr/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "특정한, 특별한",
-          "ex": "He has a particular interest in old maps.",
-          "tr": "그는 오래된 지도에 특별한 관심이 있다."
-        },
-        {
-          "pos": "adj.",
-          "ko": "까다로운"
-        }
-      ],
-      "syn": [
-        "specific",
-        "certain"
-      ],
-      "deriv": [
-        "particularly (adv.)"
-      ],
-      "roots": [
-        {
-          "part": "part",
-          "mean": "부분"
-        }
-      ],
-      "etymHint": "part(부분) → 특정 부분의 → 특정한",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 85,
-        "exams": 40,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "society",
-      "ipa": "/səˈsaɪəti/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "사회, 집단",
-          "ex": "Education shapes the future of a society.",
-          "tr": "교육은 한 사회의 미래를 형성한다."
-        }
-      ],
-      "syn": [
-        "community",
-        "public"
-      ],
-      "deriv": [
-        "social (adj.)",
-        "sociable (adj.)"
-      ],
-      "roots": [
-        {
-          "part": "soci",
-          "mean": "동료"
-        }
-      ],
-      "etymHint": "soci(동료) → 동료들의 모임 → 사회",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 141,
-        "exams": 46,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "effect",
-      "ipa": "/ɪˈfekt/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "영향, 효과, 결과",
-          "ex": "Stress has a negative effect on health.",
-          "tr": "스트레스는 건강에 부정적인 영향을 미친다."
-        }
-      ],
-      "syn": [
-        "result",
-        "impact"
-      ],
-      "deriv": [
-        "effective (adj.)",
-        "effectively (adv.)"
-      ],
-      "roots": [
-        {
-          "part": "ef-",
-          "mean": "밖으로"
-        },
-        {
-          "part": "fect",
-          "mean": "만들다"
-        }
-      ],
-      "etymHint": "ef(밖으로)+fect(만들다) → 만들어 낸 결과 → 효과",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 127,
-        "exams": 51,
-        "recentYear": "2026",
-        "stars": 3
-      }
-    },
-    {
-      "en": "certain",
-      "ipa": "/ˈsɜːrtn/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "확실한, 틀림없는",
-          "ex": "I am certain that he will come.",
-          "tr": "나는 그가 올 것이라고 확신한다."
-        },
-        {
-          "pos": "adj.",
-          "ko": "어떤, 특정한"
-        }
-      ],
-      "syn": [
-        "sure",
-        "definite"
-      ],
-      "deriv": [
-        "certainly (adv.)",
-        "certainty (n.)"
-      ],
-      "roots": [
-        {
-          "part": "cert",
-          "mean": "확실한"
-        }
-      ],
-      "etymHint": "cert(확실한) → 확실한",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 95,
-        "exams": 40,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "physical",
-      "ipa": "/ˈfɪzɪkl/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "신체의, 육체의",
-          "ex": "Regular exercise improves physical health.",
-          "tr": "규칙적인 운동은 신체 건강을 향상시킨다."
-        },
-        {
-          "pos": "adj.",
-          "ko": "물리적인, 물질의"
-        }
-      ],
-      "syn": [
-        "bodily",
-        "material"
-      ],
-      "deriv": [
-        "physically (adv.)"
-      ],
-      "roots": [
-        {
-          "part": "phys",
-          "mean": "자연·몸"
-        }
-      ],
-      "etymHint": "phys(자연·몸) → 몸의 → 신체의",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 98,
-        "exams": 40,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "science",
-      "ipa": "/ˈsaɪəns/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "과학",
-          "ex": "Science helps us understand the natural world.",
-          "tr": "과학은 우리가 자연계를 이해하도록 돕는다."
-        }
-      ],
-      "syn": [],
-      "deriv": [
-        "scientific (adj.)",
-        "scientist (n.)"
-      ],
-      "roots": [
-        {
-          "part": "sci",
-          "mean": "알다"
-        }
-      ],
-      "etymHint": "sci(알다) → 앎의 체계 → 과학",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 184,
-        "exams": 41,
-        "recentYear": "2026",
-        "stars": 3
-      }
-    },
-    {
-      "en": "knowledge",
-      "ipa": "/ˈnɑːlɪdʒ/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "지식, 앎",
-          "ex": "Books are a great source of knowledge.",
-          "tr": "책은 훌륭한 지식의 원천이다."
-        }
-      ],
-      "syn": [
-        "understanding",
-        "wisdom"
-      ],
-      "deriv": [
-        "knowledgeable (adj.)"
-      ],
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 151,
-        "exams": 39,
-        "recentYear": "2026",
-        "stars": 3
-      }
-    },
-    {
-      "en": "culture",
-      "ipa": "/ˈkʌltʃər/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "문화",
-          "ex": "Food is an important part of every culture.",
-          "tr": "음식은 모든 문화의 중요한 일부이다."
-        }
-      ],
-      "syn": [
-        "civilization",
-        "tradition"
-      ],
-      "deriv": [
-        "cultural (adj.)"
-      ],
-      "roots": [
-        {
-          "part": "cult",
-          "mean": "가꾸다"
-        }
-      ],
-      "etymHint": "cult(가꾸다) → 가꾸어 온 것 → 문화",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 143,
-        "exams": 43,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "believe",
-      "ipa": "/bɪˈliːv/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "믿다, ~라고 생각하다",
-          "ex": "Many people believe that honesty matters most.",
-          "tr": "많은 사람이 정직이 가장 중요하다고 믿는다."
-        }
-      ],
-      "syn": [
-        "trust",
-        "suppose"
-      ],
-      "deriv": [
-        "belief (n.)",
-        "believable (adj.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 127,
-        "exams": 45,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "company",
-      "ipa": "/ˈkʌmpəni/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "회사, 기업",
-          "ex": "She works for a software company.",
-          "tr": "그녀는 소프트웨어 회사에서 일한다."
-        },
-        {
-          "pos": "n.",
-          "ko": "함께 있음, 일행, 동료"
-        }
-      ],
-      "syn": [
-        "firm",
-        "business"
-      ],
-      "deriv": [],
-      "roots": [
-        {
-          "part": "com-",
-          "mean": "함께"
-        },
-        {
-          "part": "pan",
-          "mean": "빵"
-        }
-      ],
-      "etymHint": "com(함께)+pan(빵) → 함께 빵 먹는 무리 → 일행/회사",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 124,
-        "exams": 42,
-        "recentYear": "2026",
-        "stars": 3
-      }
-    },
-    {
-      "en": "create",
-      "ipa": "/kriˈeɪt/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "창조하다, 만들어 내다",
-          "ex": "Artists create beauty from simple materials.",
-          "tr": "예술가들은 단순한 재료로 아름다움을 창조한다."
-        }
-      ],
-      "syn": [
-        "produce",
-        "generate"
-      ],
-      "deriv": [
-        "creation (n.)",
-        "creative (adj.)"
-      ],
-      "roots": [
-        {
-          "part": "cre",
-          "mean": "만들다"
-        }
-      ],
-      "etymHint": "cre(만들다) → 새로 만들다 → 창조하다",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 176,
-        "exams": 52,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "system",
-      "ipa": "/ˈsɪstəm/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "체계, 시스템, 제도",
-          "ex": "The school introduced a new grading system.",
-          "tr": "그 학교는 새로운 채점 체계를 도입했다."
-        }
-      ],
-      "syn": [
-        "structure",
-        "method"
-      ],
-      "deriv": [
-        "systematic (adj.)"
-      ],
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 158,
-        "exams": 46,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "activity",
-      "ipa": "/ækˈtɪvəti/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "활동, 행위",
-          "ex": "Outdoor activity is good for both body and mind.",
-          "tr": "야외 활동은 몸과 마음 모두에 좋다."
-        }
-      ],
-      "syn": [
-        "action",
-        "pursuit"
-      ],
-      "deriv": [
-        "active (adj.)",
-        "activate (v.)"
-      ],
-      "roots": [
-        {
-          "part": "act",
-          "mean": "행하다"
-        }
-      ],
-      "etymHint": "act(행하다) → 행하는 것 → 활동",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 188,
-        "exams": 49,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "require",
-      "ipa": "/rɪˈkwaɪər/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "요구하다, 필요로 하다",
-          "ex": "This job requires patience and skill.",
-          "tr": "이 일은 인내심과 기술을 필요로 한다."
-        }
-      ],
-      "syn": [
-        "need",
-        "demand"
-      ],
-      "deriv": [
-        "requirement (n.)"
-      ],
-      "roots": [
-        {
-          "part": "re-",
-          "mean": "다시"
-        },
-        {
-          "part": "quire",
-          "mean": "구하다"
-        }
-      ],
-      "etymHint": "re(거듭)+quire(구하다) → 거듭 구하다 → 요구하다",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 135,
-        "exams": 47,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "affect",
-      "ipa": "/əˈfekt/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "영향을 미치다",
-          "ex": "Weather can affect our mood.",
-          "tr": "날씨는 우리의 기분에 영향을 미칠 수 있다."
-        }
-      ],
-      "syn": [
-        "influence",
-        "impact"
-      ],
-      "deriv": [
-        "affection (n.)"
-      ],
-      "roots": [
-        {
-          "part": "af-",
-          "mean": "~에"
-        },
-        {
-          "part": "fect",
-          "mean": "만들다"
-        }
-      ],
-      "etymHint": "af(~에)+fect(만들다) → ~에 작용하다 → 영향을 미치다",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 58,
-        "exams": 36,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "increase",
-      "ipa": "/ɪnˈkriːs/",
-      "pos": "v./n.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "증가하다, 늘리다",
-          "ex": "The number of users increased rapidly.",
-          "tr": "사용자 수가 빠르게 증가했다."
-        },
-        {
-          "pos": "n.",
-          "ko": "증가"
-        }
-      ],
-      "syn": [
-        "rise",
-        "grow"
-      ],
-      "deriv": [
-        "increasingly (adv.)"
-      ],
-      "roots": [
-        {
-          "part": "in-",
-          "mean": "안으로"
-        },
-        {
-          "part": "cre",
-          "mean": "자라다"
-        }
-      ],
-      "etymHint": "in(안으로)+cre(자라다) → 더 자라다 → 증가하다",
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 190,
-        "exams": 53,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "reduce",
-      "ipa": "/rɪˈduːs/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "줄이다, 감소시키다",
-          "ex": "We must reduce plastic waste.",
-          "tr": "우리는 플라스틱 쓰레기를 줄여야 한다."
-        }
-      ],
-      "syn": [
-        "decrease",
-        "lower"
-      ],
-      "deriv": [
-        "reduction (n.)"
-      ],
-      "roots": [
-        {
-          "part": "re-",
-          "mean": "뒤로"
-        },
-        {
-          "part": "duce",
-          "mean": "이끌다"
-        }
-      ],
-      "etymHint": "re(뒤로)+duce(이끌다) → 뒤로 끌어내리다 → 줄이다",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 82,
-        "exams": 40,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "improve",
-      "ipa": "/ɪmˈpruːv/",
-      "pos": "v.",
-      "meanings": [
-        {
-          "pos": "v.",
-          "ko": "향상시키다, 개선되다",
-          "ex": "Reading every day can improve your writing.",
-          "tr": "매일 읽는 것은 글쓰기를 향상시킬 수 있다."
-        }
-      ],
-      "syn": [
-        "enhance",
-        "upgrade"
-      ],
-      "deriv": [
-        "improvement (n.)"
-      ],
-      "level": "A2",
-      "exam": {
-        "tested": true,
-        "count": 53,
-        "exams": 35,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "social",
-      "ipa": "/ˈsoʊʃl/",
-      "pos": "adj.",
-      "meanings": [
-        {
-          "pos": "adj.",
-          "ko": "사회의, 사회적인",
-          "ex": "Humans are social animals by nature.",
-          "tr": "인간은 본래 사회적 동물이다."
-        }
-      ],
-      "syn": [
-        "communal",
-        "public"
-      ],
-      "deriv": [
-        "socially (adv.)",
-        "socialize (v.)"
-      ],
-      "roots": [
-        {
-          "part": "soci",
-          "mean": "동료"
-        }
-      ],
-      "etymHint": "soci(동료) → 동료와 어울리는 → 사회적인",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 275,
-        "exams": 53,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "individual",
-      "ipa": "/ˌɪndɪˈvɪdʒuəl/",
-      "pos": "n./adj.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "개인",
-          "ex": "Each individual has the right to an opinion.",
-          "tr": "각 개인은 의견을 가질 권리가 있다."
-        },
-        {
-          "pos": "adj.",
-          "ko": "개별의, 각각의"
-        }
-      ],
-      "syn": [
-        "person",
-        "single"
-      ],
-      "deriv": [
-        "individually (adv.)"
-      ],
-      "roots": [
-        {
-          "part": "in-",
-          "mean": "아닌"
-        },
-        {
-          "part": "divid",
-          "mean": "나누다"
-        }
-      ],
-      "etymHint": "in(아닌)+divid(나누다) → 더 못 나누는 → 개인",
-      "level": "B2",
-      "exam": {
-        "tested": true,
-        "count": 206,
-        "exams": 50,
-        "recentYear": "2027",
-        "stars": 3
-      }
-    },
-    {
-      "en": "environment",
-      "ipa": "/ɪnˈvaɪrənmənt/",
-      "pos": "n.",
-      "meanings": [
-        {
-          "pos": "n.",
-          "ko": "환경",
-          "ex": "Pollution is harmful to the environment.",
-          "tr": "오염은 환경에 해롭다."
-        },
-        {
-          "pos": "n.",
-          "ko": "(주변) 상황, 분위기"
-        }
-      ],
-      "syn": [
-        "surroundings",
-        "habitat"
-      ],
-      "deriv": [
-        "environmental (adj.)"
-      ],
-      "roots": [
-        {
-          "part": "environ",
-          "mean": "둘러싸다"
-        }
-      ],
-      "etymHint": "environ(둘러싸다) → 둘러싼 것 → 환경",
-      "level": "B1",
-      "exam": {
-        "tested": true,
-        "count": 121,
-        "exams": 49,
-        "recentYear": "2027",
-        "stars": 3
-      }
+     "pos": "n.",
+     "ko": "대중, 일반인"
     }
-  ]
+   ],
+   "syn": [
+    "communal",
+    "general"
+   ],
+   "deriv": [
+    "publicly (adv.)",
+    "publicity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pub",
+     "mean": "사람들"
+    }
+   ],
+   "etymHint": "pub(사람들) → 사람들의 → 대중의",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 138,
+    "exams": 47,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "form",
+   "ipa": "/fɔːrm/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "형태, 형식",
+     "ex": "The artist’s sculptures show the human form in a completely new way.",
+     "tr": "그 예술가의 조각은 인간의 형태를 완전히 새로운 방식으로 보여 준다.",
+     "src": "2022 9월모평 26번"
+    },
+    {
+     "pos": "v.",
+     "ko": "형성하다, 이루다"
+    }
+   ],
+   "syn": [
+    "shape",
+    "create"
+   ],
+   "deriv": [
+    "formation (n.)",
+    "formal (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "form",
+     "mean": "모양"
+    }
+   ],
+   "etymHint": "form(모양) → 모양을 갖춤 → 형태/형성하다",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 163,
+    "exams": 53,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "provide",
+   "ipa": "/prəˈvaɪd/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "제공하다, 공급하다",
+     "ex": "Your new membership provides special discounts at the museum.",
+     "tr": "새 회원권은 박물관에서 특별 할인을 제공한다.",
+     "src": "2022 6월모평 18번"
+    }
+   ],
+   "syn": [
+    "supply",
+    "offer"
+   ],
+   "deriv": [
+    "provision (n.)",
+    "provider (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pro-",
+     "mean": "앞서"
+    },
+    {
+     "part": "vid",
+     "mean": "보다"
+    }
+   ],
+   "etymHint": "pro(앞서)+vid(보다) → 앞서 내다보고 준비하다 → 제공하다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 188,
+    "exams": 53,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "various",
+   "ipa": "/ˈveriəs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "다양한, 여러 가지의",
+     "ex": "Students remember a concept better when they meet it in various contexts.",
+     "tr": "학생들은 다양한 맥락에서 그 개념을 접할 때 더 잘 기억한다.",
+     "src": "2020 6월모평 20번"
+    }
+   ],
+   "syn": [
+    "diverse",
+    "varied"
+   ],
+   "deriv": [
+    "variety (n.)",
+    "vary (v.)"
+   ],
+   "roots": [
+    {
+     "part": "vari",
+     "mean": "다른"
+    }
+   ],
+   "etymHint": "vari(다른) → 서로 다른 여럿 → 다양한",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 78,
+    "exams": 43,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "behavior",
+   "ipa": "/bɪˈheɪvjər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "행동, 행위",
+     "ex": "Under stress, people often show behavior that is unlike their usual selves.",
+     "tr": "스트레스를 받으면 사람들은 흔히 평소 자신과 다른 행동을 보인다.",
+     "src": "2017 6월모평 20번"
+    }
+   ],
+   "syn": [
+    "conduct",
+    "manner"
+   ],
+   "deriv": [
+    "behave (v.)",
+    "behavioral (adj.)"
+   ],
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 148,
+    "exams": 47,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "nature",
+   "ipa": "/ˈneɪtʃər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "자연",
+     "ex": "Many advertisements link their products to an image of nature.",
+     "tr": "많은 광고가 자사 제품을 자연의 이미지와 연결한다.",
+     "src": "2025 6월모평 23번"
+    },
+    {
+     "pos": "n.",
+     "ko": "본성, 천성"
+    }
+   ],
+   "syn": [
+    "environment",
+    "character"
+   ],
+   "deriv": [
+    "natural (adj.)",
+    "naturally (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "nat",
+     "mean": "태어나다"
+    }
+   ],
+   "etymHint": "nat(태어나다) → 태어난 그대로 → 자연/본성",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 138,
+    "exams": 43,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "reason",
+   "ipa": "/ˈriːzn/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "이유, 까닭",
+     "ex": "A strong vision motivates workers for the same reason a great goal inspires us.",
+     "tr": "강력한 비전은 위대한 목표가 우리를 고무하는 것과 같은 이유로 직원들에게 동기를 부여한다.",
+     "src": "2017 9월모평 23번"
+    },
+    {
+     "pos": "n.",
+     "ko": "이성, 사고력"
+    }
+   ],
+   "syn": [
+    "cause",
+    "motive"
+   ],
+   "deriv": [
+    "reasonable (adj.)",
+    "reasoning (n.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 139,
+    "exams": 51,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "tend",
+   "ipa": "/tend/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "(~하는) 경향이 있다",
+     "ex": "Information from distant contacts tends to be weak but to reach far.",
+     "tr": "먼 인맥에서 오는 정보는 약하지만 멀리까지 닿는 경향이 있다.",
+     "src": "2018 9월모평 40번"
+    }
+   ],
+   "syn": [
+    "incline",
+    "be apt to"
+   ],
+   "deriv": [
+    "tendency (n.)"
+   ],
+   "roots": [
+    {
+     "part": "tend",
+     "mean": "뻗다"
+    }
+   ],
+   "etymHint": "tend(뻗다) → 마음이 한쪽으로 뻗다 → 경향이 있다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 95,
+    "exams": 49,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "value",
+   "ipa": "/ˈvæljuː/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "가치, 값어치",
+     "ex": "The value of a forest can differ greatly from one group of people to another.",
+     "tr": "숲의 가치는 집단에 따라 크게 다를 수 있다.",
+     "src": "2019 9월모평 40번"
+    },
+    {
+     "pos": "v.",
+     "ko": "소중히 여기다, 평가하다"
+    }
+   ],
+   "syn": [
+    "worth",
+    "appreciate"
+   ],
+   "deriv": [
+    "valuable (adj.)",
+    "invaluable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "val",
+     "mean": "가치 있다"
+    }
+   ],
+   "etymHint": "val(가치 있다) → 가치",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 180,
+    "exams": 50,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "role",
+   "ipa": "/roʊl/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "역할, 임무",
+     "ex": "The power of suggestion plays a key role in shaping people’s decisions.",
+     "tr": "암시의 힘은 사람들의 결정을 형성하는 데 핵심적인 역할을 한다.",
+     "src": "2009 6월모평 24번"
+    }
+   ],
+   "syn": [
+    "part",
+    "function"
+   ],
+   "deriv": [],
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 112,
+    "exams": 48,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "research",
+   "ipa": "/rɪˈsɜːrtʃ/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "연구, 조사",
+     "ex": "Research shows that children do better in math when music is part of the lesson.",
+     "tr": "연구에 따르면 아이들은 수업에 음악이 포함될 때 수학을 더 잘한다.",
+     "src": "2016 9월모평 21번"
+    },
+    {
+     "pos": "v.",
+     "ko": "연구하다, 조사하다"
+    }
+   ],
+   "syn": [
+    "study",
+    "investigation"
+   ],
+   "deriv": [
+    "researcher (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "다시"
+    },
+    {
+     "part": "search",
+     "mean": "찾다"
+    }
+   ],
+   "etymHint": "re(다시)+search(찾다) → 거듭 찾다 → 연구하다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 102,
+    "exams": 42,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "personal",
+   "ipa": "/ˈpɜːrsənl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "개인의, 사적인",
+     "ex": "He says that two personal letters completely changed his life.",
+     "tr": "그는 두 통의 개인적인 편지가 자기 삶을 완전히 바꿔 놓았다고 말한다.",
+     "src": "2018 수능 30번"
+    }
+   ],
+   "syn": [
+    "private",
+    "individual"
+   ],
+   "deriv": [
+    "personally (adv.)",
+    "personality (n.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 84,
+    "exams": 42,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "develop",
+   "ipa": "/dɪˈveləp/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "발전시키다, 개발하다",
+     "ex": "Later in his career, he developed his own theory of social systems.",
+     "tr": "경력 후반에 그는 자신만의 사회 체계 이론을 발전시켰다.",
+     "src": "2023 수능 26번"
+    },
+    {
+     "pos": "v.",
+     "ko": "(능력·병이) 생기다, 자라다"
+    }
+   ],
+   "syn": [
+    "create",
+    "expand"
+   ],
+   "deriv": [
+    "development (n.)",
+    "developer (n.)"
+   ],
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 159,
+    "exams": 51,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "future",
+   "ipa": "/ˈfjuːtʃər/",
+   "pos": "n./adj.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "미래, 장래",
+     "ex": "The doctor of the future will need to treat each patient differently.",
+     "tr": "미래의 의사는 환자마다 다르게 치료해야 할 것이다.",
+     "src": "2010 수능 25번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "미래의"
+    }
+   ],
+   "syn": [
+    "tomorrow",
+    "prospect"
+   ],
+   "deriv": [],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 125,
+    "exams": 41,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "skill",
+   "ipa": "/skɪl/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "기술, 솜씨, 능력",
+     "ex": "Praise alone will not help you develop real tennis skills.",
+     "tr": "칭찬만으로는 실제 테니스 실력을 기르는 데 도움이 되지 않는다.",
+     "src": "2014 6월모평 25번"
+    }
+   ],
+   "syn": [
+    "ability",
+    "talent"
+   ],
+   "deriv": [
+    "skilled (adj.)",
+    "skillful (adj.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 121,
+    "exams": 46,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "attention",
+   "ipa": "/əˈtenʃn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "주의, 주목, 관심",
+     "ex": "When you are under pressure, pay more attention to rest and relaxation.",
+     "tr": "압박을 받을 때는 휴식과 이완에 더 많은 주의를 기울여라.",
+     "src": "2014 수능 25번"
+    }
+   ],
+   "syn": [
+    "notice",
+    "focus"
+   ],
+   "deriv": [
+    "attentive (adj.)",
+    "attend (v.)"
+   ],
+   "roots": [
+    {
+     "part": "at-",
+     "mean": "~로"
+    },
+    {
+     "part": "tent",
+     "mean": "뻗다"
+    }
+   ],
+   "etymHint": "at(~로)+tent(뻗다) → 마음을 ~로 뻗음 → 주의",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 100,
+    "exams": 41,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "century",
+   "ipa": "/ˈsentʃəri/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "세기, 100년",
+     "ex": "In the twentieth century, advances in technology changed how we store food.",
+     "tr": "20세기에 기술의 발전은 우리가 음식을 저장하는 방식을 바꾸었다.",
+     "src": "2015 6월모평 27번"
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "cent",
+     "mean": "100"
+    }
+   ],
+   "etymHint": "cent(100) → 100년 → 세기",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 97,
+    "exams": 42,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "modern",
+   "ipa": "/ˈmɑːdərn/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "현대의, 근대의",
+     "ex": "Modern economies depend on moving goods and people safely and reliably.",
+     "tr": "현대 경제는 상품과 사람을 안전하고 확실하게 이동시키는 데 의존한다.",
+     "src": "2013 6월모평 27번"
+    }
+   ],
+   "syn": [
+    "contemporary",
+    "current"
+   ],
+   "deriv": [
+    "modernize (v.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 94,
+    "exams": 41,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "control",
+   "ipa": "/kənˈtroʊl/",
+   "pos": "v./n.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "통제하다, 조절하다",
+     "ex": "A good leader never lets anger get out of control.",
+     "tr": "훌륭한 리더는 결코 분노가 통제를 벗어나게 두지 않는다.",
+     "src": "2012 6월모평 29번"
+    },
+    {
+     "pos": "n.",
+     "ko": "통제(력), 지배"
+    }
+   ],
+   "syn": [
+    "manage",
+    "regulate"
+   ],
+   "deriv": [
+    "controller (n.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 91,
+    "exams": 43,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "particular",
+   "ipa": "/pərˈtɪkjələr/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "특정한, 특별한",
+     "ex": "Early humans in Europe hunted large animals, particularly reindeer.",
+     "tr": "유럽의 초기 인류는 큰 동물, 특히 순록을 사냥했다.",
+     "src": "2019 수능 30번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "까다로운"
+    }
+   ],
+   "syn": [
+    "specific",
+    "certain"
+   ],
+   "deriv": [
+    "particularly (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "part",
+     "mean": "부분"
+    }
+   ],
+   "etymHint": "part(부분) → 특정 부분의 → 특정한",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 85,
+    "exams": 40,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "society",
+   "ipa": "/səˈsaɪəti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "사회, 집단",
+     "ex": "Even when an idea fits a society’s needs, it may not be accepted.",
+     "tr": "어떤 생각이 사회의 필요에 부합하더라도 받아들여지지 않을 수 있다.",
+     "src": "2016 수능 31번"
+    }
+   ],
+   "syn": [
+    "community",
+    "public"
+   ],
+   "deriv": [
+    "social (adj.)",
+    "sociable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "soci",
+     "mean": "동료"
+    }
+   ],
+   "etymHint": "soci(동료) → 동료들의 모임 → 사회",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 141,
+    "exams": 46,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "effect",
+   "ipa": "/ɪˈfekt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "영향, 효과, 결과",
+     "ex": "Scientists asked what effect the warming had on Alaska’s glaciers.",
+     "tr": "과학자들은 그 온난화가 알래스카의 빙하에 어떤 영향을 미쳤는지 물었다.",
+     "src": "2019 6월모평 29번"
+    }
+   ],
+   "syn": [
+    "result",
+    "impact"
+   ],
+   "deriv": [
+    "effective (adj.)",
+    "effectively (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "ef-",
+     "mean": "밖으로"
+    },
+    {
+     "part": "fect",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "ef(밖으로)+fect(만들다) → 만들어 낸 결과 → 효과",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 127,
+    "exams": 51,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "certain",
+   "ipa": "/ˈsɜːrtn/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "확실한, 틀림없는",
+     "ex": "Some thinkers assume that certain works of art produce certain effects.",
+     "tr": "어떤 사상가들은 특정 예술 작품이 특정한 효과를 낳는다고 가정한다.",
+     "src": "2015 수능 40번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "어떤, 특정한"
+    }
+   ],
+   "syn": [
+    "sure",
+    "definite"
+   ],
+   "deriv": [
+    "certainly (adv.)",
+    "certainty (n.)"
+   ],
+   "roots": [
+    {
+     "part": "cert",
+     "mean": "확실한"
+    }
+   ],
+   "etymHint": "cert(확실한) → 확실한",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 95,
+    "exams": 40,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "physical",
+   "ipa": "/ˈfɪzɪkl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "신체의, 육체의",
+     "ex": "A metaphor makes us think about the physical qualities of an object.",
+     "tr": "은유는 우리가 어떤 사물의 물리적 특성을 생각하게 만든다.",
+     "src": "2011 6월모평 45번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "물리적인, 물질의"
+    }
+   ],
+   "syn": [
+    "bodily",
+    "material"
+   ],
+   "deriv": [
+    "physically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "phys",
+     "mean": "자연·몸"
+    }
+   ],
+   "etymHint": "phys(자연·몸) → 몸의 → 신체의",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 98,
+    "exams": 40,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "science",
+   "ipa": "/ˈsaɪəns/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "과학",
+     "ex": "Decades later, science finally faced the questions Mendel had raised.",
+     "tr": "수십 년 후, 과학은 마침내 멘델이 제기한 질문들에 직면했다.",
+     "src": "2024 9월모평 33번"
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "scientific (adj.)",
+    "scientist (n.)"
+   ],
+   "roots": [
+    {
+     "part": "sci",
+     "mean": "알다"
+    }
+   ],
+   "etymHint": "sci(알다) → 앎의 체계 → 과학",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 184,
+    "exams": 41,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "knowledge",
+   "ipa": "/ˈnɑːlɪdʒ/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "지식, 앎",
+     "ex": "The best tests probe a student’s knowledge at a deep level.",
+     "tr": "가장 좋은 시험은 학생의 지식을 깊은 수준에서 점검한다.",
+     "src": "2013 9월모평 33번"
+    }
+   ],
+   "syn": [
+    "understanding",
+    "wisdom"
+   ],
+   "deriv": [
+    "knowledgeable (adj.)"
+   ],
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 151,
+    "exams": 39,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "culture",
+   "ipa": "/ˈkʌltʃər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "문화",
+     "ex": "In most musical cultures around the world, pitch plays a central role.",
+     "tr": "전 세계 대부분의 음악 문화에서 음높이는 중심적인 역할을 한다.",
+     "src": "2020 수능 34번"
+    }
+   ],
+   "syn": [
+    "civilization",
+    "tradition"
+   ],
+   "deriv": [
+    "cultural (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "cult",
+     "mean": "가꾸다"
+    }
+   ],
+   "etymHint": "cult(가꾸다) → 가꾸어 온 것 → 문화",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 143,
+    "exams": 43,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "believe",
+   "ipa": "/bɪˈliːv/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "믿다, ~라고 생각하다",
+     "ex": "Greene believes that emotions act as the automatic setting for our morality.",
+     "tr": "그린은 감정이 우리 도덕의 자동 설정 역할을 한다고 믿는다.",
+     "src": "2012 9월모평 45번"
+    }
+   ],
+   "syn": [
+    "trust",
+    "suppose"
+   ],
+   "deriv": [
+    "belief (n.)",
+    "believable (adj.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 127,
+    "exams": 45,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "company",
+   "ipa": "/ˈkʌmpəni/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "회사, 기업",
+     "ex": "One company developed a shared ‘technology shelf’ for its engineers.",
+     "tr": "한 회사는 엔지니어들을 위한 공용 ‘기술 선반’을 개발했다.",
+     "src": "2012 수능 21번"
+    },
+    {
+     "pos": "n.",
+     "ko": "함께 있음, 일행, 동료"
+    }
+   ],
+   "syn": [
+    "firm",
+    "business"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "com-",
+     "mean": "함께"
+    },
+    {
+     "part": "pan",
+     "mean": "빵"
+    }
+   ],
+   "etymHint": "com(함께)+pan(빵) → 함께 빵 먹는 무리 → 일행/회사",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 124,
+    "exams": 42,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "create",
+   "ipa": "/kriˈeɪt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "창조하다, 만들어 내다",
+     "ex": "The very features that create expertise in one field can cause blindness in others.",
+     "tr": "한 분야에서 전문성을 만들어 내는 바로 그 특성이 다른 분야에서는 무지를 낳을 수 있다.",
+     "src": "2022 수능 21번"
+    }
+   ],
+   "syn": [
+    "produce",
+    "generate"
+   ],
+   "deriv": [
+    "creation (n.)",
+    "creative (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "cre",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "cre(만들다) → 새로 만들다 → 창조하다",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 176,
+    "exams": 52,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "system",
+   "ipa": "/ˈsɪstəm/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "체계, 시스템, 제도",
+     "ex": "When the economy works as a belief system, it limits a consumer’s free choice.",
+     "tr": "경제가 신념 체계로 작동하면 소비자의 자유로운 선택을 제한한다.",
+     "src": "2015 9월모평 34번"
+    }
+   ],
+   "syn": [
+    "structure",
+    "method"
+   ],
+   "deriv": [
+    "systematic (adj.)"
+   ],
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 158,
+    "exams": 46,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "activity",
+   "ipa": "/ækˈtɪvəti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "활동, 행위",
+     "ex": "Choosing how to frame a problem is a critical activity in solving it.",
+     "tr": "문제를 어떻게 규정할지 정하는 것은 문제 해결에서 매우 중요한 활동이다.",
+     "src": "2021 6월모평 23번"
+    }
+   ],
+   "syn": [
+    "action",
+    "pursuit"
+   ],
+   "deriv": [
+    "active (adj.)",
+    "activate (v.)"
+   ],
+   "roots": [
+    {
+     "part": "act",
+     "mean": "행하다"
+    }
+   ],
+   "etymHint": "act(행하다) → 행하는 것 → 활동",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 188,
+    "exams": 49,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "require",
+   "ipa": "/rɪˈkwaɪər/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "요구하다, 필요로 하다",
+     "ex": "A careful defense is required against any weak argument.",
+     "tr": "어떤 허술한 주장에 대해서도 신중한 방어가 요구된다.",
+     "src": "2018 6월모평 32번"
+    }
+   ],
+   "syn": [
+    "need",
+    "demand"
+   ],
+   "deriv": [
+    "requirement (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "다시"
+    },
+    {
+     "part": "quire",
+     "mean": "구하다"
+    }
+   ],
+   "etymHint": "re(거듭)+quire(구하다) → 거듭 구하다 → 요구하다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 135,
+    "exams": 47,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "affect",
+   "ipa": "/əˈfekt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "영향을 미치다",
+     "ex": "Dogs are not affected by outside events the way humans are.",
+     "tr": "개는 인간과 달리 외부 사건에 영향을 받지 않는다.",
+     "src": "2013 수능 24번"
+    }
+   ],
+   "syn": [
+    "influence",
+    "impact"
+   ],
+   "deriv": [
+    "affection (n.)"
+   ],
+   "roots": [
+    {
+     "part": "af-",
+     "mean": "~에"
+    },
+    {
+     "part": "fect",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "af(~에)+fect(만들다) → ~에 작용하다 → 영향을 미치다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 58,
+    "exams": 36,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "increase",
+   "ipa": "/ɪnˈkriːs/",
+   "pos": "v./n.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "증가하다, 늘리다",
+     "ex": "Rising incomes usually lead to an increase in car ownership.",
+     "tr": "소득 증가는 보통 자동차 소유의 증가로 이어진다.",
+     "src": "2023 6월모평 30번"
+    },
+    {
+     "pos": "n.",
+     "ko": "증가"
+    }
+   ],
+   "syn": [
+    "rise",
+    "grow"
+   ],
+   "deriv": [
+    "increasingly (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "안으로"
+    },
+    {
+     "part": "cre",
+     "mean": "자라다"
+    }
+   ],
+   "etymHint": "in(안으로)+cre(자라다) → 더 자라다 → 증가하다",
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 190,
+    "exams": 53,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "reduce",
+   "ipa": "/rɪˈduːs/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "줄이다, 감소시키다",
+     "ex": "To feel happier, we can reduce the number of things we try to achieve.",
+     "tr": "더 행복해지기 위해 우리는 이루려는 일의 수를 줄일 수 있다.",
+     "src": "2011 9월모평 28번"
+    }
+   ],
+   "syn": [
+    "decrease",
+    "lower"
+   ],
+   "deriv": [
+    "reduction (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "뒤로"
+    },
+    {
+     "part": "duce",
+     "mean": "이끌다"
+    }
+   ],
+   "etymHint": "re(뒤로)+duce(이끌다) → 뒤로 끌어내리다 → 줄이다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 82,
+    "exams": 40,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "improve",
+   "ipa": "/ɪmˈpruːv/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "향상시키다, 개선되다",
+     "ex": "Sharing food greatly improves each bat’s chances of survival.",
+     "tr": "먹이를 나누는 것은 각 박쥐의 생존 가능성을 크게 향상시킨다.",
+     "src": "2011 수능 24번"
+    }
+   ],
+   "syn": [
+    "enhance",
+    "upgrade"
+   ],
+   "deriv": [
+    "improvement (n.)"
+   ],
+   "level": "A2",
+   "exam": {
+    "tested": true,
+    "count": 53,
+    "exams": 35,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "social",
+   "ipa": "/ˈsoʊʃl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "사회의, 사회적인",
+     "ex": "No social institution can be fully understood on its own.",
+     "tr": "어떤 사회 제도도 그 자체만으로는 완전히 이해될 수 없다.",
+     "src": "2020 9월모평 34번"
+    }
+   ],
+   "syn": [
+    "communal",
+    "public"
+   ],
+   "deriv": [
+    "socially (adv.)",
+    "socialize (v.)"
+   ],
+   "roots": [
+    {
+     "part": "soci",
+     "mean": "동료"
+    }
+   ],
+   "etymHint": "soci(동료) → 동료와 어울리는 → 사회적인",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 275,
+    "exams": 53,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "individual",
+   "ipa": "/ˌɪndɪˈvɪdʒuəl/",
+   "pos": "n./adj.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "개인",
+     "ex": "Some scholars argue that the ‘individual’ is partly a social invention.",
+     "tr": "일부 학자들은 ‘개인’이 부분적으로 사회적 발명품이라고 주장한다.",
+     "src": "2021 9월모평 23번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "개별의, 각각의"
+    }
+   ],
+   "syn": [
+    "person",
+    "single"
+   ],
+   "deriv": [
+    "individually (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "아닌"
+    },
+    {
+     "part": "divid",
+     "mean": "나누다"
+    }
+   ],
+   "etymHint": "in(아닌)+divid(나누다) → 더 못 나누는 → 개인",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 206,
+    "exams": 50,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "environment",
+   "ipa": "/ɪnˈvaɪrənmənt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "환경",
+     "ex": "To understand the frog, watch it swim and consider its environment.",
+     "tr": "개구리를 이해하려면 그것이 헤엄치는 모습을 보고 그 환경을 고려하라.",
+     "src": "2016 6월모평 40번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(주변) 상황, 분위기"
+    }
+   ],
+   "syn": [
+    "surroundings",
+    "habitat"
+   ],
+   "deriv": [
+    "environmental (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "environ",
+     "mean": "둘러싸다"
+    }
+   ],
+   "etymHint": "environ(둘러싸다) → 둘러싼 것 → 환경",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 121,
+    "exams": 49,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  }
+ ],
+ "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다."
 }
