@@ -2,53 +2,63 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>수능 기본 Day 1 — 카드 미리보기</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{--navy:#1c3553;--ink:#1a1511;--ink60:#6b7682;--gold:#b08544;--cardbg:#fbf8f3;}
-  body{font-family:'Pretendard',-apple-system,sans-serif;background:#eef0f3;color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:18px 14px 40px;}
-  .top{width:100%;max-width:420px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  html,body{height:100%;}
+  body{font-family:'Pretendard',-apple-system,sans-serif;background:#eef0f3;color:var(--ink);
+       height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
+  .top{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
+       padding:14px 18px calc(10px);border-bottom:1px solid rgba(28,53,83,0.07);background:#fff;}
   .book{font-weight:700;font-size:16px;color:var(--navy);}
   .book small{color:var(--ink60);font-weight:500;font-size:12px;margin-left:4px;}
   .counter{font-size:13px;color:var(--ink60);font-weight:600;}
-  .card{width:100%;max-width:420px;min-height:380px;background:var(--cardbg);border:1px solid rgba(28,53,83,0.12);border-radius:20px;box-shadow:0 14px 34px rgba(28,53,83,0.12);padding:20px 20px 18px;cursor:pointer;position:relative;display:flex;flex-direction:column;}
-  .badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
-  .b{font-size:11px;font-weight:700;border-radius:99px;padding:4px 10px;color:#fff;}
+  /* 카드 영역: 남는 공간 전부 차지, 내용 길면 내부 스크롤 */
+  .stage{flex:1;min-height:0;display:flex;padding:14px;}
+  .card{flex:1;width:100%;max-width:680px;margin:0 auto;background:var(--cardbg);
+        border:1px solid rgba(28,53,83,0.12);border-radius:20px;box-shadow:0 10px 28px rgba(28,53,83,0.10);
+        padding:22px 22px 20px;cursor:pointer;display:flex;flex-direction:column;overflow-y:auto;}
+  .badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;flex-shrink:0;}
+  .b{font-size:12px;font-weight:700;border-radius:99px;padding:5px 12px;color:#fff;}
   .b-exam{background:#c0392b;} .b-cefr{background:#2980b9;}
-  .front-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-  .word{font-size:38px;font-weight:600;color:var(--navy);letter-spacing:-0.5px;text-align:center;}
-  .ipa{font-size:15px;color:var(--ink60);}
-  .pos{font-size:13px;color:var(--gold);font-weight:700;}
-  .speak{margin-top:8px;background:rgba(176,133,68,0.16);border:1px solid rgba(176,133,68,0.45);color:#8a6520;border-radius:99px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;}
-  .hint{text-align:center;font-size:11px;color:#9aa3ad;margin-top:6px;}
-  .bk-head{text-align:center;border-bottom:1px solid rgba(28,53,83,0.1);padding-bottom:8px;margin-bottom:11px;}
-  .bk-head .w{font-size:20px;font-weight:600;color:var(--navy);} .bk-head .i{font-size:12px;color:var(--ink60);margin-left:6px;}
-  .lbl{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.5px;margin-bottom:5px;}
-  .mean{font-size:14px;color:#2b3a4a;line-height:1.75;margin-bottom:12px;}
+  .front-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+  .word{font-size:clamp(40px,11vw,64px);font-weight:600;color:var(--navy);letter-spacing:-0.5px;text-align:center;line-height:1.1;}
+  .ipa{font-size:clamp(16px,4.5vw,20px);color:var(--ink60);}
+  .pos{font-size:14px;color:var(--gold);font-weight:700;}
+  .speak{margin-top:10px;background:rgba(176,133,68,0.16);border:1px solid rgba(176,133,68,0.45);color:#8a6520;border-radius:99px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;}
+  .hint{text-align:center;font-size:12px;color:#9aa3ad;flex-shrink:0;padding-top:8px;}
+  .bk-head{text-align:center;border-bottom:1px solid rgba(28,53,83,0.1);padding-bottom:10px;margin-bottom:14px;flex-shrink:0;}
+  .bk-head .w{font-size:24px;font-weight:600;color:var(--navy);} .bk-head .i{font-size:13px;color:var(--ink60);margin-left:6px;}
+  .lbl{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.5px;margin-bottom:6px;}
+  .mean{font-size:16px;color:#2b3a4a;line-height:1.85;margin-bottom:14px;}
   .mean .num{color:#7b8794;} .mean .p{color:var(--gold);font-weight:700;}
-  .exbox{background:rgba(28,53,83,0.05);border-radius:10px;padding:10px 12px;margin-bottom:11px;}
-  .exbox .src{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#c0392b;background:#fdecea;border-radius:6px;padding:2px 8px;margin-bottom:6px;}
-  .exbox .en{font-size:13px;color:var(--navy);line-height:1.5;} .exbox .tr{font-size:12px;color:#6b7682;margin-top:3px;}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px;}
-  .chip{background:#eef1f5;color:#4a5663;border-radius:6px;padding:3px 8px;font-size:11px;}
-  .etym{background:rgba(176,133,68,0.13);border:1px dashed rgba(176,133,68,0.5);border-radius:10px;padding:9px 11px;}
-  .etym .lbl2{font-size:10px;font-weight:700;color:#8a6520;margin-bottom:3px;}
-  .etym .t{font-size:12px;color:#5a4a2a;line-height:1.5;}
-  .nav{width:100%;max-width:420px;display:flex;gap:10px;margin-top:16px;}
-  .nav button{flex:1;padding:13px;border:1px solid rgba(28,53,83,0.18);background:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;color:var(--navy);cursor:pointer;}
+  .exbox{background:rgba(28,53,83,0.05);border-radius:12px;padding:12px 14px;margin-bottom:12px;}
+  .exbox .src{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#c0392b;background:#fdecea;border-radius:6px;padding:3px 9px;margin-bottom:7px;}
+  .exbox .en{font-size:15px;color:var(--navy);line-height:1.55;} .exbox .tr{font-size:13px;color:#6b7682;margin-top:4px;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+  .chip{background:#eef1f5;color:#4a5663;border-radius:7px;padding:5px 10px;font-size:12.5px;}
+  .etym{background:rgba(176,133,68,0.13);border:1px dashed rgba(176,133,68,0.5);border-radius:12px;padding:11px 13px;}
+  .etym .lbl2{font-size:11px;font-weight:700;color:#8a6520;margin-bottom:4px;}
+  .etym .t{font-size:13.5px;color:#5a4a2a;line-height:1.55;}
+  /* 하단 고정 네비 */
+  .nav{flex-shrink:0;display:flex;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+       background:#fff;border-top:1px solid rgba(28,53,83,0.08);}
+  .nav button{flex:1;padding:15px 0;border:1px solid rgba(28,53,83,0.18);background:#fff;border-radius:12px;
+              font-family:inherit;font-size:15px;font-weight:700;color:var(--navy);cursor:pointer;}
   .nav button:active{transform:translateY(1px);}
-  .flipbtn{background:var(--navy)!important;color:#fff!important;border:none!important;}
+  .flipbtn{background:var(--navy)!important;color:#fff!important;border:none!important;flex:1.3!important;}
 </style>
 </head>
 <body>
   <div class="top"><div class="book">📕 수능 기본 <small>· Day 1</small></div><div class="counter" id="counter">1 / 40</div></div>
-  <div class="card" id="card" onclick="flip()"></div>
+  <div class="stage"><div class="card" id="card" onclick="flip()"></div></div>
   <div class="nav">
-    <button onclick="prev()">← 이전</button>
+    <button onclick="prev()">←</button>
     <button class="flipbtn" onclick="flip()">뒤집기</button>
-    <button onclick="next()">다음 →</button>
+    <button onclick="next()">→</button>
   </div>
 <script>
 let words=[], idx=0, flipped=false;
@@ -58,7 +68,7 @@ function speak(w){try{const u=new SpeechSynthesisUtterance(w);u.lang='en-US';spe
 function render(){
   const w=words[idx]; if(!w)return;
   document.getElementById('counter').textContent=(idx+1)+' / '+words.length;
-  const ex=w.exam||{}, c=document.getElementById('card');
+  const ex=w.exam||{}, c=document.getElementById('card'); c.scrollTop=0;
   if(!flipped){
     c.innerHTML=`<div class="badges">${ex.tested?`<span class="b b-exam">🎯 기출 ${star(ex.stars)} · ${ex.exams}개 시험</span>`:''}<span class="b b-cefr">CEFR ${esc(w.level)}</span></div>
       <div class="front-c">
