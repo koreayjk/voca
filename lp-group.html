@@ -54,7 +54,8 @@
     .cta-note { display: block; font-size: 12px; color: var(--ink-40); margin-top: 12px; }
     .signup-hint { max-width: 360px; margin: 22px auto 0; text-align: left; background: rgba(255,255,255,0.05); border: 1px solid var(--ink-12); border-radius: 14px; padding: 16px 18px; }
     .signup-hint-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
-    .signup-hint-row { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--ink-60); line-height: 1.5; padding: 4px 0; }
+    .signup-hint-row { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--ink-60); line-height: 1.55; padding: 4px 0; word-break: keep-all; }
+    .signup-hint-row > span:last-child, .signup-hint-row p { word-break: keep-all; }
     .signup-hint-row b { color: var(--accent); font-weight: 700; }
     .signup-hint-num { flex-shrink: 0; width: 19px; height: 19px; border-radius: 50%; background: var(--accent); color: #16202b; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
 
@@ -131,9 +132,9 @@
     <span class="cta-note reveal">카드 등록 없음 · 30초 가입 · 원장 무료</span>
     <div class="signup-hint reveal">
       <div class="signup-hint-title">💡 가입은 이렇게 하세요</div>
-      <div class="signup-hint-row"><span class="signup-hint-num">1</span> 회원가입 화면에서 계정 유형을 <b>‘단체(학원)’</b> 로 선택</div>
-      <div class="signup-hint-row"><span class="signup-hint-num">2</span> 역할을 <b>‘단체장(원장)’</b> 으로 선택하고 학원 이름 입력</div>
-      <div class="signup-hint-row"><span class="signup-hint-num">3</span> 완료! 가입 코드가 생기면 학생에게 공유하세요</div>
+      <div class="signup-hint-row"><span class="signup-hint-num">1</span><span>회원가입에서 계정 유형 <b>‘단체(학원)’</b> 선택</span></div>
+      <div class="signup-hint-row"><span class="signup-hint-num">2</span><span>역할 <b>‘단체장(원장)’</b> 선택 후 학원 이름 입력</span></div>
+      <div class="signup-hint-row"><span class="signup-hint-num">3</span><span>가입 코드가 생기면 학생들에게 공유</span></div>
     </div>
   </header>
 
