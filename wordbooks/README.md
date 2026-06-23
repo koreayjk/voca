@@ -17,11 +17,27 @@
 - 기출 원본 PDF: `../../test/` 폴더 (EBSi 다운로드, 67개·중복포함). `pdftotext`로 추출, python은 `/opt/homebrew/bin/python3`(3.14).
 - ★ 기준: ★★★ ≥20개 시험 · ★★ 8~19 · ★ 1~7.
 
-## 파서 도구 (`tools/`, 재사용) — 문항단위 파서 완성
+## 파서·생성 도구 (`tools/`, 재사용)
+**핵심 발견: `pdftotext -raw`가 2단 편집을 읽기순서대로 뽑아 문항번호(18~45)가 단조증가** → 줄머리 `NN.` 앵커로 문항 분리하면 단어↔문항 매핑 정확. (-layout은 컬럼이 줄단위로 섞여 실패. README 우려 해소.)
 - `extract_corpus.py` → `corpus/index.json`(48개 시험 라벨식별: 연도+회차) + `corpus/<label>.txt`. 나머지 9개는 헤더가 이미지라 자동 라벨 실패(빈 PDF 3개 포함). 48개로 충분.
-- `find_occurrences.py <book.json>` → `corpus/occurrences.json`. **핵심 발견: `pdftotext -raw`가 2단 편집을 읽기순서대로 뽑아 문항번호(18~45)가 단조증가** → 줄머리 `NN.` 앵커로 문항 분리하면 단어↔문항 매핑 정확. (-layout은 컬럼이 줄단위로 섞여 실패. README 우려 해소.)
-- `assign_sources.py` → `corpus/assigned.json`. 회차 골고루(40단어=40시험), 정확단어·깨끗한 완결문장 우선.
-- `merge_examples.py` — 재작성 예문/해석을 단어에 병합(src는 assigned.json에서 가져와 정합성 보장). **대량 생성 시 EX dict 부분을 Gemini/Claude 생성으로 대체하면 됨.**
+- `stopwords.txt` — 기능어·기초어(A1~A2)·요일/월·고유명사·불규칙형 제외 목록. 빈도 최상위어=쉬운 어휘라 필수.
+- `build_day.py <N>` / `build_all_scaffolds.py <START> <END>` — 선택풀을 (stars,exams,total)순 + 스톱필터 + 복수형 휴리스틱으로 정렬, 40단어씩 Day 청크 선정 → 회차 골고루 출처배정 + recentYear 계산 → `suneung-basic-day<N>.scaffold.json`(언어정보 빈칸, `_ref`=실제 기출문장).
+- **content.json 작성**(유일한 수작업/LLM): scaffold의 단어별 ipa·뜻·동의어·파생·어원 + `_ref` 기반 기출변형 예문 → `day<N>.content.json`. → 워크플로우 `generate-wordbook-days`로 병렬 생성.
+- `merge_day.py <N>` — scaffold + content → 최종 `suneung-basic-day<N>.json`(src/exam/recentYear는 scaffold 유지, 누락단어 검증).
+- (구) `find_occurrences.py`/`assign_sources.py`/`merge_examples.py` — Day1 예문교체용 초기 스크립트.
+
+## 진행 상황
+- **수능 기본 1권 완성: Day1~30 = 1,200단어**(중복 0, 전 필드 검증 통과). 각 단어 풀포맷 + 기출변형 예문 + 출처.
+  - Day3~30은 워크플로우 `generate-wordbook-days`로 content.json 병렬 생성 후 merge_day로 완성.
+  - 예외: jealous(D16)·envious(D27)는 듣기 '심정' 어휘라 독해(18~45)에 없어 출처/recentYear 공란 → 카드가 "🎯 기출 N개 시험"으로 폴백(정상).
+  - 선택풀 잔여 ~256단어(+frequency 상위어)는 다음 권(수능 핵심 등)으로.
+- 중간 산출물: `suneung-basic-day<N>.scaffold.json`(재생성 가능), `day<N>.content.json`(콘텐츠 소스, 편집 시 merge_day 재실행).
+- 프리뷰: `wordbook-preview.html?day=N`으로 Day 전환(book/day 라벨 자동).
+
+## 다음 권 만들 때
+1. (필요시) 권 경계용 CEFR/난이도 필터 보강 — 현재는 빈도·★ 순. 수능 핵심/고난도는 더 희소·고급 어휘 위주.
+2. `build_all_scaffolds.py <START> <END>` (이미 쓴 단어 자동 제외) → 워크플로우 재실행(프롬프트의 book명/레벨만 교체) → merge_day → 검증 스크립트.
+3. 검증: 단어수 40·중복 0·필수필드·예문 표제어 포함(위 1회용 검증 코드 재사용).
 
 ## 단어 1개 포맷 (JSON)
 `en · ipa · pos · meanings[]{pos,ko,ex,tr}(다의어는 빈출 뜻 2~3개) · syn[] · deriv[] · roots[]/etymHint(어근분해만, 스토리형 금지) · level(CEFR) · exam{count,exams,recentYear,stars}`

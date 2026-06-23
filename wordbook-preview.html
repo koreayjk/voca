@@ -53,7 +53,7 @@
 </style>
 </head>
 <body>
-  <div class="top"><div class="book">📕 수능 기본 <small>· Day 1</small></div><div class="counter" id="counter">1 / 40</div></div>
+  <div class="top"><div class="book">📕 <span id="bookname">수능 기본</span> <small id="daylabel">· Day 1</small></div><div class="counter" id="counter">1 / 40</div></div>
   <div class="stage"><div class="card" id="card" onclick="flip()"></div></div>
   <div class="nav">
     <button onclick="prev()">←</button>
@@ -81,7 +81,7 @@ function render(){
   } else {
     const meanings=(w.meanings||[]).map((m,i)=>`<div><span class="num">${'①②③④'[i]||'·'}</span> <span class="p">${esc(m.pos)}</span> ${esc(m.ko)}</div>`).join('');
     const m0=(w.meanings||[])[0]||{};
-    const src=m0.src?`<div class="src">🎯 ${esc(m0.src)} 기출변형</div>`:(ex.tested?`<div class="src">🎯 기출 ${ex.exams}개 시험 · 최근 ${esc(ex.recentYear)}</div>`:'');
+    const src=m0.src?`<div class="src">🎯 ${esc(m0.src)} 기출변형</div>`:(ex.tested?`<div class="src">🎯 기출 ${ex.exams}개 시험${ex.recentYear?` · 최근 ${esc(ex.recentYear)}`:''}</div>`:'');
     const chips=[ (w.syn&&w.syn.length)?`<span class="chip">동의어 ${w.syn.map(esc).join(' · ')}</span>`:'', (w.deriv&&w.deriv.length)?`<span class="chip">파생 ${w.deriv.map(esc).join(' · ')}</span>`:'' ].join('');
     const etym=w.etymHint?`<div class="etym"><div class="lbl2">어원</div><div class="t">${esc(w.etymHint)}</div></div>`:'';
     c.innerHTML=`<div class="bk-head"><span class="w">${esc(w.en)}</span><span class="i">${esc(w.ipa)}</span></div>
@@ -95,7 +95,8 @@ function flip(){flipped=!flipped;render();}
 function next(){idx=(idx+1)%words.length;flipped=false;render();}
 function prev(){idx=(idx-1+words.length)%words.length;flipped=false;render();}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();else if(e.key==='ArrowLeft')prev();else if(e.key===' '){e.preventDefault();flip();}});
-fetch('wordbooks/suneung-basic-day1.json').then(r=>r.json()).then(d=>{words=d.words||[];render();}).catch(e=>{document.getElementById('card').innerHTML='<div style="padding:30px;text-align:center;color:#c0392b">데이터 로드 실패: '+e.message+'</div>';});
+const _day=new URLSearchParams(location.search).get('day')||'1';
+fetch('wordbooks/suneung-basic-day'+_day+'.json').then(r=>r.json()).then(d=>{words=d.words||[];if(d.book)document.getElementById('bookname').textContent=d.book;if(d.day)document.getElementById('daylabel').textContent='· Day '+d.day;render();}).catch(e=>{document.getElementById('card').innerHTML='<div style="padding:30px;text-align:center;color:#c0392b">데이터 로드 실패: '+e.message+'</div>';});
 </script>
 </body>
 </html>
