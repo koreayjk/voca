@@ -5071,6 +5071,7 @@ async function saveReviewSchedule(bookId, pageNum) {
       return date.toISOString();
     };
     const addDays = (d, n) => toMidnight(d, n);
+    // ⚠️ 컬럼명(review_2d~60d)은 레거시라 실제 복습 간격과 안 맞음. 실제 간격은 첫 학습 기준 +1/+2/+3/+6/+15/+30일 (에빙하우스). 값이 정답이며 컬럼명은 단순 라벨이니 DB 마이그레이션 없이 그대로 둠.
     const res = await fetch(SB_URL + '/rest/v1/voca_review', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
