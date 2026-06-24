@@ -1,92 +1,106 @@
 #!/usr/bin/env python3
 """
-공식 단어장(Day1~30) 단어·예문 음원을 Gemini TTS로 1회 생성 → mp3 저장.
-- 단어: audio/w/<safe-en>.mp3 · 예문: audio/s/<safe-en>.mp3 (repo 루트의 audio/)
-- 앱은 저장된 mp3를 재생(있으면), 없으면 기존 기기 TTS로 폴백 → 재생 시 API 호출 0.
-- 멱등: 이미 있는 mp3는 건너뜀(--force 면 재생성).
+공식 단어장(Day1~30) 단어·예문 음원을 Google Cloud Text-to-Speech(정식 GA)로 1회 생성 → mp3.
+- Gemini와 별개의 'Cloud Text-to-Speech API'. 할당량 넉넉, Neural2 음성, MP3 직접 반환.
+- 단어: audio/w/<safe-en>.mp3 · 예문: audio/s/<safe-en>.mp3
+- 멱등: 이미 있는 mp3는 건너뜀(--force 면 재생성). 생성 후 upload_audio.py 로 Storage 업로드.
+
+선행(1회): Google Cloud Console에서 프로젝트에 **Cloud Text-to-Speech API 사용 설정(Enable)**.
+  (API 키가 특정 API로 제한돼 있으면 TTS API도 허용해야 함)
 
 실행:
-  export GEMINI_API_KEY="<Gemini API 키>"        # ⚠️ 비공개. 커밋/공유 금지
-  python3 tools/gen_audio.py                      # dry-run(개수·예상만)
-  python3 tools/gen_audio.py --go                 # 실제 생성
-  python3 tools/gen_audio.py --go --limit 10      # 앞 10단어만(테스트)
-  python3 tools/gen_audio.py --go --force         # 전체 재생성
-  옵션: export GEMINI_TTS_VOICE="Kore" (기본) · GEMINI_TTS_MODEL="gemini-2.5-flash-preview-tts"
-선행 없음. 생성 후 audio/ 가 repo에 포함되어 imvoca.app/audio/... 로 서빙됨.
+  export GOOGLE_API_KEY="AIza...키"          # GEMINI_API_KEY 도 인식
+  python3 tools/gen_audio.py                  # dry-run
+  python3 tools/gen_audio.py --go             # 전체 생성
+  python3 tools/gen_audio.py --go --limit 30  # 테스트
+  옵션: GOOGLE_TTS_VOICE(기본 en-US-Neural2-F) · GOOGLE_TTS_LANG(en-US) · GOOGLE_TTS_RATE(0.95)
+  음성 예: en-US-Neural2-C/D/F/J, en-US-Studio-O(최고급), en-GB-Neural2-B
 """
-import os, sys, json, base64, time, subprocess, urllib.request, urllib.error
+import os, sys, json, base64, time, urllib.request, urllib.error
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent          # wordbooks/
-REPO = ROOT.parent                                       # voca/ (repo root)
+ROOT = Path(__file__).resolve().parent.parent
+REPO = ROOT.parent
 AUD = REPO / "audio"
-KEY = os.environ.get("GEMINI_API_KEY", "")
-VOICE = os.environ.get("GEMINI_TTS_VOICE", "Kore")
-MODEL = os.environ.get("GEMINI_TTS_MODEL", "gemini-2.5-flash-preview-tts")
+KEY = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY") or ""
+VOICE = os.environ.get("GOOGLE_TTS_VOICE", "en-US-Neural2-F")
+LANG = os.environ.get("GOOGLE_TTS_LANG", "en-US")
+RATE = float(os.environ.get("GOOGLE_TTS_RATE", "0.95"))
+DELAY = float(os.environ.get("GOOGLE_TTS_DELAY", "0.15"))
 GO = "--go" in sys.argv
 FORCE = "--force" in sys.argv
 LIMIT = None
-for i,a in enumerate(sys.argv):
+for i, a in enumerate(sys.argv):
     if a == "--limit" and i+1 < len(sys.argv): LIMIT = int(sys.argv[i+1])
 DAYS = list(range(1, 31))
 
-def safe(en):
-    return "".join(c for c in (en or "").lower() if c.isalnum())
+def safe(en): return "".join(c for c in (en or "").lower() if c.isalnum())
 
 def collect():
-    items = []  # (kind, text, outpath)
-    seen = set()
+    items, seen = [], set()
     for n in DAYS:
         for w in json.load(open(ROOT/f"suneung-basic-day{n}.json"))["words"]:
-            en = w["en"]; sf = safe(en)
+            sf = safe(w["en"])
             if sf in seen: continue
             seen.add(sf)
-            items.append(("w", en, AUD/"w"/f"{sf}.mp3"))
+            items.append(("w", w["en"], AUD/"w"/f"{sf}.mp3"))
             ex = (w["meanings"][0].get("ex") or "").strip()
             if ex: items.append(("s", ex, AUD/"s"/f"{sf}.mp3"))
     return items
 
 def tts(text):
-    """Gemini TTS → PCM(s16le,24k,mono) bytes."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={KEY}"
-    body = {"contents":[{"parts":[{"text":text}]}],
-            "generationConfig":{"responseModalities":["AUDIO"],
-              "speechConfig":{"voiceConfig":{"prebuiltVoiceConfig":{"voiceName":VOICE}}}}}
+    """Google Cloud TTS → mp3 bytes."""
+    url = f"https://texttospeech.googleapis.com/v1/text:synthesize?key={KEY}"
+    body = {"input": {"text": text},
+            "voice": {"languageCode": LANG, "name": VOICE},
+            "audioConfig": {"audioEncoding": "MP3", "speakingRate": RATE}}
     req = urllib.request.Request(url, data=json.dumps(body).encode(),
-                                headers={"Content-Type":"application/json"}, method="POST")
+                                headers={"Content-Type": "application/json"}, method="POST")
     with urllib.request.urlopen(req, timeout=60) as r:
-        d = json.loads(r.read().decode())
-    part = d["candidates"][0]["content"]["parts"][0]
-    return base64.b64decode(part["inlineData"]["data"])
+        raw = r.read().decode()
+    d = json.loads(raw)
+    if "audioContent" not in d:
+        raise RuntimeError("오디오 없음 → " + raw[:300])
+    return base64.b64decode(d["audioContent"])
 
-def pcm_to_mp3(pcm, outpath):
-    outpath.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-f","s16le","-ar","24000",
-                    "-ac","1","-i","pipe:0","-b:a","64k","-y",str(outpath)],
-                   input=pcm, check=True)
+def save_mp3(data, outp):
+    outp.parent.mkdir(parents=True, exist_ok=True)
+    outp.write_bytes(data)
 
 def main():
     items = collect()
     todo = [it for it in items if FORCE or not it[2].exists()]
     if LIMIT: todo = todo[:LIMIT]
-    print(f"[plan] 대상 {len(items)}개(단어+예문) · 생성 필요 {len(todo)}개 · voice={VOICE} model={MODEL}")
-    print(f"  GEMINI_API_KEY={'OK' if KEY else 'MISSING'}  출력=audio/w, audio/s")
+    print(f"[plan] 대상 {len(items)}개 · 생성 필요 {len(todo)}개 · voice={VOICE} rate={RATE}")
+    print(f"  GOOGLE_API_KEY={'OK' if KEY else 'MISSING'}  (Cloud Text-to-Speech API)")
     if not GO:
-        print("\n(dry-run) 실제 생성은 --go. 예: python3 tools/gen_audio.py --go --limit 6")
+        print("\n(dry-run) 실제 생성은 --go. 선행: Cloud Text-to-Speech API Enable.")
         return
-    if not KEY or "여기에" in KEY or any(ord(c)>127 for c in KEY):
-        print("ERROR: GEMINI_API_KEY 환경변수에 실제 키를 넣어주세요"); sys.exit(1)
-    ok=fail=0
-    for i,(kind,text,outp) in enumerate(todo,1):
+    if not KEY or "여기에" in KEY or any(ord(c) > 127 for c in KEY):
+        print("ERROR: GOOGLE_API_KEY(또는 GEMINI_API_KEY) 환경변수에 실제 키 필요"); sys.exit(1)
+    ok = fail = 0; consec = 0; i = 0
+    while i < len(todo):
+        kind, text, outp = todo[i]
         try:
-            pcm = tts(text); pcm_to_mp3(pcm, outp); ok+=1
-            if i%25==0 or i==len(todo): print(f"  {i}/{len(todo)}  ({kind}) {outp.name}")
-            time.sleep(0.4)   # rate limit 여유
+            save_mp3(tts(text), outp); ok += 1; consec = 0; i += 1
+            if ok % 50 == 0 or i == len(todo): print(f"  {ok} 생성 ({i}/{len(todo)})  최근:{outp.name}")
+            time.sleep(DELAY)
         except urllib.error.HTTPError as e:
-            fail+=1; print(f"  FAIL {outp.name}: HTTP {e.code} {e.read()[:200]}"); time.sleep(2)
+            err = e.read()[:200]
+            if e.code in (429, 503):
+                consec += 1
+                if consec >= 6:
+                    print(f"\n⛔ {e.code} 반복 — 할당량/일시오류. 잠시 후 재실행하면 이어서 됩니다."); break
+                w = min(40, 5*consec); print(f"  ⏳ {e.code} — {w}s 대기 재시도 ({outp.name})"); time.sleep(w)
+            else:
+                fail += 1; i += 1
+                print(f"  FAIL {outp.name}: HTTP {e.code} {err}")
+                if e.code in (400, 403):
+                    print("   ↳ 403/400이면: Cloud Text-to-Speech API 미사용설정 또는 키 제한일 수 있어요.");
+                time.sleep(1)
         except Exception as e:
-            fail+=1; print(f"  FAIL {outp.name}: {e}"); time.sleep(1)
-    print(f"\n완료. 생성 {ok} · 실패 {fail}. audio/ 를 커밋하면 앱이 재생합니다.")
+            fail += 1; i += 1; print(f"  FAIL {outp.name}: {e}"); time.sleep(1)
+    print(f"\n완료. 생성 {ok} · 실패 {fail}.  다음: python3 tools/upload_audio.py --go")
 
 if __name__ == "__main__":
     main()
