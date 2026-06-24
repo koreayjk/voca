@@ -1138,6 +1138,33 @@ async function incrementScanCount() {
 function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function isOrgBillingActive(){ return !!(userOrg && userOrg.billing_active); }
 function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved' && isOrgBillingActive()); }
+// 공식 단어장 접근: 프리미엄 또는 결제중 학원(관리자/승인학생) → 전체. 무료 → Day 1 체험만.
+function hasOfficialAccess(){
+  if (userPlan === 'premium') return true;
+  if (userOrgRole==='owner' && isOrgBillingActive()) return true;
+  if (isOrgStudentActive()) return true;
+  return false;
+}
+const OFFICIAL_FREE_PAGE = 'Day 1';
+function isPageLocked(bookId, pageNum){
+  const b = (typeof findBook==='function') ? findBook(bookId) : null;
+  if (!b || !b._official) return false;
+  if (hasOfficialAccess()) return false;
+  return String(pageNum) !== OFFICIAL_FREE_PAGE;
+}
+function showOfficialPaywall(){
+  toast(userNativeLang==='ko'
+    ? '🔒 Day 2~30은 프리미엄 또는 단체 결제로 열려요 · Day 1은 무료 체험!'
+    : '🔒 Day 2–30 unlock with Premium or an academy plan · Day 1 is free!');
+}
+// 학습/퀴즈 시작 가능 여부(공식책 잠금 반영). 비공식책·즐겨찾기는 항상 true.
+function _officialAccessOK(bookId, scope, pageNum){
+  const b = (typeof findBook==='function') ? findBook(bookId) : null;
+  if (!b || !b._official) return true;
+  if (hasOfficialAccess()) return true;
+  if (scope === 'page') return String(pageNum) === OFFICIAL_FREE_PAGE;
+  return false; // 무료 사용자의 책 전체 학습은 막음
+}
 function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDailyScanCount : 0; }
 function canScan() {
   if (userPlan === 'premium') return true;
@@ -2413,8 +2440,32 @@ async function loadBooksFromDB() {
             .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: w.analysis || null }))
         }))
 }));
+    await appendOfficialBooks();
     updateTotalWords();
   } catch(e) { console.error('DB load error:', e); }
+}
+
+// 공식 단어장(is_official)을 읽어 책장에 추가 (읽기전용). 이미 있으면(소유자 본인) 중복 제거.
+async function appendOfficialBooks() {
+  try {
+    const od = await sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`);
+    if (!Array.isArray(od)) return;
+    const have = new Set(books.map(b => b.id));
+    const mapped = od.filter(b => !have.has(b.id)).map(b => ({
+      id: b.id, title: b.title, author: b.author, color: b.color,
+      desc: b.description || '', cover: b.cover_url || '', category: b.category || 'general',
+      _official: true, _readonly: true,
+      pages: (b.voca_pages || [])
+        .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
+        .map(p => ({
+          num: p.page_num, _pid: p.id,
+          words: (p.voca_words || [])
+            .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
+            .map(_dbRowToWord)
+        }))
+    }));
+    if (mapped.length) books = books.concat(mapped);
+  } catch(e) { console.warn('[official load]', e); }
 }
 
 async function saveBookToDB(title, author, color, desc, cover='', category='general') {
@@ -2439,7 +2490,7 @@ async function updateTotalWords() {
   if (!currentUser) return;
   try {
     // 전체 단어 가중치 점수(CEFR) 계산 → members.total_words에 저장
-    const totalScore = books.reduce((sum, b) =>
+    const totalScore = books.filter(b => !b._official).reduce((sum, b) =>
       sum + b.pages.reduce((s, p) =>
         s + calcWordScore(p.words), 0), 0);
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { total_words: totalScore });
@@ -3864,6 +3915,7 @@ async function backfillSentences(bookId) {
 }
 
 function initStudy(bookId, scope, pageNum) {
+  if (scope !== 'favorite' && !_officialAccessOK(bookId, scope, pageNum)) { showOfficialPaywall(); return; }
   if (bookId && bookId !== '__fav__') { try { localStorage.setItem('imvoca.lastBookId', bookId); } catch(e){} }
   window._lastEarnedScore = 0;
   window._lastReviewFinished = false;
@@ -3994,9 +4046,12 @@ function render() {
             </div>
           </div>
           <div class="rule"></div>
-          ${book._readonly
+          ${book._official
+            ? `<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">📕 ${userNativeLang==='ko'?(hasOfficialAccess()?'공식 단어장 · 기출 빅데이터 기반':'공식 단어장 · Day 1 무료 체험 · 나머지는 프리미엄/단체'):'Official wordbook'}</div>`
+            + (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:'')
+            : (book._readonly
             ? `<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">📌 ${userNativeLang==='ko'?'학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요':'Assigned by your academy (read-only) · tap a page to study'}</div>`
-            : (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:'')}
+            : (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:''))}
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
           ${book.pages.length>0?`<div style="display:flex;gap:14px;flex-wrap:wrap;padding:2px 0 10px;font-size:11px;color:var(--ink-50);">
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid rgba(44,33,24,0.25);box-sizing:border-box;"></span>${userNativeLang==='ko'?'복습 전':'Not yet'}</span>
@@ -4004,16 +4059,20 @@ function render() {
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#1c3553;"></span>${userNativeLang==='ko'?'복습 완료':'Done'}</span>
           </div>`:''}
           ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
-          [...book.pages].filter(p=>(p.words&&p.words.length>0)).sort((a,b)=>pageSort(a,b)).map(p=>`
-            <div class="page-row">
-              ${(()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
-              <span class="page-row__num" onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="flex:1;cursor:pointer;">Page ${p.num}</span>
+          [...book.pages].filter(p=>(p.words&&p.words.length>0)).sort((a,b)=>pageSort(a,b)).map(p=>{
+            const locked = isPageLocked(book.id, p.num);
+            const label = book._official ? String(p.num) : ('Page '+p.num);
+            const go = locked ? 'showOfficialPaywall()' : `push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})`;
+            return `
+            <div class="page-row" style="${locked?'opacity:0.55;':''}">
+              ${locked ? `<span style="margin-right:10px;flex-shrink:0;">🔒</span>` : (()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
+              <span class="page-row__num" onclick="${go}" style="flex:1;cursor:pointer;">${label}</span>
               <span class="page-row__right">
                 ${p.words.length} words
-                <span onclick="push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})" style="font-size:16px;color:var(--ink-40);cursor:pointer;">›</span>
+                <span onclick="${go}" style="font-size:16px;color:var(--ink-40);cursor:pointer;">${locked?'🔒':'›'}</span>
                 ${book._readonly ? '' : `<span onclick="showPageMenu('${book.id}','${p.num}')" style="font-size:16px;color:var(--ink-40);cursor:pointer;padding:0 4px;">⋯</span>`}
               </span>
-            </div>`).join('')}
+            </div>`;}).join('')}
         </div>
         ${book._readonly ? '' : `<div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
@@ -4113,6 +4172,19 @@ function render() {
     const book = findBook(route.bookId);
     const page = book ? findPage(book, route.pageNum) : null;
     if (!page) { back(); return; }
+    if (isPageLocked(route.bookId, route.pageNum)) {
+      root.innerHTML = `
+        <div class="scr">
+          <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book.title} · ${String(page.num)}</span><span></span></div>
+          <div style="text-align:center;padding:48px 24px;">
+            <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+            <div style="font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${userNativeLang==='ko'?'프리미엄 전용 단어장이에요':'Premium wordbook'}</div>
+            <div style="font-size:13px;color:var(--ink-60);line-height:1.7;max-width:300px;margin:0 auto 20px;">${userNativeLang==='ko'?`${String(page.num)}부터는 프리미엄 또는 단체 결제로 열려요.<br>Day 1은 무료로 체험할 수 있어요!`:'Day 2+ unlocks with Premium or an academy plan. Day 1 is free!'}</div>
+            <button class="btn btn-solid" style="max-width:240px;margin:0 auto;" onclick="goTab('mypage')">${userNativeLang==='ko'?'프리미엄 보기':'See Premium'}</button>
+          </div>
+        </div>`;
+      return;
+    }
     // 안전장치: 이 페이지의 단어를 DB에서 fresh 로드 (백그라운드, 다른 기기 동기화)
     if (page._pid && !page._lastSync) {
       page._lastSync = Date.now();
@@ -4133,7 +4205,7 @@ function render() {
     }
     root.innerHTML = `
       <div class="scr" style="padding-bottom:110px">
-        <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book.title} · Page ${page.num}</span><span></span></div>
+        <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${book.title} · ${book._official ? String(page.num) : ('Page '+page.num)}</span><span></span></div>
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
@@ -5135,6 +5207,7 @@ function startWrongQuiz() {
 }
 
 function startQuiz(bookId, scope, pageNum) {
+  if (scope !== 'favorite' && !_officialAccessOK(bookId, scope, pageNum)) { showOfficialPaywall(); return; }
   if (bookId && bookId !== '__fav__') { try { localStorage.setItem('imvoca.lastBookId', bookId); } catch(e){} }
   let ws;
   if (scope === 'favorite') { ws = allFavoriteWords(); }
