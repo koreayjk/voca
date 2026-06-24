@@ -451,7 +451,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .back__label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,239,226,0.42); margin-top: 16px; text-align:center; }
 .back__meaning { font-size: 17px; margin-top: 5px; line-height: 1.4; color: #f7efe2; text-align:center; }
 /* 공식 단어장 카드: 미리보기처럼 밝은 크림 배경 + 뒷면 좌측정렬/스크롤 */
-.card--official .face-back { background:#fbf8f2; border:1px solid rgba(120,90,60,0.12); align-items:stretch; justify-content:flex-start; text-align:left; overflow-y:auto; }
+.card--official .face-back { background:#fbf8f2; border:1px solid rgba(120,90,60,0.12); align-items:center; justify-content:safe center; text-align:left; overflow-y:auto; }
 body.dark .card--official .face-front { background:#fbf8f2; }
 body.dark .card--official .face-back { background:#fbf8f2; }
 body.dark .card--official .card__word { color:#1c3553 !important; }
@@ -4367,7 +4367,7 @@ function _cardBackBody(w){
   if(a.synonyms&&a.synonyms.length) h+=`<div style="margin-top:12px;"><span style="display:inline-block;font-size:12.5px;background:#eef2f7;color:#3a4a5e;border-radius:9px;padding:6px 12px;"><b style="color:#1c3553;">${ko?'동의어':'Syn'}</b> ${a.synonyms.join(' · ')}</span></div>`;
   if(a.deriv&&a.deriv.length) h+=`<div style="margin-top:7px;"><span style="display:inline-block;font-size:12.5px;background:#eef2f7;color:#3a4a5e;border-radius:9px;padding:6px 12px;"><b style="color:#1c3553;">${ko?'파생':'Deriv'}</b> ${a.deriv.join(' · ')}</span></div>`;
   if(a.etym) h+=`<div style="background:#faf6ef;border:1px solid #efe6d6;border-radius:11px;padding:10px 13px;margin-top:12px;"><div style="font-size:11px;font-weight:700;color:#9a7b3a;margin-bottom:3px;">${ko?'어원':'ETYMOLOGY'}</div><div style="font-size:13px;color:#5a4e33;line-height:1.5;">${a.etym}</div></div>`;
-  return h;
+  return `<div style="width:100%;max-width:560px;margin:0 auto;">${h}</div>`;
 }
 // ===== 저장 음원(Gemini TTS) 우선 재생, 없으면 기기 TTS 폴백 =====
 let _curAudio = null;
