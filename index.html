@@ -4216,7 +4216,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="speak('${jsq(w.en)}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button>${book._readonly ? `<span style="margin-left:auto;"></span>` : `<button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button>`}</div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${w.en}</div>${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button>${book._readonly ? `<span style="margin-left:auto;"></span>` : `<button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button>`}</div><div class="word-item__base">${w.base}</div><div class="word-item__ctx">↳ <em>${w.ctx}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${w.sentence}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
@@ -4337,7 +4337,7 @@ function _cardFrontBody(w){
       <div class="card__word" style="font-size:clamp(28px,7.5vw,46px);">${w.en}</div>
       <div class="card__ipa">${w.ipa||''}</div>
       ${pos?`<div style="font-size:14px;color:#9a7b3a;font-style:italic;">${pos}</div>`:''}
-      <button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>
+      <button onclick="event.stopPropagation();_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>
     </div>
     <div class="card__tap">${t('cardFront')}</div>
   </div>`;
@@ -4369,11 +4369,49 @@ function _cardBackBody(w){
   if(a.etym) h+=`<div style="background:#faf6ef;border:1px solid #efe6d6;border-radius:11px;padding:10px 13px;margin-top:12px;"><div style="font-size:11px;font-weight:700;color:#9a7b3a;margin-bottom:3px;">${ko?'어원':'ETYMOLOGY'}</div><div style="font-size:13px;color:#5a4e33;line-height:1.5;">${a.etym}</div></div>`;
   return h;
 }
+// ===== 저장 음원(Gemini TTS) 우선 재생, 없으면 기기 TTS 폴백 =====
+let _curAudio = null;
+function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); return s?('/audio/'+kind+'/'+s+'.mp3'):''; }
+function _stopAudio(){ if(_curAudio){ try{_curAudio.pause();}catch(e){} _curAudio=null; } }
+function _playSmart(text, url){
+  _stopAudio(); if(window.speechSynthesis) window.speechSynthesis.cancel();
+  if(url){
+    try{ const a=new Audio(url); _curAudio=a;
+      a.onerror=()=>{ if(_curAudio===a)_curAudio=null; speak(text); };
+      a.play().catch(()=>{ if(_curAudio===a)_curAudio=null; speak(text); });
+      return;
+    }catch(e){}
+  }
+  speak(text);
+}
+
+// ===== 자동 반복 읽기 (선호 설정) =====
+let _autoRead = (typeof localStorage!=='undefined' && localStorage.getItem('imvoca.autoRead')==='1');
+let _autoTok = 0;
+function _autoStop(){ _autoTok++; _stopAudio(); if(window.speechSynthesis) window.speechSynthesis.cancel(); }
+function _autoText(w, flipped){ if(!flipped) return w.en; const a=w.analysis||{}; return a.example || w.sentence || w.en; }
+function _autoAfterRender(w, flipped){
+  _autoTok++;                 // 카드 바뀌면 이전 루프 취소
+  if(!_autoRead) return;
+  const my=_autoTok, text=_autoText(w, flipped), url=_audioUrl(w, flipped?'s':'w');
+  if(!text) return;
+  const tick=()=>{ if(my!==_autoTok || !_autoRead || !studyState) return; _playSmart(text, url);
+    setTimeout(()=>{ if(my===_autoTok && _autoRead && studyState) tick(); }, Math.max(2400, String(text).length*95)); };
+  setTimeout(tick, 300);
+}
+function toggleAutoRead(){
+  _autoRead=!_autoRead; try{localStorage.setItem('imvoca.autoRead', _autoRead?'1':'0');}catch(e){}
+  _autoTok++; if(!_autoRead && window.speechSynthesis) window.speechSynthesis.cancel();
+  if(studyState) renderStudyCard();
+  toast(userNativeLang==='ko'?(_autoRead?'🔊 자동 읽기 켜짐 — 단어·예문을 반복해 읽어줘요':'🔇 자동 읽기 꺼짐'):(_autoRead?'🔊 Auto-read on':'🔇 Auto-read off'));
+}
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s?s.round:1,total:s?s.stats.total:0}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?'🔊 자동 ON':'🔇 자동'}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
+  _autoAfterRender(w, s.flipped);
 }
 
 function flipCard() {
