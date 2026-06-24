@@ -5071,8 +5071,12 @@ function speak(word, onEnd) {
     if (v) u.voice = v;
     _ttsUtterRef = u; // GC 방지
     // ⚠️ 긴 문장(예문)은 Web Speech API의 onend가 발화되지 않는 경우가 많음(엔진 ~15초 컷오프/콜백 유실).
-    //    onend에만 의존하면 자동 반복이 첫 재생 후 멈춤 → 워치독으로 재생 종료를 직접 감지해 보완.
+    //    또한 iOS Safari는 재생이 끝나도 synth.speaking이 true로 박혀 복구되지 않는 버그가 있어
+    //    speaking 상태만 믿으면 자동 반복이 멈춤 → 글자수 기반 추정 시간 상한으로 강제 종료해 보완.
     let fired = false, sawSpeaking = false, ticks = 0;
+    const startTs = Date.now();
+    const estMs = (word.length * 95) / u.rate + 1500; // 추정 발화 시간
+    const hardCapMs = estMs + 5000;                    // iOS speaking 멈춤 대비 상한(여유 5초)
     const finish = () => {
       if (fired) return; fired = true;
       if (_ttsWatch) { clearInterval(_ttsWatch); _ttsWatch = null; }
@@ -5085,10 +5089,15 @@ function speak(word, onEnd) {
     _ttsWatch = setInterval(() => {
       if (fired) { clearInterval(_ttsWatch); _ttsWatch = null; return; }
       ticks++;
-      if (synth.speaking) { sawSpeaking = true; try { synth.resume(); } catch(e) {} return; } // 장문 컷오프 방지
-      if (sawSpeaking) { finish(); return; } // 재생됐다가 끝났는데 onend가 안 옴 → 보완
-      if (ticks >= 4) { finish(); return; }  // ~4.8초간 재생 시작조차 안 됨 → 포기
-    }, 1200);
+      const elapsed = Date.now() - startTs;
+      if (synth.speaking) {
+        sawSpeaking = true;
+        if (elapsed > 10000) { try { synth.resume(); } catch(e) {} } // Chrome ~15초 컷오프 방지(장문)
+      }
+      if (sawSpeaking && !synth.speaking) { finish(); return; }  // 정상 종료(PC/안드로이드)
+      if (elapsed >= hardCapMs) { finish(); return; }            // iOS: speaking 멈춤 미복구 → 강제 종료
+      if (!sawSpeaking && ticks >= 6) { finish(); return; }      // ~3.6초간 재생 시작조차 안 됨
+    }, 600);
   };
   // 음성 목록이 아직 안 떴으면(iOS 콜드 스타트) voiceschanged를 기다렸다 재시도
   if (!(_ttsVoices && _ttsVoices.length)) {
