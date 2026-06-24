@@ -76,14 +76,14 @@
 
     /* features */
     .feature-list { display: flex; flex-direction: column; gap: 14px; }
-    .feature { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 20px 20px; }
+    .feature { background: rgba(27,37,49,0.80); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 20px 20px; box-shadow: 0 8px 26px rgba(0,0,0,0.28); }
     .feature-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--gold-soft); border: 1px solid rgba(216,180,106,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 13px; }
     .feature-title { font-size: 16.5px; font-weight: 700; margin-bottom: 6px; }
     .feature-desc { font-size: 13.5px; color: var(--ink-60); line-height: 1.65; }
 
     /* steps */
     .steps { display: flex; flex-direction: column; gap: 12px; }
-    .step { display: flex; gap: 14px; align-items: flex-start; background: rgba(255,255,255,0.04); border: 1px solid var(--ink-12); border-radius: 14px; padding: 16px 18px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; background: rgba(27,37,49,0.80); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid var(--ink-12); border-radius: 14px; padding: 16px 18px; box-shadow: 0 8px 26px rgba(0,0,0,0.28); }
     .step-num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #16202b; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 14px; }
     .step-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .step-desc { font-size: 13px; color: var(--ink-60); line-height: 1.55; }
@@ -140,6 +140,63 @@
 
   <section>
     <div class="wrap">
+      <div class="section-label reveal">단체 단독 혜택 · 공식 단어장</div>
+      <h2 class="section-title reveal">수능 영단어, <em>기출이 증명한 한 권</em>으로 끝냅니다</h2>
+      <p class="reveal" style="text-align:center;max-width:640px;margin:0 auto 26px;color:var(--ink-60);font-size:15px;line-height:1.75;">
+        2009년부터 최신까지 <b style="color:var(--ink-90);">약 20년간의 수능·6월·9월 모의평가 기출 전 회차</b>를 분석해,
+        실제로 가장 많이 나온 순서로 만든 <b style="color:var(--accent);">기출 빅데이터 단어장</b>이에요.
+        감이 아니라 <b style="color:var(--ink-90);">데이터가 고른 단어</b>만 외웁니다.
+      </p>
+      <img src="books-suneung.jpg" alt="수능 영단어 시리즈 — 기본·핵심·고난도·숙어" class="reveal" loading="lazy" style="display:block;width:100%;max-width:760px;margin:4px auto 30px;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,0.45);">
+
+      <div class="reveal" style="background:linear-gradient(135deg,rgba(40,92,72,0.90),rgba(24,38,56,0.92));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(84,180,135,0.45);border-radius:18px;padding:22px 22px;text-align:center;margin-bottom:30px;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+        <div style="display:inline-block;background:#54b487;color:#06231a;font-size:12px;font-weight:800;letter-spacing:0.3px;padding:5px 14px;border-radius:99px;margin-bottom:12px;">🎁 학원·단체 등록 시 전권 무료</div>
+        <div style="font-size:21px;font-weight:800;color:var(--ink-90);line-height:1.4;">중등 3권 + 수능 4권 — <span style="color:var(--accent);">총 7권을 우리 학원 전원에게 무료로</span></div>
+        <div style="font-size:13.5px;color:var(--ink-60);margin-top:8px;line-height:1.7;">시중 단어 교재를 따로 살 필요 없이, 앱 안에서 학습·발음·복습·테스트까지 한 번에.<br><span style="font-size:12px;color:var(--ink-40);">수능 기본(1,200단어) 출시 완료 · 나머지 권은 순차 오픈</span></div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature reveal">
+          <div class="feature-icon">📊</div>
+          <div class="feature-title">20년 기출 빅데이터 — 빈출순 수록</div>
+          <div class="feature-desc">2009~최신 수능·6·9월 모평 전 회차를 분석해 <b>실제 출제 빈도 순</b>으로 단어를 배열했어요. 시험에 잘 나오는 단어부터, 효율적으로.</div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-title">모든 예문이 ‘기출 변형’ + 출처 표기</div>
+          <div class="feature-desc">예문은 실제 출제 지문을 바탕으로 다시 쓴 <b>기출 변형 문장</b>이에요. <b>“2025 수능 32번”</b>처럼 출처까지 적혀 있어, 그냥 예문이 아니라 ‘진짜 시험 문맥’을 익혀요.</div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature-icon">🏆</div>
+          <div class="feature-title">CEFR 난이도 표시</div>
+          <div class="feature-desc">단어마다 유럽 공인 어휘 기준(B1·B2·C1) 난이도를 표시해, 학생 수준에 맞춰 어디까지 외울지 한눈에 잡혀요.</div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature-icon">🧠</div>
+          <div class="feature-title">어원·동의어·파생까지 한 카드에</div>
+          <div class="feature-desc">단어 하나를 어원 분해 + 동의어 + 파생어로 넓혀서 외워요. 외우는 양은 줄고, 기억은 오래갑니다.</div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature-icon">🔁</div>
+          <div class="feature-title">외우고 끝이 아니라 — 복습 + Day 테스트</div>
+          <div class="feature-desc">Day를 외우면 망각곡선 복습이 자동 등록되고, <b>Day별 테스트</b>로 점수까지 확인해요. ‘봤다’가 아니라 ‘내 것이 됐다’까지.</div>
+        </div>
+        <div class="feature reveal">
+          <div class="feature-icon">💸</div>
+          <div class="feature-title">교재비 부담 0 · 올인원</div>
+          <div class="feature-desc">학생마다 비싼 단어책을 따로 사지 않아도 돼요. 학원 등록 한 번이면 발음 듣기·복습·테스트·학부모 리포트까지 전부 앱 안에.</div>
+        </div>
+      </div>
+
+      <div class="price-card reveal" style="text-align:center;margin-top:30px;">
+        <div style="font-size:20px;font-weight:800;color:var(--ink-90);line-height:1.5;">이 단어장만 제대로 끝내도,<br><span style="color:var(--accent);">수능 영단어는 충분합니다.</span></div>
+        <div style="font-size:13.5px;color:var(--ink-60);margin-top:10px;line-height:1.7;">기출이 고른 단어 · 기출 문맥 예문 · 자동 복습 · Day 테스트.<br>학원장님께는 <b>교재비 부담 0</b>, 학부모님께는 <b>검증된 기출 기반 + 투명한 진도 리포트</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
       <div class="section-label reveal">비용</div>
       <h2 class="section-title reveal">부담 없는 <em>합리적인 가격</em></h2>
       <div class="price-card reveal">
@@ -167,8 +224,8 @@
         </div>
         <div class="feature reveal">
           <div class="feature-icon">📚</div>
-          <div class="feature-title">우리 책으로 과제 배정</div>
-          <div class="feature-desc">원장님이 만든 단어장(책·페이지)을 학생에게 그대로 배정. 학생은 받은 그날 바로 외우기 시작해요. 마감일도 정할 수 있어요.</div>
+          <div class="feature-title">기본 제공 수능 단어장으로 바로 배정</div>
+          <div class="feature-desc">교재를 직접 만들 필요 없어요. <b>기본 제공되는 수능·중등 단어장</b>을 학생에게 Day 단위로 그대로 배정하면 끝. (원장님이 직접 만든 책도 함께 배정 가능) 학생은 받은 그날 바로 외우기 시작하고, 마감일도 정할 수 있어요.</div>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">🔁</div>
