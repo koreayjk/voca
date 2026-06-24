@@ -2437,6 +2437,7 @@ async function loadBooksFromDB() {
     books = bd.map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
       desc: b.description || '', cover: b.cover_url || '', category: b.category || 'general',
+      _officialContent: !!b.is_official, // 공식 콘텐츠 책: 촬영/직접입력 버튼 숨김(소유자 본인이 봐도). 잠금·점수와 무관.
       pages: (b.voca_pages || [])
         .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
         .map(p => ({
@@ -2460,7 +2461,7 @@ async function appendOfficialBooks() {
     const mapped = od.filter(b => !have.has(b.id)).map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
       desc: b.description || '', cover: b.cover_url || '', category: b.category || 'general',
-      _official: true, _readonly: true,
+      _official: true, _readonly: true, _officialContent: true,
       pages: (b.voca_pages || [])
         .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
         .map(p => ({
@@ -4071,7 +4072,7 @@ function render() {
           ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
           [...book.pages].filter(p=>(p.words&&p.words.length>0)).sort((a,b)=>pageSort(a,b)).map(p=>{
             const locked = isPageLocked(book.id, p.num);
-            const label = book._official ? String(p.num) : ('Page '+p.num);
+            const label = (book._official || book._officialContent) ? String(p.num) : ('Page '+p.num);
             const go = locked ? 'showOfficialPaywall()' : `push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})`;
             return `
             <div class="page-row" style="${locked?'opacity:0.55;':''}">
@@ -4084,7 +4085,7 @@ function render() {
               </span>
             </div>`;}).join('')}
         </div>
-        ${book._readonly ? '' : `<div class="btn-fixed btn-fixed--row">
+        ${(book._readonly || book._officialContent) ? '' : `<div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
           <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
         </div>`}
@@ -4093,7 +4094,7 @@ function render() {
 
   else if (route.name === 'capture') {
     const book = findBook(route.bookId);
-    if (book && book._readonly) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); back(); return; }
+    if (book && (book._readonly || book._officialContent)) { toast(userNativeLang==='ko'?'이 책은 편집할 수 없어요':'This book is read-only'); back(); return; }
     imgData = null;
     window._captureMode = 'new';
     window._addTargetPage = null;
@@ -5879,6 +5880,8 @@ async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDa
 
 function renderManualAdd(root, route) {
   if (isAssignedReadonly(route.bookId)) { toast(userNativeLang==='ko'?'과제 책은 편집할 수 없어요':'Assigned books are read-only'); back(); return; }
+  const _b0 = findBook(route.bookId);
+  if (_b0 && _b0._officialContent) { toast(userNativeLang==='ko'?'이 책은 편집할 수 없어요':'This book is read-only'); back(); return; }
   const book = findBook(route.bookId);
   window._manualWords = window._manualWords || [];
   window._manualBookId = route.bookId;
