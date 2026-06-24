@@ -4378,17 +4378,30 @@ let _curAudio = null;
 function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
 function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); return s?(_AUDIO_BASE+'/'+kind+'/'+s+'.mp3'):''; }
-function _stopAudio(){ if(_curAudio){ try{_curAudio.pause();}catch(e){} _curAudio=null; } }
+let _aWatch = null; // mp3 재생 완료 감지 워치독(onended 누락 대비)
+function _stopAudio(){ if(_aWatch){ clearInterval(_aWatch); _aWatch=null; } if(_curAudio){ try{_curAudio.pause();}catch(e){} _curAudio=null; } }
 function _playSmart(text, url, onDone){
   // iOS는 유휴 상태에서 cancel을 반복 호출하면 다음 음성이 쉰 목소리로 깨짐 → 재생 중일 때만 cancel
   _stopAudio(); const _sy=window.speechSynthesis; if(_sy && (_sy.speaking||_sy.pending)) _sy.cancel();
-  let done=false; const fin=()=>{ if(done)return; done=true; if(onDone)onDone(); };
+  let done=false; const fin=()=>{ if(done)return; done=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} if(onDone)onDone(); };
   if(url){
     try{ const a=new Audio(url); _curAudio=a;
       a.onended=fin;
-      let fb=false; const fall=()=>{ if(fb)return; fb=true; if(_curAudio===a)_curAudio=null; speak(text, fin); };
+      let fb=false; const fall=()=>{ if(fb)return; fb=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} if(_curAudio===a)_curAudio=null; speak(text, fin); };
       a.onerror=fall;
       a.play().catch(fall);
+      // ⚠️ iOS/스트리밍 mp3는 'ended' 이벤트가 발화되지 않는 경우가 있어 자동 반복이 멈춤.
+      //    실제 duration/currentTime을 폴링해 재생 종료를 직접 감지(특히 긴 예문 음원).
+      if(_aWatch) clearInterval(_aWatch);
+      let stalled=0;
+      _aWatch=setInterval(()=>{
+        if(done || _curAudio!==a){ clearInterval(_aWatch); _aWatch=null; return; }
+        if(a.ended){ fin(); return; }
+        const d=a.duration;
+        if(isFinite(d) && d>0 && a.currentTime>=d-0.08){ fin(); return; }
+        // 재생이 진행되지 않고(일시정지/멈춤) 시간도 안 흐르면 종료로 간주
+        if(a.paused && a.currentTime>0){ if(++stalled>=3){ fin(); return; } } else { stalled=0; }
+      }, 300);
       return;
     }catch(e){}
   }
