@@ -47,7 +47,9 @@ def map_word(w):
         "synonyms": w.get("syn", []),
         "example": m0.get("ex", ""),
         "example_kr": m0.get("tr", ""),
-        # 보존(현재 미렌더, 추후 공식카드 확장용)
+        "pos": m0.get("pos", ""),
+        "meanings": [{"pos": mm.get("pos", ""), "ko": mm.get("ko", "")} for mm in m],
+        # 보존(추후 확장용)
         "_official": True, "src": m0.get("src", ""),
         "deriv": w.get("deriv", []), "etym": w.get("etymHint", ""),
         "roots": w.get("roots", []), "exam": w.get("exam"),
@@ -73,6 +75,24 @@ def delete_book(bid):
         req("DELETE", f"/rest/v1/voca_words?page_id=eq.{p['id']}")
     req("DELETE", f"/rest/v1/voca_pages?book_id=eq.{bid}")
     req("DELETE", f"/rest/v1/voca_books?id=eq.{bid}")
+
+def update_analysis():
+    """기존 공식책 단어들의 analysis/base/ctx/sentence 를 소스 기준으로 in-place PATCH (uuid 유지)."""
+    bid = find_official()
+    if not bid: print("공식책이 없어요. 먼저 --go 로 시드하세요."); return
+    pages = req("GET", f"/rest/v1/voca_pages?book_id=eq.{bid}&select=id,page_num") or []
+    pmap = {p["page_num"]: p["id"] for p in pages}
+    n = 0
+    for page_num, words in load_days():
+        pid = pmap.get(page_num)
+        if not pid: print(f"  (skip) {page_num} 페이지 없음"); continue
+        for w in words:
+            body = {"base": w["base"], "ctx": w["ctx"], "sentence": w["sentence"],
+                    "ipa": w["ipa"], "level": w["level"], "analysis": w["analysis"]}
+            q = f"/rest/v1/voca_words?page_id=eq.{pid}&en=eq.{urllib.parse.quote(w['en'])}"
+            req("PATCH", q, body, prefer="return=minimal"); n += 1
+        print(f"  {page_num}: {len(words)} updated")
+    print(f"\n완료. {n}개 단어 analysis 갱신(uuid={bid} 유지).")
 
 def main():
     days = load_days()
