@@ -4029,6 +4029,7 @@ function render() {
     const book = findBook(route.bookId);
     if (!book) { back(); return; }
     loadReviewStatus(book.id);
+    loadTestScores(book.id);
     root.innerHTML = `
       <div class="scr" style="padding-bottom:110px">
         <div class="topnav">
@@ -4074,7 +4075,7 @@ function render() {
             return `
             <div class="page-row" style="${locked?'opacity:0.55;':''}">
               ${locked ? `<span style="margin-right:10px;flex-shrink:0;">🔒</span>` : (()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
-              <span class="page-row__num" onclick="${go}" style="flex:1;cursor:pointer;">${label}</span>
+              <span class="page-row__num" onclick="${go}" style="flex:1;cursor:pointer;">${label}${(!locked && _testScore[book.id+'|'+p.num]!=null)?` <span style="font-size:10px;font-weight:700;color:#fff;background:${_testScore[book.id+'|'+p.num]>=80?'#27ae60':_testScore[book.id+'|'+p.num]>=50?'#e67e22':'#e74c3c'};border-radius:99px;padding:1px 7px;margin-left:6px;">🎯 ${_testScore[book.id+'|'+p.num]}%</span>`:''}</span>
               <span class="page-row__right">
                 ${p.words.length} words
                 <span onclick="${go}" style="font-size:16px;color:var(--ink-40);cursor:pointer;">${locked?'🔒':'›'}</span>
@@ -4221,6 +4222,7 @@ function render() {
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
+          <button class="btn btn-outline" onclick="startQuiz('${book.id}','page','${page.num}')">${userNativeLang==='ko'?'🎯 테스트':'🎯 Test'}${(_testScore[book.id+'|'+page.num]!=null)?` · ${_testScore[book.id+'|'+page.num]}%`:''}</button>
           ${book._readonly ? '' : `<button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>`}
         </div>
       </div>`;
@@ -5194,10 +5196,35 @@ async function deleteStats(id) {
   } catch(e) { toast('삭제 실패: ' + e.message); }
 }
 
-async function saveStats(bookId, total, correct) {
+async function saveStats(bookId, total, correct, pageNum) {
   try {
-    await fetch(SB_URL + '/rest/v1/voca_stats', { method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, total, correct }) });
+    const body = { user_id: currentUser.id, book_id: bookId, total, correct };
+    if (pageNum != null) body.page_num = String(pageNum);
+    await fetch(SB_URL + '/rest/v1/voca_stats', { method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify(body) });
+    // 로컬 베스트 점수 갱신
+    if (pageNum != null && total > 0) {
+      const key = bookId + '|' + pageNum, rate = Math.round(correct / total * 100);
+      if (!(key in _testScore) || rate > _testScore[key]) _testScore[key] = rate;
+    }
   } catch(e) {}
+}
+
+// Day별 테스트 베스트 점수(%) 캐시: key = bookId|pageNum
+let _testScore = {}, _testScoreLoaded = {};
+async function loadTestScores(bookId) {
+  if (_testScoreLoaded[bookId]) return;
+  _testScoreLoaded[bookId] = true;
+  try {
+    const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=not.is.null&select=page_num,total,correct`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+    const data = await res.json();
+    let changed = false;
+    if (Array.isArray(data)) data.forEach(r => {
+      if (!r.total) return;
+      const key = bookId + '|' + r.page_num, rate = Math.round(r.correct / r.total * 100);
+      if (!(key in _testScore) || rate > _testScore[key]) { _testScore[key] = rate; changed = true; }
+    });
+    if (changed && stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
+  } catch(e) { _testScoreLoaded[bookId] = false; }
 }
 
 async function saveReviewSchedule(bookId, pageNum) {
@@ -5267,7 +5294,7 @@ function renderQuiz() {
   if (!q) { goTab('books'); return; }
   if (q.idx >= q.words.length) {
     const rate = Math.round(q.correct / q.words.length * 100);
-    saveStats(q.bookId, q.words.length, q.correct);
+    saveStats(q.bookId, q.words.length, q.correct, q.scope === 'page' ? q.pageNum : null);
     const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
     const rateMsg = rate>=80?t('rateMsg80'):rate>=50?t('rateMsg50'):t('rateMsgBad');
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
