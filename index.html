@@ -5072,13 +5072,25 @@ function _pickTtsVoice(ttsLang) {
   if (!voices.length) return null;
   const norm = v => (v.lang || '').replace('_', '-');
   const prefix = ttsLang.split('-')[0];
-  const isCompact = v => /compact/i.test(v.voiceURI || v.name || '');
-  // 정확한 로캘 고품질(비-compact) → 정확한 로캘 → 같은 언어(예: en-GB) 고품질 → 같은 언어
-  return voices.find(v => norm(v) === ttsLang && !isCompact(v))
-    || voices.find(v => norm(v) === ttsLang)
-    || voices.find(v => norm(v).startsWith(prefix) && !isCompact(v))
-    || voices.find(v => norm(v).startsWith(prefix))
-    || null;
+  const nm = v => ((v.name||'') + ' ' + (v.voiceURI||''));
+  const isCompact = v => /compact/i.test(nm(v));
+  const isEnhanced = v => /(enhanced|premium|neural|siri)/i.test(nm(v));
+  // iOS/macOS 노벨티·저품질 음성(로봇처럼 들림) → 강하게 회피
+  const isNovelty = v => /(albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|kathy|princess|ralph|grandma|grandpa|reed|rocko|sandy|shelley|flo|eddy)/i.test(nm(v));
+  // 점수: 정확한 로캘>같은 언어, 고품질>표준>compact, 노벨티 제외
+  const score = v => {
+    const lang = norm(v); let s;
+    if (lang === ttsLang) s = 100; else if (lang.startsWith(prefix)) s = 50; else return -1;
+    if (isNovelty(v)) s -= 1000;
+    if (isEnhanced(v)) s += 40;
+    if (isCompact(v)) s -= 20;
+    if (v.localService) s += 5;
+    if (v.default) s += 3;
+    return s;
+  };
+  let best = null, bestS = -1;
+  for (const v of voices) { const s = score(v); if (s > bestS) { bestS = s; best = v; } }
+  return (bestS >= 0) ? best : null;
 }
 let _ttsWatch = null;   // onend 누락 감지 워치독
 let _ttsUtterRef = null; // ⚠️ Chrome: 발화 중 utterance가 GC되면 onend가 유실됨 → 참조 유지
