@@ -851,8 +851,8 @@ function pageSort(a, b) {
   // 숫자 → 문자 앞
   if (aIsNum) return -1;
   if (bIsNum) return 1;
-  // 나머지는 문자열 비교
-  return aStr.localeCompare(bStr);
+  // 나머지("Day 1"·"Day 10" 등 숫자 포함 라벨)는 숫자 자연 정렬 (1,2,…,10,11 순)
+  return aStr.localeCompare(bStr, undefined, { numeric: true, sensitivity: 'base' });
 }
 
 
@@ -4404,9 +4404,19 @@ function _autoAfterRender(w, flipped){
   if(!_autoRead) return;
   const my=_autoTok, text=_autoText(w, flipped), url=_audioUrl(w, flipped?'s':'w');
   if(!text) return;
-  // 재생이 "끝나면" → 1.1초 쉬고 → 다시. (고정 타이머 대신 onended 기반 → 단어·예문 길이 무관하게 안정적 반복)
-  const loop=()=>{ if(my!==_autoTok || !_autoRead || !studyState) return;
-    _playSmart(text, url, ()=>{ setTimeout(()=>{ if(my===_autoTok && _autoRead && studyState) loop(); }, 1100); }); };
+  // 재생이 "끝나면" → 1.1초 쉬고 → 다시.
+  // ⚠️ iOS는 mp3 <audio>의 onended나 TTS의 onend가 끝내 발화되지 않는 경우가 있어 콜백에만
+  //    의존하면 예문이 한 번만 재생되고 멈춤. → 추정 재생시간 기반 안전망 타이머를 함께 둬
+  //    콜백이 안 와도 다음 반복으로 넘어가게 한다(둘 중 먼저 오는 쪽만 1회 진행).
+  const loop=()=>{
+    if(my!==_autoTok || !_autoRead || !studyState) return;
+    let advanced=false;
+    const next=()=>{ if(advanced || my!==_autoTok) return; advanced=true;
+      setTimeout(()=>{ if(my===_autoTok && _autoRead && studyState) loop(); }, 1100); };
+    _playSmart(text, url, next);
+    const estMs = (text.length*90)/0.85 + (url?5000:2500); // mp3는 디코딩/무음 여유를 더 둠
+    setTimeout(next, Math.max(4000, estMs));               // onended/onend 누락 대비 안전망
+  };
   loop();   // 첫 재생은 즉시(탭 제스처 컨텍스트 유지 → iOS autoplay 통과)
 }
 function toggleAutoRead(){
@@ -6080,7 +6090,7 @@ async function saveManualWords(bookId) {
   }
   const ex = findPage(book, pg);
   if (ex) ex.words = [...ex.words, ...words];
-  else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b) => String(a.num).localeCompare(String(b.num))); }
+  else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b)=>pageSort(a,b)); }
   toast(userNativeLang==='ko'?`Page ${pg} 저장 완료 (${words.length}개)`:`Page ${pg} saved (${words.length} words)`);
 updateTotalWords();
   window._manualWords = [];
