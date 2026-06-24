@@ -3969,6 +3969,9 @@ function render() {
   const tab = currentTab();
   const dock = buildDock();
 
+  // 학습 카드 화면을 벗어나면 자동 읽기/음성을 반드시 정지 (✕ 외 모든 이탈 경로 커버)
+  if (route.name !== 'study-cards' && typeof _autoStop === 'function') _autoStop();
+
   if (route.name === 'org-admin') { renderOrgAdminPage(root); return; }
   if (route.name === 'report') { renderReportPage(root); return; }
 
@@ -4376,7 +4379,8 @@ const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/
 function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); return s?(_AUDIO_BASE+'/'+kind+'/'+s+'.mp3'):''; }
 function _stopAudio(){ if(_curAudio){ try{_curAudio.pause();}catch(e){} _curAudio=null; } }
 function _playSmart(text, url, onDone){
-  _stopAudio(); if(window.speechSynthesis) window.speechSynthesis.cancel();
+  // iOS는 유휴 상태에서 cancel을 반복 호출하면 다음 음성이 쉰 목소리로 깨짐 → 재생 중일 때만 cancel
+  _stopAudio(); const _sy=window.speechSynthesis; if(_sy && (_sy.speaking||_sy.pending)) _sy.cancel();
   let done=false; const fin=()=>{ if(done)return; done=true; if(onDone)onDone(); };
   if(url){
     try{ const a=new Audio(url); _curAudio=a;
@@ -4393,7 +4397,7 @@ function _playSmart(text, url, onDone){
 // ===== 자동 반복 읽기 (선호 설정) =====
 let _autoRead = (typeof localStorage!=='undefined' && localStorage.getItem('imvoca.autoRead')==='1');
 let _autoTok = 0;
-function _autoStop(){ _autoTok++; _stopAudio(); if(window.speechSynthesis) window.speechSynthesis.cancel(); }
+function _autoStop(){ _autoTok++; _stopAudio(); if(_ttsWatch){ clearInterval(_ttsWatch); _ttsWatch=null; } if(window.speechSynthesis) window.speechSynthesis.cancel(); }
 function _autoText(w, flipped){ if(!flipped) return w.en; const a=w.analysis||{}; return a.example || w.sentence || w.en; }
 function _autoAfterRender(w, flipped){
   _autoTok++;                 // 카드 바뀌면 이전 루프 취소
@@ -5057,7 +5061,8 @@ let _ttsUtterRef = null; // ⚠️ Chrome: 발화 중 utterance가 GC되면 onen
 function speak(word, onEnd) {
   if (!window.speechSynthesis) { if(onEnd) onEnd(); return; }
   const synth = window.speechSynthesis;
-  synth.cancel();
+  // iOS: 유휴 상태에서 불필요한 cancel을 반복하면 음성이 쉰 목소리로 깨짐 → 재생 중일 때만 cancel
+  if (synth.speaking || synth.pending) synth.cancel();
   if (_ttsWatch) { clearInterval(_ttsWatch); _ttsWatch = null; }
   // 학습 언어에 맞는 발음 언어 코드
   const ttsMap = { en:'en-US', ko:'ko-KR', es:'es-ES', zh:'zh-CN', ja:'ja-JP', fr:'fr-FR', de:'de-DE', pt:'pt-BR', vi:'vi-VN', id:'id-ID' };
