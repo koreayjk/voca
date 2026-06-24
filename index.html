@@ -4338,7 +4338,7 @@ function _cardFrontBody(w){
       <div class="card__word" style="font-size:clamp(28px,7.5vw,46px);">${w.en}</div>
       <div class="card__ipa">${w.ipa||''}</div>
       ${pos?`<div style="font-size:14px;color:#9a7b3a;font-style:italic;">${pos}</div>`:''}
-      <button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">🔊 ${t('pronounce')}</button>
+      <button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>
     </div>
     <div class="card__tap">${t('cardFront')}</div>
   </div>`;

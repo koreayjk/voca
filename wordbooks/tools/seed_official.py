@@ -23,6 +23,7 @@ KEY = os.environ.get("SB_SERVICE_KEY", "")
 OWNER = os.environ.get("OFFICIAL_OWNER", "")
 GO = "--go" in sys.argv
 RESET = "--reset" in sys.argv
+UPDATE = "--update" in sys.argv   # 기존 공식책 단어 analysis in-place 갱신(uuid 유지)
 
 BOOK_TITLE = "수능 기본"
 BOOK_CODE = "SUN-BASIC"        # description 에 저장(식별용)
@@ -100,19 +101,22 @@ def main():
     print(f"[plan] {BOOK_TITLE}({BOOK_CODE}) · {len(days)} pages · {total} words")
     print(f"  SB_URL={'OK' if SB_URL else 'MISSING'}  KEY={'OK' if KEY else 'MISSING'}  OWNER={'OK' if OWNER else 'MISSING'}")
     print("  sample word:", json.dumps(map_word(json.load(open(ROOT/'suneung-basic-day1.json'))['words'][0]), ensure_ascii=False)[:200])
-    if not GO:
-        print("\n(dry-run) 실제 시드는 --go 를 붙이세요. 선행: official-books.sql 실행.")
+    if not (GO or UPDATE):
+        print("\n(dry-run) 시드=--go · 기존 카드 품질 갱신=--update. 선행: official-books.sql 실행.")
         return
-    if not (SB_URL and KEY and OWNER):
-        print("ERROR: SB_URL / SB_SERVICE_KEY / OFFICIAL_OWNER 환경변수 필요"); sys.exit(1)
+    need = [SB_URL, KEY] + ([] if UPDATE else [OWNER])
+    if not all(need):
+        print("ERROR: SB_URL / SB_SERVICE_KEY" + ("" if UPDATE else " / OFFICIAL_OWNER") + " 환경변수 필요"); sys.exit(1)
     # placeholder/한글 감지 (안내문을 그대로 export 한 경우)
-    bad = [n for n, v in [("SB_SERVICE_KEY", KEY), ("OFFICIAL_OWNER", OWNER)]
-           if ("여기에" in v) or any(ord(c) > 127 for c in v)]
+    chk = [("SB_SERVICE_KEY", KEY)] + ([] if UPDATE else [("OFFICIAL_OWNER", OWNER)])
+    bad = [n for n, v in chk if ("여기에" in v) or any(ord(c) > 127 for c in v)]
     if bad:
         print(f"ERROR: {', '.join(bad)} 에 실제 값이 안 들어갔어요(안내문/한글 감지).")
         print("  SB_SERVICE_KEY = Supabase 대시보드 Settings→API→service_role 키 (eyJ... 로 시작)")
         print("  OFFICIAL_OWNER = members 테이블의 본인 계정 id (uuid)")
         sys.exit(1)
+    if UPDATE:
+        update_analysis(); return
     import re as _re
     if not _re.fullmatch(r"[0-9a-fA-F-]{32,40}", OWNER):
         print(f"ERROR: OFFICIAL_OWNER 가 uuid 형식이 아니에요: {OWNER!r}"); sys.exit(1)
