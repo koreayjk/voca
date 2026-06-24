@@ -4399,7 +4399,7 @@ function _autoAfterRender(w, flipped){
   if(!text) return;
   const tick=()=>{ if(my!==_autoTok || !_autoRead || !studyState) return; _playSmart(text, url);
     setTimeout(()=>{ if(my===_autoTok && _autoRead && studyState) tick(); }, Math.max(2400, String(text).length*95)); };
-  setTimeout(tick, 300);
+  tick();   // 첫 재생은 즉시(탭 제스처 컨텍스트 유지 → iOS autoplay 통과), 이후 반복
 }
 function toggleAutoRead(){
   _autoRead=!_autoRead; try{localStorage.setItem('imvoca.autoRead', _autoRead?'1':'0');}catch(e){}

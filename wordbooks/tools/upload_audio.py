@@ -55,7 +55,12 @@ def main():
                         data=f.read_bytes(), ctype="audio/mpeg",
                         extra={"x-upsert": "true", "cache-control": "31536000"})
         if st in (200, 201): ok += 1
-        else: fail += 1; print(f"  FAIL {rel}: {st} {body[:120]}")
+        else:
+            fail += 1; print(f"  FAIL {rel}: {st} {body[:120]}")
+            if b"Invalid Compact JWS" in body or b"Unauthorized" in body or st == 401:
+                print("\n⛔ SB_SERVICE_KEY 가 유효한 service_role 키가 아니에요.")
+                print("   Supabase → Settings → API → 'service_role' secret (eyJ... 로 시작) 복사해서 다시 export 하세요.")
+                break
         if (ok + fail) % 50 == 0: print(f"  {ok+fail}/{len(files)} (ok={ok})")
     print(f"\n완료. 업로드 {ok} · 실패 {fail}.")
     if ok: print(f"  예: {SB_URL}/storage/v1/object/public/{BUCKET}/{files[0].parent.name}/{files[0].name}")
