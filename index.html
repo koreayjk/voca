@@ -4312,11 +4312,47 @@ function render() {
   }
 }
 
+// 공식 단어장 카드용: 앞면 배지(기출★·CEFR)
+function _officialBadges(w){
+  if(!(w.analysis&&w.analysis._official)) return '';
+  const ex=w.analysis.exam||{}; const lv=w.level||'';
+  const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};
+  const star = ex.stars?'★'.repeat(ex.stars):'';
+  return `<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px;">`+
+    (ex.tested?`<span style="font-size:11px;font-weight:700;color:#b03a2e;background:#fbeae7;border-radius:99px;padding:2px 10px;">🎯 기출 ${star} · ${ex.exams||0}개 시험</span>`:'')+
+    (lv?`<span style="font-size:11px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 10px;">CEFR ${lv}</span>`:'')+
+    `</div>`;
+}
+// 카드 뒷면 본문: 공식책이면 풍부하게(출처·예문·해석·유의어·파생·어원), 아니면 기존 방식(빈 ctx 숨김)
+function _cardBackBody(w){
+  const a=w.analysis||{}, ko=userNativeLang==='ko';
+  if(!a._official){
+    return `<div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base||''}</div>`+
+      (w.ctx?`<div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>`:'')+
+      (w.sentence?`<div class="back__label">${ko?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:'');
+  }
+  const mean=(w.base||'')+(w.ctx?` · ${w.ctx}`:'');
+  let h=`<div class="back__label">${ko?'뜻':'Meaning'}</div><div class="back__meaning">${mean}</div>`;
+  const ex=a.example||w.sentence;
+  if(ex){
+    h+=`<div style="background:rgba(255,255,255,0.10);border-radius:10px;padding:10px 13px;margin:13px auto 0;text-align:left;max-width:540px;">`;
+    if(a.src) h+=`<div style="font-size:11px;font-weight:700;color:#e9c46a;margin-bottom:5px;">🎯 ${a.src} 기출변형</div>`;
+    h+=`<div style="font-size:14px;line-height:1.5;">${ex}</div>`;
+    if(a.example_kr) h+=`<div style="font-size:12px;opacity:0.72;margin-top:3px;">${a.example_kr}</div>`;
+    h+=`</div>`;
+  }
+  const chips=[];
+  if(a.synonyms&&a.synonyms.length) chips.push(`<b style="color:#e9c46a;">${ko?'유의어':'Syn'}</b> ${a.synonyms.join(' · ')}`);
+  if(a.deriv&&a.deriv.length) chips.push(`<b style="color:#e9c46a;">${ko?'파생':'Deriv'}</b> ${a.deriv.join(' · ')}`);
+  if(chips.length) h+=`<div style="font-size:12px;opacity:0.85;margin-top:11px;line-height:1.7;">${chips.join('<br>')}</div>`;
+  if(a.etym) h+=`<div style="font-size:12px;opacity:0.78;margin-top:7px;"><b style="color:#e9c46a;">${ko?'어원':'Etym'}</b> ${a.etym}</div>`;
+  return h;
+}
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s?s.round:1,total:s?s.stats.total:0}); return; }
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="back__label">${t('cardMeaning')}</div><div class="back__meaning">${w.base}</div><div class="back__label">${t('cardContext')}</div><div class="back__meaning">${w.ctx}</div>${w.sentence?`<div class="back__label">${userNativeLang==='ko'?'예문':'Example'}</div><div class="back__meaning" style="font-size:14px;">${w.sentence}</div>`:''}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span class="study__close" onclick="back();studyState=null">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''}"><div class="face face-front"><div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div><div class="card__ipa">${w.ipa||''}</div>${_officialBadges(w)}<button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div></div><div class="face face-back"><div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${w.en}</div>${_cardBackBody(w)}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}</div></div>`;
 }
 
 function flipCard() {
