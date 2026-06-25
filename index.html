@@ -1153,11 +1153,18 @@ function hasOfficialAccess(){
   return false;
 }
 const OFFICIAL_FREE_PAGE = 'Day 1';
+// 무료 체험 페이지 판정: page_num 형식('Day 1'/'1'/'Day1'/'1일' 등)에 상관없이 "첫 날(숫자 1)"이면 무료
+function _isOfficialFreePage(pageNum){
+  const s = String(pageNum).trim();
+  if (s === OFFICIAL_FREE_PAGE) return true;
+  const digits = s.replace(/[^0-9]/g, '');
+  return digits !== '' && parseInt(digits, 10) === 1;
+}
 function isPageLocked(bookId, pageNum){
   const b = (typeof findBook==='function') ? findBook(bookId) : null;
   if (!b || !b._official) return false;
   if (hasOfficialAccess()) return false;
-  return String(pageNum) !== OFFICIAL_FREE_PAGE;   // 무료/단체이탈 → Day1만 체험, 나머지 잠금
+  return !_isOfficialFreePage(pageNum);   // 무료/단체이탈 → Day1만 체험, 나머지 잠금
 }
 function showOfficialPaywall(){
   toast(userNativeLang==='ko'
@@ -1169,7 +1176,7 @@ function _officialAccessOK(bookId, scope, pageNum){
   const b = (typeof findBook==='function') ? findBook(bookId) : null;
   if (!b || !b._official) return true;
   if (hasOfficialAccess()) return true;
-  return scope === 'page' && String(pageNum) === OFFICIAL_FREE_PAGE; // 무료/단체이탈 → Day1만 체험
+  return scope === 'page' && _isOfficialFreePage(pageNum); // 무료/단체이탈 → Day1만 체험
 }
 function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDailyScanCount : 0; }
 function canScan() {
