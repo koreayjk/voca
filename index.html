@@ -2458,7 +2458,7 @@ async function loadBooksFromDB() {
 function _officialCover(title, dbCover){
   const t = title || '';
   if (t.indexOf('기본') >= 0) return 'cover-suneung-basic.jpg?v=2';
-  if (t.indexOf('핵심') >= 0) return 'cover-suneung-core.jpg?v=1';
+  if (t.indexOf('핵심') >= 0) return 'cover-suneung-core.jpg?v=2';
   return dbCover || '';
 }
 // 공식 단어장(is_official)을 읽어 책장에 추가 (읽기전용). 이미 있으면(소유자 본인) 중복 제거.
