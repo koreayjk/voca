@@ -4073,7 +4073,6 @@ function render() {
             </div>
           </div>
           <div class="rule"></div>
-          <div style="background:#fff3cd;border:1px solid #e0c000;color:#5a4500;border-radius:10px;padding:10px 12px;font-size:11px;margin-bottom:12px;line-height:1.6;word-break:break-all;">🐞 진단: plan=<b>${userPlan}</b> · orgRole=<b>${userOrgRole}</b> · orgStatus=<b>${userOrgStatus}</b> · orgBilling=<b>${String(isOrgBillingActive())}</b> · studentActive=<b>${String(isOrgStudentActive())}</b> · <b>hasOfficialAccess=${String(hasOfficialAccess())}</b> · book._official=<b>${String(!!book._official)}</b> · firstPage=<b>${book.pages[0]?JSON.stringify(String(book.pages[0].num)):'-'}</b></div>
           ${book._official
             ? `<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">📕 ${userNativeLang==='ko'?(hasOfficialAccess()?'공식 단어장 · 기출 빅데이터 기반':'공식 단어장 · Day 1 무료 체험 · 나머지는 프리미엄/단체'):'Official wordbook'}</div>`
             + (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:'')
