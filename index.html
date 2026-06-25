@@ -929,7 +929,7 @@ async function deletePageWord(bookId, pageNum, wordIdx) {
     }
 page.words.splice(wordIdx, 1);
     updateTotalWords();
-    render();
+    renderKeepScroll();
     toast(ko ? '삭제됐어요' : 'Deleted');
   } catch(e) { toast(ko ? '삭제 실패' : 'Delete failed'); }
 }
@@ -2559,8 +2559,11 @@ async function savePageWordsToDB(bookId, pageNum, words) {
     if (!pageId) return null;
 
     // 행 배열로 한 번에 INSERT (원자적 · 빠름 · 누락 방지)
-    const rows = words.map(w => {
-      const r = { page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'' };
+    // created_at 을 1초씩 증가시켜 부여 → 재로딩(=created_at 정렬) 시에도
+    // 추출 순서(책 본문 등장 순서)가 그대로 유지됨. (bulk insert 는 now() 동률이라 순서 보장 안 됨)
+    const _seqBase = Date.now();
+    const rows = words.map((w, i) => {
+      const r = { page_id:pageId, en:w.en, ipa:w.ipa||'', base:w.base, ctx:w.ctx, sentence:w.sentence||'', level:w.level||'', created_at: new Date(_seqBase + i*1000).toISOString() };
       if (w.analysis && typeof w.analysis === 'object') r.analysis = w.analysis;
       return r;
     });
@@ -3578,9 +3581,9 @@ function buildScanPrompt(useExclude=true) {
   const exclude = useExclude ? buildExcludePrompt() : '';
   const isEnglish = (target.code === 'en' || target.name === 'English' || target.name === '영어');
   const levelGuide = isEnglish
-    ? `CEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘 (가장 먼저 찾기)\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\nC1~C2 단어를 먼저 찾고, B2, B1 순서로 채워주세요.`
-    : `각 단어의 난이도를 5단계로 분류하세요. 사용 빈도가 낮고 어려울수록 높은 등급입니다:\n- C2: 매우 어려움 (전문·희귀 어휘)\n- C1: 어려움 (고급 어휘, 가장 먼저 찾기)\n- B2: 중상급\n- B1: 중급\n- A2: 초급 (기초 어휘)\n어려운 단어(C1~C2)를 먼저 찾고, B2, B1 순서로 채워주세요.`;
-  return `이 ${target.name} 책 페이지에서 어려운 ${target.name} 단어를 우선으로 최대 20개 추출해주세요.\n${levelGuide}${exclude}\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n중요: "en" 필드에는 ${target.name} 단어를 넣고, "base"와 "ctx" 필드에는 ${native.name}로 된 뜻을 넣어주세요. "en"이라는 이름이지만 실제로는 ${target.name} 단어가 들어갑니다. 또한 각 단어를 사용한 짧고 자연스러운 ${target.name} 예문 한 문장을 "sentence" 필드에 넣어주세요.\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"${target.name} 단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻","sentence":"그 단어를 사용한 짧은 ${target.name} 예문","level":"C1"}]}`;
+    ? `CEFR 난이도 기준으로 각 단어를 반드시 분류하세요:\n- C2: 원어민 수준\n- C1: 대학/원서 수준 고급 어휘\n- B2: 고급 중급\n- B1: 중급\n- A2: 초급\n어떤 단어를 고를지는 어려운 단어(C1~C2)를 우선 선택하되, 필요하면 B2·B1도 포함하세요.`
+    : `각 단어의 난이도를 5단계로 분류하세요. 사용 빈도가 낮고 어려울수록 높은 등급입니다:\n- C2: 매우 어려움 (전문·희귀 어휘)\n- C1: 어려움 (고급 어휘)\n- B2: 중상급\n- B1: 중급\n- A2: 초급 (기초 어휘)\n어떤 단어를 고를지는 어려운 단어(C1~C2)를 우선 선택하되, 필요하면 B2·B1도 포함하세요.`;
+  return `이 ${target.name} 책 페이지에서 어려운 ${target.name} 단어를 우선으로 최대 20개 추출해주세요.\n${levelGuide}${exclude}\n\n⚠️ 단어 배열 순서: 고른 단어들을 난이도순이 아니라, 책 본문에 등장하는 순서대로(페이지 위 → 아래, 왼쪽 → 오른쪽) "words" 배열에 넣어주세요. 독자가 본문을 읽으며 단어를 쉽게 찾을 수 있게 하는 것이 목적입니다.\n\n또한 이 사진에서 페이지 번호가 보이면 읽어서 page 필드에 넣어주세요. 페이지 번호가 안 보이면 page는 빈 문자열("")로 두세요. 페이지 번호는 보통 페이지 위쪽이나 아래쪽 모서리에 있는 숫자나 로마숫자입니다. 연도, 각주 번호, 본문 속 숫자는 페이지 번호가 아닙니다.\n\n중요: "en" 필드에는 ${target.name} 단어를 넣고, "base"와 "ctx" 필드에는 ${native.name}로 된 뜻을 넣어주세요. "en"이라는 이름이지만 실제로는 ${target.name} 단어가 들어갑니다. 또한 각 단어를 사용한 짧고 자연스러운 ${target.name} 예문 한 문장을 "sentence" 필드에 넣어주세요.\n\n전문 용어(의학·법률·화학·공학 등 전문 분야 어휘)인 경우, "ctx" 필드에 단순 번역에 그치지 말고 그 개념을 이해하는 데 도움이 되는 간단한 부연 설명(정의·역할·상위 개념)을 한 문장 더해주세요. 예: "ketone" → "카르보닐기(C=O)를 가진 유기 화합물의 한 종류로, 알데하이드와 함께 카르보닐 화합물에 속한다".\n\n반드시 JSON만 반환 (level 필드는 C2/C1/B2/B1/A2 중 하나):\n{"page":"34","words":[{"en":"${target.name} 단어","base":"${native.name} 뜻","ctx":"${native.name} 문맥 뜻 + (전문 용어면) 개념 설명","sentence":"그 단어를 사용한 짧은 ${target.name} 예문","level":"C1"}]}`;
 }
 
 // ── 이미 등록된 단어 목록 추출 ──
@@ -3896,6 +3899,15 @@ function allWordsGlobal() {
   const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>out.push({...w})))); return out;
 }
 
+// 재렌더하되 현재 스크롤 위치를 유지 (즐겨찾기/삭제 시 목록이 맨 위로 튀는 것 방지)
+function renderKeepScroll(){
+  const before = document.querySelector('.scr-scroll') || document.querySelector('.scr');
+  const y = before ? before.scrollTop : 0;
+  render();
+  const after = document.querySelector('.scr-scroll') || document.querySelector('.scr');
+  if (after) { after.scrollTop = y; requestAnimationFrame(()=>{ try { after.scrollTop = y; } catch(e){} }); }
+}
+
 async function toggleFavorite(bookId, pageNum, wordIdx) {
   const book = findBook(bookId);
   const page = book ? findPage(book, pageNum) : null;
@@ -3904,7 +3916,7 @@ async function toggleFavorite(bookId, pageNum, wordIdx) {
   if (!word.id) { toast(userNativeLang==='ko'?'새로고침 후 즐겨찾기를 쓸 수 있어요':'Reload to favorite this word'); return; }
   const next = !word.fav;
   word.fav = next;
-  render();
+  renderKeepScroll();
   const url = `/rest/v1/voca_words?id=eq.${word.id}`;
   const send = async () => {
     const opt = { method:'PATCH', headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }, body: JSON.stringify({ is_favorite: next }) };
@@ -3915,7 +3927,7 @@ async function toggleFavorite(bookId, pageNum, wordIdx) {
   try {
     const res = await send();
     if (!res.ok) throw new Error('fav write failed ' + res.status);
-  } catch(e) { word.fav = !next; render(); toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again'); }
+  } catch(e) { word.fav = !next; renderKeepScroll(); toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again'); }
 }
 
 // 예문 일괄 채우기 (묶음 호출, 1회성) - 책 메뉴에서 실행
