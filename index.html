@@ -2436,8 +2436,10 @@ async function loadBooksFromDB() {
     if (!Array.isArray(bd)) return;
     books = bd.map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
-      desc: b.description || '', cover: b.cover_url || '', category: b.category || 'general',
-      _officialContent: !!b.is_official, // 공식 콘텐츠 책: 촬영/직접입력 버튼 숨김(소유자 본인이 봐도). 잠금·점수와 무관.
+      desc: b.description || '', cover: b.is_official ? _officialCover(b.title, b.cover_url) : (b.cover_url || ''), category: b.category || 'general',
+      _officialContent: !!b.is_official, // 공식 콘텐츠 책: 촬영/직접입력 버튼 숨김(소유자 본인이 봐도)
+      // 소유자 본인이 봐도 공식 책은 잠금(Day1만 무료) 적용 → _official/_readonly 부여(무료=다 락, 유료만 풀림)
+      ...(b.is_official ? { _official: true, _readonly: true } : {}),
       pages: (b.voca_pages || [])
         .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
         .map(p => ({
@@ -2452,6 +2454,13 @@ async function loadBooksFromDB() {
   } catch(e) { console.error('DB load error:', e); }
 }
 
+// 공식 책 표지: 제목에 따라 레포에 호스팅된 표지 이미지를 매핑(DB cover_url이 비어도 적용).
+function _officialCover(title, dbCover){
+  const t = title || '';
+  if (t.indexOf('기본') >= 0) return 'cover-suneung-basic.jpg?v=1';
+  if (t.indexOf('핵심') >= 0) return 'cover-suneung-core.jpg?v=1';
+  return dbCover || '';
+}
 // 공식 단어장(is_official)을 읽어 책장에 추가 (읽기전용). 이미 있으면(소유자 본인) 중복 제거.
 async function appendOfficialBooks() {
   try {
@@ -2460,7 +2469,7 @@ async function appendOfficialBooks() {
     const have = new Set(books.map(b => b.id));
     const mapped = od.filter(b => !have.has(b.id)).map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
-      desc: b.description || '', cover: b.cover_url || '', category: b.category || 'general',
+      desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
       _official: true, _readonly: true, _officialContent: true,
       pages: (b.voca_pages || [])
         .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
@@ -4009,8 +4018,8 @@ function render() {
               <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
                 <div class="book-cover" style="background:${bookCoverBg(b)};position:relative;overflow:hidden;">
                   ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:bookCoverDeco(b)}
-                  <div class="book-cover__title" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${b.title}</div>
-                  <div class="book-cover__author" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${b.author}</div>
+                  ${b.cover?'':`<div class="book-cover__title" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${b.title}</div>
+                  <div class="book-cover__author" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${b.author}</div>`}
                 </div>
                 <div class="book-tile__title">${b.title}</div>
                 <div class="book-tile__sub">${b.author} · ${countWords(b)} ${userNativeLang==='ko'?'단어':'words'}</div>
