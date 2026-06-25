@@ -2457,7 +2457,7 @@ async function loadBooksFromDB() {
 // 공식 책 표지: 제목에 따라 레포에 호스팅된 표지 이미지를 매핑(DB cover_url이 비어도 적용).
 function _officialCover(title, dbCover){
   const t = title || '';
-  if (t.indexOf('기본') >= 0) return 'cover-suneung-basic.jpg?v=1';
+  if (t.indexOf('기본') >= 0) return 'cover-suneung-basic.jpg?v=2';
   if (t.indexOf('핵심') >= 0) return 'cover-suneung-core.jpg?v=1';
   return dbCover || '';
 }
