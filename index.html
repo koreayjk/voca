@@ -4225,7 +4225,7 @@ function render() {
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
           <button class="btn btn-outline" onclick="startQuiz('${book.id}','page','${page.num}')">${userNativeLang==='ko'?'🎯 테스트':'🎯 Test'}${(_testScore[book.id+'|'+page.num]!=null)?` · ${_testScore[book.id+'|'+page.num]}%`:''}</button>
-          ${book._readonly ? '' : `<button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>`}
+          ${(book._readonly || book._officialContent) ? '' : `<button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}',pageNum:'${page.num}'})">${userNativeLang==='ko'?'✏️ 직접 입력':'✏️ Add'}</button>`}
         </div>
       </div>`;
   }
