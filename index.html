@@ -4379,28 +4379,35 @@ function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
 function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); return s?(_AUDIO_BASE+'/'+kind+'/'+s+'.mp3'):''; }
 let _aWatch = null; // mp3 재생 완료 감지 워치독(onended 누락 대비)
+let _sharedAudio = null; // ⚠️ iOS: 제스처로 한 번 잠금해제된 엘리먼트만 이후 프로그램적 재생 허용 → 단일 엘리먼트 재사용
+function _getAudioEl(){ if(!_sharedAudio){ _sharedAudio = new Audio(); _sharedAudio.preload='auto'; } return _sharedAudio; }
 function _stopAudio(){ if(_aWatch){ clearInterval(_aWatch); _aWatch=null; } if(_curAudio){ try{_curAudio.pause();}catch(e){} _curAudio=null; } }
 function _playSmart(text, url, onDone){
   // iOS는 유휴 상태에서 cancel을 반복 호출하면 다음 음성이 쉰 목소리로 깨짐 → 재생 중일 때만 cancel
   _stopAudio(); const _sy=window.speechSynthesis; if(_sy && (_sy.speaking||_sy.pending)) _sy.cancel();
   let done=false; const fin=()=>{ if(done)return; done=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} if(onDone)onDone(); };
   if(url){
-    try{ const a=new Audio(url); _curAudio=a;
-      a.onended=fin;
+    try{
+      // ⚠️ new Audio()를 매번 만들면 iOS 자동재생 잠금이 매번 풀려, 첫 재생(제스처)만 되고
+      //    반복(setTimeout)은 차단돼 TTS로 빠짐. → 잠금해제된 단일 엘리먼트를 재사용한다.
+      const a=_getAudioEl(); _curAudio=a;
       let fb=false; const fall=()=>{ if(fb)return; fb=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} if(_curAudio===a)_curAudio=null; speak(text, fin); };
-      a.onerror=fall;
-      a.play().catch(fall);
-      // ⚠️ iOS/스트리밍 mp3는 'ended' 이벤트가 발화되지 않는 경우가 있어 자동 반복이 멈춤.
-      //    실제 duration/currentTime을 폴링해 재생 종료를 직접 감지(특히 긴 예문 음원).
+      a.onended=fin; a.onerror=fall;
+      if(a.src!==url){ a.src=url; }
+      try{ a.currentTime=0; }catch(e){}
+      // play()가 pause()와 겹쳐 나는 AbortError는 무시(워치독이 처리). 그 외 실패만 TTS 폴백.
+      const p=a.play(); if(p&&p.catch) p.catch(err=>{ if(err&&err.name==='AbortError')return; fall(); });
+      // iOS/스트리밍 mp3는 'ended'가 안 오는 경우가 있어, 실제 duration/currentTime을 폴링해 종료 감지.
       if(_aWatch) clearInterval(_aWatch);
-      let stalled=0;
+      let ticks=0, stalled=0;
       _aWatch=setInterval(()=>{
         if(done || _curAudio!==a){ clearInterval(_aWatch); _aWatch=null; return; }
+        ticks++;
         if(a.ended){ fin(); return; }
         const d=a.duration;
         if(isFinite(d) && d>0 && a.currentTime>=d-0.08){ fin(); return; }
-        // 재생이 진행되지 않고(일시정지/멈춤) 시간도 안 흐르면 종료로 간주
-        if(a.paused && a.currentTime>0){ if(++stalled>=3){ fin(); return; } } else { stalled=0; }
+        if(a.currentTime>0){ if(a.paused){ if(++stalled>=3){ fin(); return; } } else stalled=0; }
+        else if(ticks>=6){ fall(); return; } // ~1.8초간 재생 시작조차 못함 → TTS 폴백
       }, 300);
       return;
     }catch(e){}
