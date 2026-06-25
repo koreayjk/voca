@@ -3292,9 +3292,71 @@ function useCameraShots() {
   }
 }
 
+// ── PDF 지원: pdf.js 를 필요할 때만 CDN 로드 후 페이지를 이미지로 변환 ──
+const _PDF_MAX_PAGES = 10; // PDF 한 번에 처리할 최대 페이지(사진 10장 제한과 동일)
+let _pdfjsPromise = null;
+function _loadPdfJs() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if (_pdfjsPromise) return _pdfjsPromise;
+  _pdfjsPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload = () => {
+      try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; } catch(e){}
+      resolve(window.pdfjsLib);
+    };
+    s.onerror = () => { _pdfjsPromise = null; reject(new Error('pdf.js load failed')); };
+    document.head.appendChild(s);
+  });
+  return _pdfjsPromise;
+}
+// PDF 파일 → 페이지별 JPEG dataURL 배열 (limit 만큼만)
+async function _pdfToImages(file, limit) {
+  const lib = await _loadPdfJs();
+  const buf = await file.arrayBuffer();
+  const pdf = await lib.getDocument({ data: buf }).promise;
+  const n = Math.min(pdf.numPages, limit);
+  const out = [];
+  for (let i = 1; i <= n; i++) {
+    const page = await pdf.getPage(i);
+    const base = page.getViewport({ scale: 1 });
+    const targetMax = 1600; // 텍스트 인식 위해 사진(1200)보다 약간 높게
+    const scale = Math.max(1, targetMax / Math.max(base.width, base.height));
+    const vp = page.getViewport({ scale });
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(vp.width); canvas.height = Math.round(vp.height);
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    out.push(canvas.toDataURL('image/jpeg', 0.82));
+  }
+  return { images: out, total: pdf.numPages };
+}
+// 선택된 PDF(들) 처리 → 기존 단일/멀티 스캔 흐름으로 합류
+async function handlePdfFiles(pdfs) {
+  const ko = userNativeLang === 'ko';
+  try {
+    toast(ko ? 'PDF 변환 중...' : 'Converting PDF...');
+    let all = [], totalPages = 0;
+    for (const f of pdfs) {
+      if (all.length >= _PDF_MAX_PAGES) break;
+      const { images, total } = await _pdfToImages(f, _PDF_MAX_PAGES - all.length);
+      all = all.concat(images); totalPages += total;
+    }
+    if (!all.length) { toast(ko ? 'PDF에서 페이지를 읽지 못했어요' : 'Could not read PDF'); return; }
+    if (totalPages > all.length) toast(ko ? `PDF가 길어 처음 ${all.length}페이지만 처리해요` : `Long PDF — using first ${all.length} pages`);
+    if (all.length === 1) { imgData = all[0]; window._multiImgData = null; renderUploadPreview(); }
+    else { window._multiImgData = all; imgData = null; renderMultiPreview(all); }
+  } catch (err) {
+    console.warn('[pdf]', err);
+    toast(ko ? 'PDF 처리 실패 — 사진으로 시도해주세요' : 'PDF failed — try images');
+  }
+}
+
 function handleFileChange(e) {
   const files = Array.from(e.target.files);
   if (!files.length) return;
+  // PDF 가 포함되면 PDF 경로로 처리 (이미지와 섞이면 PDF 우선)
+  const pdfs = files.filter(f => f.type === 'application/pdf' || /\.pdf$/i.test(f.name));
+  if (pdfs.length) { handlePdfFiles(pdfs); if (e.target) e.target.value = ''; return; }
   if (files.length > 10) { toast('최대 10장까지만 선택할 수 있어요'); return; }
   const readers = files.map(f => new Promise(resolve => {
     const img = new Image(), r = new FileReader();
@@ -4194,7 +4256,7 @@ function render() {
                 <button onclick="openCamera()" style="flex:1;padding:12px;background:var(--bg-input);border:1.5px dashed var(--ink-12);border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);display:flex;align-items:center;justify-content:center;gap:6px;">${t('cameraCapture')}</button>
               `}
             </div>
-            <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif" multiple style="display:none" onchange="handleFileChange(event)">
+            <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.pdf,application/pdf" multiple style="display:none" onchange="handleFileChange(event)">
             <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none" onchange="handleFileChange(event)">
             <div id="camera-area" style="display:none;margin-top:8px;">
               <div style="position:relative;">
