@@ -1510,8 +1510,22 @@ async function setStudentStatus(id, status){
   try{
     await sbFetch(`/rest/v1/members?id=eq.${id}`, 'PATCH', { org_status: status }, true, {'Prefer':'return=representation'});
     toast(status==='approved'?(userNativeLang==='ko'?'학생을 승인했어요':'Approved'):(userNativeLang==='ko'?'거절했어요':'Rejected'));
+    syncOrgSeats(); // 승인 인원 변동 → 구독 좌석수 동기화(중도 가입자 일할 청구)
     loadOrgStudents();
   }catch(e){ toast(userNativeLang==='ko'?'변경 실패, 잠시 후 다시':'Failed'); }
+}
+
+// 단체 구독 좌석수 동기화: 승인 학생/공동관리자 수가 바뀌면 Stripe quantity 를 맞춘다.
+// 결제중(billing_active)일 때만 의미가 있으며, 미결제 시 서버에서 무시한다. (fire-and-forget)
+async function syncOrgSeats(){
+  try{
+    if (!userOrg || !userOrg.id || !isOrgBillingActive()) return;
+    await fetch(SB_URL+'/functions/v1/sync-org-seats', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      body:JSON.stringify({ org_id: userOrg.id })
+    });
+  }catch(e){ console.warn('[seat sync]', e); }
 }
 
 async function promoteStudentToCoAdmin(id){
@@ -1570,6 +1584,7 @@ async function removeStudent(id){
   try {
     await sbFetch(`/rest/v1/members?id=eq.${id}`, 'PATCH', { org_id: null, org_role: null, org_status: 'approved' }, true, {'Prefer':'return=representation'});
     toast(userNativeLang==='ko'?'학생을 내보냈어요':'Removed');
+    syncOrgSeats(); // 인원 감소 → 구독 좌석수 동기화(다음 청구일에 반영)
     loadOrgStudents();
   } catch(e){ toast(userNativeLang==='ko'?'실패':'Failed'); }
 }
