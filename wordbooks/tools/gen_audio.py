@@ -30,8 +30,10 @@ DELAY = float(os.environ.get("GOOGLE_TTS_DELAY", "0.15"))
 GO = "--go" in sys.argv
 FORCE = "--force" in sys.argv
 LIMIT = None
+BOOK = os.environ.get("BOOK_PREFIX", "")   # 특정 책만 생성(CI용). 빈값=전체
 for i, a in enumerate(sys.argv):
     if a == "--limit" and i+1 < len(sys.argv): LIMIT = int(sys.argv[i+1])
+    if a == "--book" and i+1 < len(sys.argv): BOOK = sys.argv[i+1]
 DAYS = list(range(1, 31))
 
 def safe(en): return "".join(c for c in (en or "").lower() if c.isalnum())
@@ -39,7 +41,8 @@ def safe(en): return "".join(c for c in (en or "").lower() if c.isalnum())
 def collect():
     import glob
     items, seen = [], set()
-    files = sorted(f for f in glob.glob(str(ROOT/"suneung-*-day*.json")) if ".scaffold." not in f)
+    pat = f"suneung-{BOOK}-day*.json" if BOOK else "suneung-*-day*.json"
+    files = sorted(f for f in glob.glob(str(ROOT/pat)) if ".scaffold." not in f)
     for f in files:                       # 모든 책(기본+핵심+고난도+…) 단어 포함, 중복 제거
         for w in json.load(open(f))["words"]:
             sf = safe(w["en"])

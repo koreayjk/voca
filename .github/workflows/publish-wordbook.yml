@@ -1,0 +1,66 @@
+name: 단어장 발행 (음원·DB 등록)
+
+# 폰/웹에서 GitHub → Actions → 이 워크플로우 → "Run workflow" 버튼으로 실행.
+# 비공개 키는 Settings → Secrets and variables → Actions 에 저장:
+#   SB_SERVICE_KEY  (Supabase service_role 키, eyJ...)
+#   GOOGLE_API_KEY  (Google Cloud TTS 키, AIza...)
+# 선행: 해당 책의 suneung-<prefix>-day*.json 이 repo에 푸시돼 있어야 함.
+
+on:
+  workflow_dispatch:
+    inputs:
+      book_prefix:
+        description: '책 prefix (basic / core / hard ...)'
+        required: true
+        default: 'core'
+      book_title:
+        description: '책 이름 (예: 수능 핵심)'
+        required: true
+        default: '수능 핵심'
+      book_code:
+        description: '책 코드 (예: SUN-CORE)'
+        required: true
+        default: 'SUN-CORE'
+      do_audio:
+        description: '발음 음원 생성+업로드'
+        type: boolean
+        default: true
+      do_seed:
+        description: 'DB 등록(seed)'
+        type: boolean
+        default: true
+      reset_book:
+        description: '기존 책 삭제 후 재등록(--reset)'
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wordbooks
+    env:
+      SB_URL: https://ziatqkjlafucqtwshhla.supabase.co
+      OFFICIAL_OWNER: fcfaf79d-0a27-41ac-93e2-9498b6716aba
+      SB_SERVICE_KEY: ${{ secrets.SB_SERVICE_KEY }}
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      BOOK_PREFIX: ${{ inputs.book_prefix }}
+      BOOK_TITLE: ${{ inputs.book_title }}
+      BOOK_CODE: ${{ inputs.book_code }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 발음 음원 생성 (해당 책만)
+        if: ${{ inputs.do_audio }}
+        run: python3 tools/gen_audio.py --go --book "$BOOK_PREFIX"
+      - name: 음원 Supabase Storage 업로드
+        if: ${{ inputs.do_audio }}
+        run: python3 tools/upload_audio.py --go
+      - name: 공식책 DB 등록 (seed)
+        if: ${{ inputs.do_seed }}
+        run: python3 tools/seed_official.py --go ${{ inputs.reset_book && '--reset' || '' }}
+      - name: 완료 안내
+        run: echo "✅ ${BOOK_TITLE}(${BOOK_CODE}) 발행 완료 — 앱 새로고침하면 반영됩니다."
