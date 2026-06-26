@@ -1,66 +1,69 @@
-# IM VOCA 자체 단어장 프로젝트 — 이어서 작업하는 법
+# IM VOCA 자체 단어장 — 인수인계 문서
 
-> 새 세션에서 이 폴더를 보거나 "단어장 이어서 만들자"라고 하면 이 문서 + 메모리(MEMORY.md)를 참고해 이어갈 것.
+> 새 세션(웹/로컬 클로드)에서 이 폴더를 이어 작업할 땐 **이 문서를 먼저 읽어라.** repo가 곧 컨텍스트다(채팅 기록에 의존하지 말 것).
+> python은 로컬에서 `/opt/homebrew/bin/python3`. 저작권 안전이 최우선(출판사 책 복제 금지, 기출 "사실"만 인용, 예문은 기출변형).
 
-## 목표
-저작권 안전한 **자체 단어장 7권** 제작. 출판사 책 복제 금지. **기출 빈도 + CEFR + 자체 예문** 기반.
+## 목표 · 7권 구성 (하루 40단어 = 앱 1 page, 권 간 단어 중복 없음)
+- 중등 3권: 중1 기초(~600·A1~A2) / 중2 핵심(~700·A2~B1) / 중3 완성(~800·B1)
+- 수능 4권: 기본(1,200·B1~B2) / 핵심(1,800·B2~C1) / 고난도(800·C1~C2) / 숙어(~500·구동사·관용구)
 
-## 7권 구성 (하루 40단어 × Day 단위 = 앱 page, 권 간 중복 없음)
-- 중등 3권: 중1 기초(~600·A1~A2) / 중2 핵심(~700·A2~B1) / 중3 완성(~800·B1) — 교육부 중학어휘+CEFR
-- 수능 4권: 기본(~1,200·B1~B2) / 핵심(~1,800·B2~C1) / 고난도(~800·C1~C2) / 숙어(~500) — 기출 빈도 기반
+## 진행 상황 (2026-06)
+| 책 | prefix | code | 단어 | 최종 JSON | DB(공식책) | 발음 |
+|---|---|---|---|---|---|---|
+| 수능 기본 | basic | SUN-BASIC | 1,200 (30일) | ✅ | ✅ | ✅ |
+| 수능 핵심 | core | SUN-CORE | 1,800 (45일) | ✅ | ✅ | ✅ |
+| 수능 고난도 | hard | SUN-HARD | 800 (20일) | ✅ | ✅ | ✅ |
+| 수능 숙어 | (미정 idiom) | SUN-IDIOM | ~500 | ⬜ | ⬜ | ⬜ |
+| 중등 3권 | mid1/2/3 | … | ~2,000 | ⬜ | ⬜ | ⬜ |
 
-## 데이터 (이미 생성됨)
-- `suneung-frequency.json` — 기출 전체 빈도표(상위 3000, surface form). 코퍼스 57개 시험(2009~2027 수능+6·9월 모평).
-- `suneung-selection.json` — 정제 선택 풀 1,925개(기능어·기초어 제외, 기출 빈도순, ★등급).
-- `suneung-basic-day1.json` — 수능 기본 Day 1(40단어). **예문 교체 완료**: 각 단어 meanings[0]에 `ex`(기출변형 재작성)·`tr`·`src`("YYYY 회차 NN번"). 40단어 전부 서로 다른 시험(2009~2025) 배정.
-- `suneung-core-day1.json` — 초기 핸드픽 샘플(참고용).
-- 기출 원본 PDF: `../../test/` 폴더 (EBSi 다운로드, 67개·중복포함). `pdftotext`로 추출, python은 `/opt/homebrew/bin/python3`(3.14).
-- ★ 기준: ★★★ ≥20개 시험 · ★★ 8~19 · ★ 1~7.
+→ **수능 단어 3권(3,800단어) 완성.** 남은 것: 수능 숙어, 중등 3권.
 
-## 파서·생성 도구 (`tools/`, 재사용)
-**핵심 발견: `pdftotext -raw`가 2단 편집을 읽기순서대로 뽑아 문항번호(18~45)가 단조증가** → 줄머리 `NN.` 앵커로 문항 분리하면 단어↔문항 매핑 정확. (-layout은 컬럼이 줄단위로 섞여 실패. README 우려 해소.)
-- `extract_corpus.py` → `corpus/index.json`(48개 시험 라벨식별: 연도+회차) + `corpus/<label>.txt`. 나머지 9개는 헤더가 이미지라 자동 라벨 실패(빈 PDF 3개 포함). 48개로 충분.
-- `stopwords.txt` — 기능어·기초어(A1~A2)·요일/월·고유명사·불규칙형 제외 목록. 빈도 최상위어=쉬운 어휘라 필수.
-- `build_day.py <N>` / `build_all_scaffolds.py <START> <END>` — 선택풀을 (stars,exams,total)순 + 스톱필터 + 복수형 휴리스틱으로 정렬, 40단어씩 Day 청크 선정 → 회차 골고루 출처배정 + recentYear 계산 → `suneung-basic-day<N>.scaffold.json`(언어정보 빈칸, `_ref`=실제 기출문장).
-- **content.json 작성**(유일한 수작업/LLM): scaffold의 단어별 ipa·뜻·동의어·파생·어원 + `_ref` 기반 기출변형 예문 → `day<N>.content.json`. → 워크플로우 `generate-wordbook-days`로 병렬 생성.
-- `merge_day.py <N>` — scaffold + content → 최종 `suneung-basic-day<N>.json`(src/exam/recentYear는 scaffold 유지, 누락단어 검증).
-- (구) `find_occurrences.py`/`assign_sources.py`/`merge_examples.py` — Day1 예문교체용 초기 스크립트.
+## 새 책 만드는 전체 파이프라인 (예: 다음 책)
+**⚠️ 1~3은 corpus/ 가 필요 → 로컬(맥)에서만. corpus/·*.scaffold.json 은 저작권 원문이라 gitignore(GitHub에 없음).**
+1. **빈도풀** (한 번만, 이미 `suneung-pool-full.json` 있으면 생략): `python3 tools/build_corpus_pool.py` → corpus/*.txt 에서 필터링된 단어풀 생성.
+   - corpus/ 가 없으면 먼저 `python3 tools/extract_corpus.py` (원본 PDF는 `../../test/`).
+2. **스캐폴드**: `python3 tools/build_book_scaffolds.py "<책이름>" <CODE> <prefix> suneung-pool-full.json <START> <END>`
+   - 이미 만든 모든 책 단어 자동 제외. 회차 골고루 기출 출처+recentYear 배정. → `suneung-<prefix>-day<N>.scaffold.json`.
+3. **콘텐츠 생성** (워크플로우, 병렬): 각 scaffold를 읽어 ipa·뜻·동의어·파생·어원 + `_ref` 기반 **기출변형 예문**을 만들어 `<prefix>-day<N>.content.json` 으로 저장.
+   - 기본=`generate-wordbook-days`, 핵심=`generate-core-days`, 고난도=`generate-hard-days` 워크플로우 참고(프롬프트의 책명·CEFR만 교체).
+4. **머지**: `for n in $(seq 1 END); do python3 tools/merge_day.py $n <prefix>; done` → `suneung-<prefix>-day<N>.json` (최종).
+5. **검증**: 40단어·중복0·기본외책 겹침0·필드(ipa/pos/level/ko/ex/tr)·예문에 표제어 포함.
+6. **DB 등록 + 발음** → 로컬 터미널 OR **GitHub Actions(폰)**:
+   - 로컬: `BOOK_PREFIX=<p> BOOK_TITLE="<이름>" BOOK_CODE=<CODE> OFFICIAL_OWNER=… SB_URL=… SB_SERVICE_KEY=… python3 tools/seed_official.py --go`
+     그리고 `GOOGLE_API_KEY=… python3 tools/gen_audio.py --go --book <p>` → `SB_SERVICE_KEY=… python3 tools/upload_audio.py --go`
+   - **폰/웹**: GitHub → Actions → **"단어장 발행"** → prefix·이름·코드 입력 → Run (`.github/workflows/publish-wordbook.yml`). Secrets: `SB_SERVICE_KEY`, `GOOGLE_API_KEY`.
 
-## 진행 상황
-- **수능 기본 1권 완성: Day1~30 = 1,200단어**(중복 0, 전 필드 검증 통과). 각 단어 풀포맷 + 기출변형 예문 + 출처.
-  - Day3~30은 워크플로우 `generate-wordbook-days`로 content.json 병렬 생성 후 merge_day로 완성.
-  - 예외: jealous(D16)·envious(D27)는 듣기 '심정' 어휘라 독해(18~45)에 없어 출처/recentYear 공란 → 카드가 "🎯 기출 N개 시험"으로 폴백(정상).
-  - 선택풀 잔여 ~256단어(+frequency 상위어)는 다음 권(수능 핵심 등)으로.
-- 중간 산출물: `suneung-basic-day<N>.scaffold.json`(재생성 가능), `day<N>.content.json`(콘텐츠 소스, 편집 시 merge_day 재실행).
-- 프리뷰: `wordbook-preview.html?day=N`으로 Day 전환(book/day 라벨 자동).
+## 도구 맵 (`tools/`)
+- `extract_corpus.py` — 기출 PDF(`../../test/`) → `corpus/<연도_회차>.txt` + `corpus/index.json`(48시험 식별). **핵심: `pdftotext -raw`가 2단 편집을 읽기순서로 뽑아 문항번호 18~45 단조증가** → 줄머리 `NN.` 앵커로 단어↔문항 매핑.
+- `build_corpus_pool.py` — corpus → `suneung-pool-full.json`(필터: 스톱워드·복수형·부사·고유명사 자동감지).
+- `stopwords.txt` — 기능어·기초어·중상급 제외어·고유명사·축약형·비교급/숫자.
+- `build_book_scaffolds.py` — 풀 → Day별 scaffold(+기출 출처). `build_all_scaffolds.py`/`build_day.py` 는 기본 전용(구).
+- `merge_day.py <N> [prefix]` — scaffold + content → 최종 Day JSON.
+- `seed_official.py` — 최종 JSON → Supabase voca_books/pages/words 등록(`is_official=true`). env: `BOOK_PREFIX/TITLE/CODE`, `SB_URL`, `SB_SERVICE_KEY`, `OFFICIAL_OWNER`. `--reset`(재등록), `--update`(analysis만 갱신, uuid 유지).
+- `gen_audio.py` — Google Cloud TTS(Neural2)로 단어·예문 mp3 생성(`--book <prefix>`로 한 책만). `upload_audio.py` — mp3를 Supabase Storage `audio` 버킷 업로드.
+- `find_occurrences.py` — 코퍼스 문항 분리/검색 헬퍼(스캐폴드 빌더가 import).
 
-## 다음 권 만들 때
-1. (필요시) 권 경계용 CEFR/난이도 필터 보강 — 현재는 빈도·★ 순. 수능 핵심/고난도는 더 희소·고급 어휘 위주.
-2. `build_all_scaffolds.py <START> <END>` (이미 쓴 단어 자동 제외) → 워크플로우 재실행(프롬프트의 book명/레벨만 교체) → merge_day → 검증 스크립트.
-3. 검증: 단어수 40·중복 0·필수필드·예문 표제어 포함(위 1회용 검증 코드 재사용).
+## 단어 1개 포맷 (최종 JSON)
+`en · ipa · pos · meanings[]{pos,ko,ex,tr(+첫째에 src)} · syn[] · deriv[] · roots[]/etymHint(어근분해, 스토리 금지) · level(CEFR) · exam{tested,count,exams,recentYear,stars}`
 
-## 단어 1개 포맷 (JSON)
-`en · ipa · pos · meanings[]{pos,ko,ex,tr}(다의어는 빈출 뜻 2~3개) · syn[] · deriv[] · roots[]/etymHint(어근분해만, 스토리형 금지) · level(CEFR) · exam{count,exams,recentYear,stars}`
+## 예문 규칙 (핵심)
+- 예문 = 그 단어가 **실제 출제된 기출 지문의 "기출변형"**(복제 금지, CEFR 맞춰 재작성), 표제어 포함.
+- 출처 `meanings[0].src` = "2017 수능 40번" 형식. 한 책 안에서 회차 골고루.
+- `_ref` 없는 단어(희소/듣기어, 약 5%)는 대표 뜻에 맞는 자연 예문 신규 작성 → 카드는 출처배지 폴백.
+- 예문에 큰따옴표(") 금지(작은따옴표) — JSON 깨짐 방지.
 
-## ⚠️ 예문 규칙 (사용자 핵심 요청)
-- 예문은 **그 단어가 실제 출제된 기출 문장의 "기출변형"** (그대로 복제 금지, CEFR에 맞춰 비슷하게 재작성).
-- 출처를 **"2025 수능 35번 / 2023 6월모평 20번"**(연도+회차+문항번호)으로 표기.
-- 한 단어장 내 **회차를 골고루** 분산.
-- → 이를 위해 **각 시험 PDF를 문항(18~45번) 단위로 분리하는 파서**를 먼저 만들어야 함(2단 편집이라 컬럼 분리 필요). 연도·회차는 이미 정확, 문항번호만 파서로 보강.
-- 생성은 **Gemini API(gemini-proxy 재활용) 자동 파이프라인** 권장 + 사람 검수 1회.
+## 앱 통합 현황 (index.html — 코드 수정 불필요)
+- `appendOfficialBooks()` 가 `is_official=true` 책을 **자동 로드** → seed만 하면 앱 책장에 등장.
+- **잠금**: 무료=Day1만 / 프리미엄·단체결제=전체 (`hasOfficialAccess`/`isPageLocked`).
+- **카드**: 공식책은 풍부한 카드(앞:기출★·CEFR / 뒤:뜻·🎯출처 기출변형·예문+해석·동의어·파생·어원, 밝은 크림 배경 `card--official`).
+- **발음**: `_audioUrl`이 Supabase Storage URL(`/audio/w|s/<safe-en>.mp3`) 재생, 없으면 기기 TTS 폴백. **자동읽기 토글**(`toggleAutoRead`, 앞=단어/뒤=예문 반복).
+- **Day 테스트**: 4지선다 퀴즈, 점수 `voca_stats`(page_num 포함) 저장. 학원 리포트·학부모 카드는 별도.
+- 프리뷰: `wordbook-preview.html?day=N` (basic 전용 뷰어).
+
+## DB / 키 (참고값)
+- Supabase URL: `https://ziatqkjlafucqtwshhla.supabase.co` · 공식책 owner uuid: `fcfaf79d-0a27-41ac-93e2-9498b6716aba`
+- 선행 SQL(1회): `supabase/official-books.sql`(is_official+RLS), `supabase/day-tests.sql`(voca_stats.page_num+RLS).
+- 비공개 키(service_role, Google TTS)는 절대 커밋 금지 — 로컬 env 또는 GitHub Secrets.
 
 ## 가격 (확정)
-개인 $3.99 / 단체 $2.99 유지. 단어장은 **개인 프리미엄 + 단체(결제중) 모두 포함, 무료는 잠금**(맛보기 1 Day).
-
-## 앱 카드 디자인 (확정)
-`wordbook-preview.html` 참고. 앞면(단어·발음·품사·기출★배지·CEFR·발음듣기) / 뒷면(뜻①②·기출출처+예문+해석·동의어·파생·어원). 전체화면, 하단 버튼 고정.
-
-## 다음 단계 순서
-1. ✅ 시험 문항단위 파서 제작 (tools/, `-raw` 방식). 단어별 기출 occurrence + 문항번호 매핑 완료.
-2. ✅ 회차 골고루 기출변형 예문 + 출처 생성 → 수능 기본 Day1 재생성 완료(품질 기준 확정). 카드 출처배지 "🎯 YYYY 회차 NN번 기출변형" 표시(wordbook-preview.html).
-3. ⬜ Day 단위 대량 생성(7권): suneung-selection.json을 Day(40단어)로 분할 → tools 파이프라인 돌려 예문 생성(EX dict를 API 생성으로 대체) → 검수. 수능 기본 Day2부터.
-4. ⬜ 앱 통합: 공식 단어장 등록(유료 잠금) + 학습카드 풀포맷 UI.
-
-## 품질 기준 (Day1에서 확정)
-- 예문: 실제 기출 지문을 CEFR(B1~B2)로 재작성(복제 X). 출처는 `meanings[0].src` = "2017 수능 40번".
-- 한 Day 40단어 = 40개 서로 다른 시험(회차 골고루). 정확단어 등장 문항 우선, 빈칸/슬래시선택지 문장 회피.
+개인 $3.99 / 단체 $2.99. 공식 단어장 = 프리미엄·단체결제 포함, 무료는 Day1 체험만.
