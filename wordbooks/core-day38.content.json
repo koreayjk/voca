@@ -1,0 +1,496 @@
+{
+  "awake": {
+    "ipa": "/əˈweɪk/",
+    "pos": "v./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"잠에서 깨다, 깨어나다","ex":"She tends to awake at the slightest noise during the night.","tr":"그녀는 밤에 아주 작은 소리에도 잠에서 깨는 경향이 있다."},
+      {"pos":"adj.","ko":"깨어 있는, 자지 않는"}
+    ],
+    "syn": ["waken","arouse","rouse"],
+    "deriv": ["awaken (v.)","awakening (n.)"],
+    "roots": [{"part":"a-","mean":"on, in 상태"},{"part":"wake","mean":"깨어 있다"}],
+    "etymHint": "a-(상태) + wake(깨어 있다) → 깨어 있는 상태 → 잠에서 깨다"
+  },
+  "respectable": {
+    "ipa": "/rɪˈspɛktəbl/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"존경할 만한, 상당한 수준의","ex":"She has always been concerned with appearing respectable and competent in front of her colleagues.","tr":"그녀는 항상 동료들 앞에서 존경할 만하고 유능해 보이는 것에 신경을 써왔다."}
+    ],
+    "syn": ["honorable","reputable","decent"],
+    "deriv": ["respect (n./v.)","respectably (adv.)","respectability (n.)"],
+    "roots": [{"part":"respect","mean":"존중하다"},{"part":"-able","mean":"~할 수 있는"}],
+    "etymHint": "respect(존중하다) + -able(~할 수 있는) → 존중받을 수 있는 → 존경할 만한"
+  },
+  "invitation": {
+    "ipa": "/ˌɪnvɪˈteɪʃən/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"초대, 초청","ex":"The warm smile on his face made it almost impossible to decline the invitation.","tr":"그의 얼굴에 띤 따뜻한 미소는 그 초대를 거절하는 것을 거의 불가능하게 만들었다."}
+    ],
+    "syn": ["summons","call","bid"],
+    "deriv": ["invite (v.)","inviting (adj.)","invitingly (adv.)"],
+    "roots": [{"part":"in-","mean":"안으로"},{"part":"vit","mean":"부르다(call)"}],
+    "etymHint": "in-(안으로) + vit(부르다) → 안으로 불러들임 → 초대"
+  },
+  "superficial": {
+    "ipa": "/ˌsuːpərˈfɪʃəl/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"피상적인, 표면적인","ex":"The learning process often remains fairly superficial unless students engage critically with the material.","tr":"학생들이 자료를 비판적으로 다루지 않으면 학습 과정은 대개 꽤 피상적인 수준에 머물러 있다."}
+    ],
+    "syn": ["shallow","cursory","skin-deep"],
+    "deriv": ["superficially (adv.)","superficiality (n.)"],
+    "roots": [{"part":"super-","mean":"위에"},{"part":"facies","mean":"표면, 얼굴"}],
+    "etymHint": "super-(위에) + facies(표면) → 표면 위의 → 피상적인"
+  },
+  "ancestor": {
+    "ipa": "/ˈænsɛstər/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"조상, 선조","ex":"Our earliest ancestors developed cooperative strategies to share resources within their communities.","tr":"우리의 초기 조상들은 공동체 내에서 자원을 나누기 위해 협동 전략을 발전시켰다."}
+    ],
+    "syn": ["forebear","forefather","progenitor"],
+    "deriv": ["ancestral (adj.)","ancestry (n.)"],
+    "roots": [{"part":"ante-","mean":"앞에"},{"part":"cedere","mean":"가다"}],
+    "etymHint": "ante-(앞에) + cedere(가다) → 앞서 간 사람 → 조상"
+  },
+  "restore": {
+    "ipa": "/rɪˈstɔːr/",
+    "pos": "v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"복원하다, 회복시키다","ex":"The team worked for years to restore the damaged murals to their original appearance.","tr":"그 팀은 손상된 벽화를 원래 모습으로 복원하기 위해 수년간 작업했다."}
+    ],
+    "syn": ["renovate","rehabilitate","reinstate"],
+    "deriv": ["restoration (n.)","restorative (adj.)"],
+    "roots": [{"part":"re-","mean":"다시"},{"part":"store","mean":"놓다, 쌓다"}],
+    "etymHint": "re-(다시) + store(놓다) → 다시 제자리에 놓다 → 복원하다"
+  },
+  "intellect": {
+    "ipa": "/ˈɪntəlɛkt/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"지성, 지적 능력","ex":"Human intellect and ingenuity have produced safer alternatives to many harmful industrial processes.","tr":"인간의 지성과 창의력은 많은 유해한 산업 공정에 대한 더 안전한 대안을 만들어 냈다."}
+    ],
+    "syn": ["intelligence","mind","reasoning"],
+    "deriv": ["intellectual (adj./n.)","intellectually (adv.)","intellectualize (v.)"],
+    "roots": [{"part":"inter-","mean":"사이에"},{"part":"legere","mean":"선택하다, 읽다"}],
+    "etymHint": "inter-(사이에) + legere(선택하다) → 개념들 사이에서 선택하는 능력 → 지성"
+  },
+  "poorer": {
+    "ipa": "/ˈpuːərər/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"더 가난한, 더 열악한","ex":"Studies consistently show that students more prone to anxiety tend to achieve poorer academic results.","tr":"연구들은 불안에 더 취약한 학생들이 더 열악한 학업 성과를 거두는 경향이 있음을 일관되게 보여준다."}
+    ],
+    "syn": ["worse","inferior","lower"],
+    "deriv": ["poor (adj.)","poorly (adv.)","poorest (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "navigate": {
+    "ipa": "/ˈnævɪɡeɪt/",
+    "pos": "v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"항해하다, 길을 찾다, 탐색하다","ex":"Bats are able to navigate in complete darkness by emitting high-frequency sound waves.","tr":"박쥐는 고주파 음파를 방출함으로써 완전한 어둠 속에서도 길을 찾을 수 있다."}
+    ],
+    "syn": ["steer","pilot","maneuver"],
+    "deriv": ["navigation (n.)","navigator (n.)","navigable (adj.)"],
+    "roots": [{"part":"navis","mean":"배"},{"part":"agere","mean":"이끌다, 몰다"}],
+    "etymHint": "navis(배) + agere(이끌다) → 배를 이끌다 → 항해하다"
+  },
+  "merchant": {
+    "ipa": "/ˈmɜːrtʃənt/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"상인, 무역상","ex":"The city grew prosperous by charging substantial tolls on merchants who passed through its territory.","tr":"그 도시는 자신의 영토를 통과하는 상인들에게 상당한 통행세를 부과하여 번영하게 되었다."},
+      {"pos":"adj.","ko":"상업의, 무역의"}
+    ],
+    "syn": ["trader","dealer","vendor"],
+    "deriv": ["merchandise (n./v.)","mercantile (adj.)"],
+    "roots": [{"part":"merx","mean":"상품"}],
+    "etymHint": "merx(상품) → 상품을 다루는 사람 → 상인"
+  },
+  "silk": {
+    "ipa": "/sɪlk/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"비단, 실크","ex":"The new trade routes opened up demand for luxury goods such as silk from the Far East.","tr":"새로운 무역로는 극동 지방의 비단과 같은 사치품에 대한 수요를 열어 놓았다."},
+      {"pos":"adj.","ko":"비단으로 만든, 실크의"}
+    ],
+    "syn": ["satin","damask"],
+    "deriv": ["silky (adj.)","silken (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "runner": {
+    "ipa": "/ˈrʌnər/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"달리는 사람, 주자","ex":"Experienced runners instinctively adjust their stride and leg stiffness to match different terrain.","tr":"숙련된 주자들은 본능적으로 다양한 지형에 맞게 보폭과 다리 강성을 조절한다."}
+    ],
+    "syn": ["jogger","sprinter","athlete"],
+    "deriv": ["run (v.)","running (n./adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "contract": {
+    "ipa": "/ˈkɒntrækt/ (n.), /kənˈtrækt/ (v.)",
+    "pos": "n./v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"계약, 계약서","ex":"Both parties signed a formal contract outlining their responsibilities before the project began.","tr":"양측은 프로젝트가 시작되기 전에 각자의 책임을 명시한 공식 계약서에 서명했다."},
+      {"pos":"v.","ko":"수축하다, 줄어들다"},
+      {"pos":"v.","ko":"계약을 맺다"}
+    ],
+    "syn": ["agreement","pact","compact"],
+    "deriv": ["contraction (n.)","contractor (n.)","contractual (adj.)"],
+    "roots": [{"part":"con-","mean":"함께"},{"part":"trahere","mean":"끌다"}],
+    "etymHint": "con-(함께) + trahere(끌다) → 서로를 끌어당겨 묶다 → 계약; 수축하다"
+  },
+  "sincere": {
+    "ipa": "/sɪnˈsɪər/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"진심 어린, 성실한","ex":"Although their beliefs were sincerely held, they were not considered a sufficient basis for public policy decisions.","tr":"그들의 신념은 진심으로 받아들여졌지만, 공공 정책 결정의 충분한 근거로는 여겨지지 않았다."}
+    ],
+    "syn": ["genuine","heartfelt","honest"],
+    "deriv": ["sincerely (adv.)","sincerity (n.)"],
+    "roots": [{"part":"sine","mean":"없이"},{"part":"cera","mean":"밀랍"}],
+    "etymHint": "sine(없이) + cera(밀랍) → 밀랍으로 메우지 않은(결함을 숨기지 않은) → 진실한"
+  },
+  "immoral": {
+    "ipa": "/ɪˈmɒrəl/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"비도덕적인, 부도덕한","ex":"Knowledge itself is morally neutral ― it is neither immoral nor moral until applied with intent.","tr":"지식 그 자체는 도덕적으로 중립적이다 — 의도를 가지고 적용되기 전까지는 비도덕적인 것도 도덕적인 것도 아니다."}
+    ],
+    "syn": ["unethical","wicked","corrupt"],
+    "deriv": ["immorality (n.)","immorally (adv.)","moral (adj.)","morality (n.)"],
+    "roots": [{"part":"im-","mean":"부정"},{"part":"mores","mean":"도덕, 관습"}],
+    "etymHint": "im-(부정) + mores(도덕) → 도덕에 반하는 → 비도덕적인"
+  },
+  "terminal": {
+    "ipa": "/ˈtɜːrmɪnəl/",
+    "pos": "n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"터미널, 종착역","ex":"Emotional reunions are a common sight in the arrivals hall of any busy international terminal.","tr":"감동적인 재회 장면은 바쁜 국제 터미널의 입국장에서 흔히 볼 수 있는 광경이다."},
+      {"pos":"adj.","ko":"말기의, 최종 단계의"}
+    ],
+    "syn": ["station","depot","end-point"],
+    "deriv": ["terminate (v.)","termination (n.)","terminally (adv.)"],
+    "roots": [{"part":"terminus","mean":"끝, 경계"}],
+    "etymHint": "terminus(끝) → 끝에 위치한 것 → 터미널; 말기의"
+  },
+  "rotation": {
+    "ipa": "/roʊˈteɪʃən/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"회전, 순환, 교대","ex":"The rotation of the Earth on its axis causes the cycle of day and night we experience daily.","tr":"지구의 자전축 회전이 우리가 매일 경험하는 낮과 밤의 주기를 만들어 낸다."}
+    ],
+    "syn": ["revolution","spin","cycle"],
+    "deriv": ["rotate (v.)","rotational (adj.)","rotary (adj.)"],
+    "roots": [{"part":"rotare","mean":"돌다, 회전하다"}],
+    "etymHint": "rotare(돌다) → 돌아가는 것 → 회전"
+  },
+  "clearer": {
+    "ipa": "/ˈklɪərər/",
+    "pos": "adj.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"adj.","ko":"더 명확한, 더 분명한","ex":"The boundary between wilderness and settled land appeared much clearer to European settlers than to the indigenous population.","tr":"황야와 정착지 사이의 경계는 원주민보다 유럽 정착민들에게 훨씬 더 명확하게 보였다."}
+    ],
+    "syn": ["plainer","more evident","more distinct"],
+    "deriv": ["clear (adj./v.)","clearly (adv.)","clarity (n.)"],
+    "roots": [{"part":"clarus","mean":"밝은, 명확한"}],
+    "etymHint": "clarus(밝은, 명확한) → 더 밝고 명확한 → clearer"
+  },
+  "cereal": {
+    "ipa": "/ˈsɪəriəl/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"곡류, 시리얼","ex":"Wheat and rice are the cereal crops most widely cultivated across different climatic zones.","tr":"밀과 쌀은 다양한 기후대에서 가장 널리 재배되는 곡류 작물이다."}
+    ],
+    "syn": ["grain","crop"],
+    "deriv": ["cereal (adj.)"],
+    "roots": [{"part":"Ceres","mean":"로마 농업의 여신"}],
+    "etymHint": "Ceres(농업의 여신) → 여신의 이름에서 유래 → 곡류"
+  },
+  "rainy": {
+    "ipa": "/ˈreɪni/",
+    "pos": "adj.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"adj.","ko":"비가 오는, 우천의","ex":"On rainy days, the outdoor schedule may be adjusted or moved to indoor facilities.","tr":"비가 오는 날에는 야외 일정이 조정되거나 실내 시설로 이동될 수 있다."}
+    ],
+    "syn": ["wet","showery","drizzly"],
+    "deriv": ["rain (n./v.)","rainfall (n.)","rainwater (n.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "sunny": {
+    "ipa": "/ˈsʌni/",
+    "pos": "adj.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"adj.","ko":"햇볕이 드는, 맑은","ex":"A cold lemonade is the ideal refreshment to enjoy on a hot and sunny afternoon.","tr":"차가운 레모네이드는 덥고 맑은 오후에 즐기기에 이상적인 음료이다."},
+      {"pos":"adj.","ko":"밝고 명랑한"}
+    ],
+    "syn": ["bright","clear","radiant"],
+    "deriv": ["sun (n.)","sunshine (n.)","sunlit (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "literacy": {
+    "ipa": "/ˈlɪtərəsi/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"문해력, 이해 능력","ex":"Media literacy is considered essential for helping social media users understand and protect their digital rights.","tr":"미디어 문해력은 소셜 미디어 사용자들이 자신의 디지털 권리를 이해하고 보호하도록 돕는 데 필수적인 것으로 여겨진다."}
+    ],
+    "syn": ["reading ability","comprehension","education"],
+    "deriv": ["literate (adj.)","illiteracy (n.)","illiterate (adj.)"],
+    "roots": [{"part":"littera","mean":"문자, 글자"}],
+    "etymHint": "littera(문자) → 문자를 다루는 능력 → 문해력"
+  },
+  "unreliable": {
+    "ipa": "/ˌʌnrɪˈlaɪəbl/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"신뢰할 수 없는, 믿을 수 없는","ex":"Perceptions are inherently unreliable because the senses are prone to errors and illusions.","tr":"감각이 오류와 착각에 취약하기 때문에 지각은 본질적으로 신뢰할 수 없다."}
+    ],
+    "syn": ["untrustworthy","undependable","inconsistent"],
+    "deriv": ["reliable (adj.)","reliability (n.)","rely (v.)"],
+    "roots": [{"part":"un-","mean":"부정"},{"part":"re-","mean":"다시"},{"part":"ligare","mean":"묶다"}],
+    "etymHint": "un-(부정) + re-(다시) + ligare(묶다) → 다시 묶어 의지할 수 없는 → 신뢰할 수 없는"
+  },
+  "earliest": {
+    "ipa": "/ˈɜːrliɪst/",
+    "pos": "adj.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"adj.","ko":"가장 이른, 최초의","ex":"One of the earliest recorded examples of a bottled message dates back to the late fifteenth century.","tr":"병에 담긴 메시지의 가장 이른 기록된 사례 중 하나는 15세기 후반으로 거슬러 올라간다."}
+    ],
+    "syn": ["first","initial","pioneering"],
+    "deriv": ["early (adj./adv.)","earlier (adj./adv.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "cheerful": {
+    "ipa": "/ˈtʃɪərfəl/",
+    "pos": "adj.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"adj.","ko":"밝고 유쾌한, 기분 좋은","ex":"Hearing genuine laughter is highly infectious and makes it hard not to feel cheerful yourself.","tr":"진짜 웃음소리를 들으면 전파력이 매우 강해서 자신도 기분 좋아지지 않기가 어렵다."}
+    ],
+    "syn": ["jolly","buoyant","upbeat"],
+    "deriv": ["cheer (n./v.)","cheerfully (adv.)","cheerfulness (n.)","cheerless (adj.)"],
+    "roots": [{"part":"cheer","mean":"기쁨, 환호"},{"part":"-ful","mean":"가득 찬"}],
+    "etymHint": "cheer(기쁨) + -ful(가득 찬) → 기쁨으로 가득 찬 → 밝고 유쾌한"
+  },
+  "sphere": {
+    "ipa": "/sfɪər/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"영역, 분야; 구(球)","ex":"When the self is made public within a private sphere, it becomes subject to self-reflection and critique.","tr":"자아가 사적 영역 안에서 공개될 때, 그것은 자기 성찰과 비판의 대상이 된다."},
+      {"pos":"n.","ko":"구, 구체"}
+    ],
+    "syn": ["domain","realm","field"],
+    "deriv": ["spherical (adj.)","hemisphere (n.)","atmosphere (n.)"],
+    "roots": [{"part":"sphaira","mean":"공, 구형(그리스어)"}],
+    "etymHint": "sphaira(공 모양) → 둥근 영역 → 구; 영역·분야"
+  },
+  "scope": {
+    "ipa": "/skoʊp/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"범위, 영역; 기회","ex":"Significant resources are devoted to assessing the size and scope of potential losses from natural disasters.","tr":"자연재해로 인한 잠재적 손실의 규모와 범위를 평가하는 데 상당한 자원이 투입된다."}
+    ],
+    "syn": ["range","extent","breadth"],
+    "deriv": ["telescope (n.)","microscope (n.)"],
+    "roots": [{"part":"skopein","mean":"보다, 살피다(그리스어)"}],
+    "etymHint": "skopein(살피다) → 살필 수 있는 범위 → 범위, 영역"
+  },
+  "alien": {
+    "ipa": "/ˈeɪliən/",
+    "pos": "n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"외계의; 낯선, 이질적인","ex":"Residual oxygen in the stratosphere might mislead alien observers into believing the planet is still inhabited.","tr":"성층권에 남아 있는 산소는 외계 관측자들로 하여금 그 행성에 여전히 생명체가 살고 있다고 잘못 믿게 만들 수도 있다."},
+      {"pos":"n.","ko":"외계인; 외국인"}
+    ],
+    "syn": ["extraterrestrial","foreign","unfamiliar"],
+    "deriv": ["alienate (v.)","alienation (n.)","alienated (adj.)"],
+    "roots": [{"part":"alius","mean":"다른(라틴어)"}],
+    "etymHint": "alius(다른) → 다른 곳에서 온 존재 → 외계의; 이질적인"
+  },
+  "adjustment": {
+    "ipa": "/əˈdʒʌstmənt/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"조정, 적응","ex":"Once a nonverbal signal is sent, the partner must interpret it and make the appropriate adjustment to the plan.","tr":"비언어적 신호가 전달되면, 상대방은 그것을 해석하고 계획에 적절한 조정을 해야 한다."}
+    ],
+    "syn": ["modification","adaptation","alteration"],
+    "deriv": ["adjust (v.)","adjustable (adj.)","readjustment (n.)"],
+    "roots": [{"part":"ad-","mean":"~쪽으로"},{"part":"juste","mean":"올바른, 정확한(프랑스어)"}],
+    "etymHint": "ad-(~쪽으로) + juste(올바른) → 올바른 방향으로 맞추다 → 조정"
+  },
+  "kit": {
+    "ipa": "/kɪt/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"도구 세트, 장비 일체","ex":"A well-stocked first-aid kit should be kept readily accessible in every home and workplace.","tr":"잘 갖춰진 응급 처치 키트는 모든 가정과 직장에서 즉시 이용할 수 있도록 보관되어야 한다."}
+    ],
+    "syn": ["set","pack","equipment"],
+    "deriv": ["toolkit (n.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "luxury": {
+    "ipa": "/ˈlʌkʃəri/",
+    "pos": "n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"사치, 호화; 사치품","ex":"In earlier centuries, silk and spices were considered the ultimate luxury available only to the wealthy.","tr":"이전 세기에 비단과 향신료는 부유층만 누릴 수 있는 최고의 사치품으로 여겨졌다."},
+      {"pos":"adj.","ko":"호화로운, 사치스러운"}
+    ],
+    "syn": ["opulence","extravagance","indulgence"],
+    "deriv": ["luxurious (adj.)","luxuriously (adv.)","luxuriate (v.)"],
+    "roots": [{"part":"luxus","mean":"과잉, 사치(라틴어)"}],
+    "etymHint": "luxus(과잉, 사치) → 필요 이상의 풍요로움 → 사치"
+  },
+  "communicative": {
+    "ipa": "/kəˈmjuːnɪkətɪv/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"의사소통의; 말을 잘 하는","ex":"Culture provides the shared values and communicative tools that enable social institutions to function.","tr":"문화는 사회 제도가 기능할 수 있게 하는 공유된 가치와 의사소통 도구를 제공한다."}
+    ],
+    "syn": ["expressive","forthcoming","open"],
+    "deriv": ["communicate (v.)","communication (n.)","communicatively (adv.)"],
+    "roots": [{"part":"communis","mean":"공통의"},{"part":"-ive","mean":"~하는 성질의"}],
+    "etymHint": "communis(공통의) + -ive(성질의) → 공통적으로 나누는 → 의사소통의"
+  },
+  "undergo": {
+    "ipa": "/ˌʌndərˈɡoʊ/",
+    "pos": "v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"겪다, 경험하다, 받다","ex":"Characters written by multiple authors over decades may undergo significant changes in personality and motivation.","tr":"수십 년에 걸쳐 여러 작가들이 쓴 등장인물들은 성격과 동기에 상당한 변화를 겪을 수 있다."}
+    ],
+    "syn": ["experience","endure","sustain"],
+    "deriv": [],
+    "roots": [{"part":"under-","mean":"아래에"},{"part":"go","mean":"가다"}],
+    "etymHint": "under-(아래에) + go(가다) → 무언가를 겪으며 통과해 가다 → 겪다"
+  },
+  "glue": {
+    "ipa": "/ɡluː/",
+    "pos": "n./v.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"접착제","ex":"Social norms act as a kind of glue that holds communities together and regulates shared behavior.","tr":"사회적 규범은 공동체를 하나로 묶고 공동 행동을 규제하는 일종의 접착제 역할을 한다."},
+      {"pos":"v.","ko":"붙이다; 집중하게 만들다"}
+    ],
+    "syn": ["adhesive","cement","bond"],
+    "deriv": ["glued (adj.)","gluey (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "systematic": {
+    "ipa": "/ˌsɪstəˈmætɪk/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"체계적인, 조직적인","ex":"The correlation between the two variables was too systematic to be dismissed as mere coincidence.","tr":"두 변수 사이의 상관관계는 단순한 우연으로 치부하기에는 너무 체계적이었다."}
+    ],
+    "syn": ["methodical","organized","structured"],
+    "deriv": ["system (n.)","systematically (adv.)","systematize (v.)"],
+    "roots": [{"part":"systema","mean":"조직, 체계(그리스어)"}],
+    "etymHint": "systema(체계) + -tic(~한 성질) → 체계에 따라 이루어지는 → 체계적인"
+  },
+  "agenda": {
+    "ipa": "/əˈdʒɛndə/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"안건, 의제; 숨겨진 목적","ex":"Unlike autonomous robots with their own agenda, service robots are designed to support human goals.","tr":"독자적인 목적을 가진 자율 로봇과 달리, 서비스 로봇은 인간의 목표를 지원하도록 설계된다."}
+    ],
+    "syn": ["schedule","plan","program"],
+    "deriv": [],
+    "roots": [{"part":"agere","mean":"행동하다, 이끌다"}],
+    "etymHint": "agere(행동하다) → 행동해야 할 것들의 목록 → 의제, 안건"
+  },
+  "suspect": {
+    "ipa": "/ˈsʌspɛkt/ (n./adj.), /səˈspɛkt/ (v.)",
+    "pos": "v./n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"의심하다, 추측하다","ex":"When no positive feelings are apparent, one might reasonably suspect that the emotional state is absent.","tr":"긍정적인 감정이 전혀 드러나지 않을 때, 그 감정 상태가 없다고 합리적으로 의심할 수 있다."},
+      {"pos":"n.","ko":"용의자"},
+      {"pos":"adj.","ko":"의심스러운, 믿기 어려운"}
+    ],
+    "syn": ["doubt","distrust","surmise"],
+    "deriv": ["suspicion (n.)","suspicious (adj.)","suspiciously (adv.)"],
+    "roots": [{"part":"sub-","mean":"아래에"},{"part":"specere","mean":"보다"}],
+    "etymHint": "sub-(아래에서) + specere(보다) → 아래에서 몰래 살피다 → 의심하다"
+  },
+  "reevaluate": {
+    "ipa": "/ˌriːɪˈvæljueɪt/",
+    "pos": "v.",
+    "level": "C1",
+    "meanings": [
+      {"pos":"v.","ko":"재평가하다, 다시 검토하다","ex":"Reading challenging poetry can prompt readers to reevaluate their own past experiences from a new perspective.","tr":"어려운 시를 읽는 것은 독자들이 새로운 관점에서 자신의 과거 경험을 재평가하도록 이끌 수 있다."}
+    ],
+    "syn": ["reassess","reconsider","review"],
+    "deriv": ["evaluate (v.)","evaluation (n.)","reevaluation (n.)"],
+    "roots": [{"part":"re-","mean":"다시"},{"part":"ex-","mean":"밖으로"},{"part":"valere","mean":"가치가 있다"}],
+    "etymHint": "re-(다시) + ex-(밖으로) + valere(가치가 있다) → 가치를 다시 꺼내어 살피다 → 재평가하다"
+  },
+  "illustrate": {
+    "ipa": "/ˈɪləstreɪt/",
+    "pos": "v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"설명하다, 예시하다; 삽화를 넣다","ex":"This example illustrates how rising expectations tend to increase the risk of disappointment and humiliation.","tr":"이 예시는 기대치가 높아질수록 실망과 굴욕의 위험이 커지는 경향이 있음을 잘 보여준다."}
+    ],
+    "syn": ["demonstrate","exemplify","show"],
+    "deriv": ["illustration (n.)","illustrative (adj.)","illustrator (n.)"],
+    "roots": [{"part":"illustrare","mean":"빛을 비추다, 밝히다"}],
+    "etymHint": "illustrare(빛을 비추다) → 빛으로 밝혀 보여주다 → 설명하다, 예시하다"
+  },
+  "substitute": {
+    "ipa": "/ˈsʌbstɪtjuːt/",
+    "pos": "n./v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"대체하다, 대신하다","ex":"In digital products, heavy physical components are substituted by lightweight software and data.","tr":"디지털 제품에서는 무거운 물리적 부품들이 가볍고 무게 없는 소프트웨어와 데이터로 대체된다."},
+      {"pos":"n.","ko":"대체물, 대리인"}
+    ],
+    "syn": ["replace","swap","alternate"],
+    "deriv": ["substitution (n.)","substitutable (adj.)"],
+    "roots": [{"part":"sub-","mean":"아래에"},{"part":"statuere","mean":"놓다, 세우다"}],
+    "etymHint": "sub-(아래에) + statuere(놓다) → 자리 아래에 다른 것을 놓다 → 대체하다"
+  }
+}

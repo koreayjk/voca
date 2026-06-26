@@ -10,8 +10,10 @@ import json, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 N = int(sys.argv[1])
-scaf = json.load(open(ROOT/f"suneung-basic-day{N}.scaffold.json"))
-content = json.load(open(ROOT/f"day{N}.content.json"))
+PREFIX = sys.argv[2] if len(sys.argv) > 2 else "basic"
+scaf = json.load(open(ROOT/f"suneung-{PREFIX}-day{N}.scaffold.json"))
+_cf = f"day{N}.content.json" if PREFIX == "basic" else f"{PREFIX}-day{N}.content.json"
+content = json.load(open(ROOT/_cf))
 
 out = {"book":scaf["book"],"code":scaf["code"],"day":N,
        "exampleNote":"예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
@@ -35,5 +37,5 @@ for sw in scaf["words"]:
     out["words"].append(word)
 if missing:
     print("WARNING missing content:", missing); sys.exit(1)
-json.dump(out, open(ROOT/f"suneung-basic-day{N}.json","w"), ensure_ascii=False, indent=1)
-print(f"Day{N} 완성: {len(out['words'])}단어 → suneung-basic-day{N}.json")
+json.dump(out, open(ROOT/f"suneung-{PREFIX}-day{N}.json","w"), ensure_ascii=False, indent=1)
+print(f"Day{N} 완성: {len(out['words'])}단어 → suneung-{PREFIX}-day{N}.json")

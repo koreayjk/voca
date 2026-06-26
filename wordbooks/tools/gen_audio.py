@@ -37,9 +37,11 @@ DAYS = list(range(1, 31))
 def safe(en): return "".join(c for c in (en or "").lower() if c.isalnum())
 
 def collect():
+    import glob
     items, seen = [], set()
-    for n in DAYS:
-        for w in json.load(open(ROOT/f"suneung-basic-day{n}.json"))["words"]:
+    files = sorted(f for f in glob.glob(str(ROOT/"suneung-*-day*.json")) if ".scaffold." not in f)
+    for f in files:                       # 모든 책(기본+핵심+고난도+…) 단어 포함, 중복 제거
+        for w in json.load(open(f))["words"]:
             sf = safe(w["en"])
             if sf in seen: continue
             seen.add(sf)

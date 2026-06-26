@@ -25,9 +25,9 @@ GO = "--go" in sys.argv
 RESET = "--reset" in sys.argv
 UPDATE = "--update" in sys.argv   # 기존 공식책 단어 analysis in-place 갱신(uuid 유지)
 
-BOOK_TITLE = "수능 기본"
-BOOK_CODE = "SUN-BASIC"        # description 에 저장(식별용)
-DAYS = list(range(1, 31))
+BOOK_PREFIX = os.environ.get("BOOK_PREFIX", "basic")     # 파일 패턴 suneung-<prefix>-day*.json
+BOOK_TITLE = os.environ.get("BOOK_TITLE", "수능 기본")
+BOOK_CODE = os.environ.get("BOOK_CODE", "SUN-BASIC")     # description 에 저장(식별용)
 
 def req(method, path, body=None, prefer=None):
     url = SB_URL + path
@@ -59,10 +59,14 @@ def map_word(w):
             "sentence": m0.get("ex", ""), "level": w.get("level", ""), "analysis": analysis}
 
 def load_days():
+    import glob, re as _re
+    files = [f for f in glob.glob(str(ROOT / f"suneung-{BOOK_PREFIX}-day*.json")) if ".scaffold." not in f]
+    def daynum(f):
+        m = _re.search(r"-day(\d+)\.json$", f); return int(m.group(1)) if m else 0
     out = []
-    for n in DAYS:
-        d = json.load(open(ROOT / f"suneung-basic-day{n}.json"))
-        out.append((f"Day {n}", [map_word(w) for w in d["words"]]))
+    for f in sorted(files, key=daynum):
+        d = json.load(open(f))
+        out.append((f"Day {daynum(f)}", [map_word(w) for w in d["words"]]))
     return out
 
 def find_official():
@@ -100,7 +104,7 @@ def main():
     total = sum(len(ws) for _, ws in days)
     print(f"[plan] {BOOK_TITLE}({BOOK_CODE}) · {len(days)} pages · {total} words")
     print(f"  SB_URL={'OK' if SB_URL else 'MISSING'}  KEY={'OK' if KEY else 'MISSING'}  OWNER={'OK' if OWNER else 'MISSING'}")
-    print("  sample word:", json.dumps(map_word(json.load(open(ROOT/'suneung-basic-day1.json'))['words'][0]), ensure_ascii=False)[:200])
+    if days: print("  sample word:", json.dumps(days[0][1][0], ensure_ascii=False)[:200])
     if not (GO or UPDATE):
         print("\n(dry-run) 시드=--go · 기존 카드 품질 갱신=--update. 선행: official-books.sql 실행.")
         return

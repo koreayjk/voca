@@ -1,0 +1,504 @@
+{
+  "aspiration": {
+    "ipa": "/ˌæspəˈreɪʃən/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"열망, 포부","ex":"Her aspiration to become a leading scientist drove her to study harder than anyone else.","tr":"선도적인 과학자가 되고자 하는 그녀의 열망이 그녀를 누구보다 열심히 공부하게 만들었다."},
+      {"pos":"n.","ko":"(이상적인) 염원, 목표"}
+    ],
+    "syn": ["ambition","goal","desire"],
+    "deriv": ["aspire (v.)","aspirational (adj.)","aspirant (n.)"],
+    "roots": [{"part":"ad-","mean":"~을 향해"},{"part":"spirare","mean":"숨쉬다, 갈망하다"}],
+    "etymHint": "ad(~을 향해)+spirare(숨쉬다) → ~을 향해 숨을 내쉬다 → 열망하다"
+  },
+  "pesticide": {
+    "ipa": "/ˈpestɪsaɪd/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"농약, 살충제","ex":"Farmers are encouraged to reduce their reliance on chemical pesticides to protect soil health.","tr":"농부들은 토양 건강을 보호하기 위해 화학 농약에 대한 의존도를 줄이도록 권장된다."}
+    ],
+    "syn": ["insecticide","herbicide","fungicide"],
+    "deriv": ["pesticidal (adj.)"],
+    "roots": [{"part":"pestis","mean":"해충, 역병"},{"part":"-cide","mean":"죽이는 것"}],
+    "etymHint": "pestis(해충)+cide(죽이는 것) → 해충을 죽이는 것 → 살충제"
+  },
+  "ratio": {
+    "ipa": "/ˈreɪʃioʊ/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"비율, 비","ex":"The ratio of students to teachers in the classroom significantly affects the quality of instruction.","tr":"교실에서 학생 대 교사의 비율은 수업의 질에 크게 영향을 미친다."}
+    ],
+    "syn": ["proportion","rate","fraction"],
+    "deriv": ["rational (adj.)","rationale (n.)"],
+    "roots": [{"part":"ratio","mean":"계산, 이성"}],
+    "etymHint": "ratio(계산) → 두 양을 계산하여 비교한 것 → 비율"
+  },
+  "currency": {
+    "ipa": "/ˈkɜːrənsi/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"통화, 화폐","ex":"The country adopted a single currency to simplify trade across its member states.","tr":"그 나라는 회원국 간 무역을 단순화하기 위해 단일 통화를 채택했다."},
+      {"pos":"n.","ko":"(생각·표현 등의) 통용, 유통"}
+    ],
+    "syn": ["money","coinage","tender"],
+    "deriv": ["current (adj.)","currently (adv.)","currents (n.)"],
+    "roots": [{"part":"currere","mean":"흐르다"}],
+    "etymHint": "currere(흐르다) → 유통되는 것 → 통화"
+  },
+  "gossip": {
+    "ipa": "/ˈɡɒsɪp/",
+    "pos": "n./v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"잡담, 험담, 소문","ex":"The quiet farmyard was filled only with the soft gossip of hens pecking near the fence.","tr":"조용한 농장 마당은 울타리 근처에서 모이를 쪼는 암탉들의 나지막한 소리로만 가득했다."},
+      {"pos":"v.","ko":"수다 떨다, 험담하다"}
+    ],
+    "syn": ["rumor","chatter","hearsay"],
+    "deriv": ["gossipy (adj.)","gossiper (n.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "slope": {
+    "ipa": "/sloʊp/",
+    "pos": "n./v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"경사(면), 비탈","ex":"Skiers often assess a slope carefully before deciding whether it is too steep to descend safely.","tr":"스키 선수들은 안전하게 내려갈 수 있을 만큼 경사가 가파른지 판단하기 전에 경사면을 꼼꼼히 살핀다."},
+      {"pos":"v.","ko":"경사지다, 기울다"}
+    ],
+    "syn": ["incline","gradient","descent"],
+    "deriv": ["sloping (adj.)","sloped (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "laugh": {
+    "ipa": "/læf/",
+    "pos": "v./n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"v.","ko":"웃다, 비웃다","ex":"He laughed warmly and carried the child out of the room, still smiling to himself.","tr":"그는 따뜻하게 웃으며 아이를 안고 방을 나갔고, 여전히 혼자 미소 짓고 있었다."},
+      {"pos":"n.","ko":"웃음, 웃음소리"}
+    ],
+    "syn": ["chuckle","giggle","guffaw"],
+    "deriv": ["laughter (n.)","laughable (adj.)","laughingly (adv.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "imperfect": {
+    "ipa": "/ɪmˈpɜːrfɪkt/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"불완전한, 결함이 있는","ex":"Even the most highly trained expert remains imperfect when applying complex analytical skills under pressure.","tr":"가장 잘 훈련된 전문가조차도 압박 속에서 복잡한 분석 기술을 적용할 때 불완전함을 드러낸다."}
+    ],
+    "syn": ["flawed","defective","incomplete"],
+    "deriv": ["imperfection (n.)","imperfectly (adv.)","perfect (adj.)"],
+    "roots": [{"part":"im-","mean":"아닌"},{"part":"perfectus","mean":"완성된"}],
+    "etymHint": "im(아닌)+perfectus(완성된) → 완성되지 않은 → 불완전한"
+  },
+  "laser": {
+    "ipa": "/ˈleɪzər/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"레이저","ex":"Modern digital communication technology would be virtually impossible without the invention of the laser.","tr":"현대의 디지털 통신 기술은 레이저의 발명 없이는 사실상 불가능했을 것이다."}
+    ],
+    "syn": [],
+    "deriv": [],
+    "roots": [],
+    "etymHint": ""
+  },
+  "bass": {
+    "ipa": "/beɪs/",
+    "pos": "n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"농어(물고기)","ex":"The smallmouth bass, native to North American river systems, is prized by freshwater anglers.","tr":"북아메리카 하천 수계에 서식하는 스몰마우스 배스는 민물 낚시꾼들에게 인기가 높다."},
+      {"pos":"n.","ko":"저음, 베이스(음악)"},
+      {"pos":"adj.","ko":"저음의"}
+    ],
+    "syn": [],
+    "deriv": [],
+    "roots": [],
+    "etymHint": ""
+  },
+  "outer": {
+    "ipa": "/ˈaʊtər/",
+    "pos": "adj.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"adj.","ko":"바깥쪽의, 외부의","ex":"The outer layer of the building was designed to reflect heat and reduce energy consumption.","tr":"건물의 외부 층은 열을 반사하고 에너지 소비를 줄이도록 설계되었다."}
+    ],
+    "syn": ["external","exterior","outermost"],
+    "deriv": ["outermost (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "extinction": {
+    "ipa": "/ɪkˈstɪŋkʃən/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"멸종, 소멸","ex":"Natural extinctions that occur gradually over time generally cause far less ecological disruption than human-driven ones.","tr":"오랜 시간에 걸쳐 자연적으로 발생하는 멸종은 인간이 유발하는 멸종보다 생태적 혼란을 훨씬 적게 일으킨다."}
+    ],
+    "syn": ["disappearance","eradication","annihilation"],
+    "deriv": ["extinct (adj.)","extinguish (v.)"],
+    "roots": [{"part":"ex-","mean":"밖으로"},{"part":"stinguere","mean":"끄다, 소멸시키다"}],
+    "etymHint": "ex(밖으로)+stinguere(끄다) → 완전히 꺼버림 → 멸종"
+  },
+  "ritual": {
+    "ipa": "/ˈrɪtʃuəl/",
+    "pos": "n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"의식, 의례, 관습","ex":"Frustration can occasionally arise even within the structured boundaries of established social rituals.","tr":"좌절감은 확립된 사회적 의식의 구조적 경계 내에서도 때때로 발생할 수 있다."},
+      {"pos":"adj.","ko":"의식적인, 의례적인"}
+    ],
+    "syn": ["ceremony","rite","custom"],
+    "deriv": ["ritualistic (adj.)","ritually (adv.)","ritualize (v.)"],
+    "roots": [{"part":"ritus","mean":"종교적 관습"}],
+    "etymHint": "ritus(종교적 관습) → 정해진 절차에 따른 행위 → 의식"
+  },
+  "sake": {
+    "ipa": "/seɪk/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"(~을 위한) 이익, 목적 [for the sake of]","ex":"Students should be encouraged to pursue knowledge for its own sake, not merely to achieve high test scores.","tr":"학생들은 높은 시험 점수를 얻기 위해서가 아니라 지식 그 자체를 위해 탐구하도록 장려받아야 한다."}
+    ],
+    "syn": ["benefit","purpose","interest"],
+    "deriv": [],
+    "roots": [],
+    "etymHint": ""
+  },
+  "anatomy": {
+    "ipa": "/əˈnætəmi/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"해부학, 해부(구조)","ex":"The cobbler presumed to critique the anatomy of the figure in the painting, stepping far beyond his expertise.","tr":"그 구두장이는 그림 속 인물의 해부학적 구조를 비판하려 들었으며, 이는 자신의 전문 지식을 훨씬 벗어나는 일이었다."},
+      {"pos":"n.","ko":"(조직·구조의) 상세한 분석"}
+    ],
+    "syn": ["structure","physiology","dissection"],
+    "deriv": ["anatomical (adj.)","anatomist (n.)","anatomize (v.)"],
+    "roots": [{"part":"ana-","mean":"위로, 분리"},{"part":"tome","mean":"자르다"}],
+    "etymHint": "ana(분리)+tome(자르다) → 몸을 분리하여 자르다 → 해부학"
+  },
+  "slight": {
+    "ipa": "/slaɪt/",
+    "pos": "adj./n./v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"약간의, 미세한","ex":"Even a slight reduction in food reserves can have a severe impact when a community is already facing scarcity.","tr":"공동체가 이미 결핍에 직면해 있을 때는 식량 비축량의 아주 약간의 감소조차 심각한 영향을 미칠 수 있다."},
+      {"pos":"v.","ko":"무시하다, 경시하다"},
+      {"pos":"n.","ko":"무례, 경멸"}
+    ],
+    "syn": ["minor","small","negligible"],
+    "deriv": ["slightly (adv.)","slighting (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "sociology": {
+    "ipa": "/ˌsoʊsiˈɒlədʒi/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"사회학","ex":"He was appointed professor of sociology at a major European university, where he developed influential theories of social systems.","tr":"그는 유럽의 주요 대학에서 사회학 교수로 임명되어 사회 시스템에 관한 영향력 있는 이론을 발전시켰다."}
+    ],
+    "syn": ["social science"],
+    "deriv": ["sociologist (n.)","sociological (adj.)","sociologically (adv.)"],
+    "roots": [{"part":"socius","mean":"동반자, 사회"},{"part":"-logy","mean":"학문"}],
+    "etymHint": "socius(사회)+logy(학문) → 사회를 연구하는 학문 → 사회학"
+  },
+  "sofa": {
+    "ipa": "/ˈsoʊfə/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"소파, 긴 의자","ex":"She curled up on the sofa with a book, enjoying the quiet of a rainy afternoon.","tr":"그녀는 소파에 몸을 웅크리고 책을 읽으며 비 오는 오후의 고요함을 즐겼다."}
+    ],
+    "syn": ["couch","settee","divan"],
+    "deriv": [],
+    "roots": [],
+    "etymHint": ""
+  },
+  "prone": {
+    "ipa": "/proʊn/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"~하기 쉬운, ~하는 경향이 있는 [prone to]","ex":"Individuals who are prone to anxiety tend to perform less well on academic tasks requiring sustained concentration.","tr":"불안감에 빠지기 쉬운 사람들은 지속적인 집중을 요구하는 학업 과제에서 성과가 낮은 경향이 있다."},
+      {"pos":"adj.","ko":"엎드린, 엎어진"}
+    ],
+    "syn": ["susceptible","inclined","liable"],
+    "deriv": ["proneness (n.)"],
+    "roots": [{"part":"pronus","mean":"앞으로 기울어진"}],
+    "etymHint": "pronus(앞으로 기울어진) → 어떤 방향으로 쏠리다 → ~하기 쉬운"
+  },
+  "lion": {
+    "ipa": "/ˈlaɪən/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"사자","ex":"The trainer found that keeping the sea lions well-fed actually increased their willingness to perform.","tr":"그 훈련사는 바다사자를 충분히 먹이면 실제로 공연에 대한 의욕이 높아진다는 것을 발견했다."}
+    ],
+    "syn": [],
+    "deriv": ["lionize (v.)","lioness (n.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "virtuoso": {
+    "ipa": "/ˌvɜːrtʃuˈoʊsoʊ/",
+    "pos": "n./adj.",
+    "level": "C1",
+    "meanings": [
+      {"pos":"n.","ko":"거장, 명인 (특히 음악)","ex":"The virtuoso pianist gave a breathtaking recital that left the entire audience in stunned silence.","tr":"그 피아노 거장은 청중 전체를 넋을 잃게 만든 숨 막히는 독주회를 선보였다."},
+      {"pos":"adj.","ko":"거장의, 탁월한"}
+    ],
+    "syn": ["maestro","master","expert"],
+    "deriv": ["virtuosity (n.)"],
+    "roots": [{"part":"virtus","mean":"덕, 뛰어난 능력"}],
+    "etymHint": "virtus(뛰어난 능력) → 탁월한 기량을 지닌 사람 → 거장"
+  },
+  "upward": {
+    "ipa": "/ˈʌpwərd/",
+    "pos": "adj./adv.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adv.","ko":"위쪽으로, 상향으로","ex":"A bathroom scale relies on a spring mechanism to provide the upward force that counteracts gravity.","tr":"욕실 체중계는 중력에 대항하는 상향 힘을 제공하기 위해 스프링 메커니즘에 의존한다."},
+      {"pos":"adj.","ko":"상향의, 위를 향한"}
+    ],
+    "syn": ["upwards","ascending","skyward"],
+    "deriv": ["upwards (adv.)","upwardly (adv.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "elephant": {
+    "ipa": "/ˈelɪfənt/",
+    "pos": "n.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"코끼리","ex":"Research suggests that elephants possess a strong sense of time, as demonstrated by the emotional intensity of their reunions after long separations.","tr":"연구에 따르면 코끼리는 오랜 이별 후 재회 시 감정적 강도가 높다는 점에서 강한 시간 감각을 지닌다고 한다."}
+    ],
+    "syn": [],
+    "deriv": ["elephantine (adj.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "gaze": {
+    "ipa": "/ɡeɪz/",
+    "pos": "v./n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"응시하다, 주시하다","ex":"Lower-status individuals are typically expected to maintain an attentive gaze, while those of higher status may look away freely.","tr":"지위가 낮은 개인은 일반적으로 주의 깊은 시선을 유지해야 하는 반면, 지위가 높은 사람들은 자유롭게 시선을 돌릴 수 있다."},
+      {"pos":"n.","ko":"응시, 시선"}
+    ],
+    "syn": ["stare","look","watch"],
+    "deriv": ["gazer (n.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "crude": {
+    "ipa": "/kruːd/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"조잡한, 대강의; 천연 그대로의","ex":"A rigorous philosophy of science aims to move beyond crude scientism toward a more balanced understanding of what empirical methods can achieve.","tr":"엄밀한 과학철학은 경험적 방법론이 달성할 수 있는 것에 대한 보다 균형 잡힌 이해를 향해 조잡한 과학주의를 넘어서는 것을 목표로 한다."},
+      {"pos":"adj.","ko":"거친, 저속한"}
+    ],
+    "syn": ["rough","raw","unrefined"],
+    "deriv": ["crudely (adv.)","crudeness (n.)","crudity (n.)"],
+    "roots": [{"part":"crudus","mean":"날것의, 소화되지 않은"}],
+    "etymHint": "crudus(날것의) → 다듬어지지 않은 → 조잡한"
+  },
+  "predictability": {
+    "ipa": "/prɪˌdɪktəˈbɪlɪti/",
+    "pos": "n.",
+    "level": "C1",
+    "meanings": [
+      {"pos":"n.","ko":"예측 가능성","ex":"The predictability of a system's behavior is often what makes it useful as a reliable scientific model.","tr":"시스템 행동의 예측 가능성은 그것을 신뢰할 수 있는 과학적 모델로 유용하게 만드는 요소인 경우가 많다."}
+    ],
+    "syn": ["regularity","consistency","reliability"],
+    "deriv": ["predict (v.)","predictable (adj.)","predictably (adv.)","unpredictability (n.)"],
+    "roots": [{"part":"prae-","mean":"미리"},{"part":"dicere","mean":"말하다"}],
+    "etymHint": "prae(미리)+dicere(말하다) → 미리 말할 수 있음 → 예측 가능성"
+  },
+  "picnic": {
+    "ipa": "/ˈpɪknɪk/",
+    "pos": "n./v.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"소풍, 야외 식사","ex":"She had signed up to help organize the charity picnic and was determined to arrive well before it started.","tr":"그녀는 자선 소풍 행사 준비를 돕기로 자원했으며 시작하기 훨씬 전에 도착하기로 결심했다."},
+      {"pos":"v.","ko":"소풍을 가다, 야외에서 식사하다"}
+    ],
+    "syn": ["outing","excursion"],
+    "deriv": [],
+    "roots": [],
+    "etymHint": ""
+  },
+  "cargo": {
+    "ipa": "/ˈkɑːrɡoʊ/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"화물, 적하물","ex":"During a severe storm in the Pacific, the vessel lost several cargo containers overboard, one of which was full of plastic toys.","tr":"태평양의 심한 폭풍 속에서 선박은 여러 화물 컨테이너를 바다에 잃었으며, 그 중 하나는 플라스틱 장난감으로 가득 차 있었다."}
+    ],
+    "syn": ["freight","load","shipment"],
+    "deriv": [],
+    "roots": [{"part":"carricare","mean":"짐을 싣다"}],
+    "etymHint": "carricare(짐을 싣다) → 운반되는 짐 → 화물"
+  },
+  "salespeople": {
+    "ipa": "/ˈseɪlzˌpiːpəl/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"영업 사원들, 판매원들","ex":"Salespeople often focus on activities that are measured and rewarded rather than those that genuinely serve customers.","tr":"영업 사원들은 진정으로 고객에게 도움이 되는 활동보다 측정되고 보상받는 활동에 집중하는 경향이 있다."}
+    ],
+    "syn": ["sales staff","vendors","representatives"],
+    "deriv": ["salesperson (n.)","salesman (n.)","saleswoman (n.)"],
+    "roots": [],
+    "etymHint": ""
+  },
+  "irrigation": {
+    "ipa": "/ˌɪrɪˈɡeɪʃən/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"관개, 물대기","ex":"Ancient civilizations thrived in arid regions by developing sophisticated irrigation systems to channel river water to farmland.","tr":"고대 문명은 강물을 농지로 끌어들이는 정교한 관개 시스템을 개발함으로써 건조한 지역에서도 번성했다."}
+    ],
+    "syn": ["watering","channeling"],
+    "deriv": ["irrigate (v.)","irrigated (adj.)"],
+    "roots": [{"part":"in-","mean":"안으로"},{"part":"rigare","mean":"물을 대다"}],
+    "etymHint": "in(안으로)+rigare(물을 대다) → 안으로 물을 대다 → 관개"
+  },
+  "physiological": {
+    "ipa": "/ˌfɪziəˈlɒdʒɪkəl/",
+    "pos": "adj.",
+    "level": "C1",
+    "meanings": [
+      {"pos":"adj.","ko":"생리학적인, 생리적인","ex":"The researchers hypothesized that participants would unconsciously match the same relative physiological intensity across different types of physical activity.","tr":"연구자들은 참가자들이 무의식적으로 서로 다른 유형의 신체 활동에서 동일한 상대적 생리적 강도를 맞출 것이라고 가설을 세웠다."}
+    ],
+    "syn": ["biological","bodily","organic"],
+    "deriv": ["physiology (n.)","physiologist (n.)","physiologically (adv.)"],
+    "roots": [{"part":"physis","mean":"자연, 본성"},{"part":"-logy","mean":"학문"}],
+    "etymHint": "physis(자연·본성)+logy(학문) → 신체의 자연적 기능을 연구 → 생리학적인"
+  },
+  "inseparable": {
+    "ipa": "/ɪnˈsepərəbəl/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"분리할 수 없는, 떨어질 수 없는","ex":"The two dolphins became inseparable companions, always swimming side by side and displaying remarkable signs of mutual affection.","tr":"두 돌고래는 떨어질 수 없는 동반자가 되어 항상 나란히 헤엄치며 놀라운 상호 애정의 징후를 보였다."}
+    ],
+    "syn": ["indivisible","inextricable","attached"],
+    "deriv": ["separable (adj.)","separate (v./adj.)","inseparably (adv.)"],
+    "roots": [{"part":"in-","mean":"아닌"},{"part":"separare","mean":"분리하다"}],
+    "etymHint": "in(아닌)+separare(분리하다) → 분리될 수 없는 → 떨어질 수 없는"
+  },
+  "jet": {
+    "ipa": "/dʒet/",
+    "pos": "n./v.",
+    "level": "B1",
+    "meanings": [
+      {"pos":"n.","ko":"제트기; 분출, 분사","ex":"The jet crossed the Atlantic in under eight hours, carrying passengers and freight at high altitude.","tr":"그 제트기는 8시간 이내에 대서양을 횡단하며 높은 고도에서 승객과 화물을 실어 날랐다."},
+      {"pos":"v.","ko":"제트기로 이동하다; 분출하다"}
+    ],
+    "syn": ["aircraft","plane","spray"],
+    "deriv": ["jet-lagged (adj.)","jetting (v.)"],
+    "roots": [{"part":"jeter","mean":"던지다, 내뿜다"}],
+    "etymHint": "jeter(던지다) → 가스를 내뿜어 추진 → 제트기"
+  },
+  "depict": {
+    "ipa": "/dɪˈpɪkt/",
+    "pos": "v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"묘사하다, 그리다, 표현하다","ex":"The ancient mural depicts a local hero in vivid detail, reflecting the cultural values of the community that created it.","tr":"그 고대 벽화는 지역 영웅을 생생하게 묘사하며, 그것을 만든 공동체의 문화적 가치를 반영한다."}
+    ],
+    "syn": ["portray","illustrate","represent"],
+    "deriv": ["depiction (n.)","depicted (adj.)"],
+    "roots": [{"part":"de-","mean":"완전히"},{"part":"pingere","mean":"그리다"}],
+    "etymHint": "de(완전히)+pingere(그리다) → 완전히 그려내다 → 묘사하다"
+  },
+  "retrieve": {
+    "ipa": "/rɪˈtriːv/",
+    "pos": "v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"v.","ko":"검색하다, 되찾다, 기억에서 불러오다","ex":"What you retrieve from memory is often not the event itself but a pointer to the broader narrative surrounding it.","tr":"기억에서 불러오는 것은 종종 사건 자체가 아니라 그것을 둘러싼 더 넓은 이야기에 대한 단서이다."},
+      {"pos":"v.","ko":"회수하다, 찾아오다"}
+    ],
+    "syn": ["recover","recall","fetch"],
+    "deriv": ["retrieval (n.)","retriever (n.)","retrievable (adj.)"],
+    "roots": [{"part":"re-","mean":"다시"},{"part":"trouver","mean":"찾다"}],
+    "etymHint": "re(다시)+trouver(찾다) → 다시 찾아오다 → 검색하다"
+  },
+  "vice": {
+    "ipa": "/vaɪs/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"악덕, 나쁜 버릇; 부덕","ex":"The internal world of thought and the external environment shape each other mutually, and vice versa.","tr":"사고의 내적 세계와 외부 환경은 서로를 상호적으로 형성하며, 그 반대도 마찬가지다."},
+      {"pos":"n.","ko":"(vice versa의 형태로) 반대로도"}
+    ],
+    "syn": ["sin","immorality","fault"],
+    "deriv": ["vicious (adj.)","viciously (adv.)"],
+    "roots": [{"part":"vitium","mean":"결함, 악"}],
+    "etymHint": "vitium(결함) → 도덕적 결함 → 악덕"
+  },
+  "empathetic": {
+    "ipa": "/ˌempəˈθetɪk/",
+    "pos": "adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"adj.","ko":"공감하는, 감정이입을 잘 하는","ex":"Being empathetic toward others is a core component of practical wisdom, enabling one to identify the most appropriate course of action.","tr":"타인에게 공감하는 것은 실용적 지혜의 핵심 요소로, 가장 적절한 행동 방향을 파악할 수 있게 한다."}
+    ],
+    "syn": ["compassionate","understanding","sympathetic"],
+    "deriv": ["empathy (n.)","empathize (v.)","empathetically (adv.)"],
+    "roots": [{"part":"em-","mean":"안에"},{"part":"pathos","mean":"감정, 고통"}],
+    "etymHint": "em(안에)+pathos(감정) → 타인의 감정 안으로 들어가다 → 공감하는"
+  },
+  "satellite": {
+    "ipa": "/ˈsætəlaɪt/",
+    "pos": "n./adj.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"인공위성; 위성","ex":"Hundreds of satellites are continuously orbiting the Earth, collecting detailed imagery of the planet's surface.","tr":"수백 개의 인공위성이 지구 표면의 상세한 이미지를 수집하며 지속적으로 지구 궤도를 돌고 있다."},
+      {"pos":"adj.","ko":"위성의, 위성 도시의"}
+    ],
+    "syn": ["spacecraft","orbiter"],
+    "deriv": ["satellitic (adj.)"],
+    "roots": [{"part":"satelles","mean":"호위자, 수행원"}],
+    "etymHint": "satelles(호위자) → 주된 천체를 따라다니는 것 → 위성"
+  },
+  "instructor": {
+    "ipa": "/ɪnˈstrʌktər/",
+    "pos": "n.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"강사, 교관, 지도자","ex":"The program instructor introduced himself and outlined the schedule for the upcoming summer course.","tr":"프로그램 강사는 자기 소개를 하고 다가오는 여름 강좌의 일정을 개략적으로 설명했다."}
+    ],
+    "syn": ["teacher","trainer","tutor"],
+    "deriv": ["instruct (v.)","instruction (n.)","instructional (adj.)","instructive (adj.)"],
+    "roots": [{"part":"in-","mean":"안에"},{"part":"struere","mean":"쌓다, 가르치다"}],
+    "etymHint": "in(안에)+struere(쌓다) → 지식을 쌓아 주다 → 강사"
+  },
+  "distrust": {
+    "ipa": "/dɪsˈtrʌst/",
+    "pos": "n./v.",
+    "level": "B2",
+    "meanings": [
+      {"pos":"n.","ko":"불신, 의혹","ex":"Creative and unconventional ideas are frequently met with suspicion and distrust rather than open curiosity.","tr":"창의적이고 비관습적인 아이디어는 열린 호기심보다는 의심과 불신으로 받아들여지는 경우가 많다."},
+      {"pos":"v.","ko":"불신하다, 의심하다"}
+    ],
+    "syn": ["suspicion","doubt","mistrust"],
+    "deriv": ["distrustful (adj.)","distrustfully (adv.)","trust (n./v.)"],
+    "roots": [{"part":"dis-","mean":"반대, 부정"},{"part":"trust","mean":"신뢰"}],
+    "etymHint": "dis(반대)+trust(신뢰) → 신뢰의 반대 → 불신"
+  }
+}
