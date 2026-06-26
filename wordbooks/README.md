@@ -13,10 +13,17 @@
 | 수능 기본 | basic | SUN-BASIC | 1,200 (30일) | ✅ | ✅ | ✅ |
 | 수능 핵심 | core | SUN-CORE | 1,800 (45일) | ✅ | ✅ | ✅ |
 | 수능 고난도 | hard | SUN-HARD | 800 (20일) | ✅ | ✅ | ✅ |
-| 수능 숙어 | idiom | SUN-IDIOM | 523 (14일) | ✅ | ⬜ | ⬜ |
+| 수능 숙어 | idiom | SUN-IDIOM | 523 (14일) | ✅ | ✅* | ✅* |
 | 중등 3권 | mid1/2/3 | … | ~2,000 | ⬜ | ⬜ | ⬜ |
 
-→ **수능 단어 3권 + 숙어 = 4권 완성(최종 JSON).** 숙어는 DB등록·발음만 남음(아래 명령). 다음: 중등 3권.
+→ **수능 4권(기본·핵심·고난도·숙어) 완성.** *숙어 DB·발음은 2026-06-26 GitHub Actions("단어장 발행", prefix=idiom)로 발행 실행 — Actions Success / 앱 책장에 "수능 숙어" 표시로 최종 확인 권장.
+→ **다음 작업: 중등 3권** (mid1/2/3). **수능 corpus(기출 원문) 불필요** → 교육부 중학 어휘 목록+CEFR로 큐레이션, **웹 클로드(claude.ai/code)에서 진행 가능.**
+
+## 중등 3권 만드는 법 (corpus 없이 — 웹 가능)
+수능과 달리 기출 빈도풀이 없으므로 단어 소스가 다름:
+1. 단어 선정: 교육부 지정 중학 기본 어휘(약 1,800) + CEFR A1~B1 기준으로 권 배분 — 중1 기초(~600·A1~A2)/중2 핵심(~700·A2~B1)/중3 완성(~800·B1). 수능 4권과 **중복 금지**(기존 suneung-*-day*.json 단어 제외).
+2. 예문: 기출 출처 없음 → **CEFR 맞춘 자작 예문**(표제어 포함, 큰따옴표 금지). src 필드 공란.
+3. 포맷·머지·검증·seed·발음은 수능과 동일(`merge_day.py N <prefix>` → `seed_official.py` BOOK_PREFIX=mid1 등 → 발행 워크플로우). 최종 파일명만 `suneung-` 대신 책 prefix 규칙 정하면 됨(merge_day/seed/gen_audio가 `suneung-<prefix>-day*.json` glob이므로 **prefix=mid1/mid2/mid3로 두고 파일명은 `suneung-mid1-day1.json` 형태 유지**가 도구 수정 없이 가장 간단).
 
 ## 새 책 만드는 전체 파이프라인 (예: 다음 책)
 **⚠️ 1~3은 corpus/ 가 필요 → 로컬(맥)에서만. corpus/·*.scaffold.json 은 저작권 원문이라 gitignore(GitHub에 없음).**
@@ -32,12 +39,14 @@
    - 로컬: `BOOK_PREFIX=<p> BOOK_TITLE="<이름>" BOOK_CODE=<CODE> OFFICIAL_OWNER=… SB_URL=… SB_SERVICE_KEY=… python3 tools/seed_official.py --go`
      그리고 `GOOGLE_API_KEY=… python3 tools/gen_audio.py --go --book <p>` → `SB_SERVICE_KEY=… python3 tools/upload_audio.py --go`
    - **폰/웹**: GitHub → Actions → **"단어장 발행"** → prefix·이름·코드 입력 → Run (`.github/workflows/publish-wordbook.yml`). Secrets: `SB_SERVICE_KEY`, `GOOGLE_API_KEY`.
+     - ⚠️ **반드시 "Run workflow" 버튼(workflow_dispatch)으로 입력값을 직접 넣어 실행.** PR/자동 트리거로 돌면 입력이 비어 기본값(core)으로 엉뚱한 책을 등록함. 그리고 **해당 책 최종 JSON이 먼저 push 돼 있어야** 함(GitHub Desktop Push → 그 다음 Run).
 
 ## 도구 맵 (`tools/`)
 - `extract_corpus.py` — 기출 PDF(`../../test/`) → `corpus/<연도_회차>.txt` + `corpus/index.json`(48시험 식별). **핵심: `pdftotext -raw`가 2단 편집을 읽기순서로 뽑아 문항번호 18~45 단조증가** → 줄머리 `NN.` 앵커로 단어↔문항 매핑.
 - `build_corpus_pool.py` — corpus → `suneung-pool-full.json`(필터: 스톱워드·복수형·부사·고유명사 자동감지).
 - `stopwords.txt` — 기능어·기초어·중상급 제외어·고유명사·축약형·비교급/숫자.
 - `build_book_scaffolds.py` — 풀 → Day별 scaffold(+기출 출처). `build_all_scaffolds.py`/`build_day.py` 는 기본 전용(구).
+- `build_idiom_scaffolds.py` — 숙어 전용. `suneung-idiom-pool.json`([{idiom,ko,pos}]) → 코퍼스에서 구(句) 매칭(one's/sb/sth 와일드카드+동사굴절 허용) → `suneung-idiom-day<N>.scaffold.json`(40개씩). 매칭된 것만 기출 출처. (숙어 검증: 분리형·불규칙동사 때문에 "예문에 표제어 포함" 단순체크는 오탐 많음 — 굴절·삽입 감안해 직접 확인.)
 - `merge_day.py <N> [prefix]` — scaffold + content → 최종 Day JSON.
 - `seed_official.py` — 최종 JSON → Supabase voca_books/pages/words 등록(`is_official=true`). env: `BOOK_PREFIX/TITLE/CODE`, `SB_URL`, `SB_SERVICE_KEY`, `OFFICIAL_OWNER`. `--reset`(재등록), `--update`(analysis만 갱신, uuid 유지).
 - `gen_audio.py` — Google Cloud TTS(Neural2)로 단어·예문 mp3 생성(`--book <prefix>`로 한 책만). `upload_audio.py` — mp3를 Supabase Storage `audio` 버킷 업로드.
