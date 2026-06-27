@@ -17,7 +17,11 @@
 | 중등 3권 | mid1/2/3 | … | ~2,000 | ⬜ | ⬜ | ⬜ |
 
 → **수능 4권(기본·핵심·고난도·숙어) 완성.** *숙어 DB·발음은 2026-06-26 GitHub Actions("단어장 발행", prefix=idiom)로 발행 실행 — Actions Success / 앱 책장에 "수능 숙어" 표시로 최종 확인 권장.
-→ **다음 작업: 중등 3권** (mid1/2/3). **수능 corpus(기출 원문) 불필요** → 교육부 중학 어휘 목록+CEFR로 큐레이션, **웹 클로드(claude.ai/code)에서 진행 가능.**
+→ **다음 작업: 중등 3권** (mid1/2/3). **수능 corpus(기출 원문) 불필요** → 교육부 중학 어휘 목록+CEFR로 큐레이션, **웹 클로드(claude.ai/code)에서 진행 가능.** (mid1 600단어 15일 착수: `mid1-plan.json`, `suneung-mid1-day1.json` 작성됨.)
+
+### 2026-06 음원 정합성 수정 (⚠️ 재발행 필요)
+- **음원 파일명 규칙 변경**: `_safeAudio`/`gen_audio.safe` = 영숫자+공백만 남기고 **공백→하이픈**. (구 규칙은 공백 제거라 `break down`↔`breakdown` 등 충돌) → **숙어(idiom) 음원 파일명 전부 변경** → idiom 음원 재생성 필요.
+- **권 간 중복 단어 28개 제거(dedup)**: core↔hard·basic↔core에 같은 단어가 양쪽에 있어 같은 `s/<단어>.mp3`를 공유→예문 음성 불일치. 해결: hard↔core는 hard에서, basic↔core는 core에서 제거하고 같은 자리에 **레벨 맞는 새 단어**(exam.tested=false·자작예문, 기출ref없는 5% 패턴) 교체. hard 20개·core 8개 교체(7개 day파일 변경). **core·hard 재seed + basic·core·hard·idiom 음원 재생성 필요**(공유 음원이 owning book 예문으로 다시 써져야 정합).
 
 ## 중등 3권 만드는 법 (corpus 없이 — 웹 가능)
 수능과 달리 기출 빈도풀이 없으므로 단어 소스가 다름:
