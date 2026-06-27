@@ -4480,7 +4480,7 @@ function _cardBackBody(w){
 }
 // ===== 저장 음원(Gemini TTS) 우선 재생, 없으면 기기 TTS 폴백 =====
 let _curAudio = null;
-function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'); }
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
 function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); return s?(_AUDIO_BASE+'/'+kind+'/'+s+'.mp3'):''; }
 let _aWatch = null; // mp3 재생 완료 감지 워치독(onended 누락 대비)

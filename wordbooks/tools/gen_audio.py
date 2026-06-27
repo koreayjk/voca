@@ -16,7 +16,7 @@
   옵션: GOOGLE_TTS_VOICE(기본 en-US-Neural2-F) · GOOGLE_TTS_LANG(en-US) · GOOGLE_TTS_RATE(0.95)
   음성 예: en-US-Neural2-C/D/F/J, en-US-Studio-O(최고급), en-GB-Neural2-B
 """
-import os, sys, json, base64, time, urllib.request, urllib.error
+import os, sys, json, base64, time, re, urllib.request, urllib.error
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -36,7 +36,11 @@ for i, a in enumerate(sys.argv):
     if a == "--book" and i+1 < len(sys.argv): BOOK = sys.argv[i+1]
 DAYS = list(range(1, 31))
 
-def safe(en): return "".join(c for c in (en or "").lower() if c.isalnum())
+# 앱의 _safeAudio 와 동일 규칙: 영숫자+공백만 남기고 → 공백을 하이픈으로.
+# (구 규칙은 공백 제거라 'break down'↔'breakdown' 등이 같은 파일로 충돌 → 하이픈으로 분리)
+def safe(en):
+    s = re.sub(r"[^a-z0-9 ]", "", (en or "").lower())
+    return re.sub(r"\s+", "-", s.strip())
 
 def collect():
     import glob
