@@ -24,6 +24,7 @@ OWNER = os.environ.get("OFFICIAL_OWNER", "")
 GO = "--go" in sys.argv
 RESET = "--reset" in sys.argv
 UPDATE = "--update" in sys.argv   # 기존 공식책 단어 analysis in-place 갱신(uuid 유지)
+REPLACE = "--replace" in sys.argv # book_id 유지하고 페이지별 단어를 통째 교체(단어 추가/삭제 반영). 복습/배정 진도 보존
 
 BOOK_PREFIX = os.environ.get("BOOK_PREFIX", "basic")     # 파일 패턴 suneung-<prefix>-day*.json
 BOOK_TITLE = os.environ.get("BOOK_TITLE", "수능 기본")
@@ -99,20 +100,42 @@ def update_analysis():
         print(f"  {page_num}: {len(words)} updated")
     print(f"\n완료. {n}개 단어 analysis 갱신(uuid={bid} 유지).")
 
+def replace_words():
+    """기존 공식책의 book_id 를 유지한 채 각 Day 페이지의 단어를 통째로 교체.
+    단어 추가/삭제/치환을 반영하면서도 book_id·page_num 이 그대로라 복습(voca_review/voca_stats)·
+    학원 배정(book_id+page_num 기준) 진도가 보존된다. (--reset 은 book_id 가 바뀌어 진도 끊김)"""
+    bid = find_official()
+    if not bid: print("공식책이 없어요. 먼저 --go 로 시드하세요."); return
+    pages = req("GET", f"/rest/v1/voca_pages?book_id=eq.{bid}&select=id,page_num") or []
+    pmap = {p["page_num"]: p["id"] for p in pages}
+    total = 0
+    for page_num, words in load_days():
+        pid = pmap.get(page_num)
+        if not pid:
+            pg = req("POST", "/rest/v1/voca_pages", {"book_id": bid, "page_num": page_num},
+                     prefer="return=representation")
+            pid = (pg[0] if isinstance(pg, list) else pg)["id"]
+        # 페이지 단어 전체 삭제 후 현재 JSON 으로 재삽입 (en/추가/삭제 모두 반영)
+        req("DELETE", f"/rest/v1/voca_words?page_id=eq.{pid}")
+        rows = [{**w, "page_id": pid} for w in words]
+        req("POST", "/rest/v1/voca_words", rows, prefer="return=minimal")
+        total += len(words); print(f"  {page_num}: {len(words)} replaced")
+    print(f"\n완료. book_id={bid} 유지 · {total}개 단어 교체 (복습/배정 진도 보존).")
+
 def main():
     days = load_days()
     total = sum(len(ws) for _, ws in days)
     print(f"[plan] {BOOK_TITLE}({BOOK_CODE}) · {len(days)} pages · {total} words")
     print(f"  SB_URL={'OK' if SB_URL else 'MISSING'}  KEY={'OK' if KEY else 'MISSING'}  OWNER={'OK' if OWNER else 'MISSING'}")
     if days: print("  sample word:", json.dumps(days[0][1][0], ensure_ascii=False)[:200])
-    if not (GO or UPDATE):
-        print("\n(dry-run) 시드=--go · 기존 카드 품질 갱신=--update. 선행: official-books.sql 실행.")
+    if not (GO or UPDATE or REPLACE):
+        print("\n(dry-run) 시드=--go · 카드 품질 갱신=--update · 단어 교체(진도 보존)=--replace. 선행: official-books.sql 실행.")
         return
-    need = [SB_URL, KEY] + ([] if UPDATE else [OWNER])
+    need = [SB_URL, KEY] + ([] if (UPDATE or REPLACE) else [OWNER])
     if not all(need):
-        print("ERROR: SB_URL / SB_SERVICE_KEY" + ("" if UPDATE else " / OFFICIAL_OWNER") + " 환경변수 필요"); sys.exit(1)
+        print("ERROR: SB_URL / SB_SERVICE_KEY" + ("" if (UPDATE or REPLACE) else " / OFFICIAL_OWNER") + " 환경변수 필요"); sys.exit(1)
     # placeholder/한글 감지 (안내문을 그대로 export 한 경우)
-    chk = [("SB_SERVICE_KEY", KEY)] + ([] if UPDATE else [("OFFICIAL_OWNER", OWNER)])
+    chk = [("SB_SERVICE_KEY", KEY)] + ([] if (UPDATE or REPLACE) else [("OFFICIAL_OWNER", OWNER)])
     bad = [n for n, v in chk if ("여기에" in v) or any(ord(c) > 127 for c in v)]
     if bad:
         print(f"ERROR: {', '.join(bad)} 에 실제 값이 안 들어갔어요(안내문/한글 감지).")
@@ -121,6 +144,8 @@ def main():
         sys.exit(1)
     if UPDATE:
         update_analysis(); return
+    if REPLACE:
+        replace_words(); return
     import re as _re
     if not _re.fullmatch(r"[0-9a-fA-F-]{32,40}", OWNER):
         print(f"ERROR: OFFICIAL_OWNER 가 uuid 형식이 아니에요: {OWNER!r}"); sys.exit(1)

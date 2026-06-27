@@ -30,7 +30,11 @@ on:
         type: boolean
         default: true
       reset_book:
-        description: '기존 책 삭제 후 재등록(--reset)'
+        description: '기존 책 삭제 후 재등록(--reset, book_id 바뀜·진도 끊김)'
+        type: boolean
+        default: false
+      replace_words:
+        description: '단어만 교체(--replace, book_id 유지·복습/배정 진도 보존)'
         type: boolean
         default: false
 
@@ -61,6 +65,6 @@ jobs:
         run: python3 tools/upload_audio.py --go
       - name: 공식책 DB 등록 (seed)
         if: ${{ inputs.do_seed }}
-        run: python3 tools/seed_official.py --go ${{ inputs.reset_book && '--reset' || '' }}
+        run: python3 tools/seed_official.py --go ${{ inputs.reset_book && '--reset' || (inputs.replace_words && '--replace' || '') }}
       - name: 완료 안내
         run: echo "✅ ${BOOK_TITLE}(${BOOK_CODE}) 발행 완료 — 앱 새로고침하면 반영됩니다."
