@@ -15,8 +15,11 @@ scaf = json.load(open(ROOT/f"suneung-{PREFIX}-day{N}.scaffold.json"))
 _cf = f"day{N}.content.json" if PREFIX == "basic" else f"{PREFIX}-day{N}.content.json"
 content = json.load(open(ROOT/_cf))
 
+_note = ("예문은 중학 교육과정 수준(CEFR A1~B1)에 맞춰 자체 집필한 문장입니다."
+         if PREFIX.startswith("mid")
+         else "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.")
 out = {"book":scaf["book"],"code":scaf["code"],"day":N,
-       "exampleNote":"예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+       "exampleNote":_note,
        "words":[]}
 missing=[]
 for sw in scaf["words"]:

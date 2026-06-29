@@ -1,29 +1,30 @@
 {
- "book": "중등 기초",
- "code": "MID-1",
- "day": 1,
+ "book": "중등 핵심",
+ "code": "MID-2",
+ "day": 10,
  "exampleNote": "예문은 중학 교육과정 수준(CEFR A1~B1)에 맞춰 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "family",
-   "ipa": "/ˈfæm.ɪ.li/",
+   "en": "jungle",
+   "ipa": "/ˈdʒʌŋɡəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "가족",
-     "ex": "My family eats dinner together every day.",
-     "tr": "우리 가족은 매일 함께 저녁을 먹는다.",
+     "ko": "정글, 밀림",
+     "ex": "Many animals live in the jungle.",
+     "tr": "많은 동물들이 정글에 산다.",
      "src": ""
     }
    ],
    "syn": [
-    "household"
+    "forest",
+    "rainforest"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "A1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -33,26 +34,159 @@
    }
   },
   {
-   "en": "father",
-   "ipa": "/ˈfɑː.ðɚ/",
+   "en": "volcano",
+   "ipa": "/vɒlˈkeɪnoʊ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "아버지",
-     "ex": "My father goes to work every morning.",
-     "tr": "나의 아버지는 매일 아침 출근하신다.",
+     "ko": "화산",
+     "ex": "The volcano erupted and sent ash into the air.",
+     "tr": "화산이 폭발하여 재를 공중으로 내뿜었다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "earthquake",
+   "ipa": "/ˈɜːrθkweɪk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "지진",
+     "ex": "The earthquake shook the buildings in the city.",
+     "tr": "지진이 도시의 건물들을 흔들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "flood",
+   "ipa": "/flʌd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "홍수",
+     "ex": "The flood covered the roads with water.",
+     "tr": "홍수로 도로가 물에 잠겼다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "(물이) 넘치다, 침수시키다"
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "wolf",
+   "ipa": "/wʊlf/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "늑대",
+     "ex": "The wolf howled at the moon at night.",
+     "tr": "늑대가 밤에 달을 향해 울부짖었다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "deer",
+   "ipa": "/dɪr/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "사슴",
+     "ex": "A deer ran across the road in front of us.",
+     "tr": "사슴 한 마리가 우리 앞 도로를 가로질러 달렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "insect",
+   "ipa": "/ˈɪnsɛkt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "곤충, 벌레",
+     "ex": "A bee is a type of insect.",
+     "tr": "벌은 곤충의 한 종류이다.",
      "src": ""
     }
    ],
    "syn": [
-    "dad",
-    "papa"
+    "bug"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "A1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -62,44 +196,15 @@
    }
   },
   {
-   "en": "mother",
-   "ipa": "/ˈmʌð.ɚ/",
+   "en": "bee",
+   "ipa": "/biː/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "어머니",
-     "ex": "My mother cooks breakfast for us.",
-     "tr": "나의 어머니는 우리에게 아침을 만들어 주신다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "mom",
-    "mama"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "parent",
-   "ipa": "/ˈpeɚ.ənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "부모",
-     "ex": "My parents love me very much.",
-     "tr": "나의 부모님은 나를 매우 사랑하신다.",
+     "ko": "벌",
+     "ex": "The bee flew from flower to flower.",
+     "tr": "벌이 꽃에서 꽃으로 날아다녔다.",
      "src": ""
     }
    ],
@@ -117,201 +222,15 @@
    }
   },
   {
-   "en": "brother",
-   "ipa": "/ˈbrʌð.ɚ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "남자 형제 (오빠, 남동생, 형)",
-     "ex": "My brother plays soccer after school.",
-     "tr": "내 남자 형제는 방과 후에 축구를 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sister",
-   "ipa": "/ˈsɪs.tɚ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "여자 형제 (언니, 누나, 여동생)",
-     "ex": "My sister reads books before bed.",
-     "tr": "내 여자 형제는 자기 전에 책을 읽는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "son",
-   "ipa": "/sʌn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "아들",
-     "ex": "They have one son and two daughters.",
-     "tr": "그들에게는 아들 한 명과 딸 두 명이 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "daughter",
-   "ipa": "/ˈdɔː.tɚ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "딸",
-     "ex": "Her daughter is seven years old.",
-     "tr": "그녀의 딸은 일곱 살이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "grandfather",
-   "ipa": "/ˈɡrænd.fɑː.ðɚ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "할아버지",
-     "ex": "My grandfather tells me old stories.",
-     "tr": "우리 할아버지는 나에게 옛날 이야기를 해 주신다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "grandpa"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "grandmother",
-   "ipa": "/ˈɡrænd.mʌð.ɚ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "할머니",
-     "ex": "My grandmother makes delicious soup.",
-     "tr": "우리 할머니는 맛있는 국을 만들어 주신다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "grandma"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "uncle",
-   "ipa": "/ˈʌŋ.kəl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "삼촌·외삼촌",
-     "ex": "My uncle lives in the same city.",
-     "tr": "나의 삼촌은 같은 도시에 산다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "aunt",
+   "en": "ant",
    "ipa": "/ænt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "이모·고모",
-     "ex": "My aunt gave me a nice gift.",
-     "tr": "나의 이모가 나에게 좋은 선물을 주셨다.",
+     "ko": "개미",
+     "ex": "The ant carried a big piece of food.",
+     "tr": "개미가 큰 음식 조각을 옮겼다.",
      "src": ""
     }
    ],
@@ -329,15 +248,93 @@
    }
   },
   {
-   "en": "cousin",
-   "ipa": "/ˈkʌz.ən/",
+   "en": "spider",
+   "ipa": "/ˈspaɪdər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "사촌",
-     "ex": "My cousin and I play games together.",
-     "tr": "나의 사촌과 나는 함께 게임을 한다.",
+     "ko": "거미",
+     "ex": "The spider made a web in the corner.",
+     "tr": "거미가 구석에 거미줄을 쳤다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "eagle",
+   "ipa": "/ˈiːɡəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "독수리",
+     "ex": "The eagle flew high above the mountains.",
+     "tr": "독수리가 산 위 높이 날아다녔다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "owl",
+   "ipa": "/aʊl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "올빼미",
+     "ex": "The owl sleeps during the day.",
+     "tr": "올빼미는 낮에 잠을 잔다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "duck",
+   "ipa": "/dʌk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "오리",
+     "ex": "The duck swam on the lake with her babies.",
+     "tr": "오리가 새끼들과 함께 호수에서 수영했다.",
      "src": ""
     }
    ],
@@ -355,15 +352,41 @@
    }
   },
   {
-   "en": "husband",
-   "ipa": "/ˈhʌz.bənd/",
+   "en": "whale",
+   "ipa": "/weɪl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "남편",
-     "ex": "Her husband cooks dinner on Sundays.",
-     "tr": "그녀의 남편은 일요일에 저녁을 요리한다.",
+     "ko": "고래",
+     "ex": "The whale is the largest animal in the ocean.",
+     "tr": "고래는 바다에서 가장 큰 동물이다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "air",
+   "ipa": "/ɛr/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공기",
+     "ex": "We need clean air to stay healthy.",
+     "tr": "건강을 유지하려면 깨끗한 공기가 필요하다.",
      "src": ""
     }
    ],
@@ -381,352 +404,26 @@
    }
   },
   {
-   "en": "wife",
-   "ipa": "/waɪf/",
+   "en": "land",
+   "ipa": "/lænd/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "아내",
-     "ex": "His wife works at the hospital.",
-     "tr": "그의 아내는 병원에서 일한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "baby",
-   "ipa": "/ˈbeɪ.bi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "아기",
-     "ex": "The baby is sleeping in the bed.",
-     "tr": "아기가 침대에서 자고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "infant"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "child",
-   "ipa": "/tʃaɪld/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "어린이",
-     "ex": "The child runs in the park.",
-     "tr": "그 어린이는 공원에서 달린다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "kid"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "kid",
-   "ipa": "/kɪd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "아이",
-     "ex": "The kids are playing in the yard.",
-     "tr": "아이들이 마당에서 놀고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "child"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "person",
-   "ipa": "/ˈpɝː.sən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "사람",
-     "ex": "There is one person at the door.",
-     "tr": "문 앞에 사람 한 명이 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "individual"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "people",
-   "ipa": "/ˈpiː.pəl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "사람들",
-     "ex": "Many people go to the market.",
-     "tr": "많은 사람들이 시장에 간다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "man",
-   "ipa": "/mæn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "남자",
-     "ex": "The man has a black bag.",
-     "tr": "그 남자는 검은 가방을 가지고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "guy"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "woman",
-   "ipa": "/ˈwʊm.ən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "여자",
-     "ex": "The woman smiles at me.",
-     "tr": "그 여자가 나에게 미소를 짓는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "lady"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "boy",
-   "ipa": "/bɔɪ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "소년",
-     "ex": "The boy rides his bike to school.",
-     "tr": "그 소년은 자전거를 타고 학교에 간다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "girl",
-   "ipa": "/ɡɝːl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "소녀",
-     "ex": "The girl has long hair.",
-     "tr": "그 소녀는 긴 머리카락을 가지고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "friend",
-   "ipa": "/frɛnd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "친구",
-     "ex": "My friend and I walk home together.",
-     "tr": "내 친구와 나는 함께 집에 걸어간다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "pal",
-    "buddy"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "classmate",
-   "ipa": "/ˈklæs.meɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "반 친구",
-     "ex": "My classmate sits next to me.",
-     "tr": "내 반 친구는 내 옆에 앉는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "schoolmate"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "name",
-   "ipa": "/neɪm/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "이름",
-     "ex": "My name is written on the book.",
-     "tr": "내 이름이 책에 적혀 있다.",
+     "ko": "육지, 땅",
+     "ex": "After a long trip, the ship reached the land.",
+     "tr": "긴 항해 끝에 배가 육지에 도착했다.",
      "src": ""
     },
     {
      "pos": "v",
-     "ko": "이름을 짓다"
+     "ko": "착륙하다"
     }
    ],
-   "syn": [],
+   "syn": [
+    "ground",
+    "earth"
+   ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
@@ -740,15 +437,48 @@
    }
   },
   {
-   "en": "age",
-   "ipa": "/eɪdʒ/",
+   "en": "earth",
+   "ipa": "/ɜːrθ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "나이",
-     "ex": "What is your age?",
-     "tr": "당신의 나이는 몇 살인가요?",
+     "ko": "지구",
+     "ex": "The earth moves around the sun.",
+     "tr": "지구는 태양 주위를 돈다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "흙, 땅"
+    }
+   ],
+   "syn": [
+    "ground",
+    "soil"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "sand",
+   "ipa": "/sænd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "모래",
+     "ex": "The children played in the sand at the beach.",
+     "tr": "아이들이 해변의 모래사장에서 놀았다.",
      "src": ""
     }
    ],
@@ -766,136 +496,20 @@
    }
   },
   {
-   "en": "grow",
-   "ipa": "/ɡroʊ/",
-   "pos": "v",
+   "en": "wood",
+   "ipa": "/wʊd/",
+   "pos": "n",
    "meanings": [
-    {
-     "pos": "v",
-     "ko": "자라다",
-     "ex": "Plants grow fast in the spring.",
-     "tr": "식물들은 봄에 빠르게 자란다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "get bigger"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "meet",
-   "ipa": "/miːt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "만나다",
-     "ex": "I meet my friends at the library.",
-     "tr": "나는 도서관에서 친구들을 만난다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "see"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "know",
-   "ipa": "/noʊ/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "알다",
-     "ex": "I know the answer to the question.",
-     "tr": "나는 그 질문의 답을 알고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "understand"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "love",
-   "ipa": "/lʌv/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "사랑하다",
-     "ex": "I love my family very much.",
-     "tr": "나는 나의 가족을 매우 사랑한다.",
-     "src": ""
-    },
     {
      "pos": "n",
-     "ko": "사랑"
-    }
-   ],
-   "syn": [
-    "adore"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "like",
-   "ipa": "/laɪk/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "좋아하다",
-     "ex": "I like cats and dogs.",
-     "tr": "나는 고양이와 개를 좋아한다.",
+     "ko": "나무, 목재",
+     "ex": "This table is made of wood.",
+     "tr": "이 탁자는 나무로 만들어졌다.",
      "src": ""
     }
    ],
    "syn": [
-    "enjoy"
+    "timber"
    ],
    "deriv": [],
    "roots": [],
@@ -910,20 +524,20 @@
    }
   },
   {
-   "en": "hate",
-   "ipa": "/heɪt/",
-   "pos": "v",
+   "en": "rose",
+   "ipa": "/roʊz/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "싫어하다",
-     "ex": "I hate getting up early.",
-     "tr": "나는 일찍 일어나는 것을 싫어한다.",
+     "pos": "n",
+     "ko": "장미",
+     "ex": "She got a red rose from her friend.",
+     "tr": "그녀는 친구로부터 빨간 장미를 받았다.",
      "src": ""
     }
    ],
    "syn": [
-    "dislike"
+    "flower"
    ],
    "deriv": [],
    "roots": [],
@@ -938,110 +552,21 @@
    }
   },
   {
-   "en": "help",
-   "ipa": "/hɛlp/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "돕다",
-     "ex": "I help my mother wash the dishes.",
-     "tr": "나는 어머니가 설거지하는 것을 돕는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "assist"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "call",
-   "ipa": "/kɔːl/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "부르다·전화하다",
-     "ex": "Please call me tonight.",
-     "tr": "오늘 밤에 나에게 전화해 주세요.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "~라고 부르다"
-    }
-   ],
-   "syn": [
-    "phone",
-    "ring"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "visit",
-   "ipa": "/ˈvɪz.ɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "방문하다",
-     "ex": "We visit our grandparents every weekend.",
-     "tr": "우리는 매 주말 조부모님을 방문한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "go to",
-    "drop by"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tall",
-   "ipa": "/tɔːl/",
+   "en": "sunny",
+   "ipa": "/ˈsʌni/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "키가 큰",
-     "ex": "My brother is very tall.",
-     "tr": "내 남자 형제는 키가 매우 크다.",
+     "ko": "맑은, 햇빛이 비치는",
+     "ex": "It is a sunny day, so let's go outside.",
+     "tr": "맑은 날이니 밖에 나가자.",
      "src": ""
     }
    ],
    "syn": [
-    "high"
+    "bright",
+    "clear"
    ],
    "deriv": [],
    "roots": [],
@@ -1056,24 +581,135 @@
    }
   },
   {
-   "en": "short",
-   "ipa": "/ʃɔːrt/",
+   "en": "cloudy",
+   "ipa": "/ˈklaʊdi/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "키가 작은",
-     "ex": "She is short but very fast.",
-     "tr": "그녀는 키가 작지만 매우 빠르다.",
+     "ko": "흐린, 구름이 낀",
+     "ex": "The sky is cloudy today, so bring an umbrella.",
+     "tr": "오늘 하늘이 흐리니 우산을 가져가.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "overcast"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "rainy",
+   "ipa": "/ˈreɪni/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "비가 오는, 비가 많이 내리는",
+     "ex": "It was a rainy day, so we stayed inside.",
+     "tr": "비가 오는 날이어서 우리는 실내에 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "wet"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "snowy",
+   "ipa": "/ˈsnoʊi/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "눈이 오는, 눈 덮인",
+     "ex": "We had a snowy morning and built a snowman.",
+     "tr": "눈 오는 아침에 우리는 눈사람을 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "windy",
+   "ipa": "/ˈwɪndi/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "바람이 부는",
+     "ex": "It is very windy outside, so hold your hat.",
+     "tr": "밖이 매우 바람이 부니 모자를 잡아.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "breezy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "cool",
+   "ipa": "/kuːl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "시원한, 서늘한",
+     "ex": "The water is cool and feels nice.",
+     "tr": "물이 시원해서 기분이 좋다.",
      "src": ""
     },
     {
      "pos": "adj",
-     "ko": "짧은"
+     "ko": "멋진"
     }
    ],
    "syn": [
-    "little"
+    "chilly",
+    "fresh"
    ],
    "deriv": [],
    "roots": [],
@@ -1088,26 +724,393 @@
    }
   },
   {
-   "en": "fat",
-   "ipa": "/fæt/",
+   "en": "wet",
+   "ipa": "/wɛt/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "뚱뚱한",
-     "ex": "The fat cat sleeps all day.",
-     "tr": "그 뚱뚱한 고양이는 하루 종일 잔다.",
+     "ko": "젖은, 축축한",
+     "ex": "My shoes got wet in the rain.",
+     "tr": "내 신발이 빗속에서 젖었다.",
      "src": ""
     }
    ],
    "syn": [
-    "big",
-    "heavy"
+    "damp",
+    "moist"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "dry",
+   "ipa": "/draɪ/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "건조한, 마른",
+     "ex": "The desert is very hot and dry.",
+     "tr": "사막은 매우 덥고 건조하다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "말리다, 건조시키다"
+    }
+   ],
+   "syn": [
+    "arid"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "green",
+   "ipa": "/ɡriːn/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "초록의, 녹색의",
+     "ex": "The grass is green in spring.",
+     "tr": "봄에 잔디가 초록색이다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "초록색"
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "deep",
+   "ipa": "/diːp/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "깊은",
+     "ex": "The lake is very deep and cold.",
+     "tr": "그 호수는 매우 깊고 차갑다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "blow",
+   "ipa": "/bloʊ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(바람이) 불다, 불어 보내다",
+     "ex": "The wind blows the leaves off the trees.",
+     "tr": "바람이 나뭇잎들을 나무에서 날려 보낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "gust"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "fall",
+   "ipa": "/fɔːl/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "떨어지다, 넘어지다",
+     "ex": "The apple fell from the tree.",
+     "tr": "사과가 나무에서 떨어졌다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "가을"
+    }
+   ],
+   "syn": [
+    "drop"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "swim",
+   "ipa": "/swɪm/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "수영하다",
+     "ex": "I swim in the pool every morning.",
+     "tr": "나는 매일 아침 수영장에서 수영한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "turtle",
+   "ipa": "/ˈtɜːrtəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "거북이",
+     "ex": "The turtle moved slowly across the sand.",
+     "tr": "거북이가 모래 위를 천천히 기어갔다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "midnight",
+   "ipa": "/ˈmɪdnaɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자정, 밤 12시",
+     "ex": "The party ended at midnight.",
+     "tr": "파티는 자정에 끝났다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "always",
+   "ipa": "/ˈɔːlweɪz/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "항상, 언제나",
+     "ex": "She always eats breakfast before school.",
+     "tr": "그녀는 학교 가기 전에 항상 아침을 먹는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ever"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "usually",
+   "ipa": "/ˈjuːʒuəli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "보통, 대개",
+     "ex": "I usually go to bed at ten o'clock.",
+     "tr": "나는 보통 10시에 잠자리에 든다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "normally",
+    "generally"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "often",
+   "ipa": "/ˈɔːfən/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "자주, 종종",
+     "ex": "We often go to the park on weekends.",
+     "tr": "우리는 주말에 자주 공원에 간다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "frequently"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "sometimes",
+   "ipa": "/ˈsʌmtaɪmz/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "때때로, 가끔",
+     "ex": "I sometimes eat lunch at school.",
+     "tr": "나는 때때로 학교에서 점심을 먹는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "occasionally"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "rarely",
+   "ipa": "/ˈrɛrli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "거의 ~하지 않다, 드물게",
+     "ex": "He rarely eats fast food.",
+     "tr": "그는 패스트푸드를 거의 먹지 않는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "seldom"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,

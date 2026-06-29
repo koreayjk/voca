@@ -1,0 +1,406 @@
+{
+  "fly": {
+    "ipa": "/flaɪ/",
+    "pos": "v",
+    "level": "A1",
+    "meanings": [
+      {"pos": "v", "ko": "날다, 비행하다", "ex": "Birds fly in the blue sky.", "tr": "새들이 파란 하늘을 날아다닌다."}
+    ],
+    "syn": ["soar", "glide"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "come": {
+    "ipa": "/kʌm/",
+    "pos": "v",
+    "level": "A1",
+    "meanings": [
+      {"pos": "v", "ko": "오다", "ex": "Please come to my house.", "tr": "우리 집에 와 주세요."}
+    ],
+    "syn": ["arrive"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "stop": {
+    "ipa": "/stɑp/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "정류장", "ex": "I wait at the bus stop.", "tr": "나는 버스 정류장에서 기다린다."},
+      {"pos": "v", "ko": "멈추다", "ex": "The car stops here.", "tr": "차가 여기서 멈춘다."}
+    ],
+    "syn": ["station", "halt"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "fast": {
+    "ipa": "/fæst/",
+    "pos": "adv",
+    "level": "A1",
+    "meanings": [
+      {"pos": "adv", "ko": "빠르게", "ex": "She runs very fast.", "tr": "그녀는 매우 빠르게 달린다."},
+      {"pos": "adj", "ko": "빠른", "ex": "He is a fast runner.", "tr": "그는 빠른 주자이다."}
+    ],
+    "syn": ["quickly", "rapidly"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "slow": {
+    "ipa": "/sloʊ/",
+    "pos": "adj",
+    "level": "A1",
+    "meanings": [
+      {"pos": "adj", "ko": "느린", "ex": "The turtle is very slow.", "tr": "거북이는 매우 느리다."}
+    ],
+    "syn": ["unhurried"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "bicycle": {
+    "ipa": "/ˈbaɪsɪkəl/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "자전거", "ex": "I ride my bicycle to school.", "tr": "나는 자전거를 타고 학교에 간다."}
+    ],
+    "syn": ["bike"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "taxis": {
+    "ipa": "/ˈtæksɪz/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "택시들", "ex": "Many taxis are on the street.", "tr": "거리에 택시들이 많이 있다."}
+    ],
+    "syn": ["cabs"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "animal": {
+    "ipa": "/ˈænɪməl/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "동물", "ex": "A dog is a friendly animal.", "tr": "개는 친근한 동물이다."}
+    ],
+    "syn": ["creature", "beast"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "weather": {
+    "ipa": "/ˈwɛðər/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "날씨", "ex": "The weather is nice today.", "tr": "오늘 날씨가 좋다."}
+    ],
+    "syn": ["climate"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "sky": {
+    "ipa": "/skaɪ/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "하늘", "ex": "The sky is very blue.", "tr": "하늘이 매우 파랗다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "sun": {
+    "ipa": "/sʌn/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "태양", "ex": "The sun is bright today.", "tr": "오늘 태양이 밝게 빛난다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "moon": {
+    "ipa": "/muːn/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "달", "ex": "The moon shines at night.", "tr": "달이 밤에 빛난다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "star": {
+    "ipa": "/stɑr/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "별", "ex": "I can see a bright star.", "tr": "나는 밝은 별을 볼 수 있다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "cloud": {
+    "ipa": "/klaʊd/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "구름", "ex": "A big cloud is in the sky.", "tr": "하늘에 큰 구름이 있다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "rain": {
+    "ipa": "/reɪn/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "비", "ex": "The rain is very heavy today.", "tr": "오늘 비가 아주 많이 내린다."},
+      {"pos": "v", "ko": "비가 오다", "ex": "It will rain tomorrow.", "tr": "내일 비가 올 것이다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "snow": {
+    "ipa": "/snoʊ/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "눈", "ex": "Snow falls in winter.", "tr": "겨울에 눈이 내린다."},
+      {"pos": "v", "ko": "눈이 오다", "ex": "It snowed last night.", "tr": "어젯밤에 눈이 내렸다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "wind": {
+    "ipa": "/wɪnd/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "바람", "ex": "The wind is cold today.", "tr": "오늘 바람이 차다."}
+    ],
+    "syn": ["breeze"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "ice": {
+    "ipa": "/aɪs/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "얼음", "ex": "I put ice in my drink.", "tr": "나는 음료에 얼음을 넣는다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "spring": {
+    "ipa": "/sprɪŋ/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "봄", "ex": "Flowers bloom in spring.", "tr": "봄에 꽃이 핀다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "summer": {
+    "ipa": "/ˈsʌmər/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "여름", "ex": "Summer is hot and sunny.", "tr": "여름은 덥고 맑다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "autumn": {
+    "ipa": "/ˈɔːtəm/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "가을", "ex": "Leaves fall in autumn.", "tr": "가을에 잎이 떨어진다."}
+    ],
+    "syn": ["fall"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "winter": {
+    "ipa": "/ˈwɪntər/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "겨울", "ex": "It is cold in winter.", "tr": "겨울에는 춥다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "tree": {
+    "ipa": "/triː/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "나무", "ex": "A big tree is in the park.", "tr": "공원에 큰 나무가 있다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "grass": {
+    "ipa": "/ɡræs/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "풀, 잔디", "ex": "The grass is green and soft.", "tr": "풀이 초록색이고 부드럽다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "leaf": {
+    "ipa": "/liːf/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "잎", "ex": "A green leaf fell from the tree.", "tr": "초록 잎이 나무에서 떨어졌다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "rock": {
+    "ipa": "/rɑk/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "바위, 돌", "ex": "There is a big rock by the river.", "tr": "강 옆에 큰 바위가 있다."}
+    ],
+    "syn": ["stone", "boulder"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "stone": {
+    "ipa": "/stoʊn/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "돌", "ex": "I found a smooth stone.", "tr": "나는 매끄러운 돌을 발견했다."}
+    ],
+    "syn": ["rock", "pebble"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "ocean": {
+    "ipa": "/ˈoʊʃən/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "바다, 대양", "ex": "The ocean is very deep and wide.", "tr": "바다는 매우 깊고 넓다."}
+    ],
+    "syn": ["sea"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "sea": {
+    "ipa": "/siː/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "바다", "ex": "We swim in the sea.", "tr": "우리는 바다에서 수영한다."}
+    ],
+    "syn": ["ocean"],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "dog": {
+    "ipa": "/dɔɡ/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "개", "ex": "My dog runs in the yard.", "tr": "내 개가 마당에서 달린다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "cat": {
+    "ipa": "/kæt/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "고양이", "ex": "The cat sleeps on the sofa.", "tr": "고양이가 소파 위에서 잔다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "bird": {
+    "ipa": "/bɜrd/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "새", "ex": "A small bird sings on the tree.", "tr": "작은 새가 나무 위에서 노래한다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "horse": {
+    "ipa": "/hɔrs/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "말", "ex": "The horse runs very fast.", "tr": "말이 매우 빠르게 달린다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "cow": {
+    "ipa": "/kaʊ/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "소", "ex": "The cow eats grass on the farm.", "tr": "소가 농장에서 풀을 먹는다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "pig": {
+    "ipa": "/pɪɡ/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "돼지", "ex": "The pig lives on the farm.", "tr": "돼지는 농장에 산다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "sheep": {
+    "ipa": "/ʃiːp/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "양", "ex": "The sheep has soft white wool.", "tr": "양은 부드러운 흰 털을 가지고 있다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "rabbit": {
+    "ipa": "/ˈræbɪt/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "토끼", "ex": "The rabbit has long ears.", "tr": "토끼는 긴 귀를 가지고 있다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "lion": {
+    "ipa": "/ˈlaɪən/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "사자", "ex": "The lion is a strong animal.", "tr": "사자는 강한 동물이다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "tiger": {
+    "ipa": "/ˈtaɪɡər/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "호랑이", "ex": "The tiger has orange and black stripes.", "tr": "호랑이는 주황색과 검은색 줄무늬가 있다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  },
+  "bear": {
+    "ipa": "/bɛr/",
+    "pos": "n",
+    "level": "A1",
+    "meanings": [
+      {"pos": "n", "ko": "곰", "ex": "The bear lives in the forest.", "tr": "곰은 숲속에 산다."}
+    ],
+    "syn": [],
+    "deriv": [], "roots": [], "etymHint": ""
+  }
+}
