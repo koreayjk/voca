@@ -2,8 +2,387 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 4,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
+  {
+   "en": "nostalgia",
+   "ipa": "/nɒˈstældʒə/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "향수, 과거에 대한 그리움",
+     "ex": "The film deliberately evokes nostalgia for a simpler era, using sepia tones and period-specific soundtracks to anchor viewers emotionally.",
+     "tr": "그 영화는 관객들을 감정적으로 고정시키기 위해 세피아 톤과 시대별 사운드트랙을 사용하여 더 단순한 시대에 대한 향수를 의도적으로 불러일으킨다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sentimentality",
+    "wistfulness",
+    "longing"
+   ],
+   "deriv": [
+    "nostalgic (adj.)",
+    "nostalgically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "nostos",
+     "mean": "귀향"
+    },
+    {
+     "part": "algos",
+     "mean": "고통"
+    }
+   ],
+   "etymHint": "nostos(귀향)+algos(고통) → 고향으로 돌아가고 싶은 고통 → 향수",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "verification",
+   "ipa": "/ˌvɛrɪfɪˈkeɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "검증, 확인",
+     "ex": "Scientific objectivity demands that all measurements and observations be open to independent verification by other researchers.",
+     "tr": "과학적 객관성은 모든 측정과 관찰이 다른 연구자들에 의한 독립적 검증에 열려 있을 것을 요구한다.",
+     "src": "2015 9월모평 28번"
+    }
+   ],
+   "syn": [
+    "confirmation",
+    "validation",
+    "authentication"
+   ],
+   "deriv": [
+    "verify (v.)",
+    "verifiable (adj.)",
+    "veracity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "ver",
+     "mean": "진실"
+    },
+    {
+     "part": "fic",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "ver(진실)+fic(만들다) → 진실로 만들어 확인하다 → 검증",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
+  {
+   "en": "precipitous",
+   "ipa": "/prɪˈsɪpɪtəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "가파른, 성급한",
+     "ex": "A precipitous withdrawal of troops risked destabilizing the region for years to come.",
+     "tr": "성급한 군대 철수는 앞으로 수년간 지역을 불안정하게 만들 위험이 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "steep",
+    "abrupt",
+    "hasty"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "paralyze",
+   "ipa": "/ˈpærəlaɪz/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "마비시키다; 꼼짝 못하게 하다",
+     "ex": "Writers are often paralyzed by the fear of comparison, unable to progress because they imagine others performing the same task better.",
+     "tr": "작가들은 종종 비교에 대한 두려움에 마비되어 다른 사람들이 같은 작업을 더 잘 수행하고 있다고 상상하기 때문에 진전하지 못한다.",
+     "src": "2011 6월모평 30번"
+    }
+   ],
+   "syn": [
+    "immobilize",
+    "incapacitate",
+    "cripple"
+   ],
+   "deriv": [
+    "paralysis (n.)",
+    "paralyzed (adj.)",
+    "paralytic (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "para",
+     "mean": "옆에"
+    },
+    {
+     "part": "lysis",
+     "mean": "풀다, 이완"
+    }
+   ],
+   "etymHint": "para(옆에)+lysis(이완) → 한쪽만 느슨해지다 → 마비시키다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "reconfigure",
+   "ipa": "/ˌriːkənˈfɪɡjər/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "재구성하다, 재편하다",
+     "ex": "Globalisation has fundamentally reconfigured the power dynamics between nations and multinational corporations.",
+     "tr": "세계화는 국가와 다국적 기업 간의 권력 역학을 근본적으로 재구성했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "restructure",
+    "reorganize",
+    "reshape"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "compassion",
+   "ipa": "/kəmˈpæʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "연민, 동정심",
+     "ex": "Some critics argue that rational compassion, guided by evidence and reason, produces more equitable outcomes than empathy alone.",
+     "tr": "일부 비평가들은 증거와 이성에 의해 인도되는 이성적 연민이 공감만으로는 얻을 수 없는 더 공평한 결과를 만들어낸다고 주장한다.",
+     "src": "2026 9월모평 32번"
+    }
+   ],
+   "syn": [
+    "empathy",
+    "sympathy",
+    "pity"
+   ],
+   "deriv": [
+    "compassionate (adj.)",
+    "compassionately (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "com",
+     "mean": "함께"
+    },
+    {
+     "part": "pass",
+     "mean": "고통받다"
+    }
+   ],
+   "etymHint": "com(함께)+pass(고통받다) → 함께 고통받다 → 연민",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "legitimacy",
+   "ipa": "/lɪˈdʒɪtɪməsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "정당성; 합법성",
+     "ex": "The legitimacy of a government rests not only on legal authority but on the consent of the governed.",
+     "tr": "정부의 정당성은 법적 권위뿐 아니라 피치자의 동의에도 기반한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "validity",
+    "authority",
+    "justification"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "exceptional",
+   "ipa": "/ɪkˈsɛpʃənl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "탁월한, 유례없는",
+     "ex": "Beethoven's Fifth Symphony stands as an exceptional demonstration of how minimal thematic material can generate vast structural complexity.",
+     "tr": "베토벤의 5번 교향곡은 최소한의 주제적 재료가 어떻게 방대한 구조적 복잡성을 생성할 수 있는지를 보여주는 탁월한 예시다.",
+     "src": "2023 6월모평 34번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "예외적인, 특별한"
+    }
+   ],
+   "syn": [
+    "outstanding",
+    "extraordinary",
+    "remarkable"
+   ],
+   "deriv": [
+    "exception (n.)",
+    "exceptionally (adv.)",
+    "except (prep.)"
+   ],
+   "roots": [
+    {
+     "part": "ex",
+     "mean": "밖으로"
+    },
+    {
+     "part": "cept",
+     "mean": "취하다"
+    }
+   ],
+   "etymHint": "ex(밖으로)+cept(취하다) → 바깥으로 빼내다 → 예외적인, 탁월한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "parsimonious",
+   "ipa": "/ˌpɑːrsɪˈmoʊniəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "지나치게 인색한, 과도하게 절약하는",
+     "ex": "The parsimonious approach to research funding stunted innovation across entire scientific disciplines.",
+     "tr": "연구 자금에 대한 지나치게 인색한 접근 방식은 전체 과학 분야에 걸쳐 혁신을 저해했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "miserly",
+    "niggardly",
+    "penurious"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "chamber",
+   "ipa": "/ˈtʃeɪmbər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "(특수 목적의) 실, 방; 의회",
+     "ex": "Only after extended observation do the particle tracks inside a bubble chamber resolve into recognisable and classifiable trajectories.",
+     "tr": "오직 오랜 관찰 후에야 버블 챔버 내부의 입자 궤적이 인식 가능하고 분류 가능한 궤도로 분해된다.",
+     "src": "2015 수능 20번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(총의) 약실"
+    }
+   ],
+   "syn": [
+    "room",
+    "compartment",
+    "hall"
+   ],
+   "deriv": [
+    "chamberlain (n.)",
+    "chamber music (n.)"
+   ],
+   "roots": [
+    {
+     "part": "camara",
+     "mean": "아치형 지붕이 있는 방"
+    }
+   ],
+   "etymHint": "camara(아치형 방) → 특정 기능을 위한 방 → 실, 방",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
   {
    "en": "penetrate",
    "ipa": "/ˈpenɪtreɪt/",
@@ -56,6 +435,36 @@
    }
   },
   {
+   "en": "polarize",
+   "ipa": "/ˈpoʊləraɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "양극화하다, 첨예하게 대립시키다",
+     "ex": "The controversial legislation polarized the electorate and deepened existing social divisions.",
+     "tr": "논란이 많은 입법안은 유권자들을 양극화하고 기존의 사회적 분열을 심화했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "divide",
+    "split",
+    "bifurcate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "discern",
    "ipa": "/dɪˈsɜːrn/",
    "pos": "v.",
@@ -103,6 +512,36 @@
    }
   },
   {
+   "en": "notwithstanding",
+   "ipa": "/ˌnɑːtwɪθˈstændɪŋ/",
+   "pos": "pre",
+   "meanings": [
+    {
+     "pos": "pre",
+     "ko": "~에도 불구하고; 그럼에도",
+     "ex": "Notwithstanding the committee's reservations, the proposal was ratified by a wide margin.",
+     "tr": "위원회의 유보에도 불구하고, 제안은 큰 차이로 비준되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "despite",
+    "regardless of",
+    "nevertheless"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "flaw",
    "ipa": "/flɔː/",
    "pos": "n.",
@@ -145,47 +584,33 @@
    }
   },
   {
-   "en": "multi",
-   "ipa": "/ˈmʌlti/",
-   "pos": "prefix",
+   "en": "circumspect",
+   "ipa": "/ˈsɜːrkəmspekt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "prefix",
-     "ko": "다(多)-, 여러",
-     "ex": "A simple screw multiplies the applied effort across its spiral surface, demonstrating a mechanical advantage.",
-     "tr": "단순한 나사는 나선 표면에 걸쳐 가해진 힘을 배가시켜 기계적 이점을 보여 준다.",
-     "src": "2009 6월모평 29번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "다중의, 복합의"
+     "pos": "adj",
+     "ko": "신중한, 조심스러운",
+     "ex": "A circumspect approach to investment requires thorough due diligence before committing capital.",
+     "tr": "투자에 대한 신중한 접근 방식은 자본을 투입하기 전에 철저한 실사를 요구한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "poly-",
-    "many-",
-    "multiple"
+    "prudent",
+    "cautious",
+    "wary"
    ],
-   "deriv": [
-    "multiply (v.)",
-    "multiple (adj.)",
-    "multitude (n.)",
-    "multilateral (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "multi-",
-     "mean": "많은"
-    }
-   ],
-   "etymHint": "multi(많은) → 여러 개의 → 다(多)-",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -281,81 +706,33 @@
    }
   },
   {
-   "en": "caterpillar",
-   "ipa": "/ˈkætəpɪlər/",
-   "pos": "n.",
+   "en": "galvanize",
+   "ipa": "/ˈɡælvənaɪz/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "애벌레",
-     "ex": "Upon promotion to project manager, a specialist must transform from a technical caterpillar into a generalist capable of overseeing the entire team.",
-     "tr": "프로젝트 매니저로 승진하면, 전문가는 기술적 애벌레에서 팀 전체를 감독할 수 있는 제너럴리스트로 탈바꿈해야 한다.",
-     "src": "2016 6월모평 40번"
+     "pos": "v",
+     "ko": "자극하여 행동하게 하다, 분발시키다",
+     "ex": "The documentary galvanized public opinion and spurred lawmakers to introduce new environmental legislation.",
+     "tr": "그 다큐멘터리는 여론을 자극하여 행동하게 하고 입법자들이 새 환경 법안을 발의하도록 촉구했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "larva",
-    "grub"
+    "stimulate",
+    "energize",
+    "mobilize"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "campaign",
-   "ipa": "/kæmˈpeɪn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "캠페인, 운동",
-     "ex": "He served as secretary to a Bohemian king, accompanying him on diplomatic missions and military campaigns across the continent.",
-     "tr": "그는 보헤미아 왕의 비서로 일하며, 대륙 전역의 외교 사절단과 군사 작전에 동행했다.",
-     "src": "2012 6월모평 37번"
-    },
-    {
-     "pos": "n.",
-     "ko": "군사 작전"
-    },
-    {
-     "pos": "v.",
-     "ko": "캠페인을 벌이다"
-    }
-   ],
-   "syn": [
-    "drive",
-    "crusade",
-    "operation"
-   ],
-   "deriv": [
-    "campaigner (n.)"
-   ],
-   "roots": [
-    {
-     "part": "camp-",
-     "mean": "들판"
-    },
-    {
-     "part": "-agne",
-     "mean": "장소"
-    }
-   ],
-   "etymHint": "camp(들판)+-agne → 들판에서 벌이는 군사 활동 → 작전, 캠페인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -405,6 +782,36 @@
    }
   },
   {
+   "en": "inveterate",
+   "ipa": "/ɪnˈvetərɪt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "뿌리 깊은, 습관화된",
+     "ex": "He was an inveterate skeptic who demanded empirical proof before accepting any theoretical claim.",
+     "tr": "그는 어떤 이론적 주장도 받아들이기 전에 경험적 증거를 요구하는 뿌리 깊은 회의론자였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "habitual",
+    "deep-rooted",
+    "confirmed"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "immerse",
    "ipa": "/ɪˈmɜːrs/",
    "pos": "v.",
@@ -451,133 +858,33 @@
    }
   },
   {
-   "en": "creature",
-   "ipa": "/ˈkriːtʃər/",
-   "pos": "n.",
+   "en": "remission",
+   "ipa": "/rɪˈmɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "생물, 동물",
-     "ex": "Hikers venturing into dense forest should remain alert to small venomous creatures concealed beneath leaves and rocks.",
-     "tr": "울창한 숲으로 들어가는 등산객은 낙엽과 돌 아래 숨어 있는 작은 독 생물에 주의를 기울여야 한다.",
-     "src": "2014 수능 26번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(상상 속의) 존재"
+     "pos": "n",
+     "ko": "완화, 관해, 면제",
+     "ex": "After years of treatment, the patient finally achieved full remission, with no detectable cancer cells remaining.",
+     "tr": "수년간의 치료 끝에 환자는 마침내 완전한 관해를 달성해, 감지 가능한 암세포가 남아 있지 않았다.",
+     "src": ""
     }
    ],
    "syn": [
-    "being",
-    "organism",
-    "entity"
+    "abatement",
+    "alleviation",
+    "reprieve"
    ],
-   "deriv": [
-    "creation (n.)",
-    "creator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "creat-",
-     "mean": "만들다"
-    },
-    {
-     "part": "-ure",
-     "mean": "존재"
-    }
-   ],
-   "etymHint": "creat(만들다)+-ure(존재) → 만들어진 존재 → 생물",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "port",
-   "ipa": "/pɔːrt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "항구; 출구, 통로",
-     "ex": "Drawn instinctively toward the artificial glow, the moths flew to what seemed a portal of escape, only to be consumed by the flame.",
-     "tr": "인공 빛에 본능적으로 이끌린 나방들은 탈출구처럼 보이는 것을 향해 날아갔지만, 결국 불꽃에 소진되었다.",
-     "src": "2025 9월모평 31번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(컴퓨터) 포트, 접속단자"
-    },
-    {
-     "pos": "v.",
-     "ko": "(소프트웨어를) 이식하다"
-    }
-   ],
-   "syn": [
-    "harbor",
-    "gateway",
-    "haven"
-   ],
-   "deriv": [
-    "portal (n.)",
-    "portable (adj.)",
-    "export (v.)",
-    "import (v.)"
-   ],
-   "roots": [
-    {
-     "part": "port-",
-     "mean": "나르다; 문"
-    }
-   ],
-   "etymHint": "port(문·나르다) → 물건을 나르는 문 → 항구, 통로",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "twin",
-   "ipa": "/twɪn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "쌍둥이; 한 쌍의 것",
-     "ex": "Twin dangers lurk in the study of history, luring the unwary scholar toward misinterpretation and anachronistic judgement.",
-     "tr": "역사 연구에는 쌍둥이 위험이 도사리고 있어, 부주의한 학자를 오해와 시대착오적 판단으로 유혹한다.",
-     "src": "2016 수능 22번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "쌍둥이의; 한 쌍을 이루는"
-    }
-   ],
-   "syn": [
-    "pair",
-    "counterpart",
-    "double"
-   ],
-   "deriv": [
-    "twinned (adj.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -623,6 +930,36 @@
    }
   },
   {
+   "en": "aphorism",
+   "ipa": "/ˈæfəˌrɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "격언, 경구",
+     "ex": "Oscar Wilde's prose is studded with aphorisms so polished they read as effortless truths rather than crafted epigrammatic lines.",
+     "tr": "오스카 와일드의 산문은 너무나 세련된 격언들로 가득해 공들여 만든 경구가 아니라 자연스러운 진리처럼 읽힌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "maxim",
+    "adage",
+    "epigram"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "boundary",
    "ipa": "/ˈbaʊndri/",
    "pos": "n.",
@@ -662,47 +999,6 @@
     "count": 3,
     "exams": 2,
     "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "elder",
-   "ipa": "/ˈeldər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "어른, 연장자; 조상",
-     "ex": "Modern children must travel a far greater cognitive distance than their ancestors to acquire the world view held by their elders.",
-     "tr": "현대 아이들은 조상들보다 훨씬 먼 인지적 거리를 이동해야 어른들이 지닌 세계관을 습득할 수 있다.",
-     "src": "2011 수능 45번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(나이가) 더 많은"
-    }
-   ],
-   "syn": [
-    "senior",
-    "ancestor",
-    "patriarch"
-   ],
-   "deriv": [
-    "elderly (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "eld-",
-     "mean": "나이 든"
-    }
-   ],
-   "etymHint": "eld(나이 든)+-er(비교급) → 더 나이 든 사람 → 연장자",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2020",
     "stars": 1
    }
   },
@@ -750,36 +1046,33 @@
    }
   },
   {
-   "en": "sung",
-   "ipa": "/sʌŋ/",
-   "pos": "v.",
+   "en": "diffusion",
+   "ipa": "/dɪˈfjuːʒən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "노래했다 (sing의 과거분사)",
-     "ex": "The ancient hymns, sung in unison by the congregation, resonated through the stone walls of the cathedral.",
-     "tr": "회중이 합창으로 노래한 고대 찬송가는 대성당의 돌벽을 통해 울려 퍼졌다.",
+     "pos": "n",
+     "ko": "확산, 전파",
+     "ex": "The diffusion of printing technology across Europe transformed how knowledge was produced and consumed.",
+     "tr": "유럽 전역으로의 인쇄 기술 확산은 지식이 생산되고 소비되는 방식을 변화시켰다.",
      "src": ""
     }
    ],
    "syn": [
-    "chanted",
-    "intoned"
+    "dissemination",
+    "propagation",
+    "permeation"
    ],
-   "deriv": [
-    "sing (v.)",
-    "singer (n.)",
-    "singing (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -813,40 +1106,33 @@
    }
   },
   {
-   "en": "ghost",
-   "ipa": "/ɡoʊst/",
-   "pos": "n.",
+   "en": "obdurate",
+   "ipa": "/ˈɒbdjʊrɪt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "유령, 귀신",
-     "ex": "Despite decades of neuroscience research, no brain structure unique to humans had been found to justify the notion of a distinct 'ghost' in the machine.",
-     "tr": "수십 년간의 신경과학 연구에도 불구하고, 기계 속 독자적 '유령' 개념을 정당화할 인간 고유의 뇌 구조는 발견되지 않았다.",
-     "src": "2027 6월모평 21번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(give up the ghost) 포기하다, 숨을 거두다"
+     "pos": "adj",
+     "ko": "완고한, 고집스러운",
+     "ex": "Despite mounting evidence, the defendant remained obdurate and refused to enter any plea.",
+     "tr": "증거가 쌓여감에도 피고는 완고하게 버티며 어떤 답변도 거부했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "specter",
-    "phantom",
-    "apparition"
+    "stubborn",
+    "intransigent",
+    "inflexible"
    ],
-   "deriv": [
-    "ghostly (adj.)",
-    "ghostwriter (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -892,6 +1178,36 @@
     "exams": 2,
     "recentYear": "",
     "stars": 1
+   }
+  },
+  {
+   "en": "xenophobia",
+   "ipa": "/ˌzɛnəˈfoʊbiə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "외국인 혐오, 이방인 공포증",
+     "ex": "The surge in nationalist sentiment was accompanied by a troubling rise in xenophobia.",
+     "tr": "민족주의 정서의 급증은 우려스러운 외국인 혐오의 증가와 함께 나타났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "bigotry",
+    "nativism",
+    "chauvinism"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -983,6 +1299,36 @@
    }
   },
   {
+   "en": "vicarious",
+   "ipa": "/vɪˈkeəriəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "대리의, 간접 경험에 의한",
+     "ex": "Readers derive vicarious pleasure from the protagonist's daring exploits throughout the novel.",
+     "tr": "독자들은 소설 전반에 걸쳐 주인공의 대담한 행적에서 대리적 쾌락을 얻는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "surrogate",
+    "indirect",
+    "secondhand"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "defender",
    "ipa": "/dɪˈfendər/",
    "pos": "n.",
@@ -1027,6 +1373,36 @@
     "exams": 2,
     "recentYear": "2017",
     "stars": 1
+   }
+  },
+  {
+   "en": "obsolescence",
+   "ipa": "/ˌɒbsəˈlɛsəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "노후화, 쓸모없어짐",
+     "ex": "Planned obsolescence, the deliberate designing of products to fail, drives consumerist cycles of replacement.",
+     "tr": "제품이 고장나도록 의도적으로 설계하는 계획적 노후화는 소비주의적 교체 순환을 주도한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "outdatedness",
+    "desuetude",
+    "superannuation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1081,6 +1457,36 @@
    }
   },
   {
+   "en": "amplify",
+   "ipa": "/ˈæmplɪfaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "증폭하다, 확대하다",
+     "ex": "Echo chambers on digital platforms amplify extreme viewpoints and distort public perception of consensus.",
+     "tr": "디지털 플랫폼의 에코 챔버는 극단적인 견해를 증폭하고 합의에 대한 대중의 인식을 왜곡한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "intensify",
+    "magnify",
+    "enhance"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "gigantic",
    "ipa": "/dʒaɪˈɡæntɪk/",
    "pos": "adj.",
@@ -1114,608 +1520,6 @@
     "count": 3,
     "exams": 2,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "progression",
-   "ipa": "/prəˈɡreʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "진행, 발전; 연속",
-     "ex": "Each experiment in science, whether it confirms or refutes a hypothesis, initiates a new step in a theoretically infinite progression.",
-     "tr": "과학의 모든 실험은 가설을 확인하든 반박하든 이론적으로 무한한 발전의 새로운 단계를 시작한다.",
-     "src": "2017 9월모평 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(음악) 진행"
-    }
-   ],
-   "syn": [
-    "advancement",
-    "sequence",
-    "development"
-   ],
-   "deriv": [
-    "progress (n./v.)",
-    "progressive (adj.)",
-    "progressively (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "pro-",
-     "mean": "앞으로"
-    },
-    {
-     "part": "gress-",
-     "mean": "걷다"
-    }
-   ],
-   "etymHint": "pro(앞으로)+gress(걷다) → 앞으로 나아가다 → 진행",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "licence",
-   "ipa": "/ˈlaɪsəns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "허가, 면허; (창작의) 자유",
-     "ex": "When storytellers embellish a tale for comedic effect, the audience willingly grants them comic licence to deviate from strict factual accuracy.",
-     "tr": "이야기꾼이 희극적 효과를 위해 이야기를 부풀릴 때, 청중은 기꺼이 그들에게 엄격한 사실적 정확성에서 벗어날 수 있는 희극적 허가를 부여한다.",
-     "src": "2022 수능 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "허가하다"
-    }
-   ],
-   "syn": [
-    "permission",
-    "authorization",
-    "liberty"
-   ],
-   "deriv": [
-    "license (v.)",
-    "licensed (adj.)",
-    "licensing (n.)"
-   ],
-   "roots": [
-    {
-     "part": "licen-",
-     "mean": "허용하다"
-    }
-   ],
-   "etymHint": "licen(허용하다)+-ce → 허용된 것 → 허가",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "invariable",
-   "ipa": "/ɪnˈveəriəbəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "변하지 않는, 일정한",
-     "ex": "Because word meanings are never truly invariable, every act of communication involves active interpretation by both speaker and listener.",
-     "tr": "단어의 의미는 결코 완전히 변하지 않는 것이 아니기 때문에, 모든 의사소통 행위는 화자와 청자 모두의 능동적인 해석을 수반한다.",
-     "src": "2017 수능 22번"
-    }
-   ],
-   "syn": [
-    "constant",
-    "fixed",
-    "unvarying"
-   ],
-   "deriv": [
-    "invariably (adv.)",
-    "variable (adj.)",
-    "vary (v.)"
-   ],
-   "roots": [
-    {
-     "part": "in-",
-     "mean": "아니다"
-    },
-    {
-     "part": "vari-",
-     "mean": "변하다"
-    },
-    {
-     "part": "-able",
-     "mean": "~할 수 있는"
-    }
-   ],
-   "etymHint": "in(아니다)+vari(변하다)+-able → 변할 수 없는 → 변하지 않는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "unemployment",
-   "ipa": "/ˌʌnɪmˈplɔɪmənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "실업, 실직",
-     "ex": "Technological unemployment threatens to dismantle long-established wage arrangements, concentrating income among fewer and fewer individuals.",
-     "tr": "기술적 실업은 오랫동안 확립된 임금 체계를 해체하고 점점 더 소수의 개인에게 소득을 집중시킬 위험이 있다.",
-     "src": "2026 6월모평 40번"
-    }
-   ],
-   "syn": [
-    "joblessness",
-    "redundancy"
-   ],
-   "deriv": [
-    "unemployed (adj.)",
-    "employ (v.)",
-    "employment (n.)"
-   ],
-   "roots": [
-    {
-     "part": "un-",
-     "mean": "아니다"
-    },
-    {
-     "part": "employ-",
-     "mean": "고용하다"
-    },
-    {
-     "part": "-ment",
-     "mean": "상태"
-    }
-   ],
-   "etymHint": "un(아니다)+employ(고용하다)+-ment → 고용되지 않은 상태 → 실업",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "greet",
-   "ipa": "/ɡriːt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "인사하다, 맞이하다",
-     "ex": "Elephants may greet a familiar companion by gently reaching their trunk into the other's mouth, mirroring a human kiss on the cheek.",
-     "tr": "코끼리는 다른 코끼리의 입 속으로 코를 살며시 뻗음으로써 친숙한 동반자에게 인사할 수 있는데, 이는 인간의 볼 키스와 유사하다.",
-     "src": "2020 수능 40번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(장면·소식 등이) 맞이하다"
-    }
-   ],
-   "syn": [
-    "welcome",
-    "acknowledge",
-    "salute"
-   ],
-   "deriv": [
-    "greeting (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "maturity",
-   "ipa": "/məˈtjʊərɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "성숙, 원숙함",
-     "ex": "Emotional maturity allows individuals to tolerate ambiguity without demanding immediate resolution or certainty.",
-     "tr": "정서적 성숙은 개인이 즉각적인 해결이나 확실성을 요구하지 않고 모호함을 견딜 수 있게 한다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "(금융) 만기"
-    }
-   ],
-   "syn": [
-    "adulthood",
-    "ripeness",
-    "development"
-   ],
-   "deriv": [
-    "mature (adj./v.)",
-    "immature (adj.)",
-    "maturing (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "matur-",
-     "mean": "익다"
-    },
-    {
-     "part": "-ity",
-     "mean": "상태"
-    }
-   ],
-   "etymHint": "matur(익다)+-ity(상태) → 무르익은 상태 → 성숙",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "larvae",
-   "ipa": "/ˈlɑːrviː/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "유충들 (larva의 복수)",
-     "ex": "The larvae of certain moth species hatch within days and immediately begin feeding on the host plant's leaves.",
-     "tr": "특정 나방 종의 유충은 며칠 안에 부화하여 즉시 숙주 식물의 잎을 먹기 시작한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "grubs",
-    "caterpillars"
-   ],
-   "deriv": [
-    "larva (n. sing.)",
-    "larval (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "larv-",
-     "mean": "가면, 유령"
-    }
-   ],
-   "etymHint": "larv(가면) → 아직 본 모습을 드러내지 않은 것 → 유충",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "improvise",
-   "ipa": "/ˈɪmprəvaɪz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "즉흥적으로 하다, 임기응변으로 만들다",
-     "ex": "Skilled improvisers draw on deep reservoirs of knowledge; those who cannot improvise meaningfully are merely producing random variations.",
-     "tr": "숙련된 즉흥 연주자는 깊은 지식의 저장고에서 끌어내며, 의미 있게 즉흥할 수 없는 이들은 단지 무작위 변형을 만들어낼 뿐이다.",
-     "src": "2020 수능 21번"
-    }
-   ],
-   "syn": [
-    "extemporize",
-    "ad-lib",
-    "devise"
-   ],
-   "deriv": [
-    "improvisation (n.)",
-    "improviser (n.)",
-    "improvisational (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "im-",
-     "mean": "아니다"
-    },
-    {
-     "part": "pro-",
-     "mean": "미리"
-    },
-    {
-     "part": "vis-",
-     "mean": "보다"
-    }
-   ],
-   "etymHint": "im(아니다)+pro(미리)+vis(보다) → 미리 보지 않고 → 즉흥적으로 하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sticky",
-   "ipa": "/ˈstɪki/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "끈적한; 달라붙는",
-     "ex": "Picture the brain as a cluttered desk covered in sticky notes, loose papers, and overlapping spreadsheets competing for attention.",
-     "tr": "뇌를 끈적이는 메모지, 낱장 종이, 관심을 다투는 겹겹이 쌓인 스프레드시트로 어수선한 책상으로 상상해 보라.",
-     "src": "2018 6월모평 23번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(상황이) 까다로운, 곤란한"
-    }
-   ],
-   "syn": [
-    "adhesive",
-    "viscous",
-    "tacky"
-   ],
-   "deriv": [
-    "stick (v./n.)",
-    "stickiness (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mastery",
-   "ipa": "/ˈmɑːstəri/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "숙달, 정통; 지배",
-     "ex": "Achieving genuine job mastery in the digital age demands continuous engagement with the rapidly evolving tools available online.",
-     "tr": "디지털 시대에 진정한 직무 숙달을 이루려면 온라인에서 빠르게 진화하는 도구들과의 지속적인 교류가 필요하다.",
-     "src": "2019 6월모평 21번"
-    }
-   ],
-   "syn": [
-    "expertise",
-    "proficiency",
-    "command"
-   ],
-   "deriv": [
-    "master (n./v.)",
-    "masterful (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "mast-",
-     "mean": "지배하다"
-    },
-    {
-     "part": "-ery",
-     "mean": "상태·기술"
-    }
-   ],
-   "etymHint": "mast(지배하다)+-ery → 완전히 지배하는 상태 → 숙달",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "embellish",
-   "ipa": "/ɪmˈbelɪʃ/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "꾸미다, 윤색하다",
-     "ex": "A digital index can be embellished with colour coding, icons, and hyperlinks to make navigation far more intuitive.",
-     "tr": "디지털 색인은 탐색을 훨씬 더 직관적으로 만들기 위해 색상 코딩, 아이콘, 하이퍼링크로 꾸밀 수 있다.",
-     "src": "2020 9월모평 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(이야기를) 과장하여 꾸미다"
-    }
-   ],
-   "syn": [
-    "adorn",
-    "ornament",
-    "elaborate"
-   ],
-   "deriv": [
-    "embellishment (n.)"
-   ],
-   "roots": [
-    {
-     "part": "em-",
-     "mean": "만들다"
-    },
-    {
-     "part": "bell-",
-     "mean": "아름다운"
-    }
-   ],
-   "etymHint": "em(만들다)+bell(아름다운) → 아름답게 만들다 → 꾸미다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "enhancement",
-   "ipa": "/ɪnˈhɑːnsmənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "향상, 강화; 개선",
-     "ex": "Even in situations where failure is publicly acknowledged, self-enhancement motives can still shape the way individuals frame their own role.",
-     "tr": "실패가 공개적으로 인정되는 상황에서도 자기 향상 동기는 개인이 자신의 역할을 구성하는 방식에 여전히 영향을 미칠 수 있다.",
-     "src": "2018 9월모평 21번"
-    }
-   ],
-   "syn": [
-    "improvement",
-    "augmentation",
-    "boost"
-   ],
-   "deriv": [
-    "enhance (v.)",
-    "enhanced (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "en-",
-     "mean": "만들다"
-    },
-    {
-     "part": "hance-",
-     "mean": "높이다"
-    }
-   ],
-   "etymHint": "en(만들다)+hance(높이다) → 높게 만들다 → 향상",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "tactic",
-   "ipa": "/ˈtæktɪk/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "전술, 전략적 수단",
-     "ex": "Strategic and tactical decisions in warfare remain contingent upon a prior political determination of who the enemy actually is.",
-     "tr": "전쟁에서의 전략적·전술적 결정은 적이 누구인지에 대한 선행 정치적 결정에 달려 있다.",
-     "src": "2019 수능 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "방법, 수단"
-    }
-   ],
-   "syn": [
-    "strategy",
-    "maneuver",
-    "approach"
-   ],
-   "deriv": [
-    "tactical (adj.)",
-    "tactically (adv.)",
-    "tactics (n. pl.)"
-   ],
-   "roots": [
-    {
-     "part": "tact-",
-     "mean": "배열하다"
-    }
-   ],
-   "etymHint": "tact(배열하다) → 병력을 배열하는 법 → 전술",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "innovate",
-   "ipa": "/ˈɪnəveɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "혁신하다, 새것을 도입하다",
-     "ex": "To remain competitive, organisations must challenge existing practices and actively seek opportunities to innovate across every process.",
-     "tr": "경쟁력을 유지하기 위해 조직은 기존 관행에 도전하고 모든 프로세스에 걸쳐 혁신할 기회를 적극적으로 모색해야 한다.",
-     "src": "2018 수능 20번"
-    }
-   ],
-   "syn": [
-    "revolutionize",
-    "pioneer",
-    "modernize"
-   ],
-   "deriv": [
-    "innovation (n.)",
-    "innovative (adj.)",
-    "innovator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "in-",
-     "mean": "안으로"
-    },
-    {
-     "part": "nov-",
-     "mean": "새로운"
-    }
-   ],
-   "etymHint": "in(안으로)+nov(새로운) → 안으로 새것을 들이다 → 혁신하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2025",
     "stars": 1
    }
   }

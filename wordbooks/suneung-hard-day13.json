@@ -2,8 +2,495 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 13,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
+  {
+   "en": "alleviate",
+   "ipa": "/əˈliːvieɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "완화하다, 경감하다",
+     "ex": "Cognitive behavioral therapy has proven effective in alleviating symptoms of chronic anxiety and depression.",
+     "tr": "인지 행동 치료는 만성 불안과 우울증 증상을 완화하는 데 효과적임이 입증되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mitigate",
+    "ease",
+    "relieve"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "prompt",
+   "ipa": "/prɒmpt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "신속한, 즉각적인",
+     "ex": "Those who handle requests efficiently and promptly are far more likely to get the outcome they desire.",
+     "tr": "요청을 효율적이고 신속하게 처리하는 사람들은 원하는 결과를 얻을 가능성이 훨씬 더 높다.",
+     "src": "2015 6월모평 19번"
+    },
+    {
+     "pos": "v.",
+     "ko": "촉발시키다, 자극하다"
+    }
+   ],
+   "syn": [
+    "immediate",
+    "swift",
+    "timely",
+    "punctual"
+   ],
+   "deriv": [
+    "promptly (adv.)",
+    "promptness (n.)",
+    "prompter (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pro-",
+     "mean": "앞으로"
+    },
+    {
+     "part": "empt",
+     "mean": "가져오다"
+    }
+   ],
+   "etymHint": "pro(앞으로)+empt(가져오다) → 앞에서 이끌다 → 신속한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
+  {
+   "en": "neglect",
+   "ipa": "/nɪˈɡlekt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "소홀히 하다, 방치하다",
+     "ex": "Without proper checks, one domain of responsibility is inevitably neglected at the expense of the other.",
+     "tr": "적절한 점검 없이는 책임의 한 영역이 다른 영역을 희생하며 불가피하게 방치된다.",
+     "src": "2026 수능 22번"
+    },
+    {
+     "pos": "n.",
+     "ko": "소홀, 방치"
+    }
+   ],
+   "syn": [
+    "overlook",
+    "disregard",
+    "ignore",
+    "abandon"
+   ],
+   "deriv": [
+    "negligence (n.)",
+    "negligent (adj.)",
+    "negligible (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "neg-",
+     "mean": "아닌, 않는"
+    },
+    {
+     "part": "lect",
+     "mean": "선택하다, 모으다"
+    }
+   ],
+   "etymHint": "neg(않는)+lect(선택하다) → 선택하지 않다 → 소홀히 하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "apprehension",
+   "ipa": "/ˌæprɪˈhɛnʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불안, 두려운 예기 심리",
+     "ex": "A general apprehension about the future pervaded the community after the factory closure was announced.",
+     "tr": "공장 폐쇄가 발표된 후 미래에 대한 일반적인 불안이 지역사회에 만연했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "anxiety",
+    "dread",
+    "foreboding"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "persuasion",
+   "ipa": "/pərˈsweɪʒən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "설득, 납득시키기",
+     "ex": "Effective persuasion relies not merely on logic but on an understanding of the audience's deeply held values.",
+     "tr": "효과적인 설득은 논리에만 의존하는 것이 아니라 청중의 깊이 자리 잡은 가치에 대한 이해에 달려 있다.",
+     "src": ""
+    },
+    {
+     "pos": "n.",
+     "ko": "신념, 확신"
+    }
+   ],
+   "syn": [
+    "convincing",
+    "inducement",
+    "advocacy"
+   ],
+   "deriv": [
+    "persuade (v.)",
+    "persuasive (adj.)",
+    "persuasively (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "per-",
+     "mean": "완전히"
+    },
+    {
+     "part": "suad",
+     "mean": "설득하다"
+    }
+   ],
+   "etymHint": "per(완전히)+suad(설득하다) → 완전히 설득하다 → 설득",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "colloquial",
+   "ipa": "/kəˈloʊkwiəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "구어체의, 일상적 표현의",
+     "ex": "The novelist's deliberate use of colloquial diction creates an intimate register that pulls the reader into the narrator's confidence.",
+     "tr": "소설가의 의도적인 구어체 어휘 사용은 독자를 화자의 내면으로 끌어들이는 친밀한 어조를 만들어낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "vernacular",
+    "informal",
+    "idiomatic"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "permanence",
+   "ipa": "/ˈpɜːrmənəns/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "영속성, 지속성",
+     "ex": "Aristocrats planted long rows of hardwood trees to announce both their property's extent and its permanence.",
+     "tr": "귀족들은 재산의 범위와 그것의 영속성을 선언하기 위해 긴 줄로 활엽수를 심었다.",
+     "src": "2022 6월모평 40번"
+    }
+   ],
+   "syn": [
+    "durability",
+    "immutability",
+    "stability",
+    "endurance"
+   ],
+   "deriv": [
+    "permanent (adj.)",
+    "permanently (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "per-",
+     "mean": "완전히"
+    },
+    {
+     "part": "man",
+     "mean": "머무르다"
+    }
+   ],
+   "etymHint": "per(완전히)+man(머무르다) → 완전히 머물러 있음 → 영속성",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "perturb",
+   "ipa": "/pərˈtɜːrb/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "교란하다, 동요시키다",
+     "ex": "Even minor fluctuations in gravitational fields can perturb the trajectories of artificial satellites.",
+     "tr": "중력장의 미세한 변동조차도 인공위성의 궤도를 교란할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "disturb",
+    "disrupt",
+    "unsettle"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "underwent",
+   "ipa": "/ˌʌndərˈwent/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "겪었다 (undergo의 과거형), 경험하다",
+     "ex": "Despite absorbing influences from several continents, the garment's basic structure never underwent fundamental change.",
+     "tr": "여러 대륙의 영향을 흡수했음에도 불구하고 그 의복의 기본 구조는 근본적인 변화를 겪지 않았다.",
+     "src": "2013 6월모평 34번"
+    }
+   ],
+   "syn": [
+    "experienced",
+    "endured",
+    "sustained"
+   ],
+   "deriv": [
+    "undergo (v.)",
+    "undergone (past participle)"
+   ],
+   "roots": [
+    {
+     "part": "under-",
+     "mean": "아래에"
+    },
+    {
+     "part": "go",
+     "mean": "가다"
+    }
+   ],
+   "etymHint": "under(아래에)+go(가다) → 무언가 아래를 지나가다 → 겪다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "thrift",
+   "ipa": "/θrɪft/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "검약, 절약",
+     "ex": "A culture of thrift encourages people to repair what they have rather than immediately buying something new.",
+     "tr": "검약의 문화는 사람들이 새것을 바로 사는 것보다 가진 것을 고쳐 쓰도록 장려한다.",
+     "src": "2013 6월모평 31번"
+    },
+    {
+     "pos": "n.",
+     "ko": "스리프트 (북극 지방의 꽃)"
+    }
+   ],
+   "syn": [
+    "frugality",
+    "economy",
+    "parsimony"
+   ],
+   "deriv": [
+    "thrifty (adj.)",
+    "thriftily (adv.)",
+    "thriftiness (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
+  {
+   "en": "albeit",
+   "ipa": "/ɔːlˈbiːɪt/",
+   "pos": "con",
+   "meanings": [
+    {
+     "pos": "con",
+     "ko": "비록 ~이지만",
+     "ex": "The reform was a step forward, albeit an insufficient one given the scale of the crisis.",
+     "tr": "그 개혁은 비록 위기의 규모를 고려하면 불충분하지만 한 걸음 전진이었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "although",
+    "even though",
+    "though"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "rectangular",
+   "ipa": "/rekˈtæŋɡjələr/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "직사각형의",
+     "ex": "Classical garments were fashioned from a simple rectangular piece of cloth that was draped, never cut or sewn.",
+     "tr": "고전 의복은 재단되거나 봉제되지 않고 드레이프된 단순한 직사각형 천 한 장으로 만들어졌다.",
+     "src": "2013 6월모평 34번"
+    }
+   ],
+   "syn": [
+    "oblong",
+    "right-angled"
+   ],
+   "deriv": [
+    "rectangle (n.)",
+    "rectangularity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "rect",
+     "mean": "직선의, 올바른"
+    },
+    {
+     "part": "angul",
+     "mean": "각도"
+    }
+   ],
+   "etymHint": "rect(직선의)+angul(각도) → 직각으로 이루어진 → 직사각형의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "saturation",
+   "ipa": "/ˌsætʃəˈreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "포화, 충만",
+     "ex": "The market reached saturation point, leaving no room for new entrants without displacing existing competitors.",
+     "tr": "시장이 포화점에 도달하여 기존 경쟁자들을 대체하지 않고서는 신규 진입자가 설 공간이 없어졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "oversaturation",
+    "fullness",
+    "impregnation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
   {
    "en": "unambiguous",
    "ipa": "/ˌʌnæmˈbɪɡjuəs/",
@@ -56,6 +543,36 @@
    }
   },
   {
+   "en": "deferential",
+   "ipa": "/ˌdefəˈrenʃəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "경의를 표하는, 공손한",
+     "ex": "Junior scholars tend to be deferential toward established authorities, sometimes to a fault.",
+     "tr": "젊은 학자들은 기성 권위자들에게 지나칠 정도로 공손한 경향이 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "respectful",
+    "submissive",
+    "reverent"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "obligation",
    "ipa": "/ˌɒblɪˈɡeɪʃən/",
    "pos": "n.",
@@ -103,79 +620,33 @@
    }
   },
   {
-   "en": "inward",
-   "ipa": "/ˈɪnwəd/",
-   "pos": "adj.",
+   "en": "pragmatism",
+   "ipa": "/ˈpræɡmətɪzəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "내면의, 내부로 향한",
-     "ex": "After the crisis, she underwent a period of inward reflection that ultimately transformed her worldview.",
-     "tr": "위기 이후 그녀는 궁극적으로 자신의 세계관을 변화시킨 내면적 성찰의 시간을 보냈다.",
+     "pos": "n",
+     "ko": "실용주의",
+     "ex": "American pragmatism evaluates the truth of ideas by their practical consequences and utility.",
+     "tr": "미국 실용주의는 아이디어의 진리를 그 실천적 결과와 효용에 의해 평가한다.",
      "src": ""
-    },
-    {
-     "pos": "adv.",
-     "ko": "안쪽으로"
     }
    ],
    "syn": [
-    "internal",
-    "interior",
-    "introspective"
+    "functionalism",
+    "instrumentalism",
+    "practicalism"
    ],
-   "deriv": [
-    "inwardly (adv.)",
-    "inwardness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "in-",
-     "mean": "안"
-    },
-    {
-     "part": "-ward",
-     "mean": "방향"
-    }
-   ],
-   "etymHint": "in(안)+ward(방향) → 안쪽 방향 → 내면의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "radar",
-   "ipa": "/ˈreɪdɑː/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "레이더 (전파 탐지기)",
-     "ex": "Meteorologists rely on radar data to track storm systems and predict severe weather events with greater accuracy.",
-     "tr": "기상학자들은 폭풍 시스템을 추적하고 악천후 현상을 더 정확하게 예측하기 위해 레이더 데이터에 의존한다.",
-     "src": "2017 수능 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(비유) 탐지 범위, 관심 범위"
-    }
-   ],
-   "syn": [],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -226,40 +697,6 @@
    }
   },
   {
-   "en": "badge",
-   "ipa": "/bædʒ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "배지, 표지",
-     "ex": "Employees must display their security badge at all times while working in the restricted research facility.",
-     "tr": "직원들은 제한된 연구 시설에서 근무하는 동안 항상 보안 배지를 착용해야 한다.",
-     "src": "2021 6월모평 27번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(신분·소속의) 상징"
-    }
-   ],
-   "syn": [
-    "emblem",
-    "insignia",
-    "token"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
    "en": "reorganize",
    "ipa": "/ˌriːˈɔːɡənaɪz/",
    "pos": "v.",
@@ -303,255 +740,33 @@
    }
   },
   {
-   "en": "innocent",
-   "ipa": "/ˈɪnəsənt/",
-   "pos": "adj.",
+   "en": "boorish",
+   "ipa": "/ˈbʊərɪʃ/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "무죄의, 결백한",
-     "ex": "The newly presented forensic evidence proved that the defendant was entirely innocent of the charges.",
-     "tr": "새롭게 제시된 법의학적 증거는 피고가 혐의에 대해 완전히 무죄임을 증명했다.",
+     "pos": "adj",
+     "ko": "무례하고 야비한",
+     "ex": "His boorish remarks at the reception embarrassed his colleagues and offended the guests.",
+     "tr": "리셉션에서 그의 야비한 발언은 동료들을 당혹스럽게 하고 손님들을 기분 상하게 했다.",
      "src": ""
-    },
-    {
-     "pos": "adj.",
-     "ko": "순진한, 순수한"
-    },
-    {
-     "pos": "adj.",
-     "ko": "악의 없는"
     }
    ],
    "syn": [
-    "guiltless",
-    "blameless",
-    "naive"
+    "loutish",
+    "crass",
+    "uncouth"
    ],
-   "deriv": [
-    "innocence (n.)",
-    "innocently (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "in-",
-     "mean": "부정"
-    },
-    {
-     "part": "noc",
-     "mean": "해치다"
-    }
-   ],
-   "etymHint": "in(부정)+noc(해치다) → 해치지 않는 → 무죄의, 순수한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "prisoner",
-   "ipa": "/ˈprɪzənə/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "죄수, 수감자",
-     "ex": "The prisoner submitted a formal appeal arguing that his trial had been fundamentally unfair.",
-     "tr": "그 죄수는 자신의 재판이 근본적으로 불공정했다고 주장하는 공식 항소를 제출했다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "(비유) 속박된 사람"
-    }
-   ],
-   "syn": [
-    "convict",
-    "inmate",
-    "captive"
-   ],
-   "deriv": [
-    "prison (n.)",
-    "imprison (v.)",
-    "imprisonment (n.)"
-   ],
-   "roots": [
-    {
-     "part": "pris",
-     "mean": "잡다"
-    },
-    {
-     "part": "-oner",
-     "mean": "행위자"
-    }
-   ],
-   "etymHint": "pris(잡다)+-oner(행위자) → 잡힌 사람 → 죄수",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "desktop",
-   "ipa": "/ˈdesktɒp/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "데스크톱 컴퓨터; 바탕 화면",
-     "ex": "Learning to navigate a desktop publishing program efficiently can dramatically improve a writer's workflow.",
-     "tr": "데스크톱 출판 프로그램을 효율적으로 탐색하는 법을 배우면 작가의 작업 흐름을 크게 향상시킬 수 있다.",
-     "src": "2013 9월모평 20번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "탁상용의"
-    }
-   ],
-   "syn": [],
    "deriv": [],
-   "roots": [
-    {
-     "part": "desk",
-     "mean": "책상"
-    },
-    {
-     "part": "top",
-     "mean": "위"
-    }
-   ],
-   "etymHint": "desk(책상)+top(위) → 책상 위에 두는 → 데스크톱",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "basement",
-   "ipa": "/ˈbeɪsmənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "지하실, 지하층",
-     "ex": "The university's rare manuscript collection was stored in a climate-controlled basement vault.",
-     "tr": "대학교의 희귀 필사본 컬렉션은 온도와 습도가 조절되는 지하 금고에 보관되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cellar",
-    "underground floor"
-   ],
-   "deriv": [
-    "base (n.)",
-    "base (v.)"
-   ],
-   "roots": [
-    {
-     "part": "base",
-     "mean": "기초·바닥"
-    },
-    {
-     "part": "-ment",
-     "mean": "명사형 접미사"
-    }
-   ],
-   "etymHint": "base(바닥)+-ment → 건물 바닥 아래 → 지하실",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "plumber",
-   "ipa": "/ˈplʌmə/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "배관공",
-     "ex": "When a property is divided among multiple parties, a plumber may hold a limited right of access to carry out repairs.",
-     "tr": "부동산이 여러 당사자들 사이에 분할될 때, 배관공은 수리를 수행하기 위한 제한적 출입권을 가질 수 있다.",
-     "src": "2024 6월모평 21번"
-    }
-   ],
-   "syn": [
-    "pipefitter"
-   ],
-   "deriv": [
-    "plumb (v.)",
-    "plumbing (n.)"
-   ],
-   "roots": [
-    {
-     "part": "plumb",
-     "mean": "납(lead)"
-    }
-   ],
-   "etymHint": "plumb(납) → 납으로 만든 파이프를 다루는 사람 → 배관공",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "bubble",
-   "ipa": "/ˈbʌbəl/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "거품, 기포",
-     "ex": "The particle tracks observed in the bubble chamber only became meaningful after researchers had accumulated extensive observational experience.",
-     "tr": "거품 상자에서 관찰된 입자 궤적은 연구자들이 광범위한 관찰 경험을 쌓은 후에야 비로소 의미 있게 되었다.",
-     "src": "2015 수능 20번"
-    },
-    {
-     "pos": "v.",
-     "ko": "거품이 일다"
-    },
-    {
-     "pos": "n.",
-     "ko": "(비유) 거품 경제, 비현실적 환경"
-    }
-   ],
-   "syn": [
-    "blister",
-    "globule"
-   ],
-   "deriv": [
-    "bubbly (adj.)"
-   ],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -596,6 +811,36 @@
    }
   },
   {
+   "en": "modulate",
+   "ipa": "/ˈmɒdʒuleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "조절하다, 변조하다",
+     "ex": "The central bank uses interest rates to modulate economic activity and control inflation.",
+     "tr": "중앙은행은 이자율을 사용하여 경제 활동을 조절하고 인플레이션을 통제한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "regulate",
+    "adjust",
+    "temper"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "supervision",
    "ipa": "/ˌsuːpəˈvɪʒən/",
    "pos": "n.",
@@ -636,6 +881,36 @@
     "exams": 2,
     "recentYear": "",
     "stars": 1
+   }
+  },
+  {
+   "en": "aesthetic",
+   "ipa": "/ɛsˈθɛtɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "미적인, 심미적인",
+     "ex": "The curator's aesthetic sensibility was evident in the way she arranged contrasting works to create unexpected visual dialogues.",
+     "tr": "큐레이터의 미적 감수성은 대조적인 작품들을 배치하여 예상치 못한 시각적 대화를 만들어내는 방식에서 분명히 드러났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "artistic",
+    "sensory",
+    "visual"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -732,6 +1007,36 @@
    }
   },
   {
+   "en": "vestige",
+   "ipa": "/ˈvɛstɪdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "흔적, 잔재",
+     "ex": "Only a faint vestige of the original ritual survived in the modern ceremonial practice.",
+     "tr": "현대의 의식적 관행 속에는 원래 의례의 희미한 흔적만이 남아 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "remnant",
+    "relic",
+    "trace"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "misinterpret",
    "ipa": "/ˌmɪsɪnˈtɜːprɪt/",
    "pos": "v.",
@@ -779,6 +1084,36 @@
    }
   },
   {
+   "en": "attenuate",
+   "ipa": "/əˈtɛnjueɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "약화시키다, 희석하다",
+     "ex": "Thick stone walls attenuated the sound of the traffic outside, creating a tranquil interior.",
+     "tr": "두꺼운 돌벽이 외부 교통 소음을 약화시켜 조용한 내부 공간을 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "weaken",
+    "dilute",
+    "diminish"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "backbone",
    "ipa": "/ˈbækbəʊn/",
    "pos": "n.",
@@ -822,6 +1157,36 @@
    }
   },
   {
+   "en": "affirm",
+   "ipa": "/əˈfɜːrm/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "단언하다, 확언하다",
+     "ex": "The philosopher affirmed that rational inquiry alone cannot resolve questions of moral value.",
+     "tr": "그 철학자는 합리적 탐구만으로는 도덕적 가치에 관한 문제를 해결할 수 없다고 단언했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "assert",
+    "aver",
+    "avow"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "baseline",
    "ipa": "/ˈbeɪslaɪn/",
    "pos": "n.",
@@ -861,42 +1226,33 @@
    }
   },
   {
-   "en": "electrician",
-   "ipa": "/ɪˌlekˈtrɪʃən/",
-   "pos": "n.",
+   "en": "coerce",
+   "ipa": "/koʊˈɜːrs/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "전기 기사",
-     "ex": "In highly regulated industrial settings, only a certified electrician is authorized to handle high-voltage wiring.",
-     "tr": "고도로 규제된 산업 현장에서는 공인된 전기 기사만이 고압 배선을 다룰 권한을 가진다.",
-     "src": "2013 9월모평 27번"
+     "pos": "v",
+     "ko": "강요하다, 강제하다",
+     "ex": "Authoritarian regimes often coerce citizens into compliance through surveillance and threats of punishment.",
+     "tr": "권위주의 정권은 종종 감시와 처벌의 위협을 통해 시민들을 복종하도록 강요한다.",
+     "src": ""
     }
    ],
-   "syn": [],
-   "deriv": [
-    "electric (adj.)",
-    "electricity (n.)",
-    "electrical (adj.)"
+   "syn": [
+    "compel",
+    "force",
+    "intimidate"
    ],
-   "roots": [
-    {
-     "part": "electr",
-     "mean": "전기"
-    },
-    {
-     "part": "-ician",
-     "mean": "전문가"
-    }
-   ],
-   "etymHint": "electr(전기)+-ician(전문가) → 전기 전문가 → 전기 기사",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -939,52 +1295,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2014",
-    "stars": 1
-   }
-  },
-  {
-   "en": "friendliness",
-   "ipa": "/ˈfrendlinəs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "친절함, 우호적 태도",
-     "ex": "The genuine friendliness of the local community made the foreign researchers feel immediately at home.",
-     "tr": "지역 공동체의 진정한 친절함은 외국 연구자들이 즉시 편안함을 느끼게 했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "warmth",
-    "affability",
-    "amiability"
-   ],
-   "deriv": [
-    "friendly (adj.)",
-    "friend (n.)"
-   ],
-   "roots": [
-    {
-     "part": "friend",
-     "mean": "친구"
-    },
-    {
-     "part": "-ly",
-     "mean": "성질의"
-    },
-    {
-     "part": "-ness",
-     "mean": "상태"
-    }
-   ],
-   "etymHint": "friend(친구)+-ly(성질)+-ness(상태) → 친구 같은 성질 → 친절함",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
     "stars": 1
    }
   },
@@ -1033,84 +1343,33 @@
    }
   },
   {
-   "en": "roadside",
-   "ipa": "/ˈrəʊdsaɪd/",
-   "pos": "n.",
+   "en": "allegory",
+   "ipa": "/ˈæləɡɔːri/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "길가, 노변",
-     "ex": "Roadside vendors along the mountain pass offered travellers traditional foods and locally made crafts.",
-     "tr": "산길을 따라 늘어선 길가 상인들은 여행자들에게 전통 음식과 지역에서 만든 공예품을 팔았다.",
-     "src": "2013 9월모평 28번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "길가의"
+     "pos": "n",
+     "ko": "알레고리, 우의",
+     "ex": "The mural functions as an allegory for the nation's turbulent transition from colonial subjugation to hard-won independence.",
+     "tr": "그 벽화는 식민 지배에서 어렵게 쟁취한 독립으로의 국가의 격동적인 전환에 대한 알레고리로 기능한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "wayside",
-    "kerb-side"
+    "parable",
+    "fable",
+    "metaphor"
    ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "road",
-     "mean": "도로"
-    },
-    {
-     "part": "side",
-     "mean": "옆"
-    }
-   ],
-   "etymHint": "road(도로)+side(옆) → 도로 옆 → 길가",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "textbook",
-   "ipa": "/ˈtekstbʊk/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "교과서",
-     "ex": "Textbooks tend to oversimplify complex phenomena, which can lead students to form inaccurate mental models of perception.",
-     "tr": "교과서는 복잡한 현상을 지나치게 단순화하는 경향이 있어, 학생들이 지각에 대한 부정확한 정신 모델을 형성하게 할 수 있다.",
-     "src": "2013 수능 26번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "전형적인, 교과서적인"
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "text",
-     "mean": "글"
-    },
-    {
-     "part": "book",
-     "mean": "책"
-    }
-   ],
-   "etymHint": "text(글)+book(책) → 글이 담긴 책 → 교과서",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1157,6 +1416,36 @@
     "exams": 2,
     "recentYear": "2023",
     "stars": 1
+   }
+  },
+  {
+   "en": "subvert",
+   "ipa": "/səbˈvɜːrt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "전복하다, 무너뜨리다",
+     "ex": "The novel subverts traditional gender roles by placing women in positions of political and military authority.",
+     "tr": "그 소설은 여성을 정치적·군사적 권위의 자리에 위치시킴으로써 전통적 성 역할을 전복한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "undermine",
+    "overthrow",
+    "destabilize"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1207,491 +1496,33 @@
    }
   },
   {
-   "en": "arisen",
-   "ipa": "/əˈrɪzən/",
-   "pos": "v.",
+   "en": "posit",
+   "ipa": "/ˈpɒzɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "(문제·상황이) 발생한 (arise의 과거분사)",
-     "ex": "The ethical dilemmas that have arisen from advances in genetic engineering demand urgent and thoughtful policy responses.",
-     "tr": "유전공학의 발전으로 인해 발생한 윤리적 딜레마들은 긴박하고 사려 깊은 정책적 대응을 요구한다.",
-     "src": "2013 9월모평 32번"
+     "pos": "v",
+     "ko": "가정하다, 상정하다",
+     "ex": "The model posits a linear relationship between regulatory stringency and market concentration.",
+     "tr": "그 모델은 규제 엄격성과 시장 집중도 사이의 선형 관계를 가정한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "emerged",
-    "occurred",
-    "developed"
-   ],
-   "deriv": [
-    "arise (v.)",
-    "rise (v.)"
-   ],
-   "roots": [
-    {
-     "part": "a-",
-     "mean": "강조"
-    },
-    {
-     "part": "rise",
-     "mean": "일어나다"
-    }
-   ],
-   "etymHint": "a(강조)+rise(일어나다) → 어떤 상황이 일어나다 → 발생하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "froze",
-   "ipa": "/frəʊz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "얼었다; 굳어버렸다 (freeze의 과거형)",
-     "ex": "Confronted with the unexpected question during the interview, she froze and was unable to recall her prepared answer.",
-     "tr": "면접 중 예상치 못한 질문에 직면한 그녀는 굳어버려 준비한 답변을 떠올릴 수 없었다.",
-     "src": "2022 9월모평 19번"
-    }
-   ],
-   "syn": [
-    "halted",
-    "seized up",
-    "locked"
-   ],
-   "deriv": [
-    "freeze (v.)",
-    "frozen (adj.)",
-    "freezing (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "stump",
-   "ipa": "/stʌmp/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "나무 그루터기",
-     "ex": "The old stump at the edge of the field had stood in place for so long that it was nearly indistinguishable from the surrounding earth.",
-     "tr": "들판 가장자리의 오래된 그루터기는 너무 오랫동안 그 자리에 있어서 주변의 흙과 거의 구별할 수 없었다.",
-     "src": "2013 9월모평 35번"
-    },
-    {
-     "pos": "v.",
-     "ko": "당혹스럽게 하다, 어리둥절하게 하다"
-    }
-   ],
-   "syn": [
-    "stub",
-    "trunk remnant"
-   ],
-   "deriv": [
-    "stumped (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "whistle",
-   "ipa": "/ˈwɪsəl/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "호루라기; 휘파람 소리",
-     "ex": "The referee's whistle pierced the air, signaling the end of the match and confirming the home team's victory.",
-     "tr": "심판의 호루라기 소리가 공기를 가르며 경기 종료를 알리고 홈팀의 승리를 확정지었다.",
-     "src": "2017 6월모평 19번"
-    },
-    {
-     "pos": "v.",
-     "ko": "휘파람을 불다"
-    }
-   ],
-   "syn": [
-    "signal",
-    "blast"
-   ],
-   "deriv": [
-    "whistler (n.)",
-    "whistling (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "equip",
-   "ipa": "/ɪˈkwɪp/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "갖추다, 장비를 제공하다",
-     "ex": "Universities have a responsibility to equip graduates with the critical thinking skills required for an uncertain future.",
-     "tr": "대학교는 불확실한 미래에 필요한 비판적 사고력을 졸업생들에게 갖추어 줄 책임이 있다.",
-     "src": "2012 수능 37번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(능력을) 부여하다"
-    }
-   ],
-   "syn": [
-    "furnish",
-    "outfit",
-    "provide"
-   ],
-   "deriv": [
-    "equipment (n.)",
-    "equipped (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "esquip",
-     "mean": "배에 짐을 싣다"
-    }
-   ],
-   "etymHint": "고대 노르드어 skip(배)에서 → 배에 짐을 싣다 → 필요한 것을 갖추다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "navy",
-   "ipa": "/ˈneɪvi/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "해군",
-     "ex": "Maintaining a powerful navy was considered essential to protecting a nation's overseas trade routes and colonial interests.",
-     "tr": "강력한 해군을 유지하는 것은 한 나라의 해외 무역 항로와 식민지 이익을 보호하는 데 필수적인 것으로 여겨졌다.",
-     "src": "2022 6월모평 40번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "짙은 남색의"
-    }
-   ],
-   "syn": [
-    "naval force",
-    "fleet"
-   ],
-   "deriv": [
-    "naval (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "nav",
-     "mean": "배"
-    }
-   ],
-   "etymHint": "nav(배)+y → 배들의 집합 → 해군",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "airborne",
-   "ipa": "/ˈeəbɔːn/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "공중에 떠 있는, 공기로 전파되는",
-     "ex": "Airborne pathogens pose a particular challenge for infection control in densely populated urban environments.",
-     "tr": "공기 중으로 전파되는 병원균은 인구 밀도가 높은 도시 환경에서 감염 관리에 특별한 어려움을 제기한다.",
-     "src": "2013 9월모평 36번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(군대) 공수의"
-    }
-   ],
-   "syn": [
-    "aerial",
-    "airborne-transmitted"
+    "postulate",
+    "assume",
+    "presuppose"
    ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "air",
-     "mean": "공기"
-    },
-    {
-     "part": "borne",
-     "mean": "운반된"
-    }
-   ],
-   "etymHint": "air(공기)+borne(운반된) → 공기에 의해 운반된 → 공중의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "onboard",
-   "ipa": "/ˈɒnbɔːd/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "선상의, 탑승한; 내장된",
-     "ex": "The cruise package included complimentary access to onboard entertainment facilities and specialty dining venues.",
-     "tr": "크루즈 패키지에는 선상 오락 시설과 전문 식당에 대한 무료 이용이 포함되었다.",
-     "src": "2025 9월모평 18번"
-    },
-    {
-     "pos": "adv.",
-     "ko": "배(비행기) 안에"
-    }
-   ],
-   "syn": [
-    "aboard",
-    "on-vessel"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "on",
-     "mean": "위에"
-    },
-    {
-     "part": "board",
-     "mean": "선박 측면·갑판"
-    }
-   ],
-   "etymHint": "on(위에)+board(갑판) → 배 위에 → 탑승한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "fisherman",
-   "ipa": "/ˈfɪʃəmən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "어부, 낚시하는 사람",
-     "ex": "A local fisherman inadvertently discovered the submerged wreckage when a piece of debris became entangled in his net.",
-     "tr": "한 지역 어부는 잔해 조각이 그물에 걸렸을 때 우연히 물에 잠긴 난파선을 발견했다.",
-     "src": "2013 9월모평 36번"
-    }
-   ],
-   "syn": [
-    "angler",
-    "fisher"
-   ],
-   "deriv": [
-    "fish (n./v.)",
-    "fishing (n.)"
-   ],
-   "roots": [
-    {
-     "part": "fish",
-     "mean": "물고기"
-    },
-    {
-     "part": "-er",
-     "mean": "행위자"
-    },
-    {
-     "part": "man",
-     "mean": "사람"
-    }
-   ],
-   "etymHint": "fish(물고기)+-er(행위자)+man(사람) → 물고기를 잡는 사람 → 어부",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "wreck",
-   "ipa": "/rek/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "난파선; 잔해",
-     "ex": "The wreck of the historic airship was meticulously surveyed using remotely operated underwater vehicles.",
-     "tr": "역사적인 비행선의 잔해는 원격으로 조종되는 수중 탐사 기기를 사용하여 세밀하게 조사되었다.",
-     "src": "2013 9월모평 36번"
-    },
-    {
-     "pos": "v.",
-     "ko": "파괴하다, 망가뜨리다"
-    },
-    {
-     "pos": "n.",
-     "ko": "(비유) 망가진 상태"
-    }
-   ],
-   "syn": [
-    "ruin",
-    "debris",
-    "hulk"
-   ],
-   "deriv": [
-    "wreckage (n.)",
-    "wrecker (n.)"
-   ],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "restorative",
-   "ipa": "/rɪˈstɔːrətɪv/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "회복시키는, 복원하는",
-     "ex": "Conservationists place particular value on the restorative dimension of their work, returning artefacts to their original condition.",
-     "tr": "보존주의자들은 유물을 원래 상태로 되돌리는 작업의 복원적 측면에 특별한 가치를 부여한다.",
-     "src": "2027 6월모평 31번"
-    },
-    {
-     "pos": "n.",
-     "ko": "회복제, 강장제"
-    }
-   ],
-   "syn": [
-    "rehabilitative",
-    "remedial",
-    "healing"
-   ],
-   "deriv": [
-    "restore (v.)",
-    "restoration (n.)",
-    "restorable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re-",
-     "mean": "다시"
-    },
-    {
-     "part": "stor",
-     "mean": "세우다·쌓다"
-    }
-   ],
-   "etymHint": "re(다시)+stor(세우다)+ative → 다시 세우는 성질의 → 복원하는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "unspoken",
-   "ipa": "/ˌʌnˈspəʊkən/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "말로 표현되지 않은, 암묵적인",
-     "ex": "There is an unspoken expectation in many workplaces that employees will remain available outside of official working hours.",
-     "tr": "많은 직장에서 직원들이 공식 근무 시간 이외에도 연락 가능한 상태를 유지하리라는 암묵적인 기대가 존재한다.",
-     "src": "2013 9월모평 40번"
-    }
-   ],
-   "syn": [
-    "implicit",
-    "tacit",
-    "unstated"
-   ],
-   "deriv": [
-    "speak (v.)",
-    "spoken (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "un-",
-     "mean": "부정"
-    },
-    {
-     "part": "speak",
-     "mean": "말하다"
-    }
-   ],
-   "etymHint": "un(부정)+spoken(말해진) → 말로 표현되지 않은 → 암묵적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   }
  ]

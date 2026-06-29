@@ -2,151 +2,370 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 16,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
   {
-   "en": "multimedia",
-   "ipa": "/ˌmʌltiˈmiːdiə/",
-   "pos": "n.",
+   "en": "impede",
+   "ipa": "/ɪmˈpiːd/",
+   "pos": "v.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "멀티미디어, 다중 매체",
-     "ex": "Contemporary education increasingly relies on multimedia platforms to engage students across multiple sensory channels.",
-     "tr": "현대 교육은 여러 감각 채널을 통해 학생들을 참여시키기 위해 점점 더 멀티미디어 플랫폼에 의존한다.",
-     "src": "2015 수능 34번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "멀티미디어의, 다중 매체를 활용한"
+     "pos": "v.",
+     "ko": "방해하다, 지연시키다",
+     "ex": "Over-identification with a patient's distress can impede clinical judgment and obstruct timely decision-making.",
+     "tr": "환자의 고통에 과도하게 동일시하면 임상적 판단을 방해하고 시의적절한 의사결정을 저해할 수 있다.",
+     "src": "2015 9월모평 32번"
     }
    ],
    "syn": [
-    "interactive media",
-    "digital media"
+    "hinder",
+    "obstruct",
+    "hamper"
    ],
    "deriv": [
-    "multimedia (adj.)"
+    "impediment (n.)",
+    "impedance (n.)"
    ],
    "roots": [
     {
-     "part": "multi",
-     "mean": "많은"
+     "part": "im-",
+     "mean": "안에"
     },
     {
-     "part": "media",
-     "mean": "매체"
+     "part": "ped",
+     "mean": "발"
     }
    ],
-   "etymHint": "multi(많은)+media(매체) → 여러 매체를 결합한 것 → 멀티미디어",
+   "etymHint": "im(안에)+ped(발) → 발을 안으로 묶다 → 방해하다",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2023",
+    "recentYear": "2015",
     "stars": 1
    }
   },
   {
-   "en": "campsite",
-   "ipa": "/ˈkæmpsaɪt/",
-   "pos": "n.",
+   "en": "unrealistic",
+   "ipa": "/ˌʌnrɪəˈlɪstɪk/",
+   "pos": "adj.",
    "meanings": [
-    {
-     "pos": "n.",
-     "ko": "야영지, 캠핑장",
-     "ex": "The campsite nestled between tall pine trees offered both shade and a sense of solitude.",
-     "tr": "키 큰 소나무들 사이에 자리 잡은 그 야영지는 그늘과 고독한 느낌을 모두 제공했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "campground",
-    "camping ground"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "camp",
-     "mean": "야영"
-    },
-    {
-     "part": "site",
-     "mean": "장소"
-    }
-   ],
-   "etymHint": "camp(야영)+site(장소) → 야영하는 장소 → 야영지",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "lunchtime",
-   "ipa": "/ˈlʌntʃtaɪm/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "점심시간",
-     "ex": "During lunchtime, the staff gathered informally to exchange ideas about the ongoing project.",
-     "tr": "점심시간 동안 직원들은 비공식적으로 모여 진행 중인 프로젝트에 대한 아이디어를 나눴다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "noon break",
-    "midday break"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "lunch",
-     "mean": "점심"
-    },
-    {
-     "part": "time",
-     "mean": "시간"
-    }
-   ],
-   "etymHint": "lunch(점심)+time(시간) → 점심 먹는 시간 → 점심시간",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "peach",
-   "ipa": "/piːtʃ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "복숭아",
-     "ex": "She was tempted by the ripe peaches on display, their sweet fragrance filling the entire market stall.",
-     "tr": "그녀는 진열대의 잘 익은 복숭아에 마음이 끌렸는데, 그 달콤한 향기가 시장 가판대 전체를 가득 채웠다.",
-     "src": "2018 9월모평 32번"
-    },
     {
      "pos": "adj.",
-     "ko": "복숭아색의, 살구색의"
+     "ko": "비현실적인, 현실성이 없는",
+     "ex": "Classical theatrical conventions often employ unrealistic techniques to portray characters' inner thoughts on stage.",
+     "tr": "고전적 연극 관습은 무대 위에서 인물의 내면 생각을 표현하기 위해 비현실적인 기법을 자주 사용한다.",
+     "src": "2027 6월모평 30번"
     }
    ],
    "syn": [
-    "nectarine (유사 과일)"
+    "impractical",
+    "fanciful",
+    "far-fetched"
+   ],
+   "deriv": [
+    "realistic (adj.)",
+    "realism (n.)",
+    "unrealistically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "un-",
+     "mean": "부정"
+    },
+    {
+     "part": "real",
+     "mean": "실재"
+    },
+    {
+     "part": "-istic",
+     "mean": "~의 성격을 띤"
+    }
+   ],
+   "etymHint": "un-(부정)+real(실재)+-istic(~의 성격) → 실재의 성격을 갖지 않는 → 비현실적인",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "inference",
+   "ipa": "/ˈɪnfərəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "추론; 추론 결과",
+     "ex": "Valid inference requires that the conclusion follow necessarily from the premises without logical gaps.",
+     "tr": "타당한 추론은 결론이 논리적 공백 없이 전제에서 필연적으로 도출될 것을 요구한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "deduction",
+    "conclusion",
+    "reasoning"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "candidate",
+   "ipa": "/ˈkændɪdeɪt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "후보자; 지원자",
+     "ex": "Each candidate for the research fellowship was evaluated on the originality and feasibility of their proposed project.",
+     "tr": "연구 펠로십의 각 지원자는 제안한 프로젝트의 독창성과 타당성을 기준으로 평가받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "applicant",
+    "contender",
+    "nominee"
+   ],
+   "deriv": [
+    "candidacy (n.)",
+    "candidature (n.)"
+   ],
+   "roots": [
+    {
+     "part": "candid",
+     "mean": "흰, 빛나는 (candidus)"
+    }
+   ],
+   "etymHint": "candid(흰·빛나는) → 로마에서 흰 옷을 입고 선거 유세하던 사람 → 후보자",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "credulous",
+   "ipa": "/ˈkredʒ.ʊ.ləs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "잘 믿는, 쉽게 속는",
+     "ex": "The credulous investor lost his savings to a scheme that any skeptical analysis would have immediately exposed as fraudulent.",
+     "tr": "쉽게 믿는 투자자는 어떠한 회의적 분석도 즉시 사기로 폭로했을 계획에 저축금을 잃었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "gullible",
+    "naive",
+    "unsuspecting"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "volcanic",
+   "ipa": "/vɒlˈkænɪk/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "화산의, 화산 활동에 의한",
+     "ex": "Intense volcanic activity reshaped the island's terrain, compelling its animal inhabitants to seek new refuges.",
+     "tr": "강렬한 화산 활동이 섬의 지형을 변화시켜 섬에 사는 동물들이 새로운 피난처를 찾도록 강요했다.",
+     "src": "2017 6월모평 32번"
+    }
+   ],
+   "syn": [
+    "igneous",
+    "eruptive"
+   ],
+   "deriv": [
+    "volcano (n.)",
+    "volcanically (adv.)",
+    "volcanology (n.)"
+   ],
+   "roots": [
+    {
+     "part": "Vulcan",
+     "mean": "로마의 불·용광로 신"
+    }
+   ],
+   "etymHint": "Vulcan(불의 신)+ic(형용사) → 불의 신처럼 분출하는 → 화산의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "attenuated",
+   "ipa": "/əˈtenjueɪtɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "약화된, 희석된",
+     "ex": "The attenuated signal barely reached the remote research station through the dense atmosphere.",
+     "tr": "약화된 신호는 짙은 대기를 통해 외딴 연구소에 겨우 도달했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "weakened",
+    "diluted",
+    "diminished"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "violent",
+   "ipa": "/ˈvaɪələnt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "폭력적인, 격렬한",
+     "ex": "Hobbes argued that humanity's inherently violent nature necessitates a robust legal order to preserve civil peace.",
+     "tr": "홉스는 인간의 본질적으로 폭력적인 본성이 시민적 평화를 유지하기 위한 강력한 법 질서를 필요로 한다고 주장했다.",
+     "src": "2026 수능 34번"
+    }
+   ],
+   "syn": [
+    "brutal",
+    "vicious",
+    "ferocious"
+   ],
+   "deriv": [
+    "violence (n.)",
+    "violently (adv.)",
+    "violate (v.)"
+   ],
+   "roots": [
+    {
+     "part": "viol",
+     "mean": "힘, 폭력 (vis)"
+    },
+    {
+     "part": "-ent",
+     "mean": "~한 성질의"
+    }
+   ],
+   "etymHint": "viol(힘·폭력)+-ent(~한 성질) → 폭력적인 성질을 지닌 → 폭력적인",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "mitigate",
+   "ipa": "/ˈmɪtɪɡeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "완화하다, 경감하다",
+     "ex": "Planting trees along urban streets can mitigate the heat island effect in densely populated areas.",
+     "tr": "도시 거리를 따라 나무를 심으면 인구 밀집 지역의 열섬 효과를 완화할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "alleviate",
+    "lessen",
+    "attenuate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "uneaten",
+   "ipa": "/ˌʌnˈiːtən/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "먹지 않은, 먹히지 않은",
+     "ex": "Sensory-specific satiety occurs when appetite for a consumed food decreases while attraction to uneaten foods persists.",
+     "tr": "감각 특이적 포만감은 섭취한 음식에 대한 식욕이 감소하는 반면 먹지 않은 음식에 대한 끌림은 지속될 때 나타난다.",
+     "src": "2018 수능 22번"
+    }
+   ],
+   "syn": [
+    "unconsumed",
+    "untouched",
+    "left over"
+   ],
+   "deriv": [
+    "eat (v.)",
+    "eaten (adj.)",
+    "uneaten (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "un-",
+     "mean": "부정"
+    },
+    {
+     "part": "eaten",
+     "mean": "먹힌"
+    }
+   ],
+   "etymHint": "un-(부정)+eaten(먹힌) → 먹히지 않은 → 먹지 않은",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -154,6 +373,222 @@
     "exams": 2,
     "recentYear": "2018",
     "stars": 1
+   }
+  },
+  {
+   "en": "retrospect",
+   "ipa": "/ˈretrəspekt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "회고, 돌이켜봄 (in retrospect: 되돌아보면)",
+     "ex": "In retrospect, the seemingly trivial need to record livestock proved to be the catalyst for written language itself.",
+     "tr": "돌이켜보면, 가축을 기록해야 한다는 겉으로는 사소해 보이는 필요가 문자 언어 자체를 촉발한 계기였다.",
+     "src": "2020 수능 22번"
+    }
+   ],
+   "syn": [
+    "hindsight",
+    "reflection",
+    "reconsideration"
+   ],
+   "deriv": [
+    "retrospective (adj./n.)",
+    "retrospectively (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "retro",
+     "mean": "뒤로"
+    },
+    {
+     "part": "spect",
+     "mean": "보다"
+    }
+   ],
+   "etymHint": "retro(뒤로)+spect(보다) → 뒤를 돌아보다 → 회고",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "ethos",
+   "ipa": "/ˈiːθɑs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "에토스; 시대정신; 집단적 기풍",
+     "ex": "The ethos of scientific objectivity demands that researchers disclose potential conflicts of interest.",
+     "tr": "과학적 객관성의 정신은 연구자들이 잠재적인 이해 충돌을 공개할 것을 요구한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "spirit",
+    "character",
+    "disposition"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "multitask",
+   "ipa": "/ˈmʌltiˌtæsk/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "여러 일을 동시에 처리하다",
+     "ex": "What appears to be an ability to multitask is actually rapid alternation of attention between separate activities.",
+     "tr": "여러 일을 동시에 처리하는 능력처럼 보이는 것은 실제로는 별개의 활동 사이에서 주의를 빠르게 교대하는 것이다.",
+     "src": "2015 수능 31번"
+    }
+   ],
+   "syn": [
+    "juggle tasks",
+    "parallel-process"
+   ],
+   "deriv": [
+    "multitasking (n./adj.)",
+    "multitasker (n.)"
+   ],
+   "roots": [
+    {
+     "part": "multi",
+     "mean": "많은, 다수의"
+    },
+    {
+     "part": "task",
+     "mean": "과업"
+    }
+   ],
+   "etymHint": "multi(많은)+task(과업) → 많은 과업을 동시에 → 멀티태스킹하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2016",
+    "stars": 1
+   }
+  },
+  {
+   "en": "denigrate",
+   "ipa": "/ˈdenɪɡreɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "비방하다, 폄하하다",
+     "ex": "The campaign systematically attempted to denigrate its opponents' credentials and character.",
+     "tr": "그 캠페인은 체계적으로 상대방의 자격과 인격을 폄하하려 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "belittle",
+    "disparage",
+    "malign"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "absurd",
+   "ipa": "/əbˈsɜːrd/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "불합리한, 터무니없는",
+     "ex": "It would be absurd to interpret every statistical correlation as proof of a direct causal relationship between variables.",
+     "tr": "모든 통계적 상관관계를 변수 간 직접적인 인과관계의 증거로 해석하는 것은 터무니없는 일일 것이다.",
+     "src": "2016 9월모평 33번"
+    }
+   ],
+   "syn": [
+    "preposterous",
+    "ludicrous",
+    "ridiculous"
+   ],
+   "deriv": [
+    "absurdity (n.)",
+    "absurdly (adv.)",
+    "absurdism (n.)"
+   ],
+   "roots": [
+    {
+     "part": "ab-",
+     "mean": "멀리"
+    },
+    {
+     "part": "surd",
+     "mean": "귀머거리의, 소음"
+    }
+   ],
+   "etymHint": "ab(멀리)+surd(귀머거리) → 귀에 거슬릴 정도로 이치에서 벗어난 → 불합리한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2016",
+    "stars": 1
+   }
+  },
+  {
+   "en": "palpable",
+   "ipa": "/ˈpælpəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "명백한, 손으로 만질 수 있는",
+     "ex": "The tension in the negotiating room was palpable as both sides refused to yield ground.",
+     "tr": "양측이 양보를 거부하면서 협상장의 긴장감은 눈에 띄게 느껴졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "tangible",
+    "manifest",
+    "perceptible"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -236,44 +671,33 @@
    }
   },
   {
-   "en": "drag",
-   "ipa": "/dræɡ/",
-   "pos": "v.",
+   "en": "egregious",
+   "ipa": "/ɪˈɡriːdʒəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "끌다, 질질 끌다",
-     "ex": "During prolonged drought, the shrinking root system drags the plant's stem below the surface of the soil.",
-     "tr": "오랜 가뭄 동안, 수축하는 뿌리 체계가 식물의 줄기를 토양 표면 아래로 끌어당긴다.",
-     "src": "2015 9월모평 27번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(일이) 질질 늘어지다, 지루하게 이어지다"
-    },
-    {
-     "pos": "n.",
-     "ko": "방해, 장애물; 항력(공기 저항)"
+     "pos": "adj",
+     "ko": "극악한, 터무니없는",
+     "ex": "The report catalogued egregious human rights abuses that demanded immediate international response.",
+     "tr": "보고서는 즉각적인 국제적 대응을 요구하는 극악한 인권 침해 사례들을 목록화했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "haul",
-    "pull",
-    "tow"
+    "flagrant",
+    "glaring",
+    "heinous"
    ],
-   "deriv": [
-    "dragging (adj.)",
-    "drag-and-drop (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -320,6 +744,36 @@
    }
   },
   {
+   "en": "negate",
+   "ipa": "/nɪˈɡeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "부정하다, 무효로 만들다",
+     "ex": "A single act of negligence can negate years of diligent effort to build a trustworthy reputation.",
+     "tr": "단 한 번의 부주의한 행동이 신뢰할 수 있는 평판을 쌓기 위한 수년간의 부지런한 노력을 무효로 만들 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "nullify",
+    "invalidate",
+    "counteract"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "warwick",
    "ipa": "/ˈwɒrɪk/",
    "pos": "n.",
@@ -346,83 +800,33 @@
    }
   },
   {
-   "en": "microphone",
-   "ipa": "/ˈmaɪkrəfoʊn/",
-   "pos": "n.",
+   "en": "dissipate",
+   "ipa": "/ˈdɪsɪpeɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "마이크, 마이크로폰",
-     "ex": "His resonant voice overpowered the microphone and disrupted the intimate atmosphere the film director had intended.",
-     "tr": "그의 울림 있는 목소리는 마이크를 압도했고, 영화 감독이 의도했던 친밀한 분위기를 방해했다.",
-     "src": "2019 6월모평 25번"
+     "pos": "v",
+     "ko": "소산하다, 흩어지게 하다",
+     "ex": "The morning fog gradually dissipated as the sun rose higher in the sky.",
+     "tr": "아침 안개는 해가 하늘 높이 오르면서 서서히 소산되었다.",
+     "src": ""
     }
    ],
    "syn": [
-    "mic",
-    "recording device"
+    "disperse",
+    "dissolve",
+    "evaporate"
    ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "micro",
-     "mean": "작은"
-    },
-    {
-     "part": "phone",
-     "mean": "소리"
-    }
-   ],
-   "etymHint": "micro(작은)+phone(소리) → 작은 소리를 증폭시키는 장치 → 마이크",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "heartbeat",
-   "ipa": "/ˈhɑːrtbiːt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "심장 박동, 맥박",
-     "ex": "A rapid heartbeat and shallow breathing are physiological signals indicating that the body is prepared for action.",
-     "tr": "빠른 심장 박동과 얕은 호흡은 몸이 행동할 준비가 되었음을 나타내는 생리학적 신호이다.",
-     "src": "2016 6월모평 19번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(비유) 핵심, 중심부"
-    }
-   ],
-   "syn": [
-    "pulse",
-    "cardiac rhythm"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "heart",
-     "mean": "심장"
-    },
-    {
-     "part": "beat",
-     "mean": "박동"
-    }
-   ],
-   "etymHint": "heart(심장)+beat(박동) → 심장이 뛰는 것 → 심장 박동",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -472,6 +876,36 @@
    }
   },
   {
+   "en": "impermanence",
+   "ipa": "/ɪmˈpɜːrmənəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "무상, 덧없음",
+     "ex": "Buddhist philosophy centers on the impermanence of all conditioned phenomena as a source of suffering.",
+     "tr": "불교 철학은 고통의 원천으로서 모든 조건 지어진 현상의 무상함을 중심에 둔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "transience",
+    "ephemerality",
+    "fleetingness"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "mindful",
    "ipa": "/ˈmaɪndfəl/",
    "pos": "adj.",
@@ -514,195 +948,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "thrill",
-   "ipa": "/θrɪl/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "전율케 하다, 흥분시키다",
-     "ex": "The unexpected sight of bioluminescent plankton thrilled the researchers as their boat glided through the dark water.",
-     "tr": "보트가 어두운 물 위를 미끄러지듯 나아가는 동안 생물 발광 플랑크톤의 예상치 못한 광경이 연구자들을 전율케 했다.",
-     "src": "2018 수능 19번"
-    },
-    {
-     "pos": "n.",
-     "ko": "전율, 흥분, 설렘"
-    }
-   ],
-   "syn": [
-    "excite",
-    "electrify",
-    "exhilarate"
-   ],
-   "deriv": [
-    "thrilling (adj.)",
-    "thrilled (adj.)",
-    "thriller (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "crazy",
-   "ipa": "/ˈkreɪzi/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "미친, 제정신이 아닌",
-     "ex": "The relentless pace of modern life drives some people crazy with its constant demands and perpetual sense of urgency.",
-     "tr": "현대 생활의 끝없는 속도는 끊임없는 요구와 영속적인 긴박감으로 일부 사람들을 미치게 만든다.",
-     "src": "2016 6월모평 32번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "~에 열광하는, ~에 푹 빠진"
-    }
-   ],
-   "syn": [
-    "insane",
-    "mad",
-    "frantic"
-   ],
-   "deriv": [
-    "craziness (n.)",
-    "crazily (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "whisper",
-   "ipa": "/ˈwɪspər/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "속삭이다, 소곤거리다",
-     "ex": "A transit map that shouts about speed but merely whispers about frequency can mislead commuters into making poor travel choices.",
-     "tr": "속도에 대해서는 외치지만 빈도에 대해서는 그저 속삭이기만 하는 대중교통 지도는 통근자들이 잘못된 이동 선택을 하도록 오도할 수 있다.",
-     "src": "2026 수능 23번"
-    },
-    {
-     "pos": "n.",
-     "ko": "속삭임, 소곤거림"
-    }
-   ],
-   "syn": [
-    "murmur",
-    "mutter",
-    "breathe"
-   ],
-   "deriv": [
-    "whispering (adj./n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "shiver",
-   "ipa": "/ˈʃɪvər/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "떨다, 오한이 나다",
-     "ex": "After stepping briefly into the sun, she found herself shivering once more when she returned to the cold shelter behind the cliff.",
-     "tr": "잠시 햇볕 속으로 나갔다가, 그녀는 절벽 뒤 차가운 대피소로 돌아오자마자 다시 떨고 있는 자신을 발견했다.",
-     "src": "2016 수능 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "떨림, 전율"
-    }
-   ],
-   "syn": [
-    "tremble",
-    "quiver",
-    "shudder"
-   ],
-   "deriv": [
-    "shivering (adj./n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "speedy",
-   "ipa": "/ˈspiːdi/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "빠른, 신속한",
-     "ex": "A speedy recovery depends not only on medication but also on adequate rest and proper nutrition.",
-     "tr": "신속한 회복은 약물치료뿐만 아니라 충분한 휴식과 적절한 영양 섭취에도 달려 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "swift",
-    "rapid",
-    "prompt"
-   ],
-   "deriv": [
-    "speedily (adv.)",
-    "speediness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "speed",
-     "mean": "속도"
-    },
-    {
-     "part": "y",
-     "mean": "형용사 어미"
-    }
-   ],
-   "etymHint": "speed(속도)+y(형용사 어미) → 속도가 있는 → 빠른",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
     "stars": 1
    }
   },
@@ -750,100 +995,33 @@
    }
   },
   {
-   "en": "broadcast",
-   "ipa": "/ˈbrɔːdkæst/",
-   "pos": "v.",
+   "en": "deem",
+   "ipa": "/diːm/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "방송하다, 송출하다",
-     "ex": "Commercial music radio stations that broadcast to mass audiences primarily exist to deliver listeners to advertisers.",
-     "tr": "대중을 대상으로 방송하는 상업 음악 라디오 방송국은 주로 청취자들을 광고주에게 전달하기 위해 존재한다.",
-     "src": "2024 9월모평 23번"
-    },
-    {
-     "pos": "n.",
-     "ko": "방송, 방송 프로그램"
-    },
-    {
-     "pos": "v.",
-     "ko": "(소문·정보를) 퍼뜨리다"
-    }
-   ],
-   "syn": [
-    "transmit",
-    "air",
-    "telecast"
-   ],
-   "deriv": [
-    "broadcaster (n.)",
-    "broadcasting (n.)"
-   ],
-   "roots": [
-    {
-     "part": "broad",
-     "mean": "넓게"
-    },
-    {
-     "part": "cast",
-     "mean": "던지다"
-    }
-   ],
-   "etymHint": "broad(넓게)+cast(던지다) → 넓게 던지다 → 방송하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "infection",
-   "ipa": "/ɪnˈfekʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "감염, 전염",
-     "ex": "The rapid spread of infection through densely populated urban areas prompted authorities to enforce strict quarantine protocols.",
-     "tr": "인구 밀집 도시 지역을 통한 감염의 빠른 확산은 당국이 엄격한 격리 절차를 시행하도록 촉구했다.",
+     "pos": "v",
+     "ko": "간주하다, 여기다",
+     "ex": "The court deemed the defendant's argument legally insufficient to warrant a new trial.",
+     "tr": "법원은 피고의 주장이 새로운 재판을 정당화하기에 법적으로 불충분하다고 간주했다.",
      "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "(컴퓨터 바이러스) 감염"
     }
    ],
    "syn": [
-    "contagion",
-    "contamination",
-    "infestation"
+    "consider",
+    "regard",
+    "judge"
    ],
-   "deriv": [
-    "infect (v.)",
-    "infectious (adj.)",
-    "infected (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안으로"
-    },
-    {
-     "part": "fect",
-     "mean": "만들다, 행하다"
-    }
-   ],
-   "etymHint": "in(안으로)+fect(만들다) → 안으로 들어가 변화를 만들다 → 감염",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -886,158 +1064,33 @@
    }
   },
   {
-   "en": "dump",
-   "ipa": "/dʌmp/",
-   "pos": "v.",
+   "en": "presumptuous",
+   "ipa": "/prɪˈzʌmptʃuəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "버리다, 투기하다; 쏟아붓다",
-     "ex": "Hazardous waste had been dumped illegally near the river, contaminating the local water supply for years.",
-     "tr": "위험 폐기물이 강 근처에 불법으로 투기되어 수년간 지역 수도 공급을 오염시켰다.",
-     "src": "2017 6월모평 19번"
-    },
-    {
-     "pos": "n.",
-     "ko": "쓰레기장, 폐기물 처리장"
-    }
-   ],
-   "syn": [
-    "discard",
-    "dispose of",
-    "unload"
-   ],
-   "deriv": [
-    "dumping (n.)",
-    "dumpster (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mention",
-   "ipa": "/ˈmenʃən/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "언급하다, 말하다",
-     "ex": "The report highlighted economic leakages and natural degradation without even mentioning the underlying political dynamics.",
-     "tr": "그 보고서는 내재된 정치적 역학을 언급조차 하지 않고 경제적 누출과 자연적 열화를 강조했다.",
-     "src": "2024 수능 24번"
-    },
-    {
-     "pos": "n.",
-     "ko": "언급, 거론"
-    }
-   ],
-   "syn": [
-    "refer to",
-    "cite",
-    "note"
-   ],
-   "deriv": [
-    "mentionable (adj.)",
-    "aforementioned (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "men",
-     "mean": "마음, 기억"
-    },
-    {
-     "part": "tion",
-     "mean": "명사 어미"
-    }
-   ],
-   "etymHint": "men(마음·기억)+tion → 기억에 담아 입 밖으로 꺼내다 → 언급하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "homemade",
-   "ipa": "/ˌhoʊmˈmeɪd/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "집에서 만든, 수제의",
-     "ex": "The bakery's homemade bread, prepared fresh each morning, drew long queues before the shop even opened.",
-     "tr": "매일 아침 신선하게 준비되는 그 빵집의 수제 빵은 가게가 열기도 전에 긴 줄을 만들었다.",
+     "pos": "adj",
+     "ko": "주제넘은, 오만한",
+     "ex": "It would be presumptuous to assume one understands a culture after only a brief visit.",
+     "tr": "짧은 방문만으로 한 문화를 이해한다고 가정하는 것은 주제넘은 것이다.",
      "src": ""
     }
    ],
    "syn": [
-    "handmade",
-    "hand-crafted",
-    "artisanal"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "home",
-     "mean": "집"
-    },
-    {
-     "part": "made",
-     "mean": "만들어진"
-    }
-   ],
-   "etymHint": "home(집)+made(만들어진) → 집에서 만들어진 → 수제의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "menu",
-   "ipa": "/ˈmenjuː/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "메뉴, 차림표",
-     "ex": "When a server offers you a menu at a restaurant, you naturally assume that you are free to choose from its options.",
-     "tr": "식당에서 직원이 메뉴를 건넬 때, 당신은 자연스럽게 그 선택지들 중에서 자유롭게 고를 수 있다고 가정한다.",
-     "src": "2021 9월모평 21번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(컴퓨터) 메뉴, 선택 항목 목록"
-    }
-   ],
-   "syn": [
-    "bill of fare",
-    "carte"
+    "arrogant",
+    "impertinent",
+    "audacious"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1087,45 +1140,33 @@
    }
   },
   {
-   "en": "bossy",
-   "ipa": "/ˈbɒsi/",
-   "pos": "adj.",
+   "en": "juxtaposition",
+   "ipa": "/ˌdʒʌkstəpəˈzɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "지나치게 권위적인, 명령하기 좋아하는",
-     "ex": "Leaders who come across as irritable and bossy tend to alienate their teams and struggle to retain talented employees.",
-     "tr": "짜증스럽고 지나치게 권위적으로 보이는 리더는 팀을 소외시키고 유능한 직원을 유지하는 데 어려움을 겪는 경향이 있다.",
-     "src": "2016 9월모평 22번"
+     "pos": "n",
+     "ko": "병치, 대조적 배열",
+     "ex": "The photographer's deliberate juxtaposition of industrial debris and children at play creates a disturbing commentary on environmental legacy.",
+     "tr": "산업 잔해와 놀이하는 아이들을 의도적으로 병치한 사진작가의 작품은 환경 유산에 대한 불안한 논평을 만들어낸다.",
+     "src": ""
     }
    ],
    "syn": [
-    "domineering",
-    "overbearing",
-    "authoritarian"
+    "contrast",
+    "apposition",
+    "collocation"
    ],
-   "deriv": [
-    "bossily (adv.)",
-    "bossiness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "boss",
-     "mean": "상사, 우두머리"
-    },
-    {
-     "part": "y",
-     "mean": "형용사 어미"
-    }
-   ],
-   "etymHint": "boss(상사)+y(형용사 어미) → 상사처럼 구는 → 지나치게 권위적인",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1170,57 +1211,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "attach",
-   "ipa": "/əˈtætʃ/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "붙이다, 첨부하다",
-     "ex": "The coaches attached buoyant floats to the swimmer to help her maintain stability in the deep water.",
-     "tr": "코치들은 수영선수가 깊은 물에서 안정성을 유지할 수 있도록 부력 부표를 그녀에게 부착했다.",
-     "src": "2013 6월모평 38번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(중요성·가치 등을) 부여하다"
-    },
-    {
-     "pos": "v.",
-     "ko": "소속시키다, 배속하다"
-    }
-   ],
-   "syn": [
-    "fasten",
-    "affix",
-    "append"
-   ],
-   "deriv": [
-    "attachment (n.)",
-    "detach (v.)",
-    "attached (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "a",
-     "mean": "~에"
-    },
-    {
-     "part": "tach",
-     "mean": "못, 고정하다"
-    }
-   ],
-   "etymHint": "a(~에)+tach(고정하다) → ~에 고정시키다 → 붙이다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
     "stars": 1
    }
   },
@@ -1271,6 +1261,36 @@
    }
   },
   {
+   "en": "suffrage",
+   "ipa": "/ˈsʌfrɪdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "참정권, 선거권",
+     "ex": "Universal suffrage remains an aspiration rather than a reality in many parts of the world.",
+     "tr": "보편적 참정권은 세계 많은 지역에서 현실이 아닌 열망으로 남아 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "franchise",
+    "voting rights",
+    "enfranchisement"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "advantageous",
    "ipa": "/ˌædvənˈteɪdʒəs/",
    "pos": "adj.",
@@ -1311,6 +1331,36 @@
     "exams": 2,
     "recentYear": "",
     "stars": 1
+   }
+  },
+  {
+   "en": "inertia",
+   "ipa": "/ɪˈnɜːrʃə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "관성, 타성",
+     "ex": "Bureaucratic inertia prevented the organization from adapting its procedures to new technological realities.",
+     "tr": "관료주의적 타성이 조직이 새로운 기술적 현실에 맞게 절차를 적응시키는 것을 방해했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "stagnation",
+    "lethargy",
+    "passivity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1360,6 +1410,36 @@
    }
   },
   {
+   "en": "commodification",
+   "ipa": "/kəˌmɒdɪfɪˈkeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상품화",
+     "ex": "Critics argued that the commodification of education reduced learning to a transactional exchange rather than a public good.",
+     "tr": "비평가들은 교육의 상품화가 학습을 공공재가 아닌 거래적 교환으로 전락시켰다고 주장했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "commercialization",
+    "marketization",
+    "monetization"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "customization",
    "ipa": "/ˌkʌstəmaɪˈzeɪʃən/",
    "pos": "n.",
@@ -1395,260 +1475,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "generalization",
-   "ipa": "/ˌdʒenərəlaɪˈzeɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "일반화, 보편적 진술",
-     "ex": "Scientific generalizations gain their explanatory power not from mere correlation but from the underlying causal mechanisms.",
-     "tr": "과학적 일반화는 단순한 상관관계가 아니라 근본적인 인과적 메커니즘으로부터 설명력을 얻는다.",
-     "src": "2022 수능 40번"
-    }
-   ],
-   "syn": [
-    "abstraction",
-    "broad conclusion",
-    "universal claim"
-   ],
-   "deriv": [
-    "generalize (v.)",
-    "general (adj.)",
-    "generalized (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "gen",
-     "mean": "종류, 유형"
-    },
-    {
-     "part": "al",
-     "mean": "~에 관한"
-    }
-   ],
-   "etymHint": "gen(종류)+al(~에 관한) → 모든 종류에 적용되는 진술 → 일반화",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "butter",
-   "ipa": "/ˈbʌtər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "버터",
-     "ex": "Like bees and butterflies that pollinate flowers, butter production depends on complex ecological relationships.",
-     "tr": "꽃을 수분시키는 꿀벌과 나비처럼, 버터 생산도 복잡한 생태적 관계에 의존한다.",
-     "src": "2011 6월모평 24번"
-    },
-    {
-     "pos": "v.",
-     "ko": "버터를 바르다"
-    }
-   ],
-   "syn": [],
-   "deriv": [
-    "butterfly (n.)",
-    "buttercup (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "insecure",
-   "ipa": "/ˌɪnsɪˈkjʊər/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "불안정한, 안전하지 않은",
-     "ex": "Food-insecure communities urgently need policies that double agricultural output while keeping produce affordable and accessible.",
-     "tr": "식량 불안정 공동체는 농업 생산량을 두 배로 늘리면서도 농산물을 저렴하고 접근 가능하게 유지하는 정책이 시급하게 필요하다.",
-     "src": "2020 9월모평 32번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "자신감이 없는, 불안해하는"
-    }
-   ],
-   "syn": [
-    "unstable",
-    "vulnerable",
-    "uncertain"
-   ],
-   "deriv": [
-    "insecurity (n.)",
-    "secure (ant.)",
-    "insecurely (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "부정"
-    },
-    {
-     "part": "secur",
-     "mean": "안전한"
-    }
-   ],
-   "etymHint": "in(부정)+secur(안전한) → 안전하지 않은 → 불안정한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "procedure",
-   "ipa": "/prəˈsiːdʒər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "절차, 방법, 과정",
-     "ex": "Developing medical procedures that perform consistently well across diverse patient populations remains a persistent challenge.",
-     "tr": "다양한 환자 집단에서 일관되게 잘 수행되는 의료 절차를 개발하는 것은 지속적인 과제로 남아 있다.",
-     "src": "2010 수능 25번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(의학) 시술, 수술"
-    }
-   ],
-   "syn": [
-    "process",
-    "protocol",
-    "methodology"
-   ],
-   "deriv": [
-    "procedural (adj.)",
-    "proceed (v.)"
-   ],
-   "roots": [
-    {
-     "part": "pro",
-     "mean": "앞으로"
-    },
-    {
-     "part": "ced",
-     "mean": "가다"
-    }
-   ],
-   "etymHint": "pro(앞으로)+ced(가다) → 앞으로 나아가는 방식 → 절차",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "vertebrate",
-   "ipa": "/ˈvɜːrtɪbrət/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "척추동물",
-     "ex": "The evolutionary history of vertebrates demonstrates how a spinal column both enables and constrains biological development.",
-     "tr": "척추동물의 진화 역사는 척주가 생물학적 발달을 어떻게 가능하게 하는 동시에 제약하는지를 보여준다.",
-     "src": "2024 6월모평 40번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "척추동물의"
-    }
-   ],
-   "syn": [
-    "spined animal"
-   ],
-   "deriv": [
-    "vertebra (n.)",
-    "invertebrate (ant.)"
-   ],
-   "roots": [
-    {
-     "part": "vertebr",
-     "mean": "척추"
-    },
-    {
-     "part": "ate",
-     "mean": "명사/형용사 어미"
-    }
-   ],
-   "etymHint": "vertebr(척추)+ate → 척추를 가진 동물 → 척추동물",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "fade",
-   "ipa": "/feɪd/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "서서히 사라지다, 흐려지다",
-     "ex": "As time passes, the memory of an unpleasant experience tends to fade while positive impressions grow more vivid.",
-     "tr": "시간이 지남에 따라 불쾌한 경험의 기억은 사라지는 경향이 있는 반면, 긍정적인 인상은 더욱 생생해진다.",
-     "src": "2011 9월모평 39번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(색이) 바래다"
-    },
-    {
-     "pos": "n.",
-     "ko": "(음악·영상의) 페이드"
-    }
-   ],
-   "syn": [
-    "diminish",
-    "dissipate",
-    "wane"
-   ],
-   "deriv": [
-    "fading (adj./n.)",
-    "unfading (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
     "stars": 1
    }
   }

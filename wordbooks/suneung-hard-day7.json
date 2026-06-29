@@ -2,87 +2,461 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 7,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
   {
-   "en": "tutor",
-   "ipa": "/ˈtjuːtər/",
-   "pos": "n.",
+   "en": "iconoclast",
+   "ipa": "/aɪˈkɒnəklæst/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "개인 교사, 지도 교수",
-     "ex": "Children raised without emotional tutors rarely learn to recognize subtle social cues.",
-     "tr": "정서적 지도자 없이 자란 아이들은 좀처럼 미묘한 사회적 신호를 인식하는 법을 배우지 못한다.",
-     "src": "2017 6월모평 21번"
-    },
-    {
-     "pos": "v.",
-     "ko": "개인 지도하다"
+     "pos": "n",
+     "ko": "성상 파괴자, 인습 타파자",
+     "ex": "Duchamp's readymades established him as the ultimate iconoclast, permanently destabilising the boundary between art and everyday object.",
+     "tr": "뒤샹의 레디메이드는 그를 궁극적인 인습 타파자로 확립시켜 예술과 일상적 사물 사이의 경계를 영구적으로 불안정하게 만들었다.",
+     "src": ""
     }
    ],
    "syn": [
-    "mentor",
-    "instructor",
-    "coach"
+    "rebel",
+    "nonconformist",
+    "disruptor"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "impersonal",
+   "ipa": "/ɪmˈpɜːrsənl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "비인격적인, 냉담한; 개인과 무관한",
+     "ex": "Large corporations often adopt an impersonal tone in customer communications, which erodes loyalty.",
+     "tr": "대기업은 고객 커뮤니케이션에서 흔히 비인격적인 어조를 취하는데, 이는 충성도를 약화시킨다.",
+     "src": "2009 6월모평 22번"
+    }
+   ],
+   "syn": [
+    "detached",
+    "cold",
+    "formal",
+    "indifferent"
    ],
    "deriv": [
-    "tutorial (n.)",
-    "tutoring (n.)"
+    "personal (adj.)",
+    "impersonality (n.)",
+    "impersonally (adv.)"
    ],
    "roots": [
     {
-     "part": "tut",
-     "mean": "지키다, 보호하다"
+     "part": "im",
+     "mean": "아닌"
+    },
+    {
+     "part": "person",
+     "mean": "사람"
     }
    ],
-   "etymHint": "tut(지키다) → 학생을 보호·지도하는 사람 → 개인 교사",
+   "etymHint": "im(아닌)+personal(개인적인) → 개인적이지 않은 → 비인격적인",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2017",
+    "recentYear": "2009",
     "stars": 1
    }
   },
   {
-   "en": "educator",
-   "ipa": "/ˈedjʊkeɪtər/",
+   "en": "equation",
+   "ipa": "/ɪˈkweɪʒn/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "교육자, 교육 전문가",
-     "ex": "György Kepes, a distinguished artist and educator, transformed the way people perceive visual form.",
-     "tr": "저명한 예술가이자 교육자인 György Kepes는 사람들이 시각적 형태를 인식하는 방식을 변혁시켰다.",
-     "src": "2025 9월모평 26번"
+     "ko": "동일시, 등치; 방정식",
+     "ex": "The philosopher challenged the traditional equation of equality with uniformity, arguing that difference must be built in.",
+     "tr": "그 철학자는 차이를 내재화해야 한다고 주장하면서, 평등을 획일성과 동일시하는 전통적 관행에 이의를 제기했다.",
+     "src": "2021 9월모평 33번"
     }
    ],
    "syn": [
-    "teacher",
-    "instructor",
-    "pedagogue"
+    "identification",
+    "equivalence",
+    "formula"
    ],
    "deriv": [
-    "educate (v.)",
-    "education (n.)",
-    "educational (adj.)"
+    "equate (v.)",
+    "equational (adj.)",
+    "inequation (n.)"
    ],
    "roots": [
     {
-     "part": "educ",
-     "mean": "이끌어 내다"
+     "part": "equ",
+     "mean": "같은"
     }
    ],
-   "etymHint": "educ(이끌어 내다)+ator(행위자) → 가능성을 이끌어 내는 사람 → 교육자",
+   "etymHint": "equ(같은)+ation → 같게 만드는 것 → 동일시, 방정식",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2025",
+    "recentYear": "2021",
     "stars": 1
+   }
+  },
+  {
+   "en": "contingency",
+   "ipa": "/kənˈtɪndʒənsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "우연성; 불확실한 사태",
+     "ex": "Historians debate whether the outbreak of war was a matter of historical contingency or structural inevitability.",
+     "tr": "역사가들은 전쟁의 발발이 역사적 우연의 문제인지 구조적 필연의 문제인지를 두고 논쟁한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "chance",
+    "fortuity",
+    "uncertainty"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "spiral",
+   "ipa": "/ˈspaɪrəl/",
+   "pos": "n./v./adj.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "나선형; 악순환, 연속적 하강",
+     "ex": "Once procrastination takes hold, it can trigger a downward spiral of missed deadlines and mounting anxiety.",
+     "tr": "한번 미루기가 자리를 잡으면, 기한을 놓치고 불안이 쌓이는 하향 악순환을 촉발할 수 있다.",
+     "src": "2013 6월모평 22번"
+    },
+    {
+     "pos": "v.",
+     "ko": "나선형으로 움직이다; 급격히 상승/하락하다"
+    }
+   ],
+   "syn": [
+    "helix",
+    "coil",
+    "downward cycle"
+   ],
+   "deriv": [
+    "spiraling (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "spir",
+     "mean": "숨쉬다, 감기다"
+    }
+   ],
+   "etymHint": "spir(감기다)+al → 감겨 올라가는 형태 → 나선형",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "objectification",
+   "ipa": "/əbˌdʒɛktɪfɪˈkeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "객체화, 대상화",
+     "ex": "Feminist theorists have long examined the objectification of women in advertising and popular media.",
+     "tr": "페미니스트 이론가들은 광고와 대중 매체에서의 여성 대상화를 오랫동안 연구해 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reification",
+    "dehumanization",
+    "instrumentalization"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ridge",
+   "ipa": "/rɪdʒ/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "산등성이, 능선; 隆起부",
+     "ex": "The hikers paused at the ridge to survey the valley spread out beneath them on both sides.",
+     "tr": "등산객들은 능선에서 잠시 멈추어 양쪽 아래로 펼쳐진 계곡을 바라보았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "crest",
+    "escarpment",
+    "ledge"
+   ],
+   "deriv": [
+    "ridgeline (n.)",
+    "ridgeway (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "foment",
+   "ipa": "/foʊˈmɛnt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "선동하다, 부추기다",
+     "ex": "Foreign actors attempted to foment civil unrest by spreading disinformation across social media.",
+     "tr": "외국 세력은 소셜 미디어에 허위 정보를 퍼뜨려 시민 불안을 선동하려 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "instigate",
+    "incite",
+    "provoke"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "glamorous",
+   "ipa": "/ˈɡlæmərəs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "매혹적인, 화려한; 이국적인 매력이 있는",
+     "ex": "Even glamorous portrayals of violence in films can provoke deep moral discomfort in sensitive audiences.",
+     "tr": "영화에서 폭력을 화려하게 묘사하는 것조차 민감한 관객에게 깊은 도덕적 불편함을 불러일으킬 수 있다.",
+     "src": "2015 수능 40번"
+    }
+   ],
+   "syn": [
+    "alluring",
+    "dazzling",
+    "captivating",
+    "glitzy"
+   ],
+   "deriv": [
+    "glamour (n.)",
+    "glamorize (v.)",
+    "unglamorous (adj.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
+  {
+   "en": "therapy",
+   "ipa": "/ˈθerəpi/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "치료, 요법",
+     "ex": "Cognitive behavioural therapy has proven effective in addressing the distorted thinking patterns underlying anxiety.",
+     "tr": "인지행동치료는 불안의 근저에 있는 왜곡된 사고 패턴을 다루는 데 효과적임이 입증되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "treatment",
+    "remedy",
+    "counselling"
+   ],
+   "deriv": [
+    "therapist (n.)",
+    "therapeutic (adj.)",
+    "psychotherapy (n.)"
+   ],
+   "roots": [
+    {
+     "part": "therap",
+     "mean": "돌보다, 치료하다"
+    }
+   ],
+   "etymHint": "therap(돌보다)+y → 돌봄, 치료 → 요법",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "despot",
+   "ipa": "/ˈdɛspɒt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "독재자, 폭군",
+     "ex": "History offers numerous cautionary tales of enlightened reformers who became despots.",
+     "tr": "역사는 계몽적 개혁자가 독재자가 된 수많은 경계의 사례를 제공한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "tyrant",
+    "autocrat",
+    "dictator"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "prosperous",
+   "ipa": "/ˈprɒspərəs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "번영하는, 번창한",
+     "ex": "His family was prosperous enough to be respected in the community, though not extraordinarily wealthy.",
+     "tr": "그의 가족은 엄청난 부자는 아니었지만 지역 사회에서 존경받을 만큼 충분히 번창해 있었다.",
+     "src": "2009 6월모평 37번"
+    }
+   ],
+   "syn": [
+    "thriving",
+    "flourishing",
+    "affluent",
+    "successful"
+   ],
+   "deriv": [
+    "prosper (v.)",
+    "prosperity (n.)",
+    "prosperously (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "pro",
+     "mean": "앞으로"
+    },
+    {
+     "part": "sper",
+     "mean": "희망, 운"
+    }
+   ],
+   "etymHint": "pro(앞으로)+sper(희망)+ous → 앞날이 희망찬 → 번영하는",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2009",
+    "stars": 1
+   }
+  },
+  {
+   "en": "candid",
+   "ipa": "/ˈkæn.dɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "솔직한, 거리낌 없는",
+     "ex": "The professor gave a candid assessment of the student's weaknesses, which was difficult to hear but ultimately helpful.",
+     "tr": "교수는 학생의 약점에 대해 솔직한 평가를 내렸고, 듣기 어려웠지만 결국 도움이 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "forthright",
+    "blunt",
+    "frank"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -119,238 +493,33 @@
    }
   },
   {
-   "en": "polite",
-   "ipa": "/pəˈlaɪt/",
-   "pos": "adj.",
+   "en": "equivocal",
+   "ipa": "/ɪˈkwɪvəkəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "예의 바른, 공손한",
-     "ex": "The server politely but firmly informed the guests that certain cultural customs should be observed at the table.",
-     "tr": "직원은 손님들에게 예의 바르게 그러나 단호하게 특정 문화적 관습이 식탁에서 지켜져야 함을 알렸다.",
-     "src": "2012 6월모평 34번"
+     "pos": "adj",
+     "ko": "애매한, 두 가지로 해석 가능한",
+     "ex": "The committee released an equivocal statement that satisfied neither critics nor supporters.",
+     "tr": "위원회는 비평가도 지지자도 만족시키지 못하는 애매한 성명을 발표했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "courteous",
-    "civil",
-    "well-mannered"
+    "ambiguous",
+    "evasive",
+    "noncommittal"
    ],
-   "deriv": [
-    "politely (adv.)",
-    "politeness (n.)",
-    "impolite (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "polit",
-     "mean": "닦다, 세련되게 하다"
-    }
-   ],
-   "etymHint": "polit(닦다) → 행동을 다듬은 → 예의 바른",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mineral",
-   "ipa": "/ˈmɪnərəl/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "광물, 무기질",
-     "ex": "The newly cleared soil, abundant in minerals and organic nutrients, yielded exceptional harvests for several successive seasons.",
-     "tr": "광물과 유기 영양소가 풍부한 새로 개간된 토양은 연속된 수 계절 동안 탁월한 수확량을 냈다.",
-     "src": "2012 수능 28번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "광물의, 무기질의"
-    }
-   ],
-   "syn": [
-    "ore",
-    "element",
-    "nutrient"
-   ],
-   "deriv": [
-    "mineralize (v.)",
-    "mineralogy (n.)"
-   ],
-   "roots": [
-    {
-     "part": "miner",
-     "mean": "광산"
-    }
-   ],
-   "etymHint": "miner(광산)+al → 광산에서 채취되는 것 → 광물",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "throat",
-   "ipa": "/θrəʊt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "목구멍, 인후",
-     "ex": "The deep throat-singing of the turkeys carried across the quiet farmyard as the machinery fell silent.",
-     "tr": "기계 소리가 잦아들자 칠면조들의 낮은 목구멍 울음소리가 고요한 농장을 가로질러 퍼졌다.",
-     "src": "2009 6월모평 43번"
-    }
-   ],
-   "syn": [
-    "gullet",
-    "pharynx"
-   ],
-   "deriv": [
-    "throaty (adj.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2009",
-    "stars": 1
-   }
-  },
-  {
-   "en": "gentler",
-   "ipa": "/ˈdʒentlər/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "더 완만한, 더 온화한 (gentle의 비교급)",
-     "ex": "The cattle grazed along the steeper ridgeline while the sheep descended to a gentler slope closer to the valley floor.",
-     "tr": "소들은 더 가파른 능선을 따라 풀을 뜯었고 양들은 계곡 바닥에 가까운 더 완만한 경사면으로 내려갔다.",
-     "src": "2009 6월모평 43번"
-    }
-   ],
-   "syn": [
-    "milder",
-    "softer",
-    "more gradual"
-   ],
-   "deriv": [
-    "gentle (adj.)",
-    "gently (adv.)",
-    "gentleness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "gent",
-     "mean": "귀족, 고귀한"
-    }
-   ],
-   "etymHint": "gent(고귀한)+le → 고귀하게 행동하는 → 온화한, 완만한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2009",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mini",
-   "ipa": "/ˈmɪni/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "소규모의, 미니어처의",
-     "ex": "Even the most accomplished professionals experience mini-setbacks and brief reversals on their path to sustained achievement.",
-     "tr": "가장 뛰어난 전문가들조차 지속적인 성취로 나아가는 길에서 소규모 좌절과 짧은 역경을 경험한다.",
-     "src": "2015 수능 18번"
-    },
-    {
-     "pos": "n.",
-     "ko": "소형물"
-    }
-   ],
-   "syn": [
-    "small-scale",
-    "miniature",
-    "compact"
-   ],
-   "deriv": [
-    "miniature (n.)",
-    "minimize (v.)",
-    "minimal (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "min",
-     "mean": "작다"
-    }
-   ],
-   "etymHint": "min(작다) → 소형의 → 미니의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "captain",
-   "ipa": "/ˈkæptɪn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "선장, 지휘관",
-     "ex": "The shipwrecked vessel was eventually discovered by the captain of an American trading ship patrolling waters near the Moroccan coast.",
-     "tr": "난파된 배는 결국 모로코 해안 근처 해역을 순찰하던 미국 무역선의 선장에 의해 발견되었다.",
-     "src": "2014 수능 37번"
-    },
-    {
-     "pos": "v.",
-     "ko": "지휘하다"
-    }
-   ],
-   "syn": [
-    "commander",
-    "skipper",
-    "leader"
-   ],
-   "deriv": [
-    "captaincy (n.)"
-   ],
-   "roots": [
-    {
-     "part": "capit",
-     "mean": "머리, 우두머리"
-    }
-   ],
-   "etymHint": "capit(머리)+ain → 집단의 머리 → 지휘관, 선장",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2014",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -393,151 +562,33 @@
    }
   },
   {
-   "en": "bio",
-   "ipa": "/ˈbaɪəʊ/",
-   "pos": "n.",
+   "en": "solipsism",
+   "ipa": "/ˈsɒlɪpsɪzəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "약력, 생애 (biography의 준말)",
-     "ex": "Her official bio listed numerous accolades, yet it omitted the decade of quiet scholarly work that preceded her fame.",
-     "tr": "그녀의 공식 약력에는 수많은 공적이 나열되어 있었지만 명성에 앞선 10년간의 조용한 학문적 작업은 빠져 있었다.",
-     "src": "2016 수능 23번"
-    },
-    {
-     "pos": "pref.",
-     "ko": "생명(biology 등의 접두사)"
-    }
-   ],
-   "syn": [
-    "biography",
-    "profile",
-    "life story"
-   ],
-   "deriv": [
-    "biology (n.)",
-    "biography (n.)",
-    "biodiversity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "bio",
-     "mean": "생명"
-    }
-   ],
-   "etymHint": "bio(생명) → 생명·삶에 관한 것 → 생애, 약력",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "palm",
-   "ipa": "/pɑːm/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "손바닥; 야자나무",
-     "ex": "Local artisans transformed their inherited palm mat-weaving techniques into a thriving cottage industry for the tourist market.",
-     "tr": "지역 장인들은 전통적으로 전해 내려온 야자 매트 직조 기술을 관광 시장을 위한 번성하는 가내 산업으로 발전시켰다.",
-     "src": "2016 6월모평 23번"
-    }
-   ],
-   "syn": [
-    "hand",
-    "paw (informal)"
-   ],
-   "deriv": [
-    "palmy (adj.)",
-    "palmist (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sore",
-   "ipa": "/sɔːr/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "아픈, 쓰라린; 성난",
-     "ex": "After the grueling mountain expedition, every muscle in her body was sore and her joints ached with each movement.",
-     "tr": "혹독한 산악 탐험 후 그녀의 몸 모든 근육이 쑤셨고 움직일 때마다 관절이 아팠다.",
+     "pos": "n",
+     "ko": "유아론, 자기중심적 사고",
+     "ex": "His solipsism prevented him from genuinely empathizing with anyone whose experiences differed from his own.",
+     "tr": "그의 유아론적 사고는 자신과 다른 경험을 가진 누구에게도 진심으로 공감하지 못하게 했다.",
      "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "상처, 종기"
     }
    ],
    "syn": [
-    "aching",
-    "tender",
-    "painful"
+    "egocentrism",
+    "narcissism",
+    "self-absorption"
    ],
-   "deriv": [
-    "soreness (n.)",
-    "sorely (adv.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "C1",
+   "level": "C2",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "burst",
-   "ipa": "/bɜːrst/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "터지다, 폭발하다",
-     "ex": "Fast-twitch muscle fibers deliver powerful bursts of force but exhaust their energy reserves far more rapidly than slow-twitch fibers.",
-     "tr": "속근 섬유는 강력한 힘의 폭발을 만들어 내지만 지근 섬유보다 에너지 저장량을 훨씬 빠르게 소모한다.",
-     "src": "2013 수능 37번"
-    },
-    {
-     "pos": "n.",
-     "ko": "폭발, 갑작스러운 분출"
-    }
-   ],
-   "syn": [
-    "explode",
-    "rupture",
-    "erupt"
-   ],
-   "deriv": [
-    "outburst (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -578,36 +629,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "fireplace",
-   "ipa": "/ˈfaɪərpleɪs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "벽난로",
-     "ex": "He settled cross-legged before the crackling fireplace, methodically feeding logs to the flames as he contemplated the evening.",
-     "tr": "그는 타닥거리는 벽난로 앞에 책상다리를 하고 앉아 저녁을 곱씹으며 체계적으로 장작을 불꽃에 넣었다.",
-     "src": "2010 수능 29번"
-    }
-   ],
-   "syn": [
-    "hearth",
-    "grate",
-    "chimney"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2010",
     "stars": 1
    }
   },
@@ -655,6 +676,36 @@
    }
   },
   {
+   "en": "entropy",
+   "ipa": "/ˈɛntrəpi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "엔트로피; 무질서도; 쇠퇴",
+     "ex": "The concept of entropy has been extended metaphorically to describe the gradual dissolution of social institutions.",
+     "tr": "엔트로피 개념은 사회 제도의 점진적 붕괴를 묘사하는 비유적 표현으로 확장되어 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "disorder",
+    "degradation",
+    "dissipation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "boundless",
    "ipa": "/ˈbaʊndləs/",
    "pos": "adj.",
@@ -688,41 +739,33 @@
    }
   },
   {
-   "en": "aquarium",
-   "ipa": "/əˈkweəriəm/",
-   "pos": "n.",
+   "en": "recalibrate",
+   "ipa": "/riːˈkælɪbreɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "수족관",
-     "ex": "The bottlenose dolphin housed in the coastal aquarium had developed remarkably sophisticated communication patterns with her trainers.",
-     "tr": "해안 수족관에 사는 큰돌고래는 조련사들과 놀랍도록 정교한 의사소통 패턴을 발전시켜 왔다.",
-     "src": "2013 6월모평 38번"
+     "pos": "v",
+     "ko": "재조정하다, 재설정하다",
+     "ex": "The organization was forced to recalibrate its strategic priorities in response to shifting market conditions.",
+     "tr": "조직은 변화하는 시장 상황에 대응하여 전략적 우선순위를 재조정해야 했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "fish tank",
-    "marine exhibit"
+    "readjust",
+    "reset",
+    "realign"
    ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "aqua",
-     "mean": "물"
-    },
-    {
-     "part": "arium",
-     "mean": "장소"
-    }
-   ],
-   "etymHint": "aqua(물)+arium(장소) → 물속 생물을 기르는 장소 → 수족관",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -764,80 +807,33 @@
    }
   },
   {
-   "en": "charm",
-   "ipa": "/tʃɑːrm/",
-   "pos": "n.",
+   "en": "hyperbole",
+   "ipa": "/haɪˈpɜːrbəli/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "매력, 매혹",
-     "ex": "She was completely charmed by the exotic birds and nimble lizards weaving through the canopy overhead.",
-     "tr": "그녀는 머리 위 캐노피를 누비는 이국적인 새들과 민첩한 도마뱀들에게 완전히 매혹되었다.",
-     "src": "2018 수능 19번"
-    },
-    {
-     "pos": "v.",
-     "ko": "매혹하다, 황홀하게 하다"
+     "pos": "n",
+     "ko": "과장법",
+     "ex": "The satirist deploys hyperbole with surgical precision, amplifying social absurdities until they collapse under their own grotesque weight.",
+     "tr": "풍자가는 외과적 정확성으로 과장법을 구사하여 사회적 불합리함을 그 자체의 기괴한 무게로 붕괴될 때까지 증폭시킨다.",
+     "src": ""
     }
    ],
    "syn": [
-    "allure",
-    "enchantment",
-    "appeal"
-   ],
-   "deriv": [
-    "charming (adj.)",
-    "charmed (adj.)",
-    "enchant (v.)"
-   ],
-   "roots": [
-    {
-     "part": "charm",
-     "mean": "주문, 마법"
-    }
-   ],
-   "etymHint": "charm(주문) → 마법처럼 사로잡는 것 → 매력",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "pat",
-   "ipa": "/pæt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "가볍게 두드리다, 쓰다듬다",
-     "ex": "The therapist gently patted the child's shoulder to signal reassurance before beginning the difficult conversation.",
-     "tr": "치료사는 어려운 대화를 시작하기 전에 안심을 표시하기 위해 아이의 어깨를 부드럽게 두드렸다.",
-     "src": "2011 9월모평 35번"
-    },
-    {
-     "pos": "n.",
-     "ko": "가볍게 두드림"
-    }
-   ],
-   "syn": [
-    "tap",
-    "stroke",
-    "caress"
+    "exaggeration",
+    "overstatement",
+    "amplification"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -880,40 +876,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "harmless",
-   "ipa": "/ˈhɑːrmləs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "무해한, 해롭지 않은",
-     "ex": "The clinician assured the family that the child's imaginary companions were quite harmless and served a constructive developmental purpose.",
-     "tr": "임상의는 아이의 상상 속 친구들이 전혀 무해하며 건설적인 발달 목적에 기여한다고 가족에게 확언했다.",
-     "src": "2010 수능 42번"
-    }
-   ],
-   "syn": [
-    "innocuous",
-    "benign",
-    "inoffensive"
-   ],
-   "deriv": [
-    "harm (n.)",
-    "harmful (adj.)",
-    "harmlessly (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2010",
     "stars": 1
    }
   },
@@ -961,46 +923,33 @@
    }
   },
   {
-   "en": "multiply",
-   "ipa": "/ˈmʌltɪplaɪ/",
-   "pos": "v.",
+   "en": "implicitly",
+   "ipa": "/ɪmˈplɪsɪtli/",
+   "pos": "adv",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "곱하다; 증가하다, 늘리다",
-     "ex": "Project costs were calculated by multiplying the total hours worked by the applicable labor rates for each specialist.",
-     "tr": "프로젝트 비용은 각 전문가의 해당 노동 요율에 총 작업 시간을 곱하여 산출되었다.",
-     "src": "2013 9월모평 27번"
+     "pos": "adv",
+     "ko": "암묵적으로, 함축적으로",
+     "ex": "By declining to comment, the official implicitly acknowledged the veracity of the allegations.",
+     "tr": "논평을 거부함으로써 그 관리는 암묵적으로 혐의의 사실성을 인정했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "increase",
-    "proliferate",
-    "augment"
+    "tacitly",
+    "by implication",
+    "indirectly"
    ],
-   "deriv": [
-    "multiplication (n.)",
-    "multiple (adj.)",
-    "multiplier (n.)"
-   ],
-   "roots": [
-    {
-     "part": "multi",
-     "mean": "많은"
-    },
-    {
-     "part": "plic",
-     "mean": "접다, 겹치다"
-    }
-   ],
-   "etymHint": "multi(많은)+plic(겹치다) → 여러 번 겹쳐 더하다 → 곱하다",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1046,113 +995,33 @@
    }
   },
   {
-   "en": "bargain",
-   "ipa": "/ˈbɑːrɡɪn/",
-   "pos": "n.",
+   "en": "misconstrue",
+   "ipa": "/ˌmɪskənˈstruː/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "협정, 거래; 싸게 산 물건",
-     "ex": "Both nations entered the diplomatic bargain fully aware that neither side would gain everything it had originally demanded.",
-     "tr": "양국은 어느 쪽도 원래 요구했던 모든 것을 얻지 못할 것임을 충분히 인식하면서 외교적 협정에 임했다.",
+     "pos": "v",
+     "ko": "오해하다, 잘못 해석하다",
+     "ex": "Many readers misconstrue the satirical elements of the text as straightforward historical documentation.",
+     "tr": "많은 독자들은 텍스트의 풍자적 요소를 직접적인 역사적 기록으로 오해한다.",
      "src": ""
-    },
-    {
-     "pos": "v.",
-     "ko": "협상하다"
     }
    ],
    "syn": [
-    "deal",
-    "agreement",
-    "negotiation"
+    "misinterpret",
+    "misread",
+    "distort"
    ],
-   "deriv": [
-    "bargaining (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "traveler",
-   "ipa": "/ˈtrævələr/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "여행자",
-     "ex": "Many seasoned travelers return to the same guided expedition year after year, drawn by the community and the landscapes.",
-     "tr": "많은 노련한 여행자들이 공동체와 경관에 이끌려 해마다 같은 가이드 탐험에 다시 참여한다.",
-     "src": "2026 9월모평 27번"
-    }
-   ],
-   "syn": [
-    "voyager",
-    "wayfarer",
-    "explorer"
-   ],
-   "deriv": [
-    "travel (v.)",
-    "traveling (n./adj.)"
-   ],
-   "roots": [
-    {
-     "part": "travel",
-     "mean": "여행하다"
-    }
-   ],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "chop",
-   "ipa": "/tʃɒp/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "자르다, 베다; 찍어 내다",
-     "ex": "If you chop down a single tree near a beaver dam, the ecosystem remains largely intact; remove the beaver itself and the entire wetland may collapse.",
-     "tr": "비버 댐 근처의 나무 한 그루를 베어 내도 생태계는 대부분 온전히 유지되지만, 비버 자체를 없애면 습지 전체가 붕괴될 수 있다.",
-     "src": "2012 9월모평 34번"
-    },
-    {
-     "pos": "n.",
-     "ko": "절단, 찍기"
-    }
-   ],
-   "syn": [
-    "cut",
-    "hack",
-    "fell"
-   ],
-   "deriv": [
-    "chopper (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -1202,6 +1071,36 @@
    }
   },
   {
+   "en": "abstraction",
+   "ipa": "/æbˈstrækʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "추상(화); 추상 개념",
+     "ex": "The philosopher argued that justice is a mere abstraction unless grounded in concrete social practice.",
+     "tr": "그 철학자는 정의란 구체적인 사회적 실천에 기반하지 않으면 단순한 추상 개념에 불과하다고 주장했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "generalization",
+    "concept",
+    "idealization"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "apologetic",
    "ipa": "/əˌpɒləˈdʒetɪk/",
    "pos": "adj.",
@@ -1242,6 +1141,36 @@
     "exams": 2,
     "recentYear": "",
     "stars": 1
+   }
+  },
+  {
+   "en": "dogma",
+   "ipa": "/ˈdɔɡmə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "교의; 독단적 신조",
+     "ex": "Scientific inquiry thrives when it challenges prevailing dogma rather than accepting it uncritically.",
+     "tr": "과학적 탐구는 지배적인 교의를 무비판적으로 수용하는 대신 도전할 때 발전한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "doctrine",
+    "tenet",
+    "creed"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1307,46 +1236,33 @@
    }
   },
   {
-   "en": "retirement",
-   "ipa": "/rɪˈtaɪərmənt/",
-   "pos": "n.",
+   "en": "audacious",
+   "ipa": "/ɔːˈdeɪ.ʃəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "은퇴, 퇴직",
-     "ex": "Involuntary retirement stripped many elderly individuals of the professional roles that had long sustained their sense of purpose and identity.",
-     "tr": "비자발적 은퇴는 많은 노인들에게서 오랫동안 목적의식과 정체성을 유지시켜 준 직업적 역할을 빼앗았다.",
-     "src": "2020 9월모평 24번"
+     "pos": "adj",
+     "ko": "대담한, 무모한",
+     "ex": "The audacious plan to infiltrate the heavily guarded compound seemed almost suicidal to the cautious members of the team.",
+     "tr": "삼엄하게 경비된 단지에 침투하는 대담한 계획은 팀의 신중한 구성원들에게 거의 자살행위처럼 보였다.",
+     "src": ""
     }
    ],
    "syn": [
-    "withdrawal",
-    "resignation",
-    "superannuation"
+    "daring",
+    "bold",
+    "brazen"
    ],
-   "deriv": [
-    "retire (v.)",
-    "retiree (n.)",
-    "retired (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "뒤로"
-    },
-    {
-     "part": "tire",
-     "mean": "당기다"
-    }
-   ],
-   "etymHint": "re(뒤로)+tire(당기다) → 활동 무대에서 뒤로 물러나다 → 은퇴",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1396,34 +1312,33 @@
    }
   },
   {
-   "en": "spaghetti",
-   "ipa": "/spəˈɡeti/",
-   "pos": "n.",
+   "en": "supersede",
+   "ipa": "/ˌsuːpərˈsiːd/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "스파게티 (이탈리아 면 요리)",
-     "ex": "The anecdote was so absurd ― involving spilled spaghetti and a ruined laptop ― that interrupting it to correct minor details missed the point entirely.",
-     "tr": "그 일화는 너무나 황당해서 ― 쏟아진 스파게티와 망가진 노트북을 포함하여 ― 사소한 세부 사항을 수정하기 위해 끼어드는 것은 요점을 완전히 놓치는 것이었다.",
-     "src": "2022 수능 31번"
+     "pos": "v",
+     "ko": "대체하다, 능가하다",
+     "ex": "The new international treaty supersedes all prior bilateral agreements on trade between the two nations.",
+     "tr": "새로운 국제 조약은 두 나라 간의 무역에 관한 모든 이전 양자 협정을 대체한다.",
+     "src": ""
     }
    ],
-   "syn": [],
+   "syn": [
+    "replace",
+    "supplant",
+    "displace"
+   ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "spago",
-     "mean": "실, 끈 (이탈리아어)"
-    }
-   ],
-   "etymHint": "이탈리아어 spago(끈)+etti(지소사) → 작은 끈 모양의 면 → 스파게티",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1461,92 +1376,33 @@
    }
   },
   {
-   "en": "embarrassment",
-   "ipa": "/ɪmˈbærəsmənt/",
-   "pos": "n.",
+   "en": "epiphany",
+   "ipa": "/ɪˈpɪfəni/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "당혹감, 창피함",
-     "ex": "To spare their distinguished guest any further embarrassment, the villagers collectively mimicked his accidental blunder as if it were a cherished custom.",
-     "tr": "저명한 손님에게 더 이상의 당혹감을 주지 않기 위해 마을 사람들은 그의 우발적인 실수를 소중한 관습인 양 함께 따라 했다.",
-     "src": "2011 6월모평 21번"
+     "pos": "n",
+     "ko": "문학적 깨달음, 갑작스러운 통찰",
+     "ex": "Joyce's use of the epiphany as a narrative device captures moments in which an ordinary object suddenly reveals a transcendent significance.",
+     "tr": "에피파니를 서사 장치로 사용한 조이스는 평범한 사물이 갑자기 초월적인 의미를 드러내는 순간들을 포착한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "mortification",
-    "chagrin",
-    "shame"
+    "revelation",
+    "insight",
+    "illumination"
    ],
-   "deriv": [
-    "embarrass (v.)",
-    "embarrassing (adj.)",
-    "embarrassed (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "embaraço",
-     "mean": "장애물 (포르투갈어/스페인어)"
-    }
-   ],
-   "etymHint": "embarras(방해, 장애) → 마음의 자유로운 움직임을 방해하는 것 → 당혹감",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2011",
-    "stars": 1
-   }
-  },
-  {
-   "en": "untouchable",
-   "ipa": "/ʌnˈtʌtʃəbəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "건드릴 수 없는, 손댈 수 없는; 범접 불가한",
-     "ex": "Spoken words, invisible and untouchable, nevertheless leave lasting impressions that can shape a listener's beliefs for years.",
-     "tr": "보이지 않고 손댈 수 없는 말은 그럼에도 불구하고 청자의 신념을 수년간 형성할 수 있는 지속적인 인상을 남긴다.",
-     "src": "2017 9월모평 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "불가촉천민"
-    }
-   ],
-   "syn": [
-    "unreachable",
-    "invulnerable",
-    "beyond reach"
-   ],
-   "deriv": [
-    "touch (v.)",
-    "touchable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "un",
-     "mean": "부정"
-    },
-    {
-     "part": "touch",
-     "mean": "닿다"
-    },
-    {
-     "part": "able",
-     "mean": "~할 수 있는"
-    }
-   ],
-   "etymHint": "un(부정)+touch(닿다)+able(할 수 있는) → 닿을 수 없는 → 건드릴 수 없는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   }
  ]

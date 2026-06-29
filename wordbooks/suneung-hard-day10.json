@@ -2,55 +2,8 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 10,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
-  {
-   "en": "transmit",
-   "ipa": "/trænsˈmɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "전송하다, 전달하다",
-     "ex": "Satellites transmit data signals across vast distances to ground stations worldwide.",
-     "tr": "위성은 전 세계 지상국에 광대한 거리를 가로질러 데이터 신호를 전송한다.",
-     "src": "2016 6월모평 21번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(질병을) 전파하다"
-    }
-   ],
-   "syn": [
-    "convey",
-    "relay",
-    "broadcast"
-   ],
-   "deriv": [
-    "transmission (n.)",
-    "transmitter (n.)",
-    "transmittable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "trans",
-     "mean": "넘어서, 가로질러"
-    },
-    {
-     "part": "mit",
-     "mean": "보내다"
-    }
-   ],
-   "etymHint": "trans(가로질러)+mit(보내다) → 가로질러 보내다 → 전송하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
   {
    "en": "cultivation",
    "ipa": "/ˌkʌltɪˈveɪʃən/",
@@ -143,6 +96,36 @@
    }
   },
   {
+   "en": "entitlement",
+   "ipa": "/ɪnˈtaɪtəlmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수급 자격, 사회 보장 혜택",
+     "ex": "Pension reform required the government to curtail entitlement spending without alienating retirees.",
+     "tr": "연금 개혁으로 정부는 은퇴자들을 소외시키지 않으면서 수급 혜택 지출을 축소해야 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "benefit",
+    "welfare",
+    "allowance"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "commonality",
    "ipa": "/ˌkɒməˈnælɪti/",
    "pos": "n.",
@@ -190,6 +173,36 @@
    }
   },
   {
+   "en": "substantially",
+   "ipa": "/səbˈstænʃəli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "상당히, 실질적으로",
+     "ex": "The revised draft differs substantially from the original proposal submitted last quarter.",
+     "tr": "수정 초안은 지난 분기에 제출된 원래 제안서와 상당히 다르다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "considerably",
+    "materially",
+    "significantly"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "wit",
    "ipa": "/wɪt/",
    "pos": "n.",
@@ -234,86 +247,33 @@
    }
   },
   {
-   "en": "dealer",
-   "ipa": "/ˈdiːlər/",
-   "pos": "n.",
+   "en": "perpetrate",
+   "ipa": "/ˈpɜːrpɪtreɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "판매상, 딜러",
-     "ex": "Reputable art dealers provide far more than mere sales; they authenticate works and advise clients on long-term investments.",
-     "tr": "명성 있는 미술품 판매상은 단순한 판매 이상의 것을 제공하며, 작품을 감정하고 장기 투자에 대해 고객에게 조언한다.",
-     "src": "2025 9월모평 35번"
-    },
-    {
-     "pos": "n.",
-     "ko": "거래자, 취급자"
+     "pos": "v",
+     "ko": "저지르다, 범하다",
+     "ex": "Those who perpetrate hate crimes must be held accountable to the full extent of the law.",
+     "tr": "증오 범죄를 저지르는 사람들은 법의 최대 범위에서 책임을 져야 한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "trader",
-    "merchant",
-    "vendor"
+    "commit",
+    "carry out",
+    "execute"
    ],
-   "deriv": [
-    "deal (v./n.)",
-    "dealership (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "reuse",
-   "ipa": "/ˌriːˈjuːz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "재사용하다",
-     "ex": "Designers are increasingly encouraged to reuse reclaimed materials rather than relying on newly manufactured components.",
-     "tr": "디자이너들은 새로 제조된 부품에 의존하기보다 재활용된 재료를 재사용하도록 점점 더 권장받고 있다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "재사용"
-    }
-   ],
-   "syn": [
-    "recycle",
-    "repurpose",
-    "utilize again"
-   ],
-   "deriv": [
-    "reusable (adj.)",
-    "reusability (n.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시"
-    },
-    {
-     "part": "use",
-     "mean": "사용하다"
-    }
-   ],
-   "etymHint": "re(다시)+use(사용하다) → 다시 사용하다 → 재사용하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -360,6 +320,36 @@
     "exams": 2,
     "recentYear": "2026",
     "stars": 1
+   }
+  },
+  {
+   "en": "ruminate",
+   "ipa": "/ˈruːmɪˌneɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "깊이 생각하다, 숙고하다",
+     "ex": "The author ruminates at length on the ethical contradictions inherent in contemporary liberal democracies.",
+     "tr": "저자는 현대 자유 민주주의에 내재된 윤리적 모순에 대해 오랫동안 깊이 생각한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ponder",
+    "deliberate",
+    "contemplate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -459,6 +449,36 @@
    }
   },
   {
+   "en": "erode",
+   "ipa": "/ɪˈroʊd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "잠식하다, 침식하다",
+     "ex": "Populist rhetoric can gradually erode public trust in democratic institutions and independent media.",
+     "tr": "포퓰리즘 수사는 민주주의 기관과 독립 미디어에 대한 공공의 신뢰를 서서히 잠식할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "undermine",
+    "corrode",
+    "wear away"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "recipient",
    "ipa": "/rɪˈsɪpɪənt/",
    "pos": "n.",
@@ -506,46 +526,33 @@
    }
   },
   {
-   "en": "arose",
-   "ipa": "/əˈroʊz/",
-   "pos": "v.",
+   "en": "postulate",
+   "ipa": "/ˈpɑstʃəlɪt/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "발생했다, 생겨났다 (arise의 과거형)",
-     "ex": "The tradition of exchanging elaborately wrapped gifts arose during a period of rapid industrial expansion and commercialization.",
-     "tr": "정교하게 포장된 선물을 교환하는 전통은 빠른 산업 확장과 상업화의 시기에 생겨났다.",
-     "src": "2012 6월모평 24번"
+     "pos": "n",
+     "ko": "공준; 가정",
+     "ex": "Euclid's fifth postulate, regarding parallel lines, remained unquestioned for over two thousand years.",
+     "tr": "평행선에 관한 유클리드의 다섯 번째 공준은 2천 년 이상 의심 없이 받아들여졌다.",
+     "src": ""
     }
    ],
    "syn": [
-    "emerged",
-    "originated",
-    "developed",
-    "came about"
+    "axiom",
+    "premise",
+    "assumption"
    ],
-   "deriv": [
-    "arise (v.)",
-    "arisen (past participle)"
-   ],
-   "roots": [
-    {
-     "part": "a",
-     "mean": "위로"
-    },
-    {
-     "part": "rise",
-     "mean": "오르다"
-    }
-   ],
-   "etymHint": "a(위로)+rise(오르다) → 위로 오르다 → 생겨나다, 발생하다",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -598,45 +605,33 @@
    }
   },
   {
-   "en": "tap",
-   "ipa": "/tæp/",
-   "pos": "v.",
+   "en": "remuneration",
+   "ipa": "/rɪˌmjuːnəˈreɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "(자원·잠재력을) 활용하다, 끌어내다",
-     "ex": "Innovative companies seek to tap the creative potential of their workforce through collaborative design sessions.",
-     "tr": "혁신적인 기업들은 협력적인 디자인 세션을 통해 직원들의 창의적 잠재력을 활용하려 한다.",
-     "src": "2010 수능 27번"
-    },
-    {
-     "pos": "v.",
-     "ko": "가볍게 두드리다"
-    },
-    {
-     "pos": "n.",
-     "ko": "수도꼭지; 가볍게 두드리기"
+     "pos": "n",
+     "ko": "보수, 급여, 보상",
+     "ex": "The board approved a substantial increase in executive remuneration despite declining profits.",
+     "tr": "이사회는 수익 감소에도 불구하고 임원 보수의 상당한 인상을 승인했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "utilize",
-    "exploit",
-    "draw on",
-    "knock"
+    "compensation",
+    "salary",
+    "emolument"
    ],
-   "deriv": [
-    "tapping (n.)",
-    "untapped (adj.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -732,6 +727,36 @@
    }
   },
   {
+   "en": "bureaucratic",
+   "ipa": "/ˌbjʊərəˈkrætɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "관료적인, 행정 절차에 얽매인",
+     "ex": "The bureaucratic inertia of the regulatory agency delayed the rollout of essential infrastructure.",
+     "tr": "규제 기관의 관료적 타성이 필수 인프라 구축을 지연시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "administrative",
+    "procedural",
+    "red-tape-bound"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "scarcity",
    "ipa": "/ˈskeərsɪti/",
    "pos": "n.",
@@ -775,6 +800,36 @@
    }
   },
   {
+   "en": "homeostasis",
+   "ipa": "/ˌhoʊmiəˈsteɪsɪs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "항상성 (생체 내부 환경의 안정 유지)",
+     "ex": "Homeostasis is maintained through negative feedback loops that counteract deviations from physiological norms.",
+     "tr": "항상성은 생리학적 기준에서의 편차를 상쇄하는 음성 피드백 루프를 통해 유지된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "physiological balance",
+    "internal equilibrium",
+    "self-regulation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "backfire",
    "ipa": "/ˌbækˈfaɪər/",
    "pos": "v.",
@@ -814,6 +869,36 @@
     "exams": 2,
     "recentYear": "2013",
     "stars": 1
+   }
+  },
+  {
+   "en": "belie",
+   "ipa": "/bɪˈlaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "반박하다, 거짓임을 드러내다",
+     "ex": "The tranquil surface of the prose belied a deeply subversive argument lurking beneath.",
+     "tr": "산문의 고요한 표면은 그 아래 숨어 있는 깊이 전복적인 주장을 감추고 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "contradict",
+    "refute",
+    "negate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -860,6 +945,36 @@
     "exams": 2,
     "recentYear": "2013",
     "stars": 1
+   }
+  },
+  {
+   "en": "replicate",
+   "ipa": "/ˈrɛplɪkeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "복제하다, 재현하다",
+     "ex": "Scientists struggle to replicate the results of many landmark psychological studies under controlled conditions.",
+     "tr": "과학자들은 통제된 조건에서 많은 획기적인 심리학 연구 결과를 재현하는 데 어려움을 겪고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reproduce",
+    "duplicate",
+    "recreate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -937,6 +1052,36 @@
    }
   },
   {
+   "en": "nepotism",
+   "ipa": "/ˈnɛpətɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "족벌주의, 연고 채용",
+     "ex": "The audit revealed widespread nepotism in the hiring practices of the state-owned enterprise.",
+     "tr": "감사를 통해 국영 기업의 채용 관행에서 만연한 족벌주의가 드러났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "favoritism",
+    "cronyism",
+    "patronage"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "inquire",
    "ipa": "/ɪnˈkwaɪər/",
    "pos": "v.",
@@ -985,6 +1130,36 @@
    }
   },
   {
+   "en": "bifurcate",
+   "ipa": "/ˈbaɪfərkeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "둘로 나누다, 분기하다",
+     "ex": "The debate over immigration policy has bifurcated public opinion along deeply ideological lines.",
+     "tr": "이민 정책에 대한 논쟁은 깊은 이념적 노선을 따라 여론을 둘로 나뉘게 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "divide",
+    "split",
+    "diverge"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "heartfelt",
    "ipa": "/ˈhɑːrtfelt/",
    "pos": "adj.",
@@ -1024,6 +1199,36 @@
     "exams": 2,
     "recentYear": "2012",
     "stars": 1
+   }
+  },
+  {
+   "en": "frivolous",
+   "ipa": "/ˈfrɪvələs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "경솔한, 사소한",
+     "ex": "The court dismissed the lawsuit as frivolous, finding no substantive legal basis for the claim.",
+     "tr": "법원은 소송에 실질적인 법적 근거가 없다고 판단하여 경솔한 것으로 기각했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "trivial",
+    "flippant",
+    "superficial"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1070,129 +1275,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "buzz",
-   "ipa": "/bʌz/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "윙윙거리는 소리; 소란, 떠들썩함",
-     "ex": "The incessant buzz of complaints from frustrated passengers eventually prompted the driver to take action.",
-     "tr": "좌절한 승객들의 끊임없는 불평 소리는 결국 운전사가 행동을 취하도록 촉구했다.",
-     "src": "2020 6월모평 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(구어) 화제, 유행어"
-    },
-    {
-     "pos": "v.",
-     "ko": "윙윙거리다"
-    }
-   ],
-   "syn": [
-    "hum",
-    "murmur",
-    "stir",
-    "commotion"
-   ],
-   "deriv": [
-    "buzzing (adj./n.)",
-    "buzzword (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mermaid",
-   "ipa": "/ˈmɜːrmeɪd/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "인어",
-     "ex": "The song from the animated film about a mermaid rose above the noise, momentarily calming the restless passengers.",
-     "tr": "인어에 관한 애니메이션 영화의 노래가 소음 위로 올라와 잠시 불안한 승객들을 진정시켰다.",
-     "src": "2012 6월모평 31번"
-    }
-   ],
-   "syn": [
-    "siren",
-    "sea-maiden"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "mere",
-     "mean": "바다 (고대영어)"
-    },
-    {
-     "part": "maid",
-     "mean": "처녀, 소녀"
-    }
-   ],
-   "etymHint": "mere(바다)+maid(소녀) → 바다의 소녀 → 인어",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sixth",
-   "ipa": "/sɪksθ/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "여섯 번째의",
-     "ex": "The letter 'I' is among the sixth most frequently used characters in English, yet keyboard designers placed it under weaker fingers.",
-     "tr": "'I'는 영어에서 여섯 번째로 가장 자주 사용되는 문자 중 하나이지만, 키보드 설계자들은 이를 약한 손가락 아래에 배치했다.",
-     "src": "2012 6월모평 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "6분의 1; 여섯 번째 것"
-    }
-   ],
-   "syn": [],
-   "deriv": [
-    "six (n./adj.)",
-    "sixteen (n./adj.)",
-    "sixty (n./adj.)"
-   ],
-   "roots": [
-    {
-     "part": "six",
-     "mean": "6 (고대영어 six)"
-    },
-    {
-     "part": "-th",
-     "mean": "서수 접미사"
-    }
-   ],
-   "etymHint": "six(6)+th(서수 접미사) → 여섯 번째의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
     "stars": 1
    }
   },
@@ -1245,119 +1327,33 @@
    }
   },
   {
-   "en": "bath",
-   "ipa": "/bæθ/",
-   "pos": "n.",
+   "en": "existential",
+   "ipa": "/ˌɛɡzɪˈstɛnʃəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "목욕; 욕조",
-     "ex": "Thousands of floating bath toys drifted across the Pacific Ocean after a cargo container fell overboard in a winter storm.",
-     "tr": "수천 개의 떠다니는 욕조 장난감이 겨울 폭풍에 화물 컨테이너가 바다에 떨어진 후 태평양을 가로질러 표류했다.",
-     "src": "2012 수능 20번"
-    },
-    {
-     "pos": "v.",
-     "ko": "목욕시키다"
+     "pos": "adj",
+     "ko": "실존적, 존재의 의미에 관한",
+     "ex": "Facing the terminal diagnosis, he entered a period of profound existential reflection about the value of his life's work.",
+     "tr": "말기 진단을 받은 후, 그는 자신의 생애 업적의 가치에 대한 깊은 실존적 성찰의 시기로 접어들었다.",
+     "src": ""
     }
    ],
    "syn": [
-    "bathe",
-    "soak",
-    "immerse"
-   ],
-   "deriv": [
-    "bathtub (n.)",
-    "bathroom (n.)",
-    "bathe (v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "buffalo",
-   "ipa": "/ˈbʌfəloʊ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "물소, 버팔로",
-     "ex": "According to Cambodian legend, ancient farmers devised a martial art specifically to protect their precious buffalo from marauding lions.",
-     "tr": "캄보디아 전설에 따르면, 고대 농부들은 습격하는 사자들로부터 소중한 물소를 보호하기 위해 특별히 무술을 고안했다.",
-     "src": "2012 6월모평 33번"
-    }
-   ],
-   "syn": [
-    "bison",
-    "ox",
-    "bovine"
+    "philosophical",
+    "ontological",
+    "fundamental"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "province",
-   "ipa": "/ˈprɒvɪns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "지방, 주(州)",
-     "ex": "The central government granted each province greater autonomy over local taxation and educational policy.",
-     "tr": "중앙 정부는 각 지방에 지방 세금과 교육 정책에 대한 더 큰 자율성을 부여했다.",
-     "src": "2022 수능 24번"
-    },
-    {
-     "pos": "n.",
-     "ko": "영역, 분야 (특정 집단·전문가의)"
-    }
-   ],
-   "syn": [
-    "region",
-    "territory",
-    "domain",
-    "realm",
-    "sphere"
-   ],
-   "deriv": [
-    "provincial (adj.)",
-    "provincialism (n.)"
-   ],
-   "roots": [
-    {
-     "part": "pro",
-     "mean": "앞에, 대신하여"
-    },
-    {
-     "part": "vinc (vincere)",
-     "mean": "정복하다"
-    }
-   ],
-   "etymHint": "pro(앞에)+vinc(정복하다) → 앞서 정복된 땅 → 지방, 영역",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1403,51 +1399,33 @@
    }
   },
   {
-   "en": "performer",
-   "ipa": "/pərˈfɔːrmər/",
-   "pos": "n.",
+   "en": "promulgate",
+   "ipa": "/ˈprɒməlɡeɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "연주자, 공연자, 수행자",
-     "ex": "The researcher invited skilled performers to the laboratory and measured the precision and speed of their finger movements.",
-     "tr": "연구자는 숙련된 연주자들을 실험실로 초청하여 그들의 손가락 움직임의 정밀도와 속도를 측정했다.",
-     "src": "2009 6월모평 24번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(어떤 역할을 수행하는) 사람, 사물"
+     "pos": "v",
+     "ko": "공포하다, (법령을) 선포하다",
+     "ex": "The constitutional court promulgated new guidelines on freedom of expression.",
+     "tr": "헌법 재판소는 표현의 자유에 관한 새로운 지침을 공포했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "artist",
-    "actor",
-    "musician",
-    "achiever"
+    "enact",
+    "decree",
+    "proclaim"
    ],
-   "deriv": [
-    "perform (v.)",
-    "performance (n.)",
-    "performing (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "per",
-     "mean": "완전히, 철저히"
-    },
-    {
-     "part": "form (formare)",
-     "mean": "형성하다"
-    }
-   ],
-   "etymHint": "per(완전히)+form(형성하다) → 완전히 형태를 갖추다 → 수행하다 → 공연자",
-   "level": "C1",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1502,6 +1480,36 @@
    }
   },
   {
+   "en": "hubris",
+   "ipa": "/ˈhjuːbrɪs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "오만; 자만심",
+     "ex": "The collapse of the hedge fund was attributed to the hubris of its founders, who believed they had eliminated risk.",
+     "tr": "헤지펀드의 붕괴는 위험을 제거했다고 믿었던 창업자들의 오만에 기인한 것으로 평가받는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "arrogance",
+    "overconfidence",
+    "presumption"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "reactive",
    "ipa": "/riˈæktɪv/",
    "pos": "adj.",
@@ -1546,224 +1554,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "unattainable",
-   "ipa": "/ˌʌnəˈteɪnəbl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "달성할 수 없는, 얻을 수 없는",
-     "ex": "Digital technology makes accessible a vast range of data that would have been entirely unattainable in the pre-internet era.",
-     "tr": "디지털 기술은 인터넷 이전 시대에는 완전히 얻을 수 없었을 방대한 양의 데이터를 접근 가능하게 만든다.",
-     "src": "2022 9월모평 40번"
-    }
-   ],
-   "syn": [
-    "unreachable",
-    "inaccessible",
-    "impossible",
-    "out of reach"
-   ],
-   "deriv": [
-    "attain (v.)",
-    "attainable (adj.)",
-    "attainment (n.)"
-   ],
-   "roots": [
-    {
-     "part": "un",
-     "mean": "부정"
-    },
-    {
-     "part": "at (ad)",
-     "mean": "~에"
-    },
-    {
-     "part": "tain (tenere)",
-     "mean": "잡다, 유지하다"
-    }
-   ],
-   "etymHint": "un(부정)+at(~에)+tain(잡다) → 잡을 수 없는 → 달성할 수 없는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "stationary",
-   "ipa": "/ˈsteɪʃəneri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "정지한, 움직이지 않는",
-     "ex": "When an object is stationary, the net forces acting upon it must sum to zero, as Newton's first law dictates.",
-     "tr": "물체가 정지해 있을 때, 그것에 작용하는 순 힘은 뉴턴의 제1법칙이 규정하듯 합이 0이어야 한다.",
-     "src": "2012 6월모평 42번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "변화 없는, 고정된"
-    }
-   ],
-   "syn": [
-    "motionless",
-    "still",
-    "immobile",
-    "fixed"
-   ],
-   "deriv": [
-    "stationarily (adv.)",
-    "stationariness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "stat (stare)",
-     "mean": "서다, 서 있다"
-    },
-    {
-     "part": "-ary",
-     "mean": "~의 성질"
-    }
-   ],
-   "etymHint": "stat(서다)+ary(성질) → 서 있는 성질의 → 정지한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "soak",
-   "ipa": "/soʊk/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "흠뻑 적시다, 담그다",
-     "ex": "Stranded outdoors in a downpour with no shelter, she found her clothes soaked within minutes of the storm's onset.",
-     "tr": "피신처 없이 폭우에 야외에서 발이 묶인 채, 그녀는 폭풍이 시작된 지 몇 분 만에 옷이 흠뻑 젖은 것을 발견했다.",
-     "src": "2016 수능 32번"
-    },
-    {
-     "pos": "v.",
-     "ko": "흡수하다, 스며들다"
-    }
-   ],
-   "syn": [
-    "drench",
-    "saturate",
-    "immerse",
-    "steep"
-   ],
-   "deriv": [
-    "soaked (adj.)",
-    "soaking (adj./n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "tongue",
-   "ipa": "/tʌŋ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "혀; 언어, 말투",
-     "ex": "Behavioral studies of taste receptors typically require participants to immerse their tongue in an acidic solution for a set duration.",
-     "tr": "미각 수용체에 관한 행동 연구는 일반적으로 참가자들이 일정 시간 동안 혀를 산성 용액에 담글 것을 요구한다.",
-     "src": "2012 6월모평 45번"
-    },
-    {
-     "pos": "n.",
-     "ko": "언어, 모국어"
-    }
-   ],
-   "syn": [
-    "language",
-    "speech",
-    "dialect"
-   ],
-   "deriv": [
-    "tongue-tied (adj.)",
-    "mother tongue (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "cloudy",
-   "ipa": "/ˈklaʊdi/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "흐린, 구름 낀",
-     "ex": "Under an increasingly hot and cloudy atmosphere, microbial life might persist for extended periods during a planetary transformation.",
-     "tr": "점점 더 뜨겁고 흐린 대기 아래에서, 미생물 생명체는 행성 변환 기간 동안 오랜 기간 지속될 수 있다.",
-     "src": "2013 6월모평 24번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "불분명한, 흐릿한"
-    }
-   ],
-   "syn": [
-    "overcast",
-    "hazy",
-    "murky",
-    "unclear"
-   ],
-   "deriv": [
-    "cloud (n./v.)",
-    "cloudless (adj.)",
-    "cloudiness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "cloud",
-     "mean": "구름 (고대영어 clud)"
-    },
-    {
-     "part": "-y",
-     "mean": "~의 성질"
-    }
-   ],
-   "etymHint": "cloud(구름)+y(성질) → 구름이 낀 → 흐린",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
     "stars": 1
    }
   }

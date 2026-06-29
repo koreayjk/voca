@@ -2,89 +2,161 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 11,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
   {
-   "en": "cruise",
-   "ipa": "/kruːz/",
-   "pos": "v.",
+   "en": "artifice",
+   "ipa": "/ˈɑːrtɪfɪs/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "유람하다; 순항하다",
-     "ex": "They decided to cruise along the Mediterranean coast for two weeks before returning home.",
-     "tr": "그들은 귀국하기 전에 2주 동안 지중해 해안을 따라 유람하기로 했다.",
-     "src": "2025 9월모평 18번"
-    },
-    {
-     "pos": "n.",
-     "ko": "크루즈 여행"
-    },
-    {
-     "pos": "v.",
-     "ko": "(차량이) 일정 속도로 달리다"
+     "pos": "n",
+     "ko": "기교, 꾀, 교묘한 장치",
+     "ex": "What appears to be spontaneity in her watercolours is, in fact, the product of painstaking artifice refined over decades.",
+     "tr": "그녀의 수채화에서 자연스러움처럼 보이는 것은 사실 수십 년에 걸쳐 다듬어진 고심한 기교의 산물이다.",
+     "src": ""
     }
    ],
    "syn": [
-    "sail",
-    "voyage",
-    "glide"
+    "craft",
+    "contrivance",
+    "ingenuity"
    ],
-   "deriv": [
-    "cruiser (n.)",
-    "cruising (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "statue",
-   "ipa": "/ˈstætʃuː/",
-   "pos": "n.",
+   "en": "unattainable",
+   "ipa": "/ˌʌnəˈteɪnəbl/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "조각상, 동상",
-     "ex": "The ancient tomb was adorned with dozens of marble statues depicting warriors and deities.",
-     "tr": "그 고대 무덤은 전사와 신을 묘사한 수십 개의 대리석 조각상으로 장식되어 있었다.",
-     "src": "2016 6월모평 25번"
-    },
-    {
-     "pos": "n.",
-     "ko": "입상(立像)"
+     "pos": "adj.",
+     "ko": "달성할 수 없는, 얻을 수 없는",
+     "ex": "Digital technology makes accessible a vast range of data that would have been entirely unattainable in the pre-internet era.",
+     "tr": "디지털 기술은 인터넷 이전 시대에는 완전히 얻을 수 없었을 방대한 양의 데이터를 접근 가능하게 만든다.",
+     "src": "2022 9월모평 40번"
     }
    ],
    "syn": [
-    "sculpture",
-    "figurine",
-    "effigy"
+    "unreachable",
+    "inaccessible",
+    "impossible",
+    "out of reach"
    ],
    "deriv": [
-    "statuesque (adj.)",
-    "statuette (n.)"
+    "attain (v.)",
+    "attainable (adj.)",
+    "attainment (n.)"
    ],
    "roots": [
     {
-     "part": "stat",
-     "mean": "서다"
+     "part": "un",
+     "mean": "부정"
+    },
+    {
+     "part": "at (ad)",
+     "mean": "~에"
+    },
+    {
+     "part": "tain (tenere)",
+     "mean": "잡다, 유지하다"
     }
    ],
-   "etymHint": "stat(서다) → 서 있는 형상 → 조각상",
+   "etymHint": "un(부정)+at(~에)+tain(잡다) → 잡을 수 없는 → 달성할 수 없는",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2025",
+    "recentYear": "2022",
     "stars": 1
+   }
+  },
+  {
+   "en": "stationary",
+   "ipa": "/ˈsteɪʃəneri/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "정지한, 움직이지 않는",
+     "ex": "When an object is stationary, the net forces acting upon it must sum to zero, as Newton's first law dictates.",
+     "tr": "물체가 정지해 있을 때, 그것에 작용하는 순 힘은 뉴턴의 제1법칙이 규정하듯 합이 0이어야 한다.",
+     "src": "2012 6월모평 42번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "변화 없는, 고정된"
+    }
+   ],
+   "syn": [
+    "motionless",
+    "still",
+    "immobile",
+    "fixed"
+   ],
+   "deriv": [
+    "stationarily (adv.)",
+    "stationariness (n.)"
+   ],
+   "roots": [
+    {
+     "part": "stat (stare)",
+     "mean": "서다, 서 있다"
+    },
+    {
+     "part": "-ary",
+     "mean": "~의 성질"
+    }
+   ],
+   "etymHint": "stat(서다)+ary(성질) → 서 있는 성질의 → 정지한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "elucidate",
+   "ipa": "/ɪˈluːsɪˌdeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "명확히 설명하다, 해명하다",
+     "ex": "The professor elucidated the paradox by drawing on both formal logic and intuitive examples.",
+     "tr": "교수는 형식 논리와 직관적인 예시를 모두 활용하여 그 역설을 명확히 설명했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "explicate",
+    "clarify",
+    "illuminate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -134,6 +206,36 @@
    }
   },
   {
+   "en": "intransigent",
+   "ipa": "/ɪnˈtræn.sɪ.dʒənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "완고한, 타협하지 않는",
+     "ex": "Negotiations broke down because both sides remained intransigent on the issue of territorial boundaries.",
+     "tr": "양측이 영토 경계 문제에 대해 완고한 태도를 유지했기 때문에 협상이 결렬되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inflexible",
+    "obstinate",
+    "recalcitrant"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "shrug",
    "ipa": "/ʃrʌɡ/",
    "pos": "v.",
@@ -169,49 +271,33 @@
    }
   },
   {
-   "en": "angle",
-   "ipa": "/ˈæŋɡəl/",
-   "pos": "n.",
+   "en": "vitriolic",
+   "ipa": "/ˌvɪtriˈɒlɪk/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "각도; 관점",
-     "ex": "Examining the issue from a different angle reveals assumptions that had previously gone unquestioned.",
-     "tr": "다른 관점에서 그 문제를 살펴보면 이전에는 의문을 품지 않았던 가정들이 드러난다.",
-     "src": "2011 수능 42번"
-    },
-    {
-     "pos": "n.",
-     "ko": "각(角)"
-    },
-    {
-     "pos": "v.",
-     "ko": "낚시하다; (특정 방향으로) 기울이다"
+     "pos": "adj",
+     "ko": "독설적인, 신랄한",
+     "ex": "The vitriolic exchange between the two scholars was published in full by the academic journal.",
+     "tr": "두 학자 사이의 독설적인 교환은 그 학술지에 전문이 게재되었다.",
+     "src": ""
     }
    ],
    "syn": [
-    "perspective",
-    "viewpoint",
-    "slant"
+    "caustic",
+    "corrosive",
+    "acerbic"
    ],
-   "deriv": [
-    "angular (adj.)",
-    "angler (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ang",
-     "mean": "굽다, 구부러지다"
-    }
-   ],
-   "etymHint": "ang(굽다) → 두 선이 만나 굽어진 곳 → 각도",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -261,47 +347,6 @@
    }
   },
   {
-   "en": "christianity",
-   "ipa": "/ˌkrɪstʃiˈænɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "기독교",
-     "ex": "The spread of Christianity throughout the Roman Empire transformed the cultural and political landscape of the ancient world.",
-     "tr": "로마 제국 전역으로의 기독교 확산은 고대 세계의 문화적·정치적 지형을 변화시켰다.",
-     "src": "2019 수능 32번"
-    }
-   ],
-   "syn": [
-    "the Christian faith",
-    "Christendom"
-   ],
-   "deriv": [
-    "Christian (adj./n.)",
-    "Christianize (v.)"
-   ],
-   "roots": [
-    {
-     "part": "Christ",
-     "mean": "그리스도"
-    },
-    {
-     "part": "-ity",
-     "mean": "상태·성질"
-    }
-   ],
-   "etymHint": "Christ(그리스도)+ian+ity(성질) → 그리스도를 따르는 신앙 → 기독교",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
    "en": "elegance",
    "ipa": "/ˈelɪɡəns/",
    "pos": "n.",
@@ -344,38 +389,33 @@
    }
   },
   {
-   "en": "rocket",
-   "ipa": "/ˈrɒkɪt/",
-   "pos": "n.",
+   "en": "resilience",
+   "ipa": "/rɪˈzɪliəns/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "로켓",
-     "ex": "During the war, engineers raced to develop a system capable of intercepting enemy rockets before they reached their targets.",
-     "tr": "전쟁 중에 엔지니어들은 적의 로켓이 목표물에 도달하기 전에 요격할 수 있는 시스템을 개발하기 위해 경쟁했다.",
-     "src": "2026 9월모평 26번"
-    },
-    {
-     "pos": "v.",
-     "ko": "급등하다, 치솟다"
+     "pos": "n",
+     "ko": "회복탄력성, 역경에서 회복하는 능력",
+     "ex": "Psychologists now recognize resilience not as a fixed trait but as a dynamic capacity cultivated through experience.",
+     "tr": "심리학자들은 이제 회복탄력성을 고정된 특성이 아니라 경험을 통해 개발되는 역동적 능력으로 인식한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "missile",
-    "projectile"
+    "fortitude",
+    "buoyancy",
+    "adaptability"
    ],
-   "deriv": [
-    "rocketry (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -418,6 +458,36 @@
     "exams": 2,
     "recentYear": "2027",
     "stars": 1
+   }
+  },
+  {
+   "en": "culpable",
+   "ipa": "/ˈkʌlpəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "유죄의, 과실이 있는",
+     "ex": "The investigation found the corporation culpable for the environmental damage caused by its subsidiary.",
+     "tr": "조사 결과 해당 기업이 자회사가 야기한 환경 피해에 대해 책임이 있는 것으로 밝혀졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "blameworthy",
+    "liable",
+    "negligent"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -468,6 +538,36 @@
    }
   },
   {
+   "en": "plausible",
+   "ipa": "/ˈplɔːzɪbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "그럴듯한, 타당해 보이는",
+     "ex": "The hypothesis, while plausible on its face, collapsed under rigorous empirical scrutiny.",
+     "tr": "가설은 표면상 그럴듯해 보였지만 엄격한 경험적 검토 아래 붕괴되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "credible",
+    "conceivable",
+    "tenable"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "liken",
    "ipa": "/ˈlaɪkən/",
    "pos": "v.",
@@ -506,42 +606,33 @@
    }
   },
   {
-   "en": "wink",
-   "ipa": "/wɪŋk/",
-   "pos": "v.",
+   "en": "grotesque",
+   "ipa": "/ɡroʊˈtɛsk/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "윙크하다; (눈을) 깜빡이다",
-     "ex": "She winked at her colleague across the room, signalling that the negotiation was going according to plan.",
-     "tr": "그녀는 협상이 계획대로 진행되고 있음을 알리며 방 건너편의 동료에게 윙크했다.",
-     "src": "2012 9월모평 31번"
-    },
-    {
-     "pos": "n.",
-     "ko": "윙크; 눈 깜빡임"
-    },
-    {
-     "pos": "idiom",
-     "ko": "한숨도 못 자다 (not sleep a wink)"
+     "pos": "adj",
+     "ko": "그로테스크한, 기이하고 섬뜩한",
+     "ex": "Flannery O'Connor's grotesque characters inhabit a Southern Gothic world where spiritual violence erupts beneath polite social surfaces.",
+     "tr": "플래너리 오코너의 그로테스크한 인물들은 예의 바른 사회적 표면 아래 정신적 폭력이 터져 나오는 남부 고딕 세계에 살고 있다.",
+     "src": ""
     }
    ],
    "syn": [
-    "blink",
-    "signal"
+    "bizarre",
+    "macabre",
+    "distorted"
    ],
-   "deriv": [
-    "winking (adj.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -577,173 +668,6 @@
     "count": 2,
     "exams": 2,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "stomach",
-   "ipa": "/ˈstʌmək/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "위장; 배",
-     "ex": "Infants placed on their stomachs during supervised play develop stronger core muscles and better motor coordination.",
-     "tr": "감독된 놀이 중에 배를 아래로 눕혀진 영아들은 더 강한 중심근육과 더 나은 운동 협응력을 발달시킨다.",
-     "src": "2018 6월모평 21번"
-    },
-    {
-     "pos": "v.",
-     "ko": "참다, 견디다"
-    },
-    {
-     "pos": "n.",
-     "ko": "식욕; 용기"
-    }
-   ],
-   "syn": [
-    "belly",
-    "abdomen",
-    "gut"
-   ],
-   "deriv": [
-    "stomachache (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "secondhand",
-   "ipa": "/ˌsekəndˈhænd/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "중고의; 간접적인",
-     "ex": "The proliferation of platforms for trading secondhand goods has fundamentally altered how consumers think about ownership.",
-     "tr": "중고품 거래 플랫폼의 확산은 소비자들이 소유에 대해 생각하는 방식을 근본적으로 바꾸었다.",
-     "src": "2012 9월모평 32번"
-    },
-    {
-     "pos": "adv.",
-     "ko": "간접적으로; 중고로"
-    }
-   ],
-   "syn": [
-    "used",
-    "pre-owned",
-    "indirect"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "second",
-     "mean": "두 번째"
-    },
-    {
-     "part": "hand",
-     "mean": "손"
-    }
-   ],
-   "etymHint": "second(두 번째)+hand(손) → 두 번째 손을 거친 → 중고의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "intend",
-   "ipa": "/ɪnˈtend/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "의도하다, ~할 작정이다",
-     "ex": "The legislation was originally intended to protect small businesses, yet its effects have been far more wide-ranging.",
-     "tr": "그 법률은 원래 소기업을 보호하기 위해 의도되었지만, 그 효과는 훨씬 더 광범위했다.",
-     "src": "2022 9월모평 22번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(특정 용도·사람을 위해) 의미하다"
-    }
-   ],
-   "syn": [
-    "mean",
-    "plan",
-    "aim"
-   ],
-   "deriv": [
-    "intention (n.)",
-    "intentional (adj.)",
-    "intent (n./adj.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안으로"
-    },
-    {
-     "part": "tend",
-     "mean": "뻗다, 향하다"
-    }
-   ],
-   "etymHint": "in(안으로)+tend(향하다) → 마음속으로 향하다 → 의도하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "bin",
-   "ipa": "/bɪn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "(쓰레기·저장용) 통, 함",
-     "ex": "Recycling bins placed at convenient locations throughout the city led to a measurable decrease in waste.",
-     "tr": "시 전역의 편리한 위치에 놓인 재활용 통은 쓰레기의 눈에 띄는 감소로 이어졌다.",
-     "src": "2015 9월모평 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "버리다, 폐기하다"
-    }
-   ],
-   "syn": [
-    "container",
-    "receptacle",
-    "box"
-   ],
-   "deriv": [
-    "dustbin (n.)",
-    "recycling bin (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
     "stars": 1
    }
   },
@@ -794,46 +718,33 @@
    }
   },
   {
-   "en": "super",
-   "ipa": "/ˈsuːpər/",
-   "pos": "adj.",
+   "en": "populism",
+   "ipa": "/ˈpɒpjʊlɪzəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "최고의, 탁월한; 우월한",
-     "ex": "Societies that regard their own customs as superior often struggle to engage with other cultures on equal terms.",
-     "tr": "자신의 관습을 우월하다고 여기는 사회들은 다른 문화와 대등한 조건으로 교류하는 데 어려움을 겪는 경우가 많다.",
-     "src": "2016 수능 22번"
-    },
-    {
-     "pos": "prefix",
-     "ko": "초(超)-, 상위의"
+     "pos": "n",
+     "ko": "포퓰리즘, 대중주의",
+     "ex": "Analysts warned that unchecked populism threatens the institutional checks of liberal democracy.",
+     "tr": "분석가들은 견제받지 않는 포퓰리즘이 자유 민주주의의 제도적 견제를 위협한다고 경고했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "excellent",
-    "outstanding",
-    "superior"
+    "demagoguery",
+    "nativism",
+    "anti-elitism"
    ],
-   "deriv": [
-    "superb (adj.)",
-    "superior (adj.)",
-    "superfluous (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "super",
-     "mean": "위에, 넘어서"
-    }
-   ],
-   "etymHint": "super(위에) → 위에 있는 → 탁월한·우월한",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -883,44 +794,33 @@
    }
   },
   {
-   "en": "bounce",
-   "ipa": "/baʊns/",
-   "pos": "v.",
+   "en": "acrimonious",
+   "ipa": "/ˌækrɪˈmoʊniəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "튀다, 튀어 오르다",
-     "ex": "Light bounces off reflective surfaces at an angle equal to that at which it strikes them.",
-     "tr": "빛은 반사면에서 부딪히는 각도와 동일한 각도로 튕겨 나온다.",
-     "src": "2010 수능 34번"
-    },
-    {
-     "pos": "v.",
-     "ko": "활기차게 움직이다"
-    },
-    {
-     "pos": "n.",
-     "ko": "튐; 탄력"
+     "pos": "adj",
+     "ko": "신랄한, 격렬히 대립하는",
+     "ex": "The acrimonious dispute over the estate dragged on for nearly a decade.",
+     "tr": "유산을 둘러싼 격렬한 분쟁은 거의 10년 동안 계속되었다.",
+     "src": ""
     }
    ],
    "syn": [
-    "rebound",
-    "spring",
-    "ricochet"
+    "bitter",
+    "vitriolic",
+    "contentious"
    ],
-   "deriv": [
-    "bouncy (adj.)",
-    "bouncer (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -963,6 +863,36 @@
     "exams": 2,
     "recentYear": "2012",
     "stars": 1
+   }
+  },
+  {
+   "en": "predispose",
+   "ipa": "/ˌpriːdɪˈspoʊz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "성향을 갖게 하다, 취약하게 만들다",
+     "ex": "Certain genetic factors predispose individuals to developing cardiovascular disease later in life.",
+     "tr": "특정 유전적 요인은 개인을 노년기에 심혈관 질환을 발병하게 하는 성향을 갖게 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "incline",
+    "dispose",
+    "make susceptible"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1054,6 +984,36 @@
    }
   },
   {
+   "en": "rectify",
+   "ipa": "/ˈrɛktɪfaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "바로잡다, 시정하다",
+     "ex": "The legislature moved quickly to rectify the constitutional ambiguity that had paralyzed the courts.",
+     "tr": "의회는 법원을 마비시켰던 헌법적 모호성을 신속히 시정하기 위해 움직였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "correct",
+    "remedy",
+    "redress"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "commonplace",
    "ipa": "/ˈkɒmənpleɪs/",
    "pos": "adj.",
@@ -1094,6 +1054,36 @@
     "exams": 2,
     "recentYear": "2016",
     "stars": 1
+   }
+  },
+  {
+   "en": "convoluted",
+   "ipa": "/ˈkɒnvəluːtɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "뒤얽힌, 복잡한",
+     "ex": "The convoluted syntax of the statute made it nearly impossible to interpret without legal counsel.",
+     "tr": "법령의 복잡한 구문은 법률 자문 없이는 해석이 거의 불가능했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "tortuous",
+    "labyrinthine",
+    "Byzantine"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1139,44 +1129,33 @@
    }
   },
   {
-   "en": "scan",
-   "ipa": "/skæn/",
-   "pos": "v.",
+   "en": "avaricious",
+   "ipa": "/ˌævəˈrɪʃəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "훑어보다, 대충 살피다",
-     "ex": "She scanned the lengthy report for key data points rather than reading every line in full.",
-     "tr": "그녀는 모든 줄을 읽는 대신 핵심 데이터 포인트를 찾기 위해 긴 보고서를 훑어보았다.",
-     "src": "2018 9월모평 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(의료·기술 장치로) 스캔하다"
-    },
-    {
-     "pos": "n.",
-     "ko": "스캔; 정밀 검사"
+     "pos": "adj",
+     "ko": "탐욕스러운, 돈에 욕심이 많은",
+     "ex": "An avaricious landlord systematically denied tenants' requests for basic repairs to maximize profit.",
+     "tr": "탐욕스러운 집주인은 이윤을 극대화하기 위해 세입자들의 기본 수리 요청을 체계적으로 거부했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "skim",
-    "survey",
-    "scrutinize"
+    "greedy",
+    "covetous",
+    "rapacious"
    ],
-   "deriv": [
-    "scanner (n.)",
-    "scanning (n.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1213,6 +1192,36 @@
     "exams": 2,
     "recentYear": "2013",
     "stars": 1
+   }
+  },
+  {
+   "en": "latency",
+   "ipa": "/ˈleɪtənsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "잠재 상태, 지연",
+     "ex": "The latency of the virus meant that carriers could transmit the infection long before displaying symptoms.",
+     "tr": "바이러스의 잠재 상태 특성으로 인해 보균자들은 증상을 나타내기 훨씬 전에 감염을 전파할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "dormancy",
+    "quiescence",
+    "concealment"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1307,6 +1316,36 @@
    }
   },
   {
+   "en": "immutable",
+   "ipa": "/ɪˈmjuːtəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "불변의, 변경 불가능한",
+     "ex": "Legal systems rest on the assumption that certain core principles are immutable across jurisdictions.",
+     "tr": "법체계는 특정 핵심 원칙이 관할권 전반에서 불변한다는 가정에 근거한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "invariable",
+    "fixed",
+    "inalterable"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "deepen",
    "ipa": "/ˈdiːpən/",
    "pos": "v.",
@@ -1349,6 +1388,36 @@
    }
   },
   {
+   "en": "sardonic",
+   "ipa": "/sɑːrˈdɒnɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "냉소적인, 비웃는",
+     "ex": "He offered a sardonic smile whenever colleagues cited consensus as evidence of truth.",
+     "tr": "그는 동료들이 합의를 진실의 증거로 인용할 때마다 냉소적인 미소를 지었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cynical",
+    "derisive",
+    "scornful"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "societal",
    "ipa": "/səˈsaɪɪtəl/",
    "pos": "adj.",
@@ -1387,188 +1456,26 @@
    }
   },
   {
-   "en": "spontaneous",
-   "ipa": "/spɒnˈteɪniəs/",
-   "pos": "adj.",
+   "en": "reflexivity",
+   "ipa": "/ˌriːflɛkˈsɪvɪti/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "자발적인, 즉흥적인",
-     "ex": "The most memorable conversations often arise from spontaneous exchanges rather than carefully planned agendas.",
-     "tr": "가장 기억에 남는 대화는 종종 신중하게 계획된 안건보다는 즉흥적인 대화에서 생겨난다.",
+     "pos": "n",
+     "ko": "재귀성; 반성적 자기인식",
+     "ex": "Sociological reflexivity demands that researchers critically examine how their own assumptions shape their findings.",
+     "tr": "사회학적 재귀성은 연구자들이 자신의 가정이 연구 결과를 어떻게 형성하는지 비판적으로 검토할 것을 요구한다.",
      "src": ""
-    },
-    {
-     "pos": "adj.",
-     "ko": "(물리·화학) 자연발생적인"
     }
    ],
    "syn": [
-    "impulsive",
-    "unplanned",
-    "instinctive"
+    "self-awareness",
+    "introspection",
+    "recursiveness"
    ],
-   "deriv": [
-    "spontaneously (adv.)",
-    "spontaneity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "sponte",
-     "mean": "(라틴어) 자신의 의지로"
-    }
-   ],
-   "etymHint": "sponte(자신의 의지로)+aneous → 자신의 의지에서 비롯된 → 자발적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "adviser",
-   "ipa": "/ədˈvaɪzər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "조언자, 고문",
-     "ex": "Each graduate student is matched with a personal adviser who provides guidance throughout the duration of the programme.",
-     "tr": "각 대학원생은 프로그램 기간 내내 안내를 제공하는 개인 지도교수와 매칭된다.",
-     "src": "2012 수능 18번"
-    }
-   ],
-   "syn": [
-    "consultant",
-    "counsellor",
-    "mentor"
-   ],
-   "deriv": [
-    "advise (v.)",
-    "advice (n.)",
-    "advisory (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ad",
-     "mean": "~에게"
-    },
-    {
-     "part": "vis",
-     "mean": "보다"
-    }
-   ],
-   "etymHint": "ad(~에게)+vis(보다) → 바라봐 주는 사람 → 조언자",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "insightful",
-   "ipa": "/ˈɪnsaɪtfəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "통찰력 있는, 예리한",
-     "ex": "The panel delivered insightful feedback that helped contestants identify weaknesses they had previously overlooked.",
-     "tr": "패널은 참가자들이 이전에 간과했던 약점을 파악하는 데 도움이 되는 통찰력 있는 피드백을 제공했다.",
-     "src": "2012 수능 18번"
-    }
-   ],
-   "syn": [
-    "perceptive",
-    "astute",
-    "penetrating"
-   ],
-   "deriv": [
-    "insight (n.)",
-    "insightfully (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안으로"
-    },
-    {
-     "part": "sight",
-     "mean": "봄"
-    }
-   ],
-   "etymHint": "in(안으로)+sight(봄)+ful → 속을 꿰뚫어 보는 → 통찰력 있는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "cleverness",
-   "ipa": "/ˈklevənəs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "영리함, 재치",
-     "ex": "Relying solely on cleverness to compensate for disorganisation often undermines the quality of one's long-term output.",
-     "tr": "무질서함을 보완하기 위해 영리함에만 의존하는 것은 종종 장기적인 성과의 질을 훼손한다.",
-     "src": "2012 수능 24번"
-    }
-   ],
-   "syn": [
-    "ingenuity",
-    "wit",
-    "acuteness"
-   ],
-   "deriv": [
-    "clever (adj.)",
-    "cleverly (adv.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "perfunctory",
-   "ipa": "/pərˈfʌŋktəri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "형식적인, 건성의",
-     "ex": "He gave the report only a perfunctory glance before signing it.",
-     "tr": "그는 서명하기 전에 보고서를 건성으로 훑어보기만 했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cursory",
-    "superficial",
-    "cursory"
-   ],
-   "deriv": [
-    "perfunctorily (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "per-(완전히)+funct(수행) → 의무만 겨우 수행하는",
    "level": "C2",
    "exam": {
     "tested": false,
@@ -1576,81 +1483,6 @@
     "exams": 0,
     "recentYear": "",
     "stars": 0
-   }
-  },
-  {
-   "en": "messy",
-   "ipa": "/ˈmesi/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "지저분한, 어수선한",
-     "ex": "A persistently messy workspace can reflect and reinforce a lack of structured thinking in its occupant.",
-     "tr": "지속적으로 어수선한 작업 공간은 그 주인의 체계적이지 못한 사고방식을 반영하고 강화할 수 있다.",
-     "src": "2012 수능 24번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "복잡하고 어려운"
-    }
-   ],
-   "syn": [
-    "disorderly",
-    "untidy",
-    "cluttered"
-   ],
-   "deriv": [
-    "mess (n.)",
-    "messiness (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "amaze",
-   "ipa": "/əˈmeɪz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "놀라게 하다, 경탄하게 하다",
-     "ex": "She was amazed to discover that a decade of consistent effort had resulted in such a dramatic improvement in her sales figures.",
-     "tr": "그녀는 10년간의 꾸준한 노력이 자신의 판매 수치에 이렇게 극적인 향상을 가져왔다는 것을 발견하고 놀랐다.",
-     "src": "2011 9월모평 23번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "놀란 (amazed)"
-    }
-   ],
-   "syn": [
-    "astonish",
-    "astound",
-    "stun"
-   ],
-   "deriv": [
-    "amazement (n.)",
-    "amazing (adj.)",
-    "amazingly (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
    }
   }
  ]

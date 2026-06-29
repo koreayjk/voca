@@ -2,8 +2,239 @@
  "book": "수능 고난도",
  "code": "SUN-HARD",
  "day": 3,
- "exampleNote": "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.",
+ "exampleNote": "예문은 C1~C2 고난도 어휘를 위해 자체 집필하거나, 기출 출제 단어는 기출변형으로 작성했습니다.",
  "words": [
+  {
+   "en": "preclude",
+   "ipa": "/prɪˈkluːd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "배제하다, 불가능하게 하다",
+     "ex": "The procedural constraints imposed by the committee precluded a thorough examination of the evidence.",
+     "tr": "위원회가 부과한 절차상 제약은 증거에 대한 철저한 검토를 불가능하게 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "prevent",
+    "prohibit",
+    "obviate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "dismiss",
+   "ipa": "/dɪsˈmɪs/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "무시하다, 일축하다",
+     "ex": "Critics who dismiss sports journalism as trivial overlook its profound role in shaping cultural identity.",
+     "tr": "스포츠 저널리즘을 사소하다고 일축하는 비평가들은 그것이 문화적 정체성을 형성하는 데 미치는 깊은 역할을 간과한다.",
+     "src": "2023 수능 31번"
+    },
+    {
+     "pos": "v.",
+     "ko": "해고하다, 해산시키다"
+    }
+   ],
+   "syn": [
+    "disregard",
+    "reject",
+    "brush off"
+   ],
+   "deriv": [
+    "dismissal (n.)",
+    "dismissive (adj.)",
+    "dismissively (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "dis-",
+     "mean": "떨어져"
+    },
+    {
+     "part": "miss",
+     "mean": "보내다 (라틴 mittere)"
+    }
+   ],
+   "etymHint": "dis(떨어져)+mittere(보내다) → 멀리 보내 버리다 → 무시하다, 해고하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "inefficiency",
+   "ipa": "/ˌɪnɪˈfɪʃənsi/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "비효율, 비능률",
+     "ex": "Scheduling multiple trades simultaneously exposes the profound inefficiency embedded in traditional construction workflows.",
+     "tr": "여러 직종을 동시에 스케줄링하는 것은 전통적인 건설 작업 흐름에 내재된 심각한 비효율을 드러낸다.",
+     "src": "2013 9월모평 27번"
+    }
+   ],
+   "syn": [
+    "wastefulness",
+    "ineptitude",
+    "unproductiveness"
+   ],
+   "deriv": [
+    "inefficient (adj.)",
+    "inefficiently (adv.)",
+    "efficient (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "부정"
+    },
+    {
+     "part": "ef-",
+     "mean": "밖으로"
+    },
+    {
+     "part": "fici",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "in(부정)+efficere(이루다) → 이루지 못함 → 비효율",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "obfuscate",
+   "ipa": "/ˈɒbfəˌskeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "흐리게 하다, 불분명하게 하다",
+     "ex": "Dense technical jargon can obfuscate the underlying argument rather than illuminate it.",
+     "tr": "복잡한 전문 용어는 기저의 논증을 밝히기보다 오히려 흐리게 할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "obscure",
+    "muddy",
+    "confuse"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "stereotype",
+   "ipa": "/ˈsteriəˌtaɪp/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "고정관념, 전형적 이미지",
+     "ex": "Although the stereotype of the absent-minded professor is often exaggerated, it contains a kernel of empirical truth.",
+     "tr": "멍한 교수라는 고정관념은 종종 과장되지만, 경험적 진실의 씨앗을 담고 있다.",
+     "src": "2013 9월모평 28번"
+    },
+    {
+     "pos": "v.",
+     "ko": "고정관념으로 보다, 틀에 박히게 하다"
+    }
+   ],
+   "syn": [
+    "cliché",
+    "generalization",
+    "preconception"
+   ],
+   "deriv": [
+    "stereotypical (adj.)",
+    "stereotypically (adv.)",
+    "stereotyped (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "stereo",
+     "mean": "단단한, 고정된 (그리스 stereos)"
+    },
+    {
+     "part": "type",
+     "mean": "형, 유형"
+    }
+   ],
+   "etymHint": "stereos(단단한)+typos(형) → 단단히 굳어진 유형 → 고정관념",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "compulsory",
+   "ipa": "/kəmˈpʌlsəri/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "강제적인, 의무적인",
+     "ex": "The government made pension contributions compulsory for all full-time employees.",
+     "tr": "정부는 모든 전일제 직원에 대해 연금 납부를 의무화했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mandatory",
+    "obligatory",
+    "required"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
   {
    "en": "companionship",
    "ipa": "/kəmˈpænjənʃɪp/",
@@ -48,6 +279,36 @@
     "exams": 2,
     "recentYear": "2025",
     "stars": 1
+   }
+  },
+  {
+   "en": "sordid",
+   "ipa": "/ˈsɔːrdɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "추잡한, 불결한",
+     "ex": "The sordid details of the scandal were eventually revealed in a series of leaked documents.",
+     "tr": "그 스캔들의 추잡한 세부 사항들은 결국 일련의 유출 문서를 통해 밝혀졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "squalid",
+    "corrupt",
+    "tawdry"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -101,48 +362,6 @@
    }
   },
   {
-   "en": "cruel",
-   "ipa": "/ˈkruːəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "잔인한, 냉혹한",
-     "ex": "Historical records reveal that rulers once celebrated as great were, in many cases, profoundly cruel to those they governed.",
-     "tr": "역사적 기록은 위대하다고 칭송받던 통치자들이 많은 경우 그들이 통치한 사람들에게 매우 잔인했음을 드러낸다.",
-     "src": "2013 9월모평 43번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "가혹한, 비정한"
-    }
-   ],
-   "syn": [
-    "brutal",
-    "merciless",
-    "ruthless"
-   ],
-   "deriv": [
-    "cruelly (adv.)",
-    "cruelty (n.)"
-   ],
-   "roots": [
-    {
-     "part": "crud",
-     "mean": "날것의, 거친"
-    }
-   ],
-   "etymHint": "crud(날것의) → 날 것처럼 거칠고 잔혹한 → 잔인한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
    "en": "inability",
    "ipa": "/ˌɪnəˈbɪlɪti/",
    "pos": "n.",
@@ -186,6 +405,36 @@
    }
   },
   {
+   "en": "supplant",
+   "ipa": "/səˈplænt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "대체하다, 밀어내다",
+     "ex": "Digital streaming services have largely supplanted traditional cable television among younger generations.",
+     "tr": "디지털 스트리밍 서비스는 젊은 세대 사이에서 전통적인 케이블 텔레비전을 대체했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "replace",
+    "displace",
+    "supersede"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "scrupulous",
    "ipa": "/ˈskruːpjələs/",
    "pos": "adj.",
@@ -218,45 +467,33 @@
    }
   },
   {
-   "en": "rearrange",
-   "ipa": "/ˌriːəˈreɪndʒ/",
-   "pos": "v.",
+   "en": "autocratic",
+   "ipa": "/ˌɔːtəˈkrætɪk/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "재배열하다, 다시 정리하다",
-     "ex": "Scientists rearrange experimental variables systematically to isolate the factor most responsible for the observed effect.",
-     "tr": "과학자들은 관찰된 효과에 가장 책임 있는 요인을 분리하기 위해 실험 변수를 체계적으로 재배열한다.",
+     "pos": "adj",
+     "ko": "독재적인, 전제적인",
+     "ex": "The autocratic ruler dismissed parliament and consolidated power within the executive branch.",
+     "tr": "독재적인 통치자는 의회를 해산하고 행정부 내에 권력을 집중시켰다.",
      "src": ""
     }
    ],
    "syn": [
-    "reorganize",
-    "restructure",
-    "reorder"
+    "despotic",
+    "tyrannical",
+    "authoritarian"
    ],
-   "deriv": [
-    "arrangement (n.)",
-    "rearrangement (n.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시"
-    },
-    {
-     "part": "arrange",
-     "mean": "배열하다"
-    }
-   ],
-   "etymHint": "re(다시)+arrange(배열하다) → 다시 배열하다 → 재배열하다",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -298,6 +535,36 @@
     "exams": 2,
     "recentYear": "2021",
     "stars": 1
+   }
+  },
+  {
+   "en": "disproportionate",
+   "ipa": "/ˌdɪsprəˈpɔːrʃənɪt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "불균형적인, 과도한",
+     "ex": "Minority communities bore a disproportionate burden of the economic downturn.",
+     "tr": "소수 집단 공동체는 경제 침체의 불균형적으로 큰 부담을 짊어졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unequal",
+    "excessive",
+    "inordinate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -343,88 +610,33 @@
    }
   },
   {
-   "en": "daylight",
-   "ipa": "/ˈdeɪlaɪt/",
-   "pos": "n.",
+   "en": "complacency",
+   "ipa": "/kəmˈpleɪsənsi/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "일광, 낮의 빛",
-     "ex": "Migratory birds use the duration of daylight as a precise biological cue to initiate their seasonal journeys.",
-     "tr": "철새들은 계절적 여정을 시작하기 위한 정확한 생물학적 신호로 일조 시간을 이용한다.",
+     "pos": "n",
+     "ko": "자기만족, 안주하는 태도",
+     "ex": "Complacency born of early success blinded the company to emerging competitive threats.",
+     "tr": "초기 성공에서 비롯된 자기만족은 회사가 새로운 경쟁 위협을 보지 못하게 했다.",
      "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "새벽, 동틀 녘"
     }
    ],
    "syn": [
-    "sunlight",
-    "sunshine",
-    "daytime"
+    "self-satisfaction",
+    "smugness",
+    "contentment"
    ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "day",
-     "mean": "낮"
-    },
-    {
-     "part": "light",
-     "mean": "빛"
-    }
-   ],
-   "etymHint": "day(낮)+light(빛) → 낮의 빛 → 일광",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sauce",
-   "ipa": "/sɔːs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "소스, 양념장",
-     "ex": "The chef carefully balanced the acidity of the tomato sauce to complement the richness of the braised meat.",
-     "tr": "요리사는 브레이즈한 고기의 풍미를 보완하기 위해 토마토 소스의 산도를 신중하게 조화시켰다.",
-     "src": "2012 6월모평 34번"
-    },
-    {
-     "pos": "n.",
-     "ko": "접시 받침 (saucer)"
-    }
-   ],
-   "syn": [
-    "condiment",
-    "dressing",
-    "gravy"
-   ],
-   "deriv": [
-    "saucer (n.)",
-    "saucy (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "sal",
-     "mean": "소금"
-    }
-   ],
-   "etymHint": "sal(소금) → 소금으로 간한 것 → 소스",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
+    "stars": 0
    }
   },
   {
@@ -521,6 +733,36 @@
    }
   },
   {
+   "en": "didactic",
+   "ipa": "/daɪˈdæk.tɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "교훈적인, 지나치게 가르치려는",
+     "ex": "Critics found the novel too didactic, feeling that the author's moral message overwhelmed the narrative.",
+     "tr": "비평가들은 소설이 너무 교훈적이라고 느끼며, 작가의 도덕적 메시지가 서사를 압도한다고 느꼈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "instructive",
+    "preachy",
+    "moralistic"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "gene",
    "ipa": "/dʒiːn/",
    "pos": "n.",
@@ -556,6 +798,36 @@
     "exams": 2,
     "recentYear": "2026",
     "stars": 1
+   }
+  },
+  {
+   "en": "vilify",
+   "ipa": "/ˈvɪlɪfaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "중상하다, 비방하다",
+     "ex": "The tabloids routinely vilified celebrities to sell papers, with little regard for truth.",
+     "tr": "타블로이드지는 진실에 대한 거의 고려 없이 신문을 팔기 위해 유명인들을 일상적으로 중상했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "malign",
+    "defame",
+    "slander"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -600,44 +872,33 @@
    }
   },
   {
-   "en": "belt",
-   "ipa": "/bɛlt/",
-   "pos": "n.",
+   "en": "sanguine",
+   "ipa": "/ˈsæŋɡwɪn/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "벨트, 안전띠",
-     "ex": "Mandating seat belts across the country produced the paradoxical outcome of redistributing risk rather than eliminating it.",
-     "tr": "전국에 걸쳐 안전띠를 의무화한 것은 위험을 제거하는 것이 아니라 재분배하는 역설적인 결과를 낳았다.",
-     "src": "2013 수능 45번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(지리적) 지대, 구역"
-    },
-    {
-     "pos": "v.",
-     "ko": "힘껏 치다, 강타하다"
+     "pos": "adj",
+     "ko": "낙관적인",
+     "ex": "Few analysts remained sanguine about the economy after the third consecutive quarter of contraction.",
+     "tr": "3분기 연속 수축 이후 경제에 대해 낙관적인 분석가는 거의 없었다.",
+     "src": ""
     }
    ],
    "syn": [
-    "strap",
-    "band",
-    "girdle"
+    "optimistic",
+    "buoyant",
+    "hopeful"
    ],
-   "deriv": [
-    "seatbelt (n.)",
-    "belted (adj.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -678,52 +939,6 @@
     "count": 3,
     "exams": 2,
     "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "intersection",
-   "ipa": "/ˌɪntəˈsɛkʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "교차점, 교차로",
-     "ex": "The intersection of cultural identity and economic inequality creates complex social dynamics that resist simple policy solutions.",
-     "tr": "문화적 정체성과 경제적 불평등의 교차점은 단순한 정책 해결책에 저항하는 복잡한 사회적 역학을 만들어낸다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "(수학) 교집합, 교점"
-    }
-   ],
-   "syn": [
-    "junction",
-    "crossroads",
-    "convergence"
-   ],
-   "deriv": [
-    "intersect (v.)",
-    "intersectional (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "inter",
-     "mean": "사이"
-    },
-    {
-     "part": "sect",
-     "mean": "자르다"
-    }
-   ],
-   "etymHint": "inter(사이)+sect(자르다) → 서로 사이를 잘라 만나다 → 교차점",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
     "stars": 1
    }
   },
@@ -770,6 +985,36 @@
    }
   },
   {
+   "en": "tortuous",
+   "ipa": "/ˈtɔːrtʃuəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "구불구불한, 복잡한",
+     "ex": "The tortuous path to regulatory approval discouraged smaller firms from entering the market.",
+     "tr": "규제 승인에 이르는 복잡한 경로는 소규모 기업들의 시장 진입을 억제했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "convoluted",
+    "sinuous",
+    "winding"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "competitor",
    "ipa": "/kəmˈpɛtɪtər/",
    "pos": "n.",
@@ -813,82 +1058,33 @@
    }
   },
   {
-   "en": "engineer",
-   "ipa": "/ˌɛndʒɪˈnɪər/",
-   "pos": "n.",
+   "en": "reticence",
+   "ipa": "/ˈrɛtɪsəns/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "공학자; (생태계) 조성자",
-     "ex": "Beavers are regarded as ecosystem engineers because they physically reshape landscapes by building dams and flooding meadows.",
-     "tr": "비버는 댐을 건설하고 초원에 물을 대어 경관을 물리적으로 재형성하기 때문에 생태계 공학자로 여겨진다.",
-     "src": "2012 9월모평 34번"
-    },
-    {
-     "pos": "v.",
-     "ko": "설계하다, 공학적으로 만들다"
+     "pos": "n",
+     "ko": "과묵함, 말을 삼가는 태도",
+     "ex": "His reticence in team meetings was frequently misread as disagreement rather than cautious deliberation.",
+     "tr": "팀 회의에서의 그의 과묵함은 신중한 숙고가 아닌 반대 의사로 자주 오해받았다.",
+     "src": ""
     }
    ],
    "syn": [
-    "designer",
-    "architect",
-    "technician"
+    "taciturnity",
+    "reserve",
+    "silence"
    ],
-   "deriv": [
-    "engineering (n.)",
-    "engineered (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ingen",
-     "mean": "재능, 고안"
-    }
-   ],
-   "etymHint": "ingen(재능·고안) → 재능으로 고안하는 사람 → 공학자",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "queen",
-   "ipa": "/kwiːn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "여왕, 왕비",
-     "ex": "Columbus was returning to inform the king and queen of his discoveries when a severe storm threatened to destroy his vessel.",
-     "tr": "콜럼버스는 자신의 발견을 왕과 여왕에게 알리기 위해 돌아가던 중 심한 폭풍이 그의 배를 위협했다.",
-     "src": "2014 수능 37번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(체스·카드의) 퀸"
-    }
-   ],
-   "syn": [
-    "monarch",
-    "sovereign",
-    "ruler"
-   ],
-   "deriv": [
-    "queendom (n.)",
-    "queenly (adj.)"
-   ],
+   "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2014",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -928,6 +1124,36 @@
     "exams": 2,
     "recentYear": "2026",
     "stars": 1
+   }
+  },
+  {
+   "en": "causality",
+   "ipa": "/kɔːˈzæləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인과관계; 인과율",
+     "ex": "Establishing causality rather than mere correlation is one of the central challenges in epidemiological research.",
+     "tr": "단순한 상관관계가 아닌 인과관계를 규명하는 것은 역학 연구의 핵심 과제 중 하나이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "causation",
+    "determinism",
+    "etiology"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -974,46 +1200,33 @@
    }
   },
   {
-   "en": "publish",
-   "ipa": "/ˈpʌblɪʃ/",
-   "pos": "v.",
+   "en": "concession",
+   "ipa": "/kənˈsɛʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "출판하다, 발표하다",
-     "ex": "Over the following decade, the author published a series of interconnected short stories that earned him lasting international recognition.",
-     "tr": "다음 십 년에 걸쳐 그 작가는 지속적인 국제적 명성을 얻게 해 준 일련의 연결된 단편 소설들을 출판했다.",
-     "src": "2009 6월모평 37번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(연구 결과를) 공개하다"
+     "pos": "n",
+     "ko": "양보, 이권 허가",
+     "ex": "The negotiators secured trade concessions in exchange for removing tariff barriers.",
+     "tr": "협상가들은 관세 장벽을 제거하는 대가로 무역상의 양보를 얻어냈다.",
+     "src": ""
     }
    ],
    "syn": [
-    "release",
-    "issue",
-    "print"
+    "compromise",
+    "grant",
+    "allowance"
    ],
-   "deriv": [
-    "publication (n.)",
-    "publisher (n.)",
-    "publishing (n.)"
-   ],
-   "roots": [
-    {
-     "part": "public",
-     "mean": "공공의, 대중"
-    }
-   ],
-   "etymHint": "public(공공의) → 대중에게 알리다 → 출판하다",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
@@ -1102,6 +1315,36 @@
    }
   },
   {
+   "en": "soliloquy",
+   "ipa": "/səˈlɪləkwi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "독백",
+     "ex": "Hamlet's soliloquies perform a radical interiority that was unprecedented in the theatre of Shakespeare's contemporaries.",
+     "tr": "햄릿의 독백은 셰익스피어의 동시대 연극에서는 전례 없는 급진적 내면성을 수행한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "monologue",
+    "aside",
+    "interior speech"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "segment",
    "ipa": "/ˈsɛɡmənt/",
    "pos": "n.",
@@ -1148,6 +1391,36 @@
    }
   },
   {
+   "en": "rhetoric",
+   "ipa": "/ˈrɛtərɪk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수사학; 수사적 표현",
+     "ex": "The politician's rhetoric was powerful but hollow, offering inspiration without actionable policy.",
+     "tr": "그 정치인의 수사는 강력하지만 공허했으며, 실행 가능한 정책 없이 영감만 제공했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "oratory",
+    "eloquence",
+    "discourse"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
    "en": "rhetorical",
    "ipa": "/rɪˈtɒrɪkl/",
    "pos": "adj.",
@@ -1191,492 +1464,33 @@
    }
   },
   {
-   "en": "nostalgia",
-   "ipa": "/nɒˈstældʒə/",
-   "pos": "n.",
+   "en": "engender",
+   "ipa": "/ɪnˈdʒɛndər/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "향수, 과거에 대한 그리움",
-     "ex": "The film deliberately evokes nostalgia for a simpler era, using sepia tones and period-specific soundtracks to anchor viewers emotionally.",
-     "tr": "그 영화는 관객들을 감정적으로 고정시키기 위해 세피아 톤과 시대별 사운드트랙을 사용하여 더 단순한 시대에 대한 향수를 의도적으로 불러일으킨다.",
+     "pos": "v",
+     "ko": "야기하다, 낳다",
+     "ex": "Prolonged inequality tends to engender resentment among the disenfranchised segments of society.",
+     "tr": "장기적인 불평등은 사회의 소외된 계층에서 분노를 야기하는 경향이 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "sentimentality",
-    "wistfulness",
-    "longing"
+    "generate",
+    "produce",
+    "foster"
    ],
-   "deriv": [
-    "nostalgic (adj.)",
-    "nostalgically (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "nostos",
-     "mean": "귀향"
-    },
-    {
-     "part": "algos",
-     "mean": "고통"
-    }
-   ],
-   "etymHint": "nostos(귀향)+algos(고통) → 고향으로 돌아가고 싶은 고통 → 향수",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "projector",
-   "ipa": "/prəˈdʒɛktər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "프로젝터, 영사기",
-     "ex": "The lecturer switched off the projector and invited students to discuss the implications of the data they had just seen.",
-     "tr": "강사는 프로젝터를 끄고 학생들에게 방금 본 데이터의 함의를 논의하도록 권유했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "beamer",
-    "slide projector",
-    "overhead projector"
-   ],
-   "deriv": [
-    "project (v./n.)",
-    "projection (n.)"
-   ],
-   "roots": [
-    {
-     "part": "pro",
-     "mean": "앞으로"
-    },
-    {
-     "part": "ject",
-     "mean": "던지다"
-    }
-   ],
-   "etymHint": "pro(앞으로)+ject(던지다) → 앞으로 영상을 던지는 기계 → 영사기",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "dish",
-   "ipa": "/dɪʃ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "요리, 음식; 접시",
-     "ex": "Each dish on the tasting menu reflected a distinct regional tradition, celebrating the diversity of the country's culinary heritage.",
-     "tr": "시식 메뉴의 각 요리는 뚜렷한 지역 전통을 반영하여 그 나라의 요리 유산의 다양성을 기렸다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "(위성) 안테나"
-    }
-   ],
-   "syn": [
-    "meal",
-    "course",
-    "plate"
-   ],
-   "deriv": [
-    "dishware (n.)",
-    "sidedish (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "permit",
-   "ipa": "/pəˈmɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "허용하다, 허락하다",
-     "ex": "Certain interpretive frameworks permit scholars to set aside contradictory evidence in favour of an overarching theoretical model.",
-     "tr": "특정 해석 틀은 학자들이 포괄적인 이론적 모델을 위해 모순되는 증거를 제쳐두는 것을 허용한다.",
-     "src": "2026 수능 30번"
-    },
-    {
-     "pos": "n.",
-     "ko": "허가증, 면허"
-    }
-   ],
-   "syn": [
-    "allow",
-    "authorize",
-    "sanction"
-   ],
-   "deriv": [
-    "permission (n.)",
-    "permissive (adj.)",
-    "permissible (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "per",
-     "mean": "완전히"
-    },
-    {
-     "part": "mit",
-     "mean": "보내다"
-    }
-   ],
-   "etymHint": "per(완전히)+mit(보내다) → 완전히 보내 주다 → 허용하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "pizza",
-   "ipa": "/ˈpiːtsə/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "피자",
-     "ex": "Street vendors have reimagined traditional pizza by combining local ingredients with Italian techniques to create entirely new flavour profiles.",
-     "tr": "길거리 상인들은 현지 재료와 이탈리아 기법을 결합하여 완전히 새로운 맛 프로필을 만들어냄으로써 전통 피자를 재해석했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [
-    "pizzeria (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mess",
-   "ipa": "/mɛs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "혼란, 엉망인 상태",
-     "ex": "When a manager models the desired behaviour directly, even a complex organisational mess can be transformed more effectively than through memos alone.",
-     "tr": "관리자가 원하는 행동을 직접 모델링하면 복잡한 조직적 혼란도 메모만으로 하는 것보다 더 효과적으로 변화시킬 수 있다.",
-     "src": "2010 수능 39번"
-    },
-    {
-     "pos": "v.",
-     "ko": "어지럽히다, 망치다"
-    }
-   ],
-   "syn": [
-    "disorder",
-    "chaos",
-    "disarray"
-   ],
-   "deriv": [
-    "messy (adj.)",
-    "messily (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "verification",
-   "ipa": "/ˌvɛrɪfɪˈkeɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "검증, 확인",
-     "ex": "Scientific objectivity demands that all measurements and observations be open to independent verification by other researchers.",
-     "tr": "과학적 객관성은 모든 측정과 관찰이 다른 연구자들에 의한 독립적 검증에 열려 있을 것을 요구한다.",
-     "src": "2015 9월모평 28번"
-    }
-   ],
-   "syn": [
-    "confirmation",
-    "validation",
-    "authentication"
-   ],
-   "deriv": [
-    "verify (v.)",
-    "verifiable (adj.)",
-    "veracity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ver",
-     "mean": "진실"
-    },
-    {
-     "part": "fic",
-     "mean": "만들다"
-    }
-   ],
-   "etymHint": "ver(진실)+fic(만들다) → 진실로 만들어 확인하다 → 검증",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "paralyze",
-   "ipa": "/ˈpærəlaɪz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "마비시키다; 꼼짝 못하게 하다",
-     "ex": "Writers are often paralyzed by the fear of comparison, unable to progress because they imagine others performing the same task better.",
-     "tr": "작가들은 종종 비교에 대한 두려움에 마비되어 다른 사람들이 같은 작업을 더 잘 수행하고 있다고 상상하기 때문에 진전하지 못한다.",
-     "src": "2011 6월모평 30번"
-    }
-   ],
-   "syn": [
-    "immobilize",
-    "incapacitate",
-    "cripple"
-   ],
-   "deriv": [
-    "paralysis (n.)",
-    "paralyzed (adj.)",
-    "paralytic (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "para",
-     "mean": "옆에"
-    },
-    {
-     "part": "lysis",
-     "mean": "풀다, 이완"
-    }
-   ],
-   "etymHint": "para(옆에)+lysis(이완) → 한쪽만 느슨해지다 → 마비시키다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "compassion",
-   "ipa": "/kəmˈpæʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "연민, 동정심",
-     "ex": "Some critics argue that rational compassion, guided by evidence and reason, produces more equitable outcomes than empathy alone.",
-     "tr": "일부 비평가들은 증거와 이성에 의해 인도되는 이성적 연민이 공감만으로는 얻을 수 없는 더 공평한 결과를 만들어낸다고 주장한다.",
-     "src": "2026 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "empathy",
-    "sympathy",
-    "pity"
-   ],
-   "deriv": [
-    "compassionate (adj.)",
-    "compassionately (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "com",
-     "mean": "함께"
-    },
-    {
-     "part": "pass",
-     "mean": "고통받다"
-    }
-   ],
-   "etymHint": "com(함께)+pass(고통받다) → 함께 고통받다 → 연민",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "exceptional",
-   "ipa": "/ɪkˈsɛpʃənl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "탁월한, 유례없는",
-     "ex": "Beethoven's Fifth Symphony stands as an exceptional demonstration of how minimal thematic material can generate vast structural complexity.",
-     "tr": "베토벤의 5번 교향곡은 최소한의 주제적 재료가 어떻게 방대한 구조적 복잡성을 생성할 수 있는지를 보여주는 탁월한 예시다.",
-     "src": "2023 6월모평 34번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "예외적인, 특별한"
-    }
-   ],
-   "syn": [
-    "outstanding",
-    "extraordinary",
-    "remarkable"
-   ],
-   "deriv": [
-    "exception (n.)",
-    "exceptionally (adv.)",
-    "except (prep.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "cept",
-     "mean": "취하다"
-    }
-   ],
-   "etymHint": "ex(밖으로)+cept(취하다) → 바깥으로 빼내다 → 예외적인, 탁월한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "chamber",
-   "ipa": "/ˈtʃeɪmbər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "(특수 목적의) 실, 방; 의회",
-     "ex": "Only after extended observation do the particle tracks inside a bubble chamber resolve into recognisable and classifiable trajectories.",
-     "tr": "오직 오랜 관찰 후에야 버블 챔버 내부의 입자 궤적이 인식 가능하고 분류 가능한 궤도로 분해된다.",
-     "src": "2015 수능 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(총의) 약실"
-    }
-   ],
-   "syn": [
-    "room",
-    "compartment",
-    "hall"
-   ],
-   "deriv": [
-    "chamberlain (n.)",
-    "chamber music (n.)"
-   ],
-   "roots": [
-    {
-     "part": "camara",
-     "mean": "아치형 지붕이 있는 방"
-    }
-   ],
-   "etymHint": "camara(아치형 방) → 특정 기능을 위한 방 → 실, 방",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "taekwondo",
-   "ipa": "/ˌtaɪkwɒnˈdəʊ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "태권도",
-     "ex": "Taekwondo demands not only physical agility and strength but also the mental discipline to anticipate and control every movement.",
-     "tr": "태권도는 신체적 민첩성과 힘뿐만 아니라 모든 움직임을 예측하고 제어하는 정신적 규율을 요구한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
    "deriv": [],
-   "roots": [
-    {
-     "part": "tae",
-     "mean": "발"
-    },
-    {
-     "part": "kwon",
-     "mean": "주먹"
-    },
-    {
-     "part": "do",
-     "mean": "길, 도"
-    }
-   ],
-   "etymHint": "tae(발)+kwon(주먹)+do(길) → 발과 주먹으로 수련하는 길 → 태권도",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 1
+    "stars": 0
    }
   }
  ]
