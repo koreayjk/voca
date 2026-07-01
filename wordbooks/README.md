@@ -17,8 +17,12 @@
 | 중등 기초 | mid1 | MID-1 | 500 (13일·A1) | ✅ | ✅ | ✅ |
 | 중등 핵심 | mid2 | MID-2 | 600 (15일·A1~A2) | ✅ | ✅ | ✅ |
 | 중등 완성 | mid3 | MID-3 | 700 (18일·B1) | ✅ | ✅ | ✅ |
+| 스페인어 기초 | esp1 | ESP-1 | 500 (13일·A1) | ✅ | ⬜ | ⬜ |
+| 스페인어 중급 | esp2 | ESP-2 | 600 (15일·A1~A2) | ✅ | ⬜ | ⬜ |
+| 스페인어 선교 | esp3 | ESP-3 | 400 (10일·주제별) | ✅ | ⬜ | ⬜ |
 
 → **7권 전부 완성 + DB등록·발음 완료(2026-06-26).** 7권 모두 is_official로 Supabase 등록·Storage 음원 업로드됨.
+→ **스페인어 회화 3권 추가(2026-06-26, 최종 JSON):** 기초500·중급600·선교400=1,500. 회화 최빈출+구어체 예문(선교=전도·교회 대화), 명사 성(el/la) `gen` 필드. 기초↔중급 중복0/선교 중복허용. corpus 없이 풀생성(`spa-gen-pool.json` 1,818·`spa-mis-pool.json` 448)→`build_spanish_scaffolds.py`→콘텐츠 워크플로우→merge. **DB등록·발음 남음**: 발행 워크플로우 prefix별 3회, **음원은 스페인어 음성 지정**(tts_voice=`es-US-Neural2-A`, tts_lang=`es-US`). merge_day가 `gen` 보존, gen_audio 빈값 안전처리.
 → **고난도 단어 교체(2026-06-26):** 쉬운 350개(B2 336 + C1오분류 14: candy/joke/plumber 등) 삭제 → 진짜 C1~C2 350개(sagacious/insidious/ubiquitous 등) 신규. 유지 450(기출). 신규어는 자체집필 예문(src 없음). 최종 JSON 직접 조립(scaffold/merge 우회)이라 hard scaffold·content는 stale.
 → 중등은 corpus 없이 제작: 의미영역별 풀 생성(`mid-pool.json` 2,725개) → 수능 중복 **허용**(별개 단계, 겹치는 기초어=복습) + 1,800개로 축소 → CEFR 밴드별 영역 라운드로빈 선정 → `build_mid_scaffolds.py` → 콘텐츠 워크플로우(자작 예문) → merge.
 
