@@ -15,9 +15,12 @@ scaf = json.load(open(ROOT/f"suneung-{PREFIX}-day{N}.scaffold.json"))
 _cf = f"day{N}.content.json" if PREFIX == "basic" else f"{PREFIX}-day{N}.content.json"
 content = json.load(open(ROOT/_cf))
 
-_note = ("예문은 중학 교육과정 수준(CEFR A1~B1)에 맞춰 자체 집필한 문장입니다."
-         if PREFIX.startswith("mid")
-         else "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다.")
+if PREFIX.startswith("esp"):
+    _note = "예문은 실제 회화에서 쓰는 표현으로 자체 집필한 문장입니다."
+elif PREFIX.startswith("mid"):
+    _note = "예문은 중학 교육과정 수준(CEFR A1~B1)에 맞춰 자체 집필한 문장입니다."
+else:
+    _note = "예문은 실제 기출 지문(연도·회차·문항 표기)을 CEFR 수준에 맞춰 재작성한 기출변형입니다."
 out = {"book":scaf["book"],"code":scaf["code"],"day":N,
        "exampleNote":_note,
        "words":[]}
@@ -37,6 +40,7 @@ for sw in scaf["words"]:
           "syn":c.get("syn",[]),"deriv":c.get("deriv",[]),
           "roots":c.get("roots",[]),"etymHint":c.get("etymHint",""),
           "level":c["level"],"exam":sw["exam"]}
+    if sw.get("gen"): word["gen"]=sw["gen"]   # 스페인어 명사 성(m/f) 보존
     out["words"].append(word)
 if missing:
     print("WARNING missing content:", missing); sys.exit(1)

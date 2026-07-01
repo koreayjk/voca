@@ -37,6 +37,14 @@ on:
         description: '단어만 교체(--replace, book_id 유지·복습/배정 진도 보존)'
         type: boolean
         default: false
+      tts_voice:
+        description: 'TTS 음성(비우면 영어 en-US-Neural2-F / 스페인어=es-US-Neural2-A)'
+        required: false
+        default: ''
+      tts_lang:
+        description: 'TTS 언어코드(비우면 en-US / 스페인어=es-US)'
+        required: false
+        default: ''
 
 jobs:
   publish:
@@ -59,6 +67,9 @@ jobs:
           python-version: '3.12'
       - name: 발음 음원 생성 (해당 책만)
         if: ${{ inputs.do_audio }}
+        env:
+          GOOGLE_TTS_VOICE: ${{ inputs.tts_voice }}
+          GOOGLE_TTS_LANG: ${{ inputs.tts_lang }}
         run: python3 tools/gen_audio.py --go --book "$BOOK_PREFIX"
       - name: 음원 Supabase Storage 업로드
         if: ${{ inputs.do_audio }}
