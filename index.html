@@ -2486,12 +2486,14 @@ function _officialCover(title, dbCover){
   return dbCover || '';
 }
 // 공식 단어장(is_official)을 읽어 책장에 추가 (읽기전용). 이미 있으면(소유자 본인) 중복 제거.
+// 공식책의 학습언어 판별: '스페인어…'=es, 그 외(수능·중등)=en. (앱은 학습언어=userTargetLang 에 맞는 공식책만 노출)
+function _officialLang(title){ return String(title||'').startsWith('스페인어') ? 'es' : 'en'; }
 async function appendOfficialBooks() {
   try {
     const od = await sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`);
     if (!Array.isArray(od)) return;
     const have = new Set(books.map(b => b.id));
-    const mapped = od.filter(b => !have.has(b.id)).map(b => ({
+    const mapped = od.filter(b => !have.has(b.id) && _officialLang(b.title) === userTargetLang).map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
       desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
       _official: true, _readonly: true, _officialContent: true,
@@ -4644,12 +4646,18 @@ function selectTargetLang(code) {
   });
 }
 
-function applyLangSettings() {
+async function applyLangSettings() {
   if (window._pendingNative===window._pendingTarget) { toast('모국어와 학습 언어는 달라야 해요!'); return; }
+  const targetChanged = window._pendingTarget !== userTargetLang;
   saveLangSettings(window._pendingNative, window._pendingTarget);
   document.getElementById('lang-settings-overlay')?.remove();
   const native=getNativeLang(), target=getTargetLang();
   toast(userNativeLang==='ko'?`${native.flag} ${native.name} → ${target.flag} ${target.name} 설정됐어요!`:`${native.flag} ${native.name} → ${target.flag} ${target.name} set!`);
+  // 학습언어가 바뀌면 공식 단어장을 해당 언어에 맞게 다시 로드(예: 한국어→Español 선택 시 스페인어 3권만 노출)
+  if (targetChanged && currentUser) {
+    books = books.filter(b => !b._official);
+    await appendOfficialBooks();
+  }
   if (!currentUser) renderLogin(); else render();
 }
 
