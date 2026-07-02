@@ -1452,7 +1452,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
         <div style="width:26px;text-align:center;font-weight:700;color:var(--ink-60);font-size:14px;flex-shrink:0;">${medal}</div>
         <div style="flex:1;min-width:0;">
           <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
-          <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}${!isPrimary&&tname?'':(tname?` · 👩‍🏫 ${esc(tname)}`:(isPrimary?` · <span style="color:#c0392b;">${ko?'담당 미지정':'No teacher'}</span>`:''))}</div>
+          <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}${tname?` · 👩‍🏫 ${esc(tname)}`:(isPrimary?` · <span style="color:#c0392b;">${ko?'담당 미지정':'No teacher'}</span>`:'')}</div>
         </div>
         ${isPrimary?teacherSelectHTML(m.id, m.teacher_id, owners):''}
         ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
@@ -1460,13 +1460,19 @@ function renderOrgStudentsHTML(list, reviewByUser){
       </div>`;
   };
 
-  // ===== 공동 관리자(선생님): 내 담당 학생만 =====
+  // ===== 공동 관리자(선생님): 내 담당 학생 + 단체 전체 학생(읽기전용) =====
   if (!isPrimary) {
-    const mine = list.filter(m=>(m.org_status||'')==='approved' && m.org_role==='student' && m.teacher_id===myId)
+    const isAppr = m=>(m.org_status||'')==='approved' && m.org_role==='student';
+    const mine = list.filter(m=>isAppr(m) && m.teacher_id===myId)
                      .sort((a,b)=>(b.total_words||0)-(a.total_words||0));
+    const all = list.filter(isAppr).sort((a,b)=>(b.total_words||0)-(a.total_words||0));
     let h = `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:4px 0 8px;">👥 ${ko?'내 담당 학생':'My students'} (${mine.length})</div>`;
-    if (!mine.length) h += `<div class="muted" style="font-size:13px;text-align:center;padding:16px;line-height:1.6;">${ko?'아직 배정된 담당 학생이 없어요.<br>주 관리자에게 담당 학생 지정을 요청하세요.':'No students assigned to you yet.'}</div>`;
+    if (!mine.length) h += `<div class="muted" style="font-size:13px;text-align:center;padding:14px;line-height:1.6;">${ko?'아직 배정된 담당 학생이 없어요.<br>주 관리자에게 담당 학생 지정을 요청하세요.':'No students assigned to you yet.'}</div>`;
     else h += mine.map((m,i)=>studentRow(m,i)).join('');
+    // 단체 전체 학생 (누구든 눌러 상세 확인 가능)
+    h += `<div style="font-size:14px;font-weight:700;color:var(--ink-100);margin:18px 0 8px;">🏫 ${ko?'단체 전체 학생':'All students'} (${all.length})</div>`;
+    if (!all.length) h += `<div class="muted" style="font-size:13px;text-align:center;padding:14px;">${ko?'아직 승인된 학생이 없어요.':'No approved students yet.'}</div>`;
+    else h += all.map((m,i)=>studentRow(m,i)).join('');
     return h;
   }
 
