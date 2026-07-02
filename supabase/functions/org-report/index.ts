@@ -93,9 +93,7 @@ Deno.serve(async (req) => {
       return json({ error: 'forbidden' }, 403)
     }
 
-    // 주 관리자 여부 (단체 owner_id == 호출자). 공동 관리자는 담당 학생만.
-    const { data: orgRow } = await svc.from('orgs').select('owner_id').eq('id', org_id).single()
-    const isPrimary = !!(orgRow && orgRow.owner_id === uid)
+    // (주/공동 관리자 모두 단체 전체 진도 열람 가능 — 위에서 org owner 승인 검증 완료)
 
     // 대상 배정 결정
     let assignQuery = svc
@@ -114,7 +112,7 @@ Deno.serve(async (req) => {
       .eq('org_id', org_id)
       .eq('org_role', 'student')
       .eq('org_status', 'approved')
-    if (!isPrimary) stuQuery = stuQuery.eq('teacher_id', uid)  // 공동 관리자: 담당 학생만
+    // 공동 관리자도 단체 전체 학생 진도를 볼 수 있음(주 관리자와 동일). 특정 학생만 보려면 student_id.
     if (student_id) stuQuery = stuQuery.eq('id', student_id)
     const { data: students } = await stuQuery
     const studentList = students || []

@@ -1428,13 +1428,32 @@ function teacherSelectHTML(studentId, currentTid, owners){
 }
 async function setStudentTeacher(id, tid){
   const ko = userNativeLang==='ko';
-  if (!orgIsPrimary()) { toast(ko?'담당 지정은 주 관리자만 가능해요':'Primary admin only'); return; }
+  const myId = currentUser && currentUser.id;
+  // 주 관리자: 아무 선생님으로나 지정 가능. 공동 관리자: 본인 담당으로 지정(claim)/본인 담당 해제만.
+  if (!orgIsPrimary()) {
+    const cur = (window._orgStudentsList||[]).find(x=>x.id===id);
+    const claimSelf = (tid===myId);
+    const releaseOwn = ((!tid) && cur && cur.teacher_id===myId);
+    if (!(orgIsAdmin() && (claimSelf || releaseOwn))) {
+      toast(ko?'공동 관리자는 본인 담당으로만 지정/해제할 수 있어요':'Co-admins can only assign/release their own students'); return;
+    }
+  }
   try {
     await sbFetch(`/rest/v1/members?id=eq.${id}`, 'PATCH', { teacher_id: tid||null }, true, {'Prefer':'return=representation'});
-    toast(ko?'담당 선생님을 지정했어요':'Teacher assigned');
+    toast(tid ? (ko?'담당 선생님을 지정했어요':'Teacher assigned') : (ko?'담당을 해제했어요':'Unassigned'));
     loadOrgStudents();
   } catch(e){ toast(ko?'지정 실패':'Failed'); }
 }
+// 공동 관리자: 학생을 내 담당으로 가져오기(이미 다른 선생님 담당이면 확인)
+function claimStudent(id){
+  const ko = userNativeLang==='ko';
+  const cur = (window._orgStudentsList||[]).find(x=>x.id===id);
+  if (cur && cur.teacher_id && cur.teacher_id!==(currentUser&&currentUser.id)) {
+    if (!confirm(ko?'이 학생은 이미 다른 선생님 담당이에요.\n내 담당으로 가져올까요?':'This student is assigned to another teacher. Claim to yourself?')) return;
+  }
+  setStudentTeacher(id, currentUser && currentUser.id);
+}
+function releaseStudent(id){ setStudentTeacher(id, ''); }
 function renderOrgStudentsHTML(list, reviewByUser){
   const ko = userNativeLang==='ko';
   const myId = currentUser && currentUser.id;
@@ -1457,6 +1476,9 @@ function renderOrgStudentsHTML(list, reviewByUser){
         ${isPrimary?teacherSelectHTML(m.id, m.teacher_id, owners):''}
         ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
         ${isPrimary?`<button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>`:''}
+        ${(!isPrimary && m.org_role==='student') ? (m.teacher_id===myId
+            ? `<button onclick="event.stopPropagation();releaseStudent('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;">${ko?'담당 해제':'Release'}</button>`
+            : `<button onclick="event.stopPropagation();claimStudent('${m.id}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--accent);font-weight:600;font-family:var(--font-body);flex-shrink:0;">${ko?'내 담당':'Claim'}</button>`) : ''}
       </div>`;
   };
 
