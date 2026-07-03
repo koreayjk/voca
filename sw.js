@@ -1,7 +1,7 @@
 // IM VOCA Service Worker
 // 전략: HTML은 항상 네트워크 우선 (최신 유지), 정적 자원은 캐시 우선 (속도)
 
-const CACHE_VERSION = 'imvoca-v3';
+const CACHE_VERSION = 'imvoca-v4';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -10,17 +10,21 @@ const PRECACHE_URLS = [
   '/',
   '/manifest.json',
   '/2.png',
-  '/logo_imvoca.png',
   '/og-image.png'
 ];
 
-// 설치 — 정적 자원 미리 캐시
+// 설치 — 정적 자원 미리 캐시. (skipWaiting 은 자동으로 하지 않음:
+//  업데이트 토스트를 눌렀을 때만 SKIP_WAITING 메시지로 활성화 → 사용자 흐름 안 끊김)
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then((cache) => cache.addAll(PRECACHE_URLS).catch(() => {}))
-      .then(() => self.skipWaiting())
   );
+});
+
+// 페이지에서 업데이트 토스트를 누르면 즉시 활성화
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 // 활성화 — 옛날 캐시 정리
