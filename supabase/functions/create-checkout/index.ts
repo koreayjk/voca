@@ -43,10 +43,22 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
 
   try {
-    const { org_id, success_url, cancel_url } = await req.json()
+    const { org_id } = await req.json()
     if (!org_id) {
       return new Response(JSON.stringify({ error: 'org_id required' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } })
     }
+
+    // 0) 호출자 인증 — 로그인한 "주 관리자(원장)" 본인만 결제 세션 생성 가능.
+    //    (미검증 시: 누구나 임의 org 로 세션 생성 + redirect URL 조작 가능했음)
+    const token = (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '')
+    if (!token) {
+      return new Response(JSON.stringify({ error: 'no_token' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } })
+    }
+    const { data: ures, error: uerr } = await supabase.auth.getUser(token)
+    if (uerr || !ures?.user) {
+      return new Response(JSON.stringify({ error: 'invalid_token' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } })
+    }
+    const uid = ures.user.id
 
     // 1) 단체 조회
     const { data: org, error: orgErr } = await supabase
@@ -57,9 +69,15 @@ serve(async (req) => {
     if (orgErr || !org) {
       return new Response(JSON.stringify({ error: 'org not found' }), { status: 404, headers: { ...cors, 'Content-Type': 'application/json' } })
     }
+    if (org.owner_id !== uid) {
+      return new Response(JSON.stringify({ error: 'forbidden' }), { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } })
+    }
     if (org.billing_active) {
       return new Response(JSON.stringify({ error: 'already_active' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } })
     }
+    // redirect URL 은 클라이언트 입력을 신뢰하지 않고 고정(오픈리다이렉트/피싱 방지)
+    const success_url = 'https://imvoca.app/?org_paid=1'
+    const cancel_url = 'https://imvoca.app/?org_cancel=1'
 
     // 2) 주 관리자(원장) 이메일
     const { data: owner } = await supabase
