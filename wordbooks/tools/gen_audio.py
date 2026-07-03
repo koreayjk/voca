@@ -34,6 +34,10 @@ BOOK = os.environ.get("BOOK_PREFIX", "")   # 특정 책만 생성(CI용). 빈값
 for i, a in enumerate(sys.argv):
     if a == "--limit" and i+1 < len(sys.argv): LIMIT = int(sys.argv[i+1])
     if a == "--book" and i+1 < len(sys.argv): BOOK = sys.argv[i+1]
+# 스페인어 책(esp*)은 음성을 명시 안 하면 중남미 스페인어로 자동 선택
+# (기본값이 영어 성우라, 지정 안 하면 스페인어를 영어식으로 잘못 읽는 것 방지)
+if str(BOOK).startswith("esp") and not (os.environ.get("GOOGLE_TTS_VOICE") or "").strip():
+    VOICE = "es-US-Neural2-A"; LANG = "es-US"
 DAYS = list(range(1, 31))
 
 # 앱의 _safeAudio 와 동일 규칙: 영숫자+공백만 남기고 → 공백을 하이픈으로.
