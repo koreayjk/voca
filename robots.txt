@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+# 관리자·내부 도구는 색인 제외 (접근 차단은 서버 인증/RLS 로 별도 처리)
+Disallow: /admin.html
+Disallow: /admin-test.html
+Disallow: /wordbook-preview.html
