@@ -745,38 +745,25 @@ async function assignToOrg(id,label,orgId,orgName,role){
 
 async function setPlan(id, toPremium){
   try{
-    let body;
+    let months = 0;
     if(toPremium){
       // 무료 제공 기간 선택
-      const months = prompt('몇 개월간 무료 Premium을 제공할까요?\n\n숫자만 입력 (예: 1 = 1개월, 3 = 3개월)\n무기한은 0 입력');
-      if(months===null) return; // 취소
-      const m = parseInt(months);
-      if(isNaN(m) || m<0){ toast('숫자를 올바르게 입력해주세요'); return; }
-      let premiumUntil = null;
-      if(m>0){
-        const d = new Date();
-        d.setMonth(d.getMonth()+m);
-        premiumUntil = d.toISOString();
-      }
-      body = JSON.stringify({plan:'premium', premium_until:premiumUntil});
-    } else {
-      body = JSON.stringify({plan:'free', premium_until:null});
+      const inp = prompt('몇 개월간 무료 Premium을 제공할까요?\n\n숫자만 입력 (예: 1 = 1개월, 3 = 3개월)\n무기한은 0 입력');
+      if(inp===null) return; // 취소
+      months = parseInt(inp);
+      if(isNaN(months) || months<0){ toast('숫자를 올바르게 입력해주세요'); return; }
     }
     await refreshToken(); // 토큰 갱신 (만료 방지)
-    const res = await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
-      body
+    // plan 은 트리거로 클라이언트 직접수정 차단됨 → 관리자 엣지함수(service_role) 경유
+    const res = await fetch(SB_URL+'/functions/v1/admin-set-plan',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
+      body: JSON.stringify({ user_id:id, premium:toPremium, months })
     });
     if(!res.ok){
       const t = await res.text();
       console.error('[플랜 변경 실패]', res.status, t);
-      toast('변경 실패: ' + (res.status===403?'권한 없음(다시 로그인)':t.slice(0,60)));
-      return;
-    }
-    const updated = await res.json();
-    if(!updated || updated.length===0){
-      toast('변경 실패: 회원을 못 찾거나 권한 없음');
+      toast('변경 실패: ' + (res.status===403?'관리자 권한 없음':res.status===404?'회원 못 찾음':t.slice(0,80)));
       return;
     }
     toast(toPremium?'✨ Premium으로 변경됐어요':'Free로 변경됐어요');
