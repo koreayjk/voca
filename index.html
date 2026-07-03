@@ -1130,16 +1130,14 @@ function contactSupport() {
   location.href = 'mailto:imamerica2414@gmail.com';
 }
 
-// 스캔 카운트 증가
-async function incrementScanCount() {
+// 스캔 카운트 증가 — 로컬 표시용만. 실제 카운트/한도는 서버(gemini-proxy)가 권위적으로
+// 관리(service_role)하므로 클라이언트는 DB에 쓰지 않는다(우회·중복증가 방지). 다음 로드 시
+// loadUserPlan 이 서버 값으로 동기화한다.
+function incrementScanCount() {
   userScanCount++;
-  // 일일 카운트 (날짜 바뀌면 리셋)
   const today = _todayStr();
   if (userDailyScanDate !== today) { userDailyScanDate = today; userDailyScanCount = 0; }
   userDailyScanCount++;
-  try {
-    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { scan_count: userScanCount, daily_scan_count: userDailyScanCount, daily_scan_date: userDailyScanDate });
-  } catch(e) { console.error('[scan_count 저장 오류]', e); }
 }
 
 // 스캔 가능 여부 체크
@@ -3526,6 +3524,7 @@ async function processNextMultiScan() {
     const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
     const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(false)}]}], generationConfig:{temperature:0.1,maxOutputTokens:16384} });
     if (data.error) {
+      if (data.error.code==='scan_limit') { handleScanBlocked(); return; } // 서버 한도 초과 → 중단
       if (data.error.code===403) { toast('API 키를 확인해주세요'); render(); return; }
       toast(userNativeLang==='ko'?`${idx+1}번 사진 처리 실패, 건너뛰어요`:`Photo ${idx+1} failed, skipping`);
       window._multiIdx++; await processNextMultiScan(); return;
@@ -3732,6 +3731,7 @@ async function doScan() {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
     const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(true)}]}], generationConfig:{temperature:0.1,maxOutputTokens:16384} });
     if (data.error) {
+      if (data.error.code==='scan_limit') { handleScanBlocked(); return; } // 서버 한도 초과
       if (data.error.code===403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
       render(); return;

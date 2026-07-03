@@ -56,6 +56,14 @@ begin
     end if;
   end if;
 
+  -- 스캔 카운터는 서버(gemini-proxy, service_role)만 기록. 클라이언트가 0으로 리셋해
+  -- 무료 스캔 한도를 우회하는 것 차단. (앱은 더 이상 이 컬럼을 클라이언트로 안 씀)
+  if (new.scan_count is distinct from old.scan_count)
+     or (new.daily_scan_count is distinct from old.daily_scan_count)
+     or (new.daily_scan_date is distinct from old.daily_scan_date) then
+    raise exception 'scan 카운터는 서버에서만 관리합니다.';
+  end if;
+
   return new;
 end;
 $$;
