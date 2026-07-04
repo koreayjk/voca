@@ -2511,10 +2511,14 @@ async function loadBooksFromDB() {
 // 공식 책 표지: 제목에 따라 레포에 호스팅된 표지 이미지를 매핑(DB cover_url이 비어도 적용).
 function _officialCover(title, dbCover){
   const t = title || '';
-  if (t.indexOf('기본') >= 0) return 'cover-suneung-basic.jpg?v=5';
-  if (t.indexOf('핵심') >= 0) return 'cover-suneung-core.jpg?v=5';
-  if (t.indexOf('고난도') >= 0) return 'cover-suneung-hard.jpg?v=5';
-  if (t.indexOf('숙어') >= 0) return 'cover-suneung-idiom.jpg?v=5';
+  // 수능 전용 표지 — 제목에 '수능'이 있을 때만. (중등 핵심/스페인어 등이 '핵심' 같은
+  // 공통어로 수능 표지를 잘못 가져가던 문제 방지)
+  if (t.indexOf('수능') >= 0) {
+    if (t.indexOf('기본') >= 0) return 'cover-suneung-basic.jpg?v=5';
+    if (t.indexOf('핵심') >= 0) return 'cover-suneung-core.jpg?v=5';
+    if (t.indexOf('고난도') >= 0) return 'cover-suneung-hard.jpg?v=5';
+    if (t.indexOf('숙어') >= 0) return 'cover-suneung-idiom.jpg?v=5';
+  }
   return dbCover || '';
 }
 // 공식 단어장(is_official)을 읽어 책장에 추가 (읽기전용). 이미 있으면(소유자 본인) 중복 제거.
