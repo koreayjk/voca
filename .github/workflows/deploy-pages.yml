@@ -19,8 +19,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # 웹에 실제 서빙되는 파일만 스테이징(.git·wordbooks·supabase·.github 제외).
+      # 레포 전체(.git + 수백 개 JSON)를 올리면 아티팩트가 비대해져 Pages 배포가
+      # 간헐적으로 "Deployment failed, try again later" 로 실패함.
+      - name: Stage site
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git' --exclude='.github' \
+            --exclude='wordbooks' --exclude='supabase' \
+            --exclude='_site' \
+            ./ _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
