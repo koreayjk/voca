@@ -20,8 +20,12 @@
 | 스페인어 기초 | esp1 | ESP-1 | 500 (13일·A1) | ✅ | ⬜ | ⬜ |
 | 스페인어 중급 | esp2 | ESP-2 | 600 (15일·A1~A2) | ✅ | ⬜ | ⬜ |
 | 스페인어 선교 | esp3 | ESP-3 | 400 (10일·주제별) | ✅ | ⬜ | ⬜ |
+| 토익 기초 | toeic1 | TOEIC-1 | 493 (13일·600점대) | ✅ | ⬜ | ⬜ |
+| 토익 핵심 | toeic2 | TOEIC-2 | 683 (18일·800점대) | ✅ | ⬜ | ⬜ |
+| 토익 고득점 | toeic3 | TOEIC-3 | 874 (23일·900점대) | ✅ | ⬜ | ⬜ |
 
 → **7권 전부 완성 + DB등록·발음 완료(2026-06-26).** 7권 모두 is_official로 Supabase 등록·Storage 음원 업로드됨.
+→ **TOEIC 3권 추가(2026-07-06, 최종 JSON):** 기초493·핵심683·고득점874=2,050. 40회 실전모의고사(`toeic/` PDF=이미지) **OCR(tesseract 170dpi)** → 88만단어 코퍼스(`toeic-corpus/`) → `build_toeic_pool.py`(빈도+사전대조 노이즈제거+문제형식어 제외, `toeic-pool-full.json` 3,662) → `build_toeic_scaffolds.py`(빈출 tier: 기초=최빈출/고득점=희귀, prefix toeic1/2/3) → 콘텐츠 워크플로우(비즈니스 예문) → 관대한 merge(OCR노이즈 단어 드롭)+수동 노이즈제거(chet/cist 등 OCR잘린어 26개). LC/RC 미구분(빈도 tier). 예문 자작(출처 없음). **DB등록·발음 남음**(발행 워크플로우 3회, 영어 음성 기본). corpus·PDF gitignore(저작권). merge는 인라인 관대버전 사용(scaffold/content stale 가능).
 → **스페인어 회화 3권 추가(2026-06-26, 최종 JSON):** 기초500·중급600·선교400=1,500. 회화 최빈출+구어체 예문(선교=전도·교회 대화), 명사 성(el/la) `gen` 필드. 기초↔중급 중복0/선교 중복허용. corpus 없이 풀생성(`spa-gen-pool.json` 1,818·`spa-mis-pool.json` 448)→`build_spanish_scaffolds.py`→콘텐츠 워크플로우→merge. **DB등록·발음 남음**: 발행 워크플로우 prefix별 3회, **음원은 스페인어 음성 지정**(tts_voice=`es-US-Neural2-A`, tts_lang=`es-US`). merge_day가 `gen` 보존, gen_audio 빈값 안전처리.
 → **고난도 단어 교체(2026-06-26):** 쉬운 350개(B2 336 + C1오분류 14: candy/joke/plumber 등) 삭제 → 진짜 C1~C2 350개(sagacious/insidious/ubiquitous 등) 신규. 유지 450(기출). 신규어는 자체집필 예문(src 없음). 최종 JSON 직접 조립(scaffold/merge 우회)이라 hard scaffold·content는 stale.
 → 중등은 corpus 없이 제작: 의미영역별 풀 생성(`mid-pool.json` 2,725개) → 수능 중복 **허용**(별개 단계, 겹치는 기초어=복습) + 1,800개로 축소 → CEFR 밴드별 영역 라운드로빈 선정 → `build_mid_scaffolds.py` → 콘텐츠 워크플로우(자작 예문) → merge.
