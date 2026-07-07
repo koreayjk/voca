@@ -107,10 +107,11 @@ def replace_words():
     bid = find_official()
     if not bid: print("공식책이 없어요. 먼저 --go 로 시드하세요."); return
     pages = req("GET", f"/rest/v1/voca_pages?book_id=eq.{bid}&select=id,page_num") or []
-    pmap = {p["page_num"]: p["id"] for p in pages}
-    total = 0
+    pmap = {str(p["page_num"]): p["id"] for p in pages}
+    total = 0; keep = set()
     for page_num, words in load_days():
-        pid = pmap.get(page_num)
+        keep.add(str(page_num))
+        pid = pmap.get(str(page_num))
         if not pid:
             pg = req("POST", "/rest/v1/voca_pages", {"book_id": bid, "page_num": page_num},
                      prefer="return=representation")
@@ -120,7 +121,14 @@ def replace_words():
         rows = [{**w, "page_id": pid} for w in words]
         req("POST", "/rest/v1/voca_words", rows, prefer="return=minimal")
         total += len(words); print(f"  {page_num}: {len(words)} replaced")
-    print(f"\n완료. book_id={bid} 유지 · {total}개 단어 교체 (복습/배정 진도 보존).")
+    # 일수가 줄었을 때 남는 옛 페이지(및 단어) 정리
+    pruned = 0
+    for pnum, pid in pmap.items():
+        if pnum not in keep:
+            req("DELETE", f"/rest/v1/voca_words?page_id=eq.{pid}")
+            req("DELETE", f"/rest/v1/voca_pages?id=eq.{pid}")
+            pruned += 1; print(f"  {pnum}: 잉여 페이지 삭제")
+    print(f"\n완료. book_id={bid} 유지 · {total}개 단어 교체 · 잉여 페이지 {pruned}개 삭제 (진도 보존).")
 
 def main():
     days = load_days()
