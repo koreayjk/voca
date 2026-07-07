@@ -2,24 +2,24 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 11,
- "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "corroborate",
-   "ipa": "/kəˈrɑbəˌreɪt/",
-   "pos": "v",
+   "en": "segmentation",
+   "ipa": "/ˌsegmenˈteɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(진술·주장을) 확증하다",
-     "ex": "The internal memo corroborated the whistleblower's account of the accounting irregularities.",
-     "tr": "그 내부 메모는 내부 고발자의 회계 부정에 관한 진술을 확증해 주었다.",
+     "pos": "n",
+     "ko": "(시장) 세분화",
+     "ex": "Effective market segmentation allowed the firm to design distinct promotional strategies for each customer tier.",
+     "tr": "효과적인 시장 세분화 덕분에 회사는 각 고객 등급에 맞는 별도의 홍보 전략을 설계할 수 있었다.",
      "src": ""
     }
    ],
    "syn": [
-    "confirm",
-    "validate"
+    "categorization",
+    "stratification"
    ],
    "deriv": [],
    "roots": [],
@@ -34,21 +34,20 @@
    }
   },
   {
-   "en": "apprise",
-   "ipa": "/əˈpraɪz/",
-   "pos": "v",
+   "en": "severability",
+   "ipa": "/ˌsevərəˈbɪləti/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(공식적으로) 알리다, 통지하다",
-     "ex": "Shareholders will be apprised of any material changes to the merger terms.",
-     "tr": "주주들은 합병 조건에 중대한 변경이 있을 경우 통지받을 것이다.",
+     "pos": "n",
+     "ko": "분리 가능성(조항)",
+     "ex": "Thanks to the severability clause, the invalidation of one provision did not void the entire contract.",
+     "tr": "분리 가능성 조항 덕분에 한 조항이 무효화되어도 계약 전체가 무효가 되지는 않았다.",
      "src": ""
     }
    ],
    "syn": [
-    "inform",
-    "notify"
+    "separability"
    ],
    "deriv": [],
    "roots": [],
@@ -63,21 +62,21 @@
    }
   },
   {
-   "en": "exacerbate",
-   "ipa": "/ɪgˈzæsərˌbeɪt/",
-   "pos": "v",
+   "en": "severance",
+   "ipa": "/ˈsɛvərəns/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "악화시키다",
-     "ex": "The delayed shipment exacerbated the supplier's already strained relationship with the retailer.",
-     "tr": "지연된 배송은 공급업체와 소매업체 사이의 이미 긴장된 관계를 악화시켰다.",
+     "pos": "n",
+     "ko": "퇴직금, 해고 수당",
+     "ex": "The company offered a generous severance package to employees affected by the restructuring.",
+     "tr": "회사는 구조조정의 영향을 받은 직원들에게 후한 퇴직금 패키지를 제공했다.",
      "src": ""
     }
    ],
    "syn": [
-    "aggravate",
-    "worsen"
+    "redundancy pay",
+    "severance pay"
    ],
    "deriv": [],
    "roots": [],
@@ -92,21 +91,22 @@
    }
   },
   {
-   "en": "curtail",
-   "ipa": "/kɜrˈteɪl/",
+   "en": "solicit",
+   "ipa": "/səˈlɪsɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "축소하다, 삭감하다",
-     "ex": "The board voted to curtail discretionary spending in response to the revenue shortfall.",
-     "tr": "이사회는 수익 부족에 대응하여 재량 지출을 축소하기로 의결했다.",
+     "ko": "요청하다, 간청하다, (기부·지지 등을) 구하다",
+     "ex": "The nonprofit organization is prohibited from soliciting donations without prior approval from the regulatory board.",
+     "tr": "그 비영리 단체는 규제 위원회의 사전 승인 없이는 기부를 요청하는 것이 금지되어 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "reduce",
-    "cut back"
+    "request",
+    "canvass",
+    "seek"
    ],
    "deriv": [],
    "roots": [],
@@ -121,21 +121,21 @@
    }
   },
   {
-   "en": "convene",
-   "ipa": "/kənˈviːn/",
-   "pos": "v",
+   "en": "solicitation",
+   "ipa": "/səˌlɪsɪˈteɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(회의를) 소집하다",
-     "ex": "The audit committee was convened on short notice to address the compliance breach.",
-     "tr": "감사위원회는 규정 위반 문제를 다루기 위해 급히 소집되었다.",
+     "pos": "n",
+     "ko": "권유, 청탁",
+     "ex": "The noncompete agreement includes a nonsolicitation clause barring the former employee from recruiting ex-colleagues.",
+     "tr": "경업 금지 계약에는 전 직원이 전 동료를 채용하지 못하도록 금지하는 비청탁 조항이 포함되어 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "assemble",
-    "call together"
+    "enticement",
+    "canvassing"
    ],
    "deriv": [],
    "roots": [],
@@ -150,21 +150,21 @@
    }
   },
   {
-   "en": "appease",
-   "ipa": "/əˈpiːz/",
-   "pos": "v",
+   "en": "solvency",
+   "ipa": "/ˈsɒlvənsi/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(불만 등을) 달래다, 완화하다",
-     "ex": "The airline offered vouchers to appease passengers affected by the prolonged delay.",
-     "tr": "항공사는 장기 지연으로 피해를 입은 승객들을 달래기 위해 바우처를 제공했다.",
+     "pos": "n",
+     "ko": "지급능력, 재무건전성",
+     "ex": "Analysts questioned the retailer's solvency after it defaulted on two consecutive bond payments.",
+     "tr": "그 소매업체가 두 차례 연속 채권 이자 지급을 이행하지 못하자 애널리스트들은 회사의 지급능력에 의문을 제기했다.",
      "src": ""
     }
    ],
    "syn": [
-    "placate",
-    "pacify"
+    "financial stability",
+    "creditworthiness"
    ],
    "deriv": [],
    "roots": [],
@@ -179,21 +179,20 @@
    }
   },
   {
-   "en": "litigate",
-   "ipa": "/ˈlɪtɪˌgeɪt/",
-   "pos": "v",
+   "en": "solvent",
+   "ipa": "/ˈsɒlvənt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "소송을 제기하다, 소송으로 다투다",
-     "ex": "The two companies chose to litigate the patent dispute rather than settle out of court.",
-     "tr": "두 회사는 합의 대신 특허 분쟁을 소송으로 다투기로 했다.",
+     "pos": "adj",
+     "ko": "지급능력이 있는",
+     "ex": "Despite the market downturn, the firm remained solvent thanks to its diversified revenue streams.",
+     "tr": "시장 침체에도 불구하고 그 회사는 다각화된 수익원 덕분에 지급능력을 유지했다.",
      "src": ""
     }
    ],
    "syn": [
-    "sue",
-    "prosecute"
+    "financially stable"
    ],
    "deriv": [],
    "roots": [],
@@ -208,21 +207,20 @@
    }
   },
   {
-   "en": "appraise",
-   "ipa": "/əˈpreɪz/",
-   "pos": "v",
+   "en": "stagflation",
+   "ipa": "/stæɡˈfleɪ.ʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(가치를) 감정하다, 평가하다",
-     "ex": "An independent firm was hired to appraise the value of the company's intangible assets.",
-     "tr": "회사의 무형자산 가치를 감정하기 위해 독립 회사가 고용되었다.",
+     "pos": "n",
+     "ko": "스태그플레이션(경기침체+물가상승)",
+     "ex": "Economists cautioned that stagflation could emerge if wage growth stalls while consumer prices continue to climb",
+     "tr": "경제학자들은 임금 상승이 정체되는 동안 소비자 물가가 계속 오르면 스태그플레이션이 나타날 수 있다고 경고했다",
      "src": ""
     }
    ],
    "syn": [
-    "assess",
-    "evaluate"
+    "economic stagnation with inflation"
    ],
    "deriv": [],
    "roots": [],
@@ -237,21 +235,22 @@
    }
   },
   {
-   "en": "tabulate",
-   "ipa": "/ˈtæbjəˌleɪt/",
-   "pos": "v",
+   "en": "stagnant",
+   "ipa": "/ˈstæɡnənt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "표로 만들다, 도표화하다",
-     "ex": "The survey results will be tabulated before being presented at the shareholders' meeting.",
-     "tr": "설문 결과는 주주 총회에서 발표되기 전에 표로 정리될 것이다.",
+     "pos": "adj",
+     "ko": "침체된, 정체된",
+     "ex": "With sales remaining stagnant for three consecutive quarters, executives called for a strategic overhaul.",
+     "tr": "3분기 연속 매출이 침체되면서 경영진은 전략적 개편을 요구했다.",
      "src": ""
     }
    ],
    "syn": [
-    "chart",
-    "compile"
+    "sluggish",
+    "dormant",
+    "flat"
    ],
    "deriv": [],
    "roots": [],
@@ -266,21 +265,22 @@
    }
   },
   {
-   "en": "extrapolate",
-   "ipa": "/ɪkˈstræpəˌleɪt/",
-   "pos": "v",
+   "en": "statutory",
+   "ipa": "/ˈstætʃuˌtɔːri/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(자료로부터) 추정하다, 추론하다",
-     "ex": "Analysts extrapolated future demand based on the previous three quarters of sales data.",
-     "tr": "분석가들은 지난 세 분기의 판매 데이터를 기반으로 향후 수요를 추정했다.",
+     "pos": "adj",
+     "ko": "법정의, 법령상의",
+     "ex": "Employees are entitled to the statutory minimum notice period upon termination of employment.",
+     "tr": "직원은 고용 종료 시 법정 최소 통지 기간을 받을 권리가 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "project",
-    "infer"
+    "legal",
+    "legislated",
+    "codified"
    ],
    "deriv": [],
    "roots": [],
@@ -295,21 +295,21 @@
    }
   },
   {
-   "en": "prorate",
-   "ipa": "/ˈproʊreɪt/",
-   "pos": "v",
+   "en": "stipend",
+   "ipa": "/ˈstaɪpɛnd/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "비례 배분하다, 일할 계산하다",
-     "ex": "The subscription fee will be prorated for customers who cancel mid-cycle.",
-     "tr": "주기 중간에 해지하는 고객에 대해서는 구독료가 일할 계산될 것이다.",
+     "pos": "n",
+     "ko": "수당, 보조금",
+     "ex": "Relocated executives receive a monthly stipend to cover housing costs during the transition period.",
+     "tr": "전근 임원들은 이전 기간 동안 주거비를 충당하기 위해 월별 수당을 받는다.",
      "src": ""
     }
    ],
    "syn": [
-    "apportion",
-    "pro-rate"
+    "allowance",
+    "grant"
    ],
    "deriv": [],
    "roots": [],
@@ -324,21 +324,22 @@
    }
   },
   {
-   "en": "garnish",
-   "ipa": "/ˈgɑrnɪʃ/",
+   "en": "stipulate",
+   "ipa": "/ˈstɪpjəˌleɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "(임금 등을) 압류하다",
-     "ex": "The court ordered that a portion of the debtor's wages be garnished to satisfy the judgment.",
-     "tr": "법원은 판결을 이행하기 위해 채무자 임금의 일부를 압류하라고 명령했다.",
+     "ko": "규정하다, 명시하다",
+     "ex": "The agreement stipulates that all deliverables must be submitted no later than the fifteenth of each month.",
+     "tr": "그 계약은 모든 산출물이 매월 15일까지 제출되어야 한다고 규정하고 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "withhold",
-    "attach"
+    "specify",
+    "provide",
+    "prescribe"
    ],
    "deriv": [],
    "roots": [],
@@ -353,21 +354,21 @@
    }
   },
   {
-   "en": "overhaul",
-   "ipa": "/ˌoʊvərˈhɔl/",
-   "pos": "v",
+   "en": "stipulation",
+   "ipa": "/ˌstɪpjəˈleɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "대대적으로 개편하다, 정비하다",
-     "ex": "The board decided to overhaul the entire compensation structure after the shareholder revolt.",
-     "tr": "이사회는 주주 반발 이후 전체 보상 체계를 대대적으로 개편하기로 결정했다.",
+     "pos": "n",
+     "ko": "조항, 규정",
+     "ex": "The employment contract contains a stipulation prohibiting outside consulting work without prior approval.",
+     "tr": "고용 계약서에는 사전 승인 없이 외부 컨설팅 업무를 금지하는 조항이 포함되어 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "revamp",
-    "restructure"
+    "provision",
+    "clause"
    ],
    "deriv": [],
    "roots": [],
@@ -382,21 +383,21 @@
    }
   },
   {
-   "en": "phase out",
-   "ipa": "/feɪz aʊt/",
-   "pos": "phr",
+   "en": "stockout",
+   "ipa": "/ˈstɑkˌaʊt/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "phr",
-     "ko": "단계적으로 폐지하다",
-     "ex": "The manufacturer plans to phase out the legacy product line within eighteen months.",
-     "tr": "그 제조업체는 18개월 이내에 기존 제품 라인을 단계적으로 폐지할 계획이다.",
+     "pos": "n",
+     "ko": "재고 소진, 품절",
+     "ex": "A sudden surge in demand led to a stockout of the flagship product just before the holiday shopping season began.",
+     "tr": "수요의 급격한 증가로 인해 성수기 쇼핑 시즌이 시작되기 직전에 주력 제품의 재고 소진이 발생했다.",
      "src": ""
     }
    ],
    "syn": [
-    "discontinue gradually",
-    "wind down"
+    "out-of-stock situation",
+    "shortage"
    ],
    "deriv": [],
    "roots": [],
@@ -411,21 +412,21 @@
    }
   },
   {
-   "en": "encapsulate",
-   "ipa": "/ɪnˈkæpsjəˌleɪt/",
-   "pos": "v",
+   "en": "stopgap",
+   "ipa": "/ˈstɒpɡæp/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "요약하다, 압축하다",
-     "ex": "The executive summary encapsulates the key findings of the due diligence report.",
-     "tr": "그 요약본은 실사 보고서의 핵심 결과를 압축적으로 담고 있다.",
+     "pos": "adj",
+     "ko": "임시방편(의)",
+     "ex": "Management approved a stopgap measure to keep the line running until the part arrives",
+     "tr": "경영진은 부품이 도착할 때까지 라인을 가동시킬 임시방편 조치를 승인했다",
      "src": ""
     }
    ],
    "syn": [
-    "summarize",
-    "condense"
+    "temporary fix",
+    "makeshift solution"
    ],
    "deriv": [],
    "roots": [],
@@ -440,21 +441,21 @@
    }
   },
   {
-   "en": "impinge",
-   "ipa": "/ɪmˈpɪndʒ/",
-   "pos": "v",
+   "en": "stringent",
+   "ipa": "/ˈstrɪndʒənt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(부정적으로) 영향을 미치다, 침해하다",
-     "ex": "The new zoning ordinance may impinge on the company's expansion plans.",
-     "tr": "새로운 지역 조례는 그 회사의 확장 계획에 영향을 미칠 수 있다.",
+     "pos": "adj",
+     "ko": "엄격한",
+     "ex": "The recruitment committee applied stringent criteria when screening candidates for the executive vacancy.",
+     "tr": "채용위원회는 임원 공석 후보자 심사 시 엄격한 기준을 적용했다.",
      "src": ""
     }
    ],
    "syn": [
-    "encroach on",
-    "affect adversely"
+    "strict",
+    "rigorous"
    ],
    "deriv": [],
    "roots": [],
@@ -469,21 +470,21 @@
    }
   },
   {
-   "en": "preclude",
-   "ipa": "/prɪˈkluːd/",
-   "pos": "v",
+   "en": "sublease",
+   "ipa": "/ˈsʌbliːs/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(가능성을) 배제하다, 막다",
-     "ex": "The confidentiality clause precludes former employees from disclosing trade secrets.",
-     "tr": "비밀유지 조항은 전직 직원들이 영업 비밀을 공개하는 것을 배제한다.",
+     "pos": "n",
+     "ko": "전대, 재임대(하다)",
+     "ex": "The tenant is prohibited from subleasing any portion of the warehouse without written consent",
+     "tr": "임차인은 서면 동의 없이 창고의 어떤 부분도 전대할 수 없다",
      "src": ""
     }
    ],
    "syn": [
-    "prevent",
-    "rule out"
+    "sublet",
+    "re-rent"
    ],
    "deriv": [],
    "roots": [],
@@ -498,21 +499,22 @@
    }
   },
   {
-   "en": "redress",
-   "ipa": "/rɪˈdrɛs/",
-   "pos": "v",
+   "en": "subpoena",
+   "ipa": "/səˈpiːnə/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(잘못을) 시정하다, 바로잡다",
-     "ex": "The regulator ordered the bank to redress customers who were charged excessive fees.",
-     "tr": "규제 당국은 은행이 과도한 수수료를 부과받은 고객들에게 시정 조치를 하도록 명령했다.",
+     "pos": "n",
+     "ko": "소환장, 소환하다",
+     "ex": "The company was subpoenaed to produce internal correspondence related to the fraud investigation.",
+     "tr": "그 회사는 사기 조사와 관련된 내부 서신을 제출하라는 소환장을 받았다.",
      "src": ""
     }
    ],
    "syn": [
-    "remedy",
-    "rectify"
+    "summons",
+    "court order",
+    "citation"
    ],
    "deriv": [],
    "roots": [],
@@ -527,21 +529,108 @@
    }
   },
   {
-   "en": "impute",
-   "ipa": "/ɪmˈpjuːt/",
-   "pos": "v",
+   "en": "subrogation",
+   "ipa": "/ˌsʌbrəˈɡeɪʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(원인·책임을) 귀속시키다, 전가하다",
-     "ex": "The auditor imputed the shortfall to inadequate internal controls.",
-     "tr": "감사인은 그 부족분을 부적절한 내부 통제 탓으로 돌렸다.",
+     "pos": "n",
+     "ko": "대위(변제)",
+     "ex": "After paying the claim, the insurer exercised its right of subrogation against the negligent contractor.",
+     "tr": "보험금을 지급한 후 보험사는 과실 있는 시공업체를 상대로 대위 청구권을 행사했다.",
      "src": ""
     }
    ],
    "syn": [
-    "attribute",
-    "ascribe"
+    "substitution of rights",
+    "legal succession"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "subsidy",
+   "ipa": "/ˈsʌbsɪdi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "보조금",
+     "ex": "Manufacturers that adopt renewable energy sources are eligible for a government subsidy.",
+     "tr": "재생에너지원을 도입하는 제조업체는 정부 보조금을 받을 자격이 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "grant",
+    "financial aid"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "substandard",
+   "ipa": "/ˌsʌbˈstændərd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "기준 미달의",
+     "ex": "The audit uncovered several substandard wiring installations that violated safety codes",
+     "tr": "감사 결과 안전 규정을 위반하는 여러 기준 미달의 배선 설치가 발견되었다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "subpar",
+    "inferior"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "substantiate",
+   "ipa": "/səbˈstænʃiˌeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "입증하다, 근거를 대다",
+     "ex": "The claimant failed to substantiate the damages alleged in the breach-of-contract lawsuit.",
+     "tr": "청구인은 계약 위반 소송에서 주장된 손해를 입증하는 데 실패했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "corroborate",
+    "verify"
    ],
    "deriv": [],
    "roots": [],
@@ -585,21 +674,108 @@
    }
   },
   {
-   "en": "appertain",
-   "ipa": "/ˌæpərˈteɪn/",
+   "en": "supply chain disruption",
+   "ipa": "/səˈplaɪ tʃeɪn dɪsˈrʌp.ʃən/",
+   "pos": "nou",
+   "meanings": [
+    {
+     "pos": "nou",
+     "ko": "공급망 교란",
+     "ex": "The prolonged supply chain disruption forced manufacturers to seek alternative sourcing arrangements overseas",
+     "tr": "장기간의 공급망 교란으로 인해 제조업체들은 해외에서 대체 조달 방안을 모색해야 했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supply chain interruption",
+    "logistics breakdown"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "surplus",
+   "ipa": "/ˈsɜːrplʌs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "잉여금, 흑자",
+     "ex": "The company reported a budget surplus for the third consecutive quarter, allowing for reinvestment in R&D.",
+     "tr": "그 회사는 3분기 연속 예산 흑자를 보고했고, 이를 통해 연구개발에 재투자할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "excess",
+    "overage"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "synergy",
+   "ipa": "/ˈsɪnərdʒi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "시너지, 상승효과",
+     "ex": "Executives touted the anticipated synergy between the two merging firms' distribution networks.",
+     "tr": "경영진은 합병하는 두 회사의 유통망 사이에서 기대되는 시너지 효과를 강조했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "synergistic effect",
+    "combined benefit"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "tabulate",
+   "ipa": "/ˈtæbjəˌleɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "(권리·의무 등이) 속하다, 관련되다",
-     "ex": "All rights appertaining to the intellectual property shall remain with the licensor.",
-     "tr": "해당 지식재산권에 속하는 모든 권리는 라이선스 제공자에게 남는다.",
+     "ko": "표로 만들다, 도표화하다",
+     "ex": "The survey results will be tabulated before being presented at the shareholders' meeting.",
+     "tr": "설문 결과는 주주 총회에서 발표되기 전에 표로 정리될 것이다.",
      "src": ""
     }
    ],
    "syn": [
-    "pertain to",
-    "relate to"
+    "chart",
+    "compile"
    ],
    "deriv": [],
    "roots": [],
@@ -614,21 +790,22 @@
    }
   },
   {
-   "en": "apportion",
-   "ipa": "/əˈpɔrʃən/",
-   "pos": "v",
+   "en": "tangible",
+   "ipa": "/ˈtændʒəbəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(비례하여) 배분하다",
-     "ex": "Liability for the delay was apportioned between the contractor and the subcontractor.",
-     "tr": "지연에 대한 책임은 원청업체와 하청업체 간에 배분되었다.",
+     "pos": "adj",
+     "ko": "유형의, 실체가 있는",
+     "ex": "Investors expect tangible evidence of cost savings before the next quarterly earnings call.",
+     "tr": "투자자들은 다음 분기 실적 발표 전에 비용 절감에 대한 실질적인 증거를 기대하고 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "allocate",
-    "distribute"
+    "concrete",
+    "measurable",
+    "real"
    ],
    "deriv": [],
    "roots": [],
@@ -643,21 +820,21 @@
    }
   },
   {
-   "en": "expropriate",
-   "ipa": "/ɪkˈsproʊprieɪt/",
-   "pos": "v",
+   "en": "tantamount",
+   "ipa": "/ˈtæntəˌmaʊnt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(재산을) 수용하다, 몰수하다",
-     "ex": "The foreign government moved to expropriate the mining company's assets without compensation.",
-     "tr": "그 외국 정부는 보상 없이 광산 회사의 자산을 수용하려 했다.",
+     "pos": "adj",
+     "ko": "~와 마찬가지인, 다름없는",
+     "ex": "Failing to disclose the conflict of interest was tantamount to a breach of fiduciary duty.",
+     "tr": "이해 상충을 공개하지 않은 것은 수탁 의무 위반과 다름없었다.",
      "src": ""
     }
    ],
    "syn": [
-    "confiscate",
-    "seize"
+    "equivalent to",
+    "equal to"
    ],
    "deriv": [],
    "roots": [],
@@ -672,21 +849,22 @@
    }
   },
   {
-   "en": "perpetuate",
-   "ipa": "/pərˈpɛtʃuˌeɪt/",
-   "pos": "v",
+   "en": "tariff barrier",
+   "ipa": "/ˈtær.ɪf ˈber.i.ər/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(관행 등을) 지속시키다, 영속화하다",
-     "ex": "Critics argue the bonus structure perpetuates short-term thinking among executives.",
-     "tr": "비판론자들은 그 상여금 구조가 경영진의 단기적 사고를 지속시킨다고 주장한다.",
+     "pos": "n",
+     "ko": "관세 장벽",
+     "ex": "Removing tariff barriers under the new bilateral agreement is expected to boost cross-border trade volume significantly",
+     "tr": "새로운 양자 협정에 따라 관세 장벽을 철폐하면 국경 간 교역량이 크게 증가할 것으로 예상된다",
      "src": ""
     }
    ],
    "syn": [
-    "prolong",
-    "continue"
+    "trade barrier",
+    "import duty barrier",
+    "protectionist measure"
    ],
    "deriv": [],
    "roots": [],
@@ -701,21 +879,21 @@
    }
   },
   {
-   "en": "vest",
-   "ipa": "/vɛst/",
-   "pos": "v",
+   "en": "tariff exemption",
+   "ipa": "/ˈtærɪf ɪgˈzɛmpʃən/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "(권리를) 부여하다, 귀속시키다",
-     "ex": "Full ownership of the shares will vest after a four-year holding period.",
-     "tr": "주식의 완전한 소유권은 4년의 보유 기간 이후에 귀속될 것이다.",
+     "pos": "n",
+     "ko": "관세 면제",
+     "ex": "Manufacturers importing components solely for reassembly and re-export may qualify for a tariff exemption under the trade agreement.",
+     "tr": "재조립 및 재수출 목적으로만 부품을 수입하는 제조업체는 무역 협정에 따라 관세 면제 대상이 될 수 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "confer",
-    "grant"
+    "duty waiver",
+    "customs exemption"
    ],
    "deriv": [],
    "roots": [],
@@ -730,21 +908,22 @@
    }
   },
   {
-   "en": "impede",
-   "ipa": "/ɪmˈpiːd/",
-   "pos": "v",
+   "en": "tender",
+   "ipa": "/ˈtendər/",
+   "pos": "v./",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "방해하다, 지연시키다",
-     "ex": "Bureaucratic red tape continued to impede the approval of the cross-border merger.",
-     "tr": "관료적 형식주의는 국경 간 합병 승인을 계속 지연시켰다.",
+     "pos": "v./",
+     "ko": "제출하다, 입찰(하다)",
+     "ex": "The contractor must tender proof of insurance before commencing work on the site.",
+     "tr": "그 시공업체는 현장 작업을 시작하기 전에 보험 증빙을 제출해야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "hinder",
-    "obstruct"
+    "submit",
+    "offer",
+    "proffer"
    ],
    "deriv": [],
    "roots": [],
@@ -759,21 +938,22 @@
    }
   },
   {
-   "en": "attenuate",
-   "ipa": "/əˈtɛnjuˌeɪt/",
-   "pos": "v",
+   "en": "testator",
+   "ipa": "/ˈtɛsteɪtər/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "약화시키다, 완화하다",
-     "ex": "The hedging strategy was designed to attenuate the impact of currency fluctuations.",
-     "tr": "그 헤지 전략은 환율 변동의 영향을 완화하기 위해 고안되었다.",
+     "pos": "n",
+     "ko": "유언자",
+     "ex": "The will was contested on the grounds that the testator lacked capacity at the time of signing.",
+     "tr": "그 유언장은 유언자가 서명 당시 행위 능력이 없었다는 이유로 이의가 제기되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "reduce",
-    "weaken"
+    "decedent",
+    "will-maker",
+    "legator"
    ],
    "deriv": [],
    "roots": [],
@@ -788,21 +968,22 @@
    }
   },
   {
-   "en": "conflate",
-   "ipa": "/kənˈfleɪt/",
-   "pos": "v",
+   "en": "testimonium",
+   "ipa": "/ˌtɛstɪˈmoʊniəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "혼동하다, 합치다",
-     "ex": "Analysts warned against conflating operating income with net cash flow when valuing the firm.",
-     "tr": "분석가들은 그 회사를 평가할 때 영업이익과 순현금흐름을 혼동하지 말라고 경고했다.",
+     "pos": "n",
+     "ko": "입증 문구, 계약 종결부",
+     "ex": "The testimonium clause confirms that the parties executed the agreement on the stated date.",
+     "tr": "그 입증 문구 조항은 당사자들이 명시된 날짜에 계약을 체결했음을 확인한다.",
      "src": ""
     }
    ],
    "syn": [
-    "merge",
-    "confuse"
+    "attestation clause",
+    "closing statement",
+    "execution clause"
    ],
    "deriv": [],
    "roots": [],
@@ -817,199 +998,21 @@
    }
   },
   {
-   "en": "circumscribe",
-   "ipa": "/ˈsɜrkəmˌskraɪb/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "(권한 등을) 제한하다",
-     "ex": "The revised bylaws circumscribe the authority of the interim chief executive.",
-     "tr": "개정된 정관은 임시 최고경영자의 권한을 제한한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "restrict",
-    "limit"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "deplete",
-   "ipa": "/dɪˈpliːt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "고갈시키다, 소진시키다",
-     "ex": "The prolonged legal battle depleted the startup's cash reserves.",
-     "tr": "장기간의 법적 분쟁은 그 스타트업의 현금 보유고를 고갈시켰다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "exhaust",
-    "drain"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "remunerate",
-   "ipa": "/rɪˈmjuːnəˌreɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "보수를 지급하다, 보상하다",
-     "ex": "Senior executives are remunerated largely through performance-based stock grants.",
-     "tr": "고위 임원들은 주로 성과 기반 주식 부여를 통해 보수를 지급받는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "compensate",
-    "pay"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "notwithstanding",
-   "ipa": "/ˌnɑːtwɪθˈstændɪŋ/",
-   "pos": "pre",
-   "meanings": [
-    {
-     "pos": "pre",
-     "ko": "~에도 불구하고",
-     "ex": "Notwithstanding the delays in the supply chain, the vendor delivered the shipment ahead of the revised deadline.",
-     "tr": "공급망 지연에도 불구하고, 그 공급업체는 수정된 마감일보다 앞서 화물을 배송했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "despite",
-    "in spite of",
-    "regardless of"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "nonetheless",
-   "ipa": "/ˌnʌnðəˈlɛs/",
+   "en": "thenceforth",
+   "ipa": "/ˌðɛnsˈfɔːrθ/",
    "pos": "adv",
    "meanings": [
     {
      "pos": "adv",
-     "ko": "그럼에도 불구하고",
-     "ex": "The merger negotiations stalled repeatedly; nonetheless, both parties remained committed to reaching a binding agreement.",
-     "tr": "합병 협상이 여러 번 교착 상태에 빠졌지만, 그럼에도 불구하고 양측은 구속력 있는 합의에 도달하는 데 전념했다.",
+     "ko": "그때부터, 그 이후로",
+     "ex": "The distributor breached the exclusivity clause, and thenceforth the manufacturer sought alternative partners.",
+     "tr": "그 유통업체가 독점 조항을 위반했고, 그때부터 제조업체는 대안 파트너를 모색했다.",
      "src": ""
     }
    ],
    "syn": [
-    "nevertheless",
-    "still",
-    "even so"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "accordingly",
-   "ipa": "/əˈkɔːrdɪŋli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그에 따라",
-     "ex": "The auditor identified several discrepancies in the ledger, and the finance team revised the report accordingly.",
-     "tr": "감사인이 장부에서 여러 불일치를 발견했고, 재무팀은 그에 따라 보고서를 수정했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "consequently",
-    "therefore",
-    "correspondingly"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "henceforth",
-   "ipa": "/ˌhɛnsˈfɔːrθ/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "이제부터, 향후",
-     "ex": "Henceforth, all reimbursement claims must be submitted through the online portal rather than by email.",
-     "tr": "이제부터 모든 환급 청구는 이메일이 아니라 온라인 포털을 통해 제출되어야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "from now on",
-    "hereafter",
-    "going forward"
+    "from then on",
+    "thereafter"
    ],
    "deriv": [],
    "roots": [],
@@ -1054,21 +1057,21 @@
    }
   },
   {
-   "en": "hereby",
-   "ipa": "/ˌhɪrˈbaɪ/",
-   "pos": "adv",
+   "en": "third-party logistics",
+   "ipa": "/θɜrd ˈpɑrti loʊˈdʒɪstɪks/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adv",
-     "ko": "이에 의하여, 이로써(계약·공지에서)",
-     "ex": "The undersigned parties hereby agree to the terms and conditions set forth in this contract.",
-     "tr": "서명한 당사자들은 이 계약서에 명시된 조건에 이로써 동의한다.",
+     "pos": "n",
+     "ko": "제3자 물류(3PL)",
+     "ex": "The company outsourced warehousing and distribution to a third-party logistics provider to focus on core manufacturing operations.",
+     "tr": "그 회사는 핵심 제조 업무에 집중하기 위해 창고 및 유통을 제3자 물류 업체에 위탁했다.",
      "src": ""
     }
    ],
    "syn": [
-    "by this means",
-    "herewith"
+    "3PL provider",
+    "logistics outsourcing"
    ],
    "deriv": [],
    "roots": [],
@@ -1083,22 +1086,21 @@
    }
   },
   {
-   "en": "whereas",
-   "ipa": "/wɛrˈæz/",
-   "pos": "con",
+   "en": "throughput",
+   "ipa": "/ˈθruːpʊt/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "con",
-     "ko": "반면에(전문에서: ~이므로)",
-     "ex": "Whereas the vendor failed to meet the delivery schedule, the client is entitled to invoke the penalty clause.",
-     "tr": "공급업체가 배송 일정을 지키지 못했으므로, 고객은 위약 조항을 발동할 권리가 있다.",
+     "pos": "n",
+     "ko": "처리량, 생산 처리 속도",
+     "ex": "Installing the new conveyor system increased daily throughput by nearly thirty percent",
+     "tr": "새 컨베이어 시스템 설치로 일일 처리량이 거의 30퍼센트 증가했다",
      "src": ""
     }
    ],
    "syn": [
-    "while",
-    "given that",
-    "considering that"
+    "output rate",
+    "processing capacity"
    ],
    "deriv": [],
    "roots": [],
@@ -1113,52 +1115,51 @@
    }
   },
   {
-   "en": "pursuant",
-   "ipa": "/pərˈsuːənt/",
+   "en": "tortfeasor",
+   "ipa": "/ˈtɔːrtˌfiːzər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불법행위자",
+     "ex": "As the joint tortfeasor, the subcontractor shared liability for the workplace injury.",
+     "tr": "공동 불법행위자로서 그 하도급업체는 그 산업 재해에 대한 책임을 분담했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "wrongdoer",
+    "offending party"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "tortious",
+   "ipa": "/ˈtɔːrʃəs/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "~에 따라, 준거하여(pursuant to)",
-     "ex": "Pursuant to the terms of the lease agreement, the tenant must provide sixty days' written notice before vacating.",
-     "tr": "임대 계약 조건에 따라, 임차인은 퇴거 전 60일 서면 통지를 제공해야 한다.",
+     "ko": "불법행위의",
+     "ex": "The court found the executive personally liable for tortious interference with the vendor contract.",
+     "tr": "법원은 그 임원이 공급업체 계약에 대한 불법행위적 방해에 개인적으로 책임이 있다고 판단했다.",
      "src": ""
     }
    ],
    "syn": [
-    "in accordance with",
-    "under",
-    "per"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "heretofore",
-   "ipa": "/ˌhɪrtuˈfɔːr/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "지금까지, 이전에는",
-     "ex": "The subsidiary had heretofore operated independently, but it will now report directly to corporate headquarters.",
-     "tr": "그 자회사는 지금까지 독립적으로 운영되어 왔으나, 이제는 본사에 직접 보고할 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "until now",
-    "previously",
-    "hitherto"
+    "wrongful",
+    "unlawful",
+    "actionable"
    ],
    "deriv": [],
    "roots": [],

@@ -2,25 +2,23 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 1,
- "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "expenditure",
-   "ipa": "/ɪkˈspɛndɪtʃər/",
+   "en": "comprehension",
+   "ipa": "/ˌkɑːmprɪˈhɛnʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "지출, 경비",
-     "ex": "The board demanded a detailed breakdown of capital expenditure before approving next year's budget.",
-     "tr": "이사회는 내년 예산을 승인하기 전에 자본 지출에 대한 상세한 내역을 요구했다.",
+     "ko": "이해(력)",
+     "ex": "The manual was written for easy comprehension by new staff.",
+     "tr": "그 설명서는 신입 직원이 쉽게 이해하도록 작성되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "outlay",
-    "spending",
-    "disbursement"
+    "understanding"
    ],
    "deriv": [],
    "roots": [],
@@ -28,28 +26,32 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 0,
-    "exams": 0,
+    "count": 42,
+    "exams": 40,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "depreciation",
-   "ipa": "/dɪˌpriʃiˈeɪʃən/",
+   "en": "aid",
+   "ipa": "/eɪd/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "감가상각",
-     "ex": "The accounting department adjusted the depreciation schedule to reflect the machinery's shortened useful life.",
-     "tr": "회계 부서는 기계의 단축된 내용연수를 반영하기 위해 감가상각 일정을 조정했다.",
+     "ko": "도움, 지원",
+     "ex": "The new software provides aid to employees filing reports.",
+     "tr": "새 소프트웨어는 직원들이 보고서를 작성하는 데 도움을 줍니다.",
      "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "돕다"
     }
    ],
    "syn": [
-    "amortization",
-    "devaluation"
+    "assistance",
+    "help"
    ],
    "deriv": [],
    "roots": [],
@@ -57,29 +59,27 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 0,
-    "exams": 0,
+    "count": 152,
+    "exams": 38,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "reimbursement",
-   "ipa": "/ˌriːɪmˈbɜːrsmənt/",
+   "en": "inventory",
+   "ipa": "/ˈɪnvəntɔːri/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "환급, 상환",
-     "ex": "Employees must submit itemized receipts within thirty days to qualify for travel expense reimbursement.",
-     "tr": "직원들은 출장 경비 환급을 받으려면 30일 이내에 항목별 영수증을 제출해야 한다.",
+     "ko": "재고, 물품 목록",
+     "ex": "We need to check the inventory before placing a new order.",
+     "tr": "새로 주문하기 전에 재고를 확인해야 합니다.",
      "src": ""
     }
    ],
    "syn": [
-    "repayment",
-    "refund",
-    "compensation"
+    "stock"
    ],
    "deriv": [],
    "roots": [],
@@ -87,28 +87,27 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 0,
-    "exams": 0,
+    "count": 99,
+    "exams": 31,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "surplus",
-   "ipa": "/ˈsɜːrplʌs/",
+   "en": "estate",
+   "ipa": "/ɪˈsteɪt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "잉여금, 흑자",
-     "ex": "The company reported a budget surplus for the third consecutive quarter, allowing for reinvestment in R&D.",
-     "tr": "그 회사는 3분기 연속 예산 흑자를 보고했고, 이를 통해 연구개발에 재투자할 수 있었다.",
+     "ko": "부동산",
+     "ex": "She works as a real estate agent in the downtown area.",
+     "tr": "그녀는 시내 지역에서 부동산 중개인으로 일하고 있습니다.",
      "src": ""
     }
    ],
    "syn": [
-    "excess",
-    "overage"
+    "property"
    ],
    "deriv": [],
    "roots": [],
@@ -116,28 +115,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 0,
-    "exams": 0,
+    "count": 90,
+    "exams": 30,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "remittance",
-   "ipa": "/rɪˈmɪtəns/",
+   "en": "merchandise",
+   "ipa": "/ˈmɜːrtʃəndaɪz/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "송금, 송금액",
-     "ex": "Please attach the remittance advice to confirm that payment has been wired to the supplier's account.",
-     "tr": "공급업체 계좌로 대금이 송금되었음을 확인할 수 있도록 송금 통지서를 첨부해 주십시오.",
+     "ko": "상품",
+     "ex": "The store received a large shipment of new merchandise this morning.",
+     "tr": "그 매장은 오늘 아침 새로운 상품을 대량으로 배송받았습니다.",
      "src": ""
     }
    ],
    "syn": [
-    "payment transfer",
-    "wire transfer"
+    "goods",
+    "products"
    ],
    "deriv": [],
    "roots": [],
@@ -145,29 +144,53 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 0,
-    "exams": 0,
+    "count": 87,
+    "exams": 30,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "disbursement",
-   "ipa": "/dɪsˈbɜːrsmənt/",
+   "en": "executive",
+   "ipa": "/ɪɡˈzɛkjətɪv/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "지급, 지출",
-     "ex": "The finance team is responsible for authorizing every disbursement exceeding ten thousand dollars.",
-     "tr": "재무팀은 만 달러를 초과하는 모든 지급 건에 대해 승인할 책임이 있다.",
+     "ko": "임원, 경영진",
+     "ex": "The executives will meet to discuss the annual budget next week.",
+     "tr": "임원들은 다음 주 연간 예산을 논의하기 위해 모일 것입니다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 69,
+    "exams": 29,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "eta",
+   "ipa": "/ˌiː tiː ˈeɪ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "도착 예정 시간 (estimated time of arrival)",
+     "ex": "Could you send me the ETA for the delivery truck so I can plan the unloading schedule?",
+     "tr": "하역 일정을 짤 수 있도록 배송 트럭의 도착 예정 시간을 보내 주시겠어요?",
      "src": ""
     }
    ],
    "syn": [
-    "payout",
-    "expenditure",
-    "outlay"
+    "estimated arrival time"
    ],
    "deriv": [],
    "roots": [],
@@ -175,29 +198,567 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 0,
-    "exams": 0,
+    "count": 51,
+    "exams": 28,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "fiscal",
-   "ipa": "/ˈfɪskəl/",
+   "en": "vice",
+   "ipa": "/vaɪs/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "회계의, 재정의",
-     "ex": "The corporation's fiscal year ends in March, prompting an internal audit shortly thereafter.",
-     "tr": "그 회사의 회계연도는 3월에 끝나며, 그 직후 내부 감사가 진행된다.",
+     "ko": "부(副)~의",
+     "ex": "The vice president approved the budget for the new marketing campaign.",
+     "tr": "부사장이 새 마케팅 캠페인 예산을 승인했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 57,
+    "exams": 28,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "warranty",
+   "ipa": "/ˈwɔːrənti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "품질 보증(서)",
+     "ex": "The printer comes with a two-year warranty that covers parts and labor.",
+     "tr": "그 프린터는 부품과 인건비를 보장하는 2년 품질보증이 함께 제공된다.",
      "src": ""
     }
    ],
    "syn": [
-    "financial",
-    "monetary",
-    "budgetary"
+    "guarantee"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 96,
+    "exams": 28,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "merger",
+   "ipa": "/ˈmɜːrdʒər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "합병",
+     "ex": "The merger between the two companies is expected to be completed by next year.",
+     "tr": "두 회사 간의 합병은 내년까지 완료될 것으로 예상된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "acquisition",
+    "consolidation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 66,
+    "exams": 27,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "vendor",
+   "ipa": "/ˈvɛndər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "판매업체, 공급업체",
+     "ex": "The purchasing department is negotiating prices with a new vendor.",
+     "tr": "구매 부서는 새로운 공급업체와 가격을 협상하고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supplier",
+    "seller"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 41,
+    "exams": 26,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "convention",
+   "ipa": "/kənˈvenʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "총회, 대회, 컨벤션",
+     "ex": "Thousands of professionals attend the annual technology convention every spring.",
+     "tr": "매년 봄 수천 명의 전문가들이 연례 기술 총회에 참석합니다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conference"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 69,
+    "exams": 24,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "accommodate",
+   "ipa": "/əˈkɑːmədeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "수용하다, (요구에) 맞춰주다",
+     "ex": "The hotel can accommodate up to three hundred guests for the conference.",
+     "tr": "그 호텔은 회의를 위해 최대 300명의 손님을 수용할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hold",
+    "adapt to"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 43,
+    "exams": 23,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "initiative",
+   "ipa": "/ɪˈnɪʃətɪv/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "계획, 주도권",
+     "ex": "The manager launched a new initiative to reduce paper waste.",
+     "tr": "관리자는 종이 낭비를 줄이기 위한 새로운 계획을 시작했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "program",
+    "plan"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 52,
+    "exams": 23,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "itinerary",
+   "ipa": "/aɪˈtɪnəreri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "여행 일정표",
+     "ex": "The travel agent sent us a detailed itinerary for the business trip.",
+     "tr": "여행사 직원은 우리에게 출장을 위한 상세한 일정표를 보내주었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "travel schedule"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 61,
+    "exams": 22,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "lease",
+   "ipa": "/liːs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "임대차 계약, 리스",
+     "ex": "The company signed a two-year lease for the new office space.",
+     "tr": "회사는 새 사무 공간에 대해 2년 임대차 계약을 체결했다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "임대하다, 임차하다"
+    }
+   ],
+   "syn": [
+    "rent",
+    "tenancy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 48,
+    "exams": 22,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "recruit",
+   "ipa": "/rɪˈkruːt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "채용하다, 모집하다",
+     "ex": "The company plans to recruit additional staff for the new branch office.",
+     "tr": "회사는 신규 지점을 위해 추가 직원을 채용할 계획이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hire",
+    "employ"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 32,
+    "exams": 20,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "batch",
+   "ipa": "/bætʃ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "묶음, 1회분",
+     "ex": "The factory produced a new batch of products this morning.",
+     "tr": "공장은 오늘 아침 새로운 제품 한 묶음을 생산했습니다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 27,
+    "exams": 18,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "negotiate",
+   "ipa": "/nɪˈɡoʊʃieɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "협상하다",
+     "ex": "The sales team will negotiate the terms of the contract with the supplier.",
+     "tr": "영업팀은 공급업체와 계약 조건을 협상할 것입니다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "bargain"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 29,
+    "exams": 18,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "luncheon",
+   "ipa": "/ˈlʌntʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "오찬, 공식 점심 식사",
+     "ex": "The awards luncheon will be held in the hotel ballroom at noon.",
+     "tr": "시상식 오찬은 정오에 호텔 연회장에서 열릴 예정이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "lunch"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 23,
+    "exams": 17,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "revenue",
+   "ipa": "/ˈrevənuː/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수익, 매출",
+     "ex": "The company reported a ten percent increase in annual revenue.",
+     "tr": "그 회사는 연간 수익이 10퍼센트 증가했다고 발표했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "earnings",
+    "income"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 25,
+    "exams": 17,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "caterer",
+   "ipa": "/ˈkeɪtərər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "출장 연회 업체, 음식 공급업자",
+     "ex": "The office hired a local caterer for the annual holiday party.",
+     "tr": "사무실은 연례 연말 파티를 위해 지역 출장 연회 업체를 고용했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "food supplier"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 27,
+    "exams": 16,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "consultation",
+   "ipa": "/ˌkɑːnsəlˈteɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상담, 협의",
+     "ex": "Clients can schedule a free consultation with our financial advisor.",
+     "tr": "고객들은 저희 재무 상담사와 무료 상담을 예약할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "meeting",
+    "discussion"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 25,
+    "exams": 16,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "efficiency",
+   "ipa": "/ɪˈfɪʃnsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "효율성",
+     "ex": "The company invested in new machinery to increase manufacturing efficiency.",
+     "tr": "그 회사는 제조 효율성을 높이기 위해 새 기계에 투자했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "effectiveness"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 31,
+    "exams": 16,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "productivity",
+   "ipa": "/ˌproʊdʌkˈtɪvəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "생산성",
+     "ex": "The new scheduling system has significantly improved employee productivity.",
+     "tr": "새로운 일정 관리 시스템은 직원 생산성을 크게 향상시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "efficiency",
+    "output"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 39,
+    "exams": 16,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "quarterly",
+   "ipa": "/ˈkwɔːrtərli/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "분기별의",
+     "ex": "The finance team submits a quarterly report to the board of directors.",
+     "tr": "재무팀은 이사회에 분기별 보고서를 제출한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 36,
+    "exams": 16,
+    "recentYear": "",
+    "stars": 2
+   }
+  },
+  {
+   "en": "abrogate",
+   "ipa": "/ˈæbrəˌɡeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "폐지하다, 무효화하다",
+     "ex": "The new administration moved to abrogate the trade agreement negotiated by its predecessor.",
+     "tr": "새 행정부는 전임자가 협상한 무역 협정을 폐지하려 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "repeal",
+    "nullify"
    ],
    "deriv": [],
    "roots": [],
@@ -212,80 +773,21 @@
    }
   },
   {
-   "en": "arrears",
-   "ipa": "/əˈrɪərz/",
+   "en": "accreditation",
+   "ipa": "/əˌkredɪˈteɪʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "연체금, 미납금",
-     "ex": "Tenants who fall into arrears for more than sixty days will be subject to late fees under the lease agreement.",
-     "tr": "임대차 계약에 따라 60일 이상 연체된 임차인에게는 연체료가 부과된다.",
+     "ko": "공인, 인가",
+     "ex": "Losing its accreditation would prevent the testing laboratory from issuing official reports",
+     "tr": "공인을 잃게 되면 그 시험 연구소는 공식 보고서를 발행할 수 없게 된다",
      "src": ""
     }
    ],
    "syn": [
-    "overdue payment",
-    "outstanding debt"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "liabilities",
-   "ipa": "/ˌlaɪəˈbɪlətiz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "부채",
-     "ex": "Current liabilities must be settled within one fiscal year to maintain a healthy balance sheet.",
-     "tr": "건전한 대차대조표를 유지하려면 유동부채는 한 회계연도 내에 상환되어야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "debts",
-    "obligations"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "audit",
-   "ipa": "/ˈɔːdɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "감사, 감사하다",
-     "ex": "An independent auditor was hired to audit the firm's financial statements before the merger.",
-     "tr": "합병 전에 회사의 재무제표를 감사하기 위해 독립 감사인이 고용되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "examination",
-    "review",
-    "inspection"
+    "certification",
+    "authorization"
    ],
    "deriv": [],
    "roots": [],
@@ -328,165 +830,21 @@
    }
   },
   {
-   "en": "amortization",
-   "ipa": "/ˌæmərtɪˈzeɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "분할상환, 무형자산상각",
-     "ex": "The loan's amortization schedule outlines how much principal and interest is due each month.",
-     "tr": "그 대출의 분할상환 일정표는 매월 상환해야 할 원금과 이자를 명시한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "debt repayment",
-    "depreciation"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "receivables",
-   "ipa": "/rɪˈsiːvəbəlz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "미수금, 매출채권",
-     "ex": "The collections department has been tasked with reducing outstanding receivables by the end of the quarter.",
-     "tr": "수금 부서는 분기 말까지 미결제 미수금을 줄이라는 임무를 받았다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "accounts receivable"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "payables",
-   "ipa": "/ˈpeɪəbəlz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "미지급금, 매입채무",
-     "ex": "Extending the payables cycle can improve short-term cash flow but may strain vendor relations.",
-     "tr": "매입채무 결제 주기를 연장하면 단기 현금흐름은 개선되지만 공급업체와의 관계가 악화될 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "accounts payable"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "solvency",
-   "ipa": "/ˈsɒlvənsi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "지급능력, 재무건전성",
-     "ex": "Analysts questioned the retailer's solvency after it defaulted on two consecutive bond payments.",
-     "tr": "그 소매업체가 두 차례 연속 채권 이자 지급을 이행하지 못하자 애널리스트들은 회사의 지급능력에 의문을 제기했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "financial stability",
-    "creditworthiness"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "insolvency",
-   "ipa": "/ɪnˈsɒlvənsi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "지급불능, 파산상태",
-     "ex": "Mounting liabilities pushed the subsidiary toward insolvency within eighteen months.",
-     "tr": "부채가 누적되면서 그 자회사는 18개월 만에 지급불능 상태에 이르렀다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "bankruptcy",
-    "financial ruin"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "underwrite",
-   "ipa": "/ˈʌndərraɪt/",
+   "en": "accrue",
+   "ipa": "/əˈkruː/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "인수하다, 보증하다",
-     "ex": "The investment bank agreed to underwrite the bond issuance in exchange for a fixed fee.",
-     "tr": "그 투자은행은 고정 수수료를 받는 조건으로 채권 발행을 인수하기로 합의했다.",
+     "ko": "(이자 등이) 누적되다, 발생하다",
+     "ex": "Interest on the outstanding balance continues to accrue until the invoice is settled in full.",
+     "tr": "미지급 잔액에 대한 이자는 송장이 전액 정산될 때까지 계속 누적된다.",
      "src": ""
     }
    ],
    "syn": [
-    "guarantee",
-    "sponsor",
-    "finance"
+    "accumulate",
+    "build up"
    ],
    "deriv": [],
    "roots": [],
@@ -501,22 +859,22 @@
    }
   },
   {
-   "en": "collateral",
-   "ipa": "/kəˈlætərəl/",
+   "en": "addendum",
+   "ipa": "/əˈdendəm/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "담보",
-     "ex": "The borrower pledged the warehouse as collateral to secure the commercial loan.",
-     "tr": "차용인은 상업 대출을 담보하기 위해 창고를 담보물로 제공했다.",
+     "ko": "부칙, 추가 조항",
+     "ex": "An addendum outlining the revised pricing schedule was attached to the original purchase agreement.",
+     "tr": "수정된 가격 일정을 명시한 부칙이 원 매매 계약서에 첨부되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "security",
-    "pledge",
-    "guarantee"
+    "supplement",
+    "appendix",
+    "attachment"
    ],
    "deriv": [],
    "roots": [],
@@ -531,488 +889,22 @@
    }
   },
   {
-   "en": "escrow",
-   "ipa": "/ˈɛskroʊ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "에스크로, 제3자 예치",
-     "ex": "The purchase price will be held in escrow until all contractual conditions have been satisfied.",
-     "tr": "매매 대금은 모든 계약 조건이 충족될 때까지 에스크로에 예치될 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "trust account",
-    "holding account"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "indemnity",
-   "ipa": "/ɪnˈdɛmnəti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "배상, 보상",
-     "ex": "The vendor requested an indemnity clause to protect against losses arising from product defects.",
-     "tr": "공급업체는 제품 결함으로 인한 손실로부터 보호받기 위해 배상 조항을 요청했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "compensation",
-    "reimbursement"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "stipend",
-   "ipa": "/ˈstaɪpɛnd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "수당, 보조금",
-     "ex": "Relocated executives receive a monthly stipend to cover housing costs during the transition period.",
-     "tr": "전근 임원들은 이전 기간 동안 주거비를 충당하기 위해 월별 수당을 받는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "allowance",
-    "grant"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "levy",
-   "ipa": "/ˈlɛvi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "부과금, 부과하다",
-     "ex": "The government imposed a new levy on imported machinery to protect domestic manufacturers.",
-     "tr": "정부는 국내 제조업체를 보호하기 위해 수입 기계류에 새로운 부과금을 도입했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "tax",
-    "tariff",
-    "duty"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "subsidy",
-   "ipa": "/ˈsʌbsɪdi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보조금",
-     "ex": "Manufacturers that adopt renewable energy sources are eligible for a government subsidy.",
-     "tr": "재생에너지원을 도입하는 제조업체는 정부 보조금을 받을 자격이 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "grant",
-    "financial aid"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "withholding",
-   "ipa": "/wɪðˈhoʊldɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "원천징수",
-     "ex": "The payroll office recalculated withholding tax after the new income brackets took effect.",
-     "tr": "급여 부서는 새로운 소득 구간이 적용된 후 원천징수세를 재계산했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "deduction",
-    "retention"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "remuneration",
-   "ipa": "/rɪˌmjuːnəˈreɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보수, 급여",
-     "ex": "Executive remuneration packages must now include performance-based incentives under the new policy.",
-     "tr": "새 정책에 따라 임원 보수 패키지에는 이제 성과 기반 인센티브가 포함되어야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "compensation",
-    "salary",
-    "pay"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "appropriation",
-   "ipa": "/əˌproʊpriˈeɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "예산 배정, 충당",
-     "ex": "Congress finalized the appropriation of funds for the infrastructure renewal project.",
-     "tr": "의회는 인프라 재건 사업을 위한 예산 배정을 확정했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "allocation",
-    "budgeting"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "encumbrance",
-   "ipa": "/ɪnˈkʌmbrəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "저당권, 부담",
-     "ex": "Before finalizing the sale, the buyer confirmed that the property was free of any encumbrance.",
-     "tr": "매수인은 매매를 확정하기 전에 그 부동산에 어떠한 저당권도 없음을 확인했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "lien",
-    "claim",
-    "burden"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "contingency",
-   "ipa": "/kənˈtɪndʒənsi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "우발 상황, 예비비",
-     "ex": "The finance director set aside a contingency fund to cover unforeseen litigation costs.",
-     "tr": "재무 이사는 예상치 못한 소송 비용을 충당하기 위해 예비비를 따로 마련했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "reserve",
-    "provision"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "forfeiture",
-   "ipa": "/ˈfɔːrfɪtʃər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "몰수, 상실",
-     "ex": "Failure to meet the delivery deadline results in forfeiture of the performance bond.",
-     "tr": "납품 기한을 지키지 못하면 이행보증금을 몰수당하게 된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "confiscation",
-    "loss"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "embezzlement",
-   "ipa": "/ɪmˈbɛzəlmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "횡령",
-     "ex": "The internal audit uncovered evidence of embezzlement involving the company's petty cash fund.",
-     "tr": "내부 감사에서 회사의 소액현금 계좌와 관련된 횡령의 증거가 드러났다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "misappropriation",
-    "fraud"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "misappropriation",
-   "ipa": "/ˌmɪsəˌproʊpriˈeɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "횡령, 부당 유용",
-     "ex": "The former treasurer was charged with misappropriation of shareholder funds.",
-     "tr": "전 회계 담당자는 주주 자금 횡령 혐의로 기소되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "embezzlement",
-    "fraud"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "liquidation",
-   "ipa": "/ˌlɪkwɪˈdeɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "청산",
-     "ex": "Creditors voted to place the insolvent firm into liquidation rather than pursue restructuring.",
-     "tr": "채권자들은 구조조정을 추진하는 대신 지급불능 상태의 회사를 청산하기로 표결했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "dissolution",
-    "winding-up"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "receivership",
-   "ipa": "/rɪˈsiːvərʃɪp/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "관재, 재산관리 상태",
-     "ex": "The airline was placed into receivership after failing to secure emergency financing.",
-     "tr": "그 항공사는 긴급 자금 조달에 실패한 후 재산관리 상태에 들어갔다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "administration",
-    "conservatorship"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "covenant",
-   "ipa": "/ˈkʌvənənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "약정, 조항",
-     "ex": "The loan agreement includes a covenant restricting the borrower from taking on additional debt.",
-     "tr": "그 대출 계약에는 차용인이 추가 부채를 지지 못하도록 제한하는 약정이 포함되어 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "agreement",
-    "stipulation"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "amortize",
-   "ipa": "/ˈæmərtaɪz/",
+   "en": "adjudicate",
+   "ipa": "/əˈdʒuːdɪˌkeɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "분할상환하다",
-     "ex": "The company plans to amortize the patent's acquisition cost over its remaining legal life.",
-     "tr": "그 회사는 특허 취득 비용을 남은 법적 존속 기간에 걸쳐 분할상환할 계획이다.",
+     "ko": "판결하다, 심리하다",
+     "ex": "The tribunal was appointed to adjudicate the shareholder dispute over dividend distribution.",
+     "tr": "그 재판부는 배당금 분배를 둘러싼 주주 분쟁을 심리하기 위해 임명되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "pay off gradually",
-    "write off"
+    "arbitrate",
+    "judge",
+    "rule on"
    ],
    "deriv": [],
    "roots": [],
@@ -1027,20 +919,22 @@
    }
   },
   {
-   "en": "capitalize",
-   "ipa": "/ˈkæpɪtəlaɪz/",
-   "pos": "v",
+   "en": "adverse",
+   "ipa": "/ædˈvɜːrs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "자본화하다",
-     "ex": "Under GAAP, the firm chose to capitalize the software development costs rather than expense them.",
-     "tr": "미국 회계기준에 따라 그 회사는 소프트웨어 개발 비용을 비용 처리하는 대신 자본화하기로 했다.",
+     "pos": "adj",
+     "ko": "불리한, 부정적인",
+     "ex": "The recession had an adverse effect on quarterly earnings across the retail sector.",
+     "tr": "경기 침체는 소매 부문 전반의 분기 수익에 부정적인 영향을 미쳤다.",
      "src": ""
     }
    ],
    "syn": [
-    "capitalise"
+    "unfavorable",
+    "detrimental",
+    "harmful"
    ],
    "deriv": [],
    "roots": [],
@@ -1055,107 +949,22 @@
    }
   },
   {
-   "en": "write-off",
-   "ipa": "/ˈraɪt ɔːf/",
+   "en": "affidavit",
+   "ipa": "/ˌæfɪˈdeɪvɪt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "손실 처리, 상각",
-     "ex": "The bank recorded a substantial write-off after several corporate loans defaulted.",
-     "tr": "몇몇 기업 대출이 부도나자 그 은행은 상당한 손실 처리를 기록했다.",
+     "ko": "선서 진술서",
+     "ex": "The witness submitted a signed affidavit corroborating the timeline of events.",
+     "tr": "그 증인은 사건 경과를 뒷받침하는 서명된 선서 진술서를 제출했다.",
      "src": ""
     }
    ],
    "syn": [
-    "write-down",
-    "charge-off"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "impairment",
-   "ipa": "/ɪmˈpɛrmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "손상, 자산가치 하락",
-     "ex": "The company recognized an impairment loss on goodwill following the disappointing acquisition.",
-     "tr": "그 회사는 실망스러운 인수 이후 영업권에 대한 손상차손을 인식했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "devaluation",
-    "write-down"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "provision",
-   "ipa": "/prəˈvɪʒən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "충당금, 대비",
-     "ex": "The bank increased its provision for bad debts amid rising default rates.",
-     "tr": "그 은행은 부도율 상승 속에서 대손충당금을 늘렸다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "allowance",
-    "reserve"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "underwriting",
-   "ipa": "/ˈʌndərraɪtɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "인수업무, 보증업무",
-     "ex": "The underwriting fee compensates the bank for assuming the risk of the securities offering.",
-     "tr": "인수 수수료는 은행이 증권 발행의 위험을 부담하는 데 대한 보상이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "guarantee service"
+    "sworn statement",
+    "declaration",
+    "testimony"
    ],
    "deriv": [],
    "roots": [],

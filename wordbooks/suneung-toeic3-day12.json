@@ -2,25 +2,24 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 12,
- "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "aforementioned",
-   "ipa": "/əˌfɔːrˈmɛnʃənd/",
-   "pos": "adj",
+   "en": "trade barrier",
+   "ipa": "/treɪd ˈber.i.ər/",
+   "pos": "nou",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "앞서 언급한",
-     "ex": "The aforementioned deadlines apply to all departments unless otherwise specified in writing.",
-     "tr": "앞서 언급한 마감일은 서면으로 달리 명시되지 않는 한 모든 부서에 적용된다.",
+     "pos": "nou",
+     "ko": "무역 장벽",
+     "ex": "Nontariff trade barriers such as complex licensing requirements can be just as restrictive as import duties",
+     "tr": "복잡한 인허가 요건과 같은 비관세 무역 장벽은 수입 관세만큼이나 제한적일 수 있다",
      "src": ""
     }
    ],
    "syn": [
-    "previously mentioned",
-    "above-stated",
-    "said"
+    "trade obstacle",
+    "protectionist barrier"
    ],
    "deriv": [],
    "roots": [],
@@ -35,21 +34,22 @@
    }
   },
   {
-   "en": "whereby",
-   "ipa": "/wɛrˈbaɪ/",
-   "pos": "adv",
+   "en": "trajectory",
+   "ipa": "/trəˈdʒektəri/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adv",
-     "ko": "그것에 의하여",
-     "ex": "The board approved a new policy whereby employees can request flexible working arrangements after one year of tenure.",
-     "tr": "이사회는 직원들이 1년 재직 후 유연근무를 요청할 수 있게 하는 새로운 정책을 승인했다.",
+     "pos": "n",
+     "ko": "(성장 등의) 궤적, 추세",
+     "ex": "The company's revenue trajectory has remained consistently upward since the acquisition.",
+     "tr": "그 회사의 매출 추세는 인수 이후 꾸준히 상승세를 유지해 왔다.",
      "src": ""
     }
    ],
    "syn": [
-    "by which",
-    "through which"
+    "trend",
+    "path",
+    "course"
    ],
    "deriv": [],
    "roots": [],
@@ -64,21 +64,22 @@
    }
   },
   {
-   "en": "insofar",
-   "ipa": "/ˌɪnsoʊˈfɑːr/",
-   "pos": "adv",
+   "en": "trustee",
+   "ipa": "/trʌˈstiː/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adv",
-     "ko": "~하는 한(insofar as)",
-     "ex": "The subcontractor is liable insofar as the defect resulted from its own negligence during installation.",
-     "tr": "그 하도급업체는 결함이 설치 중 자신의 과실로 인한 것인 한 책임을 진다.",
+     "pos": "n",
+     "ko": "수탁자, 신탁 관리인",
+     "ex": "The trustee is obligated to manage the estate's assets in accordance with the will's instructions.",
+     "tr": "그 수탁자는 유언장의 지시에 따라 유산의 자산을 관리할 의무가 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "to the extent that",
-    "as far as"
+    "fiduciary",
+    "administrator",
+    "custodian"
    ],
    "deriv": [],
    "roots": [],
@@ -93,981 +94,21 @@
    }
   },
   {
-   "en": "thenceforth",
-   "ipa": "/ˌðɛnsˈfɔːrθ/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그때부터, 그 이후로",
-     "ex": "The distributor breached the exclusivity clause, and thenceforth the manufacturer sought alternative partners.",
-     "tr": "그 유통업체가 독점 조항을 위반했고, 그때부터 제조업체는 대안 파트너를 모색했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "from then on",
-    "thereafter"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "forthwith",
-   "ipa": "/ˌfɔːrθˈwɪθ/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "즉시, 지체 없이",
-     "ex": "Should the licensee violate the agreement, the license shall be revoked forthwith.",
-     "tr": "실시권자가 계약을 위반할 경우, 라이선스는 즉시 취소된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "immediately",
-    "at once",
-    "without delay"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "heretoafter",
-   "ipa": "/ˌhɪrtuˈæftər/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "이후로(hereinafter의 변형, 문서에서)",
-     "ex": "The two entities heretoafter shall be jointly referred to as the parties in this agreement.",
-     "tr": "두 법인은 이후로 본 계약에서 당사자로 공동 지칭된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "hereinafter",
-    "from this point on"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "hereinafter",
-   "ipa": "/ˌhɪrɪnˈæftər/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "이하에서(계약서에서)",
-     "ex": "ABC Corporation, hereinafter referred to as the Supplier, shall deliver the goods within thirty days.",
-     "tr": "ABC사(이하 공급자라 함)는 30일 이내에 물품을 인도해야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "from here on",
-    "below"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "nevertheless",
-   "ipa": "/ˌnɛvərðəˈlɛs/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그럼에도 불구하고",
-     "ex": "Market conditions were unfavorable; the firm nevertheless proceeded with the planned expansion.",
-     "tr": "시장 상황이 좋지 않았지만, 그 회사는 그럼에도 불구하고 계획된 확장을 진행했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "nonetheless",
-    "still",
-    "regardless"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "albeit",
-   "ipa": "/ɔːlˈbiːɪt/",
-   "pos": "con",
-   "meanings": [
-    {
-     "pos": "con",
-     "ko": "비록 ~이지만",
-     "ex": "The proposal was approved, albeit with several amendments requested by the compliance department.",
-     "tr": "그 제안은 준법감시 부서가 요청한 여러 수정 사항을 포함하여, 비록 그렇지만 승인되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "although",
-    "though",
-    "even though"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "conversely",
-   "ipa": "/kənˈvɜːrsli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "반대로",
-     "ex": "Revenue from overseas markets increased sharply; conversely, domestic sales continued to decline.",
-     "tr": "해외 시장 수익은 급격히 증가했다. 반대로, 국내 매출은 계속 감소했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "on the contrary",
-    "in contrast"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "heretounder",
-   "ipa": "/ˌhɪrtuˈʌndər/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "이 문서 하에서(계약서 표현)",
-     "ex": "All obligations heretounder shall survive the termination of this agreement.",
-     "tr": "이 문서 하의 모든 의무는 본 계약의 종료 후에도 존속한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "under this agreement",
-    "hereunder"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "hereunder",
-   "ipa": "/hɪrˈʌndər/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "본 계약 하에서",
-     "ex": "The rights and obligations of each party hereunder shall not be assigned without prior written consent.",
-     "tr": "본 계약 하의 각 당사자의 권리와 의무는 사전 서면 동의 없이 양도될 수 없다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "under this contract",
-    "herein"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "foregoing",
-   "ipa": "/fɔːrˈɡoʊɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "앞서 말한, 전술한",
-     "ex": "Notwithstanding the foregoing, the warranty does not cover damage caused by improper use.",
-     "tr": "전술한 내용에도 불구하고, 그 보증은 부적절한 사용으로 인한 손해는 포함하지 않는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "aforementioned",
-    "preceding",
-    "above-stated"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "ensuing",
-   "ipa": "/ɪnˈsuːɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "뒤이은, 그 결과의",
-     "ex": "The factory fire and the ensuing production halt cost the company several million dollars in lost revenue.",
-     "tr": "공장 화재와 그 뒤이은 생산 중단으로 그 회사는 수백만 달러의 매출 손실을 입었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "subsequent",
-    "resultant",
-    "following"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "aforesaid",
-   "ipa": "/əˈfɔːrsɛd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "전술한, 상기의",
-     "ex": "The aforesaid amendments shall take effect immediately upon signature by both parties.",
-     "tr": "전술한 개정 사항은 양 당사자의 서명과 동시에 즉시 효력을 발한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "aforementioned",
-    "above-cited"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "concomitant",
-   "ipa": "/kənˈkɑːmɪtənt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "수반되는, 동반하는",
-     "ex": "The rapid expansion into overseas markets brought concomitant risks in currency exposure and regulatory compliance.",
-     "tr": "해외 시장으로의 급속한 확장은 환율 노출과 규제 준수라는 수반되는 위험을 가져왔다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "accompanying",
-    "attendant"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "heretoforementioned",
-   "ipa": "/ˌhɪrtuˌfɔːrˈmɛnʃənd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "위에서 언급된",
-     "ex": "The heretoforementioned conditions must be satisfied before disbursement of the second tranche.",
-     "tr": "위에서 언급된 조건들은 2차 자금 지급 전에 충족되어야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "aforementioned",
-    "above-mentioned"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "whensoever",
-   "ipa": "/ˌwɛnsoʊˈɛvər/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "언제든지(격식체)",
-     "ex": "Whensoever a discrepancy arises between the two versions, the English text shall prevail.",
-     "tr": "두 버전 사이에 불일치가 발생할 때는 언제든지, 영문본이 우선한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "whenever",
-    "at any time that"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "notwithstandingly",
-   "ipa": "/ˌnɑːtwɪθˈstændɪŋli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그럼에도 불구하고(드문 강조형)",
-     "ex": "The regulator flagged the filing as incomplete; notwithstandingly, the firm resubmitted it without material changes.",
-     "tr": "규제 당국이 그 신고서를 불완전하다고 지적했지만, 그럼에도 불구하고 그 회사는 실질적 변경 없이 재제출했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "nonetheless",
-    "nevertheless"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "prospectively",
-   "ipa": "/prəˈspɛktɪvli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "장래에 대하여, 향후 적용되는",
-     "ex": "The revised fee schedule will apply prospectively and will not affect contracts already executed.",
-     "tr": "수정된 요금표는 장래에 대하여 적용되며 이미 체결된 계약에는 영향을 미치지 않는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "going forward",
-    "from this point onward"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "retroactively",
-   "ipa": "/ˌrɛtroʊˈæktɪvli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "소급하여",
-     "ex": "The salary adjustment will be applied retroactively to the beginning of the fiscal quarter.",
-     "tr": "급여 조정은 회계 분기 초부터 소급하여 적용될 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "retrospectively",
-    "with retroactive effect"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "correspondingly",
-   "ipa": "/ˌkɔːrəˈspɑːndɪŋli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그에 상응하여",
-     "ex": "Production costs rose sharply, and the wholesale price was adjusted correspondingly.",
-     "tr": "생산비가 급격히 상승했고, 도매가는 그에 상응하여 조정되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "accordingly",
-    "correlatively"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "heretical",
-   "ipa": "/həˈrɛtɪkəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "이단적인, 통념에 반하는",
-     "ex": "Analysts dismissed the heretical proposal to abandon the core product line entirely.",
-     "tr": "애널리스트들은 핵심 제품군을 완전히 포기하자는 통념에 반하는 제안을 일축했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "unorthodox",
-    "dissenting"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "inasmuch",
-   "ipa": "/ˌɪnəzˈmʌtʃ/",
-   "pos": "con",
-   "meanings": [
-    {
-     "pos": "con",
-     "ko": "~인 한에서, ~이므로(inasmuch as)",
-     "ex": "Inasmuch as the supplier breached the confidentiality clause, the contract may be terminated without notice.",
-     "tr": "공급업체가 기밀유지 조항을 위반한 한, 계약은 통지 없이 해지될 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "insofar as",
-    "given that"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tantamount",
-   "ipa": "/ˈtæntəˌmaʊnt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "~와 마찬가지인, 다름없는",
-     "ex": "Failing to disclose the conflict of interest was tantamount to a breach of fiduciary duty.",
-     "tr": "이해 상충을 공개하지 않은 것은 수탁 의무 위반과 다름없었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "equivalent to",
-    "equal to"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "predicated",
-   "ipa": "/ˈprɛdɪˌkeɪtɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "~에 근거한(predicated on)",
-     "ex": "The valuation was predicated on overly optimistic revenue projections that never materialized.",
-     "tr": "그 가치평가는 결코 실현되지 않은 지나치게 낙관적인 매출 전망에 근거했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "based on",
-    "grounded in"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "ipso facto",
-   "ipa": "/ˌɪpsoʊ ˈfæktoʊ/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그 자체로, 사실 자체로 인해",
-     "ex": "Missing the filing deadline is ipso facto grounds for disqualification from the bidding process.",
-     "tr": "제출 마감을 놓친 것은 그 자체로 입찰 절차에서 실격 사유가 된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "by that very fact",
-    "inherently"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "mutatis mutandis",
-   "ipa": "/muːˌtɑːtɪs muːˈtændɪs/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "필요한 부분만 수정하여",
-     "ex": "The same procurement procedure shall apply, mutatis mutandis, to the overseas subsidiaries.",
-     "tr": "동일한 조달 절차가 필요한 부분만 수정하여 해외 자회사에도 적용된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "with necessary changes",
-    "with appropriate modifications"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "in lieu",
-   "ipa": "/ɪn ˈluː/",
-   "pos": "pre",
-   "meanings": [
-    {
-     "pos": "pre",
-     "ko": "~대신에(in lieu of)",
-     "ex": "The employee elected to receive additional stock options in lieu of a year-end cash bonus.",
-     "tr": "그 직원은 연말 현금 상여 대신 추가 스톡옵션을 받기로 선택했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "instead of",
-    "in place of"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "per se",
-   "ipa": "/pər ˈseɪ/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "그 자체로, 본질적으로",
-     "ex": "The clause is not unlawful per se, but its application in this case raises antitrust concerns.",
-     "tr": "그 조항은 그 자체로 불법은 아니지만, 이 사건에서의 적용은 독점금지 우려를 제기한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "in itself",
-    "intrinsically"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "prima facie",
-   "ipa": "/ˌpraɪmə ˈfeɪʃi/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "일견, 언뜻 보기에(법률·감사 맥락)",
-     "ex": "The auditor found prima facie evidence of revenue misstatement in the quarterly filings.",
-     "tr": "감사인은 분기 신고서에서 수익 허위 기재의 일견 증거를 발견했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "at first glance",
-    "on the face of it"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "de facto",
-   "ipa": "/di ˈfæktoʊ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "사실상의",
-     "ex": "Despite lacking formal authority, the interim director became the de facto decision-maker during the transition.",
-     "tr": "공식 권한이 없었음에도, 그 임시 이사는 전환 기간 동안 사실상의 의사결정권자가 되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "in practice",
-    "effectively"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "ex post facto",
-   "ipa": "/ˌɛks poʊst ˈfæktoʊ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "사후의, 소급하는",
-     "ex": "Shareholders objected to the ex post facto justification offered for the executive's bonus payout.",
-     "tr": "주주들은 경영진의 상여금 지급에 대해 제시된 사후적 정당화에 반대했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "after the fact",
-    "retroactive"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sans",
-   "ipa": "/sɑːnz/",
-   "pos": "pre",
-   "meanings": [
-    {
-     "pos": "pre",
-     "ko": "~없이",
-     "ex": "The proposal was submitted sans the required financial disclosures, prompting immediate rejection.",
-     "tr": "그 제안서는 요구되는 재무 공시 없이 제출되어 즉각 거부되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "without"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "heretoforesaid",
-   "ipa": "/ˌhɪrtuˈfɔːrsɛd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "전술한(중복 제거 대상)",
-     "ex": "delete",
-     "tr": "delete",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "delete"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "aggrieved",
-   "ipa": "/əˈɡriːvd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "불복하는, 피해를 입은(법률 맥락)",
-     "ex": "The aggrieved party may seek arbitration within thirty days of the disputed decision.",
-     "tr": "불복하는 당사자는 분쟁이 된 결정 후 30일 이내에 중재를 신청할 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "wronged",
-    "injured party"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "promulgate",
-   "ipa": "/ˈprɑːməlˌɡeɪt/",
+   "en": "undercut",
+   "ipa": "/ˌʌndərˈkʌt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "공표하다, 공포하다",
-     "ex": "The regulatory body promulgated new disclosure rules effective at the start of the next fiscal year.",
-     "tr": "그 규제 기관은 다음 회계연도 초부터 시행되는 새로운 공시 규정을 공표했다.",
+     "ko": "(가격을) 깎아서 경쟁하다",
+     "ex": "The discount chain consistently undercuts its rivals by offering lower prices on staple household items.",
+     "tr": "그 할인 체인점은 생활필수품에 더 낮은 가격을 제시함으로써 경쟁사들보다 지속적으로 가격을 낮춘다.",
      "src": ""
     }
    ],
    "syn": [
-    "enact",
-    "announce officially"
+    "underprice",
+    "undersell"
    ],
    "deriv": [],
    "roots": [],
@@ -1082,21 +123,488 @@
    }
   },
   {
-   "en": "abrogate",
-   "ipa": "/ˈæbrəˌɡeɪt/",
-   "pos": "v",
+   "en": "underemployment",
+   "ipa": "/ˌʌndərɪmˈplɔɪmənt/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "폐지하다, 무효화하다",
-     "ex": "The new administration moved to abrogate the trade agreement negotiated by its predecessor.",
-     "tr": "새 행정부는 전임자가 협상한 무역 협정을 폐지하려 했다.",
+     "pos": "n",
+     "ko": "불완전 고용",
+     "ex": "The report highlighted persistent underemployment among recent graduates working part-time in unrelated fields.",
+     "tr": "그 보고서는 무관한 분야에서 시간제로 일하는 최근 졸업생들 사이의 지속적인 불완전 고용을 강조했다.",
      "src": ""
     }
    ],
    "syn": [
-    "repeal",
-    "nullify"
+    "underutilization",
+    "partial employment"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "underfund",
+   "ipa": "/ˌʌndərˈfʌnd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "자금을 충분히 대지 않다",
+     "ex": "Regulators warned that continuing to underfund the pension scheme could trigger a solvency crisis.",
+     "tr": "규제 당국은 연금 제도에 계속 자금을 충분히 대지 않으면 지급능력 위기를 촉발할 수 있다고 경고했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "undercapitalize"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "underfunded",
+   "ipa": "/ˌʌndərˈfʌndɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "자금 부족의",
+     "ex": "The pension plan was found to be significantly underfunded, prompting regulatory scrutiny.",
+     "tr": "그 연금 제도는 상당한 자금 부족 상태로 밝혀져 규제 당국의 조사를 받게 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "undercapitalized"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "undertaking",
+   "ipa": "/ˌʌndərˈteɪkɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "서약, 약속",
+     "ex": "The supplier gave a written undertaking to meet the revised delivery schedule.",
+     "tr": "그 공급업체는 수정된 납품 일정을 준수하겠다는 서면 서약을 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "pledge",
+    "commitment",
+    "promise"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "underwrite",
+   "ipa": "/ˈʌndərraɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "인수하다, 보증하다",
+     "ex": "The investment bank agreed to underwrite the bond issuance in exchange for a fixed fee.",
+     "tr": "그 투자은행은 고정 수수료를 받는 조건으로 채권 발행을 인수하기로 합의했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "guarantee",
+    "sponsor",
+    "finance"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "underwriting",
+   "ipa": "/ˈʌndərraɪtɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인수업무, 보증업무",
+     "ex": "The underwriting fee compensates the bank for assuming the risk of the securities offering.",
+     "tr": "인수 수수료는 은행이 증권 발행의 위험을 부담하는 데 대한 보상이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "guarantee service"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "unprecedented",
+   "ipa": "/ʌnˈpresɪdentɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "전례 없는",
+     "ex": "The firm reported unprecedented growth in overseas markets following the trade agreement.",
+     "tr": "무역 협정 체결 이후 그 회사는 해외 시장에서 전례 없는 성장을 보고했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unparalleled",
+    "unmatched",
+    "record"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "unwarranted",
+   "ipa": "/ʌnˈwɔːrəntɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "부당한, 근거 없는",
+     "ex": "The tribunal ruled that the termination was unwarranted given the employee's otherwise clean disciplinary record.",
+     "tr": "심판소는 그 직원의 다른 면에서 깨끗한 징계 기록을 고려할 때 해고가 부당했다고 판결했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unjustified",
+    "groundless"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "upsell",
+   "ipa": "/ˈʌpsel/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "상위 제품을 추가 판매하다",
+     "ex": "Trained sales staff are encouraged to upsell premium warranties whenever customers purchase electronics.",
+     "tr": "훈련된 판매 직원들은 고객이 전자제품을 구매할 때마다 프리미엄 보증을 추가 판매하도록 권장받는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cross-sell",
+    "push higher-tier"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "upsurge",
+   "ipa": "/ˈʌpsɜːrdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "급증, 급등",
+     "ex": "An unexpected upsurge in orders overwhelmed the company's fulfillment capacity.",
+     "tr": "예상치 못한 주문 급증이 그 회사의 물류 처리 능력을 압도했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "surge",
+    "spike",
+    "upswing"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "valuation",
+   "ipa": "/ˌvæl.juˈeɪ.ʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "가치 평가, 기업가치 산정",
+     "ex": "The investment bank revised its valuation of the startup downward after reviewing the disappointing quarterly earnings report",
+     "tr": "투자은행은 실망스러운 분기 실적 보고서를 검토한 후 그 스타트업에 대한 가치 평가를 하향 조정했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "appraisal",
+    "assessment",
+    "estimation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "variance",
+   "ipa": "/ˈveəriəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(규정의) 예외 허가, 변경 승인",
+     "ex": "The company requested a zoning variance to build a loading dock closer to the property line",
+     "tr": "그 회사는 부지 경계선에 더 가깝게 하역장을 건설하기 위해 구역 설정 예외 허가를 요청했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "exception",
+    "waiver"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vendor compliance",
+   "ipa": "/ˈvɛndər kəmˈplaɪəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공급업체 준수(사항)",
+     "ex": "Failure to meet vendor compliance standards, including proper labeling and packaging, can result in shipment rejection at the distribution center.",
+     "tr": "적절한 라벨링 및 포장을 포함한 공급업체 준수 기준을 충족하지 못하면 유통 센터에서 화물 인수가 거부될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supplier compliance",
+    "vendor standards"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vest",
+   "ipa": "/vɛst/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(권리를) 부여하다, 귀속시키다",
+     "ex": "Full ownership of the shares will vest after a four-year holding period.",
+     "tr": "주식의 완전한 소유권은 4년의 보유 기간 이후에 귀속될 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "confer",
+    "grant"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vested",
+   "ipa": "/ˈvestɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "기득권의, 확정된",
+     "ex": "Employees acquire a vested interest in the pension plan after five years of service.",
+     "tr": "직원들은 5년 근속 후 연금 제도에 대한 기득권을 획득한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "guaranteed",
+    "secured",
+    "conferred"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vesting",
+   "ipa": "/ˈvɛstɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(연금·주식 등의) 권리 확정",
+     "ex": "Under the vesting schedule, employees gain full ownership of their stock options after four years of service.",
+     "tr": "권리 확정 일정에 따라 직원들은 4년의 근속 후 스톡옵션에 대한 완전한 소유권을 얻는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "entitlement accrual",
+    "allocation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vetting",
+   "ipa": "/ˈvɛtɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신원 심사",
+     "ex": "Thorough vetting of executive candidates includes verifying prior compensation and disciplinary records.",
+     "tr": "임원 후보에 대한 철저한 신원 심사에는 이전 보수 및 징계 기록 확인이 포함된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "screening",
+    "background check"
    ],
    "deriv": [],
    "roots": [],
@@ -1140,21 +648,343 @@
    }
   },
   {
-   "en": "exigent",
-   "ipa": "/ˈɛksɪdʒənt/",
+   "en": "volatile",
+   "ipa": "/ˈvɒlətaɪl/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "긴급한, 급박한",
-     "ex": "Exigent market conditions compelled the board to convene an emergency session.",
-     "tr": "긴급한 시장 상황으로 이사회는 긴급 회의를 소집해야 했다.",
+     "ko": "변동성이 큰, 불안정한",
+     "ex": "Given the volatile commodity market, the procurement team hedged its exposure with futures contracts.",
+     "tr": "변동성이 큰 원자재 시장을 고려하여 조달팀은 선물 계약으로 위험 노출을 헤지했다.",
      "src": ""
     }
    ],
    "syn": [
-    "urgent",
-    "pressing"
+    "unstable",
+    "unpredictable",
+    "erratic"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "volatility",
+   "ipa": "/ˌvɑː.ləˈtɪl.ə.ti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "변동성",
+     "ex": "Heightened volatility in commodity markets made it difficult for procurement managers to lock in stable prices",
+     "tr": "원자재 시장의 높은 변동성으로 인해 구매 관리자들이 안정적인 가격을 확정하기 어려워졌다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "instability",
+    "fluctuation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "waive",
+   "ipa": "/weɪv/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "권리를 포기하다, 면제하다",
+     "ex": "By signing below, the vendor agrees to waive its right to dispute the arbitration outcome.",
+     "tr": "아래에 서명함으로써 그 공급업체는 중재 결과에 이의를 제기할 권리를 포기하는 데 동의한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "relinquish",
+    "forgo",
+    "renounce"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "waiver",
+   "ipa": "/ˈweɪvər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "권리 포기(서)",
+     "ex": "The employee signed a liability waiver before participating in the company-sponsored expedition.",
+     "tr": "그 직원은 회사 후원 탐험에 참가하기 전에 책임 포기 각서에 서명했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "release",
+    "renunciation",
+    "exemption"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "whensoever",
+   "ipa": "/ˌwɛnsoʊˈɛvər/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "언제든지(격식체)",
+     "ex": "Whensoever a discrepancy arises between the two versions, the English text shall prevail.",
+     "tr": "두 버전 사이에 불일치가 발생할 때는 언제든지, 영문본이 우선한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "whenever",
+    "at any time that"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "whereas",
+   "ipa": "/wɛrˈæz/",
+   "pos": "con",
+   "meanings": [
+    {
+     "pos": "con",
+     "ko": "반면에(전문에서: ~이므로)",
+     "ex": "Whereas the vendor failed to meet the delivery schedule, the client is entitled to invoke the penalty clause.",
+     "tr": "공급업체가 배송 일정을 지키지 못했으므로, 고객은 위약 조항을 발동할 권리가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "while",
+    "given that",
+    "considering that"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "whereby",
+   "ipa": "/wɛrˈbaɪ/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "그것에 의하여",
+     "ex": "The board approved a new policy whereby employees can request flexible working arrangements after one year of tenure.",
+     "tr": "이사회는 직원들이 1년 재직 후 유연근무를 요청할 수 있게 하는 새로운 정책을 승인했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "by which",
+    "through which"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "windfall",
+   "ipa": "/ˈwɪndfɔːl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "뜻밖의 수익, 횡재",
+     "ex": "The unexpected celebrity endorsement resulted in a windfall of new orders for the small business.",
+     "tr": "예상치 못한 유명인의 보증은 그 소규모 업체에 뜻밖의 대량 주문이라는 수익을 안겨 주었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unexpected gain",
+    "bonanza"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "withholding",
+   "ipa": "/wɪðˈhoʊldɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "원천징수",
+     "ex": "The payroll office recalculated withholding tax after the new income brackets took effect.",
+     "tr": "급여 부서는 새로운 소득 구간이 적용된 후 원천징수세를 재계산했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "deduction",
+    "retention"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "working capital",
+   "ipa": "/ˈwɜːrkɪŋ ˈkæpɪtəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "운전자본",
+     "ex": "The retailer secured a short-term loan to bolster working capital during the holiday season.",
+     "tr": "그 소매업체는 연말연시 동안 운전자본을 확충하기 위해 단기 대출을 확보했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "operating funds"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "write-off",
+   "ipa": "/ˈraɪt ɔːf/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "손실 처리, 상각",
+     "ex": "The bank recorded a substantial write-off after several corporate loans defaulted.",
+     "tr": "몇몇 기업 대출이 부도나자 그 은행은 상당한 손실 처리를 기록했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "write-down",
+    "charge-off"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "zoning",
+   "ipa": "/ˈzoʊnɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "구역 설정, 용도지역제",
+     "ex": "The developer had to apply for a zoning variance before converting the warehouse into office space",
+     "tr": "개발업자는 창고를 사무 공간으로 전환하기 전에 구역 설정 변경 허가를 신청해야 했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "land-use regulation",
+    "districting"
    ],
    "deriv": [],
    "roots": [],

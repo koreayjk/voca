@@ -2,111 +2,24 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 7,
- "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "dispatch",
-   "ipa": "/dɪˈspætʃ/",
-   "pos": "v./",
-   "meanings": [
-    {
-     "pos": "v./",
-     "ko": "발송하다, 급파(하다)",
-     "ex": "Once payment has cleared, the warehouse is instructed to dispatch the order within one business day.",
-     "tr": "결제가 완료되면 창고는 영업일 기준 하루 이내에 주문 상품을 발송하도록 지시받는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "send off",
-    "ship out"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "outsourcing",
-   "ipa": "/ˈaʊtˌsɔrsɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "외주, 아웃소싱",
-     "ex": "Outsourcing warehouse operations to a third-party logistics provider allowed the firm to reduce fixed overhead costs significantly.",
-     "tr": "창고 운영을 제3자 물류 업체에 외주함으로써 회사는 고정 간접비를 크게 줄일 수 있었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "subcontracting",
-    "offshoring"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "depot",
-   "ipa": "/ˈdiːpoʊ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "물류 창고, 저장소",
-     "ex": "Trucks are loaded at the central depot before being routed to regional distribution centers overnight.",
-     "tr": "트럭은 중앙 물류 창고에서 적재된 후 야간에 지역 유통 센터로 배송된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "storage facility",
-    "distribution depot"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "palletize",
-   "ipa": "/ˈpælɪˌtaɪz/",
+   "en": "impute",
+   "ipa": "/ɪmˈpjuːt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "팔레트에 적재하다",
-     "ex": "All outgoing merchandise must be palletized and wrapped before being loaded onto the trailer for transport.",
-     "tr": "모든 출고 상품은 운송을 위해 트레일러에 적재되기 전에 팔레트에 쌓이고 포장되어야 한다.",
+     "ko": "(원인·책임을) 귀속시키다, 전가하다",
+     "ex": "The auditor imputed the shortfall to inadequate internal controls.",
+     "tr": "감사인은 그 부족분을 부적절한 내부 통제 탓으로 돌렸다.",
      "src": ""
     }
    ],
    "syn": [
-    "pallet-load",
-    "crate"
+    "attribute",
+    "ascribe"
    ],
    "deriv": [],
    "roots": [],
@@ -121,21 +34,21 @@
    }
   },
   {
-   "en": "customs broker",
-   "ipa": "/ˈkʌstəmz ˈbroʊkər/",
-   "pos": "n",
+   "en": "in lieu",
+   "ipa": "/ɪn ˈluː/",
+   "pos": "pre",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "관세사, 통관 중개인",
-     "ex": "The importer hired a customs broker to handle the complex documentation required for clearing electronics through the port.",
-     "tr": "수입업체는 항구를 통해 전자제품을 통관하는 데 필요한 복잡한 서류 작업을 처리하기 위해 관세사를 고용했다.",
+     "pos": "pre",
+     "ko": "~대신에(in lieu of)",
+     "ex": "The employee elected to receive additional stock options in lieu of a year-end cash bonus.",
+     "tr": "그 직원은 연말 현금 상여 대신 추가 스톡옵션을 받기로 선택했다.",
      "src": ""
     }
    ],
    "syn": [
-    "clearance agent",
-    "import agent"
+    "instead of",
+    "in place of"
    ],
    "deriv": [],
    "roots": [],
@@ -150,21 +63,22 @@
    }
   },
   {
-   "en": "tariff exemption",
-   "ipa": "/ˈtærɪf ɪgˈzɛmpʃən/",
-   "pos": "n",
+   "en": "inadvertent",
+   "ipa": "/ˌɪnədˈvɜːrtənt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "관세 면제",
-     "ex": "Manufacturers importing components solely for reassembly and re-export may qualify for a tariff exemption under the trade agreement.",
-     "tr": "재조립 및 재수출 목적으로만 부품을 수입하는 제조업체는 무역 협정에 따라 관세 면제 대상이 될 수 있다.",
+     "pos": "adj",
+     "ko": "고의가 아닌, 부주의한",
+     "ex": "The company apologized for an inadvertent disclosure of customer data.",
+     "tr": "그 회사는 고객 데이터의 고의가 아닌 유출에 대해 사과했다.",
      "src": ""
     }
    ],
    "syn": [
-    "duty waiver",
-    "customs exemption"
+    "unintentional",
+    "accidental",
+    "unintended"
    ],
    "deriv": [],
    "roots": [],
@@ -179,21 +93,21 @@
    }
   },
   {
-   "en": "freight surcharge",
-   "ipa": "/freɪt ˈsɜrˌtʃɑrdʒ/",
-   "pos": "n",
+   "en": "inasmuch",
+   "ipa": "/ˌɪnəzˈmʌtʃ/",
+   "pos": "con",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "운임 할증료",
-     "ex": "An unexpected freight surcharge was added to the invoice due to a sudden spike in fuel prices.",
-     "tr": "연료 가격의 급등으로 인해 예상치 못한 운임 할증료가 송장에 추가되었다.",
+     "pos": "con",
+     "ko": "~인 한에서, ~이므로(inasmuch as)",
+     "ex": "Inasmuch as the supplier breached the confidentiality clause, the contract may be terminated without notice.",
+     "tr": "공급업체가 기밀유지 조항을 위반한 한, 계약은 통지 없이 해지될 수 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "fuel surcharge",
-    "additional freight fee"
+    "insofar as",
+    "given that"
    ],
    "deriv": [],
    "roots": [],
@@ -208,21 +122,21 @@
    }
   },
   {
-   "en": "replenishment cycle",
-   "ipa": "/rɪˈplɛnɪʃmənt ˈsaɪkəl/",
-   "pos": "n",
+   "en": "incumbent",
+   "ipa": "/ɪnˈkʌmbənt/",
+   "pos": "n./",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "보충 주기",
-     "ex": "The retailer shortened its replenishment cycle to weekly deliveries in order to minimize the risk of stockouts.",
-     "tr": "소매업체는 재고 부족 위험을 최소화하기 위해 보충 주기를 주간 배송으로 단축했다.",
+     "pos": "n./",
+     "ko": "현직자, 재직 중인",
+     "ex": "The incumbent director will remain in her role until a suitable successor is fully trained.",
+     "tr": "현직 이사는 적합한 후임자가 완전히 훈련될 때까지 자리를 유지할 것이다.",
      "src": ""
     }
    ],
    "syn": [
-    "restocking cycle",
-    "reorder cycle"
+    "officeholder",
+    "current holder"
    ],
    "deriv": [],
    "roots": [],
@@ -237,282 +151,21 @@
    }
   },
   {
-   "en": "stockout",
-   "ipa": "/ˈstɑkˌaʊt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재고 소진, 품절",
-     "ex": "A sudden surge in demand led to a stockout of the flagship product just before the holiday shopping season began.",
-     "tr": "수요의 급격한 증가로 인해 성수기 쇼핑 시즌이 시작되기 직전에 주력 제품의 재고 소진이 발생했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "out-of-stock situation",
-    "shortage"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "third-party logistics",
-   "ipa": "/θɜrd ˈpɑrti loʊˈdʒɪstɪks/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "제3자 물류(3PL)",
-     "ex": "The company outsourced warehousing and distribution to a third-party logistics provider to focus on core manufacturing operations.",
-     "tr": "그 회사는 핵심 제조 업무에 집중하기 위해 창고 및 유통을 제3자 물류 업체에 위탁했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "3PL provider",
-    "logistics outsourcing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "manifest",
-   "ipa": "/ˈmænɪˌfɛst/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "적하목록, 화물 명세서",
-     "ex": "Customs officials cross-checked the cargo manifest against the physical contents of each container before granting clearance.",
-     "tr": "세관 공무원들은 통관을 허가하기 전에 화물 명세서를 각 컨테이너의 실제 내용물과 대조 확인했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cargo list",
-    "shipping manifest"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "freight forwarding",
-   "ipa": "/freɪt ˈfɔrwərdɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "화물 운송 주선업",
-     "ex": "The company specializes in freight forwarding for perishable goods requiring temperature-controlled transport across international borders.",
-     "tr": "그 회사는 국경을 넘는 온도 조절 운송이 필요한 부패성 물품의 화물 운송 주선을 전문으로 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "shipping brokerage",
-    "cargo forwarding"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "embargo",
-   "ipa": "/ɪmˈbɑrɡoʊ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "금수 조치, 수출입 금지",
-     "ex": "The trade embargo on certain raw materials forced the manufacturer to seek alternative suppliers in neighboring countries.",
-     "tr": "특정 원자재에 대한 무역 금수 조치로 인해 제조업체는 인접 국가에서 대체 공급업체를 찾아야 했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "trade ban",
-    "import restriction"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "quota",
-   "ipa": "/ˈkwoʊtə/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "할당량, 쿼터",
-     "ex": "The import quota on textiles was tightened, limiting the volume that domestic retailers could bring in each quarter.",
-     "tr": "섬유 제품에 대한 수입 쿼터가 강화되어 국내 소매업체가 분기마다 들여올 수 있는 물량이 제한되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "allotment",
-    "allocation limit"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "expiration date",
-   "ipa": "/ˌɛkspəˈreɪʃən deɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "유효기한, 만료일",
-     "ex": "Warehouse personnel are trained to rotate stock so that items nearing their expiration date are shipped first.",
-     "tr": "창고 직원들은 유효기한이 임박한 품목이 먼저 출고되도록 재고를 순환시키는 교육을 받는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "expiry date",
-    "shelf-life limit"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "cross-docking",
-   "ipa": "/krɔs ˈdɑkɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "크로스도킹, 환적 물류",
-     "ex": "Cross-docking allows incoming shipments to be transferred directly onto outbound trucks, eliminating the need for long-term storage.",
-     "tr": "크로스도킹을 통해 입고되는 화물을 바로 출고 트럭으로 옮길 수 있어 장기 보관의 필요성이 없어진다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "transloading",
-    "direct transfer"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "procurement cycle",
-   "ipa": "/proʊˈkjʊrmənt ˈsaɪkəl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "조달 주기",
-     "ex": "Streamlining the procurement cycle reduced the average time between requisition and delivery by nearly forty percent.",
-     "tr": "조달 주기를 간소화함으로써 청구부터 납품까지의 평균 소요 시간이 거의 40퍼센트 단축되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "purchasing cycle",
-    "sourcing cycle"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "reconcile",
-   "ipa": "/ˈrɛkənˌsaɪl/",
+   "en": "incur",
+   "ipa": "/ɪnˈkɜr/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "(장부 등을) 대조하다, 조정하다",
-     "ex": "The accounting team must reconcile the shipping invoices with the purchase orders before releasing payment to the vendor.",
-     "tr": "회계팀은 공급업체에 대금을 지급하기 전에 배송 송장과 구매 주문서를 대조해야 한다.",
+     "ko": "(비용·손실 등을) 초래하다, 부담하다",
+     "ex": "The company incurred substantial penalties for failing to meet the contractual delivery deadline.",
+     "tr": "그 회사는 계약상 배송 기한을 맞추지 못해 상당한 위약금을 부담하게 되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "match",
-    "align records"
+    "sustain",
+    "accrue"
    ],
    "deriv": [],
    "roots": [],
@@ -527,21 +180,22 @@
    }
   },
   {
-   "en": "forwarding agent",
-   "ipa": "/ˈfɔrwərdɪŋ ˈeɪdʒənt/",
+   "en": "indemnification",
+   "ipa": "/ɪnˌdɛmnɪfɪˈkeɪʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "운송 대리인",
-     "ex": "The forwarding agent negotiated favorable freight rates by consolidating shipments from multiple exporters into a single vessel.",
-     "tr": "운송 대리인은 여러 수출업체의 화물을 하나의 선박으로 통합함으로써 유리한 운임을 협상했다.",
+     "ko": "배상, 손해 보상",
+     "ex": "The vendor sought indemnification for legal costs incurred defending the trademark dispute.",
+     "tr": "그 협력업체는 상표 분쟁 방어 과정에서 발생한 소송 비용에 대한 배상을 청구했다.",
      "src": ""
     }
    ],
    "syn": [
-    "shipping agent",
-    "freight agent"
+    "compensation",
+    "reimbursement",
+    "restitution"
    ],
    "deriv": [],
    "roots": [],
@@ -556,21 +210,21 @@
    }
   },
   {
-   "en": "provisional invoice",
-   "ipa": "/prəˈvɪʒənəl ˈɪnvɔɪs/",
-   "pos": "n",
+   "en": "indemnify",
+   "ipa": "/ɪnˈdɛmnɪfaɪ/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "가송장, 임시 청구서",
-     "ex": "A provisional invoice was issued pending the final quantity confirmation upon arrival at the destination port.",
-     "tr": "목적항 도착 시 최종 수량이 확정될 때까지 가송장이 발행되었다.",
+     "pos": "v",
+     "ko": "배상하다, 보상하다",
+     "ex": "The contractor agreed to indemnify the client against any third-party claims arising from the project.",
+     "tr": "그 계약업체는 프로젝트에서 발생하는 제3자 청구에 대해 고객에게 배상하기로 합의했다.",
      "src": ""
     }
    ],
    "syn": [
-    "preliminary invoice",
-    "interim bill"
+    "compensate",
+    "reimburse"
    ],
    "deriv": [],
    "roots": [],
@@ -585,21 +239,21 @@
    }
   },
   {
-   "en": "logistical bottleneck",
-   "ipa": "/loʊˈdʒɪstɪkəl ˈbɑtəlˌnɛk/",
+   "en": "indemnitor",
+   "ipa": "/ɪnˈdemnɪtər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "물류 병목 현상",
-     "ex": "Congestion at the port created a logistical bottleneck that delayed the delivery of components to the assembly plant.",
-     "tr": "항구의 혼잡으로 인한 물류 병목 현상이 조립 공장으로의 부품 배송을 지연시켰다.",
+     "ko": "배상 의무자",
+     "ex": "Under the surety bond, the indemnitor must reimburse the insurer for any claims paid out.",
+     "tr": "보증증권에 따라 배상 의무자는 보험사가 지급한 어떠한 청구액도 상환해야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "supply-chain congestion",
-    "distribution holdup"
+    "guarantor",
+    "surety"
    ],
    "deriv": [],
    "roots": [],
@@ -614,21 +268,21 @@
    }
   },
   {
-   "en": "freight liability",
-   "ipa": "/freɪt ˌlaɪəˈbɪləti/",
+   "en": "indemnity",
+   "ipa": "/ɪnˈdɛmnəti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "운송 책임(배상 책임)",
-     "ex": "The carrier's freight liability is limited to the declared value of the goods stated on the bill of lading.",
-     "tr": "운송업체의 운송 책임은 선하증권에 명시된 물품의 신고 가치로 제한된다.",
+     "ko": "배상, 보상",
+     "ex": "The vendor requested an indemnity clause to protect against losses arising from product defects.",
+     "tr": "공급업체는 제품 결함으로 인한 손실로부터 보호받기 위해 배상 조항을 요청했다.",
      "src": ""
     }
    ],
    "syn": [
-    "carrier liability",
-    "shipping liability"
+    "compensation",
+    "reimbursement"
    ],
    "deriv": [],
    "roots": [],
@@ -643,21 +297,21 @@
    }
   },
   {
-   "en": "nonconforming goods",
-   "ipa": "/ˌnɑnkənˈfɔrmɪŋ gʊdz/",
+   "en": "indenture",
+   "ipa": "/ɪnˈdentʃər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "규격 미달 물품, 계약 불이행 물품",
-     "ex": "The buyer reserved the right to reject any nonconforming goods that failed to meet the specifications outlined in the contract.",
-     "tr": "구매자는 계약서에 명시된 규격을 충족하지 못하는 규격 미달 물품을 거부할 권리를 유보했다.",
+     "ko": "(사채·부동산) 정식 계약서",
+     "ex": "The bond indenture sets forth the covenants that restrict the issuer from taking on additional senior debt.",
+     "tr": "그 사채 계약서는 발행사가 추가 선순위 부채를 지지 못하도록 제한하는 특약을 규정한다.",
      "src": ""
     }
    ],
    "syn": [
-    "defective goods",
-    "substandard merchandise"
+    "deed",
+    "formal contract"
    ],
    "deriv": [],
    "roots": [],
@@ -672,21 +326,22 @@
    }
   },
   {
-   "en": "pro forma invoice",
-   "ipa": "/proʊ ˈfɔrmə ˈɪnvɔɪs/",
+   "en": "infringement",
+   "ipa": "/ɪnˈfrɪndʒmənt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "견적 송장",
-     "ex": "The exporter sent a pro forma invoice so the importer could arrange financing before the shipment was actually dispatched.",
-     "tr": "수출업체는 화물이 실제로 발송되기 전에 수입업체가 자금을 마련할 수 있도록 견적 송장을 보냈다.",
+     "ko": "침해",
+     "ex": "The lawsuit alleges patent infringement by a rival firm that copied the proprietary design.",
+     "tr": "그 소송은 경쟁 회사가 독점 설계를 복제하여 특허를 침해했다고 주장한다.",
      "src": ""
     }
    ],
    "syn": [
-    "preliminary invoice",
-    "quotation invoice"
+    "violation",
+    "breach",
+    "encroachment"
    ],
    "deriv": [],
    "roots": [],
@@ -701,21 +356,22 @@
    }
   },
   {
-   "en": "safety stock",
-   "ipa": "/ˈseɪfti stɑk/",
+   "en": "injunction",
+   "ipa": "/ɪnˈdʒʌŋkʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "안전 재고",
-     "ex": "Maintaining adequate safety stock helped the distributor absorb the sudden delay caused by the supplier's factory shutdown.",
-     "tr": "충분한 안전 재고를 유지한 덕분에 유통업체는 공급업체 공장 가동 중단으로 인한 갑작스러운 지연을 흡수할 수 있었다.",
+     "ko": "금지 명령",
+     "ex": "The court granted a temporary injunction preventing the release of the confidential report.",
+     "tr": "법원은 그 기밀 보고서 공개를 막는 임시 금지 명령을 승인했다.",
      "src": ""
     }
    ],
    "syn": [
-    "buffer stock",
-    "reserve inventory"
+    "court order",
+    "restraining order",
+    "prohibition"
    ],
    "deriv": [],
    "roots": [],
@@ -730,21 +386,21 @@
    }
   },
   {
-   "en": "freight consolidator",
-   "ipa": "/freɪt kənˈsɑlɪˌdeɪtər/",
-   "pos": "n",
+   "en": "insofar",
+   "ipa": "/ˌɪnsoʊˈfɑːr/",
+   "pos": "adv",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "화물 혼재업자",
-     "ex": "A freight consolidator combined shipments from several small exporters to secure a lower per-unit shipping rate.",
-     "tr": "화물 혼재업자는 여러 소규모 수출업체의 화물을 결합하여 단위당 더 낮은 운송 요율을 확보했다.",
+     "pos": "adv",
+     "ko": "~하는 한(insofar as)",
+     "ex": "The subcontractor is liable insofar as the defect resulted from its own negligence during installation.",
+     "tr": "그 하도급업체는 결함이 설치 중 자신의 과실로 인한 것인 한 책임을 진다.",
      "src": ""
     }
    ],
    "syn": [
-    "cargo consolidator",
-    "shipment combiner"
+    "to the extent that",
+    "as far as"
    ],
    "deriv": [],
    "roots": [],
@@ -759,21 +415,21 @@
    }
   },
   {
-   "en": "import duty",
-   "ipa": "/ˈɪmˌpɔrt ˈduːti/",
+   "en": "insolvency",
+   "ipa": "/ɪnˈsɒlvənsi/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "수입 관세",
-     "ex": "The company factored the import duty into its pricing strategy to avoid eroding profit margins on overseas sales.",
-     "tr": "그 회사는 해외 판매에서 이익률이 잠식되는 것을 막기 위해 가격 전략에 수입 관세를 반영했다.",
+     "ko": "지급불능, 파산상태",
+     "ex": "Mounting liabilities pushed the subsidiary toward insolvency within eighteen months.",
+     "tr": "부채가 누적되면서 그 자회사는 18개월 만에 지급불능 상태에 이르렀다.",
      "src": ""
     }
    ],
    "syn": [
-    "import tariff",
-    "customs duty"
+    "bankruptcy",
+    "financial ruin"
    ],
    "deriv": [],
    "roots": [],
@@ -788,21 +444,22 @@
    }
   },
   {
-   "en": "container yard",
-   "ipa": "/kənˈteɪnər jɑrd/",
-   "pos": "n",
+   "en": "insolvent",
+   "ipa": "/ɪnˈsɑːlvənt/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "컨테이너 야적장",
-     "ex": "Empty containers were left idle at the container yard for weeks due to a shortage of available truck drivers.",
-     "tr": "이용 가능한 트럭 운전사 부족으로 인해 빈 컨테이너들이 몇 주 동안 컨테이너 야적장에 방치되었다.",
+     "pos": "adj",
+     "ko": "지급불능의, 파산한",
+     "ex": "The startup was declared insolvent after failing to secure additional funding.",
+     "tr": "그 스타트업은 추가 자금 확보에 실패한 후 지급불능 상태로 선고되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "container depot",
-    "storage yard"
+    "bankrupt",
+    "broke",
+    "insolvent"
    ],
    "deriv": [],
    "roots": [],
@@ -817,21 +474,21 @@
    }
   },
   {
-   "en": "contingency plan",
-   "ipa": "/kənˈtɪndʒənsi plæn/",
+   "en": "insubordination",
+   "ipa": "/ˌɪnsəˌbɔːrdəˈneɪʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "비상 계획",
-     "ex": "The logistics director developed a contingency plan to reroute shipments in the event of a port worker strike.",
-     "tr": "물류 이사는 항만 노동자 파업 시 화물을 우회 경로로 보낼 수 있는 비상 계획을 마련했다.",
+     "ko": "항명, 불복종",
+     "ex": "Repeated insubordination toward supervisors was cited as grounds for the employee's immediate dismissal.",
+     "tr": "상사에 대한 반복적인 항명이 그 직원의 즉각적인 해고 사유로 언급되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "backup plan",
-    "fallback strategy"
+    "defiance",
+    "disobedience"
    ],
    "deriv": [],
    "roots": [],
@@ -846,21 +503,21 @@
    }
   },
   {
-   "en": "vendor compliance",
-   "ipa": "/ˈvɛndər kəmˈplaɪəns/",
-   "pos": "n",
+   "en": "intangible",
+   "ipa": "/ɪnˈtændʒəbəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "공급업체 준수(사항)",
-     "ex": "Failure to meet vendor compliance standards, including proper labeling and packaging, can result in shipment rejection at the distribution center.",
-     "tr": "적절한 라벨링 및 포장을 포함한 공급업체 준수 기준을 충족하지 못하면 유통 센터에서 화물 인수가 거부될 수 있다.",
+     "pos": "adj",
+     "ko": "무형의",
+     "ex": "Brand recognition, though intangible, was valued at several million dollars in the acquisition.",
+     "tr": "브랜드 인지도는 무형 자산이지만 그 인수에서 수백만 달러의 가치로 평가되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "supplier compliance",
-    "vendor standards"
+    "nonphysical",
+    "abstract"
    ],
    "deriv": [],
    "roots": [],
@@ -875,21 +532,167 @@
    }
   },
   {
-   "en": "turnaround time",
-   "ipa": "/ˈtɜrnəˌraʊnd taɪm/",
+   "en": "inventory turnover",
+   "ipa": "/ˈɪnvənˌtɔri ˈtɜrnˌoʊvər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "처리 소요 시간, 회전 시간",
-     "ex": "The warehouse reduced its order turnaround time by implementing an automated picking and packing system.",
-     "tr": "그 창고는 자동화된 피킹 및 포장 시스템을 도입해 주문 처리 소요 시간을 단축했다.",
+     "ko": "재고 회전율",
+     "ex": "A low inventory turnover ratio suggested that the retailer was overstocking merchandise that customers were reluctant to purchase.",
+     "tr": "낮은 재고 회전율은 소매업체가 고객이 구매를 꺼리는 상품을 과잉 재고로 보유하고 있음을 시사했다.",
      "src": ""
     }
    ],
    "syn": [
-    "processing time",
-    "cycle time"
+    "stock turnover",
+    "turnover rate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ipso facto",
+   "ipa": "/ˌɪpsoʊ ˈfæktoʊ/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "그 자체로, 사실 자체로 인해",
+     "ex": "Missing the filing deadline is ipso facto grounds for disqualification from the bidding process.",
+     "tr": "제출 마감을 놓친 것은 그 자체로 입찰 절차에서 실격 사유가 된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "by that very fact",
+    "inherently"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "jurisdiction",
+   "ipa": "/ˌdʒʊrɪsˈdɪkʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "관할권",
+     "ex": "Any dispute arising from this agreement shall be resolved under the jurisdiction of the courts of New York.",
+     "tr": "본 계약에서 발생하는 어떠한 분쟁도 뉴욕 법원의 관할권 하에 해결되어야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "authority",
+    "purview",
+    "dominion"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "kickback",
+   "ipa": "/ˈkɪkbæk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "뒷돈, 리베이트",
+     "ex": "The company terminated the contract after discovering that a manager had accepted an illegal kickback from a vendor.",
+     "tr": "회사는 한 관리자가 공급업체로부터 불법 리베이트를 받은 사실을 발견한 후 계약을 해지했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "bribe",
+    "payoff"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "latitude",
+   "ipa": "/ˈlætɪˌtuːd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "재량권, 자유",
+     "ex": "Department heads are given considerable latitude in structuring performance bonuses for their teams.",
+     "tr": "부서장들은 팀 성과 보너스 구조화에 상당한 재량권을 부여받는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "discretion",
+    "flexibility"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ledger",
+   "ipa": "/ˈlɛdʒər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "장부, 원장",
+     "ex": "Discrepancies in the general ledger triggered an immediate internal audit.",
+     "tr": "총계정원장의 불일치로 인해 즉각적인 내부 감사가 촉발되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "account book",
+    "register"
    ],
    "deriv": [],
    "roots": [],
@@ -933,21 +736,22 @@
    }
   },
   {
-   "en": "freight insurance",
-   "ipa": "/freɪt ɪnˈʃʊrəns/",
-   "pos": "n",
+   "en": "leverage",
+   "ipa": "/ˈlevərɪdʒ/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "운송 보험, 적하 보험",
-     "ex": "Purchasing freight insurance protected the exporter against losses resulting from damage incurred during transoceanic transit.",
-     "tr": "운송 보험에 가입함으로써 수출업체는 대양 횡단 운송 중 발생하는 손상으로 인한 손실로부터 보호받았다.",
+     "pos": "v",
+     "ko": "(자산·자원을) 활용하다, 지렛대로 삼다",
+     "ex": "The firm intends to leverage its existing supplier network to negotiate more favorable procurement terms.",
+     "tr": "그 회사는 더 유리한 조달 조건을 협상하기 위해 기존 공급업체 네트워크를 활용할 계획이다.",
      "src": ""
     }
    ],
    "syn": [
-    "cargo insurance",
-    "marine insurance"
+    "utilize",
+    "capitalize on",
+    "harness"
    ],
    "deriv": [],
    "roots": [],
@@ -962,21 +766,22 @@
    }
   },
   {
-   "en": "dock scheduling",
-   "ipa": "/dɑk ˈskɛdʒʊlɪŋ/",
+   "en": "levy",
+   "ipa": "/ˈlɛvi/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "입출고 일정 관리",
-     "ex": "Poor dock scheduling caused trucks to idle for hours waiting to load or unload at the overcrowded warehouse.",
-     "tr": "부실한 입출고 일정 관리로 인해 트럭들이 혼잡한 창고에서 적재 또는 하역을 기다리며 몇 시간씩 대기했다.",
+     "ko": "부과금, 부과하다",
+     "ex": "The government imposed a new levy on imported machinery to protect domestic manufacturers.",
+     "tr": "정부는 국내 제조업체를 보호하기 위해 수입 기계류에 새로운 부과금을 도입했다.",
      "src": ""
     }
    ],
    "syn": [
-    "appointment scheduling",
-    "loading dock coordination"
+    "tax",
+    "tariff",
+    "duty"
    ],
    "deriv": [],
    "roots": [],
@@ -991,21 +796,21 @@
    }
   },
   {
-   "en": "procurement officer",
-   "ipa": "/proʊˈkjʊrmənt ˈɔfɪsər/",
+   "en": "liabilities",
+   "ipa": "/ˌlaɪəˈbɪlətiz/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "조달 담당자",
-     "ex": "The procurement officer was authorized to negotiate directly with suppliers on pricing for contracts under a certain threshold.",
-     "tr": "조달 담당자는 일정 기준 이하 계약에 대해 공급업체와 직접 가격 협상을 할 권한을 부여받았다.",
+     "ko": "부채",
+     "ex": "Current liabilities must be settled within one fiscal year to maintain a healthy balance sheet.",
+     "tr": "건전한 대차대조표를 유지하려면 유동부채는 한 회계연도 내에 상환되어야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "purchasing officer",
-    "buyer"
+    "debts",
+    "obligations"
    ],
    "deriv": [],
    "roots": [],
@@ -1020,21 +825,21 @@
    }
   },
   {
-   "en": "shipment tracking",
-   "ipa": "/ˈʃɪpmənt ˈtrækɪŋ/",
+   "en": "lien",
+   "ipa": "/liːn/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "화물 추적",
-     "ex": "Real-time shipment tracking allowed the client to monitor the exact location of the consignment throughout its journey.",
-     "tr": "실시간 화물 추적을 통해 고객은 위탁 화물의 이동 경로 전체에서 정확한 위치를 확인할 수 있었다.",
+     "ko": "유치권, 저당권",
+     "ex": "The contractor placed a lien on the property after the developer failed to pay for completed work.",
+     "tr": "개발업자가 완료된 공사 대금을 지불하지 않자 계약업체는 그 부동산에 유치권을 설정했다.",
      "src": ""
     }
    ],
    "syn": [
-    "cargo tracking",
-    "order tracking"
+    "claim",
+    "encumbrance"
    ],
    "deriv": [],
    "roots": [],
@@ -1049,21 +854,21 @@
    }
   },
   {
-   "en": "reorder point",
-   "ipa": "/riˈɔrdər pɔɪnt/",
+   "en": "liquidation",
+   "ipa": "/ˌlɪkwɪˈdeɪʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "재주문 시점",
-     "ex": "The inventory system automatically generates a purchase order once stock levels fall below the predetermined reorder point.",
-     "tr": "재고 수준이 사전에 정해진 재주문 시점 아래로 떨어지면 재고 시스템이 자동으로 구매 주문을 생성한다.",
+     "ko": "청산",
+     "ex": "Creditors voted to place the insolvent firm into liquidation rather than pursue restructuring.",
+     "tr": "채권자들은 구조조정을 추진하는 대신 지급불능 상태의 회사를 청산하기로 표결했다.",
      "src": ""
     }
    ],
    "syn": [
-    "reorder threshold",
-    "trigger level"
+    "dissolution",
+    "winding-up"
    ],
    "deriv": [],
    "roots": [],
@@ -1078,21 +883,21 @@
    }
   },
   {
-   "en": "freight rate",
-   "ipa": "/freɪt reɪt/",
+   "en": "liquidity",
+   "ipa": "/lɪˈkwɪd.ə.ti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "운임률",
-     "ex": "Fluctuating fuel prices make it difficult for shippers to negotiate a fixed freight rate over an extended contract period.",
-     "tr": "변동하는 유가로 인해 화주들은 장기 계약 기간에 걸친 고정 운임률을 협상하기 어렵다.",
+     "ko": "유동성",
+     "ex": "The company maintained sufficient liquidity to meet short-term obligations despite the volatile export market",
+     "tr": "그 회사는 변동성이 큰 수출 시장에도 불구하고 단기 채무를 이행할 충분한 유동성을 유지했다",
      "src": ""
     }
    ],
    "syn": [
-    "shipping rate",
-    "carriage rate"
+    "cash flow",
+    "solvency"
    ],
    "deriv": [],
    "roots": [],
@@ -1107,21 +912,21 @@
    }
   },
   {
-   "en": "customs declaration",
-   "ipa": "/ˈkʌstəmz ˌdɛkləˈreɪʃən/",
-   "pos": "n",
+   "en": "litigate",
+   "ipa": "/ˈlɪtɪˌgeɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "세관 신고(서)",
-     "ex": "An inaccurate customs declaration can trigger a lengthy inspection and potentially result in fines for the importer.",
-     "tr": "부정확한 세관 신고는 장기간의 검사를 유발할 수 있고 수입업체에 벌금이 부과될 수 있다.",
+     "pos": "v",
+     "ko": "소송을 제기하다, 소송으로 다투다",
+     "ex": "The two companies chose to litigate the patent dispute rather than settle out of court.",
+     "tr": "두 회사는 합의 대신 특허 분쟁을 소송으로 다투기로 했다.",
      "src": ""
     }
    ],
    "syn": [
-    "import declaration",
-    "customs form"
+    "sue",
+    "prosecute"
    ],
    "deriv": [],
    "roots": [],
@@ -1136,21 +941,227 @@
    }
   },
   {
-   "en": "expiring contract",
-   "ipa": "/ɪkˈspaɪrɪŋ ˈkɑntrækt/",
+   "en": "litigation",
+   "ipa": "/ˌlɪtɪˈɡeɪʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "만료 예정 계약",
-     "ex": "Procurement must decide whether to renew or rebid the expiring contract with the current freight carrier well before the deadline.",
-     "tr": "조달 부서는 마감 시한 훨씬 전에 현재 운송업체와의 만료 예정 계약을 갱신할지 재입찰할지 결정해야 한다.",
+     "ko": "소송",
+     "ex": "The company set aside a substantial reserve to cover potential litigation stemming from the patent dispute.",
+     "tr": "그 회사는 특허 분쟁에서 비롯될 수 있는 잠재적 소송에 대비해 상당한 충당금을 마련해 두었다.",
      "src": ""
     }
    ],
    "syn": [
-    "lapsing agreement",
-    "contract renewal deadline"
+    "lawsuit",
+    "legal action",
+    "court proceedings"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "litigious",
+   "ipa": "/lɪˈtɪdʒəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "소송을 좋아하는, 소송이 잦은",
+     "ex": "Operating in a litigious market, the firm maintains extensive liability insurance.",
+     "tr": "소송이 잦은 시장에서 사업을 하기에, 그 회사는 광범위한 배상책임 보험을 유지한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "prone to litigation",
+    "contentious"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "logistical bottleneck",
+   "ipa": "/loʊˈdʒɪstɪkəl ˈbɑtəlˌnɛk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "물류 병목 현상",
+     "ex": "Congestion at the port created a logistical bottleneck that delayed the delivery of components to the assembly plant.",
+     "tr": "항구의 혼잡으로 인한 물류 병목 현상이 조립 공장으로의 부품 배송을 지연시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supply-chain congestion",
+    "distribution holdup"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "lucrative",
+   "ipa": "/ˈluːkrətɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "수익성이 높은",
+     "ex": "Securing the overseas distribution contract proved far more lucrative than management had initially projected.",
+     "tr": "해외 유통 계약을 확보한 것은 경영진이 처음 예상했던 것보다 훨씬 더 수익성이 높은 것으로 드러났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "profitable",
+    "remunerative",
+    "gainful"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "macroeconomic",
+   "ipa": "/ˌmæk.roʊˌiː.kəˈnɑː.mɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "거시경제의",
+     "ex": "Deteriorating macroeconomic indicators prompted the finance ministry to reconsider its projected growth targets",
+     "tr": "악화되는 거시경제 지표로 인해 재무부는 예상 성장 목표를 재고하게 되었다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "economy-wide",
+    "aggregate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "malfeasance",
+   "ipa": "/ˌmælˈfiːzəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "위법행위, 부정행위",
+     "ex": "The audit uncovered evidence of malfeasance by senior officials who diverted company funds.",
+     "tr": "감사에서 회사 자금을 유용한 고위 임원들의 위법행위 증거가 발견되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "wrongdoing",
+    "misconduct",
+    "corruption"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "manifest",
+   "ipa": "/ˈmænɪˌfɛst/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "적하목록, 화물 명세서",
+     "ex": "Customs officials cross-checked the cargo manifest against the physical contents of each container before granting clearance.",
+     "tr": "세관 공무원들은 통관을 허가하기 전에 화물 명세서를 각 컨테이너의 실제 내용물과 대조 확인했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cargo list",
+    "shipping manifest"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "markdown",
+   "ipa": "/ˈmɑːrkdaʊn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "가격 인하",
+     "ex": "The department store announced a seasonal markdown of up to forty percent on winter apparel.",
+     "tr": "그 백화점은 겨울 의류에 대해 최대 40퍼센트의 계절 가격 인하를 발표했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "discount",
+    "price cut"
    ],
    "deriv": [],
    "roots": [],

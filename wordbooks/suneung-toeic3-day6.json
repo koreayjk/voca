@@ -2,24 +2,25 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 6,
- "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "contingent",
-   "ipa": "/kənˈtɪndʒənt/",
+   "en": "foregoing",
+   "ipa": "/fɔːrˈɡoʊɪŋ/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "조건부의, 임시 고용의",
-     "ex": "The signing bonus is contingent upon the candidate passing a comprehensive background screening.",
-     "tr": "계약 보너스는 후보자가 종합적인 신원 조회를 통과하는 것을 조건으로 한다.",
+     "ko": "앞서 말한, 전술한",
+     "ex": "Notwithstanding the foregoing, the warranty does not cover damage caused by improper use.",
+     "tr": "전술한 내용에도 불구하고, 그 보증은 부적절한 사용으로 인한 손해는 포함하지 않는다.",
      "src": ""
     }
    ],
    "syn": [
-    "conditional",
-    "dependent"
+    "aforementioned",
+    "preceding",
+    "above-stated"
    ],
    "deriv": [],
    "roots": [],
@@ -34,21 +35,50 @@
    }
   },
   {
-   "en": "delegate",
-   "ipa": "/ˈdɛlɪˌɡeɪt/",
+   "en": "foreign direct investment",
+   "ipa": "/ˈfɔːr.ən dəˈrekt ɪnˈves.mənt/",
+   "pos": "nou",
+   "meanings": [
+    {
+     "pos": "nou",
+     "ko": "외국인 직접투자",
+     "ex": "The government eased regulations to attract greater foreign direct investment into its manufacturing sector",
+     "tr": "정부는 제조업 부문에 더 많은 외국인 직접투자를 유치하기 위해 규제를 완화했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "FDI",
+    "overseas capital investment"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "forestall",
+   "ipa": "/fɔrˈstɔl/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "위임하다",
-     "ex": "The outgoing director was asked to delegate her hiring authority to the newly appointed deputy.",
-     "tr": "퇴임하는 이사는 새로 임명된 부책임자에게 채용 권한을 위임하도록 요청받았다.",
+     "ko": "미연에 방지하다, 선수를 치다",
+     "ex": "The company revised its pricing strategy to forestall further loss of market share.",
+     "tr": "그 회사는 시장 점유율의 추가 손실을 미연에 방지하기 위해 가격 전략을 수정했다.",
      "src": ""
     }
    ],
    "syn": [
-    "entrust",
-    "assign"
+    "preempt",
+    "avert"
    ],
    "deriv": [],
    "roots": [],
@@ -63,486 +93,22 @@
    }
   },
   {
-   "en": "succession",
-   "ipa": "/səkˈsɛʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "승계, 후임",
-     "ex": "The board developed a succession plan to ensure a smooth transition when the CEO retires.",
-     "tr": "이사회는 최고경영자가 은퇴할 때 원활한 전환을 보장하기 위해 승계 계획을 마련했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "replacement plan",
-    "continuity"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "solicitation",
-   "ipa": "/səˌlɪsɪˈteɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "권유, 청탁",
-     "ex": "The noncompete agreement includes a nonsolicitation clause barring the former employee from recruiting ex-colleagues.",
-     "tr": "경업 금지 계약에는 전 직원이 전 동료를 채용하지 못하도록 금지하는 비청탁 조항이 포함되어 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "enticement",
-    "canvassing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "appointee",
-   "ipa": "/əˌpɔɪnˈtiː/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "임명된 사람",
-     "ex": "The newly confirmed appointee will assume oversight of talent acquisition across all regional offices.",
-     "tr": "새로 임명이 확정된 사람은 모든 지역 사무소의 인재 채용 감독을 맡게 될 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "designee",
-    "nominee"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "deputation",
-   "ipa": "/ˌdɛpjəˈteɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "대표단 파견, 위임",
-     "ex": "A deputation from the workers' union met with executives to negotiate the terms of the layoff package.",
-     "tr": "노조 대표단이 해고 패키지 조건을 협상하기 위해 임원들과 만났다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "delegation",
-    "representation"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "induction",
-   "ipa": "/ɪnˈdʌkʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "입사 교육, 도입",
-     "ex": "The induction session covers company policies, benefits enrollment, and reporting structures for new employees.",
-     "tr": "입사 교육 세션은 신입 직원을 위한 회사 정책, 복리후생 등록, 보고 체계를 다룬다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "orientation",
-    "onboarding"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "relocation",
-   "ipa": "/ˌriːloʊˈkeɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "전근, 이주",
-     "ex": "The offer includes a relocation allowance to cover moving expenses for the candidate and immediate family.",
-     "tr": "그 제안에는 후보자와 직계 가족의 이사 비용을 충당하는 전근 수당이 포함되어 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "transfer",
-    "resettlement"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "downgrade",
-   "ipa": "/ˈdaʊnˌɡreɪd/",
-   "pos": "v./",
-   "meanings": [
-    {
-     "pos": "v./",
-     "ko": "강등하다, 격하",
-     "ex": "Due to underperformance, the manager was downgraded to a nonsupervisory position with reduced responsibilities.",
-     "tr": "실적 부진으로 인해 그 관리자는 책임이 줄어든 비감독 직위로 강등되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "demote",
-    "reduce in rank"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "underqualified",
-   "ipa": "/ˌʌndərˈkwɒlɪˌfaɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "자격 미달의",
-     "ex": "The hiring manager rejected several applicants deemed underqualified for the senior compliance role.",
-     "tr": "채용 담당자는 고위 준법 직책에 자격 미달로 여겨진 여러 지원자를 거절했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "unqualified",
-    "insufficiently qualified"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "overstaffed",
-   "ipa": "/ˌoʊvərˈstæft/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "인원 과잉의",
-     "ex": "The logistics department was found to be overstaffed, prompting a targeted reduction in headcount.",
-     "tr": "물류 부서가 인원 과잉인 것으로 밝혀져 표적화된 인원 감축이 촉발되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "overmanned",
-    "overpersonnel"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "latitude",
-   "ipa": "/ˈlætɪˌtuːd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재량권, 자유",
-     "ex": "Department heads are given considerable latitude in structuring performance bonuses for their teams.",
-     "tr": "부서장들은 팀 성과 보너스 구조화에 상당한 재량권을 부여받는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "discretion",
-    "flexibility"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tenured",
-   "ipa": "/ˈtɛnjərd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "정년이 보장된",
-     "ex": "Only tenured employees at the director level are eligible for the extended severance formula.",
-     "tr": "이사급의 정년이 보장된 직원만이 연장된 퇴직금 산정 공식의 대상이 된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "permanent",
-    "long-serving"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "entitlement",
-   "ipa": "/ɪnˈtaɪtəlmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "수급 권리, 자격",
-     "ex": "Employees should review their leave entitlement before submitting a request for extended time off.",
-     "tr": "직원들은 장기 휴가 신청서를 제출하기 전에 휴가 수급 권리를 검토해야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "benefit",
-    "allowance"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "disparity",
-   "ipa": "/dɪˈspærəti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "격차, 불균형",
-     "ex": "The internal audit revealed a significant pay disparity between employees in equivalent roles across departments.",
-     "tr": "내부 감사 결과 부서 간 동등한 직위의 직원들 사이에 상당한 임금 격차가 드러났다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "gap",
-    "imbalance"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "redeployment",
-   "ipa": "/ˌriːdɪˈplɔɪmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재배치",
-     "ex": "Rather than issuing layoffs, management opted for the redeployment of surplus staff to understaffed divisions.",
-     "tr": "경영진은 해고 대신 잉여 인력을 인력 부족 부서로 재배치하는 것을 선택했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "reassignment",
-    "transfer"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "provisional",
-   "ipa": "/prəˈvɪʒənəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "임시의, 잠정적인",
-     "ex": "A provisional offer of employment was extended pending satisfactory completion of the reference check.",
-     "tr": "임시 고용 제안이 만족스러운 신원조회 완료를 조건으로 제시되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "temporary",
-    "conditional"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "procurement",
-   "ipa": "/proʊˈkjʊrmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "조달, 구매(획득)",
-     "ex": "The procurement department must obtain three competing bids before authorizing any purchase order exceeding fifty thousand dollars.",
-     "tr": "조달 부서는 5만 달러를 초과하는 구매 주문을 승인하기 전에 반드시 세 개의 경쟁 입찰을 받아야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "acquisition",
-    "sourcing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "expedite",
-   "ipa": "/ˈɛkspɪˌdaɪt/",
+   "en": "forfeit",
+   "ipa": "/ˈfɔːrfɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "신속히 처리하다, 촉진하다",
-     "ex": "The logistics manager asked the carrier to expedite the shipment so it would clear customs before the holiday closure.",
-     "tr": "물류 관리자는 공휴일 휴무 전에 통관이 완료되도록 화물을 신속히 처리해 달라고 운송업체에 요청했다.",
+     "ko": "몰수당하다, 상실하다",
+     "ex": "Employees who resign before the vesting period ends will forfeit their unvested stock options.",
+     "tr": "베스팅 기간이 끝나기 전에 퇴사하는 직원은 미확정 주식매수선택권을 상실하게 된다.",
      "src": ""
     }
    ],
    "syn": [
-    "hasten",
-    "accelerate",
-    "fast-track"
+    "lose",
+    "surrender",
+    "relinquish"
    ],
    "deriv": [],
    "roots": [],
@@ -557,21 +123,21 @@
    }
   },
   {
-   "en": "consignment",
-   "ipa": "/kənˈsaɪnmənt/",
+   "en": "forfeiture",
+   "ipa": "/ˈfɔːrfɪtʃər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "위탁 화물, 위탁 판매",
-     "ex": "Under the consignment agreement, the retailer only pays the supplier once the goods have actually been sold to customers.",
-     "tr": "위탁 판매 계약에 따라 소매업체는 상품이 실제로 고객에게 판매된 후에만 공급업체에 대금을 지불한다.",
+     "ko": "몰수, 상실",
+     "ex": "Failure to meet the delivery deadline results in forfeiture of the performance bond.",
+     "tr": "납품 기한을 지키지 못하면 이행보증금을 몰수당하게 된다.",
      "src": ""
     }
    ],
    "syn": [
-    "shipment",
-    "consignment lot"
+    "confiscation",
+    "loss"
    ],
    "deriv": [],
    "roots": [],
@@ -586,79 +152,22 @@
    }
   },
   {
-   "en": "freight",
-   "ipa": "/freɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "화물, 운임",
-     "ex": "Rising fuel surcharges have pushed freight costs up by nearly twenty percent since the beginning of the fiscal year.",
-     "tr": "연료 할증료 상승으로 회계연도 초 이후 화물 운임이 거의 20퍼센트 인상되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cargo",
-    "shipping cost"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "customs",
-   "ipa": "/ˈkʌstəmz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "세관, 관세 절차",
-     "ex": "Incomplete documentation caused the entire consignment to be held at customs for an additional two weeks.",
-     "tr": "서류 미비로 인해 전체 위탁 화물이 세관에서 추가로 2주간 억류되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "customs clearance",
-    "border control"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "replenish",
-   "ipa": "/rɪˈplɛnɪʃ/",
+   "en": "forgo",
+   "ipa": "/fɔːrˈɡoʊ/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "보충하다, 재고를 채우다",
-     "ex": "Warehouse staff are required to replenish depleted stock within twenty-four hours of receiving an automated low-inventory alert.",
-     "tr": "창고 직원은 자동 재고 부족 경보를 받은 후 24시간 이내에 소진된 재고를 보충해야 한다.",
+     "ko": "포기하다, 삼가다",
+     "ex": "Investors were asked to forgo dividends temporarily to support expansion plans.",
+     "tr": "투자자들은 확장 계획을 지원하기 위해 일시적으로 배당금을 포기하도록 요청받았다.",
      "src": ""
     }
    ],
    "syn": [
-    "restock",
-    "replenish supplies"
+    "relinquish",
+    "waive",
+    "abstain from"
    ],
    "deriv": [],
    "roots": [],
@@ -673,21 +182,22 @@
    }
   },
   {
-   "en": "logistics",
-   "ipa": "/loʊˈdʒɪstɪks/",
-   "pos": "n",
+   "en": "formidable",
+   "ipa": "/ˈfɔːrmɪdəbəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "물류, 운영 관리",
-     "ex": "The logistics team coordinated with three separate freight forwarders to ensure the components arrived in time for assembly.",
-     "tr": "물류팀은 부품이 조립 시점에 맞춰 도착하도록 세 개의 별도 화물 운송 주선업체와 조율했다.",
+     "pos": "adj",
+     "ko": "만만치 않은, 강력한",
+     "ex": "The startup quickly emerged as a formidable competitor to established industry players.",
+     "tr": "그 스타트업은 빠르게 기존 업계 강자들에게 만만치 않은 경쟁자로 부상했다.",
      "src": ""
     }
    ],
    "syn": [
-    "supply-chain management",
-    "distribution"
+    "formidable",
+    "daunting",
+    "powerful"
    ],
    "deriv": [],
    "roots": [],
@@ -702,21 +212,22 @@
    }
   },
   {
-   "en": "backorder",
-   "ipa": "/ˈbækˌɔrdər/",
-   "pos": "n",
+   "en": "forthcoming",
+   "ipa": "/ˌfɔːrθˈkʌmɪŋ/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "이월 주문, 재입고 대기 주문",
-     "ex": "Due to a shortage of raw materials, the manufacturer had to backorder nearly a third of the components requested.",
-     "tr": "원자재 부족으로 인해 제조업체는 요청받은 부품의 거의 3분의 1을 이월 주문 처리해야 했다.",
+     "pos": "adj",
+     "ko": "다가오는, 곧 있을",
+     "ex": "Details regarding the forthcoming merger will be disclosed at the press briefing.",
+     "tr": "다가오는 합병에 관한 세부 사항은 기자회견에서 공개될 예정입니다.",
      "src": ""
     }
    ],
    "syn": [
-    "pending order",
-    "stock shortage"
+    "upcoming",
+    "imminent",
+    "impending"
    ],
    "deriv": [],
    "roots": [],
@@ -731,21 +242,22 @@
    }
   },
   {
-   "en": "consolidation",
-   "ipa": "/kənˌsɑːləˈdeɪʃən/",
-   "pos": "n",
+   "en": "forthwith",
+   "ipa": "/ˌfɔːrθˈwɪθ/",
+   "pos": "adv",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "(화물) 통합, 혼재",
-     "ex": "Freight consolidation allows several smaller shipments to be combined into a single container, reducing overall shipping expenses.",
-     "tr": "화물 통합을 통해 여러 개의 소규모 화물을 하나의 컨테이너로 합쳐 전체 운송 비용을 줄일 수 있다.",
+     "pos": "adv",
+     "ko": "즉시, 지체 없이",
+     "ex": "Should the licensee violate the agreement, the license shall be revoked forthwith.",
+     "tr": "실시권자가 계약을 위반할 경우, 라이선스는 즉시 취소된다.",
      "src": ""
     }
    ],
    "syn": [
-    "combining",
-    "bundling"
+    "immediately",
+    "at once",
+    "without delay"
    ],
    "deriv": [],
    "roots": [],
@@ -760,21 +272,21 @@
    }
   },
   {
-   "en": "tariff",
-   "ipa": "/ˈtærɪf/",
-   "pos": "n",
+   "en": "forward contract",
+   "ipa": "/ˈfɔːr.wərd ˈkɑːn.trækt/",
+   "pos": "nou",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "관세, 요금표",
-     "ex": "A newly imposed tariff on imported steel forced the manufacturer to renegotiate contracts with its overseas suppliers.",
-     "tr": "수입 철강에 새로 부과된 관세로 인해 제조업체는 해외 공급업체와 계약을 재협상해야 했다.",
+     "pos": "nou",
+     "ko": "선물환 계약",
+     "ex": "The importer signed a forward contract locking in today's exchange rate for a shipment arriving next quarter",
+     "tr": "수입업체는 다음 분기에 도착하는 선적물에 대해 오늘의 환율을 고정하는 선물환 계약을 체결했다",
      "src": ""
     }
    ],
    "syn": [
-    "duty",
-    "levy"
+    "futures agreement",
+    "forward exchange deal"
    ],
    "deriv": [],
    "roots": [],
@@ -789,21 +301,21 @@
    }
   },
   {
-   "en": "bill of lading",
-   "ipa": "/bɪl əv ˈleɪdɪŋ/",
+   "en": "franchisee",
+   "ipa": "/ˌfrænˌtʃaɪˈziː/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "선하증권",
-     "ex": "The freight forwarder refused to release the cargo until the importer presented the original bill of lading.",
-     "tr": "화물 운송 주선업체는 수입업체가 원본 선하증권을 제시할 때까지 화물 인도를 거부했다.",
+     "ko": "가맹점주, 프랜차이즈 가입자",
+     "ex": "Each franchisee is required to adhere to the corporate marketing guidelines when running local promotions.",
+     "tr": "각 가맹점주는 지역 프로모션을 진행할 때 본사의 마케팅 지침을 준수해야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "shipping document",
-    "carrier receipt"
+    "licensee",
+    "dealer"
    ],
    "deriv": [],
    "roots": [],
@@ -818,21 +330,20 @@
    }
   },
   {
-   "en": "demurrage",
-   "ipa": "/dɪˈmɜːrɪdʒ/",
-   "pos": "n",
+   "en": "free-floating exchange rate",
+   "ipa": "/friː ˈfloʊ.tɪŋ ɪksˈtʃeɪndʒ reɪt/",
+   "pos": "nou",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "체선료, 컨테이너 초과 보관료",
-     "ex": "Because the consignee failed to collect the containers promptly, the company was charged substantial demurrage fees at the port.",
-     "tr": "수하인이 신속히 컨테이너를 인수하지 못해 회사는 항구에서 상당한 체선료를 부과받았다.",
+     "pos": "nou",
+     "ko": "자유변동환율",
+     "ex": "Adopting a free-floating exchange rate exposed the nation's exporters to greater currency risk",
+     "tr": "자유변동환율제를 채택하면서 그 나라의 수출업체들은 더 큰 환율 위험에 노출되었다",
      "src": ""
     }
    ],
    "syn": [
-    "detention charge",
-    "storage penalty"
+    "floating rate"
    ],
    "deriv": [],
    "roots": [],
@@ -847,50 +358,21 @@
    }
   },
   {
-   "en": "lead time",
-   "ipa": "/liːd taɪm/",
+   "en": "freight consolidator",
+   "ipa": "/freɪt kənˈsɑlɪˌdeɪtər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "조달 기간, 리드타임",
-     "ex": "Extended lead times for semiconductor components have compelled manufacturers to place orders far in advance.",
-     "tr": "반도체 부품의 리드타임이 길어지면서 제조업체들은 훨씬 앞서 주문을 넣어야만 했다.",
+     "ko": "화물 혼재업자",
+     "ex": "A freight consolidator combined shipments from several small exporters to secure a lower per-unit shipping rate.",
+     "tr": "화물 혼재업자는 여러 소규모 수출업체의 화물을 결합하여 단위당 더 낮은 운송 요율을 확보했다.",
      "src": ""
     }
    ],
    "syn": [
-    "turnaround time",
-    "delivery period"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "inventory turnover",
-   "ipa": "/ˈɪnvənˌtɔri ˈtɜrnˌoʊvər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재고 회전율",
-     "ex": "A low inventory turnover ratio suggested that the retailer was overstocking merchandise that customers were reluctant to purchase.",
-     "tr": "낮은 재고 회전율은 소매업체가 고객이 구매를 꺼리는 상품을 과잉 재고로 보유하고 있음을 시사했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "stock turnover",
-    "turnover rate"
+    "cargo consolidator",
+    "shipment combiner"
    ],
    "deriv": [],
    "roots": [],
@@ -934,21 +416,21 @@
    }
   },
   {
-   "en": "consignee",
-   "ipa": "/kənˌsaɪˈniː/",
+   "en": "freight forwarding",
+   "ipa": "/freɪt ˈfɔrwərdɪŋ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "수하인, 수취인",
-     "ex": "The carrier will not release the cargo unless the consignee provides proof of identity matching the shipping documents.",
-     "tr": "운송업체는 수하인이 운송 서류와 일치하는 신분 증명을 제시하지 않는 한 화물을 인도하지 않을 것이다.",
+     "ko": "화물 운송 주선업",
+     "ex": "The company specializes in freight forwarding for perishable goods requiring temperature-controlled transport across international borders.",
+     "tr": "그 회사는 국경을 넘는 온도 조절 운송이 필요한 부패성 물품의 화물 운송 주선을 전문으로 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "recipient",
-    "receiver"
+    "shipping brokerage",
+    "cargo forwarding"
    ],
    "deriv": [],
    "roots": [],
@@ -963,21 +445,21 @@
    }
   },
   {
-   "en": "consignor",
-   "ipa": "/kənˈsaɪnər/",
+   "en": "freight forwarding agreement",
+   "ipa": "/freɪt ˈfɔrwərdɪŋ əˈgriːmənt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "위탁자, 송하인",
-     "ex": "The consignor is liable for any damage to the goods that occurs prior to the carrier taking possession.",
-     "tr": "위탁자는 운송업체가 물품을 인수하기 전에 발생하는 모든 손상에 대해 책임을 진다.",
+     "ko": "화물 운송 주선 계약",
+     "ex": "The freight forwarding agreement specifies liability limits in the event that cargo is lost or damaged during transit.",
+     "tr": "화물 운송 주선 계약은 운송 중 화물이 분실되거나 손상될 경우의 책임 한도를 명시하고 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "shipper",
-    "sender"
+    "shipping contract",
+    "cargo handling agreement"
    ],
    "deriv": [],
    "roots": [],
@@ -992,21 +474,21 @@
    }
   },
   {
-   "en": "expedited shipping",
-   "ipa": "/ˈɛkspɪˌdaɪtɪd ˈʃɪpɪŋ/",
+   "en": "freight liability",
+   "ipa": "/freɪt ˌlaɪəˈbɪləti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "신속 배송",
-     "ex": "Customers who select expedited shipping should expect their orders to arrive within two business days at an additional charge.",
-     "tr": "신속 배송을 선택한 고객은 추가 요금을 내고 영업일 기준 2일 이내에 주문 상품을 받을 것으로 예상해야 한다.",
+     "ko": "운송 책임(배상 책임)",
+     "ex": "The carrier's freight liability is limited to the declared value of the goods stated on the bill of lading.",
+     "tr": "운송업체의 운송 책임은 선하증권에 명시된 물품의 신고 가치로 제한된다.",
      "src": ""
     }
    ],
    "syn": [
-    "rush delivery",
-    "priority shipping"
+    "carrier liability",
+    "shipping liability"
    ],
    "deriv": [],
    "roots": [],
@@ -1021,21 +503,21 @@
    }
   },
   {
-   "en": "perishable",
-   "ipa": "/ˈpɛrɪʃəbəl/",
-   "pos": "adj",
+   "en": "freight surcharge",
+   "ipa": "/freɪt ˈsɜrˌtʃɑrdʒ/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "부패하기 쉬운 (상품)",
-     "ex": "Perishable goods must be transported in refrigerated containers to prevent spoilage before reaching the distribution center.",
-     "tr": "부패하기 쉬운 상품은 유통 센터에 도착하기 전에 상하지 않도록 냉장 컨테이너로 운송되어야 한다.",
+     "pos": "n",
+     "ko": "운임 할증료",
+     "ex": "An unexpected freight surcharge was added to the invoice due to a sudden spike in fuel prices.",
+     "tr": "연료 가격의 급등으로 인해 예상치 못한 운임 할증료가 송장에 추가되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "spoilable goods",
-    "fresh cargo"
+    "fuel surcharge",
+    "additional freight fee"
    ],
    "deriv": [],
    "roots": [],
@@ -1050,22 +532,50 @@
    }
   },
   {
-   "en": "procure",
-   "ipa": "/proʊˈkjʊr/",
+   "en": "furlough",
+   "ipa": "/ˈfɜːrloʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "일시 휴직, 강제 휴가",
+     "ex": "To conserve cash during the downturn, management placed nonessential staff on temporary furlough.",
+     "tr": "경기 침체 동안 현금을 절약하기 위해 경영진은 비필수 직원들을 일시적인 강제 휴직 상태로 두었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "temporary layoff",
+    "forced leave"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "garnish",
+   "ipa": "/ˈgɑrnɪʃ/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "조달하다, 획득하다",
-     "ex": "The purchasing office was tasked with procuring raw materials from certified suppliers at the lowest possible cost.",
-     "tr": "구매 사무소는 인증된 공급업체로부터 최대한 낮은 비용으로 원자재를 조달하는 임무를 맡았다.",
+     "ko": "(임금 등을) 압류하다",
+     "ex": "The court ordered that a portion of the debtor's wages be garnished to satisfy the judgment.",
+     "tr": "법원은 판결을 이행하기 위해 채무자 임금의 일부를 압류하라고 명령했다.",
      "src": ""
     }
    ],
    "syn": [
-    "obtain",
-    "acquire",
-    "source"
+    "withhold",
+    "attach"
    ],
    "deriv": [],
    "roots": [],
@@ -1080,21 +590,21 @@
    }
   },
   {
-   "en": "requisition",
-   "ipa": "/ˌrɛkwɪˈzɪʃən/",
+   "en": "garnishment",
+   "ipa": "/ˈɡɑːrnɪʃmənt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "(사내) 청구, 물품 신청(하다)",
-     "ex": "Department heads must submit a requisition form to procurement before any equipment purchase can be initiated.",
-     "tr": "부서장은 장비 구매를 시작하기 전에 조달 부서에 청구서를 제출해야 한다.",
+     "ko": "급여 압류, 채권 압류",
+     "ex": "Wage garnishment proceedings began after the employee failed to settle the outstanding tax debt.",
+     "tr": "직원이 미납 세금을 정산하지 못하자 급여 압류 절차가 시작되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "purchase request",
-    "order form"
+    "seizure",
+    "attachment"
    ],
    "deriv": [],
    "roots": [],
@@ -1109,21 +619,21 @@
    }
   },
   {
-   "en": "subcontractor",
-   "ipa": "/ˌsʌbkənˈtræktər/",
+   "en": "gimmick",
+   "ipa": "/ˈɡɪmɪk/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "하도급업체",
-     "ex": "The prime contractor is ultimately responsible for ensuring that every subcontractor complies with the safety regulations outlined in the agreement.",
-     "tr": "원청 계약업체는 모든 하도급업체가 계약서에 명시된 안전 규정을 준수하도록 보장할 최종 책임이 있다.",
+     "ko": "판촉용 술책, 눈길 끌기 수법",
+     "ex": "Critics dismissed the limited-time offer as a mere marketing gimmick rather than a genuine discount.",
+     "tr": "비평가들은 그 한정 기간 제안을 진정한 할인이 아니라 단순한 마케팅 술책으로 치부했다.",
      "src": ""
     }
    ],
    "syn": [
-    "subvendor",
-    "subordinate contractor"
+    "ploy",
+    "stunt"
    ],
    "deriv": [],
    "roots": [],
@@ -1138,21 +648,516 @@
    }
   },
   {
-   "en": "stockpile",
-   "ipa": "/ˈstɑkˌpaɪl/",
+   "en": "gratuity",
+   "ipa": "/ɡrəˈtuːɪti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "비축(하다)",
-     "ex": "Anticipating disruptions in the supply chain, the firm decided to stockpile critical components several months in advance.",
-     "tr": "공급망 차질을 예상하여 그 회사는 핵심 부품을 몇 달 앞서 비축하기로 결정했다.",
+     "ko": "퇴직 사례금, 사례금",
+     "ex": "Long-serving employees are entitled to a gratuity payment calculated based on years of continuous service.",
+     "tr": "장기 근속 직원은 지속적인 근속 연수를 기준으로 산정된 퇴직 사례금을 받을 자격이 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "reserve",
-    "accumulate"
+    "bonus payment",
+    "honorarium"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "grievance",
+   "ipa": "/ˈɡriːvəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "고충, 불만 사항",
+     "ex": "Employees may file a formal grievance with the human resources department regarding workplace disputes.",
+     "tr": "직원들은 직장 내 분쟁에 관해 인사부에 공식 고충을 제기할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "complaint",
+    "grudge"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "hedging",
+   "ipa": "/ˈhedʒ.ɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "환헤지, 위험회피",
+     "ex": "The multinational firm relied on currency hedging to mitigate losses from unfavorable exchange rate fluctuations",
+     "tr": "그 다국적 기업은 불리한 환율 변동으로 인한 손실을 완화하기 위해 환헤지에 의존했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "risk mitigation",
+    "currency protection"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "henceforth",
+   "ipa": "/ˌhɛnsˈfɔːrθ/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "이제부터, 향후",
+     "ex": "Henceforth, all reimbursement claims must be submitted through the online portal rather than by email.",
+     "tr": "이제부터 모든 환급 청구는 이메일이 아니라 온라인 포털을 통해 제출되어야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "from now on",
+    "hereafter",
+    "going forward"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "hereby",
+   "ipa": "/ˌhɪrˈbaɪ/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "이에 의하여, 이로써(계약·공지에서)",
+     "ex": "The undersigned parties hereby agree to the terms and conditions set forth in this contract.",
+     "tr": "서명한 당사자들은 이 계약서에 명시된 조건에 이로써 동의한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "by this means",
+    "herewith"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "hereinafter",
+   "ipa": "/ˌhɪrɪnˈæftər/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "이하에서(계약서에서)",
+     "ex": "ABC Corporation, hereinafter referred to as the Supplier, shall deliver the goods within thirty days.",
+     "tr": "ABC사(이하 공급자라 함)는 30일 이내에 물품을 인도해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "from here on",
+    "below"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "heretical",
+   "ipa": "/həˈrɛtɪkəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "이단적인, 통념에 반하는",
+     "ex": "Analysts dismissed the heretical proposal to abandon the core product line entirely.",
+     "tr": "애널리스트들은 핵심 제품군을 완전히 포기하자는 통념에 반하는 제안을 일축했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unorthodox",
+    "dissenting"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "heretoafter",
+   "ipa": "/ˌhɪrtuˈæftər/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "이후로(hereinafter의 변형, 문서에서)",
+     "ex": "The two entities heretoafter shall be jointly referred to as the parties in this agreement.",
+     "tr": "두 법인은 이후로 본 계약에서 당사자로 공동 지칭된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hereinafter",
+    "from this point on"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "heretofore",
+   "ipa": "/ˌhɪrtuˈfɔːr/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "지금까지, 이전에는",
+     "ex": "The subsidiary had heretofore operated independently, but it will now report directly to corporate headquarters.",
+     "tr": "그 자회사는 지금까지 독립적으로 운영되어 왔으나, 이제는 본사에 직접 보고할 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "until now",
+    "previously",
+    "hitherto"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "heretoforementioned",
+   "ipa": "/ˌhɪrtuˌfɔːrˈmɛnʃənd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "위에서 언급된",
+     "ex": "The heretoforementioned conditions must be satisfied before disbursement of the second tranche.",
+     "tr": "위에서 언급된 조건들은 2차 자금 지급 전에 충족되어야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "aforementioned",
+    "above-mentioned"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "heretoforesaid",
+   "ipa": "/ˌhɪrtuˈfɔːrsɛd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "전술한(중복 제거 대상)",
+     "ex": "delete",
+     "tr": "delete",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "delete"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "heretounder",
+   "ipa": "/ˌhɪrtuˈʌndər/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "이 문서 하에서(계약서 표현)",
+     "ex": "All obligations heretounder shall survive the termination of this agreement.",
+     "tr": "이 문서 하의 모든 의무는 본 계약의 종료 후에도 존속한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "under this agreement",
+    "hereunder"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "hereunder",
+   "ipa": "/hɪrˈʌndər/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "본 계약 하에서",
+     "ex": "The rights and obligations of each party hereunder shall not be assigned without prior written consent.",
+     "tr": "본 계약 하의 각 당사자의 권리와 의무는 사전 서면 동의 없이 양도될 수 없다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "under this contract",
+    "herein"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "illicit",
+   "ipa": "/ɪˈlɪsɪt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "불법의",
+     "ex": "The audit uncovered illicit transfers between offshore accounts.",
+     "tr": "그 감사는 역외 계좌 간의 불법 송금을 밝혀냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unlawful",
+    "illegal",
+    "prohibited"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "impairment",
+   "ipa": "/ɪmˈpɛrmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "손상, 자산가치 하락",
+     "ex": "The company recognized an impairment loss on goodwill following the disappointing acquisition.",
+     "tr": "그 회사는 실망스러운 인수 이후 영업권에 대한 손상차손을 인식했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "devaluation",
+    "write-down"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "impede",
+   "ipa": "/ɪmˈpiːd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "방해하다, 지연시키다",
+     "ex": "Bureaucratic red tape continued to impede the approval of the cross-border merger.",
+     "tr": "관료적 형식주의는 국경 간 합병 승인을 계속 지연시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hinder",
+    "obstruct"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "impetus",
+   "ipa": "/ˈɪmpɪtəs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자극, 추진력",
+     "ex": "The successful pilot campaign provided the impetus for a nationwide rollout of the loyalty program.",
+     "tr": "성공적인 시범 캠페인은 로열티 프로그램의 전국적 확대를 위한 추진력을 제공했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "stimulus",
+    "momentum"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "impinge",
+   "ipa": "/ɪmˈpɪndʒ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(부정적으로) 영향을 미치다, 침해하다",
+     "ex": "The new zoning ordinance may impinge on the company's expansion plans.",
+     "tr": "새로운 지역 조례는 그 회사의 확장 계획에 영향을 미칠 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "encroach on",
+    "affect adversely"
    ],
    "deriv": [],
    "roots": [],
