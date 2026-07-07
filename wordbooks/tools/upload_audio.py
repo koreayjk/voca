@@ -10,7 +10,7 @@
   python3 tools/upload_audio.py                  # 미리보기(개수)
   python3 tools/upload_audio.py --go             # 업로드
 """
-import os, sys, json, urllib.request, urllib.error
+import os, sys, json, time, socket, urllib.request, urllib.error
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent   # voca/
@@ -20,16 +20,26 @@ KEY = os.environ.get("SB_SERVICE_KEY", "")
 BUCKET = "audio"
 GO = "--go" in sys.argv
 
-def _req(method, path, data=None, ctype=None, extra=None):
-    r = urllib.request.Request(SB_URL + path, data=data, method=method)
-    r.add_header("apikey", KEY); r.add_header("Authorization", "Bearer " + KEY)
-    if ctype: r.add_header("Content-Type", ctype)
-    for k, v in (extra or {}).items(): r.add_header(k, v)
-    try:
-        with urllib.request.urlopen(r, timeout=60) as resp:
-            return resp.status, resp.read()
-    except urllib.error.HTTPError as e:
-        return e.code, e.read()
+def _req(method, path, data=None, ctype=None, extra=None, tries=5):
+    last = None
+    for attempt in range(tries):
+        r = urllib.request.Request(SB_URL + path, data=data, method=method)
+        r.add_header("apikey", KEY); r.add_header("Authorization", "Bearer " + KEY)
+        if ctype: r.add_header("Content-Type", ctype)
+        for k, v in (extra or {}).items(): r.add_header(k, v)
+        try:
+            with urllib.request.urlopen(r, timeout=120) as resp:
+                return resp.status, resp.read()
+        except urllib.error.HTTPError as e:
+            body = e.read()
+            if e.code in (429, 500, 502, 503, 504) and attempt < tries - 1:
+                last = e; time.sleep(1.5 * (attempt + 1)); continue   # 일시적 서버오류 재시도
+            return e.code, body
+        except (urllib.error.URLError, TimeoutError, socket.timeout, ConnectionError, OSError) as e:
+            last = e
+            if attempt < tries - 1:
+                time.sleep(1.5 * (attempt + 1)); continue              # 네트워크 타임아웃 재시도
+    return 0, (f"network error after {tries} tries: {last}".encode())
 
 def ensure_bucket():
     st, body = _req("POST", "/storage/v1/bucket",
