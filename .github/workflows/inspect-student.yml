@@ -1,0 +1,27 @@
+name: 학생 활동 조회 (점수 진단)
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: '학생 이름 (예: 한필립)'
+        required: true
+        default: '한필립'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wordbooks
+    env:
+      SB_URL: https://ziatqkjlafucqtwshhla.supabase.co
+      SB_SERVICE_KEY: ${{ secrets.SB_SERVICE_KEY }}
+      STUDENT_NAME: ${{ inputs.name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 학생 활동 덤프
+        run: python3 tools/inspect_student.py
