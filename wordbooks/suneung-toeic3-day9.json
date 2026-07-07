@@ -2,57 +2,24 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 9,
- "exampleNote": "예문은 TOEIC 기출 빈출어를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "drawing",
-   "ipa": "/ˈdrɔːɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "도면, 도안",
-     "ex": "Please review the attached drawing before approving the final layout of the warehouse.",
-     "tr": "창고 최종 배치도를 승인하기 전에 첨부된 도면을 검토해 주세요.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "추첨"
-    }
-   ],
-   "syn": [
-    "sketch",
-    "blueprint"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 21,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "permitted",
-   "ipa": "/pərˈmɪtɪd/",
+   "en": "proactive",
+   "ipa": "/proʊˈæktɪv/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "허용된",
-     "ex": "Smoking is not permitted anywhere inside the manufacturing facility.",
-     "tr": "제조 시설 내부에서는 어디서든 흡연이 허용되지 않습니다.",
+     "ko": "선제적인",
+     "ex": "The compliance team took a proactive approach, auditing contracts before regulators requested them.",
+     "tr": "준법감시팀은 규제 당국이 요청하기 전에 계약서를 감사하는 선제적인 접근법을 취했다.",
      "src": ""
     }
    ],
    "syn": [
-    "allowed",
-    "authorized"
+    "preemptive",
+    "forward-looking"
    ],
    "deriv": [],
    "roots": [],
@@ -60,27 +27,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 20,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "yearly",
-   "ipa": "/ˈjɪrli/",
+   "en": "formidable",
+   "ipa": "/ˈfɔːrmɪdəbəl/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "매년의, 연례의",
-     "ex": "The yearly performance review will take place in the first week of December.",
-     "tr": "연례 인사 평가는 12월 첫째 주에 진행됩니다.",
+     "ko": "만만치 않은, 강력한",
+     "ex": "The startup quickly emerged as a formidable competitor to established industry players.",
+     "tr": "그 스타트업은 빠르게 기존 업계 강자들에게 만만치 않은 경쟁자로 부상했다.",
      "src": ""
     }
    ],
    "syn": [
-    "annual"
+    "formidable",
+    "daunting",
+    "powerful"
    ],
    "deriv": [],
    "roots": [],
@@ -88,28 +57,88 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 20,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "invest",
-   "ipa": "/ɪnˈvɛst/",
+   "en": "unprecedented",
+   "ipa": "/ʌnˈpresɪdentɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "전례 없는",
+     "ex": "The firm reported unprecedented growth in overseas markets following the trade agreement.",
+     "tr": "무역 협정 체결 이후 그 회사는 해외 시장에서 전례 없는 성장을 보고했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unparalleled",
+    "unmatched",
+    "record"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "obsolete",
+   "ipa": "/ˌɒbsəˈliːt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "구식의, 쓸모없어진",
+     "ex": "Management wrote off the obsolete inventory rather than attempting to liquidate it at a loss.",
+     "tr": "경영진은 손실을 감수하며 처분하기보다 구식 재고를 상각 처리했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "outdated",
+    "antiquated",
+    "defunct"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "accrue",
+   "ipa": "/əˈkruː/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "투자하다",
-     "ex": "The board decided to invest heavily in new manufacturing equipment next fiscal year.",
-     "tr": "이사회는 다음 회계연도에 신규 제조 설비에 대규모로 투자하기로 결정했다.",
+     "ko": "(이자 등이) 누적되다, 발생하다",
+     "ex": "Interest on the outstanding balance continues to accrue until the invoice is settled in full.",
+     "tr": "미지급 잔액에 대한 이자는 송장이 전액 정산될 때까지 계속 누적된다.",
      "src": ""
     }
    ],
    "syn": [
-    "fund",
-    "finance"
+    "accumulate",
+    "build up"
    ],
    "deriv": [],
    "roots": [],
@@ -117,666 +146,292 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 20,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "planting",
-   "ipa": "/ˈplæntɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "식목, 나무 심기",
-     "ex": "Volunteers from the company will participate in a tree planting event near the new office.",
-     "tr": "회사 자원봉사자들은 새 사무실 근처에서 열리는 식목 행사에 참여할 예정이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 20,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "efficiently",
-   "ipa": "/ɪˈfɪʃəntli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "효율적으로",
-     "ex": "The new inventory system allows the warehouse staff to process orders more efficiently.",
-     "tr": "새 재고 관리 시스템 덕분에 창고 직원들이 주문을 더 효율적으로 처리할 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "productively"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 20,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "outlet",
-   "ipa": "/ˈaʊtlɛt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "직판점, 매장",
-     "ex": "The company plans to open three new retail outlets in the downtown area next spring.",
-     "tr": "그 회사는 내년 봄 시내 지역에 신규 소매 직판점 세 곳을 열 계획이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "store",
-    "shop"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "checkout",
-   "ipa": "/ˈtʃɛkaʊt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "계산대, 퇴실",
-     "ex": "Guests are required to complete the checkout process before eleven in the morning.",
-     "tr": "투숙객은 오전 11시 이전에 퇴실 절차를 완료해야 합니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "gathering",
-   "ipa": "/ˈɡæðərɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "모임, 회합",
-     "ex": "The annual gathering of regional managers will be held at the downtown convention center.",
-     "tr": "지역 관리자들의 연례 모임은 시내 컨벤션 센터에서 열릴 예정이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "assembly",
-    "meeting"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "presenter",
-   "ipa": "/prɪˈzɛntər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "발표자",
-     "ex": "Each presenter will have fifteen minutes to summarize the quarterly results.",
-     "tr": "각 발표자는 분기 실적을 요약하는 데 15분씩 주어진다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "speaker"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "conflict",
-   "ipa": "/ˈkɑːnflɪkt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "충돌, 상충",
-     "ex": "There seems to be a scheduling conflict between the client meeting and the training session.",
-     "tr": "고객 미팅과 교육 세션 사이에 일정 충돌이 있는 것 같습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "clash",
-    "dispute"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "cancellation",
-   "ipa": "/ˌkænsəˈleɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "취소",
-     "ex": "Please notify the front desk at least 24 hours in advance to avoid a cancellation fee.",
-     "tr": "취소 수수료를 피하려면 최소 24시간 전에 프런트에 알려 주세요.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "specialty",
-   "ipa": "/ˈspɛʃəlti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "전문 분야, 특산품",
-     "ex": "The restaurant chain is known for its specialty in locally sourced seafood dishes.",
-     "tr": "그 레스토랑 체인은 현지산 해산물 요리 전문으로 유명하다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "specialization"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "quiet",
-   "ipa": "/ˈkwaɪət/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "조용한, 한산한",
-     "ex": "Business tends to be quiet during the first two weeks of January.",
-     "tr": "1월 첫 두 주 동안은 대체로 사업이 한산한 편이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "calm",
-    "still"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "leaning",
-   "ipa": "/ˈliːnɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "성향, 기울기",
-     "ex": "The committee showed a clear leaning toward adopting the more sustainable packaging option.",
-     "tr": "위원회는 더 지속 가능한 포장 옵션을 채택하는 쪽으로 뚜렷한 성향을 보였다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "tendency",
-    "inclination"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "expressed",
-   "ipa": "/ɪkˈsprɛst/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "표현된, 명시된",
-     "ex": "The client expressed concern about the delayed shipment during yesterdays call.",
-     "tr": "고객은 어제 통화에서 배송 지연에 대한 우려를 표명했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "stated",
-    "voiced"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "souvenir",
-   "ipa": "/ˌsuːvəˈnɪr/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "기념품",
-     "ex": "Conference attendees received a small souvenir bag at the registration desk.",
-     "tr": "컨퍼런스 참가자들은 등록 데스크에서 작은 기념품 가방을 받았다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "memento"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "searching",
-   "ipa": "/ˈsɜːrtʃɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "면밀한, 탐색하는",
-     "ex": "The auditors conducted a searching review of the companys financial statements.",
-     "tr": "감사관들은 회사의 재무제표에 대해 면밀한 검토를 실시했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "thorough",
-    "probing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "sitting",
-   "ipa": "/ˈsɪtɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "회의, 회차",
-     "ex": "The board will hold a special sitting to discuss the proposed merger.",
-     "tr": "이사회는 제안된 합병을 논의하기 위해 특별 회의를 열 예정이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "session"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "proof",
-   "ipa": "/pruːf/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "증거, 증빙",
-     "ex": "Employees must submit proof of purchase to be reimbursed for travel expenses.",
-     "tr": "직원들은 출장 경비를 환급받으려면 구매 증빙을 제출해야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "evidence"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "prospective",
-   "ipa": "/prəˈspɛktɪv/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "장래의, 유망한",
-     "ex": "The recruiter scheduled interviews with several prospective candidates for the marketing position.",
-     "tr": "채용 담당자는 마케팅 직무에 지원한 유망 후보자 몇 명과 면접 일정을 잡았다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "potential",
-    "future"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "image",
-   "ipa": "/ˈɪmɪdʒ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "이미지, 인상",
-     "ex": "The marketing team wants to update the companys image with a more modern logo.",
-     "tr": "마케팅팀은 더 현대적인 로고로 회사 이미지를 개선하고 싶어 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "reputation"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "orchestra",
-   "ipa": "/ˈɔːrkəstrə/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "오케스트라, 관현악단",
-     "ex": "The corporate gala will feature a live performance by the city orchestra.",
-     "tr": "이번 기업 갈라 행사에는 시립 오케스트라의 라이브 공연이 포함될 예정이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "painted",
-   "ipa": "/ˈpeɪntɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "페인트칠된",
-     "ex": "The freshly painted lobby walls gave the office a much brighter appearance.",
-     "tr": "새로 페인트칠된 로비 벽 덕분에 사무실이 훨씬 밝아 보였다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "disappointed",
-   "ipa": "/ˌdɪsəˈpɔɪntɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "실망한",
-     "ex": "Several customers were disappointed with the delay in the product launch.",
-     "tr": "몇몇 고객들은 제품 출시 지연에 실망했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "dissatisfied"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "lined",
-   "ipa": "/laɪnd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "줄지어 늘어선, 안감을 댄",
-     "ex": "The hallway leading to the executive offices was lined with framed award certificates.",
-     "tr": "임원실로 이어지는 복도에는 액자에 담긴 수상 인증서들이 줄지어 늘어서 있었다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "upload",
-   "ipa": "/ˈʌploʊd/",
+   "en": "disburse",
+   "ipa": "/dɪsˈbɜːrs/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "업로드하다",
-     "ex": "Please upload the signed contract to the shared folder by the end of the day.",
-     "tr": "서명된 계약서를 오늘까지 공유 폴더에 업로드해 주세요.",
+     "ko": "(자금을) 지급하다, 지출하다",
+     "ex": "The grant funds will be disbursed in installments contingent upon project milestones.",
+     "tr": "보조금은 프로젝트 이정표 달성을 조건으로 분할 지급될 것이다.",
      "src": ""
     }
    ],
-   "syn": [],
+   "syn": [
+    "pay out",
+    "allocate funds"
+   ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "boost",
-   "ipa": "/buːst/",
+   "en": "deficit",
+   "ipa": "/ˈdefɪsɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "적자, 결손",
+     "ex": "The company must address its widening trade deficit before pursuing further overseas expansion.",
+     "tr": "그 회사는 추가 해외 확장을 추진하기 전에 확대되는 무역 적자를 해결해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "shortfall",
+    "shortage"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "liability",
+   "ipa": "/ˌlaɪəˈbɪləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "부채, 책임",
+     "ex": "Unresolved litigation was listed as a contingent liability on the balance sheet.",
+     "tr": "해결되지 않은 소송은 대차대조표에 우발 부채로 기재되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "debt",
+    "obligation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "equity",
+   "ipa": "/ˈekwɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자기자본, 지분",
+     "ex": "Investors negotiated a larger equity stake in exchange for the capital infusion.",
+     "tr": "투자자들은 자본 투입의 대가로 더 큰 지분을 협상했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ownership stake",
+    "shareholding"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "dividend",
+   "ipa": "/ˈdɪvɪdend/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "배당금",
+     "ex": "The company suspended its quarterly dividend to preserve cash during the downturn.",
+     "tr": "그 회사는 경기 침체 동안 현금을 보존하기 위해 분기 배당금을 중단했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "payout",
+    "distribution"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "forecast",
+   "ipa": "/ˈfɔːrkæst/",
+   "pos": "v./",
+   "meanings": [
+    {
+     "pos": "v./",
+     "ko": "예측하다; 전망",
+     "ex": "Analysts forecast a moderate rebound in consumer spending during the second half of the year.",
+     "tr": "분석가들은 하반기 동안 소비 지출이 완만하게 반등할 것으로 예측한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "project",
+    "predict",
+    "estimate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "protocol",
+   "ipa": "/ˈproʊtəkɒl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "규정, 절차",
+     "ex": "Employees must follow the updated security protocol when accessing client data remotely.",
+     "tr": "직원들은 원격으로 고객 데이터에 접근할 때 업데이트된 보안 규정을 따라야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "procedure",
+    "guideline"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "scale up",
+   "ipa": "/skeɪl ʌp/",
+   "pos": "phr",
+   "meanings": [
+    {
+     "pos": "phr",
+     "ko": "규모를 확대하다",
+     "ex": "The manufacturer plans to scale up production once the new facility passes inspection.",
+     "tr": "그 제조업체는 새 시설이 검사를 통과하는 즉시 생산 규모를 확대할 계획이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "expand",
+    "ramp up"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "trajectory",
+   "ipa": "/trəˈdʒektəri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(성장 등의) 궤적, 추세",
+     "ex": "The company's revenue trajectory has remained consistently upward since the acquisition.",
+     "tr": "그 회사의 매출 추세는 인수 이후 꾸준히 상승세를 유지해 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "trend",
+    "path",
+    "course"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "endorse",
+   "ipa": "/ɪnˈdɔːrs/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "촉진하다, 끌어올리다",
-     "ex": "The new advertising campaign is expected to boost sales significantly this quarter.",
-     "tr": "새 광고 캠페인은 이번 분기 매출을 크게 끌어올릴 것으로 예상된다.",
+     "ko": "보증하다, 지지하다, 이서하다",
+     "ex": "The celebrity agreed to endorse the new line of skincare products in exchange for a substantial royalty fee.",
+     "tr": "그 유명인은 상당한 로열티 대가로 새 스킨케어 제품 라인을 보증하는 데 동의했다.",
      "src": ""
     }
    ],
    "syn": [
-    "increase",
-    "enhance"
+    "sanction",
+    "back",
+    "vouch for"
    ],
    "deriv": [],
    "roots": [],
@@ -784,53 +439,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "brick",
-   "ipa": "/brɪk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "벽돌",
-     "ex": "The contractor recommended using brick instead of siding for the new building exterior.",
-     "tr": "시공업체는 신축 건물 외관에 사이딩 대신 벽돌을 사용할 것을 권장했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "greet",
-   "ipa": "/ɡriːt/",
+   "en": "solicit",
+   "ipa": "/səˈlɪsɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "맞이하다, 환영하다",
-     "ex": "A receptionist will greet visitors at the front entrance and issue temporary badges.",
-     "tr": "안내 직원이 정문에서 방문객을 맞이하고 임시 출입증을 발급할 것이다.",
+     "ko": "요청하다, 간청하다, (기부·지지 등을) 구하다",
+     "ex": "The nonprofit organization is prohibited from soliciting donations without prior approval from the regulatory board.",
+     "tr": "그 비영리 단체는 규제 위원회의 사전 승인 없이는 기부를 요청하는 것이 금지되어 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "welcome"
+    "request",
+    "canvass",
+    "seek"
    ],
    "deriv": [],
    "roots": [],
@@ -838,54 +469,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "innovation",
-   "ipa": "/ˌɪnəˈveɪʃən/",
+   "en": "testimonial",
+   "ipa": "/ˌtestɪˈmoʊniəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "혁신",
-     "ex": "The award recognizes companies that demonstrate innovation in sustainable manufacturing.",
-     "tr": "이 상은 지속 가능한 제조 분야에서 혁신을 보여준 기업들을 표창한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 17,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "approaching",
-   "ipa": "/əˈproʊtʃɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "다가오는",
-     "ex": "Staff should prepare for the approaching audit by organizing all financial records.",
-     "tr": "직원들은 다가오는 감사에 대비해 모든 재무 기록을 정리해 두어야 한다.",
+     "ko": "추천사, 고객 후기",
+     "ex": "Marketing analysts noted that a genuine customer testimonial can boost conversion rates more effectively than any advertisement.",
+     "tr": "마케팅 분석가들은 진솔한 고객 추천사가 어떤 광고보다도 전환율을 효과적으로 높일 수 있다고 언급했다.",
      "src": ""
     }
    ],
    "syn": [
-    "upcoming",
-    "nearing"
+    "endorsement",
+    "reference",
+    "recommendation"
    ],
    "deriv": [],
    "roots": [],
@@ -893,28 +499,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "possibility",
-   "ipa": "/ˌpɑːsəˈbɪləti/",
-   "pos": "n",
+   "en": "demographic",
+   "ipa": "/ˌdeməˈɡræfɪk/",
+   "pos": "n./",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "가능성",
-     "ex": "Management is exploring the possibility of expanding operations into overseas markets.",
-     "tr": "경영진은 해외 시장으로 사업을 확장할 가능성을 검토하고 있다.",
+     "pos": "n./",
+     "ko": "인구통계학적 (집단), 인구통계의",
+     "ex": "The survey results were segmented by demographic in order to tailor the promotional campaign to each age group.",
+     "tr": "설문 결과는 각 연령대에 맞춰 홍보 캠페인을 조정하기 위해 인구통계학적 집단별로 분류되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "chance",
-    "likelihood"
+    "population segment",
+    "cohort",
+    "market segment"
    ],
    "deriv": [],
    "roots": [],
@@ -922,28 +529,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "aspect",
-   "ipa": "/ˈæspɛkt/",
+   "en": "incentive",
+   "ipa": "/ɪnˈsentɪv/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "측면, 양상",
-     "ex": "Customer service is one aspect of the business that the new manager wants to improve.",
-     "tr": "고객 서비스는 신임 관리자가 개선하고자 하는 사업의 한 측면이다.",
+     "ko": "장려책, 유인책",
+     "ex": "The sales department introduced a tiered incentive structure to motivate representatives to exceed their quarterly targets.",
+     "tr": "영업 부서는 담당자들이 분기별 목표를 초과 달성하도록 동기를 부여하기 위해 단계별 장려책 구조를 도입했다.",
      "src": ""
     }
    ],
    "syn": [
-    "facet",
-    "element"
+    "inducement",
+    "motivator",
+    "perk"
    ],
    "deriv": [],
    "roots": [],
@@ -951,60 +559,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "premium",
-   "ipa": "/ˈpriːmiəm/",
+   "en": "outreach",
+   "ipa": "/ˈaʊtriːtʃ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "할증료, 보험료",
-     "ex": "Customers who choose the premium plan will receive priority technical support.",
-     "tr": "프리미엄 요금제를 선택한 고객은 우선 기술 지원을 받게 된다.",
-     "src": ""
-    },
-    {
-     "pos": "adj",
-     "ko": "고급의"
-    }
-   ],
-   "syn": [
-    "surcharge"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 17,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "peak",
-   "ipa": "/piːk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "정점, 절정",
-     "ex": "Demand for the product typically reaches its peak during the holiday shopping season.",
-     "tr": "그 제품에 대한 수요는 보통 연말 쇼핑 시즌에 절정에 이른다.",
+     "ko": "홍보 활동, 지원 활동",
+     "ex": "The firm expanded its community outreach initiative to strengthen brand loyalty among underserved neighborhoods.",
+     "tr": "그 회사는 소외된 지역 사회에서 브랜드 충성도를 강화하기 위해 지역사회 홍보 활동을 확대했다.",
      "src": ""
     }
    ],
    "syn": [
-    "height",
-    "summit"
+    "engagement",
+    "canvassing",
+    "liaison"
    ],
    "deriv": [],
    "roots": [],
@@ -1012,80 +589,29 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "presence",
-   "ipa": "/ˈprɛzəns/",
+   "en": "retention",
+   "ipa": "/rɪˈtenʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "존재, 입지",
-     "ex": "The company hopes to strengthen its presence in the Asian market next year.",
-     "tr": "그 회사는 내년에 아시아 시장에서의 입지를 강화하고자 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 17,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "engine",
-   "ipa": "/ˈɛndʒɪn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "엔진, 동력원",
-     "ex": "The manufacturing plant redesigned the engine to reduce fuel consumption.",
-     "tr": "그 제조 공장은 연료 소비를 줄이기 위해 엔진을 재설계했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 17,
-    "exams": 11,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "surrounding",
-   "ipa": "/səˈraʊndɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "주변의",
-     "ex": "The new distribution center will create jobs for residents in the surrounding area.",
-     "tr": "새 물류 센터는 주변 지역 주민들에게 일자리를 창출할 것이다.",
+     "ko": "(고객·직원) 유지, 보유",
+     "ex": "Customer retention rates improved significantly after the company revamped its loyalty rewards program.",
+     "tr": "회사가 로열티 보상 프로그램을 개편한 후 고객 유지율이 크게 향상되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "nearby",
-    "adjacent"
+    "preservation",
+    "loyalty",
+    "continuity"
    ],
    "deriv": [],
    "roots": [],
@@ -1093,36 +619,564 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "sauce",
-   "ipa": "/sɔːs/",
+   "en": "conversion rate",
+   "ipa": "/kənˈvɜːrʒən reɪt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "소스",
-     "ex": "The catering company offers a variety of sauces to accompany the grilled entrees.",
-     "tr": "그 케이터링 업체는 구이 요리에 곁들일 다양한 소스를 제공한다.",
+     "ko": "전환율",
+     "ex": "By simplifying the checkout process, the marketing team raised the conversion rate on the landing page by twelve percent.",
+     "tr": "결제 절차를 간소화함으로써 마케팅 팀은 랜딩 페이지의 전환율을 12퍼센트 끌어올렸다.",
      "src": ""
     }
    ],
-   "syn": [],
+   "syn": [
+    "response rate",
+    "success ratio"
+   ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 16,
-    "exams": 11,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
+   }
+  },
+  {
+   "en": "brand equity",
+   "ipa": "/brænd ˈekwɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "브랜드 자산 가치",
+     "ex": "Years of consistent quality and advertising have built substantial brand equity for the beverage company.",
+     "tr": "수년간의 일관된 품질과 광고는 그 음료 회사에 상당한 브랜드 자산 가치를 쌓아 주었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "brand value",
+    "goodwill"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "cultivate",
+   "ipa": "/ˈkʌltɪveɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(관계·고객 등을) 육성하다, 함양하다",
+     "ex": "Account managers are expected to cultivate long-term relationships with key stakeholders rather than pursue one-off sales.",
+     "tr": "고객 관리자는 일회성 판매를 좇기보다 핵심 이해관계자들과 장기적인 관계를 육성해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "foster",
+    "nurture",
+    "develop"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "segmentation",
+   "ipa": "/ˌsegmenˈteɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(시장) 세분화",
+     "ex": "Effective market segmentation allowed the firm to design distinct promotional strategies for each customer tier.",
+     "tr": "효과적인 시장 세분화 덕분에 회사는 각 고객 등급에 맞는 별도의 홍보 전략을 설계할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "categorization",
+    "stratification"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "perception",
+   "ipa": "/pərˈsepʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인식, 지각",
+     "ex": "The rebranding campaign was designed to alter public perception of the company as an outdated manufacturer.",
+     "tr": "그 리브랜딩 캠페인은 회사에 대한 대중의 인식을 구식 제조업체라는 이미지에서 바꾸도록 설계되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "impression",
+    "view",
+    "image"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "disseminate",
+   "ipa": "/dɪˈsemɪneɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(정보 등을) 배포하다, 널리 퍼뜨리다",
+     "ex": "The public relations team disseminated a press release to major outlets ahead of the merger announcement.",
+     "tr": "홍보팀은 합병 발표에 앞서 주요 언론사에 보도자료를 배포했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "distribute",
+    "circulate",
+    "broadcast"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "clientele",
+   "ipa": "/ˌklaɪənˈtel/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "고객층",
+     "ex": "The boutique agency has cultivated an affluent clientele that values personalized investment advice.",
+     "tr": "그 부티크 에이전시는 맞춤형 투자 자문을 중시하는 부유한 고객층을 형성해 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "customer base",
+    "patronage"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "affiliate",
+   "ipa": "/əˈfɪlieɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "제휴사, 계열사; 제휴하다",
+     "ex": "The corporation signed an agreement to affiliate with a regional distributor to expand its market reach.",
+     "tr": "그 회사는 시장 도달 범위를 확대하기 위해 지역 유통업체와 제휴하는 계약을 체결했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "partner",
+    "associate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "differentiate",
+   "ipa": "/ˌdɪfəˈrenʃieɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "차별화하다",
+     "ex": "The agency recommended a bold visual identity to differentiate the brand from its numerous competitors.",
+     "tr": "그 에이전시는 수많은 경쟁사와 브랜드를 차별화하기 위해 대담한 시각적 아이덴티티를 권고했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "distinguish",
+    "set apart"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "circulation",
+   "ipa": "/ˌsɜːrkjəˈleɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(간행물 등의) 발행 부수, 유통",
+     "ex": "The trade magazine boasts a wide circulation among procurement executives across the manufacturing sector.",
+     "tr": "그 업계 잡지는 제조업 부문 조달 임원들 사이에서 폭넓은 발행 부수를 자랑한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "distribution",
+    "readership"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "franchisee",
+   "ipa": "/ˌfrænˌtʃaɪˈziː/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "가맹점주, 프랜차이즈 가입자",
+     "ex": "Each franchisee is required to adhere to the corporate marketing guidelines when running local promotions.",
+     "tr": "각 가맹점주는 지역 프로모션을 진행할 때 본사의 마케팅 지침을 준수해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "licensee",
+    "dealer"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "referral",
+   "ipa": "/rɪˈfɜːrəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "소개, 추천 (고객)",
+     "ex": "The agency offers a generous referral bonus to clients who recommend its services to other businesses.",
+     "tr": "그 에이전시는 자사 서비스를 다른 업체에 추천하는 고객에게 후한 소개 보너스를 제공한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "recommendation",
+    "introduction"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "commission",
+   "ipa": "/kəˈmɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수수료, 커미션",
+     "ex": "The brokerage revised its commission structure to reward agents who close high-value deals.",
+     "tr": "그 중개업체는 고가 거래를 성사시키는 중개인에게 보상하도록 수수료 구조를 개편했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "fee",
+    "cut"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "markup",
+   "ipa": "/ˈmɑːrkʌp/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "가격 인상폭, 마진",
+     "ex": "The wholesaler applies a modest markup to retain competitiveness while still ensuring profitability.",
+     "tr": "그 도매업체는 경쟁력을 유지하면서도 수익성을 확보하기 위해 적당한 가격 인상폭을 적용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "margin",
+    "price increase"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "clientage",
+   "ipa": "/ˈklaɪəntɪdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "고객층, 단골",
+     "ex": "The consulting firm's clientage spans multinational corporations seeking guidance on entering emerging markets.",
+     "tr": "그 컨설팅 회사의 고객층은 신흥 시장 진출 관련 자문을 구하는 다국적 기업들에 걸쳐 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "clientele",
+    "patrons"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "niche market",
+   "ipa": "/nɪtʃ ˈmɑːrkɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "틈새 시장",
+     "ex": "The startup identified a lucrative niche market for eco-friendly packaging among boutique cosmetics brands.",
+     "tr": "그 스타트업은 부티크 화장품 브랜드들 사이에서 친환경 포장에 대한 수익성 높은 틈새 시장을 발견했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "specialty market",
+    "target segment"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "outsell",
+   "ipa": "/ˌaʊtˈsel/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "~보다 많이 팔다, 매출에서 앞서다",
+     "ex": "The new smartphone model outsold its predecessor within the first month of its release.",
+     "tr": "새 스마트폰 모델은 출시 첫 달 만에 전작보다 많이 팔렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "outperform",
+    "surpass in sales"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "undercut",
+   "ipa": "/ˌʌndərˈkʌt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(가격을) 깎아서 경쟁하다",
+     "ex": "The discount chain consistently undercuts its rivals by offering lower prices on staple household items.",
+     "tr": "그 할인 체인점은 생활필수품에 더 낮은 가격을 제시함으로써 경쟁사들보다 지속적으로 가격을 낮춘다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "underprice",
+    "undersell"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "foothold",
+   "ipa": "/ˈfʊthoʊld/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "발판, 교두보",
+     "ex": "The joint venture allowed the manufacturer to gain a foothold in the competitive Southeast Asian market.",
+     "tr": "그 합작 투자 덕분에 제조업체는 경쟁이 치열한 동남아시아 시장에서 발판을 마련할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "toehold",
+    "entry point"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   }
  ]

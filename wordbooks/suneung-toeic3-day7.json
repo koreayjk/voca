@@ -2,28 +2,53 @@
  "book": "토익 고득점",
  "code": "TOEIC-3",
  "day": 7,
- "exampleNote": "예문은 TOEIC 기출 빈출어를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
+ "exampleNote": "예문은 TOEIC 900점대 고난도 어휘를 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "documentary",
-   "ipa": "/ˌdɑːkjəˈmentri/",
+   "en": "dispatch",
+   "ipa": "/dɪˈspætʃ/",
+   "pos": "v./",
+   "meanings": [
+    {
+     "pos": "v./",
+     "ko": "발송하다, 급파(하다)",
+     "ex": "Once payment has cleared, the warehouse is instructed to dispatch the order within one business day.",
+     "tr": "결제가 완료되면 창고는 영업일 기준 하루 이내에 주문 상품을 발송하도록 지시받는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "send off",
+    "ship out"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "outsourcing",
+   "ipa": "/ˈaʊtˌsɔrsɪŋ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "다큐멘터리, 기록물",
-     "ex": "The marketing team produced a short documentary highlighting the company's twenty-year history.",
-     "tr": "마케팅 팀은 회사의 20년 역사를 조명하는 짧은 다큐멘터리를 제작했다.",
+     "ko": "외주, 아웃소싱",
+     "ex": "Outsourcing warehouse operations to a third-party logistics provider allowed the firm to reduce fixed overhead costs significantly.",
+     "tr": "창고 운영을 제3자 물류 업체에 외주함으로써 회사는 고정 간접비를 크게 줄일 수 있었다.",
      "src": ""
-    },
-    {
-     "pos": "adj",
-     "ko": "기록의, 문서의"
     }
    ],
    "syn": [
-    "film",
-    "footage"
+    "subcontracting",
+    "offshoring"
    ],
    "deriv": [],
    "roots": [],
@@ -31,32 +56,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 19,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "sense",
-   "ipa": "/sens/",
+   "en": "depot",
+   "ipa": "/ˈdiːpoʊ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "감각, 의미, 분별",
-     "ex": "It makes sense to consolidate the two departments before the merger takes effect.",
-     "tr": "합병이 발효되기 전에 두 부서를 통합하는 것이 합리적이다.",
+     "ko": "물류 창고, 저장소",
+     "ex": "Trucks are loaded at the central depot before being routed to regional distribution centers overnight.",
+     "tr": "트럭은 중앙 물류 창고에서 적재된 후 야간에 지역 유통 센터로 배송된다.",
      "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "감지하다, 알아차리다"
     }
    ],
    "syn": [
-    "perception",
-    "judgment"
+    "storage facility",
+    "distribution depot"
    ],
    "deriv": [],
    "roots": [],
@@ -64,180 +85,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 19,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "pretty",
-   "ipa": "/ˈprɪti/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "꽤, 상당히",
-     "ex": "The quarterly earnings report was pretty impressive compared to last year's figures.",
-     "tr": "분기 실적 보고서는 작년 수치와 비교했을 때 꽤 인상적이었다.",
-     "src": ""
-    },
-    {
-     "pos": "adj",
-     "ko": "예쁜, 보기 좋은"
-    }
-   ],
-   "syn": [
-    "fairly",
-    "quite"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "heating",
-   "ipa": "/ˈhiːtɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "난방(장치)",
-     "ex": "Facilities management will inspect the heating system in the warehouse next week.",
-     "tr": "시설 관리팀은 다음 주에 창고의 난방 시스템을 점검할 예정이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "heat"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "spending",
-   "ipa": "/ˈspendɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "지출, 소비",
-     "ex": "The finance director asked all departments to reduce discretionary spending this quarter.",
-     "tr": "재무 이사는 모든 부서에 이번 분기 재량 지출을 줄이라고 요청했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "expenditure",
-    "outlay"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "attractive",
-   "ipa": "/əˈtræktɪv/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "매력적인, (조건이) 유리한",
-     "ex": "The supplier offered an attractive discount for orders placed before the end of the month.",
-     "tr": "공급업체는 월말 이전에 주문하면 유리한 할인을 제공했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "appealing",
-    "favorable"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "faster",
-   "ipa": "/ˈfæstər/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "더 빠른",
-     "ex": "The logistics team switched carriers to guarantee faster delivery to overseas clients.",
-     "tr": "물류팀은 해외 고객에게 더 빠른 배송을 보장하기 위해 운송업체를 변경했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "quicker",
-    "speedier"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 19,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "lock",
-   "ipa": "/lɑːk/",
+   "en": "palletize",
+   "ipa": "/ˈpælɪˌtaɪz/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "고정하다, 잠그다, 확정하다",
-     "ex": "We should lock in the current exchange rate before signing the international contract.",
-     "tr": "국제 계약에 서명하기 전에 현재 환율을 확정해 두어야 한다.",
+     "ko": "팔레트에 적재하다",
+     "ex": "All outgoing merchandise must be palletized and wrapped before being loaded onto the trailer for transport.",
+     "tr": "모든 출고 상품은 운송을 위해 트레일러에 적재되기 전에 팔레트에 쌓이고 포장되어야 한다.",
      "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "자물쇠"
     }
    ],
    "syn": [
-    "secure",
-    "fasten"
+    "pallet-load",
+    "crate"
    ],
    "deriv": [],
    "roots": [],
@@ -245,57 +114,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "talented",
-   "ipa": "/ˈtæləntɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "재능 있는, 유능한",
-     "ex": "HR is working to retain talented engineers amid fierce competition from rival firms.",
-     "tr": "인사팀은 경쟁사들의 치열한 인재 유치 경쟁 속에서 유능한 엔지니어들을 붙잡기 위해 노력하고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "skilled",
-    "gifted"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "opinion",
-   "ipa": "/əˈpɪnjən/",
+   "en": "customs broker",
+   "ipa": "/ˈkʌstəmz ˈbroʊkər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "의견, 견해",
-     "ex": "Management sought employee opinion before finalizing the new remote work policy.",
-     "tr": "경영진은 새로운 재택근무 정책을 확정하기 전에 직원들의 의견을 구했다.",
+     "ko": "관세사, 통관 중개인",
+     "ex": "The importer hired a customs broker to handle the complex documentation required for clearing electronics through the port.",
+     "tr": "수입업체는 항구를 통해 전자제품을 통관하는 데 필요한 복잡한 서류 작업을 처리하기 위해 관세사를 고용했다.",
      "src": ""
     }
    ],
    "syn": [
-    "view",
-    "viewpoint"
+    "clearance agent",
+    "import agent"
    ],
    "deriv": [],
    "roots": [],
@@ -303,28 +143,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "showing",
-   "ipa": "/ˈʃoʊɪŋ/",
+   "en": "tariff exemption",
+   "ipa": "/ˈtærɪf ɪgˈzɛmpʃən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "성과, 실적, 상영",
-     "ex": "The sales team's strong showing this quarter earned them a company-wide commendation.",
-     "tr": "이번 분기 영업팀의 뛰어난 실적은 전사적인 표창을 받게 했다.",
+     "ko": "관세 면제",
+     "ex": "Manufacturers importing components solely for reassembly and re-export may qualify for a tariff exemption under the trade agreement.",
+     "tr": "재조립 및 재수출 목적으로만 부품을 수입하는 제조업체는 무역 협정에 따라 관세 면제 대상이 될 수 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "performance",
-    "display"
+    "duty waiver",
+    "customs exemption"
    ],
    "deriv": [],
    "roots": [],
@@ -332,28 +172,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "talent",
-   "ipa": "/ˈtælənt/",
+   "en": "freight surcharge",
+   "ipa": "/freɪt ˈsɜrˌtʃɑrdʒ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "인재, 재능",
-     "ex": "The company launched an internship program to attract top talent from local universities.",
-     "tr": "회사는 지역 대학의 우수 인재를 유치하기 위해 인턴십 프로그램을 시작했다.",
+     "ko": "운임 할증료",
+     "ex": "An unexpected freight surcharge was added to the invoice due to a sudden spike in fuel prices.",
+     "tr": "연료 가격의 급등으로 인해 예상치 못한 운임 할증료가 송장에 추가되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "skill",
-    "ability"
+    "fuel surcharge",
+    "additional freight fee"
    ],
    "deriv": [],
    "roots": [],
@@ -361,64 +201,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "closer",
-   "ipa": "/ˈkloʊzər/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "더 가까이, 더 밀접하게",
-     "ex": "Executives are working closer with regional offices to align on next year's budget.",
-     "tr": "경영진은 내년 예산을 조율하기 위해 지역 사무소들과 더 긴밀히 협력하고 있다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "마무리 짓는 사람, 거래 성사자"
-    }
-   ],
-   "syn": [
-    "nearer"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "outline",
-   "ipa": "/ˈaʊtlaɪn/",
+   "en": "replenishment cycle",
+   "ipa": "/rɪˈplɛnɪʃmənt ˈsaɪkəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "개요, 윤곽",
-     "ex": "The consultant submitted a detailed outline of the proposed restructuring plan.",
-     "tr": "컨설턴트는 제안된 구조조정 계획의 상세한 개요를 제출했다.",
+     "ko": "보충 주기",
+     "ex": "The retailer shortened its replenishment cycle to weekly deliveries in order to minimize the risk of stockouts.",
+     "tr": "소매업체는 재고 부족 위험을 최소화하기 위해 보충 주기를 주간 배송으로 단축했다.",
      "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "개요를 서술하다"
     }
    ],
    "syn": [
-    "summary",
-    "draft"
+    "restocking cycle",
+    "reorder cycle"
    ],
    "deriv": [],
    "roots": [],
@@ -426,54 +230,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "birthday",
-   "ipa": "/ˈbɜːrθdeɪ/",
+   "en": "stockout",
+   "ipa": "/ˈstɑkˌaʊt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "생일",
-     "ex": "The office organized a small celebration for the CEO's birthday during the lunch break.",
-     "tr": "사무실은 점심시간에 최고경영자의 생일을 위한 작은 축하 행사를 마련했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 18,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "beside",
-   "ipa": "/bɪˈsaɪd/",
-   "pos": "prep",
-   "meanings": [
-    {
-     "pos": "prep",
-     "ko": "~옆에",
-     "ex": "The new printer was installed beside the reception desk on the third floor.",
-     "tr": "새 프린터는 3층 안내 데스크 옆에 설치되었다.",
+     "ko": "재고 소진, 품절",
+     "ex": "A sudden surge in demand led to a stockout of the flagship product just before the holiday shopping season began.",
+     "tr": "수요의 급격한 증가로 인해 성수기 쇼핑 시즌이 시작되기 직전에 주력 제품의 재고 소진이 발생했다.",
      "src": ""
     }
    ],
    "syn": [
-    "next to",
-    "alongside"
+    "out-of-stock situation",
+    "shortage"
    ],
    "deriv": [],
    "roots": [],
@@ -481,28 +259,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 18,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "employer",
-   "ipa": "/ɪmˈplɔɪər/",
+   "en": "third-party logistics",
+   "ipa": "/θɜrd ˈpɑrti loʊˈdʒɪstɪks/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "고용주",
-     "ex": "The survey found that most employees ranked flexible hours as a top priority for their employer to offer.",
-     "tr": "설문조사에 따르면 대다수 직원들은 유연근무제를 고용주가 제공해야 할 최우선 사항으로 꼽았다.",
+     "ko": "제3자 물류(3PL)",
+     "ex": "The company outsourced warehousing and distribution to a third-party logistics provider to focus on core manufacturing operations.",
+     "tr": "그 회사는 핵심 제조 업무에 집중하기 위해 창고 및 유통을 제3자 물류 업체에 위탁했다.",
      "src": ""
     }
    ],
    "syn": [
-    "company",
-    "firm"
+    "3PL provider",
+    "logistics outsourcing"
    ],
    "deriv": [],
    "roots": [],
@@ -510,28 +288,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "valuable",
-   "ipa": "/ˈvæljuəbl/",
-   "pos": "adj",
+   "en": "manifest",
+   "ipa": "/ˈmænɪˌfɛst/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "귀중한, 가치 있는",
-     "ex": "The consultant provided valuable insight into streamlining the production process.",
-     "tr": "컨설턴트는 생산 공정을 간소화하는 데 귀중한 통찰을 제공했다.",
+     "pos": "n",
+     "ko": "적하목록, 화물 명세서",
+     "ex": "Customs officials cross-checked the cargo manifest against the physical contents of each container before granting clearance.",
+     "tr": "세관 공무원들은 통관을 허가하기 전에 화물 명세서를 각 컨테이너의 실제 내용물과 대조 확인했다.",
      "src": ""
     }
    ],
    "syn": [
-    "precious",
-    "invaluable"
+    "cargo list",
+    "shipping manifest"
    ],
    "deriv": [],
    "roots": [],
@@ -539,27 +317,202 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "eke",
-   "ipa": "/iːk/",
+   "en": "freight forwarding",
+   "ipa": "/freɪt ˈfɔrwərdɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "화물 운송 주선업",
+     "ex": "The company specializes in freight forwarding for perishable goods requiring temperature-controlled transport across international borders.",
+     "tr": "그 회사는 국경을 넘는 온도 조절 운송이 필요한 부패성 물품의 화물 운송 주선을 전문으로 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "shipping brokerage",
+    "cargo forwarding"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "embargo",
+   "ipa": "/ɪmˈbɑrɡoʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "금수 조치, 수출입 금지",
+     "ex": "The trade embargo on certain raw materials forced the manufacturer to seek alternative suppliers in neighboring countries.",
+     "tr": "특정 원자재에 대한 무역 금수 조치로 인해 제조업체는 인접 국가에서 대체 공급업체를 찾아야 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "trade ban",
+    "import restriction"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "quota",
+   "ipa": "/ˈkwoʊtə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "할당량, 쿼터",
+     "ex": "The import quota on textiles was tightened, limiting the volume that domestic retailers could bring in each quarter.",
+     "tr": "섬유 제품에 대한 수입 쿼터가 강화되어 국내 소매업체가 분기마다 들여올 수 있는 물량이 제한되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "allotment",
+    "allocation limit"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "expiration date",
+   "ipa": "/ˌɛkspəˈreɪʃən deɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "유효기한, 만료일",
+     "ex": "Warehouse personnel are trained to rotate stock so that items nearing their expiration date are shipped first.",
+     "tr": "창고 직원들은 유효기한이 임박한 품목이 먼저 출고되도록 재고를 순환시키는 교육을 받는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "expiry date",
+    "shelf-life limit"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "cross-docking",
+   "ipa": "/krɔs ˈdɑkɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "크로스도킹, 환적 물류",
+     "ex": "Cross-docking allows incoming shipments to be transferred directly onto outbound trucks, eliminating the need for long-term storage.",
+     "tr": "크로스도킹을 통해 입고되는 화물을 바로 출고 트럭으로 옮길 수 있어 장기 보관의 필요성이 없어진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "transloading",
+    "direct transfer"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "procurement cycle",
+   "ipa": "/proʊˈkjʊrmənt ˈsaɪkəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "조달 주기",
+     "ex": "Streamlining the procurement cycle reduced the average time between requisition and delivery by nearly forty percent.",
+     "tr": "조달 주기를 간소화함으로써 청구부터 납품까지의 평균 소요 시간이 거의 40퍼센트 단축되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "purchasing cycle",
+    "sourcing cycle"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "reconcile",
+   "ipa": "/ˈrɛkənˌsaɪl/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "겨우 벌다, 근근이 얻어내다 (eke out)",
-     "ex": "Despite the sluggish market, the retailer managed to eke out a small profit this quarter.",
-     "tr": "부진한 시장 상황에도 불구하고 그 소매업체는 이번 분기 근근이 소폭의 이익을 냈다.",
+     "ko": "(장부 등을) 대조하다, 조정하다",
+     "ex": "The accounting team must reconcile the shipping invoices with the purchase orders before releasing payment to the vendor.",
+     "tr": "회계팀은 공급업체에 대금을 지급하기 전에 배송 송장과 구매 주문서를 대조해야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "scrape by"
+    "match",
+    "align records"
    ],
    "deriv": [],
    "roots": [],
@@ -567,181 +520,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 17,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "seek",
-   "ipa": "/siːk/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "구하다, 찾다, 추구하다",
-     "ex": "The company is seeking approval from regulators before launching the new product line.",
-     "tr": "그 회사는 신제품 라인을 출시하기 전에 규제 당국의 승인을 구하고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "pursue",
-    "look for"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 17,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "rapid",
-   "ipa": "/ˈræpɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "급속한, 빠른",
-     "ex": "The startup experienced rapid growth after securing its second round of funding.",
-     "tr": "그 스타트업은 2차 투자 유치 이후 급속한 성장을 경험했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "swift",
-    "fast"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 17,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "single",
-   "ipa": "/ˈsɪŋɡl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "단 하나의, 단일의",
-     "ex": "Every invoice must reference a single purchase order number for tracking purposes.",
-     "tr": "추적을 위해 모든 청구서에는 단일한 구매 주문 번호가 기재되어야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "sole",
-    "individual"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 16,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "profitable",
-   "ipa": "/ˈprɑːfɪtəbl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "수익성 있는",
-     "ex": "The overseas division became profitable within two years of its launch.",
-     "tr": "해외 사업부는 출범 2년 만에 수익성을 갖추게 되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "lucrative",
-    "profitable"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 16,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "gain",
-   "ipa": "/ɡeɪn/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "얻다, 획득하다",
-     "ex": "The company gained a competitive edge by adopting automated inventory management.",
-     "tr": "그 회사는 자동화된 재고 관리를 도입하여 경쟁 우위를 얻었다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "이익, 증가"
-    }
-   ],
-   "syn": [
-    "acquire",
-    "obtain"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 16,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "transition",
-   "ipa": "/trænˈzɪʃn/",
+   "en": "forwarding agent",
+   "ipa": "/ˈfɔrwərdɪŋ ˈeɪdʒənt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "전환, 이행",
-     "ex": "The IT department is overseeing a smooth transition to the new database system.",
-     "tr": "IT 부서는 새로운 데이터베이스 시스템으로의 원활한 전환을 감독하고 있다.",
+     "ko": "운송 대리인",
+     "ex": "The forwarding agent negotiated favorable freight rates by consolidating shipments from multiple exporters into a single vessel.",
+     "tr": "운송 대리인은 여러 수출업체의 화물을 하나의 선박으로 통합함으로써 유리한 운임을 협상했다.",
      "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "전환하다, 이행하다"
     }
    ],
    "syn": [
-    "shift",
-    "changeover"
+    "shipping agent",
+    "freight agent"
    ],
    "deriv": [],
    "roots": [],
@@ -749,115 +549,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 16,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "rising",
-   "ipa": "/ˈraɪzɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "상승하는, 증가하는",
-     "ex": "Rising material costs forced the manufacturer to adjust its pricing strategy.",
-     "tr": "상승하는 원자재 비용은 제조업체가 가격 전략을 조정하도록 만들었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "increasing",
-    "growing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 16,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "shed",
-   "ipa": "/ʃed/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "감축하다, 없애다",
-     "ex": "The corporation announced plans to shed non-core business units to focus on its main product.",
-     "tr": "그 기업은 핵심 사업에 집중하기 위해 비핵심 사업부를 정리하겠다는 계획을 발표했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "eliminate",
-    "cut"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 16,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "earn",
-   "ipa": "/ɜːrn/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "벌다, 얻다",
-     "ex": "The consulting firm earned a solid reputation for delivering projects ahead of schedule.",
-     "tr": "그 컨설팅 회사는 일정보다 앞서 프로젝트를 완수하여 확고한 명성을 얻었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "gain",
-    "make"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 16,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "popularity",
-   "ipa": "/ˌpɑːpjəˈlærəti/",
+   "en": "provisional invoice",
+   "ipa": "/prəˈvɪʒənəl ˈɪnvɔɪs/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "인기",
-     "ex": "The product's popularity surged after it was featured in a national advertising campaign.",
-     "tr": "그 제품의 인기는 전국 광고 캠페인에 소개된 이후 급증했다.",
+     "ko": "가송장, 임시 청구서",
+     "ex": "A provisional invoice was issued pending the final quantity confirmation upon arrival at the destination port.",
+     "tr": "목적항 도착 시 최종 수량이 확정될 때까지 가송장이 발행되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "fame",
-    "acclaim"
+    "preliminary invoice",
+    "interim bill"
    ],
    "deriv": [],
    "roots": [],
@@ -865,28 +578,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 15,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "teaching",
-   "ipa": "/ˈtiːtʃɪŋ/",
+   "en": "logistical bottleneck",
+   "ipa": "/loʊˈdʒɪstɪkəl ˈbɑtəlˌnɛk/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "교육, 강의",
-     "ex": "The training coordinator revised the teaching materials used in the onboarding program.",
-     "tr": "교육 담당자는 신입사원 오리엔테이션 프로그램에서 사용하는 교육 자료를 개정했다.",
+     "ko": "물류 병목 현상",
+     "ex": "Congestion at the port created a logistical bottleneck that delayed the delivery of components to the assembly plant.",
+     "tr": "항구의 혼잡으로 인한 물류 병목 현상이 조립 공장으로의 부품 배송을 지연시켰다.",
      "src": ""
     }
    ],
    "syn": [
-    "instruction",
-    "training"
+    "supply-chain congestion",
+    "distribution holdup"
    ],
    "deriv": [],
    "roots": [],
@@ -894,27 +607,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 15,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "dollar",
-   "ipa": "/ˈdɑːlər/",
+   "en": "freight liability",
+   "ipa": "/freɪt ˌlaɪəˈbɪləti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "달러",
-     "ex": "The contract specifies that all payments will be made in U.S. dollars.",
-     "tr": "계약서에는 모든 대금 지급이 미국 달러로 이루어진다고 명시되어 있다.",
+     "ko": "운송 책임(배상 책임)",
+     "ex": "The carrier's freight liability is limited to the declared value of the goods stated on the bill of lading.",
+     "tr": "운송업체의 운송 책임은 선하증권에 명시된 물품의 신고 가치로 제한된다.",
      "src": ""
     }
    ],
    "syn": [
-    "currency"
+    "carrier liability",
+    "shipping liability"
    ],
    "deriv": [],
    "roots": [],
@@ -922,28 +636,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 15,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "listing",
-   "ipa": "/ˈlɪstɪŋ/",
+   "en": "nonconforming goods",
+   "ipa": "/ˌnɑnkənˈfɔrmɪŋ gʊdz/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "목록, 등록, 상장",
-     "ex": "The job listing attracted over two hundred applicants within the first day.",
-     "tr": "그 채용 공고는 첫날에만 200명이 넘는 지원자를 끌어모았다.",
+     "ko": "규격 미달 물품, 계약 불이행 물품",
+     "ex": "The buyer reserved the right to reject any nonconforming goods that failed to meet the specifications outlined in the contract.",
+     "tr": "구매자는 계약서에 명시된 규격을 충족하지 못하는 규격 미달 물품을 거부할 권리를 유보했다.",
      "src": ""
     }
    ],
    "syn": [
-    "list",
-    "entry"
+    "defective goods",
+    "substandard merchandise"
    ],
    "deriv": [],
    "roots": [],
@@ -951,90 +665,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 14,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "exceptional",
-   "ipa": "/ɪkˈsepʃənl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "탁월한, 예외적인",
-     "ex": "The client praised the team for its exceptional customer service during the crisis.",
-     "tr": "고객은 위기 상황에서 보여준 팀의 탁월한 고객 서비스를 칭찬했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "outstanding",
-    "remarkable"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 13,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "lean",
-   "ipa": "/liːn/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "군더더기 없는, 효율적인",
-     "ex": "The factory adopted lean manufacturing techniques to reduce waste and cut costs.",
-     "tr": "그 공장은 낭비를 줄이고 비용을 절감하기 위해 린 제조 기법을 도입했다.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "기울다, 의존하다"
-    }
-   ],
-   "syn": [
-    "efficient",
-    "streamlined"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "900",
-   "exam": {
-    "tested": true,
-    "count": 13,
-    "exams": 12,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "difficulty",
-   "ipa": "/ˈdɪfɪkəlti/",
+   "en": "pro forma invoice",
+   "ipa": "/proʊ ˈfɔrmə ˈɪnvɔɪs/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "어려움, 곤란",
-     "ex": "The vendor reported difficulty in meeting the revised delivery deadline.",
-     "tr": "공급업체는 수정된 배송 마감일을 맞추는 데 어려움이 있다고 보고했다.",
+     "ko": "견적 송장",
+     "ex": "The exporter sent a pro forma invoice so the importer could arrange financing before the shipment was actually dispatched.",
+     "tr": "수출업체는 화물이 실제로 발송되기 전에 수입업체가 자금을 마련할 수 있도록 견적 송장을 보냈다.",
      "src": ""
     }
    ],
    "syn": [
-    "trouble",
-    "hardship"
+    "preliminary invoice",
+    "quotation invoice"
    ],
    "deriv": [],
    "roots": [],
@@ -1042,28 +694,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "greatly",
-   "ipa": "/ˈɡreɪtli/",
-   "pos": "adv",
+   "en": "safety stock",
+   "ipa": "/ˈseɪfti stɑk/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adv",
-     "ko": "대단히, 크게",
-     "ex": "Customer satisfaction improved greatly after the new support hotline was launched.",
-     "tr": "새로운 고객지원 핫라인이 개설된 이후 고객 만족도가 대단히 향상되었다.",
+     "pos": "n",
+     "ko": "안전 재고",
+     "ex": "Maintaining adequate safety stock helped the distributor absorb the sudden delay caused by the supplier's factory shutdown.",
+     "tr": "충분한 안전 재고를 유지한 덕분에 유통업체는 공급업체 공장 가동 중단으로 인한 갑작스러운 지연을 흡수할 수 있었다.",
      "src": ""
     }
    ],
    "syn": [
-    "considerably",
-    "significantly"
+    "buffer stock",
+    "reserve inventory"
    ],
    "deriv": [],
    "roots": [],
@@ -1071,28 +723,28 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "whet",
-   "ipa": "/wet/",
-   "pos": "v",
+   "en": "freight consolidator",
+   "ipa": "/freɪt kənˈsɑlɪˌdeɪtər/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "돋우다, 자극하다 (whet one's appetite)",
-     "ex": "The preview of the new product line whetted investors' appetite ahead of the launch.",
-     "tr": "신제품 라인의 사전 공개는 출시를 앞두고 투자자들의 관심을 돋우었다.",
+     "pos": "n",
+     "ko": "화물 혼재업자",
+     "ex": "A freight consolidator combined shipments from several small exporters to secure a lower per-unit shipping rate.",
+     "tr": "화물 혼재업자는 여러 소규모 수출업체의 화물을 결합하여 단위당 더 낮은 운송 요율을 확보했다.",
      "src": ""
     }
    ],
    "syn": [
-    "stimulate",
-    "sharpen"
+    "cargo consolidator",
+    "shipment combiner"
    ],
    "deriv": [],
    "roots": [],
@@ -1100,10 +752,416 @@
    "level": "900",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
+   }
+  },
+  {
+   "en": "import duty",
+   "ipa": "/ˈɪmˌpɔrt ˈduːti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수입 관세",
+     "ex": "The company factored the import duty into its pricing strategy to avoid eroding profit margins on overseas sales.",
+     "tr": "그 회사는 해외 판매에서 이익률이 잠식되는 것을 막기 위해 가격 전략에 수입 관세를 반영했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "import tariff",
+    "customs duty"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "container yard",
+   "ipa": "/kənˈteɪnər jɑrd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "컨테이너 야적장",
+     "ex": "Empty containers were left idle at the container yard for weeks due to a shortage of available truck drivers.",
+     "tr": "이용 가능한 트럭 운전사 부족으로 인해 빈 컨테이너들이 몇 주 동안 컨테이너 야적장에 방치되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "container depot",
+    "storage yard"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "contingency plan",
+   "ipa": "/kənˈtɪndʒənsi plæn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "비상 계획",
+     "ex": "The logistics director developed a contingency plan to reroute shipments in the event of a port worker strike.",
+     "tr": "물류 이사는 항만 노동자 파업 시 화물을 우회 경로로 보낼 수 있는 비상 계획을 마련했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "backup plan",
+    "fallback strategy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vendor compliance",
+   "ipa": "/ˈvɛndər kəmˈplaɪəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공급업체 준수(사항)",
+     "ex": "Failure to meet vendor compliance standards, including proper labeling and packaging, can result in shipment rejection at the distribution center.",
+     "tr": "적절한 라벨링 및 포장을 포함한 공급업체 준수 기준을 충족하지 못하면 유통 센터에서 화물 인수가 거부될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supplier compliance",
+    "vendor standards"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "turnaround time",
+   "ipa": "/ˈtɜrnəˌraʊnd taɪm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "처리 소요 시간, 회전 시간",
+     "ex": "The warehouse reduced its order turnaround time by implementing an automated picking and packing system.",
+     "tr": "그 창고는 자동화된 피킹 및 포장 시스템을 도입해 주문 처리 소요 시간을 단축했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "processing time",
+    "cycle time"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "letter of credit",
+   "ipa": "/ˈlɛtər əv ˈkrɛdɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신용장",
+     "ex": "The exporter refused to ship the goods until an irrevocable letter of credit was issued by the buyer's bank.",
+     "tr": "수출업체는 구매자의 은행이 취소 불능 신용장을 발행할 때까지 물품 선적을 거부했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "L/C",
+    "bank guarantee document"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "freight insurance",
+   "ipa": "/freɪt ɪnˈʃʊrəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "운송 보험, 적하 보험",
+     "ex": "Purchasing freight insurance protected the exporter against losses resulting from damage incurred during transoceanic transit.",
+     "tr": "운송 보험에 가입함으로써 수출업체는 대양 횡단 운송 중 발생하는 손상으로 인한 손실로부터 보호받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cargo insurance",
+    "marine insurance"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "dock scheduling",
+   "ipa": "/dɑk ˈskɛdʒʊlɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "입출고 일정 관리",
+     "ex": "Poor dock scheduling caused trucks to idle for hours waiting to load or unload at the overcrowded warehouse.",
+     "tr": "부실한 입출고 일정 관리로 인해 트럭들이 혼잡한 창고에서 적재 또는 하역을 기다리며 몇 시간씩 대기했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "appointment scheduling",
+    "loading dock coordination"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "procurement officer",
+   "ipa": "/proʊˈkjʊrmənt ˈɔfɪsər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "조달 담당자",
+     "ex": "The procurement officer was authorized to negotiate directly with suppliers on pricing for contracts under a certain threshold.",
+     "tr": "조달 담당자는 일정 기준 이하 계약에 대해 공급업체와 직접 가격 협상을 할 권한을 부여받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "purchasing officer",
+    "buyer"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "shipment tracking",
+   "ipa": "/ˈʃɪpmənt ˈtrækɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "화물 추적",
+     "ex": "Real-time shipment tracking allowed the client to monitor the exact location of the consignment throughout its journey.",
+     "tr": "실시간 화물 추적을 통해 고객은 위탁 화물의 이동 경로 전체에서 정확한 위치를 확인할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cargo tracking",
+    "order tracking"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "reorder point",
+   "ipa": "/riˈɔrdər pɔɪnt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "재주문 시점",
+     "ex": "The inventory system automatically generates a purchase order once stock levels fall below the predetermined reorder point.",
+     "tr": "재고 수준이 사전에 정해진 재주문 시점 아래로 떨어지면 재고 시스템이 자동으로 구매 주문을 생성한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reorder threshold",
+    "trigger level"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "freight rate",
+   "ipa": "/freɪt reɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "운임률",
+     "ex": "Fluctuating fuel prices make it difficult for shippers to negotiate a fixed freight rate over an extended contract period.",
+     "tr": "변동하는 유가로 인해 화주들은 장기 계약 기간에 걸친 고정 운임률을 협상하기 어렵다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "shipping rate",
+    "carriage rate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "customs declaration",
+   "ipa": "/ˈkʌstəmz ˌdɛkləˈreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "세관 신고(서)",
+     "ex": "An inaccurate customs declaration can trigger a lengthy inspection and potentially result in fines for the importer.",
+     "tr": "부정확한 세관 신고는 장기간의 검사를 유발할 수 있고 수입업체에 벌금이 부과될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "import declaration",
+    "customs form"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "expiring contract",
+   "ipa": "/ɪkˈspaɪrɪŋ ˈkɑntrækt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "만료 예정 계약",
+     "ex": "Procurement must decide whether to renew or rebid the expiring contract with the current freight carrier well before the deadline.",
+     "tr": "조달 부서는 마감 시한 훨씬 전에 현재 운송업체와의 만료 예정 계약을 갱신할지 재입찰할지 결정해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "lapsing agreement",
+    "contract renewal deadline"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "900",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   }
  ]
