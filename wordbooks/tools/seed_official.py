@@ -57,6 +57,7 @@ def map_word(w):
         **({"_lang": "es"} if os.environ.get("BOOK_PREFIX", "").startswith("esp") else {}),
         "deriv": w.get("deriv", []), "etym": w.get("etymHint", ""),
         "roots": w.get("roots", []), "exam": w.get("exam"),
+        "colloc": w.get("colloc", []), "tip": w.get("tip", ""),   # 토익: 빈출표현·시험팁
     }
     return {"en": w["en"], "ipa": w.get("ipa", ""), "base": base, "ctx": ctx,
             "sentence": m0.get("ex", ""), "level": w.get("level", ""), "analysis": analysis}
