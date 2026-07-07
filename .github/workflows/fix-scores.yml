@@ -1,0 +1,29 @@
+name: 명예의 전당 점수 정정 (첫 암기 점수 제거)
+
+# 각 학생의 perfect_reviews 에서 '첫 암기로 받은 점수'만 차감(실제 복습 점수는 보존).
+# apply 체크 안 하면 DRY-RUN(미리보기)만. ⚠️ apply는 한 번만 실행할 것.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: '실제 반영(체크 안 하면 미리보기만)'
+        type: boolean
+        default: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wordbooks
+    env:
+      SB_URL: https://ziatqkjlafucqtwshhla.supabase.co
+      SB_SERVICE_KEY: ${{ secrets.SB_SERVICE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 점수 정정
+        run: python3 tools/fix_review_scores.py ${{ inputs.apply && '--go' || '' }}
