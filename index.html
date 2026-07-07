@@ -4524,7 +4524,7 @@ function _cardBackBody(w){
 let _curAudio = null;
 function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'); }
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
-function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); return s?(_AUDIO_BASE+'/'+kind+'/'+s+'.mp3'):''; }
+function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); if(!s) return ''; const ns=(w.analysis._lang==='es')?'es/':''; return _AUDIO_BASE+'/'+ns+kind+'/'+s+'.mp3'; }
 let _aWatch = null; // mp3 재생 완료 감지 워치독(onended 누락 대비)
 let _sharedAudio = null; // ⚠️ iOS: 제스처로 한 번 잠금해제된 엘리먼트만 이후 프로그램적 재생 허용 → 단일 엘리먼트 재사용
 function _getAudioEl(){ if(!_sharedAudio){ _sharedAudio = new Audio(); _sharedAudio.preload='auto'; } return _sharedAudio; }

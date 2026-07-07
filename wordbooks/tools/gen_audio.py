@@ -46,19 +46,30 @@ def safe(en):
     s = re.sub(r"[^a-z0-9 ]", "", (en or "").lower())
     return re.sub(r"\s+", "-", s.strip())
 
+# --words <file>: safe명 JSON 배열에 있는 단어만 재생성(--force 권장) — 스페인어 덮어쓰기 복구용
+WORDS_FILTER = None
+for i, a in enumerate(sys.argv):
+    if a == "--words" and i+1 < len(sys.argv):
+        WORDS_FILTER = set(json.load(open(sys.argv[i+1])))
+
 def collect():
     import glob
     items, seen = [], set()
     pat = f"suneung-{BOOK}-day*.json" if BOOK else "suneung-*-day*.json"
     files = sorted(f for f in glob.glob(str(ROOT/pat)) if ".scaffold." not in f)
     for f in files:                       # 모든 책(기본+핵심+고난도+…) 단어 포함, 중복 제거
+        is_es = "-esp" in Path(f).name    # 스페인어 책 → 언어 네임스페이스 분리(영어 음원 덮어쓰기 방지)
+        base = AUD/"es" if is_es else AUD
+        if WORDS_FILTER is not None and is_es: continue  # 단어복구 모드는 영어만
         for w in json.load(open(f))["words"]:
             sf = safe(w["en"])
-            if sf in seen: continue
-            seen.add(sf)
-            items.append(("w", w["en"], AUD/"w"/f"{sf}.mp3"))
+            key = ("es" if is_es else "en", sf)
+            if key in seen: continue
+            if WORDS_FILTER is not None and sf not in WORDS_FILTER: continue
+            seen.add(key)
+            items.append(("w", w["en"], base/"w"/f"{sf}.mp3"))
             ex = (w["meanings"][0].get("ex") or "").strip()
-            if ex: items.append(("s", ex, AUD/"s"/f"{sf}.mp3"))
+            if ex: items.append(("s", ex, base/"s"/f"{sf}.mp3"))
     return items
 
 def tts(text):

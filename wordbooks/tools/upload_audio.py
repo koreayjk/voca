@@ -50,7 +50,7 @@ def ensure_bucket():
     else: print(f"버킷 생성 응답 {st}: {body[:160]}")
 
 def main():
-    files = sorted(AUD.glob("*/*.mp3")) if AUD.exists() else []
+    files = sorted(AUD.glob("**/*.mp3")) if AUD.exists() else []   # es/ 등 언어 하위폴더 포함
     print(f"[plan] 로컬 mp3 {len(files)}개 · 대상 버킷='{BUCKET}'")
     print(f"  SB_URL={'OK' if SB_URL else 'MISSING'}  KEY={'OK' if KEY else 'MISSING'}")
     if not GO:
@@ -60,7 +60,7 @@ def main():
     ensure_bucket()
     ok = fail = 0
     for f in files:
-        rel = f"{f.parent.name}/{f.name}"          # w/enhance.mp3
+        rel = str(f.relative_to(AUD))              # w/enhance.mp3, es/w/hola.mp3
         st, body = _req("POST", f"/storage/v1/object/{BUCKET}/{rel}",
                         data=f.read_bytes(), ctype="audio/mpeg",
                         extra={"x-upsert": "true", "cache-control": "31536000"})

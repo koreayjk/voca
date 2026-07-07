@@ -1,0 +1,30 @@
+name: 음원 복구 (스페인어 덮어쓰기 수정)
+
+# 스페인어 발행 때 철자가 같은 영어 단어(hotel, taxi 등 31개)의 음원이
+# 스페인어 음성으로 덮어써진 것을 영어 음성으로 재생성·업로드.
+# 목록: wordbooks/audio-fix-words.json
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wordbooks
+    env:
+      SB_URL: https://ziatqkjlafucqtwshhla.supabase.co
+      SB_SERVICE_KEY: ${{ secrets.SB_SERVICE_KEY }}
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 충돌 단어 영어 음원 재생성
+        run: python3 tools/gen_audio.py --go --force --words audio-fix-words.json
+      - name: Storage 업로드(덮어쓰기)
+        run: python3 tools/upload_audio.py --go
+      - name: 완료
+        run: echo "✅ 영어 음원 복구 완료"

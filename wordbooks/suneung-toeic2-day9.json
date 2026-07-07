@@ -5,19 +5,660 @@
  "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "series",
-   "ipa": "/ˈsɪriːz/",
+   "en": "outstanding balance",
+   "ipa": "/aʊtˈstændɪŋ ˈbæləns/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "연속, 시리즈",
-     "ex": "The company held a series of workshops on customer service.",
-     "tr": "그 회사는 고객 서비스에 관한 일련의 워크숍을 개최했다.",
+     "ko": "미결제 잔액",
+     "ex": "Customers with an outstanding balance exceeding the credit limit will have new orders suspended.",
+     "tr": "신용 한도를 초과하는 미결제 잔액이 있는 고객은 신규 주문이 중단된다.",
      "src": ""
     }
    ],
    "syn": [
+    "unpaid balance"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "overdue",
+   "ipa": "/ˌoʊ.vərˈduː/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "기한이 지난, 연체된",
+     "ex": "The payment is now two weeks overdue.",
+     "tr": "그 대금은 이제 2주가 연체되었습니다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "past due",
+    "late"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "overhead",
+   "ipa": "/ˈoʊvərhɛd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "간접비, 운영비",
+     "ex": "Reducing administrative overhead was the primary goal of the cost-cutting initiative.",
+     "tr": "관리 간접비 절감이 그 비용 절감 계획의 주된 목표였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "operating costs",
+    "fixed costs"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "oversee",
+   "ipa": "/ˌoʊvərˈsiː/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "감독하다, 관리하다",
+     "ex": "The newly appointed director will oversee the merger integration across all subsidiaries.",
+     "tr": "신임 이사는 모든 자회사에 걸친 합병 통합 작업을 감독할 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supervise",
+    "superintend"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "overstaffed",
+   "ipa": "/ˌoʊvərˈstæft/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "인원 과잉의",
+     "ex": "The logistics department was found to be overstaffed, prompting a targeted reduction in headcount.",
+     "tr": "물류 부서가 인원 과잉인 것으로 밝혀져 표적화된 인원 감축이 촉발되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "overmanned",
+    "overpersonnel"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "payable",
+   "ipa": "/ˈpeɪ.ə.bəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "미지급금, 매입채무",
+     "ex": "Accounts payable rose after the firm negotiated longer payment terms with suppliers.",
+     "tr": "회사가 공급업체와 더 긴 결제 조건을 협상한 후 매입채무가 증가했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "outstanding debt",
+    "money owed to vendors"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "payables",
+   "ipa": "/ˈpeɪəbəlz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "미지급금, 매입채무",
+     "ex": "Extending the payables cycle can improve short-term cash flow but may strain vendor relations.",
+     "tr": "매입채무 결제 주기를 연장하면 단기 현금흐름은 개선되지만 공급업체와의 관계가 악화될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "accounts payable"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "pension",
+   "ipa": "/ˈpɛnʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연금",
+     "ex": "The company transitioned from a defined-benefit pension plan to a defined-contribution scheme for new hires.",
+     "tr": "회사는 신입 직원들을 위해 확정급여형 연금제도에서 확정기여형 제도로 전환했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "retirement fund",
+    "annuity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "perception",
+   "ipa": "/pərˈsepʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인식, 지각",
+     "ex": "The rebranding campaign was designed to alter public perception of the company as an outdated manufacturer.",
+     "tr": "그 리브랜딩 캠페인은 회사에 대한 대중의 인식을 구식 제조업체라는 이미지에서 바꾸도록 설계되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "impression",
+    "view",
+    "image"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "periodically",
+   "ipa": "/ˌpɪriˈɑːdɪkli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "주기적으로",
+     "ex": "Equipment should be periodically inspected to ensure it meets safety standards.",
+     "tr": "장비는 안전 기준을 충족하는지 확인하기 위해 주기적으로 점검되어야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "regularly",
+    "occasionally"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "phase out",
+   "ipa": "/feɪz aʊt/",
+   "pos": "phr",
+   "meanings": [
+    {
+     "pos": "phr",
+     "ko": "단계적으로 폐지하다",
+     "ex": "The manufacturer plans to phase out the legacy product line within eighteen months.",
+     "tr": "그 제조업체는 18개월 이내에 기존 제품 라인을 단계적으로 폐지할 계획이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "discontinue gradually",
+    "wind down"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "pitch",
+   "ipa": "/pɪtʃ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "홍보, 제안; 홍보하다",
+     "ex": "The account executive delivered a compelling pitch to persuade the client to renew the advertising contract.",
+     "tr": "그 고객 담당자는 클라이언트가 광고 계약을 갱신하도록 설득력 있는 홍보를 진행했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "proposal",
+    "presentation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "placement",
+   "ipa": "/ˈpleɪsmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "배치, 취업 알선",
+     "ex": "The staffing agency guarantees successful placement within ninety days or a full refund of the service fee.",
+     "tr": "그 인력 알선 회사는 90일 이내에 성공적인 배치를 보장하거나 서비스 수수료를 전액 환불한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "assignment",
+    "posting"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "plumbing",
+   "ipa": "/ˈplʌmɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "배관 설비",
+     "ex": "The building's plumbing was replaced entirely to comply with updated municipal codes",
+     "tr": "그 건물의 배관은 개정된 시 규정을 준수하기 위해 전면 교체되었다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "piping system"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "portfolio",
+   "ipa": "/pɔːrtˈfoʊ.li.oʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "포트폴리오, 투자 자산 구성",
+     "ex": "The financial advisor recommended diversifying the client's portfolio across several asset classes.",
+     "tr": "재무 상담사는 고객의 포트폴리오를 여러 자산군에 걸쳐 분산할 것을 권했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "investment holdings",
+    "asset mix"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "preliminary",
+   "ipa": "/prɪˈlɪmɪneri/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "예비의, 사전의",
+     "ex": "A preliminary estimate of construction costs will be submitted by the end of the week.",
+     "tr": "건설 비용에 대한 예비 견적은 이번 주말까지 제출될 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "initial",
+    "introductory",
+    "preparatory"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "premises",
+   "ipa": "/ˈpremɪsɪz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(건물이 딸린) 부지, 구내",
+     "ex": "Visitors must sign in at the front desk before entering the manufacturing premises",
+     "tr": "방문객은 제조 부지에 들어가기 전 안내 데스크에서 서명해야 한다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "property",
+    "grounds",
+    "site"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "premium",
+   "ipa": "/ˈpriː.mi.əm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "보험료, 프리미엄",
+     "ex": "The insurer raised the annual premium after the client filed multiple claims.",
+     "tr": "고객이 여러 건의 보험금을 청구한 후 보험사는 연간 보험료를 인상했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "insurance payment",
+    "surcharge"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "prerequisite",
+   "ipa": "/ˌpriːˈrekwəzɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "전제 조건, 필요조건",
+     "ex": "Regulatory clearance is a prerequisite for finalizing the cross-border acquisition.",
+     "tr": "규제 승인은 국경 간 인수를 마무리하기 위한 전제 조건이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "precondition",
+    "requirement",
+    "stipulation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "presumably",
+   "ipa": "/prɪˈzuːməbli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "아마도",
+     "ex": "The delay was presumably caused by a shortage of raw materials.",
+     "tr": "그 지연은 아마도 원자재 부족으로 인해 발생했을 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "probably",
+    "supposedly"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "preventive maintenance",
+   "ipa": "/prɪˈventɪv ˈmeɪntənəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "예방 정비",
+     "ex": "Preventive maintenance schedules helped the facility avoid costly emergency repairs",
+     "tr": "예방 정비 일정 덕분에 그 시설은 비용이 많이 드는 긴급 수리를 피할 수 있었다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "scheduled maintenance",
+    "routine upkeep"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "principal",
+   "ipa": "/ˈprɪn.sə.pəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "원금",
+     "ex": "The loan agreement requires monthly payments of both interest and principal.",
+     "tr": "대출 계약서는 이자와 원금을 매달 모두 상환하도록 요구한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "loan capital",
+    "original sum"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "prioritize",
+   "ipa": "/praɪˈɔːrɪˌtaɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "우선순위를 정하다",
+     "ex": "Managers were asked to prioritize tasks that affect customer satisfaction.",
+     "tr": "관리자들은 고객 만족에 영향을 미치는 업무의 우선순위를 정하도록 요청받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "rank",
+    "order",
     "sequence"
    ],
    "deriv": [],
@@ -25,89 +666,29 @@
    "etymHint": "",
    "level": "800",
    "exam": {
-    "tested": true,
-    "count": 75,
-    "exams": 23,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "stage",
-   "ipa": "/steɪdʒ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "단계",
-     "ex": "The construction project has entered its final stage.",
-     "tr": "그 건설 프로젝트는 마지막 단계에 접어들었다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "무대"
-    }
-   ],
-   "syn": [
-    "phase"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 56,
-    "exams": 23,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "technician",
-   "ipa": "/tekˈnɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "기술자",
-     "ex": "A technician will inspect the copier this afternoon.",
-     "tr": "기술자가 오늘 오후 복사기를 점검할 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "engineer"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 58,
-    "exams": 23,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "unique",
-   "ipa": "/juˈniːk/",
+   "en": "proactive",
+   "ipa": "/proʊˈæktɪv/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "독특한, 고유한",
-     "ex": "Each employee is assigned a unique login ID for the internal system.",
-     "tr": "각 직원에게는 내부 시스템에 접속할 고유한 로그인 아이디가 부여된다.",
+     "ko": "선제적인",
+     "ex": "The compliance team took a proactive approach, auditing contracts before regulators requested them.",
+     "tr": "준법감시팀은 규제 당국이 요청하기 전에 계약서를 감사하는 선제적인 접근법을 취했다.",
      "src": ""
     }
    ],
    "syn": [
-    "distinctive",
-    "one-of-a-kind"
+    "preemptive",
+    "forward-looking"
    ],
    "deriv": [],
    "roots": [],
@@ -115,27 +696,28 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 49,
-    "exams": 23,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "beverage",
-   "ipa": "/ˈbɛvərɪdʒ/",
+   "en": "proceeds",
+   "ipa": "/ˈproʊsiːdz/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "음료",
-     "ex": "Complimentary beverages will be served during the conference break.",
-     "tr": "학회 휴식 시간 동안 무료 음료가 제공될 것이다.",
+     "ko": "수익금, 매각대금",
+     "ex": "The proceeds from the bond sale will be allocated toward refinancing existing debt.",
+     "tr": "채권 매각 수익금은 기존 부채의 차환에 배정될 것이다.",
      "src": ""
     }
    ],
    "syn": [
-    "drink"
+    "revenue",
+    "earnings"
    ],
    "deriv": [],
    "roots": [],
@@ -143,290 +725,29 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 38,
-    "exams": 22,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "booth",
-   "ipa": "/buːθ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "부스, 칸막이 자리",
-     "ex": "Our company will have a booth at the trade show next month.",
-     "tr": "우리 회사는 다음 달 무역 박람회에서 부스를 운영할 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "stall",
-    "stand"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 72,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "capacity",
-   "ipa": "/kəˈpæsəti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "수용력, 용량",
-     "ex": "The conference room has a seating capacity of one hundred people.",
-     "tr": "그 회의실의 좌석 수용력은 100명이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "capability",
-    "volume"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 49,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "complex",
-   "ipa": "/ˈkɑːmplɛks/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "단지, 복합 건물",
-     "ex": "The new office complex includes a gym and a cafeteria.",
-     "tr": "새 오피스 단지에는 체육관과 구내식당이 포함되어 있다.",
-     "src": ""
-    },
-    {
-     "pos": "adj",
-     "ko": "복잡한"
-    }
-   ],
-   "syn": [
-    "complicated"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 47,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "crew",
-   "ipa": "/kruː/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "팀, 작업반, 승무원",
-     "ex": "A maintenance crew will repair the elevator this weekend.",
-     "tr": "정비팀이 이번 주말에 엘리베이터를 수리할 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "team",
-    "staff"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 42,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "distribute",
-   "ipa": "/dɪˈstrɪbjuːt/",
+   "en": "procure",
+   "ipa": "/proʊˈkjʊr/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "배포하다, 유통하다",
-     "ex": "The marketing team will distribute the new brochures at the trade show.",
-     "tr": "마케팅 팀이 무역 박람회에서 새 브로슈어를 배포할 것이다.",
+     "ko": "조달하다, 획득하다",
+     "ex": "The purchasing office was tasked with procuring raw materials from certified suppliers at the lowest possible cost.",
+     "tr": "구매 사무소는 인증된 공급업체로부터 최대한 낮은 비용으로 원자재를 조달하는 임무를 맡았다.",
      "src": ""
-    }
-   ],
-   "syn": [
-    "deliver",
-    "circulate"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 45,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "editor",
-   "ipa": "/ˈɛdɪtər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "편집자",
-     "ex": "The editor reviewed the manuscript before sending it to print.",
-     "tr": "편집자는 인쇄에 넘기기 전에 원고를 검토했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 48,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "former",
-   "ipa": "/ˈfɔːrmər/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "이전의, 전자의",
-     "ex": "The former manager was invited back to speak at the retirement dinner.",
-     "tr": "전임 매니저가 은퇴 만찬에서 연설하도록 다시 초대받았다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "previous",
-    "ex-"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 41,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "insurance",
-   "ipa": "/ɪnˈʃʊrəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보험",
-     "ex": "The company provides health insurance to all full-time employees.",
-     "tr": "그 회사는 모든 정규직 직원에게 건강 보험을 제공한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 65,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "perform",
-   "ipa": "/pərˈfɔːrm/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "수행하다, 실시하다",
-     "ex": "Technicians will perform routine maintenance on the equipment tonight.",
-     "tr": "기술자들이 오늘 밤 장비에 대한 정기 점검을 수행할 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "carry out",
-    "conduct"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 47,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "secure",
-   "ipa": "/sɪˈkjʊr/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "확보하다",
-     "ex": "The team worked hard to secure the contract with the new client.",
-     "tr": "팀은 새 고객과의 계약을 확보하기 위해 열심히 일했다.",
-     "src": ""
-    },
-    {
-     "pos": "adj",
-     "ko": "안전한"
     }
    ],
    "syn": [
     "obtain",
-    "safe"
+    "acquire",
+    "source"
    ],
    "deriv": [],
    "roots": [],
@@ -434,55 +755,28 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 49,
-    "exams": 22,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "senior",
-   "ipa": "/ˈsiːnjər/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "고위의, 선임의",
-     "ex": "The senior manager will oversee the budget approval process.",
-     "tr": "고위 관리자가 예산 승인 절차를 감독할 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "executive"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 41,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "status",
-   "ipa": "/ˈsteɪtəs/",
+   "en": "procurement",
+   "ipa": "/proʊˈkjʊrmənt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "상태, 지위",
-     "ex": "You can check the status of your order online at any time.",
-     "tr": "언제든지 온라인으로 주문 상태를 확인할 수 있다.",
+     "ko": "조달, 구매(획득)",
+     "ex": "The procurement department must obtain three competing bids before authorizing any purchase order exceeding fifty thousand dollars.",
+     "tr": "조달 부서는 5만 달러를 초과하는 구매 주문을 승인하기 전에 반드시 세 개의 경쟁 입찰을 받아야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "condition"
+    "acquisition",
+    "sourcing"
    ],
    "deriv": [],
    "roots": [],
@@ -490,79 +784,28 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 35,
-    "exams": 22,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "tourism",
-   "ipa": "/ˈtʊrɪzəm/",
+   "en": "procurement cycle",
+   "ipa": "/proʊˈkjʊrmənt ˈsaɪkəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "관광업",
-     "ex": "The local tourism board launched a new campaign to attract visitors.",
-     "tr": "지역 관광청은 방문객을 유치하기 위한 새 캠페인을 시작했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 28,
-    "exams": 22,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "administrative",
-   "ipa": "/ədˈmɪnɪstreɪtɪv/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "행정의, 관리의",
-     "ex": "The new hire will be responsible for various administrative tasks in the office.",
-     "tr": "신입 사원은 사무실에서 다양한 행정 업무를 담당하게 될 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 41,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "competitive",
-   "ipa": "/kəmˈpɛtɪtɪv/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "경쟁력 있는",
-     "ex": "Our company offers competitive salaries to attract top talent.",
-     "tr": "우리 회사는 우수 인재를 유치하기 위해 경쟁력 있는 급여를 제공한다.",
+     "ko": "조달 주기",
+     "ex": "Streamlining the procurement cycle reduced the average time between requisition and delivery by nearly forty percent.",
+     "tr": "조달 주기를 간소화함으로써 청구부터 납품까지의 평균 소요 시간이 거의 40퍼센트 단축되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "cutthroat"
+    "purchasing cycle",
+    "sourcing cycle"
    ],
    "deriv": [],
    "roots": [],
@@ -570,54 +813,28 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 32,
-    "exams": 21,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "consulting",
-   "ipa": "/kənˈsʌltɪŋ/",
+   "en": "procurement officer",
+   "ipa": "/proʊˈkjʊrmənt ˈɔfɪsər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "컨설팅, 자문",
-     "ex": "The firm specializes in consulting services for small businesses.",
-     "tr": "그 회사는 중소기업을 위한 컨설팅 서비스를 전문으로 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 35,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "handle",
-   "ipa": "/ˈhændl/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "처리하다, 다루다",
-     "ex": "The customer service team is trained to handle complaints quickly and professionally.",
-     "tr": "고객 서비스 팀은 불만 사항을 신속하고 전문적으로 처리하도록 훈련받았다.",
+     "ko": "조달 담당자",
+     "ex": "The procurement officer was authorized to negotiate directly with suppliers on pricing for contracts under a certain threshold.",
+     "tr": "조달 담당자는 일정 기준 이하 계약에 대해 공급업체와 직접 가격 협상을 할 권한을 부여받았다.",
      "src": ""
     }
    ],
    "syn": [
-    "manage",
-    "deal with"
+    "purchasing officer",
+    "buyer"
    ],
    "deriv": [],
    "roots": [],
@@ -625,490 +842,319 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 43,
-    "exams": 21,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "hosting",
-   "ipa": "/ˈhoʊstɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "주최, 개최",
-     "ex": "Our department is hosting a workshop for new employees next Friday.",
-     "tr": "우리 부서는 다음 주 금요일 신입 사원을 위한 워크숍을 개최한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 34,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "inconvenience",
-   "ipa": "/ˌɪnkənˈviːniəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "불편",
-     "ex": "We apologize for any inconvenience caused by the temporary closure of the store.",
-     "tr": "매장의 일시적 휴업으로 인한 불편에 대해 사과드립니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 42,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "innovative",
-   "ipa": "/ˈɪnəveɪtɪv/",
+   "en": "proficient",
+   "ipa": "/prəˈfɪʃnt/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "혁신적인",
-     "ex": "The design team presented an innovative solution for reducing packaging waste.",
-     "tr": "디자인팀은 포장 폐기물을 줄이기 위한 혁신적인 해결책을 제시했다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 41,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "inquire",
-   "ipa": "/ɪnˈkwaɪər/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "문의하다",
-     "ex": "Please feel free to inquire about our pricing plans by calling customer support.",
-     "tr": "고객 지원에 전화하셔서 저희 요금제에 대해 편하게 문의해 주세요.",
+     "ko": "능숙한",
+     "ex": "Applicants must be proficient in at least two foreign languages.",
+     "tr": "지원자들은 최소 두 개의 외국어에 능숙해야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "ask"
+    "skilled",
+    "competent"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "800",
    "exam": {
-    "tested": true,
-    "count": 39,
-    "exams": 21,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "investment",
-   "ipa": "/ɪnˈvestmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "투자",
-     "ex": "The firm is seeking additional investment to expand its overseas operations.",
-     "tr": "그 회사는 해외 사업 확장을 위해 추가 투자를 모색하고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 48,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "legal",
-   "ipa": "/ˈliːɡəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "법률의, 합법적인",
-     "ex": "Please have the legal department review the contract before it is signed.",
-     "tr": "계약서에 서명하기 전에 법무팀이 검토하도록 해 주세요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "lawful"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 52,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "operating",
-   "ipa": "/ˈɑːpəreɪtɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "운영의, 영업의",
-     "ex": "The company reduced its operating costs by switching to a remote work policy.",
-     "tr": "그 회사는 원격 근무 정책으로 전환하여 운영 비용을 줄였다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 41,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "postpone",
-   "ipa": "/poʊstˈpoʊn/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "연기하다",
-     "ex": "The board meeting has been postponed until next Thursday due to a scheduling conflict.",
-     "tr": "이사회 회의는 일정 충돌로 인해 다음 주 목요일로 연기되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "delay",
-    "put off"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 42,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "previously",
-   "ipa": "/ˈpriːviəsli/",
+   "en": "proficiently",
+   "ipa": "/prəˈfɪʃntli/",
    "pos": "adv",
    "meanings": [
     {
      "pos": "adv",
-     "ko": "이전에",
-     "ex": "The position was previously held by an employee who transferred to another branch.",
-     "tr": "그 직책은 이전에 다른 지점으로 전근 간 직원이 맡고 있었다.",
+     "ko": "능숙하게",
+     "ex": "She handled the client negotiations proficiently despite the tight deadline.",
+     "tr": "그녀는 촉박한 마감 기한에도 불구하고 고객과의 협상을 능숙하게 처리했다.",
      "src": ""
     }
    ],
    "syn": [
-    "formerly"
+    "skillfully",
+    "competently"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "800",
    "exam": {
-    "tested": true,
-    "count": 35,
-    "exams": 21,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "procedure",
-   "ipa": "/prəˈsiːdʒər/",
-   "pos": "n",
+   "en": "promptly",
+   "ipa": "/ˈprɑːmptli/",
+   "pos": "adv",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "절차",
-     "ex": "New employees must follow the standard procedure for requesting time off.",
-     "tr": "신입 직원은 휴가를 신청할 때 표준 절차를 따라야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 37,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "reference",
-   "ipa": "/ˈrefərəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "참고, 추천서",
-     "ex": "Applicants are asked to provide two professional references along with their resume.",
-     "tr": "지원자는 이력서와 함께 두 개의 추천서를 제공하도록 요청받는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 36,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "residential",
-   "ipa": "/ˌrezɪˈdenʃəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "주거의",
-     "ex": "The construction company is developing a new residential area near the station.",
-     "tr": "그 건설 회사는 역 근처에 새로운 주거 지역을 개발하고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 33,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "seating",
-   "ipa": "/ˈsiːtɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "좌석 (배치)",
-     "ex": "The seating arrangement for the conference has been changed to accommodate more guests.",
-     "tr": "더 많은 손님을 수용하기 위해 컨퍼런스 좌석 배치가 변경되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 51,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "shuttle",
-   "ipa": "/ˈʃʌtl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "셔틀버스, 왕복 교통편",
-     "ex": "A free shuttle runs between the hotel and the convention center every hour.",
-     "tr": "무료 셔틀버스가 매시간 호텔과 컨벤션 센터 사이를 운행한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 56,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "significant",
-   "ipa": "/sɪɡˈnɪfɪkənt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "중요한, 상당한",
-     "ex": "The company made a significant investment in new manufacturing equipment.",
-     "tr": "그 회사는 새 제조 설비에 상당한 투자를 했다.",
+     "pos": "adv",
+     "ko": "즉시, 신속하게",
+     "ex": "Customer complaints should be addressed promptly to maintain client satisfaction.",
+     "tr": "고객 만족을 유지하기 위해서는 고객 불만이 즉시 처리되어야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "substantial",
-    "considerable"
+    "immediately",
+    "quickly"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "800",
    "exam": {
-    "tested": true,
-    "count": 49,
-    "exams": 21,
+    "tested": false,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "sound",
-   "ipa": "/saʊnd/",
+   "en": "prone to",
+   "ipa": "/proʊn tuː/",
+   "pos": "adj. phr",
+   "meanings": [
+    {
+     "pos": "adj. phr",
+     "ko": "~하기 쉬운, ~에 취약한",
+     "ex": "Outdated machinery is prone to frequent breakdowns.",
+     "tr": "구식 기계는 잦은 고장이 나기 쉽다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "susceptible to",
+    "liable to",
+    "inclined to"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "prospective",
+   "ipa": "/prəˈspɛktɪv/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "건전한, 타당한",
-     "ex": "The consultant provided sound advice on how to reduce operating costs.",
-     "tr": "그 컨설턴트는 운영 비용을 줄이는 방법에 대해 타당한 조언을 제공했다.",
+     "ko": "장래의, 유망한",
+     "ex": "The HR department scheduled a series of interviews to evaluate prospective candidates for the regional manager position.",
+     "tr": "인사부는 지역 관리자직 후보가 될 유망한 지원자들을 평가하기 위해 일련의 면접을 예약했다.",
      "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "소리"
     }
    ],
-   "syn": [],
+   "syn": [
+    "potential",
+    "would-be"
+   ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 44,
-    "exams": 21,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   },
   {
-   "en": "source",
-   "ipa": "/sɔːrs/",
+   "en": "protective measure",
+   "ipa": "/prəˈtek.tɪv ˈmeʒ.ər/",
+   "pos": "nou",
+   "meanings": [
+    {
+     "pos": "nou",
+     "ko": "보호 조치",
+     "ex": "The ministry introduced a protective measure to shield emerging industries from aggressive foreign price competition",
+     "tr": "부처는 신흥 산업을 공격적인 외국 가격 경쟁으로부터 보호하기 위한 보호 조치를 도입했다",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "safeguard",
+    "shielding policy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "protocol",
+   "ipa": "/ˈproʊtəkɒl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "공급원, 원천",
-     "ex": "The company is looking for a reliable source of raw materials overseas.",
-     "tr": "그 회사는 해외에서 신뢰할 수 있는 원자재 공급원을 찾고 있다.",
+     "ko": "규정, 절차",
+     "ex": "Employees must follow the updated security protocol when accessing client data remotely.",
+     "tr": "직원들은 원격으로 고객 데이터에 접근할 때 업데이트된 보안 규정을 따라야 한다.",
      "src": ""
-    },
+    }
+   ],
+   "syn": [
+    "procedure",
+    "guideline"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "provision",
+   "ipa": "/prəˈvɪʒən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "충당금, 대비",
+     "ex": "The bank increased its provision for bad debts amid rising default rates.",
+     "tr": "그 은행은 부도율 상승 속에서 대손충당금을 늘렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "allowance",
+    "reserve"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "provisional",
+   "ipa": "/prəˈvɪʒənəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "임시의, 잠정적인",
+     "ex": "A provisional offer of employment was extended pending satisfactory completion of the reference check.",
+     "tr": "임시 고용 제안이 만족스러운 신원조회 완료를 조건으로 제시되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "temporary",
+    "conditional"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": true,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "punctual",
+   "ipa": "/ˈpʌŋktʃuəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "시간을 엄수하는",
+     "ex": "All staff members are expected to be punctual for the morning briefing.",
+     "tr": "모든 직원은 아침 브리핑에 시간을 엄수할 것으로 기대된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "prompt",
+    "on time"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "800",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "quantify",
+   "ipa": "/ˈkwɑːntɪfaɪ/",
+   "pos": "v",
+   "meanings": [
     {
      "pos": "v",
-     "ko": "조달하다"
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "800",
-   "exam": {
-    "tested": true,
-    "count": 32,
-    "exams": 21,
-    "recentYear": "",
-    "stars": 2
-   }
-  },
-  {
-   "en": "stated",
-   "ipa": "/ˈsteɪtɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "명시된, 정해진",
-     "ex": "Please submit the report by the stated deadline.",
-     "tr": "명시된 마감일까지 보고서를 제출해 주세요.",
+     "ko": "수치화하다, 정량화하다",
+     "ex": "It remains difficult to quantify the exact impact of the brand awareness campaign on overall sales.",
+     "tr": "브랜드 인지도 캠페인이 전체 매출에 미치는 정확한 영향을 수치화하기는 여전히 어렵다.",
      "src": ""
     }
    ],
    "syn": [
-    "specified",
-    "designated"
+    "measure",
+    "calculate"
    ],
    "deriv": [],
    "roots": [],
@@ -1116,10 +1162,10 @@
    "level": "800",
    "exam": {
     "tested": true,
-    "count": 32,
-    "exams": 21,
+    "count": 0,
+    "exams": 0,
     "recentYear": "",
-    "stars": 2
+    "stars": 0
    }
   }
  ]

@@ -5,24 +5,21 @@
  "exampleNote": "예문은 TOEIC 실전 비즈니스 상황으로 자체 집필한 문장입니다.",
  "words": [
   {
-   "en": "correct",
-   "ipa": "/kəˈrekt/",
+   "en": "main",
+   "ipa": "/meɪn/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "정확한",
-     "ex": "Please make sure the correct shipping address is listed on the invoice.",
-     "tr": "청구서에 정확한 배송 주소가 기재되어 있는지 확인해 주세요.",
+     "ko": "주요한, 주된",
+     "ex": "The main office is located downtown near the station.",
+     "tr": "본사는 역 근처 시내에 위치해 있습니다.",
      "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "수정하다"
     }
    ],
    "syn": [
-    "accurate"
+    "primary",
+    "major"
    ],
    "deriv": [],
    "roots": [],
@@ -30,22 +27,22 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 74,
-    "exams": 32,
+    "count": 167,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "designed",
-   "ipa": "/dɪˈzaɪnd/",
-   "pos": "adj",
+   "en": "management",
+   "ipa": "/ˈmænɪdʒmənt/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "설계된, 고안된",
-     "ex": "This program is designed to help new employees adjust quickly.",
-     "tr": "이 프로그램은 신입 직원들이 빠르게 적응하도록 고안되었습니다.",
+     "pos": "n",
+     "ko": "경영진, 관리",
+     "ex": "Management decided to extend the project deadline.",
+     "tr": "경영진은 프로젝트 마감일을 연장하기로 결정했습니다.",
      "src": ""
     }
    ],
@@ -56,415 +53,109 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 69,
-    "exams": 32,
+    "count": 211,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "especially",
-   "ipa": "/ɪˈspeʃəli/",
+   "en": "mobile",
+   "ipa": "/ˈmoʊbl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "이동하는, 휴대용의",
+     "ex": "Employees can access their email through the mobile app.",
+     "tr": "직원들은 모바일 앱을 통해 이메일에 접속할 수 있습니다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 143,
+    "exams": 37,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "payment",
+   "ipa": "/ˈpeɪmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "지불, 결제",
+     "ex": "Payment is due within thirty days of the invoice date.",
+     "tr": "결제는 청구서 발행일로부터 30일 이내에 이루어져야 합니다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 162,
+    "exams": 37,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "position",
+   "ipa": "/pəˈzɪʃn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "직위, 일자리",
+     "ex": "She applied for a marketing position at the company.",
+     "tr": "그녀는 그 회사의 마케팅 직위에 지원했습니다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "job",
+    "post"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 226,
+    "exams": 37,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "quickly",
+   "ipa": "/ˈkwɪkli/",
    "pos": "adv",
    "meanings": [
     {
      "pos": "adv",
-     "ko": "특히",
-     "ex": "The new software is useful, especially for tracking inventory.",
-     "tr": "그 새 소프트웨어는 특히 재고를 추적하는 데 유용합니다.",
+     "ko": "빠르게, 신속히",
+     "ex": "Please respond to the client's email as quickly as possible.",
+     "tr": "가능한 한 빨리 고객의 이메일에 답장해 주세요.",
      "src": ""
     }
    ],
    "syn": [
-    "particularly"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 70,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "expect",
-   "ipa": "/ɪkˈspekt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "예상하다, 기대하다",
-     "ex": "We expect the shipment to arrive by the end of the week.",
-     "tr": "우리는 이번 주말까지 배송품이 도착할 것으로 예상합니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "anticipate"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 68,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "fact",
-   "ipa": "/fækt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "사실",
-     "ex": "In fact, the new policy has increased employee satisfaction.",
-     "tr": "사실, 새 정책은 직원 만족도를 높였습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 63,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "map",
-   "ipa": "/mæp/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "지도",
-     "ex": "A map of the conference center was included in the welcome packet.",
-     "tr": "환영 패킷에 컨퍼런스 센터 지도가 포함되어 있었습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 80,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "package",
-   "ipa": "/ˈpækɪdʒ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "소포, 패키지",
-     "ex": "The package was delivered to the wrong office address.",
-     "tr": "그 소포는 잘못된 사무실 주소로 배송되었습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "parcel"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 99,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "perfect",
-   "ipa": "/ˈpɜːrfɪkt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "완벽한",
-     "ex": "This location is perfect for our new branch office.",
-     "tr": "이 위치는 우리의 새 지점 사무실로 완벽합니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "ideal"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 58,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "regular",
-   "ipa": "/ˈreɡjələr/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "정기적인",
-     "ex": "The team holds a regular meeting every Monday morning.",
-     "tr": "그 팀은 매주 월요일 아침에 정기 회의를 엽니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "routine"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 76,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "summer",
-   "ipa": "/ˈsʌmər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "여름",
-     "ex": "Our office will hire several interns this summer.",
-     "tr": "우리 사무실은 이번 여름에 여러 명의 인턴을 채용할 예정입니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 118,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "view",
-   "ipa": "/vjuː/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "견해, 전망",
-     "ex": "In view of the budget cuts, we need to revise our plans.",
-     "tr": "예산 삭감을 고려하여 우리는 계획을 수정해야 합니다.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "보다, 여기다"
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 98,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "visiting",
-   "ipa": "/ˈvɪzɪtɪŋ/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "방문 중인",
-     "ex": "We arranged a tour of the factory for the visiting executives.",
-     "tr": "우리는 방문 중인 임원들을 위해 공장 견학을 마련했습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 75,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "writing",
-   "ipa": "/ˈraɪtɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "문서, 글쓰기",
-     "ex": "Please confirm the cancellation in writing by email.",
-     "tr": "취소 사항을 이메일로 서면 확인해 주시기 바랍니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 109,
-    "exams": 32,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "author",
-   "ipa": "/ˈɔːθər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "저자, 작가",
-     "ex": "The author will be signing copies of her new book at the store on Saturday.",
-     "tr": "그 작가는 토요일에 매장에서 새 책에 사인을 해줄 예정입니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "writer"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 62,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "bit",
-   "ipa": "/bɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "약간, 조금",
-     "ex": "The meeting was delayed a bit because of a traffic jam.",
-     "tr": "회의는 교통 체증 때문에 조금 지연되었습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "a little"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 79,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "cancel",
-   "ipa": "/ˈkænsl/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "취소하다",
-     "ex": "The airline canceled the flight due to bad weather.",
-     "tr": "항공사는 악천후로 인해 항공편을 취소했습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "call off"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 69,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "code",
-   "ipa": "/koʊd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "규정, 규칙",
-     "ex": "All employees must follow the company dress code.",
-     "tr": "모든 직원은 회사의 복장 규정을 따라야 합니다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "코드, 부호"
-    }
-   ],
-   "syn": [
-    "regulation"
+    "rapidly",
+    "promptly"
    ],
    "deriv": [],
    "roots": [],
@@ -473,140 +164,51 @@
    "exam": {
     "tested": true,
     "count": 97,
-    "exams": 31,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "deliver",
-   "ipa": "/dɪˈlɪvər/",
+   "en": "return",
+   "ipa": "/rɪˈtɜːrn/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "배달하다",
-     "ex": "The courier will deliver the package to your office by noon.",
-     "tr": "택배기사가 정오까지 사무실로 소포를 배달할 것입니다.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "(연설 등을) 하다, 전달하다"
-    }
-   ],
-   "syn": [
-    "ship",
-    "bring"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 73,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "designer",
-   "ipa": "/dɪˈzaɪnər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "디자이너, 설계자",
-     "ex": "The company hired a new designer to redesign the product packaging.",
-     "tr": "회사는 제품 포장을 재디자인하기 위해 새로운 디자이너를 채용했습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 69,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "fair",
-   "ipa": "/fer/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "공정한",
-     "ex": "The manager tried to give everyone a fair chance during the promotion review.",
-     "tr": "그 매니저는 승진 심사 동안 모두에게 공정한 기회를 주려고 노력했습니다.",
+     "ko": "반품하다, 돌아오다",
+     "ex": "Customers can return items within thirty days for a full refund.",
+     "tr": "고객은 30일 이내에 물품을 반품하면 전액 환불받을 수 있습니다.",
      "src": ""
     },
     {
      "pos": "n",
-     "ko": "박람회"
+     "ko": "반품, 복귀"
     }
    ],
-   "syn": [
-    "just"
-   ],
+   "syn": [],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 121,
-    "exams": 31,
+    "count": 168,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "final",
-   "ipa": "/ˈfaɪnl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "최종의, 마지막의",
-     "ex": "Please submit the final report before Friday afternoon.",
-     "tr": "금요일 오후 전까지 최종 보고서를 제출해 주세요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "last"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 72,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "government",
-   "ipa": "/ˈɡʌvərnmənt/",
+   "en": "safety",
+   "ipa": "/ˈseɪfti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "정부",
-     "ex": "The government announced new regulations for small businesses.",
-     "tr": "정부는 소규모 사업체를 위한 새로운 규정을 발표했습니다.",
+     "ko": "안전",
+     "ex": "All employees must complete the safety training before starting work.",
+     "tr": "모든 직원은 근무를 시작하기 전에 안전 교육을 이수해야 합니다.",
      "src": ""
     }
    ],
@@ -617,79 +219,56 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 67,
-    "exams": 31,
+    "count": 160,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "member",
-   "ipa": "/ˈmembər/",
+   "en": "size",
+   "ipa": "/saɪz/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "회원, 구성원",
-     "ex": "Only members of the committee are allowed to vote on the proposal.",
-     "tr": "위원회 구성원만 제안에 대해 투표할 수 있습니다.",
+     "ko": "크기, 규모",
+     "ex": "This shirt does not come in a larger size.",
+     "tr": "이 셔츠는 더 큰 사이즈가 나오지 않는다.",
      "src": ""
     }
    ],
-   "syn": [],
+   "syn": [
+    "dimension"
+   ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 96,
-    "exams": 31,
+    "count": 112,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "outdoor",
-   "ipa": "/ˈaʊtdɔːr/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "야외의",
-     "ex": "The company picnic will be held at an outdoor venue this year.",
-     "tr": "올해 회사 야유회는 야외 장소에서 열릴 예정입니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 64,
-    "exams": 31,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "prefer",
-   "ipa": "/prɪˈfɜːr/",
+   "en": "submit",
+   "ipa": "/səbˈmɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "선호하다",
-     "ex": "Most clients prefer to receive invoices by email rather than by mail.",
-     "tr": "대부분의 고객은 우편보다 이메일로 청구서를 받는 것을 선호합니다.",
+     "ko": "제출하다",
+     "ex": "Please submit your expense report by Friday.",
+     "tr": "금요일까지 경비 보고서를 제출해 주세요.",
      "src": ""
     }
    ],
    "syn": [
-    "favor"
+    "hand in",
+    "turn in"
    ],
    "deriv": [],
    "roots": [],
@@ -697,22 +276,22 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 77,
-    "exams": 31,
+    "count": 200,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "waiting",
-   "ipa": "/ˈweɪtɪŋ/",
+   "en": "technology",
+   "ipa": "/tekˈnɑːlədʒi/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "대기, 기다림",
-     "ex": "Please have a seat in the waiting area until your name is called.",
-     "tr": "이름이 호명될 때까지 대기 구역에 앉아 계세요.",
+     "ko": "기술",
+     "ex": "New technology has made the manufacturing process faster.",
+     "tr": "새로운 기술 덕분에 제조 공정이 더 빨라졌습니다.",
      "src": ""
     }
    ],
@@ -723,88 +302,58 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 93,
-    "exams": 31,
+    "count": 154,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "allow",
-   "ipa": "/əˈlaʊ/",
-   "pos": "v",
+   "en": "times",
+   "ipa": "/taɪmz/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "허용하다, 허락하다",
-     "ex": "The manager will allow employees to work from home on Fridays.",
-     "tr": "관리자는 직원들이 금요일에 재택근무하는 것을 허용할 것입니다.",
+     "pos": "n",
+     "ko": "시간, 횟수",
+     "ex": "Please check the departure times before booking your flight.",
+     "tr": "항공편을 예약하기 전에 출발 시간을 확인해 주세요.",
      "src": ""
     }
    ],
-   "syn": [
-    "permit"
-   ],
+   "syn": [],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 62,
-    "exams": 30,
+    "count": 106,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "basic",
-   "ipa": "/ˈbeɪsɪk/",
+   "en": "top",
+   "ipa": "/tɑːp/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "기본적인, 기초의",
-     "ex": "All new employees must complete the basic training program.",
-     "tr": "모든 신입 사원은 기본 교육 프로그램을 이수해야 합니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "fundamental",
-    "essential"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 66,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "downtown",
-   "ipa": "/ˌdaʊnˈtaʊn/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "시내에, 시내로",
-     "ex": "The new branch office is located downtown, close to the subway station.",
-     "tr": "새 지점 사무실은 지하철역 근처 시내에 위치해 있습니다.",
+     "ko": "최고의, 최상위의",
+     "ex": "She is one of the top salespeople in our division.",
+     "tr": "그녀는 우리 부서에서 최고 영업사원 중 한 명이다.",
      "src": ""
     },
     {
      "pos": "n",
-     "ko": "시내, 도심"
+     "ko": "꼭대기, 상단"
     }
    ],
    "syn": [
-    "city center"
+    "best",
+    "leading"
    ],
    "deriv": [],
    "roots": [],
@@ -812,79 +361,81 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 67,
-    "exams": 30,
+    "count": 130,
+    "exams": 37,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "excited",
-   "ipa": "/ɪkˈsaɪtɪd/",
+   "en": "accounting",
+   "ipa": "/əˈkaʊntɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "회계",
+     "ex": "She transferred to the accounting department last spring.",
+     "tr": "그녀는 지난봄에 회계 부서로 옮겼다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 130,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "apply",
+   "ipa": "/əˈplaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "지원하다, 적용하다",
+     "ex": "Candidates should apply for the position by the end of the month.",
+     "tr": "지원자는 이달 말까지 그 자리에 지원해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "submit an application"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 135,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "attached",
+   "ipa": "/əˈtætʃt/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "신이 난, 흥분한",
-     "ex": "We are excited to announce the opening of our new branch office.",
-     "tr": "저희는 새로운 지점 개점을 발표하게 되어 기쁩니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 77,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "garden",
-   "ipa": "/ˈɡɑːrdn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "정원",
-     "ex": "The office building has a small garden where employees can relax during lunch.",
-     "tr": "그 사무실 건물에는 직원들이 점심시간에 쉴 수 있는 작은 정원이 있습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 145,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "giving",
-   "ipa": "/ˈɡɪvɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "제공, 기부",
-     "ex": "The company is giving all staff an extra day off this month.",
-     "tr": "회사는 이번 달 전 직원에게 하루 추가 휴가를 주고 있습니다.",
+     "ko": "첨부된",
+     "ex": "Please review the attached file before the meeting.",
+     "tr": "회의 전에 첨부된 파일을 검토해 주세요.",
      "src": ""
     }
    ],
    "syn": [
-    "providing"
+    "enclosed"
    ],
    "deriv": [],
    "roots": [],
@@ -892,80 +443,27 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 57,
-    "exams": 30,
+    "count": 84,
+    "exams": 36,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "half",
-   "ipa": "/hæf/",
+   "en": "colleague",
+   "ipa": "/ˈkɑːliːɡ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "절반",
-     "ex": "Half of the staff will attend the training session in the morning.",
-     "tr": "직원의 절반은 오전 교육 세션에 참석할 것입니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 68,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "holiday",
-   "ipa": "/ˈhɑːlədeɪ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "휴일, 공휴일",
-     "ex": "The office will be closed for the national holiday next Monday.",
-     "tr": "다음 주 월요일 국경일에는 사무실이 문을 닫습니다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 69,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "immediately",
-   "ipa": "/ɪˈmiːdiətli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "즉시, 곧바로",
-     "ex": "Please reply to this email immediately if you have any questions.",
-     "tr": "질문이 있으시면 이 이메일에 즉시 답장해 주세요.",
+     "ko": "동료",
+     "ex": "I will discuss the proposal with my colleagues tomorrow.",
+     "tr": "나는 내일 동료들과 그 제안을 논의할 것이다.",
      "src": ""
     }
    ],
    "syn": [
-    "instantly",
-    "right away"
+    "coworker"
    ],
    "deriv": [],
    "roots": [],
@@ -973,144 +471,599 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 58,
-    "exams": 30,
+    "count": 128,
+    "exams": 36,
     "recentYear": "",
     "stars": 3
    }
   },
   {
-   "en": "inside",
-   "ipa": "/ɪnˈsaɪd/",
+   "en": "course",
+   "ipa": "/kɔːrs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "강좌, 과정",
+     "ex": "Employees are required to complete a safety training course.",
+     "tr": "직원들은 안전 교육 과정을 이수해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "class"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 130,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "credit",
+   "ipa": "/ˈkredɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신용, 공로",
+     "ex": "You can pay for the order using a credit card.",
+     "tr": "신용카드로 주문 결제를 할 수 있다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "입금하다, 인정하다"
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 136,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "decision",
+   "ipa": "/dɪˈsɪʒən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "결정",
+     "ex": "The board will make a final decision on the merger next week.",
+     "tr": "이사회는 다음 주에 합병에 대한 최종 결정을 내릴 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "choice",
+    "determination"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 106,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "financial",
+   "ipa": "/faɪˈnænʃəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "재정의, 금융의",
+     "ex": "The company released its financial report for the last quarter.",
+     "tr": "그 회사는 지난 분기 재무 보고서를 발표했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 127,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "future",
+   "ipa": "/ˈfjuːtʃər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "미래, 장래",
+     "ex": "The manager talked about the future of the company at the meeting.",
+     "tr": "그 매니저는 회의에서 회사의 미래에 대해 이야기했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 97,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "happen",
+   "ipa": "/ˈhæpən/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "일어나다, 발생하다",
+     "ex": "Let us know if any problems happen during the shipment.",
+     "tr": "배송 중에 문제가 발생하면 저희에게 알려 주세요.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "occur",
+    "take place"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 94,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "hired",
+   "ipa": "/ˈhaɪərd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "고용했다 (hire의 과거형)",
+     "ex": "The restaurant hired two new servers for the busy season.",
+     "tr": "그 식당은 성수기를 위해 새 서빙 직원 두 명을 고용했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "employed",
+    "recruited"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 102,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "important",
+   "ipa": "/ɪmˈpɔːrtnt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "중요한",
+     "ex": "It is important to submit the report before the deadline.",
+     "tr": "마감일 전에 보고서를 제출하는 것이 중요하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "significant",
+    "crucial"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 120,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "latest",
+   "ipa": "/ˈleɪtɪst/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "최신의",
+     "ex": "Please check the latest version of the software before installing it.",
+     "tr": "설치하기 전에 소프트웨어의 최신 버전을 확인해 주세요.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "newest",
+    "recent"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 111,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "menu",
+   "ipa": "/ˈmenjuː/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "메뉴",
+     "ex": "The restaurant updated its menu for the new season.",
+     "tr": "그 식당은 새 시즌을 위해 메뉴를 갱신했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 122,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "museum",
+   "ipa": "/mjuˈziːəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "박물관",
+     "ex": "The client wants to visit the local museum during the business trip.",
+     "tr": "고객은 출장 중에 그 지역 박물관을 방문하고 싶어 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 215,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "ordered",
+   "ipa": "/ˈɔːrdərd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "주문했다 (order의 과거형)",
+     "ex": "The office manager ordered new supplies for the break room.",
+     "tr": "사무실 관리자가 휴게실에 쓸 새 물품을 주문했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "requested"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 106,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "prepare",
+   "ipa": "/prɪˈper/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "준비하다",
+     "ex": "We need to prepare the presentation for tomorrow's meeting.",
+     "tr": "우리는 내일 회의를 위한 발표를 준비해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "arrange",
+    "get ready"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 105,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "president",
+   "ipa": "/ˈprezɪdənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "회장, 사장",
+     "ex": "The president of the company will attend the annual meeting.",
+     "tr": "그 회사의 회장이 연례 회의에 참석할 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "CEO"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 109,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "professional",
+   "ipa": "/prəˈfeʃənl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "전문적인, 직업의",
+     "ex": "Please dress in professional attire for the client meeting.",
+     "tr": "고객 미팅에는 전문적인 복장을 착용해 주세요.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "전문가"
+    }
+   ],
+   "syn": [
+    "expert"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 146,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "promote",
+   "ipa": "/prəˈmoʊt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "승진시키다",
+     "ex": "She was promoted to sales manager last month.",
+     "tr": "그녀는 지난달 영업 매니저로 승진했다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "홍보하다, 촉진하다"
+    }
+   ],
+   "syn": [
+    "advance",
+    "advertise"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 101,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "research",
+   "ipa": "/ˈriːsɜːrtʃ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연구, 조사",
+     "ex": "The marketing team conducted research on customer preferences.",
+     "tr": "마케팅팀은 고객 선호도에 대한 조사를 실시했다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "연구하다, 조사하다"
+    }
+   ],
+   "syn": [
+    "study",
+    "investigation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 165,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "session",
+   "ipa": "/ˈseʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "회기, 시간(교육·회의 등)",
+     "ex": "The training session will begin at nine o'clock sharp.",
+     "tr": "교육 시간은 정각 9시에 시작될 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "meeting"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 174,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "supply",
+   "ipa": "/səˈplaɪ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공급, 물품",
+     "ex": "The office is running low on printer paper supply.",
+     "tr": "사무실에 프린터 용지 물품이 부족해지고 있다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "공급하다"
+    }
+   ],
+   "syn": [
+    "provide",
+    "stock"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 158,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "system",
+   "ipa": "/ˈsɪstəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "시스템, 제도",
+     "ex": "Our company installed a new accounting system last week.",
+     "tr": "우리 회사는 지난주에 새로운 회계 시스템을 설치했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 214,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "throughout",
+   "ipa": "/θruːˈaʊt/",
    "pos": "prep",
    "meanings": [
     {
      "pos": "prep",
-     "ko": "~안에",
-     "ex": "You can find the instruction manual inside the box.",
-     "tr": "설명서는 상자 안에서 찾으실 수 있습니다.",
-     "src": ""
-    },
-    {
-     "pos": "adv",
-     "ko": "내부에, 안으로"
-    }
-   ],
-   "syn": [
-    "within"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 46,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "interest",
-   "ipa": "/ˈɪntrəst/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "관심, 흥미",
-     "ex": "Many customers have shown interest in our new product line.",
-     "tr": "많은 고객들이 저희의 새 제품 라인에 관심을 보였습니다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "이자"
-    }
-   ],
-   "syn": [
-    "attention"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 56,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "pass",
-   "ipa": "/pæs/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "통과하다, 합격하다",
-     "ex": "All new employees must pass a brief training session before starting work.",
-     "tr": "모든 신입 직원은 근무를 시작하기 전에 간단한 교육을 통과해야 합니다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "출입증, 통행증"
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 89,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "spend",
-   "ipa": "/spɛnd/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "(돈·시간을) 쓰다",
-     "ex": "The company plans to spend more on marketing next quarter.",
-     "tr": "회사는 다음 분기에 마케팅에 더 많이 지출할 계획입니다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "expend"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "600",
-   "exam": {
-    "tested": true,
-    "count": 61,
-    "exams": 30,
-    "recentYear": "",
-    "stars": 3
-   }
-  },
-  {
-   "en": "world",
-   "ipa": "/wɜːrld/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "세계",
-     "ex": "The company plans to expand its business around the world.",
-     "tr": "그 회사는 전 세계로 사업을 확장할 계획입니다.",
+     "ko": "~내내, ~전역에 걸쳐",
+     "ex": "The store will offer discounts throughout the holiday season.",
+     "tr": "그 매장은 휴가 시즌 내내 할인을 제공할 것이다.",
      "src": ""
     }
    ],
@@ -1121,8 +1074,65 @@
    "level": "600",
    "exam": {
     "tested": true,
-    "count": 89,
-    "exams": 30,
+    "count": 79,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "transportation",
+   "ipa": "/ˌtrænspərˈteɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "교통, 운송",
+     "ex": "The company provides transportation for employees to the factory.",
+     "tr": "회사는 직원들에게 공장까지 교통편을 제공한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "transit"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 140,
+    "exams": 36,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "trip",
+   "ipa": "/trɪp/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "출장, 여행",
+     "ex": "She booked a flight for her business trip to Chicago.",
+     "tr": "그녀는 시카고 출장을 위해 항공편을 예약했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "journey",
+    "travel"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "600",
+   "exam": {
+    "tested": true,
+    "count": 150,
+    "exams": 36,
     "recentYear": "",
     "stars": 3
    }

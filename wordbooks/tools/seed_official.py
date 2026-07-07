@@ -53,6 +53,8 @@ def map_word(w):
         "meanings": [{"pos": mm.get("pos", ""), "ko": mm.get("ko", "")} for mm in m],
         # 보존(추후 확장용)
         "_official": True, "src": m0.get("src", ""),
+        # 스페인어 책은 음원 언어 네임스페이스(es/) 사용 → 앱 _audioUrl 이 참조
+        **({"_lang": "es"} if os.environ.get("BOOK_PREFIX", "").startswith("esp") else {}),
         "deriv": w.get("deriv", []), "etym": w.get("etymHint", ""),
         "roots": w.get("roots", []), "exam": w.get("exam"),
     }
