@@ -23,6 +23,7 @@
 | 토익 기초 | toeic1 | TOEIC-1 | 493 (13일·600점대) | ✅ | ⬜ | ⬜ |
 | 토익 핵심 | toeic2 | TOEIC-2 | 683 (18일·800점대) | ✅ | ⬜ | ⬜ |
 | 토익 고득점 | toeic3 | TOEIC-3 | 874 (23일·900점대) | ✅ | ⬜ | ⬜ |
+| 토익 숙어 | toeic4 | TOEIC-4 | 370 (10일·구동사·전치사) | ✅ | ⬜ | ⬜ |
 
 → **7권 전부 완성 + DB등록·발음 완료(2026-06-26).** 7권 모두 is_official로 Supabase 등록·Storage 음원 업로드됨.
 → **TOEIC 3권 추가(2026-07-06, 최종 JSON):** 기초493·핵심683·고득점874=2,050. 40회 실전모의고사(`toeic/` PDF=이미지) **OCR(tesseract 170dpi)** → 88만단어 코퍼스(`toeic-corpus/`) → `build_toeic_pool.py`(빈도+사전대조 노이즈제거+문제형식어 제외, `toeic-pool-full.json` 3,662) → `build_toeic_scaffolds.py`(빈출 tier: 기초=최빈출/고득점=희귀, prefix toeic1/2/3) → 콘텐츠 워크플로우(비즈니스 예문) → 관대한 merge(OCR노이즈 단어 드롭)+수동 노이즈제거(chet/cist 등 OCR잘린어 26개). LC/RC 미구분(빈도 tier). 예문 자작(출처 없음). **DB등록·발음 남음**(발행 워크플로우 3회, 영어 음성 기본). corpus·PDF gitignore(저작권). merge는 인라인 관대버전 사용(scaffold/content stale 가능).
