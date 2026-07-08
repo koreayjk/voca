@@ -394,10 +394,11 @@ async function loadMembers(retry){
 function renderOverview(){
   const total = _allMembers.length;
 
-  // 분류 (org_role 기준, 상호 배타)
-  const individuals = _allMembers.filter(m=>!m.org_role);            // 개인 (단체 미소속)
-  const students    = _allMembers.filter(m=>m.org_role==='student'); // 단체 학생
-  const owners      = _allMembers.filter(m=>m.org_role==='owner');   // 단체 관리자(주+공동)
+  // 분류 (org_id=단체 소속 여부 기준, 상호 배타)
+  // ⚠️ org_id 없으면 개인으로 취급 — org_role='student'인데 단체 미연결된 '고아' 회원도 개인회원에 노출(안 그러면 어느 탭에도 안 뜸)
+  const individuals = _allMembers.filter(m=>!m.org_id && m.org_role!=='owner'); // 개인 (단체 미소속)
+  const students    = _allMembers.filter(m=>m.org_id && m.org_role==='student'); // 단체 학생(실제 소속)
+  const owners      = _allMembers.filter(m=>m.org_role==='owner');   // 단체 관리자(주+공동, 단체 미생성 포함)
 
   const ind = individuals.length;
   const stu = students.length;
@@ -533,7 +534,7 @@ function renderRecent(){
 function fmtSeen(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-'; return (d.getMonth()+1)+'.'+d.getDate(); }catch(e){ return '-'; } }
 function renderMembers(){
   const q = (document.getElementById('member-search')?.value||'').toLowerCase().trim();
-  let list = _allMembers.filter(m=>!m.org_role);
+  let list = _allMembers.filter(m=>!m.org_id && m.org_role!=='owner'); // 단체 미소속(고아 학생 포함) = 개인 회원
   if(q) list = list.filter(m=>(m.name||'').toLowerCase().includes(q)||(m.email||'').toLowerCase().includes(q));
   document.getElementById('member-count').textContent = `(${list.length}명)`;
   if(list.length===0){ document.getElementById('member-table').innerHTML='<div class="empty">결과 없음</div>'; return; }
