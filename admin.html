@@ -564,12 +564,14 @@ async function promoteToOwner(id, label){
   if(!confirm(`'${label}' 님을 단체 관리자로 올릴까요?\n\n승격되면 다음 로그인 때 '단체 만들기' 화면으로 이동해요. (기존 책·단어는 그대로 유지)`)) return;
   try{
     await refreshToken();
+    const H = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'};
+    // ① 단체 소속 정리(고아 학생 등) → ② owner 지정. student→owner 직접 전환을 막는 트리거 회피.
+    await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{method:'PATCH',headers:H,body:JSON.stringify({org_id:null, org_role:null, org_status:null})});
     const res = await fetch(SB_URL+`/rest/v1/members?id=eq.${id}`,{
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Prefer':'return=representation'},
+      method:'PATCH', headers:H,
       body:JSON.stringify({org_role:'owner', org_status:'approved'})
     });
-    if(!res.ok){ const t=await res.text(); toast('승격 실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,60))); return; }
+    if(!res.ok){ const t=await res.text(); console.error('[승격 오류 전문]', res.status, t); toast('승격 실패: '+(res.status===403?'권한 없음(다시 로그인)':t.slice(0,120))); return; }
     const updated = await res.json();
     if(!updated || updated.length===0){ toast('승격 실패: 권한 없음'); return; }
     toast('✅ 단체 관리자로 승격했어요');
