@@ -1418,6 +1418,76 @@ async function loadOrgStudents(){
   } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
+// ===== 일일 자동 리포트 (매일 밤 9시 KST 스냅샷) =====
+async function loadDailyReport(){
+  const box = document.getElementById('org-daily-report');
+  if (!box || !userOrg) return;
+  const ko = userNativeLang==='ko';
+  const myId = currentUser && currentUser.id;
+  const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id===myId);
+  try {
+    const rows = await sbFetch(`/rest/v1/voca_daily_reports?org_id=eq.${userOrg.id}&order=report_date.desc,reviews_overdue.desc&limit=1000`);
+    if (!Array.isArray(rows) || !rows.length){
+      box.innerHTML = `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
+        <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">📊 ${ko?'오늘의 리포트':'Daily report'}</div>
+        <div class="muted" style="font-size:12px;line-height:1.6;">${ko?'아직 리포트가 없어요. 매일 밤 9시에 학생들의 복습·과제 현황이 자동으로 정리돼 여기 표시돼요.':'No report yet. Auto-generated nightly at 9pm.'}</div>
+      </div>`;
+      return;
+    }
+    const latest = rows[0].report_date;
+    let day = rows.filter(r=>r.report_date===latest);
+    // 담당쌤(공동 관리자)은 자기 담당 학생만
+    if (!isPrimary) day = day.filter(r=>r.teacher_id===myId);
+    box.innerHTML = renderDailyReportHTML(day, latest, isPrimary);
+  } catch(e){
+    box.innerHTML = `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;"><div class="muted" style="font-size:12px;">${ko?'리포트를 불러오지 못했어요':'Failed to load report'}</div></div>`;
+  }
+}
+function renderDailyReportHTML(day, dateStr, isPrimary){
+  const ko = userNativeLang==='ko';
+  const d = (dateStr||'').split('-');
+  const dLabel = d.length===3 ? (ko?`${+d[1]}월 ${+d[2]}일`:`${+d[1]}/${+d[2]}`) : dateStr;
+  if (!day.length){
+    return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">📊 ${ko?'오늘의 리포트':'Daily report'} <span class="muted" style="font-weight:400;font-size:12px;">· ${dLabel}</span></div>
+      <div class="muted" style="font-size:12px;line-height:1.6;">${ko?'담당 학생이 없어요. 학생 목록에서 \'내 담당\'으로 지정하면 여기에 나와요.':'No students assigned to you yet.'}</div></div>`;
+  }
+  // 걱정 순 정렬: 밀린 복습 많은 순 → 오늘 안 한 학생 위로
+  const rows = day.slice().sort((a,b)=>
+    (b.reviews_overdue-a.reviews_overdue) || ((a.studied_today?1:0)-(b.studied_today?1:0)) || (b.reviews_done_today-a.reviews_done_today));
+  const n = rows.length;
+  const studied = rows.filter(r=>r.studied_today).length;
+  const notStudied = n - studied;
+  const overdueStu = rows.filter(r=>r.reviews_overdue>0).length;
+  const pill = (bg,c,txt)=>`<span style="background:${bg};color:${c};font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;white-space:nowrap;">${txt}</span>`;
+  const summary = `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 12px;">
+    ${pill('#e6f4ea','#1c7c3c',(ko?'복습함':'Studied')+` ${studied}`)}
+    ${notStudied?pill('#fdecec','#c0392b',(ko?'오늘 안 함':'Idle')+` ${notStudied}`):''}
+    ${overdueStu?pill('#fff4e0','#b5720a',(ko?'밀린 복습':'Overdue')+` ${overdueStu}`):''}
+  </div>`;
+  const card = (r)=>{
+    const done = r.studied_today;
+    const badges = [];
+    badges.push(`<span style="color:${done?'#1c7c3c':'#c0392b'};font-weight:700;">${done?(ko?'✅ 공부함':'✅ Active'):(ko?'⚠️ 오늘 안 함':'⚠️ Idle')}</span>`);
+    if (r.reviews_done_today>0) badges.push(`🔁 ${ko?'복습':'Rev'} ${r.reviews_done_today}`);
+    if (r.reviews_overdue>0) badges.push(`<span style="color:#c0392b;font-weight:700;">⛔ ${ko?'밀림':'Overdue'} ${r.reviews_overdue}</span>`);
+    else if (r.reviews_due_today>0) badges.push(`<span style="color:#b5720a;">📌 ${ko?'오늘 예정':'Due'} ${r.reviews_due_today}</span>`);
+    if (r.assign_total>0) badges.push(`📝 ${ko?'과제':'Task'} ${r.assign_done}/${r.assign_total}`);
+    if (r.personal_pages>0) badges.push(`<span class="muted">📖 ${ko?'개인':'Own'} ${r.personal_pages}</span>`);
+    if (r.new_words_today>0) badges.push(`<span class="muted">＋${r.new_words_today}${ko?'단어':'w'}</span>`);
+    if (r.streak_days>1) badges.push(`🔥 ${r.streak_days}${ko?'일':'d'}`);
+    return `<div onclick="openStudentDetail('${r.student_id}')" style="background:var(--bg-card);border:1px solid ${r.reviews_overdue>0?'#f0c9c0':(done?'var(--ink-07)':'#f2ddc0')};border-radius:12px;padding:11px 13px;margin-bottom:8px;cursor:pointer;">
+      <div style="font-weight:600;color:var(--ink-100);font-size:14px;margin-bottom:5px;">${esc(r.student_name)||(ko?'학생':'Student')}</div>
+      <div style="display:flex;gap:5px 12px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-60);">${badges.join('')}</div>
+    </div>`;
+  };
+  return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:700;color:var(--ink-100);">📊 ${ko?'오늘의 리포트':'Daily report'} <span class="muted" style="font-weight:400;font-size:12px;">· ${dLabel} · ${ko?`학생 ${n}명`:`${n}`}</span></div>
+    <div class="muted" style="font-size:11.5px;line-height:1.5;margin-top:3px;">${ko?'매일 밤 9시 자동 집계. 걱정되는 학생(밀린 복습·오늘 안 함) 순으로 정렬돼요.':'Auto at 9pm nightly, sorted by concern.'}</div>
+    ${summary}
+    ${rows.map(card).join('')}
+  </div>`;
+}
 function teacherSelectHTML(studentId, currentTid, owners){
   const ko = userNativeLang==='ko';
   const opts = [`<option value="">${ko?'담당 미지정':'No teacher'}</option>`].concat(
@@ -1724,6 +1794,7 @@ function renderOrgAdminPage(root) {
           <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'배정한 과제별로 학생들의 복습 진행(며칠차)을 확인하고, 학부모 카드를 보낼 수 있어요.':'See each student\'s review progress per assignment and share a parent card.'}</div>
           <button class="btn btn-solid" onclick="push({name:'report'})">${ko?'📊 리포트 보기':'📊 View report'}</button>
         </div>
+        <div id="org-daily-report"></div>
         <div id="org-students"><div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오는 중...':'Loading students...'}</div></div>
       </div>`;
   }
@@ -1738,7 +1809,7 @@ function renderOrgAdminPage(root) {
       </div>
       <div class="scr-scroll">${inner}</div>
     </div>`;
-  if (status==='approved' && userOrg) setTimeout(loadOrgStudents, 0);
+  if (status==='approved' && userOrg) { setTimeout(loadOrgStudents, 0); setTimeout(loadDailyReport, 0); }
 }
 
 // ── 자주 묻는 질문(FAQ) ──
@@ -5794,6 +5865,7 @@ async function updateReviewStep(review) {
     const patch = {};
     const key = review._stepKey;
     const now = new Date();
+    patch.last_reviewed_at = now.toISOString();   // 일일 리포트: '오늘 복습함' 판별용
 
     // 복습 단계 순서 및 다음 단계까지의 간격 (일)
     const STEPS = [
