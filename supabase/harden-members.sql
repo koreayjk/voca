@@ -25,6 +25,14 @@ declare
   is_service boolean := (coalesce(current_setting('request.jwt.claim.role', true),
                                    (current_setting('request.jwt.claims', true)::json ->> 'role'),
                                    auth.role()) = 'service_role');
+  -- 슈퍼 어드민(어드민 대시보드) 이메일. admin.html 은 클라이언트 JWT로 members 를 PATCH 해서
+  -- 개인회원을 단체장으로 승격하거나 공동관리자·학생으로 배정함. 이 이메일은 org_role/org_status
+  -- 변경을 허용. (plan/scan 카운터는 여전히 잠금 — plan 은 admin-set-plan 엣지함수로만 변경)
+  -- ⚠️ 어드민 이메일이 바뀌면 여기와 엣지함수 ADMIN_EMAILS 둘 다 갱신.
+  admin_emails text[] := array['koreayjk@gmail.com'];
+  caller_email text := lower(coalesce(
+    current_setting('request.jwt.claims', true)::json ->> 'email', ''));
+  is_admin boolean := caller_email <> '' and caller_email = any(admin_emails);
 begin
   -- 웹훅/엣지함수(service_role)는 모든 컬럼 자유롭게 기록 (결제 반영 등)
   if is_service then return new; end if;
@@ -48,10 +56,12 @@ begin
     raise exception 'members.plan 은 클라이언트가 변경할 수 없습니다(결제 웹훅 전용).';
   end if;
 
-  -- org_role / org_status 는 "같은 org 의 승인된 owner" 만 변경 가능(본인 자가승격 차단)
+  -- org_role / org_status 는 "슈퍼 어드민" 또는 "같은 org 의 승인된 owner" 만 변경 가능
+  -- (본인 자가승격 차단). 어드민은 개인→단체장 승격/배정을 어드민 대시보드에서 직접 수행.
   if (new.org_role is distinct from old.org_role)
      or (new.org_status is distinct from old.org_status) then
-    if not public._voca_is_org_owner(coalesce(old.org_id, new.org_id)) then
+    if not (is_admin
+            or public._voca_is_org_owner(coalesce(old.org_id, new.org_id))) then
       raise exception 'org_role/org_status 는 단체 관리자만 변경할 수 있습니다.';
     end if;
   end if;
