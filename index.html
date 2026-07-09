@@ -1161,9 +1161,11 @@ function _isOfficialFreePage(pageNum){
 }
 function isPageLocked(bookId, pageNum){
   const b = (typeof findBook==='function') ? findBook(bookId) : null;
-  if (!b || !b._official) return false;
+  // 공식책 + 학원이 배정한 책(_assigned) 모두 무료/유료 잠금 적용.
+  // 배정 책: 학원 결제중이면 hasOfficialAccess()=true(전체 열림), 무료 학원이면 Day1만.
+  if (!b || !(b._official || b._assigned)) return false;
   if (hasOfficialAccess()) return false;
-  return !_isOfficialFreePage(pageNum);   // 무료/단체이탈 → Day1만 체험, 나머지 잠금
+  return !_isOfficialFreePage(pageNum);   // 무료/단체미결제 → Day1만 체험, 나머지 잠금
 }
 function showOfficialPaywall(){
   toast(userNativeLang==='ko'
@@ -1173,9 +1175,9 @@ function showOfficialPaywall(){
 // 학습/퀴즈 시작 가능 여부(공식책 잠금 반영). 비공식책·즐겨찾기는 항상 true.
 function _officialAccessOK(bookId, scope, pageNum){
   const b = (typeof findBook==='function') ? findBook(bookId) : null;
-  if (!b || !b._official) return true;
+  if (!b || !(b._official || b._assigned)) return true;
   if (hasOfficialAccess()) return true;
-  return scope === 'page' && _isOfficialFreePage(pageNum); // 무료/단체이탈 → Day1만 체험
+  return scope === 'page' && _isOfficialFreePage(pageNum); // 무료/단체미결제 → Day1만 체험
 }
 function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDailyScanCount : 0; }
 function canScan() {
@@ -2642,11 +2644,37 @@ async function loadBooksFromDB() {
     updateTotalWords();
     // 공식 단어장(~6천 단어, 큰 payload)은 비동기로 붙임 → 소유 책 먼저 그려 첫 화면
     // 블로킹을 없애고, 로드 완료 후 현재 화면을 다시 렌더한다.
-    appendOfficialBooks().then(() => {
+    Promise.all([appendOfficialBooks(), appendOrgLibraryBooks()]).then(() => {
       updateTotalWords();
       if (currentUser && typeof render === 'function') { try { render(); } catch(e){} }
-    }).catch(e => console.warn('[official load]', e));
+    }).catch(e => console.warn('[book append]', e));
   } catch(e) { console.error('DB load error:', e); }
+}
+
+// 단체장·공동관리자: 같은 단체의 다른 관리자가 만든 단어장을 라이브러리에 읽기전용으로 추가.
+// (학생에게 직접 배정하기 위함. 학생은 RLS상 접근 불가 — 이 함수도 owner 만 실행)
+// RLS: org-library-schema.sql 의 books_org_admin_read 정책이 있어야 다른 관리자 책이 조회됨.
+async function appendOrgLibraryBooks() {
+  if (!(userOrgId && userOrgRole==='owner' && userOrgStatus==='approved' && currentUser)) return;
+  try {
+    const od = await sbFetch(`/rest/v1/voca_books?is_official=eq.false&user_id=neq.${currentUser.id}&select=*,voca_pages(*,voca_words(*))&order=created_at`);
+    if (!Array.isArray(od)) return;
+    const have = new Set(books.map(b => b.id));
+    const mapped = od.filter(b => !have.has(b.id)).map(b => ({
+      id: b.id, title: b.title, author: b.author||'', color: b.color,
+      desc: b.description||'', cover: b.cover_url||'', category: b.category||'general',
+      _orgLib: true, _readonly: true,   // 읽기전용(편집 불가) · 배정은 가능
+      pages: (b.voca_pages || [])
+        .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
+        .map(p => ({
+          num: p.page_num, _pid: p.id,
+          words: (p.voca_words || [])
+            .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
+            .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: w.analysis || null }))
+        }))
+    }));
+    if (mapped.length) books = books.concat(mapped);
+  } catch(e) { console.warn('[org lib load]', e); }
 }
 
 // 공식 책 표지: 제목에 따라 레포에 호스팅된 표지 이미지를 매핑(DB cover_url이 비어도 적용).
@@ -2709,7 +2737,8 @@ async function updateTotalWords() {
   if (!currentUser) return;
   try {
     // 전체 단어 가중치 점수(CEFR) 계산 → members.total_words에 저장
-    const totalScore = books.filter(b => !b._official).reduce((sum, b) =>
+    // 공식책·단체공유책(_orgLib)·배정책(_assigned)은 '내 단어'가 아니므로 제외.
+    const totalScore = books.filter(b => !b._official && !b._orgLib && !b._assigned).reduce((sum, b) =>
       sum + b.pages.reduce((s, p) =>
         s + calcWordScore(p.words), 0), 0);
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { total_words: totalScore });
@@ -4266,7 +4295,8 @@ function render() {
 
   if (route.name === 'library') {
     loadAssignments();
-    const myBooks = books.filter(b=>!b._assigned);
+    const myBooks = books.filter(b=>!b._assigned && !b._orgLib);
+    const orgLibBooks = books.filter(b=>b._orgLib);
     root.innerHTML = `
       <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
@@ -4304,6 +4334,21 @@ function render() {
                 <div class="book-tile__sub">${esc(b.author)} · ${countWords(b)} ${userNativeLang==='ko'?'단어':'words'}</div>
               </div>`).join('')}
           </div>
+          ${orgLibBooks.length ? `
+          <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:26px 2px 12px;">🏫 ${userNativeLang==='ko'?'단체 공유 단어장 · 배정용':'Shared org wordbooks'}</div>
+          <div class="book-grid">
+            ${orgLibBooks.map(b=>`
+              <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
+                <div class="book-cover" style="background:${bookCoverBg(b)};position:relative;overflow:hidden;">
+                  ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:bookCoverDeco(b)}
+                  ${b.cover?'':`<div class="book-cover__title" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${esc(b.title)}</div>
+                  <div class="book-cover__author" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${esc(b.author)}</div>`}
+                  <div style="position:absolute;top:6px;left:6px;z-index:2;background:rgba(28,53,83,0.85);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">${userNativeLang==='ko'?'공유':'Shared'}</div>
+                </div>
+                <div class="book-tile__title">${esc(b.title)}</div>
+                <div class="book-tile__sub">${esc(b.author)} · ${countWords(b)} ${userNativeLang==='ko'?'단어':'words'}</div>
+              </div>`).join('')}
+          </div>` : ''}
         </div>
         <div class="topbar-actions" style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:60%;">
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
@@ -4345,12 +4390,17 @@ function render() {
             </div>
           </div>
           <div class="rule"></div>
-          ${book._official
-            ? `<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">📕 ${userNativeLang==='ko'?(hasOfficialAccess()?'공식 단어장 · 기출 빅데이터 기반':'공식 단어장 · Day 1 무료 체험 · 나머지는 프리미엄/단체'):'Official wordbook'}</div>`
-            + (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:'')
-            : (book._readonly
-            ? `<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">📌 ${userNativeLang==='ko'?'학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요':'Assigned by your academy (read-only) · tap a page to study'}</div>`
-            : (orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${userNativeLang==='ko'?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:''))}
+          ${(()=>{ const ko=userNativeLang==='ko';
+            const assignBtn = orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${ko?'이 책을 학원생에게 배정':'Assign this book to students'}</div>`:'';
+            const banner = (txt)=>`<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">${txt}</div>`;
+            if (book._official)
+              return banner(`📕 ${ko?(hasOfficialAccess()?'공식 단어장 · 기출 빅데이터 기반':'공식 단어장 · Day 1 무료 체험 · 나머지는 프리미엄/단체'):'Official wordbook'}`) + assignBtn;
+            if (book._orgLib)   // 단체장·공동관리자가 서로의 책을 열람(읽기전용) + 배정 가능
+              return banner(`🏫 ${ko?'단체 공유 단어장 (읽기 전용) · 학생에게 배정할 수 있어요':'Shared org wordbook (read-only) · you can assign it'}`) + assignBtn;
+            if (book._assigned) // 학생이 배정받은 책
+              return banner(`📌 ${ko?(hasOfficialAccess()?'학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요':'학원 과제 책 · Day 1 무료 · 나머지는 학원 결제 시 열려요'):'Assigned by your academy (read-only)'}`);
+            return assignBtn;  // 내 책
+          })()}
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
           ${book.pages.length>0?`<div style="display:flex;gap:14px;flex-wrap:wrap;padding:2px 0 10px;font-size:11px;color:var(--ink-50);">
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid rgba(44,33,24,0.25);box-sizing:border-box;"></span>${userNativeLang==='ko'?'복습 전':'Not yet'}</span>
@@ -5865,8 +5915,8 @@ async function checkReviews() {
       // 책이 삭제됐으면 복습 알림에서 제외
       const _rb = findBook(r.book_id);
       if (!_rb) return;
-      // 무료/단체이탈 → 공식 단어장 복습 중지(Day1 체험은 유지, 데이터 보존 → 재구독 시 재개)
-      if (_rb._official && !hasOfficialAccess() && String(r.page_num) !== OFFICIAL_FREE_PAGE) return;
+      // 무료/단체미결제 → 공식·배정 단어장 복습 중지(Day1 체험은 유지, 데이터 보존 → 재구독 시 재개)
+      if ((_rb._official || _rb._assigned) && !hasOfficialAccess() && String(r.page_num) !== OFFICIAL_FREE_PAGE) return;
       const steps = [
         { key: 'review_2d',  label: t('step1'),  date: r.review_2d  },
         { key: 'review_3d',  label: t('step2'),  date: r.review_3d  },
@@ -6081,8 +6131,8 @@ async function renderReviewPage(root, dock) {
       // 책이 삭제됐으면 복습 목록에서 제외
       const _rb2 = findBook(r.book_id);
       if (!_rb2) return;
-      // 무료/단체이탈 → 공식 단어장 복습 중지(Day1 체험은 유지)
-      if (_rb2._official && !hasOfficialAccess() && String(r.page_num) !== OFFICIAL_FREE_PAGE) return;
+      // 무료/단체미결제 → 공식·배정 단어장 복습 중지(Day1 체험은 유지)
+      if ((_rb2._official || _rb2._assigned) && !hasOfficialAccess() && String(r.page_num) !== OFFICIAL_FREE_PAGE) return;
       if (r.completed) { done.push(r); return; }
       const overdueStep = STEPS.find(s => r[s.key] && r[s.key] <= today);
       if (overdueStep) { todayDue.push({ ...r, _stepKey: overdueStep.key, _stepLabel: overdueStep.label }); return; }
