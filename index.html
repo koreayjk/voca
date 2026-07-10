@@ -33,6 +33,11 @@
   --gold: #1c3553; --gold-bg: rgba(28,53,83,0.09);
   --bg-page: #f3ece0; --bg-card: #faf6ef; --bg-input: #efe7d8;
   --accent: #1c3553; --accent-dark: #0f2238;
+  /* 프리미엄 그림자 스케일 (레이어드 소프트 섀도우) */
+  --shadow-sm: 0 1px 2px rgba(44,33,24,0.05), 0 1px 3px rgba(44,33,24,0.05);
+  --shadow-md: 0 2px 5px rgba(44,33,24,0.05), 0 10px 24px rgba(44,33,24,0.09);
+  --shadow-lg: 0 4px 10px rgba(44,33,24,0.06), 0 18px 44px rgba(44,33,24,0.13);
+  --hairline: rgba(44,33,24,0.08);
 }
 body.dark {
   --ink-100: #f0ece4; --ink-60: rgba(240,236,228,0.6); --ink-40: rgba(240,236,228,0.4);
@@ -232,7 +237,7 @@ body.dark .word-item__ctx { color: rgba(240,236,228,0.7) !important; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #e3d9c9; }
 #root { position: fixed; inset: 0; height: 100dvh; }
-.scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: var(--bg-page); }
+.scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: radial-gradient(135% 90% at 50% -12%, #f8f2e8 0%, var(--bg-page) 52%); }
 @media (min-width: 768px) {
   /* ===== PC 최적화: 좌측 사이드바 + 넓은 콘텐츠 + 가운데 정렬 ===== */
   :root { --sidebar-w: 264px; }
@@ -316,12 +321,12 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 
 /* 로그인 화면 (IM메신저 스타일 좌우 2단) */
 .auth-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--bg-page); padding: 20px; overflow-y: auto; }
-.auth-card { width: 100%; max-width: 440px; background: var(--bg-card); border-radius: 20px; overflow: hidden; display: flex; box-shadow: 0 10px 40px rgba(60,40,20,0.12); }
+.auth-card { width: 100%; max-width: 440px; background: var(--bg-card); border-radius: 22px; overflow: hidden; display: flex; box-shadow: 0 4px 12px rgba(40,25,10,0.06), 0 24px 60px rgba(40,25,10,0.16); }
 .auth-aside { display: none; }
 .auth-main { flex: 1; padding: 36px 32px; }
 @media (min-width: 768px) {
   .auth-card { max-width: 900px; min-height: 560px; }
-  .auth-aside { display: flex; flex-direction: column; justify-content: center; width: 42%; padding: 48px 40px; background: linear-gradient(160deg, #3a2c1d 0%, #251a10 100%); color: #f3ece0; }
+  .auth-aside { display: flex; flex-direction: column; justify-content: center; width: 42%; padding: 48px 40px; background: linear-gradient(158deg, #26405f 0%, #0f1d2e 100%); color: #f3ece0; position: relative; }
   .auth-main { width: 58%; padding: 56px 56px; display: flex; flex-direction: column; justify-content: center; }
   .auth-mobile-logo { display: none; }
   .auth-feat { display: flex; align-items: center; gap: 12px; margin-top: 18px; font-size: 14px; color: rgba(243,236,224,0.92); }
@@ -349,7 +354,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 .topnav__back { font-size: 20px; cursor: pointer; padding: 4px 8px 4px 0; color: var(--ink-100); user-select: none; }
 .topnav__title { font-size: 13px; color: var(--ink-60); letter-spacing: -0.02em; }
 .topnav__right { font-size: 16px; cursor: pointer; padding: 4px 0 4px 8px; }
-.dock { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 80px; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 12px; background: rgba(245,240,232,0.92); border-top: 1px solid var(--ink-07); backdrop-filter: blur(20px); z-index: 20; }
+.dock { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 80px; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 12px; background: rgba(247,242,234,0.82); border-top: 1px solid var(--hairline); backdrop-filter: blur(24px) saturate(1.4); -webkit-backdrop-filter: blur(24px) saturate(1.4); box-shadow: 0 -8px 24px rgba(40,25,10,0.05); z-index: 20; }
 .dock__btn { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 20px; font-size: 10px; color: var(--ink-40); background: none; border: none; font-family: var(--font-body); }
 .dock__btn--active { color: var(--accent); }
 button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-row:active, .page-row:active, .chip:active {
@@ -360,9 +365,10 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .btn:active { filter: brightness(0.88); transform: scale(0.98); transition: all 0.05s; }
 .ox-btn:active { filter: brightness(0.85); transform: scale(0.96); transition: all 0.05s; }
 .dock__glyph { font-family: var(--font-display); font-size: 22px; line-height: 1; letter-spacing: -0.04em; }
-.btn { width: 100%; padding: 15px 14px; border-radius: 13px; font-family: var(--font-body); font-weight: 500; font-size: 15px; cursor: pointer; border: none; text-align: center; }
-.btn-solid { background: var(--accent); color: #fff; }
-.btn-outline { background: transparent; color: var(--ink-100); border: 1.5px solid var(--ink-12); }
+.btn { width: 100%; padding: 15px 14px; border-radius: 13px; font-family: var(--font-body); font-weight: 600; font-size: 15px; cursor: pointer; border: none; text-align: center; letter-spacing: -0.01em; transition: transform .12s ease, box-shadow .18s ease, filter .12s ease; }
+.btn-solid { background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 60%), var(--accent); color: #fff; box-shadow: 0 2px 6px rgba(15,34,56,0.18), 0 10px 22px rgba(15,34,56,0.18); }
+.btn-solid:hover { box-shadow: 0 3px 8px rgba(15,34,56,0.22), 0 14px 30px rgba(15,34,56,0.22); transform: translateY(-1px); }
+.btn-outline { background: var(--bg-card); color: var(--ink-100); border: 1.5px solid var(--ink-12); box-shadow: var(--shadow-sm); }
 .btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
 .btn-fixed--row { flex-direction: row; gap: 8px; }
 .btn-fixed--row .btn { flex: 1; }
@@ -380,7 +386,10 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
 .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
 .book-tile { cursor: pointer; }
-.book-cover { width: 100%; aspect-ratio: 30/43; border-radius: 11px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 8px 22px rgba(70,45,15,0.2), 0 2px 5px rgba(70,45,15,0.14); }
+.book-cover { position: relative; width: 100%; aspect-ratio: 30/43; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 1px 2px rgba(40,25,10,0.12), 0 10px 22px rgba(40,25,10,0.20), 0 22px 46px rgba(40,25,10,0.14); transition: transform .18s ease, box-shadow .18s ease; }
+/* 표지 상단 광택 + 미세한 안쪽 테두리로 '실제 책' 질감 */
+.book-cover::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(157deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 46%); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 -18px 30px rgba(0,0,0,0.14); pointer-events: none; }
+.book-tile:hover .book-cover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(40,25,10,0.14), 0 16px 30px rgba(40,25,10,0.24), 0 30px 60px rgba(40,25,10,0.16); }
 /* aspect-ratio 미지원 안드로이드 폴백 */
 @supports not (aspect-ratio: 1/1) {
   .book-tile { position: relative; }
@@ -5538,11 +5547,12 @@ async function loadHallOfFame() {
 }
 
 // ── 책 표지: id 기반 고정 랜덤 (색 + 일러스트) ──
+// 프리미엄 주얼·어스 톤 (깊은 베이스 → 살짝 밝은 톤. 채도를 낮춰 고급스럽게)
 const _COVER_GRADS = [
-  ['#6b2c3e','#9a4259'], ['#2d4a6b','#3f6690'], ['#3a5a40','#5a8268'],
-  ['#5e4b8b','#8268b0'], ['#8a5a2b','#b5824a'], ['#7a3346','#a04862'],
-  ['#2b5f5a','#3f8a82'], ['#7a2d4d','#a8456f'], ['#3d4a7a','#5d6cb0'],
-  ['#704a2a','#9c6b3f'], ['#4a3a6b','#6b54a0'], ['#2f6b4a','#46a06b'],
+  ['#3b2a4f','#6a4d82'], ['#213b57','#3d6089'], ['#2b4a3f','#4a7a62'],
+  ['#6b2f3e','#9c4d5f'], ['#7a4a24','#b07d43'], ['#2d4657','#527088'],
+  ['#43305c','#7358a0'], ['#5e2f43','#93506a'], ['#1f5651','#3f8079'],
+  ['#6a4326','#9a6d42'], ['#33415f','#5a6a92'], ['#264d3a','#48805f'],
 ];
 function _coverHash(str){ let h=0; str=String(str||''); for(let i=0;i<str.length;i++){ h=((h<<5)-h+str.charCodeAt(i))|0; } return Math.abs(h); }
 function _coverIllust(kind, op){
