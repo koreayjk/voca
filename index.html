@@ -1147,10 +1147,14 @@ function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' &&
 // 공식 단어장 접근: 프리미엄 또는 결제중 학원(관리자/승인학생) → 전체. 무료 → Day 1 체험만.
 function hasOfficialAccess(){
   if (userPlan === 'premium') return true;
-  if (userOrgRole==='owner' && isOrgBillingActive()) return true;
+  // 단체장·공동관리자(승인된 owner)는 결제 여부와 무관하게 공식 단어장 전체 열람.
+  // (학생에게 배정하려면 내용을 다 볼 수 있어야 하므로. 학생은 아래 isOrgStudentActive로 결제시에만 전체)
+  if (userOrgRole==='owner' && userOrgStatus==='approved') return true;
   if (isOrgStudentActive()) return true;
   return false;
 }
+// 공식 단어장을 학습언어 필터 없이(전체 언어) 볼 수 있는 사용자 = 단체 관리자(배정용)
+function _seesAllOfficialLangs(){ return userOrgRole==='owner' && userOrgStatus==='approved'; }
 const OFFICIAL_FREE_PAGE = 'Day 1';
 // 무료 체험 페이지 판정: page_num 형식('Day 1'/'1'/'Day1'/'1일' 등)에 상관없이 "첫 날(숫자 1)"이면 무료
 function _isOfficialFreePage(pageNum){
@@ -2698,7 +2702,9 @@ async function appendOfficialBooks() {
     const od = await sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`);
     if (!Array.isArray(od)) return;
     const have = new Set(books.map(b => b.id));
-    const mapped = od.filter(b => !have.has(b.id) && _officialLang(b.title) === userTargetLang).map(b => ({
+    // 일반 사용자·학생: 학습언어에 맞는 공식책만. 단체 관리자: 배정을 위해 전체 언어의 공식책 모두 노출.
+    const allLangs = _seesAllOfficialLangs();
+    const mapped = od.filter(b => !have.has(b.id) && (allLangs || _officialLang(b.title) === userTargetLang)).map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
       desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
       _official: true, _readonly: true, _officialContent: true,
