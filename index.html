@@ -938,7 +938,7 @@ async function deletePageWord(bookId, pageNum, wordIdx) {
       });
     }
 page.words.splice(wordIdx, 1);
-    updateTotalWords();
+    updateTotalWords(true);   // 삭제: 마지막 단어면 0 기록 허용
     renderKeepScroll();
     toast(ko ? '삭제됐어요' : 'Deleted');
   } catch(e) { toast(ko ? '삭제 실패' : 'Delete failed'); }
@@ -2748,7 +2748,7 @@ function calcWordScore(words) {
   return words.reduce((sum, w) => sum + (WEIGHTS[w.level] || 1), 0);
 }
 
-async function updateTotalWords() {
+async function updateTotalWords(allowZero=false) {
   if (!currentUser) return;
   try {
     // 전체 단어 가중치 점수(CEFR) 계산 → members.total_words에 저장
@@ -2756,6 +2756,10 @@ async function updateTotalWords() {
     const totalScore = books.filter(b => !b._official && !b._orgLib && !b._assigned).reduce((sum, b) =>
       sum + b.pages.reduce((s, p) =>
         s + calcWordScore(p.words), 0), 0);
+    // ⚠️ 스푸리어스 제로화 방지: 책 로드가 아직 안 됐거나, 토큰 만료 등으로 목록이 일시적으로
+    // 비어 total=0 이 나올 때 total_words 를 0 으로 덮어쓰면 관리자·랭킹에 '단어 0'으로 표시됨.
+    // 실제 0 은 '삭제'로 마지막 단어까지 지운 경우뿐 → 그때만 allowZero=true 로 0 기록 허용.
+    if (totalScore === 0 && !allowZero) return;
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { total_words: totalScore });
   } catch(e) {}
 }
@@ -5396,7 +5400,7 @@ async function deleteBook(bookId) {
   if (!confirm(userNativeLang==='ko'?'이 책을 삭제할까요? 저장된 단어도 모두 삭제돼요.':'Delete this book? All saved words will be deleted too.')) return;
   try {
     await fetch(SB_URL+`/rest/v1/voca_books?id=eq.${bookId}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}});
-   books=books.filter(b=>b.id!==bookId); updateTotalWords(); back(); render(); toast('삭제됐어요');
+   books=books.filter(b=>b.id!==bookId); updateTotalWords(true); back(); render(); toast('삭제됐어요');
   } catch(e) { toast('삭제 실패: '+e.message); }
 }
 
@@ -5407,7 +5411,7 @@ async function deletePage(bookId, pageNum) {
     const book=findBook(bookId), page=findPage(book,pageNum);
     if (page?._pid) await fetch(SB_URL+`/rest/v1/voca_pages?id=eq.${page._pid}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}});
     if (book) book.pages=book.pages.filter(p=>String(p.num)!==String(pageNum));
-    updateTotalWords();
+    updateTotalWords(true);   // 삭제: 마지막 페이지면 0 기록 허용
     render(); toast(userNativeLang==='ko'?`Page ${pageNum} 삭제됐어요`:`Page ${pageNum} deleted`);
   } catch(e) { toast('삭제 실패: '+e.message); }
 }
