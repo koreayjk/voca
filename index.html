@@ -5060,6 +5060,22 @@ async function assignBook(bookId, pageNum){
     if (Array.isArray(list)) students = list;
   } catch(e){}
   window._assignStudents = students;
+  // 이 책(+페이지)에 이미 배정된 학생 파악 → 다이얼로그에 '배정됨'으로 표시(중복 배정 방지)
+  let assignedIds = new Set(); let hasAllAssign = false;
+  try {
+    const pageF = (pageNum!=null && pageNum!=='null') ? `&page_num=eq.${encodeURIComponent(String(pageNum))}` : `&page_num=is.null`;
+    const as = await sbFetch(`/rest/v1/voca_assignments?org_id=eq.${userOrg.id}&book_id=eq.${bookId}&active=eq.true${pageF}&select=id,target_type`);
+    if (Array.isArray(as) && as.length) {
+      if (as.some(a=>a.target_type==='all')) hasAllAssign = true;
+      const selIds = as.filter(a=>a.target_type==='selected').map(a=>a.id);
+      if (selIds.length) {
+        const links = await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=in.(${selIds.join(',')})&select=student_id`);
+        if (Array.isArray(links)) links.forEach(l=>assignedIds.add(l.student_id));
+      }
+    }
+  } catch(e){}
+  window._assignAlready = assignedIds; window._assignHasAll = hasAllAssign;
+  const preSel = assignedIds.size>0 && !hasAllAssign;   // 이미 지정배정된 학생이 있으면 목록 바로 펼침
   const titleSnap = book.title + (pageNum!=null && pageNum!=='null' ? ` · p.${pageNum}` : '');
   const pnArg = (pageNum!=null && pageNum!=='null') ? `'${jsq(String(pageNum))}'` : 'null';
   const overlay = document.createElement('div');
@@ -5071,13 +5087,16 @@ async function assignBook(bookId, pageNum){
       <div class="muted" style="font-size:12px;margin-bottom:16px;">${esc(titleSnap)}</div>
       <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:6px;">${ko?'대상':'Target'}</div>
       <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
-        <input type="radio" name="assign-target" value="all" checked onchange="var e=document.getElementById('assign-students');if(e)e.style.display='none'"> ${orgIsPrimary()?(ko?'학원 전체 승인 학생':'All approved students'):(ko?'내 담당 학생 전체':'All my students')} (${students.length})
+        <input type="radio" name="assign-target" value="all" ${preSel?'':'checked'} onchange="var e=document.getElementById('assign-students');if(e)e.style.display='none'"> ${orgIsPrimary()?(ko?'학원 전체 승인 학생':'All approved students'):(ko?'내 담당 학생 전체':'All my students')} (${students.length})
       </label>
       <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
-        <input type="radio" name="assign-target" value="selected" onchange="var e=document.getElementById('assign-students');if(e)e.style.display='block'"> ${ko?'학생 선택':'Select students'}
+        <input type="radio" name="assign-target" value="selected" ${preSel?'checked':''} onchange="var e=document.getElementById('assign-students');if(e)e.style.display='block'"> ${ko?'학생 선택':'Select students'}${assignedIds.size?` <span class="muted" style="font-size:11px;">(${ko?`이미 ${assignedIds.size}명 배정됨`:`${assignedIds.size} assigned`})</span>`:''}
       </label>
-      <div id="assign-students" style="display:none;max-height:200px;overflow:auto;border:1px solid var(--ink-07);border-radius:10px;padding:6px 10px;margin:6px 0;">
-        ${students.length ? students.map(s=>`<label style="display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:var(--ink-100);cursor:pointer;"><input type="checkbox" class="assign-stu" value="${esc(s.id)}"> ${esc(s.name||s.email||'학생')}</label>`).join('') : `<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'승인된 학생이 없어요':'No approved students'}</div>`}
+      ${hasAllAssign?`<div style="font-size:12px;color:var(--accent);background:var(--gold-bg);border-radius:8px;padding:8px 11px;margin:2px 0 4px;">✓ ${ko?'이미 학원 전체에게 배정된 책이에요.':'Already assigned to all students.'}</div>`:''}
+      <div id="assign-students" style="display:${preSel?'block':'none'};max-height:200px;overflow:auto;border:1px solid var(--ink-07);border-radius:10px;padding:6px 10px;margin:6px 0;">
+        ${students.length ? students.map(s=>{ const done = hasAllAssign || assignedIds.has(s.id);
+          return `<label style="display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:var(--ink-100);cursor:${done?'default':'pointer'};"><input type="checkbox" class="assign-stu" value="${esc(s.id)}" ${done?'checked disabled':''}> <span style="flex:1;${done?'color:var(--ink-40);':''}">${esc(s.name||s.email||'학생')}</span>${done?`<span style="font-size:11px;font-weight:700;color:var(--accent);">✓ ${ko?'배정됨':'Assigned'}</span>`:''}</label>`;
+        }).join('') : `<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'승인된 학생이 없어요':'No approved students'}</div>`}
       </div>
       <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin:14px 0 6px;">${ko?'마감일 (선택)':'Due date (optional)'}</div>
       <input type="date" id="assign-due" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);box-sizing:border-box;">
@@ -5098,8 +5117,9 @@ async function doAssign(bookId, pageNum){
   const due = (document.getElementById('assign-due')||{}).value || null;
   let studentIds = [];
   if (target==='selected'){
-    studentIds = [...document.querySelectorAll('.assign-stu:checked')].map(c=>c.value);
-    if (!studentIds.length){ toast(ko?'학생을 한 명 이상 선택해주세요':'Select at least one student'); return; }
+    // 이미 배정된(disabled) 학생은 제외하고 '새로 체크한' 학생만 배정(중복 방지)
+    studentIds = [...document.querySelectorAll('.assign-stu:checked:not(:disabled)')].map(c=>c.value);
+    if (!studentIds.length){ toast(ko?'새로 배정할 학생을 선택해주세요 (✓ 배정됨은 이미 배정된 학생)':'Select a student to add'); return; }
   } else if (!orgIsPrimary()) {
     // 공동 관리자의 '전체' = 자기 담당 학생 전체를 지정 배정
     studentIds = (window._assignStudents||[]).map(s=>s.id);
