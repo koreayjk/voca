@@ -1600,7 +1600,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
           <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}${tname?` · 👩‍🏫 ${esc(tname)}`:(isPrimary?` · <span style="color:#c0392b;">${ko?'담당 미지정':'No teacher'}</span>`:'')}</div>
         </div>
         ${isPrimary?teacherSelectHTML(m.id, m.teacher_id, owners):''}
-        ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;" title="${ko?'공동 관리자로 임명':'Make co-admin'}">${ko?'임명':'Admin'}</button>`:''}
+        ${isPrimary?`<button onclick="event.stopPropagation();promoteStudentToCoAdmin('${m.id}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:8px;padding:6px 10px;font-size:11px;cursor:pointer;color:var(--accent);font-weight:600;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;" title="${ko?'이 학생을 공동 관리자로 임명':'Make co-admin'}">${ko?'🛡️ 공동관리자':'🛡️ Co-admin'}</button>`:''}
         ${isPrimary?`<button onclick="event.stopPropagation();removeStudent('${m.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-40);padding:4px;flex-shrink:0;" title="${ko?'내보내기':'Remove'}">✕</button>`:''}
         ${(!isPrimary && m.org_role==='student') ? (m.teacher_id===myId
             ? `<button onclick="event.stopPropagation();releaseStudent('${m.id}')" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 9px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;">${ko?'담당 해제':'Release'}</button>`
@@ -4354,6 +4354,14 @@ function render() {
 
   if (route.name === 'library') {
     loadAssignments();
+    // 자가복구: 단체 관리자인데 공식 단어장(수능/중등/토익…)이 아직 안 붙어있으면(경합·캐시 등)
+    // 화면을 볼 때 다시 불러온다. (owner 는 _seesAllOfficialLangs()=true 라 전체 언어 노출)
+    if (typeof _seesAllOfficialLangs==='function' && _seesAllOfficialLangs()
+        && !books.some(b=>b._official) && !window._officialFetching) {
+      window._officialFetching = true;
+      appendOfficialBooks().then(()=>{ window._officialFetching=false; updateTotalWords(); render(); })
+                           .catch(()=>{ window._officialFetching=false; });
+    }
     const myBooks = books.filter(b=>!b._assigned);
     root.innerHTML = `
       <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
