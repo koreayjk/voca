@@ -4303,6 +4303,8 @@ function initStudy(bookId, scope, pageNum) {
   window._lastEarnedScore = 0;
   window._lastReviewFinished = false;
   window._lastReviewLate = false;
+  window._lastReviewLateDays = 0;
+  window._lastReviewDue = '';
   let ws;
   if (scope === 'favorite') { ws = allFavoriteWords(); }
   else { const book = findBook(bookId); if (!book) return; ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]).map(w=>({...w,pageNum})) : allWords(book); }
@@ -4694,8 +4696,9 @@ function render() {
           ):(window._lastReviewLate ? `
           <div class="celebrate-card" style="background:var(--bg-input);">
             <div class="celebrate-coin">⏰</div>
-            <div class="celebrate-title" style="color:var(--ink-60);">${userNativeLang==='ko'?'복습 완료!':'Review done!'}</div>
-            <div class="celebrate-sub" style="margin-top:6px;">${userNativeLang==='ko'?'예정일이 지나서 이번 점수는 없어요.<br>다음 복습은 정상 등록됐어요 — 제때 하면 점수를 받아요!':'Past the due date, so no points this time. Next review is set.'}</div>
+            <div class="celebrate-title" style="color:var(--ink-60);">${userNativeLang==='ko'?'점수 없음 · 늦은 복습':'No points · late review'}</div>
+            <div style="display:inline-block;background:#fdecec;color:#c0392b;font-size:12px;font-weight:700;border-radius:99px;padding:4px 12px;margin:8px 0 4px;">${userNativeLang==='ko'?`복습 예정일 ${window._lastReviewDue} · ${window._lastReviewLateDays}일 지남`:`Due ${window._lastReviewDue} · ${window._lastReviewLateDays}d late`}</div>
+            <div class="celebrate-sub" style="margin-top:8px;line-height:1.6;">${userNativeLang==='ko'?`예정일(${window._lastReviewDue})을 넘겨서 이번 복습은 <b>점수를 받지 못했어요.</b><br>다음 복습은 오늘 기준으로 등록됐어요 — <b>제때 하면 점수를 받아요!</b>`:`Reviewed after the due date, so no points this time.<br>Do it on time next round to earn points.`}</div>
           </div>` : '')}
           <div class="label-xs">${t('memoryDone')}</div>
           <div class="done__n">${route.total}</div>
@@ -6088,11 +6091,15 @@ async function updateReviewStep(review) {
     patch[key] = null;
 
     // 원래 예정일과 오늘 비교 - 하루 이상 미뤄졌으면 is_perfect=false + 이번 회차 점수 0(늦은 복습)
-    let isLate = false;
+    let isLate = false, lateDays = 0, dueStr = '';
     const scheduled = review._scheduledDate ? new Date(review._scheduledDate) : null;
     if (scheduled) {
       const diffDays = Math.floor((now - scheduled) / (1000 * 60 * 60 * 24));
-      if (diffDays > 0) { patch.is_perfect = false; isLate = true; }
+      if (diffDays > 0) {
+        patch.is_perfect = false; isLate = true; lateDays = diffDays;
+        dueStr = userNativeLang==='ko' ? `${scheduled.getMonth()+1}월 ${scheduled.getDate()}일`
+                                       : `${scheduled.getMonth()+1}/${scheduled.getDate()}`;
+      }
     }
 
     if (!step || !step.next) {
@@ -6115,6 +6122,8 @@ async function updateReviewStep(review) {
     const pageScore = isLate ? 0 : (isFinalStep ? baseScore * 2 : baseScore); // 완주 시 2배 보너스
     window._lastReviewFinished = isFinalStep; // 축하 화면 분기용
     window._lastReviewLate = isLate;          // 늦은 복습(점수 없음) 안내용
+    window._lastReviewLateDays = lateDays;    // 며칠 늦었는지
+    window._lastReviewDue = dueStr;           // 원래 예정일(표시용)
     window._lastBaseScore = baseScore; // 기본 점수 (보너스 표시용)
     if (pageScore > 0) { addReviewScore(pageScore); window._lastEarnedScore = pageScore; }
     else { window._lastEarnedScore = 0; }
