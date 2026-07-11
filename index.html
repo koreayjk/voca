@@ -1781,13 +1781,84 @@ async function openStudentDetail(id){
         <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>
         <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;">✕</button>
       </div>
-      <div class="muted" style="font-size:12px;margin-bottom:14px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
+      ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
       ${bodyHtml}`;
   } catch(e){
     card.innerHTML = `<div style="text-align:center;color:var(--ink-45);font-size:13px;padding:24px;">${ko?'불러오지 못했어요 (권한 정책 확인)':'Failed to load'}</div><div style="text-align:center;"><button onclick="document.getElementById('student-detail-modal').remove()" style="margin-top:10px;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button></div>`;
   }
 }
 
+// 학생 중심 배정: 한 학생에게 여러 단어장을 골라 배정 (개별 맞춤용)
+async function assignBooksToStudent(studentId, studentName){
+  const ko = userNativeLang==='ko';
+  if (!orgIsAdmin() || !userOrg) { toast(ko?'관리자만 배정할 수 있어요':'Admins only'); return; }
+  const assignable = books.filter(b=>!b._assigned);   // 내 책 + 공식책 (배정받은 책 제외)
+  // 이 학생에게 이미 배정된 책 파악
+  let assignedBooks = new Set();
+  try {
+    const as = await sbFetch(`/rest/v1/voca_assignments?org_id=eq.${userOrg.id}&active=eq.true&page_num=is.null&select=id,book_id,target_type`);
+    if (Array.isArray(as) && as.length) {
+      const selIds = as.filter(a=>a.target_type==='selected').map(a=>a.id);
+      let mine = new Set();
+      if (selIds.length){
+        const links = await sbFetch(`/rest/v1/voca_assignment_students?student_id=eq.${studentId}&assignment_id=in.(${selIds.join(',')})&select=assignment_id`);
+        if (Array.isArray(links)) links.forEach(l=>mine.add(l.assignment_id));
+      }
+      as.forEach(a=>{ if (a.target_type==='all' || mine.has(a.id)) assignedBooks.add(a.book_id); });
+    }
+  } catch(e){}
+  const overlay = document.createElement('div');
+  overlay.id = 'assign2stu-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;display:flex;align-items:flex-end;justify-content:center;';
+  const rows = assignable.length ? assignable.map(b=>{ const done = assignedBooks.has(b.id);
+    return `<label style="display:flex;align-items:center;gap:9px;padding:9px 4px;font-size:13.5px;color:var(--ink-100);cursor:${done?'default':'pointer'};border-bottom:1px solid var(--ink-05);"><input type="checkbox" class="astu-book" value="${esc(b.id)}" ${done?'checked disabled':''}> <span style="flex:1;${done?'color:var(--ink-40);':''}">${esc(b.title)}${b._official?` <span style="font-size:10px;color:var(--accent);">${ko?'공식':'Official'}</span>`:''}</span>${done?`<span style="font-size:11px;font-weight:700;color:var(--accent);">✓ ${ko?'배정됨':'Assigned'}</span>`:`<span class="muted" style="font-size:11px;">${countWords(b)}${ko?'단어':'w'}</span>`}</label>`;
+  }).join('') : `<div class="muted" style="font-size:12px;padding:14px;text-align:center;">${ko?'배정할 단어장이 없어요. 먼저 단어장을 만들거나 공식 단어장을 사용하세요.':'No wordbooks to assign.'}</div>`;
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:85vh;overflow:auto;">
+      <div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--ink-100);margin-bottom:2px;">📚 ${ko?'단어장 배정':'Assign wordbooks'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:14px;">${ko?`${esc(studentName)} 학생에게 줄 단어장을 고르세요`:`Pick wordbooks for ${esc(studentName)}`}</div>
+      <div style="max-height:46vh;overflow:auto;border:1px solid var(--ink-07);border-radius:12px;padding:4px 12px;margin-bottom:12px;">${rows}</div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin:4px 0 6px;">${ko?'마감일 (선택)':'Due date (optional)'}</div>
+      <input type="date" id="astu-due" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);box-sizing:border-box;">
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="var o=document.getElementById('assign2stu-overlay');if(o)o.remove()">${ko?'취소':'Cancel'}</button>
+        <button class="btn btn-solid" style="flex:1;" onclick="doAssignToStudent('${jsq(studentId)}')">${ko?'배정하기':'Assign'}</button>
+      </div>
+    </div>`;
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+async function doAssignToStudent(studentId){
+  const ko = userNativeLang==='ko';
+  const checked = [...document.querySelectorAll('.astu-book:checked:not(:disabled)')].map(c=>c.value);
+  if (!checked.length){ toast(ko?'새로 배정할 단어장을 선택해주세요':'Select a wordbook'); return; }
+  const due = (document.getElementById('astu-due')||{}).value || null;
+  let n = 0;
+  try {
+    for (const bookId of checked){
+      const book = findBook(bookId);
+      // 이 책의 활성 selected 배정(책 전체)이 있으면 재사용, 없으면 생성 → 그 배정에 학생 추가
+      let aid = null;
+      const as = await sbFetch(`/rest/v1/voca_assignments?org_id=eq.${userOrg.id}&book_id=eq.${bookId}&page_num=is.null&target_type=eq.selected&active=eq.true&select=id&limit=1`);
+      if (Array.isArray(as) && as[0]) aid = as[0].id;
+      if (!aid){
+        const rowsR = await sbFetch('/rest/v1/voca_assignments','POST',{
+          org_id:userOrg.id, assigned_by:currentUser.id, book_id:bookId, page_num:null,
+          title:(book?book.title:''), due_date:due||null, target_type:'selected', active:true
+        }, true, {'Prefer':'return=representation'});
+        if (Array.isArray(rowsR) && rowsR[0]) aid = rowsR[0].id;
+      }
+      if (aid){
+        await sbFetch('/rest/v1/voca_assignment_students','POST',[{assignment_id:aid, student_id:studentId}],
+          true, {'Prefer':'return=minimal,resolution=ignore-duplicates'});
+        n++;
+      }
+    }
+    const ov=document.getElementById('assign2stu-overlay'); if(ov) ov.remove();
+    toast(ko?`✅ 단어장 ${n}권 배정했어요`:`✅ Assigned ${n} wordbook(s)`);
+  } catch(e){ toast((ko?'배정 오류: ':'Error: ')+(e&&e.message||e)); }
+}
 function setOrgTab(t){ window._orgTab = t; render(); }
 function renderOrgAdminPage(root) {
   const ko = userNativeLang==='ko';
