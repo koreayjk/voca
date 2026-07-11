@@ -56,12 +56,17 @@ begin
     raise exception 'members.plan 은 클라이언트가 변경할 수 없습니다(결제 웹훅 전용).';
   end if;
 
-  -- org_role / org_status 는 "슈퍼 어드민" 또는 "같은 org 의 승인된 owner" 만 변경 가능
-  -- (본인 자가승격 차단). 어드민은 개인→단체장 승격/배정을 어드민 대시보드에서 직접 수행.
+  -- org_role / org_status 는 "슈퍼 어드민" 또는 "같은 org 의 승인된 owner" 또는
+  -- "그 org 를 직접 만든 사람(orgs.owner_id)" 만 변경 가능 (본인 무단 자가승격 차단).
+  --  · 어드민: 개인→단체장 승격/배정을 어드민 대시보드에서 수행.
+  --  · org 생성자: createOrg 에서 자기 자신을 owner/approved 로 승격(정당 — 자기가 만든 단체).
   if (new.org_role is distinct from old.org_role)
      or (new.org_status is distinct from old.org_status) then
     if not (is_admin
-            or public._voca_is_org_owner(coalesce(old.org_id, new.org_id))) then
+            or public._voca_is_org_owner(coalesce(old.org_id, new.org_id))
+            or exists (select 1 from public.orgs o
+                       where o.id = coalesce(new.org_id, old.org_id)
+                         and o.owner_id = auth.uid())) then
       raise exception 'org_role/org_status 는 단체 관리자만 변경할 수 있습니다.';
     end if;
   end if;

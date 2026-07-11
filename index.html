@@ -1319,6 +1319,16 @@ async function loadMyOrg() {
     }
     else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
     userOrg = (Array.isArray(d) && d[0]) ? d[0] : null;
+    // 자기복구: 내가 직접 만든 단체(orgs.owner_id=본인)인데 하드닝 트리거 때문에 아직
+    // owner/approved 로 못 올라간 계정을 자동 승격. (가드는 orgs.owner_id 로 이 변경을 허용)
+    if (userOrg && currentUser && userOrg.owner_id === currentUser.id
+        && (userOrgRole !== 'owner' || userOrgStatus !== 'approved')) {
+      try {
+        await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH',
+          { org_role: 'owner', org_status: 'approved' }, true, {'Prefer':'return=minimal'});
+        userOrgRole = 'owner'; userOrgStatus = 'approved';
+      } catch(e) {}
+    }
   } catch(e) { userOrg = null; }
 }
 
@@ -1372,9 +1382,11 @@ async function createOrg() {
     }
     const org = Array.isArray(created) ? created[0] : null;
     if (!org || !org.id) { toast(userNativeLang==='ko'?'단체 생성 실패, 다시 시도해주세요':'Create failed'); return; }
-    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id }, true, {'Prefer':'return=representation'});
+    // 단체 생성자는 owner·승인 상태여야 함. (가입 시 하드닝 트리거가 org_role='student'로
+    // 강제하므로, 여기서 명시적으로 owner/approved 로 승격 — orgs.owner_id 가 본인이라 가드 통과)
+    await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id, org_role: 'owner', org_status: 'approved' }, true, {'Prefer':'return=representation'});
     userOrg = { id: org.id, name: org.name, code: org.code, owner_id: currentUser.id };
-    userOrgId = org.id;
+    userOrgId = org.id; userOrgRole = 'owner'; userOrgStatus = 'approved';
     toast(userNativeLang==='ko'?'✅ 단체가 만들어졌어요!':'✅ Organization created!');
     stack = [{ name:'org-admin' }]; render();
   } catch(e) { toast('오류: ' + e.message); }

@@ -907,15 +907,15 @@ function renderOrgAdmins(){
     }
 
     html += `<div style="background:var(--bg-card);border:1px solid var(--ink-12);border-radius:12px;margin-bottom:10px;overflow:hidden;">
-      <div onclick="toggleOrg('${orgKey}')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
+      <div onclick="toggleOrg('${orgKey}')" style="display:flex;align-items:center;flex-wrap:wrap;padding:14px 16px;cursor:pointer;gap:8px 10px;">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 190px;">
           <span style="font-size:14px;color:var(--ink-45);width:14px;flex-shrink:0;">${expanded?'▼':'▶'}</span>
           <div style="min-width:0;">
             <div class="row-name" style="font-size:15px;">${orgName}</div>
-            <div class="row-email">코드 ${esc(org.code||'-')} · 학생 ${students}명 · 관리자 ${1+g.coOwners.length}명</div>
+            <div class="row-email" style="word-break:keep-all;">코드 ${esc(org.code||'-')} · 학생 ${students}명 · 관리자 ${1+g.coOwners.length}명</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">${billStatus} ${freeBtn} <button class="act-btn down" onclick="event.stopPropagation();deleteOrg('${org.id}','${esc(org.name||'')}',${!!org.stripe_subscription_id},${!!org.billing_active},${students})" style="background:#c0392b;color:#fff;">🗑️ 삭제</button></div>
+        <div style="display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto;">${billStatus} ${freeBtn} <button class="act-btn down" onclick="event.stopPropagation();deleteOrg('${org.id}','${esc(org.name||'')}',${!!org.stripe_subscription_id},${!!org.billing_active},${students})" style="background:#c0392b;color:#fff;">🗑️ 삭제</button></div>
       </div>
       ${expanded ? (
         (g.primary ? renderOwnerLine(g.primary, '주') : '<div style="padding:10px 14px;color:var(--ink-45);font-size:12px;border-top:1px solid var(--ink-12);">주 관리자 정보 없음</div>')
