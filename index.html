@@ -369,6 +369,24 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .btn-solid { background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 60%), var(--accent); color: #fff; box-shadow: 0 2px 6px rgba(15,34,56,0.18), 0 10px 22px rgba(15,34,56,0.18); }
 .btn-solid:hover { box-shadow: 0 3px 8px rgba(15,34,56,0.22), 0 14px 30px rgba(15,34,56,0.22); transform: translateY(-1px); }
 .btn-outline { background: var(--bg-card); color: var(--ink-100); border: 1.5px solid var(--ink-12); box-shadow: var(--shadow-sm); }
+/* ── 단체 관리(LMS) 사이드바 레이아웃 ── */
+.org-shell { display: flex; gap: 22px; align-items: flex-start; }
+.org-nav { width: 216px; flex-shrink: 0; position: sticky; top: 8px; display: flex; flex-direction: column; gap: 3px; }
+.org-nav__id { display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px; margin-bottom: 6px; border-bottom: 1px solid var(--ink-07); }
+.org-nav__btn { display: flex; align-items: center; gap: 11px; padding: 11px 13px; border-radius: 11px; border: none; background: none; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--ink-60); cursor: pointer; text-align: left; width: 100%; transition: background .15s, color .15s; }
+.org-nav__btn:hover { background: var(--bg-card); color: var(--ink-100); }
+.org-nav__btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 6px rgba(15,34,56,0.18); }
+.org-nav__ic { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.org-main { flex: 1; min-width: 0; }
+.org-main__title { font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--ink-100); letter-spacing: -0.01em; margin: 2px 2px 16px; }
+@media (max-width: 760px) {
+  .org-shell { flex-direction: column; gap: 12px; }
+  .org-nav { width: 100%; flex-direction: row; overflow-x: auto; position: static; gap: 6px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .org-nav__id { display: none; }
+  .org-nav__btn { width: auto; flex-shrink: 0; padding: 9px 14px; font-size: 13px; border: 1px solid var(--ink-07); background: var(--bg-card); white-space: nowrap; }
+  .org-nav__btn.active { border-color: var(--accent); }
+  .org-nav::-webkit-scrollbar { display: none; }
+}
 .btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
 .btn-fixed--row { flex-direction: row; gap: 8px; }
 .btn-fixed--row .btn { flex: 1; }
@@ -1767,134 +1785,12 @@ async function openStudentDetail(id){
   }
 }
 
+function setOrgTab(t){ window._orgTab = t; render(); }
 function renderOrgAdminPage(root) {
   const ko = userNativeLang==='ko';
   const status = userOrgStatus || 'pending';
-  let inner;
-  if (status !== 'approved') {
-    inner = `
-      <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;padding:38px 24px;text-align:center;margin-top:8px;">
-        <div style="font-size:44px;margin-bottom:14px;">${status==='rejected'?'🚫':'⏳'}</div>
-        <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--ink-100);margin-bottom:10px;">${status==='rejected'?(ko?'승인이 거절되었어요':'Not approved'):(ko?'단체 관리자 승인 대기 중':'Awaiting approval')}</div>
-        <div class="muted" style="font-size:13px;line-height:1.7;">${status==='rejected'?(ko?'관리자에게 문의해주세요.':'Please contact the admin.'):(ko?'관리자 승인 후 단체를 만들 수 있어요.<br>승인되면 여기서 바로 만들 수 있어요.':'You can create your organization after admin approval.')}</div>
-      </div>`;
-  } else if (!userOrg) {
-    inner = `
-      <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;overflow:hidden;margin-top:8px;">
-        <div style="height:4px;background:linear-gradient(90deg,var(--accent),var(--accent-dark));"></div>
-        <div style="padding:24px 22px;">
-          <div style="font-family:var(--font-display);font-size:21px;font-weight:600;color:var(--ink-100);margin-bottom:7px;">${ko?'단체 만들기':'Create your organization'}</div>
-          <div class="muted" style="font-size:13px;line-height:1.6;margin-bottom:18px;">${ko?'학원·학교 등 단체 이름을 입력하면 학생 초대용 코드가 자동으로 만들어져요.':'Enter your organization name; a join code is generated automatically.'}</div>
-          <input id="org-name-inp" type="text" placeholder="${ko?'단체 이름 (예: OO영어학원)':'Organization name'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:13px 14px;font-family:var(--font-body);font-size:15px;color:var(--ink-100);outline:none;margin-bottom:14px;box-sizing:border-box;">
-          <button class="btn btn-solid" onclick="createOrg()">${ko?'단체 만들기':'Create'}</button>
-        </div>
-      </div>`;
-  } else {
-    const isPrim = orgIsPrimary();
-    const eyebrow = (t)=>`<div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:22px 2px 9px;">${t}</div>`;
-    const logoBox = userOrg.logo_url
-      ? `<img src="${userOrg.logo_url}" style="width:56px;height:56px;object-fit:contain;border-radius:13px;background:#fff;border:1px solid var(--ink-07);">`
-      : `<div style="width:56px;height:56px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:600;font-size:24px;">${esc((userOrg.name||'?').trim().charAt(0))}</div>`;
-    const roleBadge = isPrim
-      ? `<span style="background:var(--gold-bg);color:var(--accent);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">👑 ${ko?'주 관리자':'Primary admin'}</span>`
-      : `<span style="background:var(--gold-bg);color:var(--accent);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">🤝 ${ko?'공동 관리자':'Co-admin'}</span>`;
-    const planBadge = userOrg.billing_active
-      ? `<span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">✨ ${ko?'프리미엄':'Premium'}</span>`
-      : `<span style="background:var(--ink-05);color:var(--ink-60);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">${ko?'무료 플랜':'Free plan'}</span>`;
-    const stat = (id,label,accent)=>`<div style="background:var(--bg-page);border:1px solid var(--ink-05);border-radius:12px;padding:11px 12px;text-align:center;">
-        <div id="${id}" style="font-family:var(--font-display);font-size:22px;font-weight:600;color:${accent||'var(--ink-100)'};line-height:1;">—</div>
-        <div class="muted" style="font-size:10.5px;margin-top:5px;letter-spacing:0.02em;">${label}</div>
-      </div>`;
-    inner = `
-      <div style="padding:2px 0 6px;">
-
-        <!-- ── HERO ── -->
-        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;margin-bottom:6px;overflow:hidden;">
-          <div style="height:4px;background:linear-gradient(90deg,var(--accent),var(--accent-dark));"></div>
-          <div style="padding:18px 18px 16px;">
-            <div style="display:flex;align-items:center;gap:13px;">
-              <div id="org-logo-preview">${logoBox}</div>
-              <div style="flex:1;min-width:0;">
-                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                  <div style="font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--ink-100);letter-spacing:-0.01em;line-height:1.15;word-break:break-all;">${esc(userOrg.name)}</div>
-                  <button onclick="renameOrg()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:7px;padding:3px 8px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);flex-shrink:0;">✏️</button>
-                </div>
-                <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">${roleBadge}${planBadge}</div>
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;">
-              ${stat('org-stat-students', ko?'학생':'Students')}
-              ${stat('org-stat-pending', ko?'승인 대기':'Pending', '#b5720a')}
-              ${stat('org-stat-admins', ko?'관리자':'Admins')}
-              ${stat('org-stat-bill', ko?'월 예상':'Monthly', 'var(--accent)')}
-            </div>
-          </div>
-        </div>
-
-        <!-- ── 초대 코드 ── -->
-        ${eyebrow(ko?'학생 초대':'Invite students')}
-        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:16px 18px;">
-          <div style="background:var(--gold-bg);border:1px dashed var(--ink-12);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-            <div style="min-width:0;">
-              <div class="muted" style="font-size:11px;font-weight:600;letter-spacing:0.04em;margin-bottom:2px;">${ko?'가입 코드':'Join code'}</div>
-              <div style="font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing:0.08em;color:var(--accent);line-height:1;">${userOrg.code}</div>
-            </div>
-            <div style="display:flex;gap:8px;flex-shrink:0;">
-              <button onclick="copyOrgCode()" style="background:var(--accent);border:none;border-radius:9px;padding:9px 15px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);">${ko?'복사':'Copy'}</button>
-              <button onclick="regenerateOrgCode()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:9px;padding:9px 13px;font-size:13px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'재발급':'New'}</button>
-            </div>
-          </div>
-          <div class="muted" style="font-size:12px;margin-top:11px;line-height:1.5;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 입력하면 우리 단체로 들어와요.':'Share this code. Students enter it at signup to join your organization.'}</div>
-        </div>
-
-        <!-- ── 리포트 ── -->
-        ${eyebrow(ko?'학습 현황':'Progress')}
-        <div id="org-daily-report"></div>
-        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:16px 18px;margin-bottom:2px;display:flex;align-items:center;gap:14px;">
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:3px;">📈 ${ko?'과제별 상세 리포트':'Assignment report'}</div>
-            <div class="muted" style="font-size:12px;line-height:1.55;">${ko?'배정한 과제별 복습 진행(며칠차)과 학부모 공유 카드.':'Per-assignment review progress and parent cards.'}</div>
-          </div>
-          <button onclick="push({name:'report'})" style="background:var(--accent);border:none;border-radius:10px;padding:10px 16px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;">${ko?'열기 →':'Open →'}</button>
-        </div>
-
-        <!-- ── 학생·관리자 ── -->
-        ${eyebrow(ko?'구성원':'Members')}
-        <div id="org-students"><div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오는 중...':'Loading students...'}</div></div>
-
-        <!-- ── 결제 ── -->
-        ${eyebrow(ko?'구독·결제':'Billing')}
-        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:16px 18px;">
-          ${userOrg.billing_active ? `
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:14.5px;font-weight:700;color:var(--ink-100);">✨ ${ko?'프리미엄 활성':'Premium active'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
-            <div class="muted" style="font-size:12px;line-height:1.6;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved member.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
-          ` : `
-            <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
-            <div class="muted" style="font-size:12px;line-height:1.6;margin-bottom:12px;">${ko?'결제하면 우리 학원 전원이 무제한이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.':'Everyone becomes unlimited. The primary admin is free; teachers and students are $2.99/month each, billed by headcount.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
-            ${isPrim
-              ? `<button class="btn btn-solid" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>`
-              : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${ko?'결제는 주 관리자만 진행할 수 있어요.':'Only the primary admin can start billing.'}</div>`}
-          `}
-        </div>
-
-        <!-- ── 단체 설정 ── -->
-        ${eyebrow(ko?'단체 설정':'Settings')}
-        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:16px 18px;">
-          <div class="muted" style="font-size:12px;margin-bottom:9px;">${ko?'단체 로고 — 학생 화면 상단에 표시돼요':'Logo — shown at the top of students\' screens'}</div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div>${logoBox}</div>
-            <label style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:9px;padding:9px 15px;font-size:13px;cursor:pointer;color:var(--ink-100);font-family:var(--font-body);">
-              ${userOrg.logo_url?(ko?'📷 로고 변경':'📷 Change'):(ko?'📷 로고 등록':'📷 Upload')}
-              <input type="file" accept="image/*" style="display:none;" onchange="uploadOrgLogo(event)">
-            </label>
-          </div>
-        </div>
-
-      </div>`;
-  }
-  root.innerHTML = `
-    <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;">
+  const headerBar = `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;">
         <div style="display:flex;align-items:center;gap:10px;min-width:0;">
           <img src="https://imvoca.app/2.png" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;">
           <div style="min-width:0;">
@@ -1903,10 +1799,159 @@ function renderOrgAdminPage(root) {
           </div>
         </div>
         <button onclick="goPersonalApp()" style="background:var(--ink-100);color:var(--bg-page);border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-family:var(--font-body);cursor:pointer;font-weight:700;flex-shrink:0;white-space:nowrap;">${ko?'📚 단어장 →':'📚 App →'}</button>
-      </div>
-      <div class="scr-scroll">${inner}</div>
+      </div>`;
+
+  // ── 승인 대기 / 단체 미생성: 사이드바 없이 단일 카드 ──
+  if (status !== 'approved') {
+    root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">${headerBar}<div class="scr-scroll">
+      <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;padding:38px 24px;text-align:center;margin-top:8px;box-shadow:var(--shadow-sm);">
+        <div style="font-size:44px;margin-bottom:14px;">${status==='rejected'?'🚫':'⏳'}</div>
+        <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--ink-100);margin-bottom:10px;">${status==='rejected'?(ko?'승인이 거절되었어요':'Not approved'):(ko?'단체 관리자 승인 대기 중':'Awaiting approval')}</div>
+        <div class="muted" style="font-size:13px;line-height:1.7;">${status==='rejected'?(ko?'관리자에게 문의해주세요.':'Please contact the admin.'):(ko?'관리자 승인 후 단체를 만들 수 있어요.<br>승인되면 여기서 바로 만들 수 있어요.':'You can create your organization after admin approval.')}</div>
+      </div></div></div>`;
+    return;
+  }
+  if (!userOrg) {
+    root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">${headerBar}<div class="scr-scroll">
+      <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;overflow:hidden;margin-top:8px;box-shadow:var(--shadow-sm);">
+        <div style="height:4px;background:linear-gradient(90deg,var(--accent),var(--accent-dark));"></div>
+        <div style="padding:24px 22px;">
+          <div style="font-family:var(--font-display);font-size:21px;font-weight:600;color:var(--ink-100);margin-bottom:7px;">${ko?'단체 만들기':'Create your organization'}</div>
+          <div class="muted" style="font-size:13px;line-height:1.6;margin-bottom:18px;">${ko?'학원·학교 등 단체 이름을 입력하면 학생 초대용 코드가 자동으로 만들어져요.':'Enter your organization name; a join code is generated automatically.'}</div>
+          <input id="org-name-inp" type="text" placeholder="${ko?'단체 이름 (예: OO영어학원)':'Organization name'}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:13px 14px;font-family:var(--font-body);font-size:15px;color:var(--ink-100);outline:none;margin-bottom:14px;box-sizing:border-box;">
+          <button class="btn btn-solid" onclick="createOrg()">${ko?'단체 만들기':'Create'}</button>
+        </div>
+      </div></div></div>`;
+    return;
+  }
+
+  // ── 승인된 단체: LMS 사이드바 레이아웃 ──
+  const isPrim = orgIsPrimary();
+  const tab = window._orgTab || 'dashboard';
+  const logoBox = (sz)=> userOrg.logo_url
+    ? `<img src="${userOrg.logo_url}" style="width:${sz}px;height:${sz}px;object-fit:contain;border-radius:${Math.round(sz*0.23)}px;background:#fff;border:1px solid var(--ink-07);flex-shrink:0;">`
+    : `<div style="width:${sz}px;height:${sz}px;border-radius:${Math.round(sz*0.23)}px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:600;font-size:${Math.round(sz*0.43)}px;flex-shrink:0;">${esc((userOrg.name||'?').trim().charAt(0))}</div>`;
+  const roleBadge = isPrim
+    ? `<span style="background:var(--gold-bg);color:var(--accent);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">👑 ${ko?'주 관리자':'Primary'}</span>`
+    : `<span style="background:var(--gold-bg);color:var(--accent);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">🤝 ${ko?'공동 관리자':'Co-admin'}</span>`;
+  const planBadge = userOrg.billing_active
+    ? `<span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">✨ ${ko?'프리미엄':'Premium'}</span>`
+    : `<span style="background:var(--ink-05);color:var(--ink-60);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">${ko?'무료':'Free'}</span>`;
+  const stat = (id,label,accent)=>`<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px 14px;text-align:center;box-shadow:var(--shadow-sm);">
+      <div id="${id}" style="font-family:var(--font-display);font-size:28px;font-weight:600;color:${accent||'var(--ink-100)'};line-height:1;">—</div>
+      <div class="muted" style="font-size:11px;margin-top:7px;letter-spacing:0.02em;">${label}</div>
     </div>`;
-  if (status==='approved' && userOrg) { setTimeout(loadOrgStudents, 0); setTimeout(loadDailyReport, 0); }
+  const card = (body,pad='18px 20px')=>`<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:${pad};box-shadow:var(--shadow-sm);margin-bottom:14px;">${body}</div>`;
+
+  // ── 탭별 콘텐츠 ──
+  const secDashboard = `
+    <div class="org-main__title">📊 ${ko?'대시보드':'Dashboard'}</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
+      ${stat('org-stat-students', ko?'학생':'Students')}
+      ${stat('org-stat-pending', ko?'승인 대기':'Pending', '#b5720a')}
+      ${stat('org-stat-admins', ko?'관리자':'Admins')}
+      ${stat('org-stat-bill', ko?'월 예상':'Monthly', 'var(--accent)')}
+    </div>
+    <div id="org-daily-report"></div>
+    ${card(`<div style="display:flex;align-items:center;gap:14px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:3px;">📈 ${ko?'과제별 상세 리포트':'Assignment report'}</div>
+          <div class="muted" style="font-size:12px;line-height:1.55;">${ko?'배정한 과제별 복습 진행(며칠차)과 학부모 공유 카드.':'Per-assignment review progress and parent cards.'}</div>
+        </div>
+        <button onclick="push({name:'report'})" style="background:var(--accent);border:none;border-radius:10px;padding:10px 16px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;">${ko?'열기 →':'Open →'}</button>
+      </div>`)}`;
+
+  const secMembers = `
+    <div class="org-main__title">👥 ${ko?'학생·관리자':'Members'}</div>
+    <div id="org-students"><div class="muted" style="font-size:13px;text-align:center;padding:24px;">${ko?'학생 정보를 불러오는 중...':'Loading...'}</div></div>`;
+
+  const secReport = `
+    <div class="org-main__title">📈 ${ko?'학습 리포트':'Reports'}</div>
+    <div id="org-daily-report"></div>
+    ${card(`<div style="display:flex;align-items:center;gap:14px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:3px;">📈 ${ko?'과제별 상세 리포트':'Assignment report'}</div>
+          <div class="muted" style="font-size:12px;line-height:1.55;">${ko?'배정한 과제별 복습 진행(며칠차)과 학부모 공유 카드를 볼 수 있어요.':'Per-assignment review progress and parent cards.'}</div>
+        </div>
+        <button onclick="push({name:'report'})" style="background:var(--accent);border:none;border-radius:10px;padding:11px 18px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;">${ko?'열기 →':'Open →'}</button>
+      </div>`)}`;
+
+  const secInvite = `
+    <div class="org-main__title">🎫 ${ko?'학생 초대':'Invite'}</div>
+    ${card(`
+      <div style="background:var(--gold-bg);border:1px dashed var(--ink-12);border-radius:12px;padding:18px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div style="min-width:0;">
+          <div class="muted" style="font-size:11px;font-weight:600;letter-spacing:0.04em;margin-bottom:3px;">${ko?'가입 코드':'Join code'}</div>
+          <div style="font-family:var(--font-display);font-size:36px;font-weight:700;letter-spacing:0.08em;color:var(--accent);line-height:1;">${userOrg.code}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="copyOrgCode()" style="background:var(--accent);border:none;border-radius:9px;padding:10px 17px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);">${ko?'복사':'Copy'}</button>
+          <button onclick="regenerateOrgCode()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:9px;padding:10px 14px;font-size:13px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'재발급':'New'}</button>
+        </div>
+      </div>
+      <div class="muted" style="font-size:12.5px;margin-top:13px;line-height:1.55;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 입력하면 우리 단체로 들어와요. 재발급하면 이전 코드는 더 이상 쓸 수 없어요.':'Share this code. Students enter it at signup to join.'}</div>`)}`;
+
+  const secBilling = `
+    <div class="org-main__title">💳 ${ko?'구독·결제':'Billing'}</div>
+    ${card(userOrg.billing_active ? `
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">✨ ${ko?'프리미엄 활성':'Premium active'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
+        <div class="muted" style="font-size:12.5px;line-height:1.7;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved member.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+      ` : `
+        <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
+        <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${ko?'결제하면 우리 학원 전원이 무제한이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.':'Everyone becomes unlimited. The primary admin is free; teachers and students are $2.99/month each.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+        ${isPrim ? `<button class="btn btn-solid" style="max-width:280px;" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>` : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${ko?'결제는 주 관리자만 진행할 수 있어요.':'Only the primary admin can start billing.'}</div>`}
+      `)}`;
+
+  const secSettings = `
+    <div class="org-main__title">⚙️ ${ko?'단체 설정':'Settings'}</div>
+    ${card(`
+      <div style="font-size:13.5px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">${ko?'단체 이름':'Organization name'}</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--ink-100);">${esc(userOrg.name)}</div>
+        <button onclick="renameOrg()" style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);">${ko?'✏️ 변경':'✏️ Rename'}</button>
+      </div>`)}
+    ${card(`
+      <div style="font-size:13.5px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">${ko?'단체 로고':'Logo'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'학생 화면 상단에 표시돼요':'Shown on the student home screen'}</div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div id="org-logo-preview">${logoBox(56)}</div>
+        <label style="background:var(--bg-input);border:1px solid var(--ink-12);border-radius:9px;padding:10px 16px;font-size:13px;cursor:pointer;color:var(--ink-100);font-family:var(--font-body);">
+          ${userOrg.logo_url?(ko?'📷 로고 변경':'📷 Change'):(ko?'📷 로고 등록':'📷 Upload')}
+          <input type="file" accept="image/*" style="display:none;" onchange="uploadOrgLogo(event)">
+        </label>
+      </div>`)}`;
+
+  const SEC = { dashboard: secDashboard, members: secMembers, report: secReport, invite: secInvite, billing: secBilling, settings: secSettings };
+  const NAV = [
+    ['dashboard','📊', ko?'대시보드':'Dashboard'],
+    ['members','👥', ko?'학생·관리자':'Members'],
+    ['report','📈', ko?'리포트':'Reports'],
+    ['invite','🎫', ko?'초대 코드':'Invite'],
+    ['billing','💳', ko?'구독·결제':'Billing'],
+    ['settings','⚙️', ko?'설정':'Settings'],
+  ];
+  const navHTML = NAV.map(([id,ic,lb])=>`<button class="org-nav__btn ${tab===id?'active':''}" onclick="setOrgTab('${id}')"><span class="org-nav__ic">${ic}</span>${lb}</button>`).join('');
+
+  root.innerHTML = `
+    <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
+      ${headerBar}
+      <div class="scr-scroll">
+        <div class="org-shell">
+          <nav class="org-nav">
+            <div class="org-nav__id">
+              ${logoBox(38)}
+              <div style="min-width:0;">
+                <div style="font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--ink-100);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(userOrg.name)}</div>
+                <div style="margin-top:3px;">${roleBadge}</div>
+              </div>
+            </div>
+            ${navHTML}
+          </nav>
+          <div class="org-main">${SEC[tab] || secDashboard}</div>
+        </div>
+      </div>
+    </div>`;
+  setTimeout(loadOrgStudents, 0); setTimeout(loadDailyReport, 0);
 }
 
 // ── 자주 묻는 질문(FAQ) ──
