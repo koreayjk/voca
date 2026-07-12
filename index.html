@@ -2316,7 +2316,8 @@ async function sbInit() {
         loadApiKey(),
         loadUserName(),
         loadBooksFromDB(),
-        loadNotices()
+        loadNotices(),
+        loadAssignments()   // 단체 학생: 배정 단어장을 첫 렌더 전에 미리 로드(안 보이던 문제 방지)
       ]);
       await maybeSeedSampleBook();
       applyEntryStack();
@@ -2381,6 +2382,7 @@ async function loginWithDemoToken(code) {
     await loadUserName();
     await loadUserPlan();
     await loadBooksFromDB();
+    await loadAssignments();   // 배정 단어장 미리 로드
     applyEntryStack();
     render();
     setTimeout(checkReviews, 1000);
@@ -2559,7 +2561,7 @@ async function handleOAuthRedirect(){
       }catch(e){}
     }
     await loadUserPlan();   // org 역할 먼저(공식책 로드 경합 방지)
-    await Promise.all([ loadApiKey(), loadUserName(), loadBooksFromDB(), loadNotices() ]);
+    await Promise.all([ loadApiKey(), loadUserName(), loadBooksFromDB(), loadNotices(), loadAssignments() ]);
     await maybeSeedSampleBook();
     applyEntryStack(); render();
     setTimeout(updateNoticeBadge, 100); setTimeout(checkReviews, 1000);
