@@ -5231,7 +5231,10 @@ let _assignLoaded = false;
 function isAssignedReadonly(bookId){ const b = findBook(bookId); return !!(b && b._readonly); }
 async function loadAssignments(force){
   if (_assignLoaded && !force) return;
-  if (!(userOrgId && userOrgStatus === 'approved' && _authToken)) { _assignLoaded = true; return; }
+  // 아직 org 승인 상태/토큰이 준비 안 됐으면 '로드됨'으로 표시하지 말고 그냥 반환.
+  // (준비되면 다음 호출에서 실제로 로드. 예전엔 여기서 _assignLoaded=true 로 막혀
+  //  단체 학생이 첫 진입 때 배정 단어장이 안 뜨던 버그가 있었음)
+  if (!(userOrgId && userOrgStatus === 'approved' && _authToken)) return;
   _assignLoaded = true;
   try {
     const res = await fetch(SB_URL + '/functions/v1/assignments-for-student', {
