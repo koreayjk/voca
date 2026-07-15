@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IM VOCA 단체장 사용 설명서</title>
+<meta name="description" content="학원·학교·공부방 원장님을 위한 IM VOCA 단체 관리자 사용 설명서. 학생 초대, 단어장 배정, 자동 학습 리포트, 구독까지 기능별로 안내합니다.">
+<meta property="og:title" content="IM VOCA 단체장 사용 설명서">
+<meta property="og:description" content="단체장(원장)이 IM VOCA의 관리 기능을 어떻게 쓰는지 단계별로 안내하는 사용 설명서.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231c3553'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Georgia,serif' font-style='italic' font-weight='700' fill='%23fff' text-anchor='middle'%3EIM%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f3ece0; --surface:#faf6ef; --surface-2:#efe7d8;
+  --ink:#2c2118; --ink-70:rgba(44,33,24,0.72); --ink-55:rgba(44,33,24,0.55); --ink-35:rgba(44,33,24,0.35);
+  --line:rgba(44,33,24,0.10); --line-soft:rgba(44,33,24,0.06);
+  --navy:#1c3553; --navy-2:#0f2238; --navy-soft:rgba(28,53,83,0.09);
+  --gold:#a9762f; --gold-soft:rgba(169,118,47,0.12);
+  --good:#1c7c3c; --good-soft:#e6f4ea; --warn:#b5720a; --warn-soft:#fbe4cf33; --bad:#c0392b; --bad-soft:#fdecec;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+  --maxw:1120px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#191712; --surface:#221f19; --surface-2:#2b271f;
+  --ink:#f0ece4; --ink-70:rgba(240,236,228,0.72); --ink-55:rgba(240,236,228,0.55); --ink-35:rgba(240,236,228,0.35);
+  --line:rgba(240,236,228,0.12); --line-soft:rgba(240,236,228,0.06);
+  --navy:#7fa2cf; --navy-2:#5a7aa8; --navy-soft:rgba(127,162,207,0.15);
+  --gold:#d8b46a; --gold-soft:rgba(216,180,106,0.14);
+  --good:#5cc98a; --good-soft:rgba(92,201,138,0.14); --warn:#e0a84b; --bad:#e8776a; --bad-soft:rgba(232,119,106,0.14);
+}}
+:root[data-theme="light"]{
+  --bg:#f3ece0; --surface:#faf6ef; --surface-2:#efe7d8;
+  --ink:#2c2118; --ink-70:rgba(44,33,24,0.72); --ink-55:rgba(44,33,24,0.55); --ink-35:rgba(44,33,24,0.35);
+  --line:rgba(44,33,24,0.10); --line-soft:rgba(44,33,24,0.06);
+  --navy:#1c3553; --navy-2:#0f2238; --navy-soft:rgba(28,53,83,0.09);
+  --gold:#a9762f; --gold-soft:rgba(169,118,47,0.12);
+  --good:#1c7c3c; --good-soft:#e6f4ea; --warn:#b5720a; --bad:#c0392b; --bad-soft:#fdecec;
+}
+:root[data-theme="dark"]{
+  --bg:#191712; --surface:#221f19; --surface-2:#2b271f;
+  --ink:#f0ece4; --ink-70:rgba(240,236,228,0.72); --ink-55:rgba(240,236,228,0.55); --ink-35:rgba(240,236,228,0.35);
+  --line:rgba(240,236,228,0.12); --line-soft:rgba(240,236,228,0.06);
+  --navy:#7fa2cf; --navy-2:#5a7aa8; --navy-soft:rgba(127,162,207,0.15);
+  --gold:#d8b46a; --gold-soft:rgba(216,180,106,0.14);
+  --good:#5cc98a; --good-soft:rgba(92,201,138,0.14); --warn:#e0a84b; --bad:#e8776a; --bad-soft:rgba(232,119,106,0.14);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(130% 60% at 50% -10%, color-mix(in srgb, var(--bg) 60%, #fff) 0%, var(--bg) 60%);}
+a{color:inherit;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+/* ── COVER ── */
+.cover{padding:64px 0 40px;border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:30px;}
+.brand__logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(140deg,var(--navy),var(--navy-2));display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--serif);font-weight:700;font-size:20px;font-style:italic;}
+.brand__name{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.02em;}
+.brand__name span{color:var(--ink-55);font-family:var(--sans);font-weight:500;font-size:13px;margin-left:8px;letter-spacing:0;}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
+.cover h1{font-family:var(--sans);font-weight:800;font-size:clamp(30px,5vw,46px);line-height:1.2;letter-spacing:-.02em;margin:14px 0 16px;text-wrap:balance;}
+.cover h1 b{color:var(--navy);}
+.cover__lead{font-size:16px;color:var(--ink-70);max-width:62ch;}
+.cover__meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;font-size:13px;color:var(--ink-55);}
+.cover__meta b{color:var(--ink);font-weight:700;}
+
+/* ── LAYOUT ── */
+.doc{display:grid;grid-template-columns:230px 1fr;gap:48px;align-items:start;padding:44px 0 90px;}
+.toc{position:sticky;top:24px;font-size:13.5px;}
+.toc__title{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-35);margin:0 0 12px 12px;}
+.toc a{display:block;padding:8px 12px;border-radius:9px;color:var(--ink-70);text-decoration:none;border-left:2px solid transparent;transition:background .15s,color .15s;}
+.toc a:hover{background:var(--surface);color:var(--ink);}
+.toc a.active{background:var(--navy-soft);color:var(--navy);font-weight:700;border-left-color:var(--navy);}
+.toc a small{display:block;font-size:11px;color:var(--ink-35);font-weight:400;}
+
+.content{min-width:0;}
+section{scroll-margin-top:24px;margin-bottom:20px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:30px 32px;box-shadow:0 1px 2px rgba(40,25,10,.04),0 12px 26px rgba(40,25,10,.05);}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;}
+.sec-num{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--gold);flex-shrink:0;font-variant-numeric:tabular-nums;}
+section h2{font-family:var(--sans);font-weight:800;font-size:23px;letter-spacing:-.01em;margin:0;line-height:1.25;}
+.sec-sub{color:var(--ink-70);font-size:15px;margin:8px 0 20px;max-width:64ch;}
+section h3{font-size:15px;font-weight:800;margin:24px 0 10px;color:var(--ink);}
+section h3:first-of-type{margin-top:8px;}
+p{margin:0 0 12px;}
+.content p, .content li{font-size:14.5px;}
+
+/* steps */
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+ol.steps>li{counter-increment:s;position:relative;padding-left:42px;}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--serif);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;}
+ol.steps>li b{color:var(--ink);}
+.tag{display:inline-block;font-size:12px;font-weight:700;background:var(--navy-soft);color:var(--navy);border-radius:7px;padding:2px 8px;white-space:nowrap;}
+.pathbits{color:var(--ink-55);font-size:13px;}
+.pathbits b{color:var(--navy);font-weight:700;}
+
+/* callout */
+.note{border-radius:12px;padding:13px 16px;margin:16px 0 4px;font-size:13.5px;line-height:1.65;display:flex;gap:10px;}
+.note .ic{flex-shrink:0;}
+.note--tip{background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);}
+.note--warn{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 25%,transparent);}
+.note--info{background:var(--navy-soft);border:1px solid color-mix(in srgb,var(--navy) 22%,transparent);}
+.note b{font-weight:700;}
+
+/* pills / status row */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px;}
+.chip{font-size:12px;font-weight:700;border-radius:99px;padding:4px 11px;}
+.chip.good{background:var(--good-soft);color:var(--good);}
+.chip.warn{background:var(--gold-soft);color:var(--warn);}
+.chip.bad{background:var(--bad-soft);color:var(--bad);}
+.chip.n{background:var(--surface-2);color:var(--ink-55);}
+
+/* two-col compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+.compare .cc{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+.compare .cc h4{margin:0 0 4px;font-size:14.5px;font-weight:800;}
+.compare .cc .who{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:8px;}
+.compare .cc p{font-size:13.5px;color:var(--ink-70);margin:0;}
+
+/* faq */
+.faq details{border-top:1px solid var(--line);padding:14px 2px;}
+.faq details:first-child{border-top:none;}
+.faq summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:'+';color:var(--navy);font-family:var(--serif);font-size:20px;line-height:1;transition:transform .2s;}
+.faq details[open] summary::after{content:'–';}
+.faq .fa{color:var(--ink-70);font-size:14px;margin-top:10px;}
+
+.review-flow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center;}
+.rf{font-family:var(--serif);font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;color:var(--navy);background:var(--navy-soft);border-radius:8px;padding:6px 11px;}
+.rf-arrow{color:var(--ink-35);}
+
+footer{border-top:1px solid var(--line);padding:30px 0 60px;color:var(--ink-55);font-size:13px;}
+footer b{color:var(--ink);}
+
+.themetog{position:fixed;top:16px;right:16px;z-index:10;background:var(--surface);border:1px solid var(--line);color:var(--ink-70);border-radius:99px;padding:7px 14px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(40,25,10,.08);}
+
+@media (max-width:860px){
+  .doc{grid-template-columns:1fr;gap:0;}
+  .toc{position:static;margin-bottom:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;}
+  .toc__title{margin:6px 0 8px 8px;}
+  .toc__list{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .toc a{white-space:nowrap;border-left:none;}
+  .toc a small{display:none;}
+  .compare{grid-template-columns:1fr;}
+  section{padding:24px 20px;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px;border-radius:6px;}
+html{scroll-behavior:smooth;}
+</style>
+</head>
+<body>
+
+
+<button class="themetog" onclick="var r=document.documentElement,d=r.getAttribute('data-theme')==='dark'||(!r.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme:dark)').matches);r.setAttribute('data-theme',d?'light':'dark')">◐ 테마</button>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand__logo">IM</div>
+      <div class="brand__name">IM VOCA <span>단체 관리자 콘솔</span></div>
+    </div>
+    <div class="eyebrow">Director's Handbook · 원장님 안내서</div>
+    <h1>단체장(원장) <b>사용 설명서</b></h1>
+    <p class="cover__lead">학원·학교·공부방에서 IM VOCA를 단체로 운영하는 원장님을 위한 안내서입니다. 학생을 받고, 단어장을 배정하고, 매일 학습 현황을 자동으로 보고받는 방법을 기능별로 정리했어요.</p>
+    <div class="cover__meta">
+      <div><b>대상</b> · 단체장(주 관리자)·공동관리자</div>
+      <div><b>접속</b> · imvoca.app → 단체 관리</div>
+      <div><b>특허출원</b> · 제10-2026-0127089호</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="doc">
+  <nav class="toc" aria-label="목차">
+    <div class="toc__title">목차</div>
+    <div class="toc__list">
+      <a href="#start" class="active">1 · 시작하기 <small>단체 만들기·초대 코드</small></a>
+      <a href="#dashboard">2 · 대시보드 <small>한눈에 보는 현황</small></a>
+      <a href="#members">3 · 학생·관리자 관리 <small>승인·담당·임명</small></a>
+      <a href="#assign">4 · 단어장 배정 <small>책 중심·학생 중심</small></a>
+      <a href="#official">5 · 공식 단어장 <small>수능·중등·토익</small></a>
+      <a href="#report">6 · 학습 리포트 <small>오늘·과제별</small></a>
+      <a href="#billing">7 · 구독·결제 <small>학원 프리미엄</small></a>
+      <a href="#review">8 · 복습 시스템 <small>망각곡선·점수</small></a>
+      <a href="#faq">9 · 자주 묻는 질문</a>
+    </div>
+  </nav>
+
+  <main class="content">
+
+    <section id="start">
+      <div class="sec-head"><span class="sec-num">01</span><h2>시작하기 — 단체 만들고 학생 받기</h2></div>
+      <p class="sec-sub">회원가입할 때 <b>‘단체’</b>를 선택하면 단체장(원장)으로 시작합니다. 단체를 만들면 학생 초대용 <b>가입 코드</b>가 자동으로 생겨요.</p>
+
+      <h3>단체 만들기</h3>
+      <ol class="steps">
+        <li>회원가입 시 <span class="tag">🏫 단체</span> 선택 → 로그인 후 <b>단체 관리</b> 화면으로 이동해요.</li>
+        <li>단체 이름(예: <i>OO영어학원</i>)을 입력하고 <b>‘단체 만들기’</b>를 누르면 끝. 가입 코드가 자동 발급돼요.</li>
+      </ol>
+
+      <h3>학생 초대하기</h3>
+      <ol class="steps">
+        <li>왼쪽 메뉴 <span class="tag">🎫 초대 코드</span>에서 <b>가입 코드</b>를 확인하고 <b>복사</b>하세요.</li>
+        <li>학생에게 코드를 전달해요. 학생은 회원가입 때 <b>‘단체’</b>를 고르고 이 코드를 입력하면 우리 단체로 들어와요.</li>
+        <li>가입한 학생은 <b>승인 대기</b> 상태로 들어옵니다 → <b>학생·관리자</b> 탭에서 승인해 주세요.</li>
+      </ol>
+      <div class="note note--warn"><span class="ic">⚠️</span><div>코드가 유출됐을 땐 <b>‘재발급’</b>을 누르면 새 코드가 생기고 <b>이전 코드는 즉시 무효</b>가 돼요. 기존 학생에는 영향이 없습니다.</div></div>
+    </section>
+
+    <section id="dashboard">
+      <div class="sec-head"><span class="sec-num">02</span><h2>대시보드 — 한눈에 보는 현황</h2></div>
+      <p class="sec-sub"><span class="tag">📊 대시보드</span> 메뉴는 단체 상태를 요약해서 보여줘요. 매일 여기부터 확인하면 됩니다.</p>
+      <div class="chips">
+        <span class="chip n">학생 — 승인된 학생 수</span>
+        <span class="chip warn">승인 대기 — 처리할 학생 수</span>
+        <span class="chip n">관리자 — 주·공동 관리자 수</span>
+        <span class="chip good">월 예상 — 이번 달 예상 청구액</span>
+      </div>
+      <p style="margin-top:14px;">그 아래 <b>‘오늘의 리포트’</b>가 자동으로 떠서, 오늘 학생들이 복습을 했는지·과제를 하고 있는지 한눈에 보여줘요. (자세한 내용은 <a href="#report">6. 학습 리포트</a>)</p>
+    </section>
+
+    <section id="members">
+      <div class="sec-head"><span class="sec-num">03</span><h2>학생·관리자 관리</h2></div>
+      <p class="sec-sub"><span class="tag">👥 학생·관리자</span> 메뉴에서 구성원을 관리합니다. 승인, 담당 선생님 지정, 공동관리자 임명, 내보내기를 모두 여기서 해요.</p>
+
+      <h3>① 승인 대기 학생 처리</h3>
+      <p>코드로 가입한 학생은 목록 상단에 <b>승인 대기</b>로 표시돼요. <b>승인</b>하면 우리 단체 학생이 되고, <b>거절</b>하면 들어오지 못해요.</p>
+
+      <h3>② 담당 선생님 지정</h3>
+      <p>학생 옆 드롭다운에서 <b>담당 선생님(공동관리자)</b>을 지정할 수 있어요. 담당쌤은 <b>자기 담당 학생만</b> 리포트를 받고 관리해요 — 반별·담임제 운영에 딱 맞아요.</p>
+
+      <h3>③ 공동관리자 임명</h3>
+      <ol class="steps">
+        <li>선생님으로 쓸 학생 옆 <span class="tag">🛡️ 공동관리자</span> 버튼을 누르면 그 사람이 관리 권한을 갖게 돼요.</li>
+        <li>공동관리자는 <b>학생 승인·단어장 배정·리포트 열람</b>을 함께 할 수 있어요. (단어장은 그대로 사용 가능)</li>
+      </ol>
+      <div class="note note--info"><span class="ic">ℹ️</span><div><b>주 관리자(원장)</b>는 단체 전체를 관리하고 결제를 진행해요. <b>공동관리자(선생님)</b>는 학생 승인·배정·자기 담당 학생 리포트를 맡아요. 임명은 언제든 <b>해지</b>할 수 있어요.</div></div>
+    </section>
+
+    <section id="assign">
+      <div class="sec-head"><span class="sec-num">04</span><h2>단어장 배정 — 두 가지 방법</h2></div>
+      <p class="sec-sub">학생에게 단어장을 과제로 줄 때, 상황에 따라 <b>두 방향</b> 중 편한 걸 쓰세요. 배정하면 학생 앱에 <b>‘📌 과제’</b>로 바로 떠요.</p>
+
+      <div class="compare">
+        <div class="cc">
+          <div class="who">여러 학생 → 한 번에</div>
+          <h4>책에서 배정하기</h4>
+          <p>책 한 권을 반 전체·여러 학생에게 동시에 줄 때. 책을 열고 <b>‘🏫 이 책을 학원생에게 배정’</b> → 대상 선택.</p>
+        </div>
+        <div class="cc">
+          <div class="who">한 학생 → 여러 권</div>
+          <h4>학생에서 배정하기</h4>
+          <p>특정 학생에게 맞춤으로 여러 책을 줄 때. 학생을 눌러 상세 → <b>‘📚 단어장 배정’</b> → 책 여러 권 선택.</p>
+        </div>
+      </div>
+
+      <h3>책에서 배정 (다수 배정)</h3>
+      <ol class="steps">
+        <li>배정할 책(또는 특정 페이지)을 열어요. <span class="pathbits"><b>책</b> → 🏫 배정 / 페이지 <b>⋯</b> → 이 페이지 배정</span></li>
+        <li>대상 선택 — <b>‘학원 전체 승인 학생’</b> 또는 <b>‘학생 선택’</b>(체크). 마감일(선택)도 지정할 수 있어요.</li>
+        <li><b>배정하기</b>를 누르면 끝. 다시 열면 이미 배정된 학생은 <span class="chip good" style="padding:2px 8px;">✓ 배정됨</span>으로 표시돼요.</li>
+      </ol>
+
+      <h3>학생에서 배정 (개별 맞춤)</h3>
+      <ol class="steps">
+        <li><b>학생·관리자</b> 탭에서 학생을 눌러 상세를 열어요.</li>
+        <li>맨 위 <b>‘📚 이 학생에게 단어장 배정’</b> → 줄 책을 여러 권 체크(공식 단어장 포함) → <b>배정하기</b>.</li>
+      </ol>
+      <div class="note note--tip"><span class="ic">💡</span><div>이미 배정된 책은 자동으로 <b>‘✓ 배정됨’</b>으로 표시돼서 중복 배정되지 않아요. 같은 책을 여러 학생에게 줘도 리포트는 한 줄로 깔끔하게 모여요.</div></div>
+    </section>
+
+    <section id="official">
+      <div class="sec-head"><span class="sec-num">05</span><h2>공식 단어장 — 수능·중등·토익</h2></div>
+      <p class="sec-sub">IM VOCA가 만든 <b>기출 빅데이터 기반 공식 단어장</b>을 학생에게 배정할 수 있어요. 관리자는 학습언어와 상관없이 <b>모든 공식 단어장</b>을 볼 수 있어요.</p>
+      <div class="chips">
+        <span class="chip n">수능 기본·핵심·고난도·숙어</span>
+        <span class="chip n">중등 기초·핵심·완성</span>
+        <span class="chip n">토익 기초·핵심·고득점·숙어</span>
+        <span class="chip n">스페인어 기초·중급·선교</span>
+      </div>
+      <p style="margin-top:14px;">배정 방법은 일반 단어장과 같아요(위 4번 참고). 공식 단어장을 골라 학생에게 배정하면 됩니다.</p>
+      <div class="note note--info"><span class="ic">🔒</span><div><b>무료 단체</b>는 배정받은 공식책의 <b>Day 1만</b> 열려요(체험). <b>결제한 학원</b>은 학생 전원이 <b>모든 Day를</b> 무제한으로 봅니다. (결제는 <a href="#billing">7번</a> 참고)</div></div>
+    </section>
+
+    <section id="report">
+      <div class="sec-head"><span class="sec-num">06</span><h2>학습 리포트 — 자동 보고</h2></div>
+      <p class="sec-sub">학생을 일일이 안 들어가도, 누가 복습을 제대로 하고 있는지 <b>자동으로 보고</b>받아요. <span class="tag">📈 리포트</span> 메뉴에서 확인합니다.</p>
+
+      <h3>오늘의 리포트 (매일 자동)</h3>
+      <p>매일 <b>밤 9시</b>에 학생별 현황이 자동으로 정리돼요. <b>걱정되는 학생</b>(밀린 복습·오늘 안 함)이 위로 올라와서 챙기기 쉬워요.</p>
+      <div class="chips">
+        <span class="chip good">✅ 공부함 / 🔁 복습 N</span>
+        <span class="chip bad">⚠️ 오늘 안 함</span>
+        <span class="chip bad">⛔ 밀린 복습 N</span>
+        <span class="chip warn">📝 과제 3/6</span>
+        <span class="chip n">📖 개인공부 · 🔥 연속일수</span>
+      </div>
+      <p style="margin-top:12px;"><b>과제(배정한 책)</b>와 <b>학생이 개인적으로 올린 공부</b>를 구분해서 보여줘요. 담당쌤(공동관리자)은 <b>자기 담당 학생만</b> 보여요.</p>
+
+      <h3>과제별 상세 리포트</h3>
+      <p><span class="tag">📈 리포트</span> 메뉴를 누르면 바로 떠요. 배정한 과제마다 학생이 <b>며칠차 복습 중인지</b>, <b>제때 했는지 / 늦었는지</b>가 보이고, 학생별 <b>학부모 공유 카드</b>도 보낼 수 있어요.</p>
+      <div class="chips">
+        <span class="chip bad">시작 전</span><span class="chip warn">복습 중</span><span class="chip good">복습 완료</span>
+        <span class="chip good">제때 ✅</span><span class="chip warn">늦음 ⚠️</span>
+      </div>
+    </section>
+
+    <section id="billing">
+      <div class="sec-head"><span class="sec-num">07</span><h2>구독·결제 — 학원 프리미엄</h2></div>
+      <p class="sec-sub"><span class="tag">💳 구독·결제</span> 메뉴에서 학원 전체를 무제한으로 열 수 있어요. 결제는 <b>주 관리자(원장)</b>만 진행합니다.</p>
+      <h3>요금</h3>
+      <ol class="steps">
+        <li><b>원장(주 관리자)은 무료</b>예요.</li>
+        <li>선생님·학생은 <b>1명당 월 $2.99</b> — 매달 <b>승인된 인원수만큼</b> 자동 청구돼요.</li>
+        <li>결제하면 학원 전원이 <b>사진 스캔 무제한 + 공식 단어장 전체 Day</b>가 열려요.</li>
+      </ol>
+      <div class="note note--tip"><span class="ic">💡</span><div>학생이 중간에 늘거나 줄면 다음 결제에 <b>인원수만큼 자동으로 반영</b>돼요. 별도 조작이 필요 없어요.</div></div>
+    </section>
+
+    <section id="review">
+      <div class="sec-head"><span class="sec-num">08</span><h2>복습 시스템 — 망각곡선과 점수</h2></div>
+      <p class="sec-sub">IM VOCA는 <b>에빙하우스 망각곡선</b>에 따라 복습 일정을 자동으로 잡아줘요. 학생이 처음 외운 날을 기준으로 다음 복습일이 정해집니다.</p>
+      <div class="review-flow">
+        <span class="rf">암기</span><span class="rf-arrow">→</span>
+        <span class="rf">+1일</span><span class="rf-arrow">→</span>
+        <span class="rf">+2일</span><span class="rf-arrow">→</span>
+        <span class="rf">+3일</span><span class="rf-arrow">→</span>
+        <span class="rf">+6일</span><span class="rf-arrow">→</span>
+        <span class="rf">+15일</span><span class="rf-arrow">→</span>
+        <span class="rf">+30일</span>
+      </div>
+      <h3>늦게 복습하면?</h3>
+      <p><b>예정일을 넘겨서</b> 복습하면 <b>그 회차의 점수는 없어요(0점).</b> 대신 그날 기준으로 다음 차수 복습이 정상 등록돼요.</p>
+      <div class="note note--info"><span class="ic">🗓️</span><div><b>예시</b> — 5일에 처음 외웠으면 6일이 1일차 복습이에요. 6일에 안 하고 <b>7일에 하면 점수는 0</b>, 그리고 <b>8일이 2일차 복습</b>으로 세팅됩니다. 학생 완료 화면에도 “예정일이 지나 점수 없음”이 안내돼요.</div></div>
+      <p style="margin-top:6px;color:var(--ink-55);font-size:13.5px;">→ 제때 복습하는 습관을 만들도록 설계했어요. 늦어도 진도는 계속 나가되, 점수는 정시 복습에만 줍니다.</p>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="sec-head"><span class="sec-num">09</span><h2>자주 묻는 질문</h2></div>
+      <details open><summary>학생에게 배정한 단어장은 학생 화면 어디에 뜨나요?</summary><div class="fa">학생 앱 책장 상단의 <b>‘📌 과제’</b> 목록에 떠요. 학생이 눌러서 바로 외우고 복습할 수 있어요.</div></details>
+      <details><summary>공동관리자와 주 관리자는 뭐가 다른가요?</summary><div class="fa">주 관리자(원장)는 단체 전체 관리 + 결제를 담당해요. 공동관리자(선생님)는 학생 승인·배정·<b>자기 담당 학생</b> 리포트를 맡아요. 결제는 주 관리자만 가능합니다.</div></details>
+      <details><summary>오늘의 리포트가 안 보여요.</summary><div class="fa">매일 밤 9시에 자동 생성돼요. 그 전에는 전날 리포트가 최신으로 보여요. 승인된 학생이 있어야 표시됩니다.</div></details>
+      <details><summary>무료로도 학생에게 배정할 수 있나요?</summary><div class="fa">네. 배정은 무료로 됩니다. 다만 무료 단체는 학생이 공식 단어장의 <b>Day 1만</b> 볼 수 있고, 결제하면 전체 Day가 열려요.</div></details>
+      <details><summary>담당 선생님을 바꾸거나 학생을 내보내려면?</summary><div class="fa"><b>학생·관리자</b> 탭에서 학생 옆 드롭다운으로 담당을 바꾸고, ✕ 버튼으로 내보낼 수 있어요(계정·단어 데이터는 보존).</div></details>
+    </section>
+
+    <footer>
+      <p><b>IM VOCA</b> · 사진 한 장으로 완성하는 AI 단어장 · <b>imvoca.app</b><br>
+      본 설명서의 화면·명칭은 업데이트에 따라 조금씩 달라질 수 있어요. 특허출원 기술(제10-2026-0127089호).</p>
+    </footer>
+
+  </main>
+</div>
+</div>
+
+<script>
+// TOC active state on scroll
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var map={}; links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  var secs=[].slice.call(document.querySelectorAll('section[id]'));
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a)a.classList.add('active'); }});
+  },{rootMargin:'-20% 0px -70% 0px'});
+  secs.forEach(function(s){obs.observe(s);});
+})();
+</script>
+
+</body>
+</html>
