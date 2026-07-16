@@ -1597,6 +1597,7 @@ function renderOrgStudentsHTML(list, reviewByUser){
         <div style="width:26px;text-align:center;font-weight:700;color:var(--ink-60);font-size:14px;flex-shrink:0;">${medal}</div>
         <div style="flex:1;min-width:0;">
           <div style="font-weight:600;color:var(--ink-100);font-size:14px;">${esc(m.name)||(ko?'이름없음':'No name')}</div>
+          <div class="muted" style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.email?`✉️ ${esc(m.email)}`:`<span style="color:var(--ink-40);">${ko?'이메일 없음':'No email'}</span>`}</div>
           <div class="muted" style="font-size:11px;">${ko?'단어':'Words'} ${(m.total_words||0).toLocaleString()} · ${ko?'복습':'Rev'} ${rvTxt} · 📅 ${seen}${m.visit_count?` · 🔁 ${m.visit_count}`:''}${tname?` · 👩‍🏫 ${esc(tname)}`:(isPrimary?` · <span style="color:#c0392b;">${ko?'담당 미지정':'No teacher'}</span>`:'')}</div>
         </div>
         ${isPrimary?teacherSelectHTML(m.id, m.teacher_id, owners):''}
@@ -1747,6 +1748,7 @@ async function openStudentDetail(id){
   const ko = userNativeLang==='ko';
   const meCache = (window._orgStudentsList||[]).find(x=>x.id===id);
   const name = meCache ? meCache.name : '';
+  const email = meCache ? (meCache.email||'') : '';
   const overlay = document.createElement('div');
   overlay.id = 'student-detail-modal';
   overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';
@@ -1778,8 +1780,8 @@ async function openStudentDetail(id){
     }).join('');
     card.innerHTML = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-        <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>
-        <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;">✕</button>
+        <div style="min-width:0;"><div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>${email?`<div class="muted" style="font-size:12px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">✉️ ${esc(email)}</div>`:''}</div>
+        <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;flex-shrink:0;">✕</button>
       </div>
       <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
       ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
