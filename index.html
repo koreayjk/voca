@@ -582,6 +582,8 @@ body.dark .card--official .card__tap { color:#9a8f7a !important; }
       <input type="text" id="nb-category-custom" placeholder="예: 의학 전문 용어, 우주 과학 용어 등" style="display:none;width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:8px;">
     </div>
     <button class="btn btn-solid" onclick="addBook()" data-i18n="추가하기" style="margin-top:4px;">추가하기</button>
+    <!-- 우리가 만든 공식 단어장 선택 목록 (개인 사용자 전용) -->
+    <div id="official-picker" style="margin-top:16px;"></div>
     <div class="gap-sm"></div>
     <button class="btn btn-outline" onclick="closeModal('modal-add')" data-i18n="취소">취소</button>
   </div>
@@ -2814,28 +2816,117 @@ function _officialCover(title, dbCover){
 // 공식 단어장(is_official)을 읽어 책장에 추가 (읽기전용). 이미 있으면(소유자 본인) 중복 제거.
 // 공식책의 학습언어 판별: '스페인어…'=es, 그 외(수능·중등)=en. (앱은 학습언어=userTargetLang 에 맞는 공식책만 노출)
 function _officialLang(title){ return String(title||'').startsWith('스페인어') ? 'es' : 'en'; }
-async function appendOfficialBooks() {
+
+// 공식책 카탈로그(페이지·단어 포함)를 한 번만 받아 캐시. 추가 모달 선택 목록·개인 추가에 재사용.
+async function ensureOfficialCatalog(){
+  if (Array.isArray(window._officialCatalogFull)) return window._officialCatalogFull;
   try {
     const od = await sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`);
-    if (!Array.isArray(od)) return;
+    if (Array.isArray(od)) window._officialCatalogFull = od;
+  } catch(e){ console.warn('[official catalog]', e); }
+  return Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
+}
+// DB 공식책 행 → 메모리 book 객체(읽기전용)
+function _mapOfficialBook(b){
+  return {
+    id: b.id, title: b.title, author: b.author, color: b.color,
+    desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
+    _official: true, _readonly: true, _officialContent: true,
+    pages: (b.voca_pages || [])
+      .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
+      .map(p => ({
+        num: p.page_num, _pid: p.id,
+        words: (p.voca_words || [])
+          .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
+          .map(_dbRowToWord)
+      }))
+  };
+}
+// 개인(비단체) 사용자가 '추가'한 공식책 id 목록 — 기기별 기억(학습 진도는 DB에 저장돼 기기 무관 유지)
+function _myOfficialKey(){ return 'imvoca_offbooks_' + ((currentUser && currentUser.id) || 'anon'); }
+function getMyOfficialIds(){
+  try { const v = JSON.parse(localStorage.getItem(_myOfficialKey())||'[]'); return Array.isArray(v)?v:[]; } catch(e){ return []; }
+}
+function _setMyOfficialIds(arr){ try{ localStorage.setItem(_myOfficialKey(), JSON.stringify([...new Set(arr)])); }catch(e){} }
+
+async function appendOfficialBooks() {
+  try {
+    // 단체 소속이면서 '승인된 관리자(owner)'가 아닌 사람 = 단체 학생/대기자.
+    // → 공식 단어장을 자동으로 보여주지 않는다. 배정(_assigned)받은 것만 loadAssignments 로 보임.
+    const approvedOwner = (userOrgRole === 'owner' && userOrgStatus === 'approved');
+    if (userOrgId && !approvedOwner) return;
+
+    const od = await ensureOfficialCatalog();
+    if (!Array.isArray(od) || !od.length) return;
     const have = new Set(books.map(b => b.id));
-    // 일반 사용자·학생: 학습언어에 맞는 공식책만. 단체 관리자: 배정을 위해 전체 언어의 공식책 모두 노출.
-    const allLangs = _seesAllOfficialLangs();
-    const mapped = od.filter(b => !have.has(b.id) && (allLangs || _officialLang(b.title) === userTargetLang)).map(b => ({
-      id: b.id, title: b.title, author: b.author, color: b.color,
-      desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
-      _official: true, _readonly: true, _officialContent: true,
-      pages: (b.voca_pages || [])
-        .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
-        .map(p => ({
-          num: p.page_num, _pid: p.id,
-          words: (p.voca_words || [])
-            .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
-            .map(_dbRowToWord)
-        }))
-    }));
+    // 승인된 관리자: 배정 위해 전체 언어 공식책 모두 노출.
+    // 개인 사용자: 본인이 '추가'한 공식책만 노출(자동 노출 안 함).
+    const allLangs = approvedOwner;
+    // 개인 사용자 최초 1회: 이미 복습 진도가 있는 공식책은 유지(공부 중이던 책이 사라지지 않도록 시딩).
+    if (!allLangs && currentUser && localStorage.getItem(_myOfficialKey()) === null) {
+      try {
+        const offIds = od.map(b => b.id);
+        const rv = offIds.length
+          ? await sbFetch(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=in.(${offIds.join(',')})&select=book_id`)
+          : [];
+        _setMyOfficialIds(Array.isArray(rv) ? rv.map(r => r.book_id) : []);
+      } catch(e){ _setMyOfficialIds([]); }
+    }
+    const picked = allLangs ? null : new Set(getMyOfficialIds());
+    const mapped = od
+      .filter(b => !have.has(b.id) && (allLangs ? true : picked.has(b.id)))
+      .map(_mapOfficialBook);
     if (mapped.length) books = books.concat(mapped);
   } catch(e) { console.warn('[official load]', e); }
+}
+
+// 개인 사용자: 공식책을 책장에 추가/제거
+function addOfficialToShelf(id){
+  const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
+  const row = od.find(b => b.id === id);
+  if (!row) return;
+  if (!books.some(b => b.id === id)) books.push(_mapOfficialBook(row));
+  _setMyOfficialIds([...getMyOfficialIds(), id]);
+  try { loadReviewStatus(id); } catch(e){}
+  renderOfficialPicker();
+  try { render(); } catch(e){}
+  toast(userNativeLang==='ko' ? '📚 단어장을 책장에 추가했어요' : 'Added to your shelf');
+}
+function removeOfficialFromShelf(id){
+  const i = books.findIndex(b => b.id === id && b._official);
+  if (i >= 0) books.splice(i, 1);
+  _setMyOfficialIds(getMyOfficialIds().filter(x => x !== id));
+  renderOfficialPicker();
+  try { render(); } catch(e){}
+  toast(userNativeLang==='ko' ? '책장에서 뺐어요' : 'Removed from shelf');
+}
+// 추가 모달의 '우리가 만든 단어장' 선택 목록 렌더 (개인 사용자에게만 노출)
+async function renderOfficialPicker(){
+  const box = document.getElementById('official-picker');
+  if (!box) return;
+  const ko = userNativeLang==='ko';
+  // 단체 소속(관리자·학생) 에게는 선택 목록을 보이지 않음(관리자는 이미 다 보이고, 학생은 배정만).
+  if (userOrgId) { box.innerHTML = ''; return; }
+  box.innerHTML = `<div style="font-size:12px;color:var(--ink-40);padding:8px 2px;">${ko?'불러오는 중…':'Loading…'}</div>`;
+  const od = await ensureOfficialCatalog();
+  const list = od.filter(b => _officialLang(b.title) === userTargetLang);
+  if (!list.length){ box.innerHTML=''; return; }
+  const onShelf = new Set(books.map(b=>b.id));
+  const rows = list.map(b=>{
+    const wc = (b.voca_pages||[]).reduce((n,p)=>n+((p.voca_words||[]).length),0);
+    const added = onShelf.has(b.id);
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--ink-05);">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(b.title)}</div>
+        <div class="muted" style="font-size:11px;">${wc} ${ko?'단어':'words'}</div>
+      </div>
+      ${added
+        ? `<button onclick="removeOfficialFromShelf('${jsq(b.id)}')" style="flex-shrink:0;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;color:var(--ink-60);cursor:pointer;font-family:var(--font-body);">✓ ${ko?'추가됨':'Added'}</button>`
+        : `<button onclick="addOfficialToShelf('${jsq(b.id)}')" style="flex-shrink:0;background:var(--gold-bg);border:1px solid rgba(28,53,83,0.25);border-radius:8px;padding:6px 11px;font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;font-family:var(--font-body);">＋ ${ko?'추가':'Add'}</button>`}
+    </div>`;
+  }).join('');
+  box.innerHTML = `<div style="font-size:12px;color:var(--ink-60);margin:2px 0 6px;font-weight:600;">📗 ${ko?'우리가 만든 단어장 — 원하는 것만 추가하세요':'Our wordbooks — add the ones you want'}</div>
+    <div style="border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;max-height:230px;overflow-y:auto;">${rows}</div>`;
 }
 
 async function saveBookToDB(title, author, color, desc, cover='', category='general') {
@@ -3394,6 +3485,7 @@ function openAddBookModal() {
       catCustom.style.display = (this.value === 'custom') ? 'block' : 'none';
     };
   }
+  try { renderOfficialPicker(); } catch(e){}
 }
 
 // 카테고리 키 → 사용자에게 보일 라벨
