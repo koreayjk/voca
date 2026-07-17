@@ -4292,8 +4292,8 @@ async function acceptWords() {
   }
   window._renamedPageNum = null;
 
-  // 시험 카테고리 책이면 백그라운드로 심화 분석 자동 채우기
-  if (isExamCategory(book.category) && pid) {
+  // 모든 책에 대해 백그라운드로 심화 분석 자동 채우기(학생이 스캔/추가한 단어도 심화 분석 제공).
+  if (pid) {
     enrichExamWords(book.id, pid).catch(e => console.warn('[enrichExamWords] 실패', e));
   }
 }
@@ -6713,7 +6713,9 @@ async function saveManualWords(bookId) {
       categoryContext = categoryToContext(bookCat, '');
     }
   }
-  const examMode = isExamCategory(bookCat);
+  // 심화 분석은 모든 추가 단어에 생성(학생이 직접 추가한 단어도 심화 분석 보기 제공).
+  // fetchWordMeaning 은 어차피 단어당 1회 호출이라 호출 수 증가 없음(프롬프트만 풍부해짐).
+  const examMode = true;
   for (let i = 0; i < window._manualWords.length; i++) {
     const w = window._manualWords[i];
     if (!w.base) {
