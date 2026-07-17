@@ -662,7 +662,11 @@ async function sbFetch(path, method='GET', body=null, useAuth=true, extraHeaders
       res = await fetch(SB_URL + path, { method, headers: buildHeaders(), body: body ? JSON.stringify(body) : null });
     }
   }
-  return res.json();
+  // 빈 본문(204/return=minimal) 안전 처리: res.json() 은 빈 본문에서 예외를 던져
+  // 배정 등 return=minimal POST/PATCH 가 실패한 것처럼 보이는 버그를 유발함 → 빈 본문은 null 반환.
+  const text = await res.text();
+  if (!text) return null;
+  try { return JSON.parse(text); } catch(e){ return null; }
 }
 
 async function refreshSession() {
