@@ -4906,7 +4906,7 @@ function render() {
           <div class="label-xs">${t('memoryDone')}</div>
           <div class="done__n">${route.total}</div>
           <div class="done__label">${t('wordsMemorized')}</div>
-          ${route.scope==='page'?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
+          ${(route.scope==='page' && !route.isReview)?`<div style="margin-top:12px;background:var(--gold-bg);border-radius:12px;padding:10px 14px;text-align:left;width:100%;">
             <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">${t('reviewRegistered')}</div>
             <div style="font-size:11px;color:var(--ink-60);line-height:1.6;">${t('reviewSchedule')}<br>${t('reviewScheduleDesc')}</div>
           </div>`:''}
@@ -5081,10 +5081,12 @@ async function advance(isKnown) {
     saveStats(s.bookId, s.stats.total, s.stats.oCount);
     if (s.scope === 'page' && s.pageNum) {
       if (s._reviewId && s._reviewStepKey) {
-        // 복습 모드 - 다음 단계로 업데이트
-        await updateReviewStep({ id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate, book_id: s.bookId, page_num: s.pageNum });
-        toast('✅ 복습 완료! 다음 단계로 넘어갔어요');
-        await checkReviews();
+        // 복습 카드 완료 → 곧바로 점수 주지 않고 '퀴즈 통과'를 조건으로 함.
+        // 점수·다음 단계 이동은 퀴즈를 모두 맞혔을 때(renderQuiz)만 updateReviewStep 으로 처리.
+        window._pendingReview = { id: s._reviewId, _stepKey: s._reviewStepKey, _scheduledDate: s._scheduledDate, book_id: s.bookId, page_num: s.pageNum };
+        toast(userNativeLang==='ko'?'복습 끝! 퀴즈를 모두 맞히면 점수를 받아요':'Review done! Pass the quiz to earn points');
+        startReviewQuiz(s.bookId, s.pageNum);
+        return;
       } else {
         // 일반 학습 - 복습 일정 새로 등록 (첫날 암기 점수 포함)
         await saveReviewSchedule(s.bookId, s.pageNum);
@@ -6103,8 +6105,24 @@ async function saveReviewSchedule(bookId, pageNum) {
 function startWrongQuiz() {
   const q = window._quiz;
   if (!window._wrongWords?.length) return;
-  window._quiz = {bookId:q.bookId,scope:q.scope,pageNum:q.pageNum,words:shuffle([...window._wrongWords]),idx:0,correct:0};
+  // 복습-게이트 여부(_review)를 유지해야, 틀린 것만 다 맞혔을 때 복습 점수가 지급됨.
+  window._quiz = {bookId:q.bookId,scope:q.scope,pageNum:q.pageNum,words:shuffle([...window._wrongWords]),idx:0,correct:0,_review:q._review};
   push({name:'quiz',bookId:q.bookId,scope:q.scope,pageNum:q.pageNum});
+}
+
+// 복습 카드 완료 후 실행하는 '복습 게이트 퀴즈' — 모두 맞혀야 점수 지급.
+function startReviewQuiz(bookId, pageNum){
+  const book = findBook(bookId);
+  const ws = book ? shuffle([...(findPage(book, pageNum)?.words || [])]) : [];
+  if (!ws.length){
+    // 단어가 없으면 퀴즈 없이 바로 처리(폴백): 대기 중 복습을 그대로 반영.
+    const pend = window._pendingReview; window._pendingReview = null;
+    if (pend) { updateReviewStep(pend).then(()=>{ checkReviews().catch(()=>{}); }); }
+    replace({name:'study-done', bookId, scope:'page', pageNum, total:0, rounds:1, isReview:true});
+    return;
+  }
+  window._quiz = { bookId, scope:'page', pageNum, words: ws, idx:0, correct:0, _review:true };
+  replace({ name:'quiz', bookId, scope:'page', pageNum });
 }
 
 function startQuiz(bookId, scope, pageNum) {
@@ -6129,6 +6147,26 @@ function renderQuiz() {
     const rateMsg = rate>=80?t('rateMsg80'):rate>=50?t('rateMsg50'):t('rateMsgBad');
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
     window._wrongWords = wrongWords;
+
+    // ── 복습-게이트 퀴즈: 이 페이지에 대기 중인 복습이 있고, 이 퀴즈가 복습용이면 다 맞혀야 점수 지급 ──
+    const reviewGated = !!(q._review && window._pendingReview
+      && window._pendingReview.book_id === q.bookId
+      && String(window._pendingReview.page_num) === String(q.pageNum));
+    if (reviewGated && wrongWords.length === 0) {
+      // 통과 → 이제 복습 단계 이동 + 점수 지급(늦은 복습이면 0점 규칙은 그대로 적용됨).
+      const pend = window._pendingReview; window._pendingReview = null;
+      const ko = userNativeLang==='ko';
+      root.innerHTML = `<div class="scr"><div class="done" style="padding-top:70px;text-align:center;"><div style="font-size:34px;margin-bottom:10px;">✅</div><div style="font-size:14px;color:var(--ink-60);">${ko?'퀴즈 통과! 점수를 반영하는 중...':'Passed! Scoring...'}</div></div></div>`;
+      updateReviewStep(pend).then(async ()=>{ try{ await checkReviews(); }catch(e){}
+        replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:true});
+      });
+      return;
+    }
+    const gateNote = (reviewGated && wrongWords.length>0)
+      ? `<div style="width:100%;background:#fff3e0;border:1px solid #f0c98a;border-radius:12px;padding:12px 14px;margin:14px 0 0;font-size:12.5px;color:#8a5a00;line-height:1.6;text-align:left;">⚠️ ${userNativeLang==='ko'?`아직 <b>복습 점수를 받지 못했어요.</b> 아래 <b>틀린 ${wrongWords.length}개 다시 풀기</b>로 <b>모두 맞히면</b> 점수를 받아요.`:`No review points yet. Retry the ${wrongWords.length} wrong word(s) and get them all right to earn points.`}</div>`
+      : '';
+    // 복습-게이트 상태에서 '전체 다시'도 게이트를 유지해야 함(통과 시 점수 지급).
+    const retryAllOnclick = reviewGated ? `startReviewQuiz('${jsq(q.bookId)}','${jsq(String(q.pageNum))}')` : `startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')`;
     root.innerHTML = `<div class="scr" style="padding-bottom:24px;">
       <div class="topnav"><span></span><span class="topnav__title">${t('quizResult')}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
       <div class="done" style="padding-top:0;">
@@ -6136,6 +6174,7 @@ function renderQuiz() {
         <div class="done__n" style="color:${rateColor};">${rate}%</div>
         <div style="font-size:13px;color:var(--ink-60);">${q.correct}/${q.words.length} ${t('correctLabel')}</div>
         <div style="font-size:14px;color:${rateColor};margin-top:4px;font-weight:600;">${rateMsg}</div>
+        ${gateNote}
         <div class="done__grid" style="margin-top:16px;">
           <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('correct')}</div><div class="done__tile-value" style="color:#27ae60;">${q.correct}</div></div>
           <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('wrong')}</div><div class="done__tile-value" style="color:#e74c3c;">${wrongWords.length}</div></div>
@@ -6143,8 +6182,9 @@ function renderQuiz() {
         ${wrongWords.length>0?`<div style="width:100%;margin-top:16px;text-align:left;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:8px;">${t('wrongWordList')} (${wrongWords.length}${userNativeLang==='ko'?'개':''})</div><div style="background:var(--bg-card);border-radius:12px;padding:12px;max-height:160px;overflow-y:auto;">${wrongWords.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ink-07);"><span style="font-size:13px;font-weight:600;">${esc(w.en)}</span><span style="font-size:12px;color:var(--ink-60);">${esc(w.base)}</span></div>`).join('')}</div></div>`:''}
         <div style="width:100%;margin-top:16px;display:flex;flex-direction:column;gap:10px;">
           ${wrongWords.length>0?`<button class="btn btn-solid" onclick="startWrongQuiz()">${t('wrongOnly')} (${wrongWords.length}개)</button>`:''}
-          <button class="btn ${wrongWords.length>0?'btn-outline':'btn-solid'}" onclick="startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')">${t('retryAll')}</button>
-          <button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>
+          <button class="btn ${wrongWords.length>0?'btn-outline':'btn-solid'}" onclick="${retryAllOnclick}">${t('retryAll')}</button>
+          ${reviewGated?'':`<button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>`}
+          ${reviewGated?`<button class="btn btn-outline" onclick="goTab('books')">${userNativeLang==='ko'?'나중에 하기 (점수 없음)':'Later (no points)'}</button>`:''}
         </div>
       </div>
     </div>`;
