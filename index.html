@@ -1359,8 +1359,16 @@ async function loadMyOrg() {
   } catch(e) { userOrg = null; }
 }
 
+// 단체장으로 가입했지만 아직 '단체 만들기'를 안 한 사람.
+// (하드닝 가드가 INSERT 때 org_role 을 student 로 낮추므로, owner 로 바로 못 올라감 →
+//  '승인됨(org_status=approved) + 아직 소속 단체 없음(org_id 없음)' 으로 식별해 단체 생성 화면으로 안내)
+function isPendingOwner() {
+  try { if (localStorage.getItem('imvoca.ownerIntent') === '1' && !userOrgId && userOrgRole !== 'owner') return true; } catch(e){}
+  return userOrgStatus === 'approved' && !userOrgId && userOrgRole !== 'owner';
+}
+
 function applyEntryStack() {
-  if (userOrgRole === 'owner') stack = [{ name:'org-admin' }];
+  if (userOrgRole === 'owner' || isPendingOwner()) stack = [{ name:'org-admin' }];
   else stack = [{ name:'library' }];
 }
 
@@ -1414,6 +1422,7 @@ async function createOrg() {
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id, org_role: 'owner', org_status: 'approved' }, true, {'Prefer':'return=representation'});
     userOrg = { id: org.id, name: org.name, code: org.code, owner_id: currentUser.id };
     userOrgId = org.id; userOrgRole = 'owner'; userOrgStatus = 'approved';
+    try { localStorage.removeItem('imvoca.ownerIntent'); } catch(e){} // owner 의도 완료 → 플래그 정리
     toast(userNativeLang==='ko'?'✅ 단체가 만들어졌어요!':'✅ Organization created!');
     stack = [{ name:'org-admin' }]; render();
   } catch(e) { toast('오류: ' + e.message); }
@@ -2096,7 +2105,7 @@ function showMyMenu() {
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
-      ${userOrgRole==='owner' ? row('🏫', ko?'단체 관리':'Org Admin', "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
+      ${(userOrgRole==='owner' || isPendingOwner()) ? row('🏫', (userOrgRole==='owner'?(ko?'단체 관리':'Org Admin'):(ko?'단체 만들기':'Create Org')), "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
       ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
       ${row('❓', ko?'자주 묻는 질문':'FAQ', "document.getElementById('my-modal').remove();showFaq()")}
@@ -2607,7 +2616,8 @@ async function ensureMemberRow(user){
     if (emailVal) body.email = emailVal;  // 이메일 있을 때만 저장 (카카오 무이메일 대비)
     if (pending && pending.source) body.signup_source = pending.source;
     if (pending && pending.suType === 'owner') {
-      body.org_role = 'owner'; body.org_status = 'approved'; // 단체장 자동 승인
+      body.org_role = 'owner'; body.org_status = 'approved'; // 단체장 자동 승인(가드가 student로 낮춰도 아래 플래그로 단체 만들기 유도)
+      try { localStorage.setItem('imvoca.ownerIntent', '1'); } catch(e){}
     } else if (pending && (pending.suType === 'student' || pending.code) && pending.code) {
       const org = await lookupOrgByCode(pending.code);
       if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
@@ -2746,7 +2756,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
     if (data.user?.id) {
       const body = { id: data.user.id, name, email, role: '멤버', plan: 'free', scan_count: 0 };
       if (source) body.signup_source = source;
-      if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'approved'; } // 단체장 자동 승인
+      if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'approved'; try { localStorage.setItem('imvoca.ownerIntent', '1'); } catch(e){} } // 단체장 자동 승인
       else if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
       const mRes = await fetch(SB_URL + '/rest/v1/members', {
         method: 'POST',
