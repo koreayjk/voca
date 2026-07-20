@@ -2536,7 +2536,11 @@ function signInWithProvider(provider){
     const pending = { suType, code, name, source };
     try { localStorage.setItem('imvoca.oauthPending', JSON.stringify(pending)); } catch(e){}
     const redirect = encodeURIComponent(location.origin + location.pathname);
-    location.href = SB_URL + '/auth/v1/authorize?provider=' + provider + '&redirect_to=' + redirect;
+    let authUrl = SB_URL + '/auth/v1/authorize?provider=' + provider + '&redirect_to=' + redirect;
+    // 회원가입에서는 구글 계정 선택 화면을 강제로 띄운다.
+    // (브라우저에 이미 로그인된 계정으로 자동 진행돼 원치 않는 아이디로 가입/로그인되는 문제 방지)
+    if (onSignupTab) authUrl += '&prompt=select_account';
+    location.href = authUrl;
   }catch(e){ toast('로그인 이동 실패: ' + e.message); }
 }
 
