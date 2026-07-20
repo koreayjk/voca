@@ -1360,11 +1360,14 @@ async function loadMyOrg() {
 }
 
 // 단체장으로 가입했지만 아직 '단체 만들기'를 안 한 사람.
-// (하드닝 가드가 INSERT 때 org_role 을 student 로 낮추므로, owner 로 바로 못 올라감 →
-//  '승인됨(org_status=approved) + 아직 소속 단체 없음(org_id 없음)' 으로 식별해 단체 생성 화면으로 안내)
+// (하드닝 가드가 INSERT 때 org_role 을 student 로 낮추므로 owner 로 바로 못 올라감)
+// ⚠️ 오직 '단체장 가입 시 저장한 플래그'로만 판별한다. 예전엔 org_status='approved'
+//    같은 DB 상태로도 추정했는데, 개인 가입자도 그 값이 될 수 있어 '개인인데 단체 만들기가
+//    뜨는' 오작동을 유발 → 제거함. (이미 단체를 만든 사람은 userOrgRole==='owner' 로 판별됨)
 function isPendingOwner() {
-  try { if (localStorage.getItem('imvoca.ownerIntent') === '1' && !userOrgId && userOrgRole !== 'owner') return true; } catch(e){}
-  return userOrgStatus === 'approved' && !userOrgId && userOrgRole !== 'owner';
+  try {
+    return localStorage.getItem('imvoca.ownerIntent') === '1' && !userOrgId && userOrgRole !== 'owner';
+  } catch(e){ return false; }
 }
 
 function applyEntryStack() {
@@ -2783,6 +2786,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
 
 async function sbSignOut() {
   localStorage.removeItem('imvoca.session');
+  try { localStorage.removeItem('imvoca.ownerIntent'); } catch(e){} // 공용 브라우저: 다음 사용자에게 '단체 만들기'가 뜨지 않도록 정리
   _authToken = null; currentUser = null; books = [];
   _assignLoaded = false; window._assignList = [];
   renderLogin();
