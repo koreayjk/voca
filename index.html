@@ -1463,12 +1463,14 @@ async function uploadOrgLogo(ev){
 function fmtSeenShort(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-'; return (d.getMonth()+1)+'.'+d.getDate(); }catch(e){ return '-'; } }
 
 async function loadOrgStudents(){
+  if (!userOrg) return;
+  // 학생 목록 컨테이너(org-students)는 '학생·관리자' 탭에만 있음. 대시보드 탭에는 없지만
+  // 상단 통계(학생/승인대기/관리자/월예상)는 채워야 하므로, box 유무와 무관하게 진행한다.
   const box = document.getElementById('org-students');
-  if (!box || !userOrg) return;
   const ko = userNativeLang==='ko';
   try {
     const list = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=in.(student,owner)&select=id,name,email,total_words,scan_count,last_seen_at,visit_count,org_status,org_role,teacher_id&order=total_words.desc`);
-    if (!Array.isArray(list)) { box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
+    if (!Array.isArray(list)) { if (box) box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; return; }
     // 복습 완료 집계 (RLS 있으면 동작, 없으면 생략)
     let reviewByUser = {};
     const ids = list.map(m=>m.id);
@@ -1479,7 +1481,7 @@ async function loadOrgStudents(){
       } catch(e){}
     }
     window._orgStudentsList = list;
-    box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
+    if (box) box.innerHTML = renderOrgStudentsHTML(list, reviewByUser);
     const _appr = list.filter(m=>(m.org_status||'')==='approved' && m.id!==(userOrg&&userOrg.owner_id)).length;
     const _est = document.getElementById('org-bill-est');
     if (_est) _est.textContent = '$'+(_appr*2.99).toFixed(2)+(ko?` (선생님·학생 ${_appr}명)`:` (${_appr})`);
@@ -1492,7 +1494,7 @@ async function loadOrgStudents(){
     setStat('org-stat-pending', nPending);
     setStat('org-stat-admins', nAdmins);
     setStat('org-stat-bill', '$'+(_appr*2.99).toFixed(2));
-  } catch(e){ box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
+  } catch(e){ if (box) box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
 // ===== 일일 자동 리포트 (매일 밤 9시 KST 스냅샷) =====
