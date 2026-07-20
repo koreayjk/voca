@@ -6336,7 +6336,7 @@ async function updateReviewStep(review) {
     // 현재 단계 null로 지우기 (복습 완료 표시)
     patch[key] = null;
 
-    // 원래 예정일과 오늘 비교 - 하루 이상 미뤄졌으면 is_perfect=false + 이번 회차 점수 0(늦은 복습)
+    // 원래 예정일과 오늘 비교 - 하루 이상 미뤄졌으면 is_perfect=false 로 기록(리포트용). 점수는 그대로 지급.
     let isLate = false, lateDays = 0, dueStr = '';
     const scheduled = review._scheduledDate ? new Date(review._scheduledDate) : null;
     if (scheduled) {
@@ -6364,10 +6364,11 @@ async function updateReviewStep(review) {
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
     const baseScore = rpage ? calcWordScore(rpage.words) : 0;
     const isFinalStep = (!step || !step.next); // 마지막 단계(60일차) 완주
-    // 예정일을 넘겨 늦게 복습하면 이번 회차 점수는 0. (다음 차수 복습은 오늘 기준으로 정상 등록됨)
-    const pageScore = isLate ? 0 : (isFinalStep ? baseScore * 2 : baseScore); // 완주 시 2배 보너스
+    // 예정일을 넘겨도(늦어도) 퀴즈를 통과해 복습을 완료하면 점수를 지급한다.
+    // (늦음은 is_perfect=false 로만 기록 — 리포트의 '정시복습' 판별용. 점수에는 영향 없음)
+    const pageScore = isFinalStep ? baseScore * 2 : baseScore; // 완주 시 2배 보너스
     window._lastReviewFinished = isFinalStep; // 축하 화면 분기용
-    window._lastReviewLate = isLate;          // 늦은 복습(점수 없음) 안내용
+    window._lastReviewLate = false;           // 늦어도 점수를 주므로 '점수 없음' 안내는 표시하지 않음
     window._lastReviewLateDays = lateDays;    // 며칠 늦었는지
     window._lastReviewDue = dueStr;           // 원래 예정일(표시용)
     window._lastBaseScore = baseScore; // 기본 점수 (보너스 표시용)
