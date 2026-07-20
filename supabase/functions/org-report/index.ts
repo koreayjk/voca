@@ -124,7 +124,7 @@ Deno.serve(async (req) => {
     if (studentIds.length && bookIds.length) {
       const { data: rv } = await svc
         .from('voca_review')
-        .select('user_id, book_id, page_num, completed, is_perfect, first_studied_at, review_2d, review_3d, review_6d, review_15d, review_30d, review_60d')
+        .select('user_id, book_id, page_num, completed, is_perfect, first_studied_at, last_reviewed_at, review_2d, review_3d, review_6d, review_15d, review_30d, review_60d')
         .in('user_id', studentIds)
         .in('book_id', bookIds)
       reviews = rv || []
@@ -151,10 +151,16 @@ Deno.serve(async (req) => {
           })
         }
         const st = deriveStage(chosen)
+        // 이 학생의 이 과제 관련 행 중 가장 최근 복습 시각(오늘 활동 판별용)
+        const lastReviewedAt = matches.reduce((mx: string | null, r) => {
+          const v = r.last_reviewed_at as string | null
+          return (v && (!mx || v > mx)) ? v : mx
+        }, null as string | null)
         return {
           student_id: stu.id,
           name: stu.name || stu.email || '학생',
           pagesStudied: matches.length,
+          lastReviewedAt,
           ...st,
         }
       })

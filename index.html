@@ -5572,6 +5572,7 @@ async function renderReportPage(root){
 async function loadOrgReport(boxId){
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
+  window._reportBox = boxId;
   try {
     const res = await fetch(SB_URL+'/functions/v1/org-report', {
       method:'POST',
@@ -5579,16 +5580,114 @@ async function loadOrgReport(boxId){
       body: JSON.stringify({ org_id: userOrg.id })
     });
     const data = await res.json().catch(()=>({}));
-    const report = Array.isArray(data.report) ? data.report : [];
-    window._lastReport = report;
-    const box = document.getElementById(boxId);
-    if (!box) return;
-    if (!report.length){ box.innerHTML = `<div class="muted" style="text-align:center;padding:36px;font-size:13px;">${ko?'아직 배정한 과제가 없어요. 단어장에서 책·페이지를 학생에게 배정하면 여기에 진행 상황이 나와요.':'No assignments yet.'}</div>`; return; }
-    box.innerHTML = report.map((a,i)=>reportSectionHTML(a,i)).join('');
+    window._lastReport = Array.isArray(data.report) ? data.report : [];
+    renderReportInto(boxId);
   } catch(e){
     const box=document.getElementById(boxId);
     if(box) box.innerHTML = `<div class="muted" style="text-align:center;padding:36px;font-size:13px;">${(ko?'리포트 로드 실패: ':'Failed: ')+esc(e&&e.message||String(e))}</div>`;
   }
+}
+function setReportView(v){ window._reportView = v; renderReportInto(window._reportBox||'report-body'); }
+function _isTodayLocal(iso){ if(!iso) return false; const d=new Date(iso), n=new Date(); return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate(); }
+// 책×학생 리포트를 학생 중심으로 피벗
+function _pivotReportByStudent(report){
+  const map = {};
+  report.forEach(a=>{ (a.students||[]).forEach(s=>{
+    const k = s.student_id || s.name;
+    if(!map[k]) map[k]={id:s.student_id, name:s.name, assigned:0, started:0, completed:0, inprog:0, notstarted:0, late:0, lastReviewedAt:null, books:[]};
+    const m=map[k]; m.assigned++;
+    if(s.exists){ m.started++; if(s.completed)m.completed++; else m.inprog++; if(s.onTime===false)m.late++; } else m.notstarted++;
+    if(s.lastReviewedAt && (!m.lastReviewedAt || s.lastReviewedAt>m.lastReviewedAt)) m.lastReviewedAt=s.lastReviewedAt;
+    m.books.push({title:a.title, exists:s.exists, completed:s.completed, onTime:s.onTime, stageLabel:s.stageLabel});
+  }); });
+  return Object.values(map);
+}
+function renderReportInto(boxId){
+  const ko = userNativeLang==='ko';
+  const box = document.getElementById(boxId||window._reportBox||'report-body');
+  if (!box) return;
+  const report = window._lastReport || [];
+  if (!report.length){ box.innerHTML = `<div class="muted" style="text-align:center;padding:36px;font-size:13px;">${ko?'아직 배정한 과제가 없어요. 단어장에서 책·페이지를 학생에게 배정하면 여기에 진행 상황이 나와요.':'No assignments yet.'}</div>`; return; }
+  const view = window._reportView || 'student';
+  const studs = _pivotReportByStudent(report);
+  const hasToday = studs.some(s=>s.lastReviewedAt);
+  studs.forEach(s=>{ s._notToday = hasToday && !_isTodayLocal(s.lastReviewedAt); s._att = (s.started===0)||(s.late>0)||s._notToday; s._sev = (s.started===0?3:0)+(s.late>0?2:0)+(s._notToday?1:0); });
+  const N = studs.length;
+  const todayDone = hasToday ? studs.filter(s=>!s._notToday).length : null;
+  const noneStarted = studs.filter(s=>s.started===0).length;
+  const behind = studs.filter(s=>s.late>0).length;
+  const attList = studs.filter(s=>s._att).sort((a,b)=> b._sev-a._sev || (b.late+b.notstarted)-(a.late+a.notstarted));
+
+  const statCard=(n,label,color)=>`<div style="flex:1;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 8px;text-align:center;"><div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:${color||'var(--ink-100)'};line-height:1;">${n}</div><div class="muted" style="font-size:10.5px;margin-top:5px;">${label}</div></div>`;
+  let html = `<div style="display:flex;gap:8px;margin-bottom:${hasToday?14:4}px;">
+    ${statCard(N, ko?'학생':'Students')}
+    ${hasToday?statCard(todayDone, ko?'오늘 공부 ✅':'Today ✅', '#1c7c3c'):''}
+    ${statCard(behind, ko?'밀린 복습':'Behind', behind?'#c0392b':'var(--ink-100)')}
+    ${statCard(noneStarted, ko?'미시작':'Not started', noneStarted?'#b35900':'var(--ink-100)')}
+  </div>`;
+  if(!hasToday) html += `<div class="muted" style="font-size:10.5px;margin:0 2px 14px;">${ko?'※ ‘오늘 공부’ 실시간 표시는 org-report 함수 재배포 후 켜집니다.':''}</div>`;
+
+  if(attList.length){
+    html += `<div style="font-size:12px;font-weight:800;letter-spacing:.03em;color:var(--ink-60);margin:4px 2px 8px;">🚨 ${ko?'챙겨야 할 학생':'Needs attention'} (${attList.length})</div>`;
+    html += `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:4px 14px;margin-bottom:16px;">` + attList.map(s=>{
+      const r=[];
+      if(s.started===0) r.push(`<span style="color:#b35900;">${ko?'미시작':'not started'}</span>`);
+      if(s.late>0) r.push(`<span style="color:#c0392b;">${ko?`밀린복습 ${s.late}`:`${s.late} late`}</span>`);
+      if(s._notToday) r.push(`<span style="color:var(--ink-60);">${ko?'오늘 안 함':'not today'}</span>`);
+      return `<div onclick="openStudentDetail('${jsq(s.id)}')" style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;">
+        <div style="flex:1;min-width:0;font-size:13.5px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name)}</div>
+        <div style="font-size:11px;font-weight:700;display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0;">${r.join('<span style="color:var(--ink-12);font-weight:400;">·</span>')}</div>
+      </div>`;
+    }).join('') + `</div>`;
+  } else {
+    html += `<div style="background:#e6f4ea;border:1px solid #b6e0c4;border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#1c7c3c;font-weight:600;text-align:center;">✅ ${ko?'모든 학생이 잘 따라오고 있어요!':'Everyone is on track!'}</div>`;
+  }
+
+  const tabBtn=(key,label)=>`<button onclick="setReportView('${key}')" style="flex:1;padding:8px;border:1.5px solid ${view===key?'var(--accent)':'var(--ink-12)'};background:${view===key?'var(--gold-bg)':'var(--bg-input)'};border-radius:9px;font-family:var(--font-body);font-size:12.5px;font-weight:${view===key?700:500};color:var(--ink-100);cursor:pointer;">${label}</button>`;
+  html += `<div style="display:flex;gap:6px;margin-bottom:12px;">${tabBtn('student',ko?'학생별':'By student')}${tabBtn('matrix',ko?'진도표':'Matrix')}${tabBtn('book',ko?'과제별':'By book')}</div>`;
+
+  if(view==='student') html += _studentViewHTML(studs);
+  else if(view==='matrix') html += _matrixHTML(report, studs);
+  else html += report.map((a,i)=>reportSectionHTML(a,i)).join('');
+  box.innerHTML = html;
+}
+function _studentViewHTML(studs){
+  const ko=userNativeLang==='ko';
+  const chip=(n,label,color,bg)=> n>0?`<span style="font-size:10.5px;font-weight:700;color:${color};background:${bg};border-radius:99px;padding:2px 8px;">${label} ${n}</span>`:'';
+  const sorted = studs.slice().sort((a,b)=> b._sev-a._sev || b.completed-a.completed || String(a.name).localeCompare(String(b.name)));
+  return sorted.map(s=>`<div onclick="openStudentDetail('${jsq(s.id)}')" style="display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${esc(s.name)}${(s.lastReviewedAt && !s._notToday)?` <span style="font-size:11px;color:#1c7c3c;font-weight:600;">· 오늘 ✅</span>`:''}</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;">
+          ${chip(s.completed, ko?'완료':'done', '#1c7c3c', '#e6f4ea')}
+          ${chip(s.inprog, ko?'복습중':'review', '#b35900', '#fff3e0')}
+          ${chip(s.notstarted, ko?'시작전':'todo', '#c0392b', '#fdecea')}
+          ${s.late>0?`<span style="font-size:10.5px;font-weight:700;color:#c0392b;background:#fdecea;border-radius:99px;padding:2px 8px;">⚠️ ${ko?`밀림 ${s.late}`:`${s.late} late`}</span>`:''}
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--ink-40);flex-shrink:0;white-space:nowrap;">${s.started}/${s.assigned} ›</div>
+    </div>`).join('');
+}
+function _matrixHTML(report, studs){
+  const ko=userNativeLang==='ko';
+  const cols = report.map(a=>({title:(a.title||'').replace(/\s+/g,' ').trim(), byStu:Object.fromEntries((a.students||[]).map(s=>[s.student_id||s.name, s]))}));
+  const dot=(bg,br,t)=>`<span title="${t}" style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${bg};${br?`border:1px solid ${br};`:''}"></span>`;
+  const cell=(s)=>{ if(!s||!s.exists) return dot('#f2d6d1','#e0b0a8',ko?'시작전':'todo'); if(s.completed) return dot('#1c7c3c','',ko?'완료':'done'); return dot('#e6a23c','',ko?'복습중':'review'); };
+  const sorted = studs.slice().sort((a,b)=> b._sev-a._sev || String(a.name).localeCompare(String(b.name)));
+  return `<div style="overflow-x:auto;border:1px solid var(--ink-07);border-radius:12px;background:var(--bg-card);">
+    <table style="border-collapse:collapse;font-size:12px;min-width:max-content;">
+      <thead><tr>
+        <th style="position:sticky;left:0;background:var(--bg-card);text-align:left;padding:10px 12px;font-weight:700;color:var(--ink-60);z-index:1;">${ko?'학생':'Student'}</th>
+        ${cols.map(c=>`<th style="padding:9px 6px;font-weight:600;color:var(--ink-60);font-size:10px;line-height:1.2;min-width:46px;max-width:58px;vertical-align:bottom;">${esc(c.title)}</th>`).join('')}
+      </tr></thead><tbody>
+      ${sorted.map(s=>`<tr>
+        <td onclick="openStudentDetail('${jsq(s.id)}')" style="position:sticky;left:0;background:var(--bg-card);padding:9px 12px;font-weight:600;color:var(--ink-100);white-space:nowrap;cursor:pointer;border-top:1px solid var(--ink-07);">${esc(s.name)}</td>
+        ${cols.map(c=>`<td style="padding:8px;text-align:center;border-top:1px solid var(--ink-07);">${cell(c.byStu[s.id]||c.byStu[s.name])}</td>`).join('')}
+      </tr>`).join('')}
+    </tbody></table></div>
+    <div style="display:flex;gap:14px;justify-content:center;margin-top:10px;font-size:11px;color:var(--ink-60);">
+      <span>🟢 ${ko?'완료':'done'}</span><span>🟡 ${ko?'복습중':'review'}</span><span>🔴 ${ko?'시작전':'todo'}</span>
+    </div>`;
 }
 function reportSectionHTML(a, ai){
   const ko = userNativeLang==='ko';
