@@ -2899,10 +2899,18 @@ async function appendOfficialBooks() {
       } catch(e){ _setMyOfficialIds([]); }
     }
     const picked = allLangs ? null : new Set(getMyOfficialIds());
-    const mapped = od
-      .filter(b => !have.has(b.id) && (allLangs ? true : picked.has(b.id)))
-      .map(_mapOfficialBook);
-    if (mapped.length) books = books.concat(mapped);
+    od.filter(b => allLangs ? true : picked.has(b.id)).forEach(b => {
+      const ex = findBook(b.id);
+      if (ex) {
+        // 이미 책장에 있음(예: 배정 로드가 먼저 실행돼 _assigned 로 주입된 경우) →
+        // 공식 속성을 보강해서 책장에 공식책으로 정상 노출되게 한다.
+        // (예전엔 have.has 로 건너뛰어 _official 이 안 붙고, 배정한 수능책이 책장에서 사라졌음)
+        ex._official = true; ex._readonly = true; ex._officialContent = true;
+        if (!ex.cover) ex.cover = _officialCover(b.title, b.cover_url);
+      } else {
+        books.push(_mapOfficialBook(b));
+      }
+    });
   } catch(e) { console.warn('[official load]', e); }
 }
 
