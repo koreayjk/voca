@@ -1184,6 +1184,8 @@ function incrementScanCount() {
 function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function isOrgBillingActive(){ return !!(userOrg && userOrg.billing_active); }
 function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved' && isOrgBillingActive()); }
+// 스캔 무제한 판정(개인 프리미엄 또는 결제중 학원의 원장). 헤더 표시와 canScan 을 일치시키기 위해 공용.
+function hasUnlimitedScan(){ return userPlan==='premium' || (userOrgRole==='owner' && isOrgBillingActive()); }
 // 공식 단어장 접근: 프리미엄 또는 결제중 학원(관리자/승인학생) → 전체. 무료 → Day 1 체험만.
 function hasOfficialAccess(){
   if (userPlan === 'premium') return true;
@@ -1225,9 +1227,7 @@ function _officialAccessOK(bookId, scope, pageNum){
 }
 function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDailyScanCount : 0; }
 function canScan() {
-  if (userPlan === 'premium') return true;
-  // 결제중 학원의 관리자(owner): 무제한
-  if (userOrgRole==='owner' && isOrgBillingActive()) return true;
+  if (hasUnlimitedScan()) return true;  // 개인 프리미엄 또는 결제중 학원 원장
   // 결제중 학원의 승인 학생: 총 누적 제한 면제, 일일 제한만 적용
   if (isOrgStudentActive()) return dailyScansToday() < STUDENT_DAILY_LIMIT;
   return userScanCount < FREE_SCAN_LIMIT;
@@ -4654,7 +4654,7 @@ function render() {
                 <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
               `}
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${userPlan==='premium'?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${hasUnlimitedScan()?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
             <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:4px 11px;">
               <span style="font-size:11px;">🏅</span><span style="font-size:10.5px;font-weight:700;color:var(--accent);letter-spacing:0.01em;">${userNativeLang==='ko'?'특허출원 기술 · 제10-2026-0127089호':'Patent Pending · KR 10-2026-0127089'}</span>
             </div>
