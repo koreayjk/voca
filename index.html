@@ -1361,12 +1361,14 @@ async function loadMyOrg() {
 
 // 단체장으로 가입했지만 아직 '단체 만들기'를 안 한 사람.
 // (하드닝 가드가 INSERT 때 org_role 을 student 로 낮추므로 owner 로 바로 못 올라감)
-// ⚠️ 오직 '단체장 가입 시 저장한 플래그'로만 판별한다. 예전엔 org_status='approved'
-//    같은 DB 상태로도 추정했는데, 개인 가입자도 그 값이 될 수 있어 '개인인데 단체 만들기가
-//    뜨는' 오작동을 유발 → 제거함. (이미 단체를 만든 사람은 userOrgRole==='owner' 로 판별됨)
+// ⚠️ 플래그는 반드시 '계정(user id)' 에 묶는다. 예전엔 브라우저 전역 키('imvoca.ownerIntent')라
+//    한 브라우저에서 단체장 가입한 뒤 다른 개인 계정으로 로그인하면 그 플래그가 남아
+//    '개인인데 단체 만들기가 뜨는' 오작동을 유발했음. → user id 별 키로 격리.
+function _ownerIntentKey(){ return currentUser ? ('imvoca.ownerIntent.' + currentUser.id) : ''; }
 function isPendingOwner() {
   try {
-    return localStorage.getItem('imvoca.ownerIntent') === '1' && !userOrgId && userOrgRole !== 'owner';
+    if (!currentUser) return false;
+    return localStorage.getItem(_ownerIntentKey()) === '1' && !userOrgId && userOrgRole !== 'owner';
   } catch(e){ return false; }
 }
 
@@ -1425,7 +1427,7 @@ async function createOrg() {
     await sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { org_id: org.id, org_role: 'owner', org_status: 'approved' }, true, {'Prefer':'return=representation'});
     userOrg = { id: org.id, name: org.name, code: org.code, owner_id: currentUser.id };
     userOrgId = org.id; userOrgRole = 'owner'; userOrgStatus = 'approved';
-    try { localStorage.removeItem('imvoca.ownerIntent'); } catch(e){} // owner 의도 완료 → 플래그 정리
+    try { localStorage.removeItem(_ownerIntentKey()); localStorage.removeItem('imvoca.ownerIntent'); } catch(e){} // owner 의도 완료 → 플래그 정리
     toast(userNativeLang==='ko'?'✅ 단체가 만들어졌어요!':'✅ Organization created!');
     stack = [{ name:'org-admin' }]; render();
   } catch(e) { toast('오류: ' + e.message); }
@@ -2620,7 +2622,7 @@ async function ensureMemberRow(user){
     if (pending && pending.source) body.signup_source = pending.source;
     if (pending && pending.suType === 'owner') {
       body.org_role = 'owner'; body.org_status = 'approved'; // 단체장 자동 승인(가드가 student로 낮춰도 아래 플래그로 단체 만들기 유도)
-      try { localStorage.setItem('imvoca.ownerIntent', '1'); } catch(e){}
+      try { localStorage.setItem('imvoca.ownerIntent.' + user.id, '1'); } catch(e){}
     } else if (pending && (pending.suType === 'student' || pending.code) && pending.code) {
       const org = await lookupOrgByCode(pending.code);
       if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
@@ -2759,7 +2761,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
     if (data.user?.id) {
       const body = { id: data.user.id, name, email, role: '멤버', plan: 'free', scan_count: 0 };
       if (source) body.signup_source = source;
-      if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'approved'; try { localStorage.setItem('imvoca.ownerIntent', '1'); } catch(e){} } // 단체장 자동 승인
+      if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'approved'; try { localStorage.setItem('imvoca.ownerIntent.' + data.user.id, '1'); } catch(e){} } // 단체장 자동 승인
       else if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
       const mRes = await fetch(SB_URL + '/rest/v1/members', {
         method: 'POST',
