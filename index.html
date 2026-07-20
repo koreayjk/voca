@@ -5341,7 +5341,7 @@ async function assignBook(bookId, pageNum){
         <input type="radio" name="assign-target" value="all" ${preSel?'':'checked'} onchange="var e=document.getElementById('assign-students');if(e)e.style.display='none'"> ${orgIsPrimary()?(ko?'학원 전체 승인 학생':'All approved students'):(ko?'내 담당 학생 전체':'All my students')} (${students.length})
       </label>
       <label style="display:flex;align-items:center;gap:8px;padding:9px 0;cursor:pointer;font-size:14px;color:var(--ink-100);">
-        <input type="radio" name="assign-target" value="selected" ${preSel?'checked':''} onchange="var e=document.getElementById('assign-students');if(e)e.style.display='block'"> ${ko?'학생 선택':'Select students'}${assignedIds.size?` <span class="muted" style="font-size:11px;">(${ko?`이미 ${assignedIds.size}명 배정됨`:`${assignedIds.size} assigned`})</span>`:''}
+        <input type="radio" name="assign-target" value="selected" ${preSel?'checked':''} onchange="var e=document.getElementById('assign-students');if(e)e.style.display='block'"> ${ko?'학생 선택':'Select students'}${(assignedIds.size && !hasAllAssign)?` <span class="muted" style="font-size:11px;">(${ko?`이미 ${assignedIds.size}명 배정됨`:`${assignedIds.size} assigned`})</span>`:''}
       </label>
       ${hasAllAssign?`<div style="font-size:12px;color:var(--accent);background:var(--gold-bg);border-radius:8px;padding:8px 11px;margin:2px 0 4px;">✓ ${ko?'이미 학원 전체에게 배정된 책이에요.':'Already assigned to all students.'}</div>`:''}
       <div id="assign-students" style="display:${preSel?'block':'none'};max-height:200px;overflow:auto;border:1px solid var(--ink-07);border-radius:10px;padding:6px 10px;margin:6px 0;">
@@ -5391,6 +5391,12 @@ async function doAssign(bookId, pageNum){
     if (target==='selected' && studentIds.length){
       await sbFetch('/rest/v1/voca_assignment_students','POST', studentIds.map(sid=>({assignment_id:row.id, student_id:sid})), true, {'Prefer':'return=representation'});
       n = studentIds.length;
+    }
+    if (target==='all'){
+      // '학원 전체'는 전원(+향후 학생)을 커버하므로, 같은 책(+페이지)의 기존 배정
+      // (옛 1명짜리 selected·중복 all)을 비활성화해 중복/혼란을 없앤다.
+      const pf = hasPage ? `page_num=eq.${encodeURIComponent(String(pageNum))}` : 'page_num=is.null';
+      try { await sbFetch(`/rest/v1/voca_assignments?org_id=eq.${userOrg.id}&book_id=eq.${bookId}&${pf}&id=neq.${row.id}&active=eq.true`, 'PATCH', { active:false }); } catch(e){}
     }
     const ov = document.getElementById('assign-overlay'); if (ov) ov.remove();
     toast(ko?`✅ ${n}명에게 배정했어요`:`✅ Assigned to ${n}`);
