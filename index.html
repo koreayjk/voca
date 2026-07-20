@@ -4593,7 +4593,11 @@ function render() {
       appendOfficialBooks().then(()=>{ window._officialFetching=false; updateTotalWords(); render(); })
                            .catch(()=>{ window._officialFetching=false; });
     }
-    const myBooks = books.filter(b=>!b._assigned);
+    // 배정(_assigned)된 책은 학생 책장에선 '과제' 배너로만 보이도록 숨기지만,
+    // 공식 단어장(_official)은 배정 여부와 무관하게 항상 책장에 노출한다.
+    // (원장이 공식책을 학생에게 배정하면 그 책이 _assigned 로도 표시돼 원장 책장에서
+    //  사라지던 버그 방지 — 원장은 배정하는 사람이지 그 과제를 받는 학생이 아님)
+    const myBooks = books.filter(b=>!b._assigned || b._official);
     root.innerHTML = `
       <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
@@ -5445,6 +5449,8 @@ function _assignBadge(a){
   return { label: ko?'시작 전':'Not started', color:'#c0392b', bg:'#fdecea' };
 }
 function assignmentBannerHTML(){
+  // 관리자(원장·공동관리자)는 과제를 '받는' 사람이 아니라 '주는' 사람이므로 과제 배너를 표시하지 않음.
+  if (orgIsAdmin()) return '';
   const list = window._assignList || [];
   if (!list.length) return '';
   const ko = userNativeLang==='ko';
