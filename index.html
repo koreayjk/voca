@@ -5129,8 +5129,12 @@ async function advance(isKnown) {
         startReviewQuiz(s.bookId, s.pageNum);
         return;
       } else {
-        // 일반 학습 - 복습 일정 새로 등록 (첫날 암기 점수 포함)
-        await saveReviewSchedule(s.bookId, s.pageNum);
+        // 첫 암기도 복습과 동일하게 '퀴즈 통과'를 조건으로 점수·복습일정 등록.
+        // (점수·일정 등록은 퀴즈를 모두 맞혔을 때 renderQuiz → _awardFirstStudy 로 처리)
+        window._pendingFirstStudy = { book_id: s.bookId, page_num: s.pageNum };
+        toast(userNativeLang==='ko'?'암기 끝! 퀴즈를 모두 맞히면 점수를 받아요':'Done! Pass the quiz to earn points');
+        startReviewQuiz(s.bookId, s.pageNum);
+        return;
       }
     }
     replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total,isReview:!!(s._reviewId)});
@@ -6242,12 +6246,20 @@ async function saveReviewSchedule(bookId, pageNum) {
       body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 3), review_15d: addDays(now, 6), review_30d: addDays(now, 15), review_60d: addDays(now, 30) })
     });
     const data = await res.json();
-    if (data.error || data.code) { console.error('[복습 저장 오류]', data); return; }
-    // ⚠️ 첫 암기(복습 일정 첫 등록)에는 점수를 주지 않는다. 점수는 복습 1일차부터(updateReviewStep)만.
-    // (명예의 전당이 '복습 노력'을 반영하도록 — 단순 학습량으로 순위가 오르던 문제 수정)
-    window._lastEarnedScore = 0;
-    window._lastReviewFinished = false;
-  } catch(e) { console.error('[복습 저장 오류]', e); }
+    if (data.error || data.code) { console.error('[복습 저장 오류]', data); return false; }
+    return true; // 새 복습 일정을 실제로 등록함 → 첫 암기 점수 지급 대상(호출측에서 처리)
+  } catch(e) { console.error('[복습 저장 오류]', e); return false; }
+}
+
+// 첫 암기(퀴즈 통과 후): 복습 일정 등록 + 점수 지급. 일정이 새로 만들어졌을 때만 점수를 준다(중복 방지).
+async function _awardFirstStudy(bookId, pageNum){
+  const created = await saveReviewSchedule(bookId, pageNum);
+  const book = findBook(bookId);
+  const page = book ? book.pages.find(p=>String(p.num)===String(pageNum)) : null;
+  const base = page ? calcWordScore(page.words) : 0;
+  if (created && base>0){ addReviewScore(base); window._lastEarnedScore = base; }
+  else { window._lastEarnedScore = 0; }
+  window._lastReviewFinished = false; window._lastReviewLate = false; window._lastBaseScore = base;
 }
 
 function startWrongQuiz() {
@@ -6263,10 +6275,11 @@ function startReviewQuiz(bookId, pageNum){
   const book = findBook(bookId);
   const ws = book ? shuffle([...(findPage(book, pageNum)?.words || [])]) : [];
   if (!ws.length){
-    // 단어가 없으면 퀴즈 없이 바로 처리(폴백): 대기 중 복습을 그대로 반영.
-    const pend = window._pendingReview; window._pendingReview = null;
-    if (pend) { updateReviewStep(pend).then(()=>{ checkReviews().catch(()=>{}); }); }
-    replace({name:'study-done', bookId, scope:'page', pageNum, total:0, rounds:1, isReview:true});
+    // 단어가 없으면 퀴즈 없이 바로 처리(폴백): 대기 중 복습/첫암기를 그대로 반영.
+    const pr = window._pendingReview; const pf = window._pendingFirstStudy;
+    if (pr){ window._pendingReview = null; updateReviewStep(pr).then(()=>{ checkReviews().catch(()=>{}); }); }
+    else if (pf){ window._pendingFirstStudy = null; _awardFirstStudy(pf.book_id, pf.page_num).then(()=>{ checkReviews().catch(()=>{}); }); }
+    replace({name:'study-done', bookId, scope:'page', pageNum, total:0, rounds:1, isReview:!!pr});
     return;
   }
   window._quiz = { bookId, scope:'page', pageNum, words: ws, idx:0, correct:0, _review:true };
@@ -6296,25 +6309,31 @@ function renderQuiz() {
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
     window._wrongWords = wrongWords;
 
-    // ── 복습-게이트 퀴즈: 이 페이지에 대기 중인 복습이 있고, 이 퀴즈가 복습용이면 다 맞혀야 점수 지급 ──
-    const reviewGated = !!(q._review && window._pendingReview
-      && window._pendingReview.book_id === q.bookId
-      && String(window._pendingReview.page_num) === String(q.pageNum));
-    if (reviewGated && wrongWords.length === 0) {
-      // 통과 → 이제 복습 단계 이동 + 점수 지급(늦은 복습이면 0점 규칙은 그대로 적용됨).
-      const pend = window._pendingReview; window._pendingReview = null;
+    // ── 게이트 퀴즈: 이 페이지에 대기 중인 복습/첫암기가 있고 이 퀴즈가 게이트용이면 다 맞혀야 점수 지급 ──
+    const _pr = window._pendingReview, _pf = window._pendingFirstStudy;
+    const _match = (p)=> p && p.book_id===q.bookId && String(p.page_num)===String(q.pageNum);
+    const gateReview = !!(q._review && _match(_pr));
+    const gateFirst  = !!(q._review && _match(_pf));
+    const gated = gateReview || gateFirst;
+    if (gated && wrongWords.length === 0) {
       const ko = userNativeLang==='ko';
       root.innerHTML = `<div class="scr"><div class="done" style="padding-top:70px;text-align:center;"><div style="font-size:34px;margin-bottom:10px;">✅</div><div style="font-size:14px;color:var(--ink-60);">${ko?'퀴즈 통과! 점수를 반영하는 중...':'Passed! Scoring...'}</div></div></div>`;
-      updateReviewStep(pend).then(async ()=>{ try{ await checkReviews(); }catch(e){}
-        replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:true});
-      });
+      if (gateReview){
+        const pend = window._pendingReview; window._pendingReview = null;
+        updateReviewStep(pend).then(async ()=>{ try{ await checkReviews(); }catch(e){}
+          replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:true}); });
+      } else {
+        const pend = window._pendingFirstStudy; window._pendingFirstStudy = null;
+        _awardFirstStudy(pend.book_id, pend.page_num).then(async ()=>{ try{ await checkReviews(); }catch(e){}
+          replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:false}); });
+      }
       return;
     }
-    const gateNote = (reviewGated && wrongWords.length>0)
-      ? `<div style="width:100%;background:#fff3e0;border:1px solid #f0c98a;border-radius:12px;padding:12px 14px;margin:14px 0 0;font-size:12.5px;color:#8a5a00;line-height:1.6;text-align:left;">⚠️ ${userNativeLang==='ko'?`아직 <b>복습 점수를 받지 못했어요.</b> 아래 <b>틀린 ${wrongWords.length}개 다시 풀기</b>로 <b>모두 맞히면</b> 점수를 받아요.`:`No review points yet. Retry the ${wrongWords.length} wrong word(s) and get them all right to earn points.`}</div>`
+    const gateNote = (gated && wrongWords.length>0)
+      ? `<div style="width:100%;background:#fff3e0;border:1px solid #f0c98a;border-radius:12px;padding:12px 14px;margin:14px 0 0;font-size:12.5px;color:#8a5a00;line-height:1.6;text-align:left;">⚠️ ${userNativeLang==='ko'?`아직 <b>점수를 받지 못했어요.</b> 아래 <b>틀린 ${wrongWords.length}개 다시 풀기</b>로 <b>모두 맞히면</b> 점수를 받아요.`:`No points yet. Retry the ${wrongWords.length} wrong word(s) and get them all right to earn points.`}</div>`
       : '';
-    // 복습-게이트 상태에서 '전체 다시'도 게이트를 유지해야 함(통과 시 점수 지급).
-    const retryAllOnclick = reviewGated ? `startReviewQuiz('${jsq(q.bookId)}','${jsq(String(q.pageNum))}')` : `startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')`;
+    // 게이트 상태에서 '전체 다시'도 게이트를 유지해야 함(통과 시 점수 지급).
+    const retryAllOnclick = gated ? `startReviewQuiz('${jsq(q.bookId)}','${jsq(String(q.pageNum))}')` : `startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')`;
     root.innerHTML = `<div class="scr" style="padding-bottom:24px;">
       <div class="topnav"><span></span><span class="topnav__title">${t('quizResult')}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
       <div class="done" style="padding-top:0;">
@@ -6331,8 +6350,8 @@ function renderQuiz() {
         <div style="width:100%;margin-top:16px;display:flex;flex-direction:column;gap:10px;">
           ${wrongWords.length>0?`<button class="btn btn-solid" onclick="startWrongQuiz()">${t('wrongOnly')} (${wrongWords.length}개)</button>`:''}
           <button class="btn ${wrongWords.length>0?'btn-outline':'btn-solid'}" onclick="${retryAllOnclick}">${t('retryAll')}</button>
-          ${reviewGated?'':`<button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>`}
-          ${reviewGated?`<button class="btn btn-outline" onclick="goTab('books')">${userNativeLang==='ko'?'나중에 하기 (점수 없음)':'Later (no points)'}</button>`:''}
+          ${gated?'':`<button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>`}
+          ${gated?`<button class="btn btn-outline" onclick="goTab('books')">${userNativeLang==='ko'?'나중에 하기 (점수 없음)':'Later (no points)'}</button>`:''}
         </div>
       </div>
     </div>`;
