@@ -1863,24 +1863,38 @@ async function openStudentDetail(id){
   }
 }
 
-// 배정한 과제 빼기. '전체' 배정이면 비활성화(전원에서 사라짐), '지정' 배정이면 이 학생만 제외(마지막이면 비활성화).
+// 배정한 과제를 '이 학생에게서만' 빼기. (다른 학생은 그대로)
+// - '지정' 배정: 이 학생 링크만 제거(마지막이면 비활성화).
+// - '전체' 배정: 이 학생만 뺄 수 없으므로 '지정(현재 학생 전원 - 이 학생)'으로 전환해 나머지는 유지.
+//   (전환 후엔 '학원 전체'가 아니라서, 이후 새로 들어오는 학생은 자동 배정되지 않음)
 async function unassignTask(assignmentId, targetType, studentId, label){
   const ko = userNativeLang==='ko';
   if (!orgIsAdmin() || !userOrg) { toast(ko?'관리자만 할 수 있어요':'Admins only'); return; }
   const isAll = targetType==='all';
   const msg = isAll
-    ? (ko?`'${label}'\n이 과제는 '학원 전체' 배정이에요.\n빼면 전체 학생에게서 사라집니다. 계속할까요?`:`Remove '${label}' from ALL students?`)
-    : (ko?`'${label}' 과제를 이 학생에게서 뺄까요?`:`Remove '${label}' from this student?`);
+    ? (ko?`'${label}'\n이 학생에게서만 뺄까요? (다른 학생은 그대로 유지돼요)\n※ 이후 이 과제는 '전체'가 아닌 '지정'이 되어, 새로 들어오는 학생에게는 자동 배정되지 않아요.`
+         :`Remove '${label}' from THIS student only? (others keep it)`)
+    : (ko?`'${label}' 과제를 이 학생에게서 뺄까요? (다른 학생은 그대로)`:`Remove '${label}' from this student?`);
   if (!confirm(msg)) return;
   try {
     if (isAll) {
-      await sbFetch(`/rest/v1/voca_assignments?id=eq.${assignmentId}`, 'PATCH', { active:false }, true, {'Prefer':'return=minimal'});
+      // 현재 승인 학생 전원 - 이 학생 → 지정 배정으로 전환
+      const studs = await sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id`);
+      const others = (Array.isArray(studs)?studs:[]).map(s=>s.id).filter(sid=>sid!==studentId);
+      await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=eq.${assignmentId}`, 'DELETE', null, true, {'Prefer':'return=minimal'});
+      if (others.length){
+        await sbFetch('/rest/v1/voca_assignment_students', 'POST', others.map(sid=>({assignment_id:assignmentId, student_id:sid})), true, {'Prefer':'return=minimal'});
+        await sbFetch(`/rest/v1/voca_assignments?id=eq.${assignmentId}`, 'PATCH', { target_type:'selected' }, true, {'Prefer':'return=minimal'});
+      } else {
+        // 나 혼자였으면 그냥 비활성화
+        await sbFetch(`/rest/v1/voca_assignments?id=eq.${assignmentId}`, 'PATCH', { active:false }, true, {'Prefer':'return=minimal'});
+      }
     } else {
       await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=eq.${assignmentId}&student_id=eq.${studentId}`, 'DELETE', null, true, {'Prefer':'return=minimal'});
       const left = await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=eq.${assignmentId}&select=student_id&limit=1`);
       if (Array.isArray(left) && left.length===0) await sbFetch(`/rest/v1/voca_assignments?id=eq.${assignmentId}`, 'PATCH', { active:false }, true, {'Prefer':'return=minimal'});
     }
-    toast(ko?'과제를 뺐어요':'Removed');
+    toast(ko?'이 학생에게서 뺐어요':'Removed from this student');
     const ov=document.getElementById('student-detail-modal'); if(ov) ov.remove();
     openStudentDetail(studentId);
   } catch(e){ toast((ko?'오류: ':'Error: ')+(e&&e.message||e)); }
