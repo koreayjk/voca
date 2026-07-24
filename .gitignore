@@ -1,15 +1,8 @@
 # 발음 음원은 Supabase Storage에 보관 → repo/Pages 용량 절약 (로컬은 업로드 스테이징용)
-# 단, 시리즈별 예문 오디오(중복 단어)는 GitHub Pages 에서 서빙하므로 저장소에 포함.
-audio/*
-!audio/s
-audio/s/*
-!audio/s/suneung/
-!audio/s/mid/
-!audio/s/toeic/
+audio/
 sat/
 toeic/
 wordbooks/toeic-corpus/
-!audio/s/toeic/
 .DS_Store
 **/.DS_Store
 __pycache__/
