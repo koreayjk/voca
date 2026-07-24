@@ -5049,6 +5049,8 @@ function _cardBackBody(w){
 let _curAudio = null;
 function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'); }
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
+// 중복 단어의 시리즈별 예문 오디오는 저장소(GitHub Pages)에서 서빙. (단어 발음·유니크 예문은 위 Supabase)
+const _REPO_AUDIO_BASE = 'https://imvoca.app/audio';
 // 시리즈별 예문이 갈리는 '중복 단어' 목록. 이 단어만 시리즈별 예문 오디오가 필요하고,
 // 나머지(유니크)는 기존 원어민 s/{단어}.mp3 를 그대로 쓴다. (실패 시 null → 전부 시리즈경로/TTS)
 window._conflictWords = window._conflictWords || null;
@@ -5063,9 +5065,9 @@ function _audioUrl(w, kind){
     const cw = window._conflictWords;
     // 유니크 단어(시리즈별 예문이 안 갈리는 단어): 기존 원어민 예문 MP3(s/{단어}.mp3) 그대로 사용.
     if (cw && !cw.has(s)) return _AUDIO_BASE+'/s/'+s+'.mp3';
-    // 중복 단어(또는 목록 미로드): 시리즈별 폴더. 파일 없으면 _playSmart 가 예문 텍스트를 TTS로 읽음.
+    // 중복 단어(또는 목록 미로드): 시리즈별 예문 오디오(저장소). 파일 없으면 _playSmart 가 예문 텍스트를 TTS로.
     const ser = w.analysis._series || window._audioSeries || '';
-    return ser ? (_AUDIO_BASE+'/s/'+ser+'/'+s+'.mp3') : '';
+    return ser ? (_REPO_AUDIO_BASE+'/s/'+ser+'/'+s+'.mp3') : '';
   }
   return _AUDIO_BASE+'/w/'+s+'.mp3'; // 단어 발음은 어느 책이든 동일 → 전역 파일 유지
 }

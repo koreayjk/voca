@@ -26,13 +26,14 @@
 - `gen-suneung.json` (1531), `gen-mid.json` (945), `gen-toeic.json` (1123) — **생성 대상**(중복 단어 예문). `{ "w", "s" }`
 - (참고 전체본: `suneung.json`/`mid.json`/`toeic.json`/`es.json`)
 
-## 원어민 MP3 생성·업로드
+## 원어민 MP3 생성 (저장소 호스팅)
+중복 단어 예문 오디오는 **저장소 `/audio/s/{series}/`** 에 저장 → GitHub Pages 가
+`imvoca.app/audio/s/{series}/{word}.mp3` 로 서빙. 앱은 `_REPO_AUDIO_BASE` 로 여기서 읽음.
 ```bash
-export GOOGLE_TTS_KEY=...          # Google Cloud Text-to-Speech
-export SUPABASE_URL=https://xxxx.supabase.co
-export SUPABASE_SERVICE_KEY=...    # service_role
-node generate.mjs suneung          # 수능부터
-node generate.mjs mid toeic        # 이어서
+export GOOGLE_TTS_KEY=...           # Google Cloud Text-to-Speech (무료 한도 안)
+node generate.mjs suneung mid toeic # 생성 → /audio/s/{series}/ 에 저장
+git add audio/ && git commit -m "add series audio" && git push
 ```
-- 이미 있는 파일은 건너뜀(중단 후 재실행 안전).
-- 다른 TTS(기존 Gemini TTS 등)를 쓰려면 `generate.mjs` 의 `synth()` 만 교체.
+- 이미 있는 파일은 건너뜀(중단 후 재실행 안전). Supabase 키 불필요.
+- **완료 현황**: 수능 1531 · 중등 945 · 토익 1123 생성 완료(2026-07). 유니크 단어는 기존 원어민 재사용.
+- 다른 TTS 를 쓰려면 `generate.mjs` 의 `synth()` 만 교체.
