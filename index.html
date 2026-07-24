@@ -1810,7 +1810,7 @@ async function openStudentDetail(id){
     try {
       const rr = await fetch(SB_URL+'/functions/v1/org-report', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken}, body: JSON.stringify({ org_id:userOrg.id, student_id:id }) });
       const rd = await rr.json().catch(()=>({}));
-      const rep = Array.isArray(rd.report)?rd.report:[];
+      const rep = await _filterSelectedAssignments(Array.isArray(rd.report)?rd.report:[]);
       if (rep.length){
         assignedHtml = `<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:2px 2px 8px;">📌 ${ko?'배정된 과제':'Assignments'} (${rep.length})</div>` + rep.map(a=>{
           const s=(a.students||[])[0]||{};
@@ -5685,6 +5685,22 @@ async function renderReportPage(root){
   loadOrgReport('report-body');
 }
 // 과제별 상세 리포트를 지정한 컨테이너(boxId)에 채움. 리포트 페이지·단체관리 리포트 탭 공용.
+// '지정(selected)' 배정은 org-report 가 대상 학생을 안 걸러줌 → assignment_students 로 클라에서 필터.
+// (배정에서 빼도 리포트/상세에 계속 보이던 문제 해결. 엣지함수 재배포 불필요)
+async function _filterSelectedAssignments(report){
+  const selIds = (report||[]).filter(a=>a.target_type==='selected').map(a=>a.assignment_id).filter(Boolean);
+  if (!selIds.length) return report||[];
+  const map = {};
+  try {
+    const links = await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=in.(${selIds.join(',')})&select=assignment_id,student_id`);
+    if (Array.isArray(links)) links.forEach(l=>{ (map[l.assignment_id] = map[l.assignment_id] || new Set()).add(l.student_id); });
+  } catch(e){ return report||[]; }
+  return (report||[]).map(a=>{
+    if (a.target_type!=='selected') return a;
+    const set = map[a.assignment_id] || new Set();
+    return { ...a, students: (a.students||[]).filter(s=>set.has(s.student_id)) };
+  }).filter(a=> a.target_type!=='selected' || (a.students && a.students.length));
+}
 async function loadOrgReport(boxId){
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
@@ -5696,7 +5712,7 @@ async function loadOrgReport(boxId){
       body: JSON.stringify({ org_id: userOrg.id })
     });
     const data = await res.json().catch(()=>({}));
-    window._lastReport = Array.isArray(data.report) ? data.report : [];
+    window._lastReport = await _filterSelectedAssignments(Array.isArray(data.report) ? data.report : []);
     renderReportInto(boxId);
   } catch(e){
     const box=document.getElementById(boxId);

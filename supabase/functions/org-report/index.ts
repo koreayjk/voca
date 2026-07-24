@@ -117,6 +117,19 @@ Deno.serve(async (req) => {
     const { data: students } = await stuQuery
     const studentList = students || []
 
+    // '지정(selected)' 배정의 대상 학생 링크 → 그 배정은 대상 학생에게만 표시
+    const selIds = assignments.filter((a) => a.target_type === 'selected').map((a) => a.id)
+    const linkMap: Record<string, Set<string>> = {}
+    if (selIds.length) {
+      const { data: links } = await svc
+        .from('voca_assignment_students')
+        .select('assignment_id, student_id')
+        .in('assignment_id', selIds)
+      for (const l of (links || [])) {
+        (linkMap[l.assignment_id] ||= new Set<string>()).add(l.student_id as string)
+      }
+    }
+
     // 관련 voca_review 한 번에 로드 (학생들 × 배정 book_id)
     const studentIds = studentList.map((s) => s.id)
     const bookIds = [...new Set(assignments.map((a) => a.book_id))]
@@ -132,7 +145,9 @@ Deno.serve(async (req) => {
 
     // 배정별 × 학생별 리포트 구성
     const report = assignments.map((a) => {
-      const rows = studentList.map((stu) => {
+      // '지정' 배정은 대상 학생에게만. '전체'는 모두.
+      const targeted = a.target_type === 'selected' ? (linkMap[a.id] || new Set<string>()) : null
+      const rows = studentList.filter((stu) => targeted === null || targeted.has(stu.id)).map((stu) => {
         // 해당 학생의 (book_id [, page_num]) review 행 찾기
         const matches = reviews.filter((r) =>
           r.user_id === stu.id &&
@@ -173,7 +188,7 @@ Deno.serve(async (req) => {
         target_type: a.target_type,
         students: rows,
       }
-    })
+    }).filter((a) => a.students.length > 0) // 대상 학생 없는 배정(지정에서 전원 제외 등)은 숨김
 
     return json({ org_id, report })
   } catch (e) {
