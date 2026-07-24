@@ -1826,6 +1826,27 @@ async function openStudentDetail(id){
       }
     } catch(e){}
 
+    // 일별 활동(그날 새 단어·복습 몇 개) — voca_activity 집계
+    let activityHtml = '';
+    try {
+      const av = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${id}&select=day,kind,words&order=day.desc&limit=500`);
+      if (Array.isArray(av) && av.length){
+        const byDay = {};
+        av.forEach(r=>{ const d=r.day; if(!byDay[d]) byDay[d]={study:0,review:0}; if(r.kind==='review') byDay[d].review+=(r.words||0); else byDay[d].study+=(r.words||0); });
+        const days = Object.keys(byDay).sort().reverse().slice(0,14);
+        activityHtml = `<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">🗓️ ${ko?'일별 활동 (최근 2주)':'Daily activity'}</div>` + days.map(d=>{
+          const x=byDay[d];
+          return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--ink-07);border-radius:10px;margin-bottom:6px;">
+            <div style="font-size:12px;font-weight:700;color:var(--ink-100);flex-shrink:0;width:62px;">${esc(String(d).slice(5))}</div>
+            <div style="flex:1;display:flex;gap:14px;font-size:12.5px;">
+              <span style="color:#1c3553;">📘 ${ko?'새 단어':'New'} <b>${x.study}</b></span>
+              <span style="color:#b35900;">🔁 ${ko?'복습':'Review'} <b>${x.review}</b></span>
+            </div>
+          </div>`;
+        }).join('');
+      }
+    } catch(e){}
+
     card.innerHTML = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
         <div style="min-width:0;"><div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>${email?`<div class="muted" style="font-size:12px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">✉️ ${esc(email)}</div>`:''}</div>
@@ -1834,7 +1855,8 @@ async function openStudentDetail(id){
       <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
       ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
       ${assignedHtml}
-      ${assignedHtml && list.length?`<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">📖 ${ko?'개인 단어장':'Personal books'} (${list.length})</div>`:''}
+      ${activityHtml}
+      ${list.length?`<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">📖 ${ko?'개인 단어장':'Personal books'} (${list.length})</div>`:''}
       ${bodyHtml}`;
   } catch(e){
     card.innerHTML = `<div style="text-align:center;color:var(--ink-45);font-size:13px;padding:24px;">${ko?'불러오지 못했어요 (권한 정책 확인)':'Failed to load'}</div><div style="text-align:center;"><button onclick="document.getElementById('student-detail-modal').remove()" style="margin-top:10px;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button></div>`;
@@ -6270,6 +6292,17 @@ async function saveStats(bookId, total, correct, pageNum) {
   } catch(e) {}
 }
 
+// 일별 활동 로그: 첫 암기('study') / 복습 완료('review') 한 줄 기록. (관리자가 학생별 일별 활동 확인용)
+async function logActivity(bookId, pageNum, kind, words){
+  try {
+    await fetch(SB_URL + '/rest/v1/voca_activity', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken, 'Prefer':'return=minimal' },
+      body: JSON.stringify({ user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 })
+    });
+  } catch(e){}
+}
+
 // Day별 테스트 베스트 점수(%) 캐시: key = bookId|pageNum
 let _testScore = {}, _testScoreLoaded = {};
 async function loadTestScores(bookId) {
@@ -6329,6 +6362,7 @@ async function _awardFirstStudy(bookId, pageNum){
   const book = findBook(bookId);
   const page = book ? book.pages.find(p=>String(p.num)===String(pageNum)) : null;
   const base = page ? calcWordScore(page.words) : 0;
+  if (created) logActivity(bookId, pageNum, 'study', page ? page.words.length : 0); // 새 페이지 첫 암기 기록
   if (created && base>0){ addReviewScore(base); window._lastEarnedScore = base; }
   else { window._lastEarnedScore = 0; }
   window._lastReviewFinished = false; window._lastReviewLate = false; window._lastBaseScore = base;
@@ -6602,6 +6636,7 @@ async function updateReviewStep(review) {
     const rbook = findBook(review.book_id);
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
     const baseScore = rpage ? calcWordScore(rpage.words) : 0;
+    logActivity(review.book_id, review.page_num, 'review', rpage ? rpage.words.length : 0); // 복습 완료 기록
     const isFinalStep = (!step || !step.next); // 마지막 단계(60일차) 완주
     // 예정일을 넘겨도(늦어도) 퀴즈를 통과해 복습을 완료하면 점수를 지급한다.
     // (늦음은 is_perfect=false 로만 기록 — 리포트의 '정시복습' 판별용. 점수에는 영향 없음)
