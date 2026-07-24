@@ -1819,7 +1819,8 @@ async function openStudentDetail(id){
           return `<div style="border:1px solid var(--ink-07);border-radius:12px;padding:11px 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
             <div style="flex:1;min-width:0;"><div style="font-weight:700;color:var(--ink-100);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(a.title||(ko?'과제':'Task'))}</div><div class="muted" style="font-size:11px;margin-top:2px;">${a.target_type==='all'?(ko?'전체':'All'):(ko?'지정':'Selected')}${a.due_date?` · ${ko?'마감':'Due'} ${esc(a.due_date)}`:''}${s.pagesStudied?` · ${s.pagesStudied}p`:''}</div></div>
             <span style="font-size:11px;font-weight:700;color:${color};background:${bg};border-radius:99px;padding:3px 10px;white-space:nowrap;flex-shrink:0;">${esc(s.stageLabel||(ko?'시작 전':'Not started'))}</span>
-            <span style="font-size:10.5px;color:var(--ink-60);flex-shrink:0;width:50px;text-align:center;">${fid}</span>
+            <span style="font-size:10.5px;color:var(--ink-60);flex-shrink:0;width:44px;text-align:center;">${fid}</span>
+            <button onclick="unassignTask('${jsq(a.assignment_id)}','${esc(a.target_type||'')}','${jsq(id)}','${jsq(a.title||'')}')" title="${ko?'과제 빼기':'Remove'}" style="background:none;border:none;color:var(--ink-40);cursor:pointer;font-size:16px;line-height:1;padding:0 2px;flex-shrink:0;">✕</button>
           </div>`;
         }).join('');
       }
@@ -1838,6 +1839,29 @@ async function openStudentDetail(id){
   } catch(e){
     card.innerHTML = `<div style="text-align:center;color:var(--ink-45);font-size:13px;padding:24px;">${ko?'불러오지 못했어요 (권한 정책 확인)':'Failed to load'}</div><div style="text-align:center;"><button onclick="document.getElementById('student-detail-modal').remove()" style="margin-top:10px;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button></div>`;
   }
+}
+
+// 배정한 과제 빼기. '전체' 배정이면 비활성화(전원에서 사라짐), '지정' 배정이면 이 학생만 제외(마지막이면 비활성화).
+async function unassignTask(assignmentId, targetType, studentId, label){
+  const ko = userNativeLang==='ko';
+  if (!orgIsAdmin() || !userOrg) { toast(ko?'관리자만 할 수 있어요':'Admins only'); return; }
+  const isAll = targetType==='all';
+  const msg = isAll
+    ? (ko?`'${label}'\n이 과제는 '학원 전체' 배정이에요.\n빼면 전체 학생에게서 사라집니다. 계속할까요?`:`Remove '${label}' from ALL students?`)
+    : (ko?`'${label}' 과제를 이 학생에게서 뺄까요?`:`Remove '${label}' from this student?`);
+  if (!confirm(msg)) return;
+  try {
+    if (isAll) {
+      await sbFetch(`/rest/v1/voca_assignments?id=eq.${assignmentId}`, 'PATCH', { active:false }, true, {'Prefer':'return=minimal'});
+    } else {
+      await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=eq.${assignmentId}&student_id=eq.${studentId}`, 'DELETE', null, true, {'Prefer':'return=minimal'});
+      const left = await sbFetch(`/rest/v1/voca_assignment_students?assignment_id=eq.${assignmentId}&select=student_id&limit=1`);
+      if (Array.isArray(left) && left.length===0) await sbFetch(`/rest/v1/voca_assignments?id=eq.${assignmentId}`, 'PATCH', { active:false }, true, {'Prefer':'return=minimal'});
+    }
+    toast(ko?'과제를 뺐어요':'Removed');
+    const ov=document.getElementById('student-detail-modal'); if(ov) ov.remove();
+    openStudentDetail(studentId);
+  } catch(e){ toast((ko?'오류: ':'Error: ')+(e&&e.message||e)); }
 }
 
 // 학생 중심 배정: 한 학생에게 여러 단어장을 골라 배정 (개별 맞춤용)
