@@ -74,7 +74,8 @@ async function upload(path, buf) {
 }
 
 async function runSeries(series) {
-  const manifest = JSON.parse(await readFile(new URL(`./${series}.json`, import.meta.url)));
+  // gen-{series}.json = 시리즈별 예문이 갈리는 '중복 단어'만(생성 대상). 유니크 단어는 기존 원어민 s/{단어}.mp3 재사용.
+  const manifest = JSON.parse(await readFile(new URL(`./gen-${series}.json`, import.meta.url)));
   console.log(`\n[${series}] ${manifest.length} 문장`);
   let done = 0, skip = 0, fail = 0;
   let i = 0;
