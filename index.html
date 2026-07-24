@@ -5049,7 +5049,19 @@ function _cardBackBody(w){
 let _curAudio = null;
 function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'); }
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
-function _audioUrl(w, kind){ if(!(w&&w.analysis&&w.analysis._official)) return ''; const s=_safeAudio(w.en); if(!s) return ''; const ns=(w.analysis._lang==='es')?'es/':''; return _AUDIO_BASE+'/'+ns+kind+'/'+s+'.mp3'; }
+// 책 제목 → 오디오 시리즈 폴더 키. 같은 단어라도 시리즈별 예문이 달라서, 예문 발음은 시리즈별로 분리 저장.
+function _audioSeriesFromTitle(t){ t=String(t||''); if(t.indexOf('중등')>=0)return 'mid'; if(t.indexOf('토익')>=0)return 'toeic'; if(t.indexOf('수능')>=0)return 'suneung'; return ''; }
+function _audioUrl(w, kind){
+  if(!(w&&w.analysis&&w.analysis._official)) return '';
+  const s=_safeAudio(w.en); if(!s) return '';
+  if(w.analysis._lang==='es') return _AUDIO_BASE+'/es/'+kind+'/'+s+'.mp3'; // 스페인어는 기존 es/ 유지
+  if(kind==='s'){
+    // 예문 발음: 시리즈별 폴더(s/suneung, s/mid, s/toeic). 파일이 아직 없으면 '' → _playSmart 가 예문 텍스트를 TTS로 읽음(항상 화면과 일치).
+    const ser = w.analysis._series || window._audioSeries || '';
+    return ser ? (_AUDIO_BASE+'/s/'+ser+'/'+s+'.mp3') : '';
+  }
+  return _AUDIO_BASE+'/w/'+s+'.mp3'; // 단어 발음은 어느 책이든 동일 → 전역 파일 유지
+}
 let _aWatch = null; // mp3 재생 완료 감지 워치독(onended 누락 대비)
 let _sharedAudio = null; // ⚠️ iOS: 제스처로 한 번 잠금해제된 엘리먼트만 이후 프로그램적 재생 허용 → 단일 엘리먼트 재사용
 function _getAudioEl(){ if(!_sharedAudio){ _sharedAudio = new Audio(); _sharedAudio.preload='auto'; } return _sharedAudio; }
@@ -5121,6 +5133,8 @@ function toggleAutoRead(){
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
   if (!s||s.queue.length===0) { replace({name:'study-done',bookId:route.bookId,scope:route.scope,pageNum:route.pageNum,rounds:s?s.round:1,total:s?s.stats.total:0}); return; }
+  // 예문 발음 시리즈 폴더 결정용(현재 학습 중인 책 기준). 즐겨찾기 등 섞인 경우엔 '' → 예문은 TTS.
+  window._audioSeries = (s.scope==='favorite') ? '' : _audioSeriesFromTitle(findBook(s.bookId)?.title||'');
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
   root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(userNativeLang==='ko'?'즐겨찾기':'Favorites'):(findBook(s.bookId)?.title||'')}</span><span onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?'🔊 자동 ON':'🔇 자동'}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="flipCard()"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint">${s.flipped?(userNativeLang==='ko'?'○ 외움 · ✕ 다음 사이클  |  Space = 앞면':'○ Got it · ✕ Next cycle  |  Space = Front'):(userNativeLang==='ko'?'탭해서 뜻 보기  |  ○✕ 바로 선택 가능':'Tap to see meaning  |  ○✕ to choose')}<span class="kbd-only">　·　${userNativeLang==='ko'?`<kbd>Space</kbd> 뒤집기　<kbd>←</kbd> 미암기　<kbd>→</kbd> 암기`:`<kbd>Space</kbd> flip　<kbd>←</kbd> Again　<kbd>→</kbd> Got it`}</span></div></div>`;
   _autoAfterRender(w, s.flipped);
