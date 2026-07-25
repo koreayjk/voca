@@ -1826,22 +1826,31 @@ async function openStudentDetail(id){
       }
     } catch(e){}
 
-    // 일별 활동(그날 새 단어·복습 몇 개) — voca_activity 집계
+    // 일별 활동 — 그날 '어느 단어장 어느 Day'를 새로 외우고/복습했는지 (voca_activity)
     let activityHtml = '';
     try {
-      const av = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${id}&select=day,kind,words&order=day.desc&limit=500`);
+      const av = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${id}&select=day,kind,book_id,page_num&order=day.desc&limit=800`);
       if (Array.isArray(av) && av.length){
+        // 책 제목 맵(공식 카탈로그 + 이 학생 개인책)
+        const bookTitle = {};
+        (window._officialCatalogFull||[]).forEach(b=>{ if(b&&b.id) bookTitle[b.id]=b.title; });
+        (list||[]).forEach(b=>{ if(b&&b.id) bookTitle[b.id]=b.title; });
+        const pgLabel = pn => { pn=String(pn==null?'':pn); return /^\d+$/.test(pn) ? ('Day '+pn) : (pn||'—'); };
         const byDay = {};
-        av.forEach(r=>{ const d=r.day; if(!byDay[d]) byDay[d]={study:0,review:0}; if(r.kind==='review') byDay[d].review+=(r.words||0); else byDay[d].study+=(r.words||0); });
+        av.forEach(r=>{ const d=r.day; if(!byDay[d]) byDay[d]={study:[],review:[]}; (r.kind==='review'?byDay[d].review:byDay[d].study).push({title:(bookTitle[r.book_id]||(ko?'단어장':'Book')), page:pgLabel(r.page_num)}); });
+        // 같은 책은 묶고 Day 나열 (중복 제거·정렬)
+        const fmt = items => {
+          if(!items.length) return `<span style="color:var(--ink-40);">—</span>`;
+          const bb={}; items.forEach(it=>{ (bb[it.title]=bb[it.title]||new Set()).add(it.page); });
+          return Object.keys(bb).map(t=>`${esc(t)} <b>${[...bb[t]].sort((a,c)=>String(a).localeCompare(String(c),undefined,{numeric:true})).map(esc).join(', ')}</b>`).join(' · ');
+        };
         const days = Object.keys(byDay).sort().reverse().slice(0,14);
         activityHtml = `<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">🗓️ ${ko?'일별 활동 (최근 2주)':'Daily activity'}</div>` + days.map(d=>{
           const x=byDay[d];
-          return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--ink-07);border-radius:10px;margin-bottom:6px;">
-            <div style="font-size:12px;font-weight:700;color:var(--ink-100);flex-shrink:0;width:62px;">${esc(String(d).slice(5))}</div>
-            <div style="flex:1;display:flex;gap:14px;font-size:12.5px;">
-              <span style="color:#1c3553;">📘 ${ko?'새 단어':'New'} <b>${x.study}</b></span>
-              <span style="color:#b35900;">🔁 ${ko?'복습':'Review'} <b>${x.review}</b></span>
-            </div>
+          return `<div style="border:1px solid var(--ink-07);border-radius:10px;padding:10px 12px;margin-bottom:6px;">
+            <div style="font-size:12px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">${esc(String(d).slice(5))}</div>
+            <div style="display:flex;gap:8px;font-size:12px;line-height:1.55;margin-bottom:4px;"><span style="color:#1c3553;flex-shrink:0;font-weight:600;">📘 ${ko?'새 단어':'New'}</span><span style="color:var(--ink-100);">${fmt(x.study)}</span></div>
+            <div style="display:flex;gap:8px;font-size:12px;line-height:1.55;"><span style="color:#b35900;flex-shrink:0;font-weight:600;">🔁 ${ko?'복습':'Review'}</span><span style="color:var(--ink-100);">${fmt(x.review)}</span></div>
           </div>`;
         }).join('');
       }
