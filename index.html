@@ -1818,7 +1818,7 @@ async function openStudentDetail(id){
           const fid = !started?'—':(s.onTime?(ko?'제때 ✅':'On time'):(ko?'늦음 ⚠️':'Late'));
           return `<div style="border:1px solid var(--ink-07);border-radius:12px;padding:11px 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
             <div style="flex:1;min-width:0;"><div style="font-weight:700;color:var(--ink-100);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(a.title||(ko?'과제':'Task'))}</div><div class="muted" style="font-size:11px;margin-top:2px;">${a.target_type==='all'?(ko?'전체':'All'):(ko?'지정':'Selected')}${a.due_date?` · ${ko?'마감':'Due'} ${esc(a.due_date)}`:''}${s.pagesStudied?` · ${s.pagesStudied}p`:''}</div></div>
-            <span style="font-size:11px;font-weight:700;color:${color};background:${bg};border-radius:99px;padding:3px 10px;white-space:nowrap;flex-shrink:0;">${esc(s.stageLabel||(ko?'시작 전':'Not started'))}</span>
+            <span style="font-size:11px;font-weight:700;color:${color};background:${bg};border-radius:99px;padding:3px 10px;white-space:nowrap;flex-shrink:0;">${esc(_reviewStageLabel(s))}</span>
             <span style="font-size:10.5px;color:var(--ink-60);flex-shrink:0;width:44px;text-align:center;">${fid}</span>
             <button onclick="unassignTask('${jsq(a.assignment_id)}','${esc(a.target_type||'')}','${jsq(id)}','${jsq(a.title||'')}')" title="${ko?'과제 빼기':'Remove'}" style="background:none;border:none;color:var(--ink-40);cursor:pointer;font-size:16px;line-height:1;padding:0 2px;flex-shrink:0;">✕</button>
           </div>`;
@@ -5819,6 +5819,14 @@ function _matrixHTML(report, studs){
       <span>🟢 ${ko?'완료':'done'}</span><span>🟡 ${ko?'복습중':'review'}</span><span>🔴 ${ko?'시작전':'todo'}</span>
     </div>`;
 }
+// 복습 단계 라벨(명확판): 'N일차 복습중'(페이지 Day와 혼동됨) → '복습 N/6'.
+function _reviewStageLabel(s){
+  const ko = userNativeLang==='ko';
+  if (!s || !s.exists) return ko?'학습 전':'Not started';
+  if (s.completed) return ko?'복습 완주 🎉':'Done 🎉';
+  const done = Math.max(0, (s.reviewsDone||1) - 1); // 첫 학습 제외한 복습 완료 횟수(0~6)
+  return ko?`복습 ${done}/6`:`Review ${done}/6`;
+}
 function reportSectionHTML(a, ai){
   const ko = userNativeLang==='ko';
   const students = a.students||[];
@@ -5829,7 +5837,7 @@ function reportSectionHTML(a, ai){
     const fidelity = !started ? '—' : (s.onTime ? (ko?'제때 ✅':'On time ✅') : (ko?'늦음 ⚠️':'Late ⚠️'));
     return `<div style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--ink-07);">
       <div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name)}</div>
-      <span style="font-size:11px;font-weight:700;color:${stageColor};background:${stageBg};border-radius:99px;padding:3px 9px;white-space:nowrap;">${esc(s.stageLabel)}</span>
+      <span style="font-size:11px;font-weight:700;color:${stageColor};background:${stageBg};border-radius:99px;padding:3px 9px;white-space:nowrap;">${esc(_reviewStageLabel(s))}</span>
       <span style="font-size:11px;color:var(--ink-60);width:60px;text-align:center;flex-shrink:0;">${fidelity}</span>
       <button onclick="shareParentCard(${ai},${si})" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);white-space:nowrap;flex-shrink:0;">📤 ${ko?'카드':'Card'}</button>
     </div>`;
@@ -5854,7 +5862,7 @@ function shareParentCard(ai, si){
   } else if (s.completed){
     body.push('• '+(ko?'복습을 모두 완주했어요! 망각곡선을 끝까지 따라왔습니다 🎉':'Completed all reviews! 🎉'));
   } else {
-    body.push('• '+(ko?('현재 '+s.stageLabel+' — 망각곡선을 잘 따라오고 있어요!'):('Currently '+s.stageLabel+' — following the curve well!')));
+    body.push('• '+(ko?('현재 '+_reviewStageLabel(s)+' — 망각곡선을 잘 따라오고 있어요!'):('Currently '+_reviewStageLabel(s)+' — following the curve well!')));
     body.push('• '+(ko?('제때 복습: '+(s.onTime?'잘 지키고 있어요':'조금 늦었지만 따라오고 있어요')):('On-time: '+(s.onTime?'great':'a bit late but catching up'))));
     if (s.nextReviewDate){ const d=String(s.nextReviewDate).slice(0,10); body.push('• '+(ko?'다음 복습 예정':'Next review')+': '+d); }
   }
