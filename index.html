@@ -5234,9 +5234,10 @@ async function advance(isKnown) {
         startReviewQuiz(s.bookId, s.pageNum);
         return;
       } else {
-        // 첫 암기도 복습과 동일하게 '퀴즈 통과'를 조건으로 점수·복습일정 등록.
-        // (점수·일정 등록은 퀴즈를 모두 맞혔을 때 renderQuiz → _awardFirstStudy 로 처리)
-        window._pendingFirstStudy = { book_id: s.bookId, page_num: s.pageNum };
+        // 첫 암기: 카드를 끝내면 '학습'을 바로 등록(복습일정+기록). 점수는 퀴즈 통과 시.
+        // (예전엔 퀴즈 통과해야만 등록돼서, 카드만 하고 퀴즈를 안 끝내면 학습이 기록 안 되던 문제 수정)
+        const _newFS = await _registerFirstStudy(s.bookId, s.pageNum);
+        window._pendingFirstStudy = { book_id: s.bookId, page_num: s.pageNum, isNew: _newFS };
         toast(userNativeLang==='ko'?'암기 끝! 퀴즈를 모두 맞히면 점수를 받아요':'Done! Pass the quiz to earn points');
         startReviewQuiz(s.bookId, s.pageNum);
         return;
@@ -6393,13 +6394,23 @@ async function saveReviewSchedule(bookId, pageNum) {
 }
 
 // 첫 암기(퀴즈 통과 후): 복습 일정 등록 + 점수 지급. 일정이 새로 만들어졌을 때만 점수를 준다(중복 방지).
-async function _awardFirstStudy(bookId, pageNum){
+// 첫 암기 '등록': 복습 일정 + '학습' 기록 (암기 카드 완료 시점). 새로 만들어졌으면 true 반환.
+// (점수와 분리 — 카드만 하고 퀴즈를 안 끝내도 '학습'은 기록되도록. 예전엔 퀴즈 통과해야만 등록돼서 학습이 유실됐음)
+async function _registerFirstStudy(bookId, pageNum){
   const created = await saveReviewSchedule(bookId, pageNum);
+  if (created){
+    const book = findBook(bookId);
+    const page = book ? book.pages.find(p=>String(p.num)===String(pageNum)) : null;
+    logActivity(bookId, pageNum, 'study', page ? page.words.length : 0);
+  }
+  return created;
+}
+// 첫 암기 '점수': 퀴즈 통과 시. 이번에 새로 등록된 페이지(isNew)만 지급(재학습 중복 방지).
+async function _awardFirstStudyPoints(bookId, pageNum, isNew){
   const book = findBook(bookId);
   const page = book ? book.pages.find(p=>String(p.num)===String(pageNum)) : null;
   const base = page ? calcWordScore(page.words) : 0;
-  if (created) logActivity(bookId, pageNum, 'study', page ? page.words.length : 0); // 새 페이지 첫 암기 기록
-  if (created && base>0){ addReviewScore(base); window._lastEarnedScore = base; }
+  if (isNew && base>0){ addReviewScore(base); window._lastEarnedScore = base; }
   else { window._lastEarnedScore = 0; }
   window._lastReviewFinished = false; window._lastReviewLate = false; window._lastBaseScore = base;
 }
@@ -6420,7 +6431,7 @@ function startReviewQuiz(bookId, pageNum){
     // 단어가 없으면 퀴즈 없이 바로 처리(폴백): 대기 중 복습/첫암기를 그대로 반영.
     const pr = window._pendingReview; const pf = window._pendingFirstStudy;
     if (pr){ window._pendingReview = null; updateReviewStep(pr).then(()=>{ checkReviews().catch(()=>{}); }); }
-    else if (pf){ window._pendingFirstStudy = null; _awardFirstStudy(pf.book_id, pf.page_num).then(()=>{ checkReviews().catch(()=>{}); }); }
+    else if (pf){ window._pendingFirstStudy = null; _awardFirstStudyPoints(pf.book_id, pf.page_num, pf.isNew).then(()=>{ checkReviews().catch(()=>{}); }); }
     replace({name:'study-done', bookId, scope:'page', pageNum, total:0, rounds:1, isReview:!!pr});
     return;
   }
@@ -6466,7 +6477,7 @@ function renderQuiz() {
           replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:true}); });
       } else {
         const pend = window._pendingFirstStudy; window._pendingFirstStudy = null;
-        _awardFirstStudy(pend.book_id, pend.page_num).then(async ()=>{ try{ await checkReviews(); }catch(e){}
+        _awardFirstStudyPoints(pend.book_id, pend.page_num, pend.isNew).then(async ()=>{ try{ await checkReviews(); }catch(e){}
           replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:false}); });
       }
       return;
