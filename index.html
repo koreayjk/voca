@@ -1844,8 +1844,8 @@ async function openStudentDetail(id){
           const bb={}; items.forEach(it=>{ (bb[it.title]=bb[it.title]||new Set()).add(it.page); });
           return Object.keys(bb).map(t=>`${esc(t)} <b>${[...bb[t]].sort((a,c)=>String(a).localeCompare(String(c),undefined,{numeric:true})).map(esc).join(', ')}</b>`).join(' · ');
         };
-        const days = Object.keys(byDay).sort().reverse().slice(0,14);
-        activityHtml = `<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">🗓️ ${ko?'일별 활동 (최근 2주)':'Daily activity'}</div>` + days.map(d=>{
+        const days = Object.keys(byDay).sort().reverse().slice(0,30);
+        activityHtml = `<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">🗓️ ${ko?'일별 활동 (최근 30일)':'Daily activity'}</div>` + days.map(d=>{
           const x=byDay[d];
           return `<div style="border:1px solid var(--ink-07);border-radius:10px;padding:10px 12px;margin-bottom:6px;">
             <div style="font-size:12px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">${esc(String(d).slice(5))}</div>
