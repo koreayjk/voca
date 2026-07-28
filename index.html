@@ -6457,6 +6457,8 @@ function renderQuiz() {
   if (q.idx >= q.words.length) {
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct, q.scope === 'page' ? q.pageNum : null);
+    // 페이지 퀴즈(테스트)를 완료하면 복습 일정도 시작(없으면 생성). '테스트만 하고 복습이 안 오던' 문제 방지.
+    if (q.scope === 'page' && q.pageNum != null && q.bookId && q.bookId !== '__fav__') { try { _registerFirstStudy(q.bookId, q.pageNum); } catch(e){} }
     const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
     const rateMsg = rate>=80?t('rateMsg80'):rate>=50?t('rateMsg50'):t('rateMsgBad');
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
