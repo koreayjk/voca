@@ -1501,7 +1501,7 @@ async function loadOrgStudents(){
   } catch(e){ if (box) box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${ko?'학생 정보를 불러오지 못했어요':'Failed to load'}</div>`; }
 }
 
-// ===== 일일 자동 리포트 (매일 밤 9시 KST 스냅샷) =====
+// ===== 오늘의 리포트 (실시간 — voca_activity 오늘치로 즉시 계산. cron·9시 안 기다림) =====
 async function loadDailyReport(){
   const box = document.getElementById('org-daily-report');
   if (!box || !userOrg) return;
@@ -1509,22 +1509,46 @@ async function loadDailyReport(){
   const myId = currentUser && currentUser.id;
   const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id===myId);
   try {
-    const rows = await sbFetch(`/rest/v1/voca_daily_reports?org_id=eq.${userOrg.id}&order=report_date.desc,reviews_overdue.desc&limit=1000`);
-    if (!Array.isArray(rows) || !rows.length){
-      box.innerHTML = `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
-        <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">📊 ${ko?'오늘의 리포트':'Daily report'}</div>
-        <div class="muted" style="font-size:12px;line-height:1.6;">${ko?'아직 리포트가 없어요. 매일 밤 9시에 학생들의 복습·과제 현황이 자동으로 정리돼 여기 표시돼요.':'No report yet. Auto-generated nightly at 9pm.'}</div>
-      </div>`;
-      return;
-    }
-    const latest = rows[0].report_date;
-    let day = rows.filter(r=>r.report_date===latest);
-    // 담당쌤(공동 관리자)은 자기 담당 학생만
-    if (!isPrimary) day = day.filter(r=>r.teacher_id===myId);
-    box.innerHTML = renderDailyReportHTML(day, latest, isPrimary);
+    const kstToday = new Date(new Date().getTime()+9*3600*1000).toISOString().slice(0,10);
+    const [acts, studs] = await Promise.all([
+      sbFetch(`/rest/v1/voca_activity?org_id=eq.${userOrg.id}&day=eq.${kstToday}&select=user_id,kind`),
+      sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email,teacher_id&order=name`)
+    ]);
+    let students = Array.isArray(studs)?studs:[];
+    if (!isPrimary) students = students.filter(s=>s.teacher_id===myId);
+    const byUser = {};
+    (Array.isArray(acts)?acts:[]).forEach(a=>{ const u=(byUser[a.user_id]=byUser[a.user_id]||{study:0,review:0}); if(a.kind==='review')u.review++; else u.study++; });
+    box.innerHTML = renderDailyLiveHTML(students, byUser, kstToday);
   } catch(e){
     box.innerHTML = `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;"><div class="muted" style="font-size:12px;">${ko?'리포트를 불러오지 못했어요':'Failed to load report'}</div></div>`;
   }
+}
+function renderDailyLiveHTML(students, byUser, dateStr){
+  const ko = userNativeLang==='ko';
+  const d=(dateStr||'').split('-'); const dLabel=d.length===3?(ko?`${+d[1]}월 ${+d[2]}일`:`${+d[1]}/${+d[2]}`):dateStr;
+  const N=students.length;
+  const active=students.filter(s=>byUser[s.id]);
+  const idle=students.filter(s=>!byUser[s.id]);
+  const totNew=Object.values(byUser).reduce((a,u)=>a+u.study,0);
+  const totRev=Object.values(byUser).reduce((a,u)=>a+u.review,0);
+  const tile=(v,l,c)=>`<div style="flex:1;background:var(--bg-input);border-radius:10px;padding:9px 4px;text-align:center;"><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:${c||'var(--ink-100)'};line-height:1;">${v}</div><div class="muted" style="font-size:10px;margin-top:4px;">${l}</div></div>`;
+  const sorted=[...idle, ...active.slice().sort((a,b)=>(byUser[b.id].review+byUser[b.id].study)-(byUser[a.id].review+byUser[a.id].study))];
+  const rows = N ? sorted.map(s=>{
+    const u=byUser[s.id];
+    const right = u ? `<span style="font-size:11px;color:#1c3553;font-weight:600;">📘 ${u.study} · 🔁 ${u.review}</span>`
+                    : `<span style="font-size:11px;color:#c0392b;">${ko?'오늘 안 함':'idle'}</span>`;
+    return `<div onclick="openStudentDetail('${jsq(s.id)}')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name||s.email||'학생')}</div>${right}</div>`;
+  }).join('') : `<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'승인된 학생이 없어요':'No students'}</div>`;
+  return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:700;color:var(--ink-100);">📊 ${ko?'오늘의 리포트':'Today'} <span class="muted" style="font-weight:400;font-size:12px;">· ${dLabel} ${ko?'· 실시간':'· live'}</span></div>
+    <div style="display:flex;gap:7px;margin:12px 0;">
+      ${tile(active.length+'/'+N, ko?'오늘 공부':'Studied', active.length?'#1c7c3c':null)}
+      ${tile(totNew, ko?'새 단어(P)':'New')}
+      ${tile(totRev, ko?'복습(P)':'Review')}
+      ${tile(idle.length, ko?'안 함':'Idle', idle.length?'#c0392b':null)}
+    </div>
+    ${rows}
+  </div>`;
 }
 function renderDailyReportHTML(day, dateStr, isPrimary){
   const ko = userNativeLang==='ko';
