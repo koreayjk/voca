@@ -1853,7 +1853,7 @@ async function openStudentDetail(id){
     // 일별 활동 — 그날 '어느 단어장 어느 Day'를 새로 외우고/복습했는지 (voca_activity)
     let activityHtml = '';
     try {
-      const av = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${id}&select=day,kind,book_id,page_num&order=day.desc&limit=800`);
+      const av = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${id}&select=day,kind,book_id,page_num,step&order=day.desc&limit=800`);
       if (Array.isArray(av) && av.length){
         // 책 제목 맵(공식 카탈로그 + 이 학생 개인책)
         const bookTitle = {};
@@ -1861,7 +1861,9 @@ async function openStudentDetail(id){
         (list||[]).forEach(b=>{ if(b&&b.id) bookTitle[b.id]=b.title; });
         const pgLabel = pn => { pn=String(pn==null?'':pn); return /^\d+$/.test(pn) ? ('Day '+pn) : (pn||'—'); };
         const byDay = {};
-        av.forEach(r=>{ const d=r.day; if(!byDay[d]) byDay[d]={study:[],review:[]}; (r.kind==='review'?byDay[d].review:byDay[d].study).push({title:(bookTitle[r.book_id]||(ko?'단어장':'Book')), page:pgLabel(r.page_num)}); });
+        av.forEach(r=>{ const d=r.day; if(!byDay[d]) byDay[d]={study:[],review:[]}; const isRev=r.kind==='review';
+          const lbl = pgLabel(r.page_num) + (isRev && r.step ? (ko?` (${r.step}회차)`:` (R${r.step})`) : '');
+          (isRev?byDay[d].review:byDay[d].study).push({title:(bookTitle[r.book_id]||(ko?'단어장':'Book')), page:lbl}); });
         // 같은 책은 묶고 Day 나열 (중복 제거·정렬)
         const fmt = items => {
           if(!items.length) return `<span style="color:var(--ink-40);">—</span>`;
@@ -6354,12 +6356,16 @@ async function saveStats(bookId, total, correct, pageNum) {
 }
 
 // 일별 활동 로그: 첫 암기('study') / 복습 완료('review') 한 줄 기록. (관리자가 학생별 일별 활동 확인용)
-async function logActivity(bookId, pageNum, kind, words){
+// 복습 단계 컬럼 → 몇 회차 복습인지 (1~6). review_2d=1회차, review_3d=2회차, ...
+const _REVIEW_STEP_NUM = { review_2d:1, review_3d:2, review_6d:3, review_15d:4, review_30d:5, review_60d:6 };
+async function logActivity(bookId, pageNum, kind, words, step){
   try {
+    const body = { user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 };
+    if (step!=null) body.step = step;   // 복습이면 회차(1~6)
     await fetch(SB_URL + '/rest/v1/voca_activity', {
       method:'POST',
       headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken, 'Prefer':'return=minimal' },
-      body: JSON.stringify({ user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 })
+      body: JSON.stringify(body)
     });
   } catch(e){}
 }
@@ -6709,7 +6715,7 @@ async function updateReviewStep(review) {
     const rbook = findBook(review.book_id);
     const rpage = rbook?.pages.find(p => String(p.num) === String(review.page_num));
     const baseScore = rpage ? calcWordScore(rpage.words) : 0;
-    logActivity(review.book_id, review.page_num, 'review', rpage ? rpage.words.length : 0); // 복습 완료 기록
+    logActivity(review.book_id, review.page_num, 'review', rpage ? rpage.words.length : 0, _REVIEW_STEP_NUM[key]||null); // 복습 완료 기록(+회차)
     const isFinalStep = (!step || !step.next); // 마지막 단계(60일차) 완주
     // 예정일을 넘겨도(늦어도) 퀴즈를 통과해 복습을 완료하면 점수를 지급한다.
     // (늦음은 is_perfect=false 로만 기록 — 리포트의 '정시복습' 판별용. 점수에는 영향 없음)
