@@ -6412,11 +6412,15 @@ async function loadTestScores(bookId) {
   } catch(e) { _testScoreLoaded[bookId] = false; }
 }
 
+const _savingReview = new Set(); // 동시 등록(암기카드+퀴즈 완료 등) 중복 방지
 async function saveReviewSchedule(bookId, pageNum) {
+  const _key = currentUser.id + '|' + bookId + '|' + pageNum;
+  if (_savingReview.has(_key)) return false; // 같은 페이지 등록이 이미 진행 중 → 중복 차단
+  _savingReview.add(_key);
   try {
-    const check = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id,completed`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    const existing = await check.json();
-    if (existing?.length > 0) {
+    const existing = await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id,completed`);
+    if (existing == null) return false; // 확인 실패(토큰 만료/네트워크) → 등록 보류(중복 위험 회피)
+    if (existing.length > 0) {
       // 복습 일정이 있는데 책장에서 암기한 경우 안내
       const hasdue = existing.some(r => !r.completed);
       if (hasdue) {
@@ -6424,7 +6428,7 @@ async function saveReviewSchedule(bookId, pageNum) {
           toast(userNativeLang==='ko'?'📆 복습 일정이 있어요! 복습 탭에서 완료해주세요':'📆 You have a review scheduled! Complete it in the Review tab');
         }, 1500);
       }
-      return;
+      return false;
     }
     const now = new Date();
     // 날짜만 비교하기 위해 자정(00:00:00) 기준으로 저장
@@ -6441,10 +6445,12 @@ async function saveReviewSchedule(bookId, pageNum) {
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
       body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 3), review_15d: addDays(now, 6), review_30d: addDays(now, 15), review_60d: addDays(now, 30) })
     });
+    if (res.status === 409) return false; // 유니크 충돌(동시 등록) → DB가 중복을 막음. 정상.
     const data = await res.json();
     if (data.error || data.code) { console.error('[복습 저장 오류]', data); return false; }
     return true; // 새 복습 일정을 실제로 등록함 → 첫 암기 점수 지급 대상(호출측에서 처리)
   } catch(e) { console.error('[복습 저장 오류]', e); return false; }
+  finally { _savingReview.delete(_key); }
 }
 
 // 첫 암기(퀴즈 통과 후): 복습 일정 등록 + 점수 지급. 일정이 새로 만들어졌을 때만 점수를 준다(중복 방지).
