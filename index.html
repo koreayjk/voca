@@ -673,6 +673,19 @@ async function sbFetch(path, method='GET', body=null, useAuth=true, extraHeaders
   try { return JSON.parse(text); } catch(e){ return null; }
 }
 
+// 인증 GET + 401/403(토큰 만료)이면 세션 갱신 후 1회 재시도.
+// 실패(네트워크/여전히 인증 오류)면 null 을 돌려 "빈 데이터"와 구분되게 함.
+async function authGet(path) {
+  const doFetch = () => fetch(SB_URL + path, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
+  let res;
+  try { res = await doFetch(); } catch(e) { return null; }
+  if (res.status === 401 || res.status === 403) {
+    if (await refreshSession()) { try { res = await doFetch(); } catch(e) { return null; } }
+  }
+  if (!res.ok) return null;
+  try { return await res.json(); } catch(e) { return null; }
+}
+
 async function refreshSession() {
   try {
     const session = JSON.parse(localStorage.getItem('imvoca.session') || '{}');
@@ -701,10 +714,20 @@ async function autoRefreshToken() {
   if (ok) _lastTokenRefresh = Date.now();
 }
 setInterval(autoRefreshToken, 45 * 60 * 1000); // 45분마다
-document.addEventListener('visibilitychange', () => {
-  // 다시 화면을 볼 때, 5분 이상 백그라운드였으면 토큰 갱신
+document.addEventListener('visibilitychange', async () => {
+  // 다시 화면을 볼 때, 5분 이상 백그라운드였으면 토큰 갱신 + 화면 새로고침.
+  // (오래 켜둔 뒤 돌아오면 토큰 만료로 복습/명예의전당이 빈 화면처럼 보이던 문제 방지)
   if (document.visibilityState === 'visible' && _authToken && (Date.now() - _lastTokenRefresh > 5 * 60 * 1000)) {
-    autoRefreshToken();
+    await autoRefreshToken();
+    // 갱신 후, 학습/퀴즈 중이 아니면 현재 화면을 다시 그려 데이터를 새로 불러옴
+    try {
+      const _r = (typeof stack !== 'undefined' && stack.length) ? stack[stack.length-1] : null;
+      const _busy = ['study-cards', 'quiz', 'study-done'];
+      if (currentUser && _r && !_busy.includes(_r.name)) {
+        window._hallData = null; // 명예의 전당 캐시 무효화 → 재요청
+        if (typeof render === 'function') render();
+      }
+    } catch(e) {}
   }
 });
 
@@ -6117,10 +6140,7 @@ async function loadHallOfFame() {
     let q;
     if (userOrgId) q = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&org_role=eq.student&select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`;
     else q = `/rest/v1/members?org_id=is.null&select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`;
-    const res = await fetch(SB_URL + q, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
-    });
-    const data = await res.json();
+    const data = await authGet(q);
     return Array.isArray(data) ? data.filter(m => m.total_words > 0) : [];
   } catch(e) { return []; }
 }
@@ -6196,12 +6216,17 @@ async function renderStats(root, dock) {
   </div>` + dock;
 
   try {
-    // 데이터 캐시 (탭/페이지 전환 시 재요청 안 함)
-    if (!window._hallData) {
+    // 데이터 캐시 (탭/페이지 전환 시 재요청 안 함) — 성공(배열)일 때만 캐시.
+    // 토큰 만료 등 실패 결과를 빈 배열로 캐시하면 새로고침 전까지 계속 비어 보임 → 방지.
+    if (!Array.isArray(window._hallData)) {
       const hq = `/rest/v1/members?select=name,total_words,perfect_reviews,last_scored_at,org_id,org_role,org_status&limit=2000`;
-      const res = await fetch(SB_URL + hq, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-      const data = await res.json();
-      window._hallData = Array.isArray(data) ? data : [];
+      const data = await authGet(hq);
+      if (Array.isArray(data)) window._hallData = data;
+    }
+    if (!Array.isArray(window._hallData)) {
+      const el = document.getElementById('hall-inner');
+      if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${ko?'불러오지 못했어요<br><button onclick="delete window._hallData;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load<br><button onclick="delete window._hallData;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>'}</div>`;
+      return;
     }
     const all = window._hallData;
 
@@ -6211,8 +6236,7 @@ async function renderStats(root, dock) {
       const ids = [...new Set(all.filter(m=>m.org_id).map(m=>m.org_id))];
       if (ids.length) {
         try {
-          const ores = await fetch(SB_URL + `/rest/v1/orgs?id=in.(${ids.join(',')})&select=id,name`, { headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken } });
-          const od = await ores.json();
+          const od = await authGet(`/rest/v1/orgs?id=in.(${ids.join(',')})&select=id,name`);
           (Array.isArray(od)?od:[]).forEach(o=>{ window._hallOrgNames[o.id]=o.name; });
         } catch(e){}
       }
@@ -6805,15 +6829,19 @@ async function renderReviewPage(root, dock) {
   </div>` + dock;
 
   try {
-    let res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&order=first_studied_at.desc`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    let reviews = await res.json();
-    // 로그인 직후 토큰 타이밍 문제로 빈 결과가 올 수 있어 한 번 재시도
+    const _rvPath = `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&order=first_studied_at.desc`;
+    let reviews = await authGet(_rvPath);
+    // 로그인 직후/토큰 타이밍 문제로 빈 결과가 올 수 있어 한 번 재시도
     if (Array.isArray(reviews) && reviews.length === 0) {
       await new Promise(r => setTimeout(r, 600));
-      res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&order=first_studied_at.desc`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-      reviews = await res.json();
+      reviews = await authGet(_rvPath);
     }
     const el = document.getElementById('review-list');
+    // 인증 실패(토큰 만료 등) → 빈 목록으로 오인하지 않게 재시도 안내
+    if (reviews == null || !Array.isArray(reviews)) {
+      el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'불러오지 못했어요<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>'}</div>`;
+      return;
+    }
     if (!reviews?.length) { el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'아직 '+t('noReviewSchedule')+'<br>암기 카드를 완료하면 자동으로 등록돼요':t('noReviewSchedule')+'<br>Complete flashcards to register automatically'}</div>`; return; }
 
     const todayEnd = new Date();
