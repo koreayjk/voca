@@ -719,6 +719,7 @@ document.addEventListener('visibilitychange', async () => {
   // (오래 켜둔 뒤 돌아오면 토큰 만료로 복습/명예의전당이 빈 화면처럼 보이던 문제 방지)
   if (document.visibilityState === 'visible' && _authToken && (Date.now() - _lastTokenRefresh > 5 * 60 * 1000)) {
     await autoRefreshToken();
+    if (typeof flushPending === 'function') flushPending(); // 밀린 학습/테스트 기록 재전송
     // 갱신 후, 학습/퀴즈 중이 아니면 현재 화면을 다시 그려 데이터를 새로 불러옴
     try {
       const _r = (typeof stack !== 'undefined' && stack.length) ? stack[stack.length-1] : null;
@@ -728,8 +729,14 @@ document.addEventListener('visibilitychange', async () => {
         if (typeof render === 'function') render();
       }
     } catch(e) {}
+  } else if (document.visibilityState === 'visible' && _authToken && typeof flushPending === 'function') {
+    flushPending(); // 짧게 나갔다 와도 밀린 기록이 있으면 전송
   }
 });
+// 인터넷이 다시 연결되면 밀린 기록 재전송
+window.addEventListener('online', () => { if (typeof flushPending === 'function') flushPending(); });
+// 주기적으로도 재전송 시도(2분마다) — 백그라운드에서 조용히 밀린 진도 동기화
+setInterval(() => { if (typeof flushPending === 'function') flushPending(); }, 2 * 60 * 1000);
 
 // ── 언어 설정 ──
 const LANG_OPTIONS = [
@@ -955,23 +962,19 @@ let _reviewStatus = {};
 let _reviewStatusLoaded = {}; // 책별로 이미 불러왔는지
 async function loadReviewStatus(bookId) {
   if (_reviewStatusLoaded[bookId]) return; // 이미 불러왔으면 다시 안 함
+  // 먼저 로컬 백업을 덮어 그림(서버 실패해도 학습한 점이 안 사라지게)
+  _overlayLocalStudied();
+  const data = await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&select=page_num,completed`);
+  if (!Array.isArray(data)) { console.error('[복습 상태 로드 실패]'); return; } // 실패 → loaded 플래그 안 세우고 다음에 재시도
   _reviewStatusLoaded[bookId] = true;
-  try {
-    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&select=page_num,completed`, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
-    });
-    const data = await res.json();
-    let changed = false;
-    if (Array.isArray(data)) {
-      data.forEach(r => {
-        const key = bookId + '|' + r.page_num;
-        const val = r.completed ? 'done' : 'doing';
-        if (_reviewStatus[key] !== val) { _reviewStatus[key] = val; changed = true; }
-      });
-    }
-    // 실제로 새 상태가 생겼고, 지금 그 책 화면이면 한 번만 다시 그림
-    if (changed && stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
-  } catch(e) { _reviewStatusLoaded[bookId] = false; console.error('[복습 상태 로드 실패]', e); }
+  let changed = false;
+  data.forEach(r => {
+    const key = bookId + '|' + r.page_num;
+    const val = r.completed ? 'done' : 'doing';
+    if (_reviewStatus[key] !== val) { _reviewStatus[key] = val; changed = true; }
+  });
+  // 실제로 새 상태가 생겼고, 지금 그 책 화면이면 한 번만 다시 그림
+  if (changed && stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
 }
 
 // 페이지 안 단어 삭제
@@ -6366,50 +6369,122 @@ async function deleteStats(id) {
   } catch(e) { toast('삭제 실패: ' + e.message); }
 }
 
-async function saveStats(bookId, total, correct, pageNum) {
-  try {
-    const body = { user_id: currentUser.id, book_id: bookId, total, correct };
-    if (pageNum != null) body.page_num = String(pageNum);
-    await fetch(SB_URL + '/rest/v1/voca_stats', { method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }, body: JSON.stringify(body) });
-    // 로컬 베스트 점수 갱신
-    if (pageNum != null && total > 0) {
-      const key = bookId + '|' + pageNum, rate = Math.round(correct / total * 100);
-      if (!(key in _testScore) || rate > _testScore[key]) _testScore[key] = rate;
+// ════════════════════════════════════════════════════════════════
+// 진도 유실 방지: 로컬 백업 + 재전송 큐
+// 학습/테스트 기록을 (1) 기기에 즉시 저장해 화면에서 안 사라지게 하고,
+// (2) 서버 저장이 실패하면 큐에 넣어 재접속·복귀·온라인 시 자동 재전송.
+// (에러가 잦아 "했는데 안 했다고 뜨는" 진도 유실 문제 대응)
+// ════════════════════════════════════════════════════════════════
+const _LS_STUDIED='imvoca.localStudied', _LS_SCORE='imvoca.localScore', _LS_PENDING='imvoca.pendingWrites';
+function _lsGetObj(k){ try{ const o=JSON.parse(localStorage.getItem(k)||'{}'); return (o&&typeof o==='object')?o:{}; }catch(e){ return {}; } }
+function _lsSetObj(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function _lsGetArr(k){ try{ const a=JSON.parse(localStorage.getItem(k)||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function _lsSetArr(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+// 인증 POST + 401/403이면 세션 갱신 후 1회 재시도. 네트워크 실패 시 null.
+async function authPost(path, body, prefer){
+  const doIt=()=>fetch(SB_URL+path,{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken,...(prefer?{'Prefer':prefer}:{})},body:JSON.stringify(body)});
+  let res; try{ res=await doIt(); }catch(e){ return null; }
+  if(res.status===401||res.status===403){ if(await refreshSession()){ try{ res=await doIt(); }catch(e){ return null; } } }
+  return res;
+}
+
+// 로컬 낙관적 표시(빨간 점 / % 배지) — 새로고침해도 유지됨
+function _markLocalStudied(bookId,pageNum,words){
+  if(pageNum==null) return;
+  const m=_lsGetObj(_LS_STUDIED); m[bookId+'|'+pageNum]={w:words||0}; _lsSetObj(_LS_STUDIED,m);
+  const key=bookId+'|'+pageNum; if(_reviewStatus[key]!=='done') _reviewStatus[key]='doing';
+}
+function _markLocalScore(bookId,pageNum,rate){
+  if(pageNum==null) return;
+  const key=bookId+'|'+pageNum, m=_lsGetObj(_LS_SCORE);
+  if(!(key in m)||rate>m[key]){ m[key]=rate; _lsSetObj(_LS_SCORE,m); }
+  if(typeof _testScore==='object'){ if(!(key in _testScore)||rate>_testScore[key]) _testScore[key]=rate; }
+}
+// 서버 재전송 큐에 넣기 (review 는 대상별 1건으로 dedupe, 나머지는 누적·상한 300)
+function _enqueueWrite(op){
+  const q=_lsGetArr(_LS_PENDING);
+  if(op.type==='review'){
+    const id='review|'+op.book_id+'|'+op.page_num;
+    const rest=q.filter(x=>!(x.type==='review'&&('review|'+x.book_id+'|'+x.page_num)===id));
+    rest.push(op); _lsSetArr(_LS_PENDING, rest);
+  } else {
+    q.push(op); _lsSetArr(_LS_PENDING, q.slice(-300));
+  }
+}
+// 큐 1건 실제 전송. 성공(또는 이미 존재/중복)이면 true.
+async function _sendWrite(op){
+  if(!currentUser||!_authToken) return false;
+  if(op.type==='review'){
+    const ex=await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${op.book_id}&page_num=eq.${op.page_num}&select=id`);
+    if(ex==null) return false;          // 확인 실패 → 나중에 다시
+    if(ex.length>0) return true;        // 이미 있음 → 완료로 간주
+    const res=await authPost('/rest/v1/voca_review', op.body, 'return=minimal');
+    return !!res && (res.ok || res.status===409);
+  }
+  if(op.type==='stats'){ const res=await authPost('/rest/v1/voca_stats', op.body); return !!res && res.ok; }
+  if(op.type==='activity'){ const res=await authPost('/rest/v1/voca_activity', op.body, 'return=minimal'); return !!res && res.ok; }
+  return true;
+}
+let _flushing=false;
+async function flushPending(){
+  if(_flushing||!currentUser||!_authToken) return;
+  let q=_lsGetArr(_LS_PENDING); if(!q.length) return;
+  _flushing=true;
+  try{
+    const remain=[];
+    for(const op of q){
+      let ok=false; try{ ok=await _sendWrite(op); }catch(e){ ok=false; }
+      if(!ok) remain.push(op);
     }
-  } catch(e) {}
+    _lsSetArr(_LS_PENDING, remain);
+  } finally { _flushing=false; }
+}
+// 로컬에 저장해둔 테스트 점수를 _testScore 에 병합(배지 표시 유지)
+function _seedTestScoresFromLocal(){
+  try{ const m=_lsGetObj(_LS_SCORE); for(const k in m){ if(!(k in _testScore)||m[k]>_testScore[k]) _testScore[k]=m[k]; } }catch(e){}
+}
+// 로컬에 studied 표시된 페이지를 _reviewStatus 에 덮어씀(서버 상태 우선)
+function _overlayLocalStudied(){
+  try{ const m=_lsGetObj(_LS_STUDIED); for(const k in m){ if(!_reviewStatus[k]) _reviewStatus[k]='doing'; } }catch(e){}
+}
+
+async function saveStats(bookId, total, correct, pageNum) {
+  // 1) 로컬 즉시 반영(화면에서 안 사라지게)
+  let rate=null;
+  if (pageNum != null && total > 0) { rate = Math.round(correct / total * 100); _markLocalScore(bookId, pageNum, rate); }
+  // 2) 서버 저장 시도, 실패하면 큐에 넣어 나중에 재전송
+  const body = { user_id: currentUser.id, book_id: bookId, total, correct };
+  if (pageNum != null) body.page_num = String(pageNum);
+  const res = await authPost('/rest/v1/voca_stats', body);
+  if (!res || !res.ok) _enqueueWrite({ type:'stats', book_id:bookId, page_num:pageNum!=null?String(pageNum):null, body });
 }
 
 // 일별 활동 로그: 첫 암기('study') / 복습 완료('review') 한 줄 기록. (관리자가 학생별 일별 활동 확인용)
 // 복습 단계 컬럼 → 몇 회차 복습인지 (1~6). review_2d=1회차, review_3d=2회차, ...
 const _REVIEW_STEP_NUM = { review_2d:1, review_3d:2, review_6d:3, review_15d:4, review_30d:5, review_60d:6 };
 async function logActivity(bookId, pageNum, kind, words, step){
-  try {
-    const body = { user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 };
-    if (step!=null) body.step = step;   // 복습이면 회차(1~6)
-    await fetch(SB_URL + '/rest/v1/voca_activity', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken, 'Prefer':'return=minimal' },
-      body: JSON.stringify(body)
-    });
-  } catch(e){}
+  const body = { user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 };
+  if (step!=null) body.step = step;   // 복습이면 회차(1~6)
+  const res = await authPost('/rest/v1/voca_activity', body, 'return=minimal');
+  if (!res || !res.ok) _enqueueWrite({ type:'activity', book_id:bookId, page_num:body.page_num, body });
 }
 
 // Day별 테스트 베스트 점수(%) 캐시: key = bookId|pageNum
 let _testScore = {}, _testScoreLoaded = {};
 async function loadTestScores(bookId) {
   if (_testScoreLoaded[bookId]) return;
+  _seedTestScoresFromLocal(); // 로컬 백업 점수 먼저 반영(배지 안 사라지게)
+  const data = await authGet(`/rest/v1/voca_stats?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=not.is.null&select=page_num,total,correct`);
+  if (!Array.isArray(data)) return; // 실패 → loaded 플래그 안 세우고 다음에 재시도
   _testScoreLoaded[bookId] = true;
-  try {
-    const res = await fetch(SB_URL + `/rest/v1/voca_stats?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=not.is.null&select=page_num,total,correct`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    const data = await res.json();
-    let changed = false;
-    if (Array.isArray(data)) data.forEach(r => {
-      if (!r.total) return;
-      const key = bookId + '|' + r.page_num, rate = Math.round(r.correct / r.total * 100);
-      if (!(key in _testScore) || rate > _testScore[key]) { _testScore[key] = rate; changed = true; }
-    });
-    if (changed && stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
-  } catch(e) { _testScoreLoaded[bookId] = false; }
+  let changed = false;
+  data.forEach(r => {
+    if (!r.total) return;
+    const key = bookId + '|' + r.page_num, rate = Math.round(r.correct / r.total * 100);
+    if (!(key in _testScore) || rate > _testScore[key]) { _testScore[key] = rate; changed = true; }
+  });
+  if (changed && stack[stack.length-1]?.name === 'book' && stack[stack.length-1]?.bookId === bookId) render();
 }
 
 const _savingReview = new Set(); // 동시 등록(암기카드+퀴즈 완료 등) 중복 방지
@@ -6417,9 +6492,20 @@ async function saveReviewSchedule(bookId, pageNum) {
   const _key = currentUser.id + '|' + bookId + '|' + pageNum;
   if (_savingReview.has(_key)) return false; // 같은 페이지 등록이 이미 진행 중 → 중복 차단
   _savingReview.add(_key);
+  // 학습한 단어 수(로컬 표시용)
+  const _book0 = findBook(bookId);
+  const _page0 = _book0 ? findPage(_book0, pageNum) : null;
+  const _words0 = _page0 ? (_page0.words?.length||0) : 0;
   try {
     const existing = await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id,completed`);
-    if (existing == null) return false; // 확인 실패(토큰 만료/네트워크) → 등록 보류(중복 위험 회피)
+    if (existing == null) {
+      // 확인 실패(토큰 만료/네트워크) → 진도 유실 막기 위해 로컬 표시 + 큐 등록(전송 시 존재확인 후 insert)
+      _markLocalStudied(bookId, pageNum, _words0);
+      const nowF=new Date(), midF=(n)=>{const d=new Date(nowF);d.setDate(d.getDate()+n);d.setHours(0,0,0,0);return d.toISOString();};
+      _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, book_id:bookId, page_num:String(pageNum), first_studied_at:nowF.toISOString(), review_2d:midF(1), review_3d:midF(2), review_6d:midF(3), review_15d:midF(6), review_30d:midF(15), review_60d:midF(30) } });
+      _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
+      return false;
+    }
     if (existing.length > 0) {
       // 복습 일정이 있는데 책장에서 암기한 경우 안내
       const hasdue = existing.some(r => !r.completed);
@@ -6440,14 +6526,17 @@ async function saveReviewSchedule(bookId, pageNum) {
     };
     const addDays = (d, n) => toMidnight(d, n);
     // ⚠️ 컬럼명(review_2d~60d)은 레거시라 실제 복습 간격과 안 맞음. 실제 간격은 첫 학습 기준 +1/+2/+3/+6/+15/+30일 (에빙하우스). 값이 정답이며 컬럼명은 단순 라벨이니 DB 마이그레이션 없이 그대로 둠.
-    const res = await fetch(SB_URL + '/rest/v1/voca_review', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Prefer': 'return=representation' },
-      body: JSON.stringify({ user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 3), review_15d: addDays(now, 6), review_30d: addDays(now, 15), review_60d: addDays(now, 30) })
-    });
-    if (res.status === 409) return false; // 유니크 충돌(동시 등록) → DB가 중복을 막음. 정상.
-    const data = await res.json();
-    if (data.error || data.code) { console.error('[복습 저장 오류]', data); return false; }
+    const reviewBody = { user_id: currentUser.id, book_id: bookId, page_num: String(pageNum), first_studied_at: now.toISOString(), review_2d: addDays(now, 1), review_3d: addDays(now, 2), review_6d: addDays(now, 3), review_15d: addDays(now, 6), review_30d: addDays(now, 15), review_60d: addDays(now, 30) };
+    // 서버 저장 전에 로컬 낙관적 표시(빨간 점 즉시, 새로고침해도 유지)
+    _markLocalStudied(bookId, pageNum, _words0);
+    const res = await authPost('/rest/v1/voca_review', reviewBody, 'return=minimal');
+    if (res && res.status === 409) return false; // 유니크 충돌(동시 등록) → DB가 중복을 막음. 정상.
+    if (!res || !res.ok) {
+      // 저장 실패 → 재전송 큐에 넣어 나중에 자동 동기화 (진도 유실 방지)
+      _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:reviewBody });
+      _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
+      return false;
+    }
     return true; // 새 복습 일정을 실제로 등록함 → 첫 암기 점수 지급 대상(호출측에서 처리)
   } catch(e) { console.error('[복습 저장 오류]', e); return false; }
   finally { _savingReview.delete(_key); }
@@ -7252,6 +7341,8 @@ goTab = function(t) {
 
 
 sbInit();
+// 시작 시: 로컬 백업 반영 + 밀린 학습/테스트 기록 재전송(로그인 완료 후)
+setTimeout(() => { try { _seedTestScoresFromLocal(); _overlayLocalStudied(); flushPending(); } catch(e){} }, 3500);
 // 정적 모달 다국어 적용 (언어 로드 후)
 setTimeout(applyStaticI18n, 300);
 // Service Worker 등록 (오프라인 지원 + 속도 향상) + 업데이트 감지 토스트
