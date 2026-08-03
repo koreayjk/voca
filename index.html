@@ -7036,7 +7036,13 @@ async function renderReviewPage(root, dock) {
       </div>`;
     }
 
+    // 이번 주(오늘~+7일) 예정 복습 수 — 다가올 복습량 안내용
+    const _weekEnd = new Date(); _weekEnd.setDate(_weekEnd.getDate() + 7); _weekEnd.setHours(23,59,59,999);
+    const _weekCount = upcoming.filter(r => new Date(r._nextDate) <= _weekEnd).length;
+
     let html = '';
+    // 복습 원리 한 줄 안내 — "왜 오늘 몇 개만 뜨지?" 오해 방지 (하루 몰아서가 아니라 30일에 6번 분산)
+    html += `<div style="font-size:12px;color:var(--ink-60);line-height:1.55;margin-bottom:16px;">${userNativeLang==='ko'?'💡 복습은 한 단어장을 <b style="color:var(--ink-100);">30일 동안 6번</b>에 나눠서 진행돼요 — 오늘 것만 끝내면 나머지는 예정일에 자동으로 떠요.':'💡 Each wordbook is reviewed <b style="color:var(--ink-100);">6 times over 30 days</b> — finish today\'s and the rest appear automatically on their dates.'}</div>`;
     if (todayDue.length) {
       html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
         <div style="font-size:13px;font-weight:700;color:var(--accent);">${t('todayReviewTitle')}</div>
@@ -7045,7 +7051,7 @@ async function renderReviewPage(root, dock) {
       </div>`;
       html += todayDue.map(r => reviewCard(r, 'due')).join('');
     }
-    if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">${t('scheduledTitle')} (${upcoming.length}${userNativeLang==='ko'?'개':''})</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
+    if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">${t('scheduledTitle')} (${upcoming.length}${userNativeLang==='ko'?'개':''}${_weekCount?` · ${userNativeLang==='ko'?'이번 주':'this week'} ${_weekCount}${userNativeLang==='ko'?'개':''}`:''})</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
     if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">${t('completedTitle')} (${done.length}${userNativeLang==='ko'?'개':''})</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
     el.innerHTML = html || `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noReviewSchedule')}</div>`;
   } catch(e) { document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
