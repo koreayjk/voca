@@ -2483,14 +2483,41 @@ async function sbInit() {
   const saved = localStorage.getItem('imvoca.session');
   if (saved) {
     try {
-      const sess = JSON.parse(saved);
-      if (!sess.access_token || !sess.user) { localStorage.removeItem('imvoca.session'); return; }
-      const verify = await fetch(SB_URL + '/auth/v1/user', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + sess.access_token }
-      });
-      if (!verify.ok) { localStorage.removeItem('imvoca.session'); renderLogin(); return; }
-      const userData = await verify.json();
+      let sess = null;
+      try { sess = JSON.parse(saved); } catch(e) { sess = null; }
+      if (!sess || !sess.access_token || !sess.user) { localStorage.removeItem('imvoca.session'); renderLogin(); return; }
       _authToken = sess.access_token;
+
+      // 세션 확인 — 네트워크 오류와 '인증 만료'를 구분한다.
+      //  net=true  : 서버 응답 받음(ok/만료 판단 가능)
+      //  net=false : 네트워크 실패(오프라인 등) → 세션을 지우면 안 됨
+      const verifyOnce = async (tok) => {
+        try { const r = await fetch(SB_URL + '/auth/v1/user', { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + tok } }); return { net: true, ok: r.ok, res: r }; }
+        catch(e) { return { net: false, ok: false }; }
+      };
+
+      let v = await verifyOnce(_authToken);
+      // 네트워크 실패면 한 번 더(모바일 실행 직후 일시적 끊김 대비)
+      if (!v.net) { await new Promise(r => setTimeout(r, 800)); v = await verifyOnce(_authToken); }
+      // 액세스 토큰 만료(약 1시간) → refresh_token 으로 갱신 후 재확인 (여기서 로그아웃 안 함!)
+      if (v.net && !v.ok) {
+        const refreshed = await refreshSession();
+        if (refreshed) v = await verifyOnce(_authToken);
+      }
+
+      if (v.net && !v.ok) {
+        // 서버가 명확히 거부(만료 + 갱신 실패) → 진짜 로그아웃
+        localStorage.removeItem('imvoca.session'); renderLogin(); return;
+      }
+
+      let userData;
+      if (v.net && v.ok) {
+        userData = await v.res.json();
+      } else {
+        // 네트워크 실패 → 세션 유지, 저장된 정보로 낙관적 진입(껐다 켜도 로그인 유지).
+        // 이후 요청은 authGet/sbFetch 가 온라인 복귀 시 자동으로 토큰을 갱신한다.
+        userData = sess.user;
+      }
       currentUser = userData;
       // ⚠️ loadUserPlan(→loadMyOrg) 이 org 역할/승인을 세팅해야 loadBooksFromDB 안의
       // appendOfficialBooks 가 _seesAllOfficialLangs()=true 로 공식책 전체를 로드함(경합 방지).
@@ -2826,7 +2853,8 @@ async function sbSignIn(email, pw) {
       return;
     }
     _authToken = data.access_token; currentUser = data.user;
-    localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, user: data.user }));
+    // refresh_token 을 반드시 함께 저장해야 만료 후에도 자동 재로그인(카톡처럼 유지)됨
+    localStorage.setItem('imvoca.session', JSON.stringify({ access_token: data.access_token, refresh_token: data.refresh_token, user: data.user }));
     if (btn) btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin 0.8s linear infinite;"></span>${userNativeLang==='ko'?'불러오는 중...':'Loading...'}</span>`;
     await loadApiKey(); await loadUserName();
     if (currentUser.email !== 'koreayjk@gmail.com') {
