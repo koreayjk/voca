@@ -941,10 +941,12 @@ function pageSort(a, b) {
 // ── 플랜/스캔 카운트 로드 ──
 async function loadUserPlan() {
   try {
-    const res = await fetch(SB_URL + `/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status`, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
-    });
-    const data = await res.json();
+    // authGet: 토큰 만료 시 자동 갱신+재시도. (오래 유휴 후 새로고침하면 org 정보가
+    // 안 실려 어드민 통계가 0으로 뜨던 문제 방지 — 이 값이 org 상태의 기준점)
+    let data = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status`);
+    // 일시적 실패면 짧게 재시도(모바일 실행 직후 등)
+    if (!Array.isArray(data)) { await new Promise(r=>setTimeout(r,500)); data = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status`); }
+    if (!Array.isArray(data)) return; // 그래도 실패 → 기존 값 유지(0으로 덮어쓰지 않음)
     if (data[0]) {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
@@ -5796,11 +5798,13 @@ async function loadOrgReport(boxId){
   if (!userOrg) return;
   window._reportBox = boxId;
   try {
-    const res = await fetch(SB_URL+'/functions/v1/org-report', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken },
-      body: JSON.stringify({ org_id: userOrg.id })
-    });
+    // authPost: 토큰 만료 시 자동 갱신+재시도 (오래 유휴 후 리포트가 안 뜨던 문제 방지)
+    const res = await authPost('/functions/v1/org-report', { org_id: userOrg.id });
+    if (!res || !res.ok) {
+      const box=document.getElementById(boxId);
+      if(box) box.innerHTML = `<div class="muted" style="text-align:center;padding:36px;font-size:13px;">${ko?'리포트를 불러오지 못했어요<br><button onclick="loadOrgReport(\''+boxId+'\')" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load report'}</div>`;
+      return;
+    }
     const data = await res.json().catch(()=>({}));
     window._lastReport = await _filterSelectedAssignments(Array.isArray(data.report) ? data.report : []);
     renderReportInto(boxId);
