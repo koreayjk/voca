@@ -686,24 +686,35 @@ async function authGet(path) {
   try { return await res.json(); } catch(e) { return null; }
 }
 
-async function refreshSession() {
-  try {
-    const session = JSON.parse(localStorage.getItem('imvoca.session') || '{}');
-    const refreshToken = session.refresh_token;
-    if (!refreshToken) return false;
-    const res = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
-      body: JSON.stringify({ refresh_token: refreshToken })
-    });
-    const data = await res.json();
-    if (data.access_token) {
-      _authToken = data.access_token;
-      localStorage.setItem('imvoca.session', JSON.stringify(data));
-      return true;
-    }
-    return false;
-  } catch(e) { return false; }
+// ⚠️ 동시 호출 방지(single-flight): 여러 요청이 401을 동시에 만나면 refreshSession 이
+// 동시에 여러 번 호출되는데, Supabase 는 refresh_token 을 회전(rotate)시켜서 첫 갱신만
+// 성공하고 나머지는 '이미 쓰인 토큰'으로 실패 → 그 요청들이 "불러오지 못했어요"로 뜸.
+// 그래서 갱신이 진행 중이면 같은 Promise 를 공유해 딱 한 번만 갱신한다.
+let _refreshPromise = null;
+function refreshSession() {
+  if (_refreshPromise) return _refreshPromise;   // 이미 갱신 중 → 그 결과를 함께 기다림
+  _refreshPromise = (async () => {
+    try {
+      const session = JSON.parse(localStorage.getItem('imvoca.session') || '{}');
+      const refreshToken = session.refresh_token;
+      if (!refreshToken) return false;
+      const res = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+        body: JSON.stringify({ refresh_token: refreshToken })
+      });
+      const data = await res.json();
+      if (data && data.access_token) {
+        _authToken = data.access_token;
+        localStorage.setItem('imvoca.session', JSON.stringify(data));
+        return true;
+      }
+      return false;
+    } catch(e) { return false; }
+  })();
+  // 완료되면(성공/실패 무관) 잠시 뒤 잠금 해제 → 이후 재시도는 새로 갱신 가능
+  _refreshPromise.finally(() => { setTimeout(() => { _refreshPromise = null; }, 1500); });
+  return _refreshPromise;
 }
 
 // 토큰 자동 갱신: 만료(약 1시간) 전에 미리 갱신 + 앱으로 돌아올 때 갱신
@@ -6712,8 +6723,7 @@ async function checkReviews() {
     const todayEnd = new Date();
     todayEnd.setHours(23, 59, 59, 999);
     const today = todayEnd.toISOString();
-    const res = await fetch(SB_URL + `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&select=*`, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken } });
-    const reviews = await res.json();
+    const reviews = await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&select=*`);
     if (!Array.isArray(reviews)) return;
     const due = [];
     reviews.forEach(r => {
@@ -6925,11 +6935,18 @@ async function renderReviewPage(root, dock) {
 
   try {
     const _rvPath = `/rest/v1/voca_review?user_id=eq.${currentUser.id}&completed=eq.false&order=first_studied_at.desc`;
-    let reviews = await authGet(_rvPath);
-    // 로그인 직후/토큰 타이밍 문제로 빈 결과가 올 수 있어 한 번 재시도
+    // 실패(null) 시 자동 재시도 3회(점점 늘어나는 간격) — 일시적 오류로 "다시 시도" 화면이 안 뜨게
+    let reviews = null;
+    for (let _a = 0; _a < 3; _a++) {
+      reviews = await authGet(_rvPath);
+      if (Array.isArray(reviews)) break;
+      await new Promise(r => setTimeout(r, 400 * (_a + 1)));
+    }
+    // 로그인 직후/토큰 타이밍 문제로 빈 결과가 올 수 있어 한 번 더 재시도
     if (Array.isArray(reviews) && reviews.length === 0) {
       await new Promise(r => setTimeout(r, 600));
-      reviews = await authGet(_rvPath);
+      const _r2 = await authGet(_rvPath);
+      if (Array.isArray(_r2)) reviews = _r2;
     }
     const el = document.getElementById('review-list');
     // 인증 실패(토큰 만료 등) → 빈 목록으로 오인하지 않게 재시도 안내
