@@ -1,0 +1,242 @@
+<!--
+  IM VOCA — 60일 완성 로드맵 (홍보/LP 삽입용 섹션)
+  · 자체 완결형: 모든 스타일·스크립트가 .imv-roadmap 안에 스코프됨 → LP에 그대로 붙여넣기 가능.
+  · 라이트/다크 테마 모두 대응(prefers-color-scheme + data-theme).
+  · 에빙하우스 규칙(+1·2·3·6·15·30일)으로 60일 스케줄을 JS로 계산해 렌더.
+-->
+<section class="imv-roadmap" aria-label="IM VOCA 60일 완성 로드맵">
+  <style>
+    .imv-roadmap{
+      /* ── 팔레트 (IM VOCA: 네이비·골드·페이퍼) ── */
+      --paper:#f2ebdd; --card:#fffdf8; --card-2:#fbf6ea;
+      --ink:#182b45; --ink-soft:#5c6a80;
+      --navy:#26405f; --navy-rgb:38,64,95; --navy-deep:#122036;
+      --gold:#b9902f; --gold-soft:#e6cf95; --gold-rgb:185,144,47;
+      --line:rgba(24,43,69,.12); --line-2:rgba(24,43,69,.07);
+      --font:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,'Segoe UI',sans-serif;
+      background:
+        radial-gradient(120% 80% at 12% -8%, rgba(var(--gold-rgb),.10), transparent 60%),
+        radial-gradient(120% 90% at 100% 0%, rgba(var(--navy-rgb),.08), transparent 55%),
+        var(--paper);
+      color:var(--ink); font-family:var(--font);
+      padding:clamp(28px,5vw,64px) clamp(16px,4vw,48px);
+      -webkit-font-smoothing:antialiased; box-sizing:border-box;
+    }
+    .imv-roadmap *{box-sizing:border-box;}
+    @media (prefers-color-scheme:dark){
+      .imv-roadmap{
+        --paper:#0e1b2c; --card:#16273b; --card-2:#122032;
+        --ink:#f1eae0; --ink-soft:#a7b4c5;
+        --navy:#7fa2cc; --navy-rgb:127,162,204; --navy-deep:#0a1523;
+        --gold:#e0bd6a; --gold-soft:#8a6f2e; --gold-rgb:224,189,106;
+        --line:rgba(255,255,255,.14); --line-2:rgba(255,255,255,.07);
+      }
+    }
+    :root[data-theme="light"] .imv-roadmap{
+      --paper:#f2ebdd; --card:#fffdf8; --card-2:#fbf6ea;
+      --ink:#182b45; --ink-soft:#5c6a80;
+      --navy:#26405f; --navy-rgb:38,64,95; --navy-deep:#122036;
+      --gold:#b9902f; --gold-soft:#e6cf95; --gold-rgb:185,144,47;
+      --line:rgba(24,43,69,.12); --line-2:rgba(24,43,69,.07);
+    }
+    :root[data-theme="dark"] .imv-roadmap{
+      --paper:#0e1b2c; --card:#16273b; --card-2:#122032;
+      --ink:#f1eae0; --ink-soft:#a7b4c5;
+      --navy:#7fa2cc; --navy-rgb:127,162,204; --navy-deep:#0a1523;
+      --gold:#e0bd6a; --gold-rgb:224,189,106; --gold-soft:#8a6f2e;
+      --line:rgba(255,255,255,.14); --line-2:rgba(255,255,255,.07);
+    }
+
+    .imv-wrap{max-width:960px;margin:0 auto;}
+
+    .imv-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+      letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+      padding:6px 12px;border:1px solid var(--gold-soft);border-radius:99px;background:rgba(var(--gold-rgb),.08);}
+    .imv-eyebrow b{color:var(--ink);letter-spacing:.06em;}
+    .imv-h1{font-size:clamp(26px,4.6vw,44px);line-height:1.14;letter-spacing:-.02em;font-weight:800;
+      margin:18px 0 0;text-wrap:balance;}
+    .imv-h1 .g{color:var(--gold);}
+    .imv-sub{margin:14px 0 0;max-width:60ch;font-size:clamp(14px,1.7vw,16.5px);line-height:1.7;color:var(--ink-soft);}
+
+    .imv-stats{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;}
+    .imv-stat{flex:1 1 130px;min-width:120px;background:var(--card);border:1px solid var(--line);
+      border-radius:14px;padding:14px 16px;}
+    .imv-stat .n{font-size:clamp(22px,3.4vw,30px);font-weight:800;letter-spacing:-.01em;line-height:1;
+      font-variant-numeric:tabular-nums;}
+    .imv-stat .n.g{color:var(--gold);}
+    .imv-stat .l{margin-top:7px;font-size:12.5px;color:var(--ink-soft);font-weight:600;}
+
+    /* 상세 안내바 (칸에 올리면/탭하면 갱신) */
+    .imv-detail{margin:26px 0 12px;background:var(--card);border:1px solid var(--line);border-radius:16px;
+      padding:16px 18px;display:flex;align-items:center;gap:14px;min-height:76px;transition:border-color .2s;}
+    .imv-detail.is-active{border-color:var(--gold-soft);}
+    .imv-detail .dnum{flex-shrink:0;width:52px;height:52px;border-radius:13px;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;background:var(--navy);color:#fff;font-weight:800;line-height:1;}
+    .imv-detail .dnum small{font-size:9px;font-weight:700;opacity:.8;margin-bottom:2px;letter-spacing:.05em;}
+    .imv-detail .dnum b{font-size:20px;font-variant-numeric:tabular-nums;}
+    .imv-detail.grad .dnum{background:var(--gold);}
+    .imv-detail .dtxt{min-width:0;}
+    .imv-detail .dtitle{font-size:14px;font-weight:800;letter-spacing:-.01em;}
+    .imv-detail .dbody{margin-top:5px;font-size:13px;color:var(--ink-soft);line-height:1.55;}
+    .imv-detail .chip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:6px;margin:2px 4px 0 0;}
+    .imv-detail .chip.new{background:rgba(var(--gold-rgb),.16);color:var(--gold);}
+    .imv-detail .chip.rev{background:rgba(var(--navy-rgb),.14);color:var(--navy);}
+    .imv-detail .chip.grad{background:rgba(var(--gold-rgb),.18);color:var(--gold);}
+
+    /* 달력 그리드 */
+    .imv-phaselabels{display:flex;justify-content:space-between;font-size:11.5px;font-weight:800;
+      letter-spacing:.06em;color:var(--ink-soft);margin:0 2px 8px;text-transform:uppercase;}
+    .imv-phaselabels .p1{color:var(--navy);} .imv-phaselabels .p2{color:var(--gold);}
+    .imv-cal{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;}
+    .imv-cell{position:relative;aspect-ratio:1/1;border-radius:11px;border:1px solid var(--line);
+      background:var(--card);padding:6px 6px 5px;display:flex;flex-direction:column;justify-content:space-between;
+      cursor:pointer;transition:transform .12s ease,box-shadow .18s ease,border-color .18s ease;
+      -webkit-tap-highlight-color:transparent;text-align:left;}
+    .imv-cell::before{content:"";position:absolute;inset:0 0 auto;height:3px;border-radius:11px 11px 0 0;background:transparent;}
+    .imv-cell.p1::before{background:var(--navy);opacity:.35;}
+    .imv-cell.p2{background:linear-gradient(180deg,rgba(var(--gold-rgb),.10),var(--card));}
+    .imv-cell.p2::before{background:var(--gold);opacity:.55;}
+    .imv-cell:hover,.imv-cell:focus-visible{transform:translateY(-2px);box-shadow:0 6px 18px rgba(var(--navy-rgb),.18);
+      border-color:var(--gold-soft);outline:none;z-index:2;}
+    .imv-cell .cd{display:flex;align-items:flex-start;justify-content:space-between;gap:2px;}
+    .imv-cell .cn{font-size:clamp(11px,1.5vw,14px);font-weight:800;font-variant-numeric:tabular-nums;line-height:1;color:var(--ink);}
+    .imv-cell.p1 .cn{color:var(--navy);}
+    .imv-cell .mk{font-size:12px;line-height:1;}
+    .imv-cell .mk.plus{color:var(--gold);font-weight:900;}
+    /* 복습량 미터 (6칸 pip) */
+    .imv-pips{display:flex;gap:2px;align-items:flex-end;}
+    .imv-pips i{flex:1;height:5px;border-radius:2px;background:var(--line-2);}
+    .imv-cell.p1 .imv-pips i.on{background:var(--navy);}
+    .imv-cell.p2 .imv-pips i.on{background:var(--gold);}
+    .imv-cell .gday{font-size:9px;font-weight:800;color:var(--gold);letter-spacing:.02em;}
+
+    .imv-legend{display:flex;flex-wrap:wrap;gap:14px 20px;margin:16px 2px 0;font-size:12px;color:var(--ink-soft);}
+    .imv-legend span{display:inline-flex;align-items:center;gap:7px;font-weight:600;}
+    .imv-legend .sw{width:13px;height:13px;border-radius:4px;flex-shrink:0;}
+    .imv-legend .sw.navy{background:var(--navy);} .imv-legend .sw.gold{background:var(--gold);}
+
+    .imv-ebb{margin:26px 0 0;background:var(--card-2);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;}
+    .imv-ebb h3{margin:0;font-size:13px;font-weight:800;letter-spacing:-.01em;}
+    .imv-ebb p{margin:5px 0 14px;font-size:12.5px;color:var(--ink-soft);}
+    .imv-ebb .steps{display:flex;gap:8px;flex-wrap:wrap;}
+    .imv-ebb .step{flex:1 1 0;min-width:64px;text-align:center;background:var(--card);border:1px solid var(--line);
+      border-radius:11px;padding:10px 6px;}
+    .imv-ebb .step b{display:block;font-size:16px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;}
+    .imv-ebb .step small{display:block;margin-top:3px;font-size:10px;color:var(--ink-soft);font-weight:700;letter-spacing:.04em;}
+
+    .imv-kicker{margin:26px 0 0;font-size:clamp(16px,2.3vw,20px);line-height:1.5;font-weight:800;letter-spacing:-.01em;text-wrap:balance;}
+    .imv-kicker .g{color:var(--gold);}
+    .imv-foot{margin:10px 0 0;font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+
+    @media (max-width:720px){ .imv-cal{grid-template-columns:repeat(6,1fr);} }
+    @media (max-width:430px){ .imv-cal{grid-template-columns:repeat(5,1fr);gap:6px;} .imv-cell{border-radius:9px;} }
+
+    @media (prefers-reduced-motion:no-preference){
+      .imv-cell{animation:imvPop .5s cubic-bezier(.2,.7,.2,1) both;}
+      @keyframes imvPop{from{opacity:0;transform:translateY(8px) scale(.96);}to{opacity:1;transform:none;}}
+    }
+  </style>
+
+  <div class="imv-wrap">
+    <div class="imv-eyebrow"><b>IM VOCA</b> · 에빙하우스 60일 로드맵</div>
+    <h1 class="imv-h1">하루 30분, <span class="g">60일</span>.<br>이 달력대로만 하면 단어가 통째로 남습니다.</h1>
+    <p class="imv-sub">앞 30일은 매일 새 단어 한 묶음씩 외우고, 뒤 30일은 복습으로 굳히기. 모든 단어를 에빙하우스 곡선에 맞춰 <b>6번</b> 복습해 장기기억으로 넘깁니다. 오늘 뭘 할지는 앱이 알려줘요 — 당신은 <b>뜨는 것만</b> 하면 됩니다.</p>
+
+    <div class="imv-stats">
+      <div class="imv-stat"><div class="n">30일</div><div class="l">매일 새 단어 암기</div></div>
+      <div class="imv-stat"><div class="n g">1,200단어</div><div class="l">하루 40단어 × 30일</div></div>
+      <div class="imv-stat"><div class="n">6회</div><div class="l">단어당 복습 횟수</div></div>
+      <div class="imv-stat"><div class="n g">60일</div><div class="l">전부 졸업 🎓</div></div>
+    </div>
+
+    <div class="imv-detail" id="imv-detail" aria-live="polite">
+      <div class="dnum"><small>DAY</small><b>–</b></div>
+      <div class="dtxt">
+        <div class="dtitle">날짜 칸을 올리거나 탭해보세요</div>
+        <div class="dbody">그날 <b>새로 외울 단어</b>와 <b>복습할 Day</b>가 여기에 나와요.</div>
+      </div>
+    </div>
+
+    <div class="imv-phaselabels"><span class="p1">◀ 1–30일 · 암기 기간</span><span class="p2">31–60일 · 마무리 복습 ▶</span></div>
+    <div class="imv-cal" id="imv-cal"></div>
+
+    <div class="imv-legend">
+      <span><i class="sw navy"></i> 암기 기간(새 단어+복습)</span>
+      <span><i class="sw gold"></i> 마무리 복습 · 졸업 🎓</span>
+      <span>▮▮▮ 막대가 길수록 그날 복습량이 많아요</span>
+    </div>
+
+    <div class="imv-ebb">
+      <h3>왜 이 순서일까요? — 에빙하우스 망각곡선</h3>
+      <p>잊어버리기 직전에 다시 보면 기억이 오래갑니다. 그 타이밍이 첫 암기 후 이 간격이에요.</p>
+      <div class="steps">
+        <div class="step"><b>1일</b><small>1차</small></div>
+        <div class="step"><b>2일</b><small>2차</small></div>
+        <div class="step"><b>3일</b><small>3차</small></div>
+        <div class="step"><b>6일</b><small>4차</small></div>
+        <div class="step"><b>15일</b><small>5차</small></div>
+        <div class="step"><b>30일</b><small>6차·졸업</small></div>
+      </div>
+    </div>
+
+    <p class="imv-kicker">복잡한 계획은 필요 없어요. <span class="g">뜨는 것만 하면</span> — 60일 뒤, 1,200단어가 머릿속에.</p>
+    <p class="imv-foot">※ 매일 제때 했을 때의 기준 일정입니다. IM VOCA는 복습을 완료한 날에 맞춰 다음 복습을 자동으로 다시 잡아주니, 하루쯤 밀려도 곡선을 놓치지 않아요.</p>
+  </div>
+
+  <script>
+  (function(){
+    var root = document.currentScript.closest('.imv-roadmap');
+    var cal = root.querySelector('#imv-cal');
+    var detail = root.querySelector('#imv-detail');
+    var OFFSETS = [1,2,3,6,15,30];
+    function reviewsFor(D){ return OFFSETS.map(function(k){return D-k;}).filter(function(x){return x>=1 && x<=30;}).sort(function(a,b){return a-b;}); }
+    function pips(n){ var s=''; for(var i=0;i<6;i++){ s+='<i class="'+(i<n?'on':'')+'"></i>'; } return s; }
+
+    var frag = document.createDocumentFragment();
+    for(var D=1; D<=60; D++){
+      var isNew = D<=30;
+      var grad = (D>=31 && D<=60) ? (D-30) : 0;
+      var revs = reviewsFor(D);
+      var cell = document.createElement('button');
+      cell.type='button';
+      cell.className='imv-cell '+(isNew?'p1':'p2');
+      cell.style.animationDelay = Math.min(D*14,700)+'ms';
+      cell.setAttribute('data-d', D);
+      cell.setAttribute('data-new', isNew?D:'');
+      cell.setAttribute('data-grad', grad||'');
+      cell.setAttribute('data-revs', revs.join(','));
+      var mark = isNew ? '<span class="mk plus" title="새 단어">＋</span>' : '<span class="mk" title="졸업">🎓</span>';
+      cell.innerHTML =
+        '<div class="cd"><span class="cn">'+D+'</span>'+mark+'</div>'+
+        '<div class="imv-pips">'+pips(revs.length)+'</div>';
+      var aria = D+'일차. '+(isNew?('새 단어 Day'+D+'. '):'')+(grad?('Day'+grad+' 졸업. '):'')+'복습 '+revs.length+'개.';
+      cell.setAttribute('aria-label', aria);
+      frag.appendChild(cell);
+    }
+    cal.appendChild(frag);
+
+    function showDetail(cell){
+      var D = +cell.getAttribute('data-d');
+      var nw = cell.getAttribute('data-new');
+      var grad = cell.getAttribute('data-grad');
+      var revs = cell.getAttribute('data-revs');
+      var revArr = revs ? revs.split(',') : [];
+      detail.classList.add('is-active');
+      detail.classList.toggle('grad', !!grad);
+      var title = grad ? (D+'일차 · 복습만 (새 단어 없음)') : (D+'일차 · 새 단어 + 복습');
+      var body = '';
+      if(nw){ body += '<span class="chip new">＋ 새 단어 Day'+nw+'</span>'; }
+      if(revArr.length){ body += '<span class="chip rev">복습 '+revArr.length+'개</span> ' + 'Day ' + revArr.join(', '); }
+      else if(!grad){ body += '<span class="chip rev">복습 없음</span>'; }
+      else if(revArr.length===0){ body += '<span class="chip rev">복습 없음</span>'; }
+      if(grad){ body += '<div style="margin-top:6px"><span class="chip grad">🎓 Day'+grad+' 6회 복습 완료 · 졸업!</span></div>'; }
+      detail.innerHTML =
+        '<div class="dnum"><small>DAY</small><b>'+D+'</b></div>'+
+        '<div class="dtxt"><div class="dtitle">'+title+'</div><div class="dbody">'+body+'</div></div>';
+    }
+    cal.addEventListener('mouseover', function(e){ var c=e.target.closest('.imv-cell'); if(c) showDetail(c); });
+    cal.addEventListener('focusin', function(e){ var c=e.target.closest('.imv-cell'); if(c) showDetail(c); });
+    cal.addEventListener('click', function(e){ var c=e.target.closest('.imv-cell'); if(c) showDetail(c); });
+  })();
+  </script>
+</section>
