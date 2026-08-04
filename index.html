@@ -6736,6 +6736,12 @@ function renderQuiz() {
     const gateNote = (gated && wrongWords.length>0)
       ? `<div style="width:100%;background:#fff3e0;border:1px solid #f0c98a;border-radius:12px;padding:12px 14px;margin:14px 0 0;font-size:12.5px;color:#8a5a00;line-height:1.6;text-align:left;">⚠️ ${userNativeLang==='ko'?`아직 <b>점수를 받지 못했어요.</b> 아래 <b>틀린 ${wrongWords.length}개 다시 풀기</b>로 <b>모두 맞히면</b> 점수를 받아요.`:`No points yet. Retry the ${wrongWords.length} wrong word(s) and get them all right to earn points.`}</div>`
       : '';
+    // 넛지: 암기카드 없이 '테스트만' 했는데, 아직 안 배운(점수 없는) Day를 만점 못 했을 때
+    // → 강제하지 않고 '암기카드로 먼저 외우기'를 권함.
+    const _firstStudyUnscored = (!gated && q.scope==='page' && q.pageNum!=null && q.bookId && q.bookId!=='__fav__' && wrongWords.length>0 && !_scoredPages.has(q.bookId+'|'+q.pageNum));
+    const nudgeNote = _firstStudyUnscored
+      ? `<div style="width:100%;background:var(--gold-bg);border:1px solid #f0c98a;border-radius:12px;padding:13px 15px;margin:14px 0 0;font-size:13px;color:#8a5a00;line-height:1.6;text-align:left;">🃏 ${userNativeLang==='ko'?`아직 다 못 외웠어요. <b>암기카드로 먼저 외우고</b> 다시 테스트하면 통과해서 <b>점수</b>도 받기 쉬워요!`:`Not fully memorized yet. Study with flashcards first, then test again to pass and earn points.`}</div>`
+      : '';
     // 게이트 상태에서 '전체 다시'도 게이트를 유지해야 함(통과 시 점수 지급).
     const retryAllOnclick = gated ? `startReviewQuiz('${jsq(q.bookId)}','${jsq(String(q.pageNum))}')` : `startQuiz('${q.bookId}','${q.scope}','${q.pageNum}')`;
     root.innerHTML = `<div class="scr" style="padding-bottom:24px;">
@@ -6745,15 +6751,16 @@ function renderQuiz() {
         <div class="done__n" style="color:${rateColor};">${rate}%</div>
         <div style="font-size:13px;color:var(--ink-60);">${q.correct}/${q.words.length} ${t('correctLabel')}</div>
         <div style="font-size:14px;color:${rateColor};margin-top:4px;font-weight:600;">${rateMsg}</div>
-        ${gateNote}
+        ${gateNote}${nudgeNote}
         <div class="done__grid" style="margin-top:16px;">
           <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('correct')}</div><div class="done__tile-value" style="color:#27ae60;">${q.correct}</div></div>
           <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('wrong')}</div><div class="done__tile-value" style="color:#e74c3c;">${wrongWords.length}</div></div>
         </div>
         ${wrongWords.length>0?`<div style="width:100%;margin-top:16px;text-align:left;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:8px;">${t('wrongWordList')} (${wrongWords.length}${userNativeLang==='ko'?'개':''})</div><div style="background:var(--bg-card);border-radius:12px;padding:12px;max-height:160px;overflow-y:auto;">${wrongWords.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ink-07);"><span style="font-size:13px;font-weight:600;">${esc(w.en)}</span><span style="font-size:12px;color:var(--ink-60);">${esc(w.base)}</span></div>`).join('')}</div></div>`:''}
         <div style="width:100%;margin-top:16px;display:flex;flex-direction:column;gap:10px;">
-          ${wrongWords.length>0?`<button class="btn btn-solid" onclick="startWrongQuiz()">${t('wrongOnly')} (${wrongWords.length}개)</button>`:''}
-          <button class="btn ${wrongWords.length>0?'btn-outline':'btn-solid'}" onclick="${retryAllOnclick}">${t('retryAll')}</button>
+          ${_firstStudyUnscored?`<button class="btn btn-solid" onclick="initStudy('${q.bookId}','page','${jsq(String(q.pageNum))}');push({name:'study-cards',bookId:'${q.bookId}',scope:'page',pageNum:'${jsq(String(q.pageNum))}'})">🃏 ${userNativeLang==='ko'?'암기카드로 외우기':'Study with flashcards'}</button>`:''}
+          ${wrongWords.length>0?`<button class="btn ${_firstStudyUnscored?'btn-outline':'btn-solid'}" onclick="startWrongQuiz()">${t('wrongOnly')} (${wrongWords.length}개)</button>`:''}
+          <button class="btn btn-outline" onclick="${retryAllOnclick}">${t('retryAll')}</button>
           ${gated?'':`<button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>`}
           ${gated?`<button class="btn btn-outline" onclick="goTab('books')">${userNativeLang==='ko'?'나중에 하기 (점수 없음)':'Later (no points)'}</button>`:''}
         </div>
