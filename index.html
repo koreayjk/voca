@@ -3615,6 +3615,7 @@ function push(r) { stack.push(r); render(); }
 function back() { if (stack.length > 1) { stack.pop(); render(); } }
 function goTab(t) {
   if (t==='study') stack = [{name:'study-setup'}];
+  else if (t==='favorites') stack = [{name:'favorites'}];
   else if (t==='stats') { window._hallData=null; window._hallOrgNames=null; window._hallPage=1; stack = [{name:'stats'}]; }
   else if (t==='search') stack = [{name:'search'}];
   else if (t==='review') stack = [{name:'review'}];
@@ -3622,7 +3623,7 @@ function goTab(t) {
   render();
 }
 function replace(r) { stack[stack.length-1] = r; render(); }
-function currentTab() { const n = stack[stack.length-1].name; if (['study-setup','study-cards','study-done'].includes(n)) return 'study'; if (n==='stats') return 'stats'; if (n==='search') return 'search'; if (n==='review') return 'review'; return 'books'; }
+function currentTab() { const n = stack[stack.length-1].name; if (['study-setup','study-cards','study-done'].includes(n)) return 'study'; if (n==='favorites') return 'favorites'; if (n==='stats') return 'stats'; if (n==='search') return 'search'; if (n==='review') return 'review'; return 'books'; }
 
 function findBook(id) { return books.find(b => b.id === id); }
 function findPage(book, num) { return book.pages.find(p => String(p.num) === String(num)); }
@@ -4642,6 +4643,13 @@ function allFavoriteWords() {
 function allWordsGlobal() {
   const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>out.push({...w})))); return out;
 }
+// 즐겨찾기 목록에서 별표 해제(단어 id로 페이지 내 인덱스 찾아 토글)
+function favToggle(bookId, pageNum, wordId){
+  const book=findBook(bookId); const page=book?findPage(book,pageNum):null;
+  if(!page) return;
+  const idx=page.words.findIndex(w=>String(w.id)===String(wordId));
+  if(idx>=0) toggleFavorite(bookId, pageNum, idx);
+}
 
 // 재렌더하되 현재 스크롤 위치를 유지 (즐겨찾기/삭제 시 목록이 맨 위로 튀는 것 방지)
 function renderKeepScroll(){
@@ -4730,7 +4738,7 @@ function renderScanLoading(current=1, total=1) {
 
 function buildDock() {
   const tab = currentTab();
-  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='study'?'dock__btn--active':''}" onclick="goTab('study')"><span style="font-size:22px;line-height:1;">🃏</span><span>${t('game')}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button>`
+  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='favorites'?'dock__btn--active':''}" onclick="goTab('favorites')"><span style="font-size:22px;line-height:1;">⭐</span><span>${userNativeLang==='ko'?'즐겨찾기':'Favorites'}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button>`
     + buildDockBottom()
     + `</div>`;
 }
@@ -5046,6 +5054,7 @@ function render() {
 
   else if (route.name === 'stats') { renderStats(root, dock); return; }
   else if (route.name === 'search') { renderSearch(root, dock); return; }
+  else if (route.name === 'favorites') { renderFavorites(root, dock); return; }
   else if (route.name === 'review') { renderReviewPage(root, dock); return; }
   else if (route.name === 'manual-add') { renderManualAdd(root, route); return; }
 
@@ -6906,6 +6915,53 @@ async function updateReviewStep(review) {
   } catch(e) {
     console.error('[updateReviewStep 오류]', e);
   }
+}
+
+// ⭐ 즐겨찾기 탭 — 별표한 단어를 모아 보고, 그것만 암기/퀴즈
+function renderFavorites(root, dock) {
+  const ko = userNativeLang==='ko';
+  const favs = allFavoriteWords();
+  const levelColor = { 'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6' };
+  const header = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
+      <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
+      <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">⭐ ${ko?'즐겨찾기':'Favorites'}</div>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:2px;margin-bottom:16px;">${ko?'별표한 단어만 모아서 집중 암기·복습해요':'Collect starred words and study them'}</div>`;
+
+  if (!favs.length) {
+    root.innerHTML = header + `<div style="text-align:center;padding:56px 24px;">
+      <div style="font-size:46px;margin-bottom:14px;opacity:.9;">⭐</div>
+      <div style="font-size:15px;font-weight:700;color:var(--ink-100);">${ko?'아직 즐겨찾기한 단어가 없어요':'No favorites yet'}</div>
+      <div style="font-size:13px;color:var(--ink-60);margin-top:10px;line-height:1.7;">${ko?'단어 카드나 목록에서 <b style="color:#f39c12;">☆</b> 를 누르면<br>여기에 모여요. 어려운 단어만 골라<br>따로 집중 복습할 수 있어요.':'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.'}</div>
+    </div></div>` + dock;
+    return;
+  }
+
+  const studyBar = `<div style="display:flex;gap:8px;margin-bottom:14px;">
+    <button class="btn btn-solid" style="flex:1;padding:12px;font-size:14px;" onclick="initStudy('__fav__','favorite');push({name:'study-cards',bookId:'__fav__',scope:'favorite'})">🃏 ${ko?'암기카드':'Flashcards'} · ${favs.length}</button>
+    <button class="btn btn-outline" style="flex:1;padding:12px;font-size:14px;" onclick="startQuiz('__fav__','favorite')">📝 ${ko?'퀴즈':'Quiz'}</button>
+  </div>`;
+
+  const list = favs.map(w=>{
+    const lv=w.level||''; const c=levelColor[lv]||'#999';
+    const bookTitle = w.bookTitle || findBook(w.bookId)?.title || '';
+    return `<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:var(--bg-card);border-left:3px solid ${c};">
+      <div style="flex:1;min-width:0;cursor:pointer;" onclick="push({name:'page-words',bookId:'${w.bookId}',pageNum:'${jsq(String(w.pageNum))}'})">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="word-item__en">${esc(w.en||'')}</span>
+          ${lv?`<span style="font-size:10px;font-weight:700;color:#fff;background:${c};border-radius:99px;padding:2px 7px;">${lv}</span>`:''}
+        </div>
+        <div class="word-item__base">${esc(w.base||'')}</div>
+        ${w.ctx?`<div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>`:''}
+        <div style="font-size:10px;color:var(--ink-40);margin-top:4px;">📖 ${esc(bookTitle)} · Page ${esc(String(w.pageNum))}</div>
+      </div>
+      <button onclick="event.stopPropagation();favToggle('${w.bookId}','${jsq(String(w.pageNum))}','${jsq(String(w.id))}')" title="${ko?'즐겨찾기 해제':'Remove'}" style="flex-shrink:0;background:none;border:none;font-size:22px;cursor:pointer;color:#f39c12;line-height:1;padding:4px;">★</button>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = header + studyBar
+    + `<div class="scr-scroll"><div class="muted" style="font-size:12px;margin-bottom:10px;">${favs.length}${ko?'개':''}</div>${list}</div></div>` + dock;
 }
 
 function renderSearch(root, dock) {
