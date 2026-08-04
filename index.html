@@ -4635,19 +4635,30 @@ async function enrichExamWords(bookId, pageId) {
 }
 
 let studyState = null;
-// 모든 책의 즐겨찾기 단어 모으기
+// ── 즐겨찾기 로컬 저장소 ─────────────────────────────────────────
+// 공식·배정 단어장은 DB word.id 가 없어서 서버(voca_words.is_favorite)에 저장할 수 없음.
+// → 모든 단어장에서 즐겨찾기가 되도록 로컬(localStorage)에도 저장하고, DB 단어는 서버에도 함께 동기화.
+let _localFavsCache = null;
+function _localFavs(){ if(_localFavsCache) return _localFavsCache; try{ _localFavsCache = JSON.parse(localStorage.getItem('imvoca.favs')||'{}')||{}; }catch(e){ _localFavsCache={}; } return _localFavsCache; }
+function _saveLocalFavs(m){ _localFavsCache=m; try{ localStorage.setItem('imvoca.favs', JSON.stringify(m)); }catch(e){} }
+function _favKey(bookId,pageNum,en){ return bookId+'|'+pageNum+'|'+String(en||'').trim().toLowerCase(); }
+// 이 단어가 즐겨찾기인지: 서버 플래그(w.fav) 또는 로컬 저장 둘 중 하나면 true
+function isFav(bookId,pageNum,w){ return !!(w && (w.fav || _localFavs()[_favKey(bookId,pageNum,w.en)])); }
+
+// 모든 책의 즐겨찾기 단어 모으기 (공식·배정 포함)
 function allFavoriteWords() {
-  const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>{ if(w.fav) out.push({...w, pageNum:p.num, bookId:b.id}); }))); return out;
+  const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>{ if(isFav(b.id,p.num,w)) out.push({...w, pageNum:p.num, bookId:b.id}); }))); return out;
 }
 // 모든 책의 전체 단어 (퀴즈 보기용)
 function allWordsGlobal() {
   const out=[]; books.forEach(b=>b.pages.forEach(p=>p.words.forEach(w=>out.push({...w})))); return out;
 }
-// 즐겨찾기 목록에서 별표 해제(단어 id로 페이지 내 인덱스 찾아 토글)
-function favToggle(bookId, pageNum, wordId){
+// 즐겨찾기 목록에서 별표 해제(단어 en으로 페이지 내 인덱스 찾아 토글 — 공식책은 id가 없어서 en으로 매칭)
+function favToggleByEn(bookId, pageNum, en){
   const book=findBook(bookId); const page=book?findPage(book,pageNum):null;
   if(!page) return;
-  const idx=page.words.findIndex(w=>String(w.id)===String(wordId));
+  const key=String(en||'').trim().toLowerCase();
+  const idx=page.words.findIndex(w=>String(w.en||'').trim().toLowerCase()===key);
   if(idx>=0) toggleFavorite(bookId, pageNum, idx);
 }
 
@@ -4665,21 +4676,22 @@ async function toggleFavorite(bookId, pageNum, wordIdx) {
   const page = book ? findPage(book, pageNum) : null;
   const word = page?.words[wordIdx];
   if (!word) return;
-  if (!word.id) { toast(userNativeLang==='ko'?'새로고침 후 즐겨찾기를 쓸 수 있어요':'Reload to favorite this word'); return; }
-  const next = !word.fav;
+  const next = !isFav(bookId, pageNum, word);
   word.fav = next;
+  // 1) 로컬 저장(모든 단어장 공통 — 공식·배정도 여기서 즉시 반영·유지)
+  const m = _localFavs(), k = _favKey(bookId, pageNum, word.en);
+  if (next) m[k] = true; else delete m[k];
+  _saveLocalFavs(m);
   renderKeepScroll();
-  const url = `/rest/v1/voca_words?id=eq.${word.id}`;
-  const send = async () => {
+  // 2) 내가 만든(DB) 단어면 서버에도 동기화(다른 기기 반영). 실패해도 로컬은 유지.
+  if (word.id) {
+    const url = `/rest/v1/voca_words?id=eq.${word.id}`;
     const opt = { method:'PATCH', headers:{ 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':'Bearer '+_authToken }, body: JSON.stringify({ is_favorite: next }) };
-    let res = await fetch(SB_URL + url, opt);
-    if ((res.status===401||res.status===403) && await refreshSession()) { opt.headers.Authorization = 'Bearer '+_authToken; res = await fetch(SB_URL + url, opt); }
-    return res;
-  };
-  try {
-    const res = await send();
-    if (!res.ok) throw new Error('fav write failed ' + res.status);
-  } catch(e) { word.fav = !next; renderKeepScroll(); toast(userNativeLang==='ko'?'잠시 후 다시 시도해주세요':'Please try again'); }
+    try {
+      let res = await fetch(SB_URL + url, opt);
+      if ((res.status===401||res.status===403) && await refreshSession()) { opt.headers.Authorization = 'Bearer '+_authToken; res = await fetch(SB_URL + url, opt); }
+    } catch(e) {}
+  }
 }
 
 // 예문 일괄 채우기 (묶음 호출, 1회성) - 책 메뉴에서 실행
@@ -5042,7 +5054,7 @@ function render() {
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
         <div class="muted" style="font-size:11px;margin-top:4px">${userNativeLang==='ko'?'기본 뜻 + 문맥 뜻':'Meaning + Context'}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${esc(w.en)}</div>${(lv&&!/^\d+$/.test(lv))?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button>${book._readonly ? `<span style="margin-left:auto;"></span>` : `<button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${w.fav?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${w.fav?'⭐':'☆'}</button><button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button>`}</div><div class="word-item__base">${esc(w.base)}</div><div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${esc(w.sentence)}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${esc(w.en)}</div>${(lv&&!/^\d+$/.test(lv))?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${isFav(book.id,page.num,w)?'#f39c12':'var(--ink-40)'};" title="${userNativeLang==='ko'?'즐겨찾기':'Favorite'}">${isFav(book.id,page.num,w)?'⭐':'☆'}</button>${book._readonly ? `` : `<button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${userNativeLang==='ko'?'단어 삭제':'Delete word'}">🗑️</button>`}</div><div class="word-item__base">${esc(w.base)}</div><div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${esc(w.sentence)}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${userNativeLang==='ko'?'📚 암기 카드':'📚 Study'}</button>
@@ -6956,7 +6968,7 @@ function renderFavorites(root, dock) {
         ${w.ctx?`<div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>`:''}
         <div style="font-size:10px;color:var(--ink-40);margin-top:4px;">📖 ${esc(bookTitle)} · Page ${esc(String(w.pageNum))}</div>
       </div>
-      <button onclick="event.stopPropagation();favToggle('${w.bookId}','${jsq(String(w.pageNum))}','${jsq(String(w.id))}')" title="${ko?'즐겨찾기 해제':'Remove'}" style="flex-shrink:0;background:none;border:none;font-size:22px;cursor:pointer;color:#f39c12;line-height:1;padding:4px;">★</button>
+      <button onclick="event.stopPropagation();favToggleByEn('${w.bookId}','${jsq(String(w.pageNum))}','${jsq(String(w.en))}')" title="${ko?'즐겨찾기 해제':'Remove'}" style="flex-shrink:0;background:none;border:none;font-size:22px;cursor:pointer;color:#f39c12;line-height:1;padding:4px;">★</button>
     </div>`;
   }).join('');
 
