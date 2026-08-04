@@ -956,6 +956,8 @@ async function loadUserPlan() {
       userOrgId = data[0].org_id || null;
       userOrgRole = data[0].org_role || null;
       userOrgStatus = data[0].org_status || null;
+      // 첫 암기 점수 판정용: '이미 학습한 페이지'를 학습 시작 전에 미리 시드
+      _seedScoredPages().catch(()=>{});
       if (userOrgRole === 'owner' || userOrgId) { await loadMyOrg(); }
       // 최종 접속 시각(last_seen_at)은 매번 갱신, 누적 접속수(visit_count)는 하루 1회만 증가
       const today = new Date().toISOString().slice(0,10);
@@ -6623,11 +6625,25 @@ async function _registerFirstStudy(bookId, pageNum){
   return created;
 }
 // 첫 암기 '점수': 퀴즈 통과 시. 이번에 새로 등록된 페이지(isNew)만 지급(재학습 중복 방지).
+// ── 첫 암기 점수 '이미 받은 페이지' 집합 ─────────────────────────
+// 로그인 직후, 학습을 시작하기 '전에' 서버의 복습 행(=이미 학습한 페이지)으로 시드한다.
+// 이렇게 하면: 처음 배우는 Day는 여러 번 틀린 뒤 다 맞혀도 점수 지급(첫 통과 1회),
+// 이미 배운 Day는 다시 테스트해 만점 받아도 재지급 안 함(점수 파밍 방지).
+let _scoredPages = new Set();
+let _scoredSeeded = false;
+async function _seedScoredPages(){
+  if (_scoredSeeded || !currentUser) return;
+  const rows = await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&select=book_id,page_num`);
+  if (Array.isArray(rows)) { rows.forEach(r=> _scoredPages.add(r.book_id + '|' + r.page_num)); _scoredSeeded = true; }
+}
 async function _awardFirstStudyPoints(bookId, pageNum, isNew){
   const book = findBook(bookId);
   const page = book ? book.pages.find(p=>String(p.num)===String(pageNum)) : null;
   const base = page ? calcWordScore(page.words) : 0;
-  if (isNew && base>0){ addReviewScore(base); window._lastEarnedScore = base; }
+  const key = bookId + '|' + pageNum;
+  // 시드가 됐으면 '집합' 기준으로 정확 판정, 아직 안 됐으면 isNew 로 폴백.
+  const already = _scoredSeeded ? _scoredPages.has(key) : !isNew;
+  if (!already && base>0){ addReviewScore(base); _scoredPages.add(key); window._lastEarnedScore = base; }
   else { window._lastEarnedScore = 0; }
   window._lastReviewFinished = false; window._lastReviewLate = false; window._lastBaseScore = base;
 }
@@ -6706,9 +6722,8 @@ function renderQuiz() {
       const ko = userNativeLang==='ko';
       root.innerHTML = `<div class="scr"><div class="done" style="padding-top:70px;text-align:center;"><div style="font-size:34px;margin-bottom:10px;">✅</div><div style="font-size:14px;color:var(--ink-60);">${ko?'통과! 점수를 반영하는 중...':'Passed! Scoring...'}</div></div></div>`;
       (async ()=>{
-        let isNew=false; try{ isNew = await _registerFirstStudy(q.bookId, q.pageNum); }catch(e){}
-        if (isNew) { try{ await _awardFirstStudyPoints(q.bookId, q.pageNum, true); }catch(e){} }
-        else { window._lastEarnedScore = 0; window._lastReviewFinished=false; window._lastReviewLate=false; }
+        try{ await _registerFirstStudy(q.bookId, q.pageNum); }catch(e){}     // 복습 일정 등록(없으면 생성)
+        try{ await _awardFirstStudyPoints(q.bookId, q.pageNum, true); }catch(e){} // 첫 통과면 지급('이미 받은 페이지' 집합으로 판정)
         try{ await checkReviews(); }catch(e){}
         replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:false});
       })();
