@@ -2119,7 +2119,7 @@ function renderOrgAdminPage(root) {
           <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:3px;">📈 ${ko?'과제별 상세 리포트':'Assignment report'}</div>
           <div class="muted" style="font-size:12px;line-height:1.55;">${ko?'배정한 과제별 복습 진행(며칠차)과 학부모 공유 카드.':'Per-assignment review progress and parent cards.'}</div>
         </div>
-        <button onclick="push({name:'report'})" style="background:var(--accent);border:none;border-radius:10px;padding:10px 16px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;">${ko?'열기 →':'Open →'}</button>
+        <button onclick="setOrgTab('report')" style="background:var(--accent);border:none;border-radius:10px;padding:10px 16px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;">${ko?'열기 →':'Open →'}</button>
       </div>`)}`;
 
   const secMembers = `
@@ -4779,6 +4779,8 @@ function buildDockBottom() {
 }
 
 function render() {
+  // 브라우저 뒤로가기 가둠용 '버퍼 상태' 최초 1회 삽입(로그인 후) → 좌→우 스와이프로 로그인 튕김 방지
+  if (currentUser && !window._histSeeded) { window._histSeeded = true; try { history.pushState({ imv: true }, ''); } catch(e){} }
 
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
@@ -7504,10 +7506,26 @@ goTab = function(t) {
   }
 };
 
+// ── 브라우저 뒤로가기(좌→우 엣지 스와이프·안드로이드 시스템 뒤로)를 앱 안에 가둔다 ──
+// 앱은 내부 stack 으로 화면을 관리하는데 브라우저 히스토리와 연동돼 있지 않아,
+// 브라우저 뒤로가기를 하면 페이지를 떠나 로그인 화면으로 튕겼음.
+// → 히스토리에 '버퍼 상태'를 쌓아두고, 뒤로가기가 오면 앱 내부에서만 처리한다.
+let _isStandaloneApp = false;
+try { _isStandaloneApp = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches; } catch(e){}
+window.addEventListener('popstate', () => {
+  if (typeof currentUser === 'undefined' || !currentUser) return; // 로그인 전엔 관여 안 함
+  try { if (typeof stack !== 'undefined' && stack.length > 1) { stack.pop(); render(); } } catch(e){}
+  // 어떤 경우든 버퍼 상태를 다시 쌓아 다음 뒤로가기도 앱 안에서 처리(로그인 튕김 방지)
+  try { history.pushState({ imv: true }, ''); } catch(e){}
+});
+
+// 인앱 스와이프 뒤로가기 — 브라우저 모드는 브라우저 뒤로가기(popstate)에 맡기고,
+// 앱(홈 화면 설치, 뒤로 제스처 없음)에서만 커스텀 스와이프를 처리(중복 방지).
 (function() {
   let startX = 0, startY = 0;
   document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
   document.addEventListener('touchend', e => {
+    if (!_isStandaloneApp) return;
     const dx = e.changedTouches[0].clientX - startX;
     const dy = Math.abs(e.changedTouches[0].clientY - startY);
     if (dx > 60 && dy < 80 && startX < 40 && stack.length > 1) { back(); }
