@@ -6772,8 +6772,10 @@ async function checkReviews() {
         { key: 'review_30d', label: t('step15'), date: r.review_30d },
         { key: 'review_60d', label: t('step30'), date: r.review_60d },
       ];
-      const oldest = steps.find(s => s.date && s.date <= today);
-      if (oldest) due.push({ ...r, _stepKey: oldest.key, _stepLabel: oldest.label });
+      // 순서 보장: 가장 이른 미완료 단계가 현재 단계. 그게 오늘까지 예정이면 '오늘 복습'.
+      // (뒷 단계로 건너뛰어 순서가 꼬이던 문제 방지)
+      const firstPending = steps.find(s => s.date);
+      if (firstPending && firstPending.date <= today) due.push({ ...r, _stepKey: firstPending.key, _stepLabel: firstPending.label });
     });
     if (!due.length) return;
     let totalWords = 0;
@@ -7004,10 +7006,13 @@ async function renderReviewPage(root, dock) {
       // 무료/단체미결제 → 공식·배정 단어장 복습 중지(Day1 체험은 유지)
       if ((_rb2._official || _rb2._assigned) && !hasOfficialAccess() && String(r.page_num) !== OFFICIAL_FREE_PAGE) return;
       if (r.completed) { done.push(r); return; }
-      const overdueStep = STEPS.find(s => r[s.key] && r[s.key] <= today);
-      if (overdueStep) { todayDue.push({ ...r, _stepKey: overdueStep.key, _stepLabel: overdueStep.label }); return; }
-      const nextStep = STEPS.find(s => r[s.key]);
-      if (nextStep) upcoming.push({ ...r, _nextLabel: nextStep.label, _nextDate: r[nextStep.key] });
+      // 순서 보장: 항상 '가장 이른 미완료 단계'가 현재 단계 (뒤 단계를 앞질러 하지 않음).
+      // 예전엔 '미완료 & 기한지남' 첫 단계를 골라서, 앞 단계 예정일이 미래면 뒷 단계로 건너뛰어
+      // "3일차는 됐는데 2일차가 남는" 순서 꼬임이 생겼음 → 방지.
+      const firstPending = STEPS.find(s => r[s.key]);
+      if (!firstPending) { done.push(r); return; } // 전부 null인데 completed 플래그만 없는 예외
+      if (r[firstPending.key] <= today) { todayDue.push({ ...r, _stepKey: firstPending.key, _stepLabel: firstPending.label }); }
+      else { upcoming.push({ ...r, _stepKey: firstPending.key, _nextLabel: firstPending.label, _nextDate: r[firstPending.key] }); }
     });
 
     function reviewCard(r, type) {
@@ -7017,9 +7022,14 @@ async function renderReviewPage(root, dock) {
       const page = book ? findPage(book, r.page_num) : null;
       const wordCount = page?.words.length || 0;
       const studiedDate = new Date(r.first_studied_at).toLocaleDateString('ko-KR');
-      const completedSteps = STEPS.filter(s => !r[s.key]).length;
       const totalSteps = STEPS.length;
+      // 단조 표시: 현재(첫 미완료) 단계 앞까지만 '완료(✓)'로 본다. 순서 꼬임이 있어도
+      // "1일차✓ 2일차(현재) 3일차✓" 처럼 중간이 빈 채로 보이지 않게.
+      const curIdx = STEPS.findIndex(s => s.key === r._stepKey); // done이면 -1
+      const completedSteps = curIdx < 0 ? totalSteps : curIdx;
       const progress = Math.round(completedSteps / totalSteps * 100);
+      const stepDone = (i) => curIdx < 0 ? true : i < curIdx;
+      const stepCur  = (i) => i === curIdx;
 
       if (type === 'due') {
         // 오늘 복습 카드 — 카드 전체 클릭 가능, 강렬한 스타일
@@ -7040,7 +7050,7 @@ async function renderReviewPage(root, dock) {
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div style="display:flex;gap:6px;">
-              ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.9)'};font-weight:${s.key===r._stepKey?'700':'400'};${s.key===r._stepKey?'background:rgba(255,255,255,0.2);border-radius:99px;padding:1px 6px;':''}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+              ${STEPS.map((s,i) => `<span style="font-size:9px;color:${stepDone(i)?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.9)'};font-weight:${stepCur(i)?'700':'400'};${stepCur(i)?'background:rgba(255,255,255,0.2);border-radius:99px;padding:1px 6px;':''}">${s.label}${stepDone(i)?'✓':''}</span>`).join('')}
             </div>
             <span style="font-size:11px;color:rgba(255,255,255,0.7);">${t('studiedDate')} ${studiedDate}</span>
           </div>
@@ -7061,7 +7071,7 @@ async function renderReviewPage(root, dock) {
               <div style="height:100%;width:${progress}%;background:var(--accent);border-radius:99px;"></div>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:6px;">
-              ${STEPS.map(s => `<span style="font-size:9px;color:${!r[s.key]?'#27ae60':'var(--ink-40)'};font-weight:${!r[s.key]?'700':'400'}">${s.label}${!r[s.key]?'✓':''}</span>`).join('')}
+              ${STEPS.map((s,i) => `<span style="font-size:9px;color:${stepDone(i)?'#27ae60':'var(--ink-40)'};font-weight:${stepDone(i)?'700':'400'}">${s.label}${stepDone(i)?'✓':''}</span>`).join('')}
             </div>
           </div>
           <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 ${t('nextReview')}: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>
