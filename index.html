@@ -6674,8 +6674,6 @@ function renderQuiz() {
   if (q.idx >= q.words.length) {
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct, q.scope === 'page' ? q.pageNum : null);
-    // 페이지 퀴즈(테스트)를 완료하면 복습 일정도 시작(없으면 생성). '테스트만 하고 복습이 안 오던' 문제 방지.
-    if (q.scope === 'page' && q.pageNum != null && q.bookId && q.bookId !== '__fav__') { try { _registerFirstStudy(q.bookId, q.pageNum); } catch(e){} }
     const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
     const rateMsg = rate>=80?t('rateMsg80'):rate>=50?t('rateMsg50'):t('rateMsgBad');
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
@@ -6700,6 +6698,25 @@ function renderQuiz() {
           replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:false}); });
       }
       return;
+    }
+
+    // ── 테스트만(암기카드 없이) 페이지를 '만점'으로 통과한 경우: 첫 암기와 동일하게 점수 지급 + 복습 등록 ──
+    // (암기카드를 거치지 않아도, 처음 학습하는 Day를 다 맞히면 첫 암기 점수를 준다)
+    if (!gated && q.scope==='page' && q.pageNum!=null && q.bookId && q.bookId!=='__fav__' && wrongWords.length===0) {
+      const ko = userNativeLang==='ko';
+      root.innerHTML = `<div class="scr"><div class="done" style="padding-top:70px;text-align:center;"><div style="font-size:34px;margin-bottom:10px;">✅</div><div style="font-size:14px;color:var(--ink-60);">${ko?'통과! 점수를 반영하는 중...':'Passed! Scoring...'}</div></div></div>`;
+      (async ()=>{
+        let isNew=false; try{ isNew = await _registerFirstStudy(q.bookId, q.pageNum); }catch(e){}
+        if (isNew) { try{ await _awardFirstStudyPoints(q.bookId, q.pageNum, true); }catch(e){} }
+        else { window._lastEarnedScore = 0; window._lastReviewFinished=false; window._lastReviewLate=false; }
+        try{ await checkReviews(); }catch(e){}
+        replace({name:'study-done', bookId:q.bookId, scope:'page', pageNum:q.pageNum, total:q.words.length, rounds:1, isReview:false});
+      })();
+      return;
+    }
+    // 테스트만 했는데 만점이 아니면: 복습 일정은 등록(없으면 생성)하되 점수는 없음. 결과 화면은 아래 그대로.
+    if (!gated && q.scope==='page' && q.pageNum!=null && q.bookId && q.bookId!=='__fav__') {
+      try { _registerFirstStudy(q.bookId, q.pageNum); } catch(e){}
     }
     const gateNote = (gated && wrongWords.length>0)
       ? `<div style="width:100%;background:#fff3e0;border:1px solid #f0c98a;border-radius:12px;padding:12px 14px;margin:14px 0 0;font-size:12.5px;color:#8a5a00;line-height:1.6;text-align:left;">⚠️ ${userNativeLang==='ko'?`아직 <b>점수를 받지 못했어요.</b> 아래 <b>틀린 ${wrongWords.length}개 다시 풀기</b>로 <b>모두 맞히면</b> 점수를 받아요.`:`No points yet. Retry the ${wrongWords.length} wrong word(s) and get them all right to earn points.`}</div>`
