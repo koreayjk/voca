@@ -6542,12 +6542,14 @@ async function saveReviewSchedule(bookId, pageNum) {
   try {
     const existing = await authGet(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=eq.${pageNum}&select=id,completed`);
     if (existing == null) {
-      // 확인 실패(토큰 만료/네트워크) → 진도 유실 막기 위해 로컬 표시 + 큐 등록(전송 시 존재확인 후 insert)
+      // 확인 실패(토큰 만료/네트워크) → 진도 유실 막기 위해 로컬 표시 + 큐 등록(전송 시 존재확인 후 insert).
+      // 이 기기 로컬에도 학습 기록이 없으면 '처음 학습'일 가능성이 높으므로 점수 지급 대상(true).
+      const _localNew = !(_lsGetObj(_LS_STUDIED)[bookId + '|' + pageNum]);
       _markLocalStudied(bookId, pageNum, _words0);
       const nowF=new Date(), midF=(n)=>{const d=new Date(nowF);d.setDate(d.getDate()+n);d.setHours(0,0,0,0);return d.toISOString();};
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, book_id:bookId, page_num:String(pageNum), first_studied_at:nowF.toISOString(), review_2d:midF(1), review_3d:midF(2), review_6d:midF(3), review_15d:midF(6), review_30d:midF(15), review_60d:midF(30) } });
       _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
-      return false;
+      return _localNew;
     }
     if (existing.length > 0) {
       // 복습 일정이 있는데 책장에서 암기한 경우 안내
@@ -6575,10 +6577,12 @@ async function saveReviewSchedule(bookId, pageNum) {
     const res = await authPost('/rest/v1/voca_review', reviewBody, 'return=minimal');
     if (res && res.status === 409) return false; // 유니크 충돌(동시 등록) → DB가 중복을 막음. 정상.
     if (!res || !res.ok) {
-      // 저장 실패 → 재전송 큐에 넣어 나중에 자동 동기화 (진도 유실 방지)
+      // 저장이 일시적으로 실패(토큰·네트워크) → 재전송 큐에 넣어 나중에 자동 동기화.
+      // 단, 위에서 existing 이 비어있음을 확인했으니 '새 학습'인 건 확실 → 첫 암기 점수는
+      // 지급 대상(true)으로 본다. (일시 오류로 새 단어 점수를 놓치지 않게)
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:reviewBody });
       _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
-      return false;
+      return true;
     }
     return true; // 새 복습 일정을 실제로 등록함 → 첫 암기 점수 지급 대상(호출측에서 처리)
   } catch(e) { console.error('[복습 저장 오류]', e); return false; }
