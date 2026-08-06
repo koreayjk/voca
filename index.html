@@ -7233,9 +7233,29 @@ async function renderReviewPage(root, dock) {
 }
 
 async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDate) {
-  // 1차: 로컬 books에서 시도
+  // 1차: 로컬 books에서 시도(빠른 표시)
   initStudy(bookId, 'page', pageNum);
-  // 큐가 비었으면 DB에서 fresh 로드 시도 (로컬 books가 누락된 경우 대비)
+  // ⭐ 항상 DB에서 이 Day의 '전체 단어'를 확인해 보강한다.
+  //   (로컬 책이 부분 로드(20/40)·중복 페이지·누락일 때 복습 단어가 들쭉날쭉/안 보이던 문제 방지)
+  try {
+    // 이 book+page 에 해당하는 모든 page_id 수집 (중복 페이지가 있어도 전부 합침)
+    const pgs = await sbFetch(`/rest/v1/voca_pages?book_id=eq.${bookId}&page_num=eq.${encodeURIComponent(String(pageNum))}&select=id`);
+    const pids = (Array.isArray(pgs)?pgs:[]).map(p=>p.id).filter(Boolean);
+    if (pids.length) {
+      const fresh = await sbFetch(`/rest/v1/voca_words?page_id=in.(${pids.join(',')})&order=created_at`);
+      if (Array.isArray(fresh) && fresh.length) {
+        // en 기준 중복 제거(중복 페이지의 겹치는 단어 정리)
+        const seen = new Set(), ws = [];
+        for (const r of fresh) { const k=String(r.en||'').trim().toLowerCase(); if(!k||seen.has(k)) continue; seen.add(k); ws.push({ ..._dbRowToWord(r), pageNum }); }
+        // DB가 로컬보다 많으면(부분 로드였음) DB 전체로 교체 + 로컬 books 도 갱신
+        if (ws.length > (studyState?.queue?.length || 0)) {
+          studyState = { bookId, scope:'page', pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
+          const _bk = findBook(bookId), _pg = _bk ? findPage(_bk, pageNum) : null; if (_pg) _pg.words = ws;
+        }
+      }
+    }
+  } catch(e) { console.warn('복습 단어 fresh 로드 실패:', e); }
+  // 그래도 비었으면(로컬에 책 자체가 없던 경우) 전체 책 재로드 폴백
   if (!studyState || !studyState.queue || studyState.queue.length === 0) {
     try {
       toast(userNativeLang==='ko' ? '단어 불러오는 중...' : 'Loading words...');
