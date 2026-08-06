@@ -647,6 +647,48 @@ const KAKAO_JS_KEY = '3dd23d57fa02271fab74897b38ecfeff';
 const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 OFF (true로 바꾸면 복구)
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
+
+// ════════════════════════════════════════════════════════════════
+// 에러/실패 로깅 — 조용한 실패를 눈에 보이게 (voca_errors 테이블로 전송)
+// 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
+// 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
+// ════════════════════════════════════════════════════════════════
+const APP_VERSION = 'v37';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
+let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
+function logError(kind, context, message, detail){
+  try {
+    if (_errCount >= 60) return;
+    const sig = (kind||'') + '|' + (context||'') + '|' + String(message||'').slice(0,120);
+    if (_errSeen.has(sig)) return;
+    _errSeen.add(sig); _errCount++;
+    let _org = null; try { _org = (typeof userOrgId !== 'undefined' ? userOrgId : null) || null; } catch(e){}
+    const body = {
+      user_id: (currentUser && currentUser.id) || null,
+      user_email: (currentUser && currentUser.email) || null,
+      org_id: _org,
+      kind: kind || 'custom',
+      context: context || null,
+      message: String(message == null ? '' : message).slice(0, 500),
+      detail: detail || null,
+      url: (typeof location !== 'undefined' ? location.href : null),
+      ua: (typeof navigator !== 'undefined' ? navigator.userAgent : null),
+      app_version: APP_VERSION
+    };
+    fetch(SB_URL + '/rest/v1/voca_errors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY,
+                 'Authorization': 'Bearer ' + (_authToken || SB_KEY), 'Prefer': 'return=minimal' },
+      body: JSON.stringify(body), keepalive: true
+    }).catch(()=>{});
+  } catch(e) { /* 로깅 실패는 무시 */ }
+}
+window.addEventListener('error', (e) => {
+  try { logError('js_error', 'window', e.message, { file: e.filename, line: e.lineno, col: e.colno, stack: ((e.error && e.error.stack) || '').slice(0,600) }); } catch(_){}
+});
+window.addEventListener('unhandledrejection', (e) => {
+  try { const r = e.reason; logError('unhandled_rejection', 'promise', (r && (r.message || r)) || 'unknown', { stack: ((r && r.stack) || '').slice(0,600) }); } catch(_){}
+});
 let userPlan = 'free';      // 'free' or 'premium'
 let userStripeId = '';      // Stripe 고객 ID (결제한 사람만 있음)
 let userScanCount = 0;      // 이번 달 스캔 횟수
@@ -6528,7 +6570,7 @@ async function saveStats(bookId, total, correct, pageNum) {
   const body = { user_id: currentUser.id, book_id: bookId, total, correct };
   if (pageNum != null) body.page_num = String(pageNum);
   const res = await authPost('/rest/v1/voca_stats', body);
-  if (!res || !res.ok) _enqueueWrite({ type:'stats', book_id:bookId, page_num:pageNum!=null?String(pageNum):null, body });
+  if (!res || !res.ok) { logError('write_fail','saveStats',(res&&res.status)||'network',{ bookId, pageNum, rate }); _enqueueWrite({ type:'stats', book_id:bookId, page_num:pageNum!=null?String(pageNum):null, body }); }
 }
 
 // 일별 활동 로그: 첫 암기('study') / 복습 완료('review') 한 줄 기록. (관리자가 학생별 일별 활동 확인용)
@@ -6538,7 +6580,7 @@ async function logActivity(bookId, pageNum, kind, words, step){
   const body = { user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 };
   if (step!=null) body.step = step;   // 복습이면 회차(1~6)
   const res = await authPost('/rest/v1/voca_activity', body, 'return=minimal');
-  if (!res || !res.ok) _enqueueWrite({ type:'activity', book_id:bookId, page_num:body.page_num, body });
+  if (!res || !res.ok) { logError('write_fail','logActivity',(res&&res.status)||'network',{ bookId, pageNum, kind }); _enqueueWrite({ type:'activity', book_id:bookId, page_num:body.page_num, body }); }
 }
 
 // Day별 테스트 베스트 점수(%) 캐시: key = bookId|pageNum
@@ -6572,6 +6614,7 @@ async function saveReviewSchedule(bookId, pageNum) {
     if (existing == null) {
       // 확인 실패(토큰 만료/네트워크) → 진도 유실 막기 위해 로컬 표시 + 큐 등록(전송 시 존재확인 후 insert).
       // 이 기기 로컬에도 학습 기록이 없으면 '처음 학습'일 가능성이 높으므로 점수 지급 대상(true).
+      logError('load_fail','saveReviewSchedule.check','existing check failed',{ bookId, pageNum });
       const _localNew = !(_lsGetObj(_LS_STUDIED)[bookId + '|' + pageNum]);
       _markLocalStudied(bookId, pageNum, _words0);
       const nowF=new Date(), midF=(n)=>{const d=new Date(nowF);d.setDate(d.getDate()+n);d.setHours(0,0,0,0);return d.toISOString();};
@@ -6608,6 +6651,7 @@ async function saveReviewSchedule(bookId, pageNum) {
       // 저장이 일시적으로 실패(토큰·네트워크) → 재전송 큐에 넣어 나중에 자동 동기화.
       // 단, 위에서 existing 이 비어있음을 확인했으니 '새 학습'인 건 확실 → 첫 암기 점수는
       // 지급 대상(true)으로 본다. (일시 오류로 새 단어 점수를 놓치지 않게)
+      logError('write_fail','saveReviewSchedule.insert',(res&&res.status)||'network',{ bookId, pageNum });
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:reviewBody });
       _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
       return true;
@@ -6895,7 +6939,7 @@ async function addReviewScore(score) {
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken, 'Content-Type': 'application/json' },
       body: JSON.stringify({ perfect_reviews: current + score, last_scored_at: new Date().toISOString() })
     });
-  } catch(e) { console.error('[복습 점수 저장 실패]', e); }
+  } catch(e) { console.error('[복습 점수 저장 실패]', e); logError('write_fail','addReviewScore', e && e.message, { score }); }
 }
 
 async function updateReviewStep(review) {
@@ -7101,6 +7145,7 @@ async function renderReviewPage(root, dock) {
     const el = document.getElementById('review-list');
     // 인증 실패(토큰 만료 등) → 빈 목록으로 오인하지 않게 재시도 안내
     if (reviews == null || !Array.isArray(reviews)) {
+      logError('load_fail','renderReviewPage','review list load failed', null);
       el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${userNativeLang==='ko'?'불러오지 못했어요<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>'}</div>`;
       return;
     }
@@ -7264,6 +7309,7 @@ async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDa
     } catch(e) { console.warn('복습 단어 재로드 실패:', e); }
   }
   if (!studyState || !studyState.queue || studyState.queue.length === 0) {
+    logError('load_fail','startSingleReview','review words empty',{ bookId, pageNum, reviewId });
     toast(userNativeLang==='ko'
       ? '⚠️ 단어를 불러올 수 없어요. 책장에서 책을 열어 확인 후 다시 시도해주세요'
       : '⚠️ Could not load words. Please open the book in the bookshelf to verify, then retry', 5000);
