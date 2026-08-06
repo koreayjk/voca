@@ -33,6 +33,11 @@ drop policy if exists errors_insert_any on public.voca_errors;
 create policy errors_insert_any on public.voca_errors
   for insert with check (true);
 
+-- 관리자(koreayjk@gmail.com)만 앱 안 '상태' 대시보드에서 읽기 가능
+drop policy if exists errors_admin_read on public.voca_errors;
+create policy errors_admin_read on public.voca_errors
+  for select using ((auth.jwt() ->> 'email') = 'koreayjk@gmail.com');
+
 -- (선택) 30일 지난 로그 자동 정리 — pg_cron 있으면 매일 새벽 실행
 do $$
 begin

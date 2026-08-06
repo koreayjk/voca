@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v37';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v38';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -4813,6 +4813,7 @@ function buildDockBottom() {
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
+    + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${ko?'상태':'Health'}</button>` : '')
     + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
     + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${ko?'알림':'Notices'}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
     + `<button class="dock-mini" onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')">${ko?'📖 앱 소개':'📖 About'}</button>`
@@ -4821,6 +4822,95 @@ function buildDockBottom() {
         ? `<button class="dock-mini dock-mini--accent" onclick="goOrgAdmin()">${userOrgRole==='owner'?(ko?'🏫 단체 관리':'🏫 Org Admin'):(ko?'🏫 단체 만들기':'🏫 Create Org')}</button>`
         : '')
     + `</div>`;
+}
+
+// ════════════════════════════════════════════════════════════════
+// 🩺 관리자 상태 대시보드 — SQL 없이 앱에서 에러·정합성 이상을 한눈에.
+// 각 항목의 [복사] 버튼 → 클로드에게 붙여넣어 '이거 고쳐줘' 하면 바로 수정.
+// ════════════════════════════════════════════════════════════════
+function _healthClose(){ const el=document.getElementById('health-overlay'); if(el) el.remove(); }
+function copyHealth(b64){
+  try {
+    const txt = decodeURIComponent(escape(atob(b64)));
+    navigator.clipboard.writeText(txt).then(()=>{
+      toast(userNativeLang==='ko'?'📋 복사됐어요 — 클로드에게 붙여넣고 "이거 고쳐줘" 하세요':'Copied — paste to Claude');
+    }).catch(()=>{ toast('복사 실패'); });
+  } catch(e){ toast('복사 실패'); }
+}
+async function showHealthDashboard(){
+  if (!currentUser || currentUser.email !== 'koreayjk@gmail.com') { toast('관리자 전용'); return; }
+  let el = document.getElementById('health-overlay');
+  if (!el) { el = document.createElement('div'); el.id = 'health-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:9999;background:var(--bg-page);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:22px 16px 80px;');
+  el.innerHTML = `<div style="max-width:760px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink-100);">🩺 시스템 상태</div>
+      <button onclick="_healthClose()" style="background:var(--ink-100);color:var(--bg-page);border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;">닫기 ✕</button>
+    </div>
+    <div class="muted" style="font-size:12px;margin-bottom:16px;">최근 48시간 · 이상 있으면 [복사]해서 클로드에게 붙여넣기</div>
+    <div id="health-body"><div style="text-align:center;padding:40px;color:var(--ink-40);">불러오는 중…</div></div>
+  </div>`;
+  const body = el.querySelector('#health-body');
+  try {
+    // 1) 정합성 점검 (RPC)
+    let integ = [];
+    try { const r = await authPost('/rest/v1/rpc/voca_integrity_check', {}); if (r && r.ok) integ = await r.json(); } catch(e){}
+    // 2) 최근 48h 에러
+    const since = new Date(Date.now() - 48*3600*1000).toISOString();
+    const errs = await authGet(`/rest/v1/voca_errors?created_at=gte.${since}&select=kind,context,message,detail,user_email,app_version,created_at&order=created_at.desc&limit=500`);
+    body.innerHTML = _renderHealth(Array.isArray(integ)?integ:[], Array.isArray(errs)?errs:[]);
+  } catch(e){ body.innerHTML = `<div style="padding:30px;text-align:center;color:#c0392b;">불러오기 실패: ${esc(e.message||String(e))}<br><span class="muted" style="font-size:12px;">error-log.sql 의 관리자 읽기 정책이 적용됐는지 확인하세요</span></div>`; }
+}
+function _renderHealth(integ, errs){
+  const _b64 = (s)=>{ try { return btoa(unescape(encodeURIComponent(s))); } catch(e){ return ''; } };
+  // ── 정합성 ──
+  const integBad = integ.filter(r=>Number(r.issues)>0);
+  let html = `<div style="font-size:14px;font-weight:800;color:var(--ink-100);margin:4px 0 8px;">📊 데이터 정합성</div>`;
+  if (!integ.length) {
+    html += `<div class="muted" style="font-size:12px;padding:10px 0;">점검 함수를 못 불러왔어요 (integrity-checks.sql 실행 필요)</div>`;
+  } else if (!integBad.length) {
+    html += `<div style="background:rgba(39,174,96,0.08);border:1px solid #27ae60;border-radius:12px;padding:12px 14px;font-size:13px;color:#1c7c3c;font-weight:700;">✅ 이상 없음 (전 항목 0)</div>`;
+  } else {
+    html += integBad.map(r=>{
+      const sev = r.severity==='high'?'#c0392b':r.severity==='medium'?'#e67e22':'#8a8a8a';
+      const copy = _b64(`[IMVOCA 정합성 이상]\n항목: ${r.check_name}\n건수: ${r.issues}\n심각도: ${r.severity}\n설명: ${r.note}\n→ 이거 고쳐줘(정리 SQL 만들어줘)`);
+      return `<div style="display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-left:4px solid ${sev};border-radius:12px;padding:11px 13px;margin-bottom:8px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${esc(r.check_name)} <span style="color:${sev};">· ${r.issues}건</span></div>
+          <div class="muted" style="font-size:11px;margin-top:2px;">${esc(r.note)}</div>
+        </div>
+        <button onclick="copyHealth('${copy}')" style="flex-shrink:0;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--ink-100);cursor:pointer;">복사</button>
+      </div>`;
+    }).join('');
+  }
+  // ── 에러 (kind|context 로 묶기) ──
+  html += `<div style="font-size:14px;font-weight:800;color:var(--ink-100);margin:20px 0 8px;">⚠️ 최근 에러 (48h)</div>`;
+  const groups = {};
+  errs.forEach(e=>{
+    const key = (e.kind||'')+'|'+(e.context||'');
+    const g = groups[key] || (groups[key] = { kind:e.kind, context:e.context, count:0, users:new Set(), last:e.created_at, msg:e.message, detail:e.detail, ver:e.app_version });
+    g.count++; if (e.user_email) g.users.add(e.user_email);
+    if (e.created_at > g.last) g.last = e.created_at;
+  });
+  const arr = Object.values(groups).sort((a,b)=>b.count-a.count);
+  if (!arr.length) {
+    html += `<div style="background:rgba(39,174,96,0.08);border:1px solid #27ae60;border-radius:12px;padding:12px 14px;font-size:13px;color:#1c7c3c;font-weight:700;">✅ 최근 48시간 에러 없음</div>`;
+  } else {
+    html += arr.map(g=>{
+      const sev = g.kind==='write_fail'||g.kind==='js_error'?'#c0392b':'#e67e22';
+      const detailStr = g.detail ? JSON.stringify(g.detail) : '';
+      const copy = _b64(`[IMVOCA 에러 리포트]\n종류: ${g.kind}\n위치: ${g.context}\n건수: ${g.count} (최근 48h)\n영향 사용자: ${g.users.size}명\n앱버전: ${g.ver||''}\n메시지: ${g.msg||''}\n예시 detail: ${detailStr}\n마지막: ${g.last}\n→ 이거 고쳐줘`);
+      return `<div style="display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-left:4px solid ${sev};border-radius:12px;padding:11px 13px;margin-bottom:8px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${esc(g.context||g.kind)} <span style="color:${sev};">· ${g.count}건</span></div>
+          <div class="muted" style="font-size:11px;margin-top:2px;">${esc(g.kind)} · 👤${g.users.size} · ${esc(String(g.msg||'').slice(0,80))}</div>
+          ${detailStr?`<div class="muted" style="font-size:10px;margin-top:3px;color:var(--ink-40);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(detailStr.slice(0,120))}</div>`:''}
+        </div>
+        <button onclick="copyHealth('${copy}')" style="flex-shrink:0;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--ink-100);cursor:pointer;">복사</button>
+      </div>`;
+    }).join('');
+  }
+  return html;
 }
 
 function render() {
