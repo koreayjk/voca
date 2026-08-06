@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v38';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v39';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -6104,26 +6104,55 @@ function reportSectionHTML(a, ai){
     ${students.length?rows:`<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'대상 학생이 없어요':'No students'}</div>`}
   </div>`;
 }
-function shareParentCard(ai, si){
+async function shareParentCard(ai, si){
   const ko = userNativeLang==='ko';
   const a = (window._lastReport||[])[ai]; if(!a) return;
   const s = (a.students||[])[si]; if(!s) return;
+  const sid = s.student_id;
   const orgName = (userOrg && userOrg.name) ? userOrg.name : 'IM VOCA';
   const title = orgName + ' ' + (ko?'학습 리포트':'Learning Report');
-  const body = [];
-  body.push((s.name||'')+(ko?'님의 단어 학습':"'s vocabulary study"));
-  body.push('• '+(ko?'과제':'Assignment')+': '+(a.title||''));
-  if (!s.exists){
-    body.push('• '+(ko?'아직 학습을 시작하지 않았어요. 첫 페이지부터 가볍게 함께 시작해볼까요?':'Not started yet — let us begin with the first page!'));
-  } else if (s.completed){
-    body.push('• '+(ko?'복습을 모두 완주했어요! 망각곡선을 끝까지 따라왔습니다 🎉':'Completed all reviews! 🎉'));
-  } else {
-    body.push('• '+(ko?('현재 '+_reviewStageLabel(s)+' — 망각곡선을 잘 따라오고 있어요!'):('Currently '+_reviewStageLabel(s)+' — following the curve well!')));
-    body.push('• '+(ko?('제때 복습: '+(s.onTime?'잘 지키고 있어요':'조금 늦었지만 따라오고 있어요')):('On-time: '+(s.onTime?'great':'a bit late but catching up'))));
-    if (s.nextReviewDate){ const d=String(s.nextReviewDate).slice(0,10); body.push('• '+(ko?'다음 복습 예정':'Next review')+': '+d); }
-  }
-  body.push(ko?'꾸준함이 실력이 됩니다 💪':'Consistency builds mastery 💪');
-  const bodyText = body.join('\n');
+  toast(ko?'리포트 준비 중…':'Preparing…');
+
+  // 오늘(KST) 기준 날짜
+  const kstToday = new Date(Date.now() + 9*3600*1000).toISOString().slice(0,10);
+  const _p = kstToday.split('-'); const dLabel = ko ? `${+_p[1]}월 ${+_p[2]}일` : `${+_p[1]}/${+_p[2]}`;
+
+  // 오늘 활동(새 단어/복습)만 REST로 로드 — 단체 원장은 voca_activity 읽기 정책 있음(검증됨)
+  let acts = [];
+  try { acts = (sid ? await sbFetch(`/rest/v1/voca_activity?user_id=eq.${sid}&day=eq.${kstToday}&select=kind,book_id,page_num`) : []) || []; } catch(e){}
+  if (!Array.isArray(acts)) acts = [];
+
+  // 책 제목 매핑 + '책별로 Day 묶기' (예: "수능 기본 Day1, Day2")
+  const btitle = (bid)=> (findBook(bid) && findBook(bid).title) || a.title || (ko?'단어장':'Wordbook');
+  const groupBook = (kind)=>{
+    const m = {};
+    acts.filter(x=>x.kind===kind).forEach(x=>{ const t=btitle(x.book_id); (m[t] = m[t] || new Set()).add(String(x.page_num||'')); });
+    return Object.entries(m).map(([t,set])=>`${t} ${[...set].join(', ')}`);
+  };
+  const studyG = groupBook('study');
+  const reviewG = groupBook('review');
+
+  // 밀린 복습 = 이 학생의 배정 과제 중 '다음 복습 예정일'이 오늘보다 이전인 것 (org-report 데이터=서버 권위).
+  //   (다른 학생 voca_review 를 REST로 읽으면 RLS로 빈 값이 올 수 있어, 신뢰 가능한 리포트 데이터로 계산)
+  let overdue = 0;
+  (window._lastReport || []).forEach(asg=>{
+    (asg.students || []).forEach(st=>{
+      if (st.student_id !== sid) return;
+      if (st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++;
+    });
+  });
+
+  const lines = [];
+  lines.push(`${s.name || (ko?'학생':'Student')} ${ko?'학습 리포트':'Report'} · ${dLabel}`);
+  lines.push('');
+  lines.push(`📚 ${ko?'오늘 새 단어':'New today'}: ${studyG.length ? studyG.join(' / ') : (ko?'아직 기록 없음':'none yet')}`);
+  lines.push(`🔁 ${ko?'오늘 복습':'Reviewed today'}: ${reviewG.length ? reviewG.join(' / ') : (ko?'아직 기록 없음':'none yet')}`);
+  lines.push(`⏰ ${ko?'밀린 복습':'Overdue'}: ${overdue>0 ? `${overdue}${ko?'개 — 오늘 꼭 챙겨주세요 🙏':' due 🙏'}` : (ko?'없어요 👍':'none 👍')}`);
+  lines.push('');
+  lines.push((studyG.length||reviewG.length)
+    ? (ko?'꾸준함이 실력이 됩니다 💪':'Consistency builds mastery 💪')
+    : (ko?'오늘 10분이면 충분해요. 함께 챙겨주세요 🙏':'Just 10 minutes today 🙏'));
+  const bodyText = lines.join('\n');
   // 미리보기·편집 모달 → 확인/수정 후 카카오톡 전송
   const ov = document.createElement('div');
   ov.id = 'pcard-overlay';
