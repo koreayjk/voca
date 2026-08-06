@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v39';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v40';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1974,7 +1974,8 @@ async function openStudentDetail(id){
         <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;flex-shrink:0;">✕</button>
       </div>
       <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
-      ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
+      ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:10px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
+      ${orgIsAdmin()?`<button onclick="shareParentCard('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:#FEE500;color:#191600;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📤 ${ko?'학부모에게 학습 리포트 보내기':'Send report to parent'}</button>`:''}
       ${assignedHtml}
       ${activityHtml}
       ${list.length?`<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:14px 2px 8px;">📖 ${ko?'개인 단어장':'Personal books'} (${list.length})</div>`:''}
@@ -6051,6 +6052,7 @@ function _studentViewHTML(studs){
           ${s.late>0?`<span style="font-size:10.5px;font-weight:700;color:#c0392b;background:#fdecea;border-radius:99px;padding:2px 8px;">⚠️ ${ko?`밀림 ${s.late}`:`${s.late} late`}</span>`:''}
         </div>
       </div>
+      <button onclick="event.stopPropagation();shareParentCard('${jsq(s.id)}','${jsq(s.name||'')}')" title="${ko?'학부모에게 보내기':'Send to parent'}" style="flex-shrink:0;background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--ink-60);">📤</button>
       <div style="font-size:11px;color:var(--ink-40);flex-shrink:0;white-space:nowrap;">${s.started}/${s.assigned} ›</div>
     </div>`).join('');
 }
@@ -6095,7 +6097,7 @@ function reportSectionHTML(a, ai){
       <div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name)}</div>
       <span style="font-size:11px;font-weight:700;color:${stageColor};background:${stageBg};border-radius:99px;padding:3px 9px;white-space:nowrap;">${esc(_reviewStageLabel(s))}</span>
       <span style="font-size:11px;color:var(--ink-60);width:60px;text-align:center;flex-shrink:0;">${fidelity}</span>
-      <button onclick="shareParentCard(${ai},${si})" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);white-space:nowrap;flex-shrink:0;">📤 ${ko?'카드':'Card'}</button>
+      <button onclick="shareParentCard('${jsq(s.student_id)}','${jsq(s.name||'')}')" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--ink-60);font-family:var(--font-body);white-space:nowrap;flex-shrink:0;">📤 ${ko?'카드':'Card'}</button>
     </div>`;
   }).join('');
   return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:14px 16px;margin-bottom:14px;">
@@ -6104,11 +6106,16 @@ function reportSectionHTML(a, ai){
     ${students.length?rows:`<div class="muted" style="font-size:12px;padding:8px 0;">${ko?'대상 학생이 없어요':'No students'}</div>`}
   </div>`;
 }
-async function shareParentCard(ai, si){
+async function shareParentCard(studentId, studentName){
   const ko = userNativeLang==='ko';
-  const a = (window._lastReport||[])[ai]; if(!a) return;
-  const s = (a.students||[])[si]; if(!s) return;
-  const sid = s.student_id;
+  const sid = studentId;
+  if (!sid) return;
+  // 이름: 인자 우선, 없으면 리포트에서 조회
+  let sName = studentName || '';
+  if (!sName) {
+    (window._lastReport||[]).some(asg=>(asg.students||[]).some(st=>{ if(st.student_id===sid){ sName=st.name||''; return true; } return false; }));
+  }
+  const s = { name: sName };
   const orgName = (userOrg && userOrg.name) ? userOrg.name : 'IM VOCA';
   const title = orgName + ' ' + (ko?'학습 리포트':'Learning Report');
   toast(ko?'리포트 준비 중…':'Preparing…');
@@ -6123,7 +6130,7 @@ async function shareParentCard(ai, si){
   if (!Array.isArray(acts)) acts = [];
 
   // 책 제목 매핑 + '책별로 Day 묶기' (예: "수능 기본 Day1, Day2")
-  const btitle = (bid)=> (findBook(bid) && findBook(bid).title) || a.title || (ko?'단어장':'Wordbook');
+  const btitle = (bid)=> (findBook(bid) && findBook(bid).title) || (ko?'단어장':'Wordbook');
   const groupBook = (kind)=>{
     const m = {};
     acts.filter(x=>x.kind===kind).forEach(x=>{ const t=btitle(x.book_id); (m[t] = m[t] || new Set()).add(String(x.page_num||'')); });
@@ -6132,15 +6139,19 @@ async function shareParentCard(ai, si){
   const studyG = groupBook('study');
   const reviewG = groupBook('review');
 
-  // 밀린 복습 = 이 학생의 배정 과제 중 '다음 복습 예정일'이 오늘보다 이전인 것 (org-report 데이터=서버 권위).
-  //   (다른 학생 voca_review 를 REST로 읽으면 RLS로 빈 값이 올 수 있어, 신뢰 가능한 리포트 데이터로 계산)
+  // 밀린 복습 = 이 학생의 배정 과제 중 '다음 복습 예정일'이 오늘보다 이전인 것 (org-report=서버 권위).
+  //   (다른 학생 voca_review 를 REST로 읽으면 RLS로 빈 값이 올 수 있어 신뢰 가능한 리포트 데이터로 계산)
+  //   리포트 탭에서 열면 _lastReport 사용, 대시보드 등에서 열어 없으면 이 학생만 org-report 재조회.
+  let reportRows = [];
+  (window._lastReport || []).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push(st); }));
+  if (!reportRows.length && userOrg) {
+    try {
+      const rr = await authPost('/functions/v1/org-report', { org_id: userOrg.id, student_id: sid });
+      if (rr && rr.ok) { const rd = await rr.json().catch(()=>({})); (rd.report||[]).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push(st); })); }
+    } catch(e){}
+  }
   let overdue = 0;
-  (window._lastReport || []).forEach(asg=>{
-    (asg.students || []).forEach(st=>{
-      if (st.student_id !== sid) return;
-      if (st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++;
-    });
-  });
+  reportRows.forEach(st=>{ if(st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++; });
 
   const lines = [];
   lines.push(`${s.name || (ko?'학생':'Student')} ${ko?'학습 리포트':'Report'} · ${dLabel}`);
