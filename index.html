@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v47';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v48';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1262,7 +1262,8 @@ const EVENT_CFG = {
   deadline:    '2026-08-30',        // 마감
   announce:    '2026-08-31',        // 결과 발표
   rewardStart: '2026-09-01',        // 1년 무료 시작
-  email:       'imamerica2414@gmail.com'
+  price:       '$39.99',            // 1년 이용권 정가 (무료 가치 강조용)
+  priceKo:     '5만원'              // 원화 대략 표기 (참고용)
 };
 const _EVENT_ADMINS = ['koreayjk@gmail.com','imamerica2414@gmail.com'];
 function _isEventAdmin(){ return !!(currentUser && _EVENT_ADMINS.includes(String(currentUser.email||'').toLowerCase())); }
@@ -1331,8 +1332,12 @@ function showEvent(){
      <div style="background:linear-gradient(160deg,#5a4bd6,#2a1f6b);color:#fff;padding:24px 20px 26px;position:relative;">
        <button onclick="closeEvent()" style="position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;width:34px;height:34px;font-size:17px;cursor:pointer;">✕</button>
        <div style="font-size:12px;font-weight:800;letter-spacing:.12em;opacity:.92;">🎉 ${ko?'사용후기 이벤트':'REVIEW EVENT'}</div>
-       <div style="font-size:25px;font-weight:900;line-height:1.28;margin-top:9px;">${ko?'후기 남기고<br><span style="color:#FFC94D;">1년 무료</span> 받자!':'Leave a review,<br>win <span style="color:#FFC94D;">1 year free</span>'}</div>
-       <div style="font-size:13.5px;opacity:.92;margin-top:11px;line-height:1.65;">${ko?'앱 사용 후기와 짧은 영상을 남겨주세요.<br>가장 좋은 후기 <b>1·2·3등</b>께 <b style="color:#FFC94D;">1년 무료 이용권</b>을 드려요!':'Leave a review & short video. Top 1·2·3 win a <b style="color:#FFC94D;">1-year free pass</b>!'}</div>
+       <div style="font-size:25px;font-weight:900;line-height:1.28;margin-top:9px;">${ko?'후기 + 영상 남기고<br><span style="color:#FFC94D;">1년 무료</span> 받자!':'Post a review + video,<br>win <span style="color:#FFC94D;">1 year free</span>'}</div>
+       <div style="display:inline-flex;align-items:center;gap:9px;margin-top:14px;background:rgba(255,255,255,.13);border:1px solid rgba(255,201,77,.55);border-radius:12px;padding:9px 14px;">
+         <span style="font-size:13px;opacity:.8;text-decoration:line-through;">${d.price}${ko?'/년':'/yr'}</span>
+         <span style="font-size:16px;font-weight:900;color:#FFC94D;">${ko?'→ 0원 (1년 무료!)':'→ FREE for 1 year'}</span>
+       </div>
+       <div style="font-size:13.5px;opacity:.92;margin-top:13px;line-height:1.65;">${ko?`앱 사용 후기 <b>+ 후기 영상</b>을 함께 만들어 올려주세요.<br>가장 좋은 <b>1·2·3등</b>께 <b style="color:#FFC94D;">1년 이용권(${d.price} 상당)</b>을 무료로 드려요!`:`Post an app review <b>+ a review video</b>. Top <b>1·2·3</b> get a <b style="color:#FFC94D;">1-year pass (${d.price} value)</b> free!`}</div>
      </div>
      <div style="display:flex;gap:8px;padding:16px 16px 2px;">
        ${tl('📅',ko?'마감':'Deadline',_evFmt(d.deadline))}
@@ -1340,16 +1345,19 @@ function showEvent(){
        ${tl('🎁',ko?'무료 시작':'Free from',_evFmt(d.rewardStart))}
      </div>
      <div style="padding:10px 16px 4px;">
-       <div style="font-size:13px;font-weight:800;color:var(--ink-100);margin:8px 2px 10px;">${ko?'참여 방법':'How to join'}</div>
-       ${step(1,ko?'앱 사용 후기 작성':'Write a review',ko?'아래에 솔직한 후기를 남겨주세요.':'Share your honest experience below.')}
-       ${step(2,ko?'후기 영상 업로드':'Upload a video',ko?'유튜브·인스타·틱톡에 짧은 후기 영상을 올리고, 링크를 붙여넣으면 자동으로 재생돼요.':'Post a short clip on YouTube/Instagram/TikTok and paste the link — it auto-plays.')}
-       ${step(3,ko?'이메일로도 제출 (권장)':'Email us too (recommended)',`${ko?'확실하게 하려면 ':''}${d.email}${ko?' 로 링크를 보내주세요.':''}`)}
+       <div style="font-size:13px;font-weight:800;color:var(--ink-100);margin:8px 2px 10px;">${ko?'참여 방법 (2가지 다 필요해요)':'How to join (both required)'}</div>
+       ${step(1,ko?'앱 사용 후기 작성':'Write a review',ko?'아래 칸에 솔직한 후기를 적어주세요.':'Share your honest experience below.')}
+       ${step(2,ko?'후기 영상 제작 · 업로드':'Make & upload a video',ko?'짧은 후기 영상을 직접 만들어 유튜브·인스타·틱톡에 올리고, 그 링크를 아래에 붙여넣으면 자동으로 재생돼요.':'Film a short review, upload to YouTube/Instagram/TikTok, and paste the link below — it auto-plays.')}
+       <div style="display:flex;gap:9px;align-items:center;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;margin:4px 0 2px;">
+         <span style="font-size:16px;">✅</span>
+         <span style="font-size:12.5px;color:var(--ink-100);line-height:1.5;font-weight:600;">${ko?`후기 글 <b>+</b> 영상 링크를 <b>여기 페이지에 등록</b>하면 참여 완료! (별도 이메일 제출 없음)`:`Post your review <b>+</b> video link <b>here</b> to enter — no email needed.`}</span>
+       </div>
      </div>
      <div style="padding:6px 16px 4px;">
        ${canPost ? `
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:14px;">
           <textarea id="rv-body" rows="3" placeholder="${ko?'앱을 써보니 어떠셨나요? 솔직한 후기를 남겨주세요 😊':'How was IM VOCA for you?'}" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:11px 12px;font-size:14px;font-family:var(--font-body);resize:vertical;background:var(--bg-page);color:var(--ink-100);"></textarea>
-          <input id="rv-link" type="url" inputmode="url" placeholder="${ko?'영상 링크 (유튜브/인스타/틱톡) — 선택':'Video link — optional'}" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:11px 12px;font-size:14px;margin-top:8px;font-family:var(--font-body);background:var(--bg-page);color:var(--ink-100);">
+          <input id="rv-link" type="url" inputmode="url" placeholder="${ko?'후기 영상 링크 (유튜브/인스타/틱톡) — 필수':'Review video link — required'}" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:11px 12px;font-size:14px;margin-top:8px;font-family:var(--font-body);background:var(--bg-page);color:var(--ink-100);">
           <button id="rv-submit" onclick="submitReview()" style="width:100%;margin-top:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;">${ko?'후기 등록하기':'Submit review'}</button>
         </div>` : `
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:18px;text-align:center;font-size:13px;color:var(--ink-60);">${ko?'로그인 후 참여할 수 있어요':'Please log in to join'}</div>`}
@@ -1399,8 +1407,9 @@ async function submitReview(){
   const bodyEl=document.getElementById('rv-body'), linkEl=document.getElementById('rv-link');
   const body=(bodyEl?.value||'').trim();
   const link=(linkEl?.value||'').trim();
-  if(!body && !link){ toast(ko?'후기 내용이나 영상 링크를 입력해주세요':'Add a review or a video link'); return; }
-  if(link && !/^https?:\/\//i.test(link)){ toast(ko?'링크는 http로 시작하는 주소여야 해요':'Link must start with http'); return; }
+  if(!body){ toast(ko?'후기 내용을 적어주세요 ✍️':'Please write a review'); bodyEl?.focus(); return; }
+  if(!link){ toast(ko?'후기 영상 링크가 필요해요 — 영상도 함께 만들어 올려주세요 🎬':'A review video link is required'); linkEl?.focus(); return; }
+  if(!/^https?:\/\//i.test(link)){ toast(ko?'영상 링크는 http로 시작하는 주소여야 해요':'Link must start with http'); linkEl?.focus(); return; }
   const btn=document.getElementById('rv-submit'); if(btn){ btn.disabled=true; btn.textContent=ko?'등록 중…':'Submitting…'; }
   const row={ user_id: currentUser.id, user_name: userName||(ko?'익명':'Anonymous'), user_email: currentUser.email||null, org_id:(typeof userOrgId!=='undefined'?userOrgId:null)||null, body: body||null, link: link||null };
   const res = await authPost('/rest/v1/voca_reviews', row, 'return=representation');
@@ -1446,15 +1455,16 @@ async function postEventNotice(btn){
   if(!_isEventAdmin()){ toast(ko?'관리자 전용':'Admin only'); return; }
   if(btn){ btn.disabled=true; btn.textContent=ko?'올리는 중…':'Posting…'; }
   const d = EVENT_CFG;
-  const title = '🎉 후기 이벤트 — 1년 무료 이용권 (~'+_evFmt(d.deadline)+')';
+  const title = '🎉 후기 이벤트 — 1년 무료 이용권('+d.price+' 상당) (~'+_evFmt(d.deadline)+')';
   const body = [
-    '앱 사용 후기와 짧은 영상을 남겨주세요!',
-    '가장 좋은 후기 1·2·3등께 1년 무료 이용권을 드립니다 🎁',
+    '앱 사용 후기와 후기 영상을 남기고 1년 무료 이용권을 받으세요!',
+    '1년 이용권 정가 '+d.price+' 를 우수 참여자에게 0원으로 드립니다 🎁',
+    '가장 좋은 후기 1·2·3등 선정.',
     '',
-    '참여 방법',
+    '참여 방법 (2가지 다 필요)',
     '1) 앱 사용 후기 작성',
-    '2) 유튜브·인스타·틱톡에 후기 영상 업로드',
-    '3) 링크를 이벤트 탭에 붙여넣기 (또는 '+d.email+' 로 전송)',
+    '2) 후기 영상을 직접 만들어 유튜브·인스타·틱톡에 업로드',
+    '→ 후기 글과 영상 링크를 앱 [🎉 이벤트] 페이지에 등록하면 참여 완료!',
     '',
     '📅 마감: '+_evFmt(d.deadline),
     '🏆 발표: '+_evFmt(d.announce),
@@ -5194,8 +5204,8 @@ function render() {
           <div onclick="showEvent()" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#3a2b9e,#5a4bd6);color:#fff;border-radius:14px;padding:13px 15px;margin-top:16px;margin-bottom:14px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(90,75,214,0.9);">
             <div style="font-size:26px;">🎉</div>
             <div style="flex:1;min-width:0;">
-              <div style="font-size:14px;font-weight:800;">${userNativeLang==='ko'?'후기 이벤트 · 1년 무료 이용권':'Review Event · 1 Year Free'}</div>
-              <div style="font-size:11.5px;opacity:0.92;margin-top:1px;">${userNativeLang==='ko'?'후기·영상 남기고 1·2·3등에 도전! ~8/30 마감':'Leave a review & video — win 1 year free! ~Aug 30'}</div>
+              <div style="font-size:14px;font-weight:800;">${userNativeLang==='ko'?'후기 이벤트 · 1년 무료 이용권 ($39.99)':'Review Event · 1 Year Free ($39.99)'}</div>
+              <div style="font-size:11.5px;opacity:0.92;margin-top:1px;">${userNativeLang==='ko'?'후기 + 영상 만들고 1·2·3등에 도전! ~8/30 마감':'Post a review + video — win 1 year free! ~Aug 30'}</div>
             </div>
             <div style="font-size:18px;opacity:0.85;">›</div>
           </div>
