@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v43';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v44';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -6420,31 +6420,18 @@ function sendParentCard(){
   const title = ((document.getElementById('pcard-title')||{}).value || 'IM VOCA').trim();
   const desc = (document.getElementById('pcard-body')||{}).value || '';
   const ov = document.getElementById('pcard-overlay'); if (ov) ov.remove();
-  const link = { mobileWebUrl: 'https://imvoca.app', webUrl: 'https://imvoca.app' };
-  // 1순위: 카카오톡 공유 (feed 템플릿 — 이미지+제목+설명+버튼)
-  if (window.Kakao && KAKAO_JS_KEY) {
-    try { if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY); } catch(e){}
-    try {
-      if (Kakao.isInitialized() && Kakao.Share) {
-        Kakao.Share.sendDefault({
-          objectType: 'feed',
-          content: {
-            title: title,
-            description: desc.slice(0, 190),
-            imageUrl: (userOrg && userOrg.logo_url) ? userOrg.logo_url : 'https://imvoca.app/og-image.png',
-            link: link
-          },
-          buttons: [{ title: ko?'앱에서 보기':'Open app', link: link }]
-        });
-        return;
-      }
-    } catch(e){ /* 폴백 */ }
+  // 부모님껜 '전체 글'로 — 카톡 대화창에 그대로 보이게(잘림/막다른 수신설정 페이지 없음).
+  // 시스템 공유 시트에서 카카오톡을 고르면 일반 텍스트 메시지로 전달됨.
+  const full = (title ? (title + '\n\n') : '') + desc;
+  if (navigator.share){
+    navigator.share({ text: full }).catch(()=>{});
+  } else if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(full)
+      .then(()=>toast(ko?'복사했어요 — 카톡 대화창에 붙여넣기 하세요 📋':'Copied — paste into chat 📋'))
+      .catch(()=>alert(full));
+  } else {
+    alert(full);
   }
-  // 폴백: 시스템 공유 시트 / 클립보드 복사
-  const full = '['+title+'] 📚\n'+desc;
-  if (navigator.share){ navigator.share({ text: full }).catch(()=>{}); }
-  else if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(full).then(()=>toast(ko?'복사했어요 (카톡에 붙여넣기)':'Copied — paste into chat')).catch(()=>alert(full)); }
-  else { alert(full); }
 }
 
 function openEditBook(bookId) {
