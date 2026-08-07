@@ -1,0 +1,266 @@
+<title>IM VOCA 프로모션 카드뉴스</title>
+<style>
+  :root{
+    --ink:#141034;
+    --ink-2:#1F1750;
+    --violet:#6C5CE7;
+    --violet-lite:#9B8CFF;
+    --peri:#B7ADFF;
+    --gold:#FFC24B;
+    --gold-deep:#F5A623;
+    --cream:#F6F3FF;
+    --muted:#B9B2E6;
+    --card-radius:34px;
+    --font: "Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(120% 90% at 50% -10%, #241a5e 0%, #141034 55%, #0d0a26 100%);
+    color:var(--cream);
+    font-family:var(--font);
+    -webkit-font-smoothing:antialiased;
+    padding:40px 18px 72px;
+  }
+  .page-head{
+    max-width:520px;margin:0 auto 30px;text-align:center;
+  }
+  .page-head .klabel{
+    display:inline-block;font-size:12px;letter-spacing:.18em;font-weight:800;
+    color:var(--gold);border:1px solid rgba(255,194,75,.4);
+    padding:7px 14px;border-radius:999px;margin-bottom:14px;
+  }
+  .page-head h1{font-size:22px;margin:.2em 0 .35em;font-weight:800;letter-spacing:-.02em;}
+  .page-head p{font-size:14px;color:var(--muted);line-height:1.6;margin:0;}
+
+  .deck{
+    display:flex;flex-direction:column;gap:26px;align-items:center;
+  }
+  .card{
+    width:100%;max-width:480px;aspect-ratio:4/5;
+    border-radius:var(--card-radius);
+    position:relative;overflow:hidden;
+    padding:44px 40px;
+    display:flex;flex-direction:column;
+    box-shadow:0 24px 60px -24px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  /* shared brand footer */
+  .brand{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;
+    font-size:12.5px;letter-spacing:.02em;
+  }
+  .brand .wm{font-weight:900;letter-spacing:.02em;}
+  .brand .wm b{color:var(--gold);}
+  .brand .pg{opacity:.6;font-variant-numeric:tabular-nums;font-weight:700;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:800;letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .step-badge{
+    width:52px;height:52px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;font-weight:900;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
+    margin-bottom:22px;
+  }
+  h2{font-size:34px;line-height:1.22;font-weight:900;letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance;}
+  .lead{font-size:16.5px;line-height:1.72;color:#E7E2FF;margin:0;font-weight:500;}
+  .lead b{color:#fff;font-weight:800;}
+  .hl{color:var(--gold);font-weight:900;}
+
+  /* ---------- CARD 1 : cover ---------- */
+  .c-cover{
+    background:
+      radial-gradient(90% 70% at 80% 15%, rgba(155,140,255,.5) 0%, transparent 55%),
+      linear-gradient(160deg,#5a4bd6 0%,#3a2b9e 48%,#221862 100%);
+    justify-content:center;text-align:center;align-items:center;
+  }
+  .c-cover .gift{font-size:64px;margin-bottom:8px;filter:drop-shadow(0 10px 22px rgba(0,0,0,.35));}
+  .c-cover .kicker{font-size:13px;letter-spacing:.24em;font-weight:800;color:#EBE6FF;opacity:.9;margin-bottom:14px;}
+  .c-cover .prize{
+    font-size:58px;font-weight:900;letter-spacing:-.03em;line-height:1.02;
+    color:#fff;margin:0 0 6px;
+  }
+  .c-cover .prize .y{
+    display:inline-block;color:#141034;background:var(--gold);
+    padding:2px 16px;border-radius:16px;transform:rotate(-2deg);
+    box-shadow:0 8px 20px rgba(245,166,35,.45);
+  }
+  .c-cover .tag{font-size:16px;color:#E7E2FF;margin-top:18px;font-weight:600;}
+  .c-cover .brand{position:absolute;left:40px;right:40px;bottom:34px;margin-top:0;}
+
+  /* ---------- STEP cards ---------- */
+  .c-step1{background:linear-gradient(155deg,#1c1550 0%,#161138 100%);}
+  .c-step2{background:linear-gradient(155deg,#1c1550 0%,#161138 100%);}
+  .c-step3{background:linear-gradient(155deg,#221a5c 0%,#181140 100%);}
+  .c-step1 .eyebrow,.c-step2 .eyebrow,.c-step3 .eyebrow{color:var(--violet-lite);}
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
+  .chip{
+    font-size:13px;font-weight:700;padding:8px 13px;border-radius:999px;
+    background:rgba(155,140,255,.14);border:1px solid rgba(155,140,255,.28);
+    color:#DAD3FF;
+  }
+  .free-tag{
+    display:inline-block;margin-top:20px;font-size:15px;font-weight:900;
+    color:#141034;background:var(--gold);padding:9px 16px;border-radius:12px;
+  }
+
+  /* ---------- PRIZE card ---------- */
+  .c-prize{
+    background:
+      radial-gradient(80% 60% at 50% 8%, rgba(255,194,75,.34) 0%, transparent 60%),
+      linear-gradient(160deg,#2a1f5f 0%,#171040 100%);
+    text-align:center;align-items:center;justify-content:center;
+    border:1px solid rgba(255,194,75,.22);
+  }
+  .c-prize .trophy{font-size:60px;margin-bottom:14px;}
+  .c-prize .small{font-size:15px;color:var(--peri);font-weight:700;letter-spacing:.02em;margin-bottom:8px;}
+  .c-prize h2{font-size:30px;margin-bottom:12px;}
+  .c-prize .big-prize{
+    font-size:44px;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin:6px 0 4px;
+  }
+  .c-prize .big-prize .y{color:var(--gold);}
+  .c-prize .note{font-size:14.5px;color:var(--muted);margin-top:16px;line-height:1.6;}
+  .c-prize .brand{position:absolute;left:40px;right:40px;bottom:34px;margin-top:0;}
+
+  /* ---------- CTA card ---------- */
+  .c-cta{
+    background:linear-gradient(160deg,#5a4bd6 0%,#332584 55%,#1d1556 100%);
+    justify-content:center;
+  }
+  .c-cta h2{font-size:32px;}
+  .c-cta .region{
+    display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 4px;
+  }
+  .c-cta .region .r{
+    font-size:14px;font-weight:800;padding:9px 15px;border-radius:12px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  }
+  .c-cta .url{
+    margin-top:22px;font-size:20px;font-weight:900;letter-spacing:.02em;color:#fff;
+  }
+  .c-cta .url span{color:var(--gold);}
+  .c-cta .howto{font-size:14.5px;color:#E7E2FF;line-height:1.7;margin-top:10px;}
+
+  /* progress dots */
+  .dots{display:flex;gap:6px;margin-bottom:20px;}
+  .dots i{width:22px;height:5px;border-radius:3px;background:rgba(255,255,255,.16);display:block;}
+  .dots i.on{background:var(--gold);}
+
+  /* load motion */
+  @media (prefers-reduced-motion:no-preference){
+    .card{opacity:0;transform:translateY(16px);animation:rise .6s ease forwards;}
+    .card:nth-child(1){animation-delay:.02s}
+    .card:nth-child(2){animation-delay:.08s}
+    .card:nth-child(3){animation-delay:.14s}
+    .card:nth-child(4){animation-delay:.20s}
+    .card:nth-child(5){animation-delay:.26s}
+    .card:nth-child(6){animation-delay:.32s}
+    @keyframes rise{to{opacity:1;transform:none}}
+  }
+</style>
+
+<div class="page-head">
+  <span class="klabel">CARD NEWS · 6컷</span>
+  <h1>IM VOCA 프로모션 카드뉴스</h1>
+  <p>각 카드를 캡처해서 학생·학부모 단톡방, 인스타에 공유하세요.<br>순서대로 넘기면 하나의 이야기가 됩니다.</p>
+</div>
+
+<div class="deck">
+
+  <!-- 1 · COVER -->
+  <section class="card c-cover">
+    <div class="gift">🎁</div>
+    <div class="kicker">단어 암기 앱 · IM VOCA</div>
+    <div class="prize">우리 학원에서<br><span class="y">1년 무료</span></div>
+    <div class="tag">지금 참여하고, 무료로 끝까지 써보세요</div>
+    <div class="brand">
+      <span class="wm">IM<b>VOCA</b></span>
+      <span class="pg">01 / 06</span>
+    </div>
+  </section>
+
+  <!-- 2 · STEP 1 -->
+  <section class="card c-step1">
+    <div class="dots"><i class="on"></i><i></i><i></i></div>
+    <div class="eyebrow">STEP 1 · 시작</div>
+    <div class="step-badge">1</div>
+    <h2>학원 가입만 하면<br>1개월 무료</h2>
+    <p class="lead">우리 학원에 등록하고 <b>IM VOCA에 가입</b>하면<br>바로 <b>1개월 이용권</b>을 드려요.</p>
+    <span class="free-tag">부담 ZERO · 한 달 무료 체험</span>
+    <div class="brand">
+      <span class="wm">IM<b>VOCA</b></span>
+      <span class="pg">02 / 06</span>
+    </div>
+  </section>
+
+  <!-- 3 · STEP 2 -->
+  <section class="card c-step2">
+    <div class="dots"><i class="on"></i><i class="on"></i><i></i></div>
+    <div class="eyebrow">STEP 2 · 사용</div>
+    <div class="step-badge">2</div>
+    <h2>한 달 써보고<br>솔직한 피드백 남기기</h2>
+    <p class="lead">뭐가 좋았는지, 뭐가 더 있으면 좋겠는지<br>여러분의 <b>한마디가 앱을 키웁니다.</b></p>
+    <div class="chip-row">
+      <span class="chip">👍 좋았던 점</span>
+      <span class="chip">💡 아쉬운 점</span>
+      <span class="chip">📈 성적 변화</span>
+    </div>
+    <div class="brand">
+      <span class="wm">IM<b>VOCA</b></span>
+      <span class="pg">03 / 06</span>
+    </div>
+  </section>
+
+  <!-- 4 · STEP 3 -->
+  <section class="card c-step3">
+    <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    <div class="eyebrow">STEP 3 · 참여</div>
+    <div class="step-badge">3</div>
+    <h2>짧은 후기 영상<br>하나만 찍으면 끝</h2>
+    <p class="lead">"이거 진짜 단어 암기 종결자예요" 처럼<br><b>15초 쇼츠 후기 영상</b> 하나면 참여 완료!</p>
+    <div class="chip-row">
+      <span class="chip">🎬 15초 쇼츠</span>
+      <span class="chip">📱 세로 영상</span>
+      <span class="chip">😊 솔직 후기</span>
+    </div>
+    <div class="brand">
+      <span class="wm">IM<b>VOCA</b></span>
+      <span class="pg">04 / 06</span>
+    </div>
+  </section>
+
+  <!-- 5 · PRIZE -->
+  <section class="card c-prize">
+    <div class="trophy">🏆</div>
+    <div class="small">피드백 · 영상 우수 참여자에게</div>
+    <div class="big-prize"><span class="y">1년 무료 이용권</span></div>
+    <h2>증정합니다</h2>
+    <p class="lead">가장 진심 담긴 피드백과 영상을 남긴<br>학생들을 선정해 <b>1년 내내 무료</b>로!</p>
+    <div class="note">※ 우수 참여작은 IM VOCA 공식 홍보 영상으로도<br>제작될 수 있어요.</div>
+    <div class="brand">
+      <span class="wm">IM<b>VOCA</b></span>
+      <span class="pg">05 / 06</span>
+    </div>
+  </section>
+
+  <!-- 6 · CTA -->
+  <section class="card c-cta">
+    <div class="eyebrow" style="color:#FFDE9B;">NOW OPEN</div>
+    <h2>지금, 우리 학원에서<br>시작하세요</h2>
+    <div class="region">
+      <span class="r">📍 광주</span>
+      <span class="r">📍 청주</span>
+      <span class="r">📍 전 지역</span>
+    </div>
+    <div class="url">imvoca<span>.app</span></div>
+    <div class="howto">참여 방법은 <b>담당 선생님</b>께 문의하세요.<br>단어 암기, 이제 IM VOCA로 끝냅니다.</div>
+    <div class="brand">
+      <span class="wm">IM<b>VOCA</b></span>
+      <span class="pg">06 / 06</span>
+    </div>
+  </section>
+
+</div>
