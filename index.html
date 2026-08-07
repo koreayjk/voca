@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v44';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v45';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1329,7 +1329,7 @@ function showEvent(){
   el.innerHTML = `
    <div style="max-width:560px;margin:0 auto;">
      <div style="background:linear-gradient(160deg,#5a4bd6,#2a1f6b);color:#fff;padding:24px 20px 26px;position:relative;">
-       <button onclick="closeEvent()" style="position:absolute;top:14px;right:16px;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;width:34px;height:34px;font-size:17px;cursor:pointer;">✕</button>
+       <button onclick="closeEvent()" style="position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;width:34px;height:34px;font-size:17px;cursor:pointer;">✕</button>
        <div style="font-size:12px;font-weight:800;letter-spacing:.12em;opacity:.92;">🎉 ${ko?'사용후기 이벤트':'REVIEW EVENT'}</div>
        <div style="font-size:25px;font-weight:900;line-height:1.28;margin-top:9px;">${ko?'후기 남기고<br><span style="color:#FFC94D;">1년 무료</span> 받자!':'Leave a review,<br>win <span style="color:#FFC94D;">1 year free</span>'}</div>
        <div style="font-size:13.5px;opacity:.92;margin-top:11px;line-height:1.65;">${ko?'앱 사용 후기와 짧은 영상을 남겨주세요.<br>가장 좋은 후기 <b>1·2·3등</b>께 <b style="color:#FFC94D;">1년 무료 이용권</b>을 드려요!':'Leave a review & short video. Top 1·2·3 win a <b style="color:#FFC94D;">1-year free pass</b>!'}</div>
