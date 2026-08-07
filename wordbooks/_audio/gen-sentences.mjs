@@ -36,7 +36,7 @@ for (const b of (books||[])) {
       if (!ex) continue;
       const safe = safeAudio(w.en); if (!safe) continue;
       const lang = a._lang === 'es' ? 'es' : 'en';
-      const path = (lang==='es' ? 'es/s/' : 's/') + safe + '~' + sentHash(ex) + '.mp3';
+      const path = (lang==='es' ? 'es/s/' : 's/') + safe + '_' + sentHash(ex) + '.mp3'; // '_' (Supabase 는 '~' 불가)
       if (!jobs.has(path)) jobs.set(path, { text: ex, lang });
     }
   }

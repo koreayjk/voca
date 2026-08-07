@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v41';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v42';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -5379,7 +5379,7 @@ function _audioUrl(w, kind){
     //   파일이 아직 없으면 _playSmart 가 그 예문 텍스트를 TTS로 읽음 → 불일치 원천 차단.
     const ex=_exOf(w); if(!ex) return '';
     const base = (w.analysis._lang==='es') ? (_AUDIO_BASE+'/es/s/') : (_AUDIO_BASE+'/s/');
-    return base + s + '~' + _sentHash(ex) + '.mp3';
+    return base + s + '_' + _sentHash(ex) + '.mp3'; // 구분자 '_' (Supabase 스토리지는 '~' 불가)
   }
   // 단어 발음은 어느 책이든 동일 → 전역 파일 유지
   return (w.analysis._lang==='es') ? (_AUDIO_BASE+'/es/w/'+s+'.mp3') : (_AUDIO_BASE+'/w/'+s+'.mp3');
