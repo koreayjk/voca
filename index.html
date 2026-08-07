@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v46';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v47';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -6408,7 +6408,7 @@ async function shareParentCard(studentId, studentName){
       <textarea id="pcard-body" rows="7" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 13px;font-family:var(--font-body);font-size:13px;line-height:1.6;color:var(--ink-100);box-sizing:border-box;resize:vertical;">${esc(bodyText)}</textarea>
       <div style="display:flex;gap:10px;margin-top:16px;">
         <button class="btn btn-outline" style="flex:1;" onclick="var o=document.getElementById('pcard-overlay');if(o)o.remove()">${ko?'취소':'Cancel'}</button>
-        <button class="btn" style="flex:1;background:#FEE500;color:#191600;border:none;font-weight:700;" onclick="sendParentCard()">${ko?'카카오톡으로 보내기':'Send via KakaoTalk'}</button>
+        <button class="btn" style="flex:1;background:var(--accent);color:#fff;border:none;font-weight:700;" onclick="sendParentCard()">${ko?'보내기':'Send'}</button>
       </div>
     </div>`;
   ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
