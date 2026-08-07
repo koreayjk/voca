@@ -89,6 +89,10 @@
     box-shadow:0 8px 20px rgba(245,166,35,.45);
   }
   .c-cover .tag{font-size:16px;color:#E7E2FF;margin-top:18px;font-weight:600;}
+  .c-cover .deadline{
+    margin-top:16px;font-size:14px;font-weight:900;letter-spacing:.02em;
+    color:#141034;background:var(--gold);padding:8px 16px;border-radius:999px;
+  }
   .c-cover .brand{position:absolute;left:40px;right:40px;bottom:34px;margin-top:0;}
 
   /* ---------- STEP cards ---------- */
@@ -130,19 +134,20 @@
     background:linear-gradient(160deg,#5a4bd6 0%,#332584 55%,#1d1556 100%);
     justify-content:center;
   }
-  .c-cta h2{font-size:32px;}
-  .c-cta .region{
-    display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 4px;
+  .c-cta h2{font-size:30px;}
+  .c-cta .submit-box{
+    margin:20px 0 4px;display:flex;flex-direction:column;gap:12px;
   }
-  .c-cta .region .r{
-    font-size:14px;font-weight:800;padding:9px 15px;border-radius:12px;
+  .c-cta .srow{
+    display:flex;align-items:center;gap:14px;
     background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+    padding:14px 16px;border-radius:16px;font-size:15px;line-height:1.45;
   }
-  .c-cta .url{
-    margin-top:22px;font-size:20px;font-weight:900;letter-spacing:.02em;color:#fff;
-  }
-  .c-cta .url span{color:var(--gold);}
-  .c-cta .howto{font-size:14.5px;color:#E7E2FF;line-height:1.7;margin-top:10px;}
+  .c-cta .srow .ico{font-size:24px;flex:none;}
+  .c-cta .srow b{font-weight:800;font-size:13px;color:#E7E2FF;}
+  .c-cta .srow .hl{font-size:18px;font-weight:900;color:var(--gold);}
+  .c-cta .srow .mail{font-size:16.5px;font-weight:900;color:#fff;letter-spacing:.01em;word-break:break-all;}
+  .c-cta .howto{font-size:14px;color:#E7E2FF;line-height:1.7;margin-top:14px;}
 
   /* progress dots */
   .dots{display:flex;gap:6px;margin-bottom:20px;}
@@ -176,6 +181,7 @@
     <div class="kicker">단어 암기 앱 · IM VOCA</div>
     <div class="prize">우리 학원에서<br><span class="y">1년 무료</span></div>
     <div class="tag">지금 참여하고, 무료로 끝까지 써보세요</div>
+    <div class="deadline">~ 8월 30일 마감</div>
     <div class="brand">
       <span class="wm">IM<b>VOCA</b></span>
       <span class="pg">01 / 06</span>
@@ -219,12 +225,12 @@
     <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></div>
     <div class="eyebrow">STEP 3 · 참여</div>
     <div class="step-badge">3</div>
-    <h2>짧은 후기 영상<br>하나만 찍으면 끝</h2>
-    <p class="lead">"이거 진짜 단어 암기 종결자예요" 처럼<br><b>15초 쇼츠 후기 영상</b> 하나면 참여 완료!</p>
+    <h2>후기 영상 찍어<br>유튜브·인스타 업로드</h2>
+    <p class="lead">"이거 진짜 단어 암기 종결자예요" 처럼<br><b>15초 쇼츠 후기</b>를 찍어 <b>유튜브·인스타</b>에 올려요.</p>
     <div class="chip-row">
       <span class="chip">🎬 15초 쇼츠</span>
-      <span class="chip">📱 세로 영상</span>
-      <span class="chip">😊 솔직 후기</span>
+      <span class="chip">▶️ 유튜브</span>
+      <span class="chip">📸 인스타</span>
     </div>
     <div class="brand">
       <span class="wm">IM<b>VOCA</b></span>
@@ -248,15 +254,13 @@
 
   <!-- 6 · CTA -->
   <section class="card c-cta">
-    <div class="eyebrow" style="color:#FFDE9B;">NOW OPEN</div>
-    <h2>지금, 우리 학원에서<br>시작하세요</h2>
-    <div class="region">
-      <span class="r">📍 광주</span>
-      <span class="r">📍 청주</span>
-      <span class="r">📍 전 지역</span>
+    <div class="eyebrow" style="color:#FFDE9B;">참여 방법 · HOW TO</div>
+    <h2>영상 링크를<br>이메일로 보내주세요</h2>
+    <div class="submit-box">
+      <div class="srow"><span class="ico">📅</span><div><b>마감</b><br><span class="hl">8월 30일까지</span></div></div>
+      <div class="srow"><span class="ico">📩</span><div><b>영상 링크 제출</b><br><span class="mail">imamerica2414@gmail.com</span></div></div>
     </div>
-    <div class="url">imvoca<span>.app</span></div>
-    <div class="howto">참여 방법은 <b>담당 선생님</b>께 문의하세요.<br>단어 암기, 이제 IM VOCA로 끝냅니다.</div>
+    <div class="howto">유튜브·인스타에 올린 <b>후기 영상 링크</b>를 위 이메일로!<br>단어 암기, 이제 IM VOCA로 끝냅니다.</div>
     <div class="brand">
       <span class="wm">IM<b>VOCA</b></span>
       <span class="pg">06 / 06</span>
