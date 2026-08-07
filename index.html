@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v45';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v46';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -5191,7 +5191,7 @@ function render() {
           <button class="lib-add-btn" onclick="openAddBookModal()" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${userNativeLang==='ko'?'책 추가':'Add Book'}</button>
         </div>
         <div class="scr-scroll">
-          <div onclick="showEvent()" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#3a2b9e,#5a4bd6);color:#fff;border-radius:14px;padding:13px 15px;margin-bottom:14px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(90,75,214,0.9);">
+          <div onclick="showEvent()" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#3a2b9e,#5a4bd6);color:#fff;border-radius:14px;padding:13px 15px;margin-top:16px;margin-bottom:14px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(90,75,214,0.9);">
             <div style="font-size:26px;">🎉</div>
             <div style="flex:1;min-width:0;">
               <div style="font-size:14px;font-weight:800;">${userNativeLang==='ko'?'후기 이벤트 · 1년 무료 이용권':'Review Event · 1 Year Free'}</div>
