@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v53';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v54';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -2080,6 +2080,7 @@ async function startOrgBilling(){
   }catch(e){ toast('오류: '+e.message); }
 }
 function goOrgAdmin() { stack = [{ name:'org-admin' }]; render(); }
+function goOrgTestsTab() { window._orgTab = 'tests'; goOrgAdmin(); }
 
 function copyOrgCode() {
   if (!userOrg) return;
@@ -2810,11 +2811,18 @@ function renderOrgAdminPage(root) {
         </label>
       </div>`)}`;
 
-  const SEC = { dashboard: secDashboard, members: secMembers, report: secReport, invite: secInvite, billing: secBilling, settings: secSettings };
+  const secTests = `
+    <div class="org-main__title">📝 ${ko?'시험 출제':'Tests'}</div>
+    ${card(`<div style="font-size:12.5px;color:var(--ink-60);line-height:1.65;">${ko?'배정 단어장에서 문제를 뽑아 <b>온라인 시험(자동채점)</b> 또는 <b>PDF 시험지</b>로 출제하세요.<br>만든 시험은 <b>승인된 전체 학생에게 자동 배정</b>되고, 학생은 앱 홈의 <b>📝 배정된 시험</b> 배너(또는 상단 📝 시험)에서 응시합니다.':'Create online (auto-graded) or printable tests. New tests are auto-assigned to all approved students; students take them from the “📝 Tests” banner on their home.'}</div>`)}
+    <button onclick="showTestCreate()" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:14px;">＋ ${ko?'새 시험 만들기':'New test'}</button>
+    <div id="test-list"><div class="muted" style="text-align:center;padding:24px;font-size:13px;">${ko?'불러오는 중…':'Loading…'}</div></div>`;
+
+  const SEC = { dashboard: secDashboard, members: secMembers, report: secReport, tests: secTests, invite: secInvite, billing: secBilling, settings: secSettings };
   const NAV = [
     ['dashboard','📊', ko?'대시보드':'Dashboard'],
     ['members','👥', ko?'학생·관리자':'Members'],
     ['report','📈', ko?'리포트':'Reports'],
+    ['tests','📝', ko?'시험':'Tests'],
     ['invite','🎫', ko?'초대 코드':'Invite'],
     ['billing','💳', ko?'구독·결제':'Billing'],
     ['settings','⚙️', ko?'설정':'Settings'],
@@ -2842,6 +2850,7 @@ function renderOrgAdminPage(root) {
     </div>`;
   setTimeout(loadOrgStudents, 0); setTimeout(loadDailyReport, 0);
   if (tab==='report') setTimeout(()=>loadOrgReport('report-body'), 0);
+  if (tab==='tests') setTimeout(()=>{ loadTests().then(_renderTestList).catch(()=>_renderTestList()); }, 0);
 }
 
 // ── 자주 묻는 질문(FAQ) ──
@@ -5402,7 +5411,7 @@ function buildDockBottom() {
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
     + `<button class="dock-mini dock-mini--accent" onclick="showEvent()">🎉 ${ko?'이벤트':'Event'}</button>`
-    + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'showTestAdmin()':'showMyTests()'}">📝 ${_isTestAdmin()?(ko?'시험 출제':'Tests'):(ko?'시험':'Tests')}</button>` : '')
+    + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(ko?'시험 출제':'Tests'):(ko?'시험':'Tests')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${ko?'상태':'Health'}</button>` : '')
     + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
@@ -5592,7 +5601,7 @@ function render() {
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="showEvent()" class="topbar-btn" style="background:linear-gradient(135deg,#f5a623,#e67e22);border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">🎉 ${userNativeLang==='ko'?'이벤트':'Event'}</button>
-          ${userOrg?`<button onclick="${_isTestAdmin()?'showTestAdmin()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(userNativeLang==='ko'?'시험 출제':'Tests'):(userNativeLang==='ko'?'시험':'Tests')}</button>`:''}
+          ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(userNativeLang==='ko'?'시험 출제':'Tests'):(userNativeLang==='ko'?'시험':'Tests')}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
