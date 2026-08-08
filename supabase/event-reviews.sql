@@ -13,13 +13,17 @@ create table if not exists public.voca_reviews (
   user_name   text,               -- 표시 이름
   user_email  text,               -- 연락/식별용(당첨 안내)
   org_id      uuid,               -- 소속 학원(있으면)
-  body        text,               -- 후기 내용(글)
-  link        text,               -- 영상 링크(유튜브/인스타/틱톡)
-  rank        int,                -- 1/2/3 당첨, null=미선정
+  body        text,               -- 후기 내용(글) — 후기 부문
+  link        text,               -- 영상 링크(유튜브/인스타/틱톡) — 영상 부문
+  rank        int,                -- 후기 부문 1/2/3 당첨(6개월), null=미선정
+  video_rank  int,                -- 영상 부문 1/2/3 당첨(12개월), null=미선정
   published   boolean not null default true
 );
+-- 이미 테이블이 있던 경우에도 새 컬럼 보장 (재실행 안전)
+alter table public.voca_reviews add column if not exists video_rank int;
 create index if not exists idx_reviews_created on public.voca_reviews(created_at desc);
 create index if not exists idx_reviews_rank    on public.voca_reviews(rank);
+create index if not exists idx_reviews_vrank   on public.voca_reviews(video_rank);
 
 alter table public.voca_reviews enable row level security;
 
@@ -51,7 +55,8 @@ create policy reviews_delete on public.voca_reviews
 
 -- ============================================================
 -- 관리에 쓰는 조회 (SQL Editor)
---  · 전체 후기:      select created_at, user_name, user_email, rank, link, body from voca_reviews order by created_at desc;
---  · 당첨자(1~3등):  select rank, user_name, user_email, link from voca_reviews where rank between 1 and 3 order by rank;
+--  · 전체 후기:        select created_at, user_name, user_email, rank, video_rank, link, body from voca_reviews order by created_at desc;
+--  · 후기 부문 당첨(6개월): select rank, user_name, user_email, body from voca_reviews where rank between 1 and 3 order by rank;
+--  · 영상 부문 당첨(12개월): select video_rank, user_name, user_email, link from voca_reviews where video_rank between 1 and 3 order by video_rank;
 -- 되돌리기: drop table if exists public.voca_reviews;
 -- ============================================================
