@@ -27,7 +27,12 @@ create index if not exists idx_reviews_vrank   on public.voca_reviews(video_rank
 
 alter table public.voca_reviews enable row level security;
 
--- 읽기: 게시된 후기는 누구나(로그인 사용자) 열람 — 모두의 후기 목록
+-- 랜딩페이지(lp.html·lp-group.html)는 비로그인(anon)으로 후기를 읽으므로
+-- anon/authenticated 둘 다 SELECT 권한 필요 (행 제한은 아래 RLS 가 담당).
+grant select on public.voca_reviews to anon, authenticated;
+grant insert, update, delete on public.voca_reviews to authenticated;
+
+-- 읽기: 게시된 후기는 누구나(비로그인 포함) 열람 — 앱/랜딩 공통
 drop policy if exists reviews_read on public.voca_reviews;
 create policy reviews_read on public.voca_reviews
   for select using (published = true);
