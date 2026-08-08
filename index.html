@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v52';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v53';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1521,6 +1521,321 @@ async function postEventNotice(btn){
     'return=representation');
   if(res && res.ok){ toast(ko?'공지함에 올렸어요! 🔔':'Posted to notices!'); _notices=[]; if(typeof loadNotices==='function') loadNotices(); if(btn){ btn.textContent=ko?'✅ 공지함에 올림':'✅ Posted'; } }
   else { toast(ko?'공지 등록 실패':'Failed'); if(btn){ btn.disabled=false; btn.textContent=ko?'📢 이 이벤트를 공지함에 올리기 (관리자)':'📢 Post to notices (admin)'; } }
+}
+
+// ════════════════════════════════════════════════════════════════
+// 📝 시험(Test) — 온라인 자동채점 + PDF 시험지 출제 (동일 문제 스냅샷 공용)
+//   관리자(원장)가 배정 단어장에서 출제 → 학생 앱 응시(자동채점) 또는 종이 인쇄.
+// ════════════════════════════════════════════════════════════════
+let _tests = [];
+function _isTestAdmin(){ return userOrgRole==='owner' && userOrgStatus==='approved'; }
+function _wordMeaning(w){ const a=(w&&w.analysis)||{}; if(a.meanings&&a.meanings.length) return a.meanings.map(m=>m.ko).filter(Boolean).join(', '); return (w&&(w.base||w.ctx))||''; }
+function _normAns(s){ return String(s==null?'':s).toLowerCase().replace(/\s+/g,' ').trim(); }
+function _buildQuestions(words, type, count){
+  const pool = (words||[]).map(w=>({en:w.en, meaning:_wordMeaning(w)})).filter(p=>p.en&&p.meaning);
+  const picked = shuffle(pool).slice(0, Math.min(count, pool.length));
+  const allM = [...new Set(pool.map(p=>p.meaning))];
+  return picked.map((p,i)=>{
+    const qt = type==='mix' ? (i%2?'spell':'mc') : type;
+    if(qt==='mc'){
+      const distract = shuffle(allM.filter(m=>m!==p.meaning)).slice(0,3);
+      const choices = shuffle([p.meaning, ...distract]);
+      return { n:i+1, type:'mc', en:p.en, meaning:p.meaning, prompt:p.en, answer:p.meaning, choices };
+    }
+    return { n:i+1, type:'spell', en:p.en, meaning:p.meaning, prompt:p.meaning, answer:p.en };
+  });
+}
+function gradeTest(questions, answers){
+  let score=0; const per=[];
+  (questions||[]).forEach((q,i)=>{ const a=answers[i]; const ok = q.type==='mc' ? (a===q.answer) : (!!a && _normAns(a)===_normAns(q.answer)); if(ok)score++; per.push({n:q.n,given:a==null?'':a,answer:q.answer,ok}); });
+  return { score, total:(questions||[]).length, per };
+}
+function _testBooks(){ return (books||[]).filter(b=>b.pages && b.pages.some(p=>p.words&&p.words.length)); }
+function _pageLabel(b,p){ return (b._official||b._officialContent) ? String(p.num) : ('Page '+p.num); }
+
+async function loadTests(){
+  if(!userOrg) return [];
+  const data = await authGet(`/rest/v1/voca_tests?org_id=eq.${userOrg.id}&order=created_at.desc&limit=100`);
+  _tests = Array.isArray(data)?data:[]; return _tests;
+}
+
+// ── 관리자: 시험 목록 ──
+async function showTestAdmin(){
+  if(!_isTestAdmin()){ toast('관리자 전용'); return; }
+  let el=document.getElementById('test-overlay'); if(!el){ el=document.createElement('div'); el.id='test-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:9999;background:var(--bg-page);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 70px;');
+  el.innerHTML = `<div style="max-width:600px;margin:0 auto;">
+    <div style="background:linear-gradient(160deg,#1c3553,#0f2338);color:#fff;padding:22px 20px;position:relative;">
+      <button onclick="document.getElementById('test-overlay').remove()" style="position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;width:34px;height:34px;font-size:17px;cursor:pointer;">✕</button>
+      <div style="font-size:12px;font-weight:800;letter-spacing:.12em;opacity:.9;">📝 TEST</div>
+      <div style="font-size:23px;font-weight:900;margin-top:8px;">단어 시험 출제</div>
+      <div style="font-size:13px;opacity:.9;margin-top:8px;line-height:1.6;">배정 단어장에서 문제를 뽑아 <b>온라인 응시(자동채점)</b> 또는 <b>PDF 시험지</b>로 출제하세요.</div>
+    </div>
+    <div style="padding:16px;">
+      <button onclick="showTestCreate()" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:16px;">＋ 새 시험 만들기</button>
+      <div id="test-list"><div style="text-align:center;color:var(--ink-40);font-size:13px;padding:20px 0;">불러오는 중…</div></div>
+    </div></div>`;
+  await loadTests(); _renderTestList();
+}
+function _renderTestList(){
+  const box=document.getElementById('test-list'); if(!box) return;
+  if(!_tests.length){ box.innerHTML=`<div style="text-align:center;color:var(--ink-40);font-size:13px;padding:24px 0;">아직 만든 시험이 없어요. 위에서 새 시험을 만들어보세요!</div>`; return; }
+  const typeLabel={mc:'객관식',spell:'주관식',mix:'혼합'};
+  box.innerHTML=_tests.map(t=>{
+    let date=''; try{date=new Date(t.created_at).toLocaleDateString('ko-KR',{month:'short',day:'numeric'});}catch(e){}
+    return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:14px 15px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-weight:700;font-size:15px;color:var(--ink-100);">${esc(t.title||'단어 시험')}</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--ink-40);">${date}</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink-60);margin-top:4px;">${esc(t.book_title||'')} · ${(t.pages||[]).join(', ')} · ${t.num}문항 · ${typeLabel[t.qtype]||t.qtype}</div>
+      <div style="display:flex;gap:6px;margin-top:11px;flex-wrap:wrap;">
+        <button onclick="openTestPaper('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 12px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ 시험지(PDF)</button>
+        <button onclick="showTestResults('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 12px;font-size:12.5px;font-weight:700;cursor:pointer;">📊 결과 보기</button>
+        <button onclick="deleteTest('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:9px;padding:7px 12px;font-size:12.5px;cursor:pointer;color:#c0392b;margin-left:auto;">삭제</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── 관리자: 새 시험 만들기 ──
+function showTestCreate(){
+  const bks=_testBooks();
+  if(!bks.length){ toast('출제할 단어장이 없어요 (단어가 있는 책 필요)'); return; }
+  let el=document.getElementById('tcreate-overlay'); if(!el){ el=document.createElement('div'); el.id='tcreate-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);display:flex;align-items:flex-end;justify-content:center;');
+  el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:520px;max-height:90vh;overflow:auto;">
+    <div style="font-size:18px;font-weight:800;color:var(--ink-100);margin-bottom:14px;">📝 새 시험 만들기</div>
+    <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">시험명</div>
+    <input id="tc-title" placeholder="예: 수능 기본 Day1-3 단어시험" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px;background:var(--bg-page);color:var(--ink-100);">
+    <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">단어장</div>
+    <select id="tc-book" onchange="_tcDays()" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px;background:var(--bg-page);color:var(--ink-100);">
+      ${bks.map(b=>`<option value="${b.id}">${esc(b.title)}</option>`).join('')}
+    </select>
+    <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">출제 범위 (Day 선택)</div>
+    <div id="tc-days" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;max-height:150px;overflow:auto;"></div>
+    <div id="tc-poolinfo" style="font-size:11px;color:var(--ink-45);margin-bottom:12px;"></div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;">
+      <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">문제 유형</div>
+        <select id="tc-type" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;background:var(--bg-page);color:var(--ink-100);">
+          <option value="mc">객관식 (영→뜻, 4지선다)</option>
+          <option value="spell">주관식 (뜻→영 스펠링)</option>
+          <option value="mix">혼합</option>
+        </select></div>
+      <div style="width:110px;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">문항 수</div>
+        <input id="tc-count" type="number" value="20" min="1" max="100" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;background:var(--bg-page);color:var(--ink-100);"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <button onclick="document.getElementById('tcreate-overlay').remove()" style="flex:1;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">취소</button>
+      <button id="tc-save" onclick="saveTest()" style="flex:2;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;">만들기</button>
+    </div>
+  </div>`;
+  el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
+  _tcDays();
+}
+function _tcSelectedBook(){ return findBook(document.getElementById('tc-book')?.value); }
+function _tcDays(){
+  const box=document.getElementById('tc-days'); if(!box) return;
+  const b=_tcSelectedBook(); if(!b){ box.innerHTML=''; return; }
+  const pgs=[...b.pages].filter(p=>p.words&&p.words.length).sort((a,b2)=>pageSort(a,b2));
+  box.innerHTML=`<label style="font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;padding:5px 10px;border:1px solid var(--accent);border-radius:8px;"><input type="checkbox" id="tc-all" onchange="_tcToggleAll(this.checked)" style="vertical-align:-1px;"> 전체</label>`
+    + pgs.map(p=>`<label style="font-size:12.5px;color:var(--ink-100);cursor:pointer;padding:5px 10px;border:1px solid var(--ink-12);border-radius:8px;"><input type="checkbox" class="tc-day" value="${esc(String(p.num))}" onchange="_tcPool()" style="vertical-align:-1px;"> ${esc(_pageLabel(b,p))}</label>`).join('');
+  _tcPool();
+}
+function _tcToggleAll(on){ document.querySelectorAll('.tc-day').forEach(c=>c.checked=on); _tcPool(); }
+function _tcSelectedPages(){ return [...document.querySelectorAll('.tc-day:checked')].map(c=>c.value); }
+function _tcPoolWords(){ const b=_tcSelectedBook(); if(!b) return []; const sel=new Set(_tcSelectedPages()); let ws=[]; b.pages.forEach(p=>{ if(sel.has(String(p.num))) ws=ws.concat(p.words||[]); }); return ws.filter(w=>_wordMeaning(w)); }
+function _tcPool(){ const info=document.getElementById('tc-poolinfo'); if(!info) return; const n=_tcPoolWords().length; info.textContent = n? `선택 범위 단어 ${n}개 (문항 수를 이보다 크게 잡으면 전부 출제)` : '⚠️ Day를 하나 이상 선택하세요'; }
+
+async function saveTest(){
+  if(!_isTestAdmin()){ toast('관리자 전용'); return; }
+  const b=_tcSelectedBook(); const pages=_tcSelectedPages();
+  if(!b || !pages.length){ toast('단어장과 Day를 선택하세요'); return; }
+  const words=_tcPoolWords();
+  if(!words.length){ toast('선택 범위에 단어가 없어요'); return; }
+  const type=document.getElementById('tc-type').value;
+  let count=parseInt(document.getElementById('tc-count').value,10)||20; count=Math.max(1,Math.min(100,count));
+  const title=(document.getElementById('tc-title').value||'').trim() || `${b.title} ${pages.join(',')} 단어시험`;
+  const questions=_buildQuestions(words, type, count);
+  if(!questions.length){ toast('문제를 만들 수 없어요'); return; }
+  const btn=document.getElementById('tc-save'); if(btn){btn.disabled=true;btn.textContent='만드는 중…';}
+  const row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:b.id, book_title:b.title, pages, qtype:type, questions, num:questions.length, student_ids:null, active:true };
+  const res=await authPost('/rest/v1/voca_tests', row, 'return=representation');
+  if(res && res.ok){ document.getElementById('tcreate-overlay')?.remove(); toast(`시험 "${title}" 생성! (${questions.length}문항) 🎉`); await loadTests(); _renderTestList(); }
+  else { toast('생성 실패 — 잠시 후 다시 시도'); if(btn){btn.disabled=false;btn.textContent='만들기';} }
+}
+async function deleteTest(id){
+  if(!confirm('이 시험을 삭제할까요? (학생 응시 결과도 함께 삭제)')) return;
+  const res=await _authDelete(`/rest/v1/voca_tests?id=eq.${id}`);
+  if(res && res.ok){ _tests=_tests.filter(t=>String(t.id)!==String(id)); _renderTestList(); toast('삭제됐어요'); }
+  else toast('삭제 실패');
+}
+
+// ── PDF 시험지 (새 창 → 인쇄/PDF 저장) ──
+function openTestPaper(id){
+  const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
+  const qs=t.questions||[]; const circ=['①','②','③','④'];
+  const esc2=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const qhtml=qs.map(q=>{
+    if(q.type==='mc') return `<div class="q"><div class="qt"><b>${q.n}.</b> ${esc2(q.prompt)}</div><div class="ch">${(q.choices||[]).map((c,i)=>`<span>${circ[i]||'·'} ${esc2(c)}</span>`).join('')}</div></div>`;
+    return `<div class="q"><div class="qt"><b>${q.n}.</b> ${esc2(q.prompt)}</div><div class="bl">________________________</div></div>`;
+  }).join('');
+  const keys=qs.map(q=>`<span class="k"><b>${q.n}.</b> ${esc2(q.answer)}</span>`).join('');
+  const w=window.open('','_blank'); if(!w){ toast('팝업이 차단됐어요 — 허용 후 다시'); return; }
+  w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc2(t.title||'단어 시험')}</title>
+  <style>
+    *{box-sizing:border-box;} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#111;margin:0;padding:22px;}
+    .paper{max-width:760px;margin:0 auto 28px;}
+    .hd{border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:16px;}
+    .hd .t{font-size:21px;font-weight:800;} .hd .src{font-size:12px;color:#666;margin-top:3px;}
+    .hd .meta{font-size:13px;margin-top:9px;display:flex;gap:18px;flex-wrap:wrap;}
+    .q{margin:0 0 13px;font-size:14.5px;line-height:1.5;page-break-inside:avoid;} .qt b{margin-right:4px;}
+    .ch{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:5px;color:#222;font-size:13.5px;} .ch span{white-space:nowrap;}
+    .bl{margin-top:7px;color:#999;letter-spacing:1px;}
+    .answers{page-break-before:always;} .answers .t{font-size:18px;font-weight:800;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:12px;}
+    .keys{display:flex;flex-wrap:wrap;gap:7px 16px;} .k{font-size:13px;white-space:nowrap;}
+    .noprint{text-align:center;} .noprint button{background:#1c3553;color:#fff;border:none;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;}
+    @media print{ .noprint{display:none;} body{padding:0;} }
+  </style></head><body>
+   <div class="paper">
+     <div class="hd"><div class="t">${esc2(t.title||'단어 시험')}</div><div class="src">${esc2(t.book_title||'')} · ${(t.pages||[]).join(', ')} · ${qs.length}문항</div>
+       <div class="meta"><span>이름 ______________</span><span>날짜 __________</span><span>점수 ______ / ${qs.length}</span></div></div>
+     ${qhtml}
+   </div>
+   <div class="paper answers"><div class="t">✔ 정답지</div><div class="keys">${keys}</div></div>
+   <div class="noprint"><button onclick="window.print()">🖨️ 인쇄 / PDF로 저장</button></div>
+  </body></html>`);
+  w.document.close();
+}
+
+// ── 관리자: 결과 보기 ──
+async function showTestResults(id){
+  const t=_tests.find(x=>String(x.id)===String(id));
+  const rows=await authGet(`/rest/v1/voca_test_results?test_id=eq.${id}&order=score.desc,submitted_at.asc&limit=300`) || [];
+  let el=document.getElementById('tresult-overlay'); if(!el){ el=document.createElement('div'); el.id='tresult-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);display:flex;align-items:flex-end;justify-content:center;');
+  const avg = rows.length ? Math.round(rows.reduce((s,r)=>s+(r.total?r.score/r.total*100:0),0)/rows.length) : 0;
+  const list = rows.length ? rows.map((r,i)=>{
+    const pct = r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#27ae60':pct>=50?'#e67e22':'#e74c3c';
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ink-07);">
+      <span style="width:22px;color:var(--ink-40);font-size:12px;">${i+1}</span>
+      <span style="flex:1;font-size:14px;font-weight:600;color:var(--ink-100);">${esc(r.user_name||'학생')}</span>
+      <span style="font-size:13px;color:var(--ink-60);">${r.score}/${r.total}</span>
+      <span style="font-weight:800;color:${c};font-size:14px;min-width:44px;text-align:right;">${pct}%</span></div>`;
+  }).join('') : `<div style="text-align:center;color:var(--ink-40);font-size:13px;padding:22px 0;">아직 응시한 학생이 없어요.</div>`;
+  el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:85vh;overflow:auto;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="font-size:18px;font-weight:800;color:var(--ink-100);">📊 ${esc(t?t.title:'결과')}</div><button onclick="document.getElementById('tresult-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-40);">×</button></div>
+    <div style="font-size:12px;color:var(--ink-60);margin-bottom:14px;">응시 ${rows.length}명 · 평균 ${avg}%</div>
+    ${list}</div>`;
+  el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
+}
+
+// ── 학생: 배정된 시험 ──
+async function loadMyTests(){
+  if(!(userOrgId && currentUser)) return [];
+  const tests=await authGet(`/rest/v1/voca_tests?org_id=eq.${userOrgId}&active=eq.true&order=created_at.desc&limit=50`) || [];
+  const mine=await authGet(`/rest/v1/voca_test_results?user_id=eq.${currentUser.id}&select=test_id`) || [];
+  const done=new Set((mine||[]).map(r=>r.test_id));
+  return (tests||[]).filter(t=> !done.has(t.id) && (!t.student_ids || (Array.isArray(t.student_ids)&&t.student_ids.includes(currentUser.id))) );
+}
+// 학생 홈 배너 — 배정된 시험이 있으면 표시 (세션 캐시, 응시 후 갱신)
+async function _refreshMyTestsBanner(){
+  const el=document.getElementById('my-tests-banner'); if(!el) return;
+  if(!(userOrgId && userOrgRole==='student')){ el.innerHTML=''; return; }
+  if(window._myTestsCache===undefined || window._myTestsDirty){ try{ window._myTestsCache=await loadMyTests(); }catch(e){ window._myTestsCache=[]; } window._myTestsDirty=false; }
+  const list=window._myTestsCache||[];
+  if(!list.length){ el.innerHTML=''; return; }
+  el.innerHTML=`<div onclick="showMyTests()" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1c3553,#2a4a6e);color:#fff;border-radius:14px;padding:13px 15px;margin-top:16px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(28,53,83,0.9);">
+    <div style="font-size:24px;">📝</div>
+    <div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:800;">${userNativeLang==='ko'?`배정된 시험 ${list.length}개`:`${list.length} test(s) assigned`}</div><div style="font-size:11.5px;opacity:.9;margin-top:1px;">${userNativeLang==='ko'?'지금 응시하고 성적을 확인하세요':'Take now'}</div></div>
+    <div style="font-size:18px;opacity:.85;">›</div></div>`;
+}
+async function showMyTests(){
+  let el=document.getElementById('mytest-overlay'); if(!el){ el=document.createElement('div'); el.id='mytest-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:9999;background:var(--bg-page);overflow-y:auto;padding:0 0 70px;');
+  el.innerHTML=`<div style="max-width:560px;margin:0 auto;"><div style="background:linear-gradient(160deg,#1c3553,#0f2338);color:#fff;padding:22px 20px;position:relative;">
+    <button onclick="document.getElementById('mytest-overlay').remove()" style="position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;width:34px;height:34px;font-size:17px;cursor:pointer;">✕</button>
+    <div style="font-size:23px;font-weight:900;">📝 내 시험</div></div>
+    <div id="mytest-list" style="padding:16px;"><div style="text-align:center;color:var(--ink-40);font-size:13px;padding:20px 0;">불러오는 중…</div></div></div>`;
+  const list=await loadMyTests();
+  const box=document.getElementById('mytest-list'); if(!box) return;
+  box.innerHTML = list.length ? list.map(t=>`<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:15px;margin-bottom:12px;">
+      <div style="font-weight:700;font-size:15px;color:var(--ink-100);">${esc(t.title||'단어 시험')}</div>
+      <div style="font-size:12px;color:var(--ink-60);margin-top:4px;">${esc(t.book_title||'')} · ${t.num}문항 · ${t.qtype==='spell'?'주관식':t.qtype==='mix'?'혼합':'객관식'}</div>
+      <button onclick='startTakeTest(${JSON.stringify(String(t.id))})' style="width:100%;margin-top:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:800;cursor:pointer;">응시하기 →</button>
+    </div>`).join('') : `<div style="text-align:center;color:var(--ink-40);font-size:13px;padding:26px 0;">배정된 시험이 없어요 👍</div>`;
+}
+
+// ── 학생: 응시 ──
+let _take = null;
+async function startTakeTest(id){
+  const list=await loadMyTests(); const t=list.find(x=>String(x.id)===String(id)) || _tests.find(x=>String(x.id)===String(id));
+  if(!t){ toast('시험을 찾을 수 없어요'); return; }
+  _take={ test:t, answers:{}, idx:0 };
+  document.getElementById('mytest-overlay')?.remove();
+  let el=document.getElementById('take-overlay'); if(!el){ el=document.createElement('div'); el.id='take-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:10001;background:var(--bg-page);overflow-y:auto;padding:0 0 90px;');
+  _renderTake();
+}
+function _renderTake(){
+  const el=document.getElementById('take-overlay'); if(!el||!_take) return;
+  const t=_take.test, qs=t.questions||[];
+  el.innerHTML=`<div style="max-width:560px;margin:0 auto;">
+    <div style="background:var(--bg-card);border-bottom:1px solid var(--ink-07);padding:16px 18px;position:sticky;top:0;z-index:5;">
+      <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:16px;font-weight:800;color:var(--ink-100);">${esc(t.title||'단어 시험')}</div>
+      <button onclick="if(confirm('시험을 그만두시겠어요? 답안은 저장되지 않아요.')){document.getElementById('take-overlay').remove();_take=null;}" style="margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-40);">✕</button></div>
+      <div style="font-size:12px;color:var(--ink-60);margin-top:3px;">${qs.length}문항 · ${t.qtype==='spell'?'뜻을 보고 영어 단어를 쓰세요':t.qtype==='mix'?'객관식+주관식':'알맞은 뜻을 고르세요'}</div>
+    </div>
+    <div style="padding:14px 16px;">
+      ${qs.map((q,i)=>_takeQ(q,i)).join('')}
+      <button onclick="submitTest()" style="width:100%;margin-top:8px;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;">제출하고 채점하기</button>
+    </div></div>`;
+}
+function _takeQ(q,i){
+  const cur=_take.answers[i];
+  const head=`<div style="font-size:12px;color:var(--ink-45);font-weight:700;">${q.n}${q.type==='spell'?' · 스펠링':''}</div><div style="font-size:17px;font-weight:800;color:var(--ink-100);margin:3px 0 10px;">${esc(q.prompt)}</div>`;
+  let body;
+  if(q.type==='mc'){
+    body=(q.choices||[]).map(c=>`<button onclick='_takePick(${i},${JSON.stringify(c)})' style="display:block;width:100%;text-align:left;border:1.5px solid ${cur===c?'var(--accent)':'var(--ink-12)'};background:${cur===c?'var(--gold-bg)':'var(--bg-card)'};color:var(--ink-100);border-radius:10px;padding:11px 13px;font-size:14px;margin-bottom:7px;cursor:pointer;">${esc(c)}</button>`).join('');
+  } else {
+    body=`<input value="${esc(cur||'')}" oninput="_take.answers[${i}]=this.value" placeholder="영어 단어 입력" autocapitalize="off" autocomplete="off" style="width:100%;box-sizing:border-box;border:1.5px solid var(--ink-12);border-radius:10px;padding:12px 13px;font-size:15px;background:var(--bg-card);color:var(--ink-100);">`;
+  }
+  return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:15px;margin-bottom:12px;">${head}${body}</div>`;
+}
+function _takePick(i,c){ _take.answers[i]=c; _renderTake(); window.scrollTo(0,window.scrollY); }
+async function submitTest(){
+  if(!_take) return;
+  const t=_take.test, qs=t.questions||[];
+  const answers=qs.map((q,i)=>_take.answers[i]);
+  const blanks=answers.filter(a=>a==null||a==='').length;
+  if(blanks>0 && !confirm(`${blanks}문항이 비어 있어요. 그대로 제출할까요?`)) return;
+  const g=gradeTest(qs, answers);
+  const row={ test_id:t.id, user_id:currentUser.id, user_name:userName||'학생', org_id:userOrgId||null, score:g.score, total:g.total, answers:g.per };
+  const res=await authPost('/rest/v1/voca_test_results', row, 'return=minimal');
+  if(!(res && res.ok)){ toast('제출 실패 — 잠시 후 다시 시도'); logError('write_fail','submitTest',res?('status '+res.status):'no response',{}); return; }
+  window._myTestsDirty=true;
+  _renderTakeResult(g);
+}
+function _renderTakeResult(g){
+  const el=document.getElementById('take-overlay'); if(!el) return;
+  const t=_take.test, qs=t.questions||[];
+  const pct=g.total?Math.round(g.score/g.total*100):0; const c=pct>=80?'#27ae60':pct>=50?'#e67e22':'#e74c3c';
+  const review=qs.map((q,i)=>{ const p=g.per[i]; return `<div style="display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--ink-07);">
+      <span style="font-size:15px;">${p.ok?'✅':'❌'}</span>
+      <div style="flex:1;font-size:13px;"><div style="color:var(--ink-100);font-weight:600;">${q.n}. ${esc(q.prompt)}</div>
+      ${p.ok?'':`<div style="color:#c0392b;margin-top:2px;">내 답: ${esc(p.given||'(빈칸)')}</div><div style="color:#1c7c3c;">정답: ${esc(q.answer)}</div>`}</div></div>`; }).join('');
+  el.innerHTML=`<div style="max-width:560px;margin:0 auto;">
+    <div style="background:linear-gradient(160deg,#1c3553,#0f2338);color:#fff;padding:30px 20px;text-align:center;">
+      <div style="font-size:14px;opacity:.9;">${esc(t.title||'단어 시험')}</div>
+      <div style="font-size:52px;font-weight:900;margin:8px 0 2px;color:${pct>=80?'#7CF5A0':pct>=50?'#FFC94D':'#FF9B9B'};">${pct}%</div>
+      <div style="font-size:16px;font-weight:700;">${g.score} / ${g.total} 정답</div>
+    </div>
+    <div style="padding:16px;">
+      <div style="font-size:13px;font-weight:800;color:var(--ink-100);margin-bottom:8px;">문항별 결과</div>
+      ${review}
+      <button onclick="document.getElementById('take-overlay').remove();_take=null;" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;">완료</button>
+    </div></div>`;
+  window.scrollTo(0,0);
 }
 
 // 문의하기 — 메일 앱 열기
@@ -5087,6 +5402,7 @@ function buildDockBottom() {
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
     + `<button class="dock-mini dock-mini--accent" onclick="showEvent()">🎉 ${ko?'이벤트':'Event'}</button>`
+    + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'showTestAdmin()':'showMyTests()'}">📝 ${_isTestAdmin()?(ko?'시험 출제':'Tests'):(ko?'시험':'Tests')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${ko?'상태':'Health'}</button>` : '')
     + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
@@ -5205,6 +5521,7 @@ function render() {
 
   if (route.name === 'library') {
     loadAssignments();
+    if (typeof _refreshMyTestsBanner==='function') setTimeout(()=>{ try{ _refreshMyTestsBanner(); }catch(e){} }, 0);
     // 자가복구: 단체 관리자인데 공식 단어장(수능/중등/토익…)이 아직 안 붙어있으면(경합·캐시 등)
     // 화면을 볼 때 다시 불러온다. (owner 는 _seesAllOfficialLangs()=true 라 전체 언어 노출)
     if (typeof _seesAllOfficialLangs==='function' && _seesAllOfficialLangs()
@@ -5247,6 +5564,7 @@ function render() {
           <button class="lib-add-btn" onclick="openAddBookModal()" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${userNativeLang==='ko'?'책 추가':'Add Book'}</button>
         </div>
         <div class="scr-scroll">
+          <div id="my-tests-banner"></div>
           <div onclick="showEvent()" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#3a2b9e,#5a4bd6);color:#fff;border-radius:14px;padding:13px 15px;margin-top:16px;margin-bottom:14px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(90,75,214,0.9);">
             <div style="font-size:26px;">🎉</div>
             <div style="flex:1;min-width:0;">
@@ -5274,6 +5592,7 @@ function render() {
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="showEvent()" class="topbar-btn" style="background:linear-gradient(135deg,#f5a623,#e67e22);border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">🎉 ${userNativeLang==='ko'?'이벤트':'Event'}</button>
+          ${userOrg?`<button onclick="${_isTestAdmin()?'showTestAdmin()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(userNativeLang==='ko'?'시험 출제':'Tests'):(userNativeLang==='ko'?'시험':'Tests')}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
