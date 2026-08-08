@@ -143,6 +143,20 @@ Deno.serve(async (req) => {
       reviews = rv || []
     }
 
+    // 오늘(KST) — 밀린 복습 판정 기준일
+    const kstToday = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)
+
+    // 한 review 행이 '밀림'인지: 첫 미완료(비-null) 단계의 예정일이 오늘 이전인가
+    function isRowOverdue(r: Record<string, unknown>): boolean {
+      if (r.completed) return false
+      for (const sc of STEP_COLS) {
+        const v = r[sc.col]
+        if (v == null) continue                 // 이미 완료한 단계
+        return String(v).slice(0, 10) < kstToday // 다음 예정 단계가 오늘 이전 → 밀림
+      }
+      return false                              // 모든 단계 완료
+    }
+
     // 배정별 × 학생별 리포트 구성
     const report = assignments.map((a) => {
       // '지정' 배정은 대상 학생에게만. '전체'는 모두.
@@ -166,6 +180,11 @@ Deno.serve(async (req) => {
           })
         }
         const st = deriveStage(chosen)
+        // ⬇️ 정확한 '밀린 복습': 이 배정(책)의 '모든 페이지' 중 예정일 지난 것을 각각 카운트
+        //    (기존엔 가장 진행된 페이지 1개만 봐서 책당 최대 1개로 과소집계되던 버그 수정)
+        const overdueRows = matches.filter(isRowOverdue)
+        const reviewsOverdue = overdueRows.length
+        const overduePages = overdueRows.map((r) => String(r.page_num))
         // 이 학생의 이 과제 관련 행 중 가장 최근 복습 시각(오늘 활동 판별용)
         const lastReviewedAt = matches.reduce((mx: string | null, r) => {
           const v = r.last_reviewed_at as string | null
@@ -175,6 +194,8 @@ Deno.serve(async (req) => {
           student_id: stu.id,
           name: stu.name || stu.email || '학생',
           pagesStudied: matches.length,
+          reviewsOverdue,
+          overduePages,
           lastReviewedAt,
           ...st,
         }

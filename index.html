@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v51';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v52';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -6269,7 +6269,10 @@ function _pivotReportByStudent(report){
     const k = s.student_id || s.name;
     if(!map[k]) map[k]={id:s.student_id, name:s.name, assigned:0, started:0, completed:0, inprog:0, notstarted:0, late:0, lastReviewedAt:null, books:[]};
     const m=map[k]; m.assigned++;
-    if(s.exists){ m.started++; if(s.completed)m.completed++; else m.inprog++; if(s.onTime===false)m.late++; } else m.notstarted++;
+    if(s.exists){ m.started++; if(s.completed)m.completed++; else m.inprog++; } else m.notstarted++;
+    // 정확한 '밀린 복습' = 배정 내 페이지별 밀림 합산(엣지함수 reviewsOverdue).
+    // (구버전 함수 호환: 필드 없으면 예전 방식 — 완벽하지 않은 복습 1개로 폴백)
+    m.late += (typeof s.reviewsOverdue==='number') ? s.reviewsOverdue : (s.exists && s.onTime===false ? 1 : 0);
     if(s.lastReviewedAt && (!m.lastReviewedAt || s.lastReviewedAt>m.lastReviewedAt)) m.lastReviewedAt=s.lastReviewedAt;
     m.books.push({title:a.title, exists:s.exists, completed:s.completed, onTime:s.onTime, stageLabel:s.stageLabel});
   }); });
@@ -6436,15 +6439,26 @@ async function shareParentCard(studentId, studentName){
   //   (다른 학생 voca_review 를 REST로 읽으면 RLS로 빈 값이 올 수 있어 신뢰 가능한 리포트 데이터로 계산)
   //   리포트 탭에서 열면 _lastReport 사용, 대시보드 등에서 열어 없으면 이 학생만 org-report 재조회.
   let reportRows = [];
-  (window._lastReport || []).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push(st); }));
+  const _pushRows = (arr)=> (arr||[]).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push({ ...st, _book: asg.title || btitle(asg.book_id) }); }));
+  _pushRows(window._lastReport);
   if (!reportRows.length && userOrg) {
     try {
       const rr = await authPost('/functions/v1/org-report', { org_id: userOrg.id, student_id: sid });
-      if (rr && rr.ok) { const rd = await rr.json().catch(()=>({})); (rd.report||[]).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push(st); })); }
+      if (rr && rr.ok) { const rd = await rr.json().catch(()=>({})); _pushRows(rd.report); }
     } catch(e){}
   }
-  let overdue = 0;
-  reportRows.forEach(st=>{ if(st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++; });
+  // 정확한 밀린 복습 = 배정별 페이지별 밀림 합산(엣지함수 reviewsOverdue). 상세(책·Day)도 수집.
+  // (구버전 함수 호환: reviewsOverdue 필드가 없으면 예전 '책당 1개' 방식으로 폴백)
+  let overdue = 0; const overdueDetail = [];
+  const _hasNew = reportRows.some(st=>typeof st.reviewsOverdue === 'number');
+  if (_hasNew) {
+    reportRows.forEach(st=>{
+      const n = st.reviewsOverdue || 0;
+      if (n>0) { overdue += n; if (Array.isArray(st.overduePages) && st.overduePages.length) overdueDetail.push(`${st._book||''} ${st.overduePages.join('·')}`.trim()); }
+    });
+  } else {
+    reportRows.forEach(st=>{ if(st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++; });
+  }
 
   const lines = [];
   lines.push(`${s.name || (ko?'학생':'Student')} ${ko?'학습 리포트':'Report'} · ${dLabel}`);
@@ -6465,6 +6479,7 @@ async function shareParentCard(studentId, studentName){
     lines.push(`🔁 ${ko?'오늘 복습':'Reviewed'}: ${ko?'아직 기록 없음':'none yet'}`);
   }
   lines.push(`⏰ ${ko?'밀린 복습':'Overdue'}: ${overdue>0 ? `${overdue}${ko?'개 — 오늘 꼭 챙겨주세요 🙏':' due 🙏'}` : (ko?'없어요 👍':'none 👍')}`);
+  if (overdue>0 && overdueDetail.length) lines.push(`   └ ${overdueDetail.join(', ')}`);
   // ── 목표 & 수치 전망 (예: 수능 기본 30일 → 60일차 복습 완료 시 90% 완벽 암기) ──
   if (mainBook && totalWords>0 && totalDays>0) {
     const n90 = Math.round(totalWords*0.9);
