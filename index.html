@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v55';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v56';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1588,11 +1588,13 @@ function _renderTestList(){
         <span style="font-weight:700;font-size:15px;color:var(--ink-100);">${esc(t.title||'단어 시험')}</span>
         <span style="margin-left:auto;font-size:11px;color:var(--ink-40);">${date}</span>
       </div>
-      <div style="font-size:12px;color:var(--ink-60);margin-top:4px;">${esc(t.book_title||'')} · ${(t.pages||[]).join(', ')} · ${t.num}문항 · ${typeLabel[t.qtype]||t.qtype}</div>
+      <div style="font-size:12px;color:var(--ink-60);margin-top:4px;">${t.mode==='range'?`📅 기간 맞춤 · ${t.from_date}~${t.to_date} · 최대 ${t.num}문항`:`${esc(t.book_title||'')} · ${(t.pages||[]).join(', ')} · ${t.num}문항`} · ${typeLabel[t.qtype]||t.qtype}</div>
       <div style="font-size:11.5px;color:var(--ink-45);margin-top:3px;">🎯 ${t.student_ids&&t.student_ids.length?`대상 ${t.student_ids.length}명`:'전체 학생'}${t.due_date?` · ⏰ 기한 ${t.due_date}`:''}</div>
       <div style="display:flex;gap:6px;margin-top:11px;flex-wrap:wrap;">
-        <button onclick="openTestPaper('${t.id}','A')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ A형</button>
-        <button onclick="openTestPaper('${t.id}','B')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ B형</button>
+        ${t.mode==='range'
+          ? `<button onclick="openRangePapers('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ 학생별 시험지</button>`
+          : `<button onclick="openTestPaper('${t.id}','A')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ A형</button>
+        <button onclick="openTestPaper('${t.id}','B')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ B형</button>`}
         <button onclick="showTestResults('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">📊 결과</button>
         <button onclick="deleteTest('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:9px;padding:7px 11px;font-size:12.5px;cursor:pointer;color:#c0392b;margin-left:auto;">삭제</button>
       </div>
@@ -1610,13 +1612,29 @@ function showTestCreate(){
     <div style="font-size:18px;font-weight:800;color:var(--ink-100);margin-bottom:14px;">📝 새 시험 만들기</div>
     <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">시험명</div>
     <input id="tc-title" placeholder="예: 수능 기본 Day1-3 단어시험" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px;background:var(--bg-page);color:var(--ink-100);">
-    <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">단어장</div>
-    <select id="tc-book" onchange="_tcDays()" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px;background:var(--bg-page);color:var(--ink-100);">
-      ${bks.map(b=>`<option value="${b.id}">${esc(b.title)}</option>`).join('')}
-    </select>
-    <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">출제 범위 (Day 선택)</div>
-    <div id="tc-days" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;max-height:150px;overflow:auto;"></div>
-    <div id="tc-poolinfo" style="font-size:11px;color:var(--ink-45);margin-bottom:12px;"></div>
+    <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">출제 방식</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <label style="flex:1;font-size:12.5px;border:1px solid var(--ink-12);border-radius:9px;padding:9px;text-align:center;cursor:pointer;color:var(--ink-100);line-height:1.35;"><input type="radio" name="tc-mode" value="fixed" checked onchange="_tcModeToggle()" style="vertical-align:-1px;"> 범위 지정<br><span style="font-size:10.5px;color:var(--ink-45);">Day 골라 전원 동일</span></label>
+      <label style="flex:1;font-size:12.5px;border:1px solid var(--ink-12);border-radius:9px;padding:9px;text-align:center;cursor:pointer;color:var(--ink-100);line-height:1.35;"><input type="radio" name="tc-mode" value="range" onchange="_tcModeToggle()" style="vertical-align:-1px;"> 기간 맞춤<br><span style="font-size:10.5px;color:var(--ink-45);">학생별 공부분량</span></label>
+    </div>
+    <div id="tc-fixed-sec">
+      <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">단어장</div>
+      <select id="tc-book" onchange="_tcDays()" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px;background:var(--bg-page);color:var(--ink-100);">
+        ${bks.map(b=>`<option value="${b.id}">${esc(b.title)}</option>`).join('')}
+      </select>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">출제 범위 (Day 선택)</div>
+      <div id="tc-days" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;max-height:150px;overflow:auto;"></div>
+      <div id="tc-poolinfo" style="font-size:11px;color:var(--ink-45);margin-bottom:12px;"></div>
+    </div>
+    <div id="tc-range-sec" style="display:none;">
+      <div style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--ink-100);line-height:1.6;margin-bottom:12px;">📅 학생마다 <b>이 기간에 공부한(외운·복습한) 단어</b>로 문제가 자동 출제돼요. 진도가 달라도 각자 맞는 시험을 봅니다.</div>
+      <div style="display:flex;gap:10px;margin-bottom:12px;">
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">시작일</div>
+          <input id="tc-from" type="date" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;background:var(--bg-page);color:var(--ink-100);"></div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">종료일</div>
+          <input id="tc-to" type="date" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;background:var(--bg-page);color:var(--ink-100);"></div>
+      </div>
+    </div>
     <div style="display:flex;gap:10px;margin-bottom:12px;">
       <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">문제 유형</div>
         <select id="tc-type" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;background:var(--bg-page);color:var(--ink-100);">
@@ -1670,28 +1688,58 @@ function _tcTargetToggle(){
     box.dataset.filled='1';
   }
 }
+// 출제 방식 토글 (범위 지정 / 기간 맞춤)
+function _tcModeToggle(){
+  const range = document.querySelector('input[name=tc-mode]:checked')?.value==='range';
+  const f=document.getElementById('tc-fixed-sec'), r=document.getElementById('tc-range-sec');
+  if(f) f.style.display=range?'none':'block';
+  if(r) r.style.display=range?'block':'none';
+}
 async function saveTest(){
   if(!_isTestAdmin()){ toast('관리자 전용'); return; }
-  const b=_tcSelectedBook(); const pages=_tcSelectedPages();
-  if(!b || !pages.length){ toast('단어장과 Day를 선택하세요'); return; }
-  const words=_tcPoolWords();
-  if(!words.length){ toast('선택 범위에 단어가 없어요'); return; }
   const type=document.getElementById('tc-type').value;
   let count=parseInt(document.getElementById('tc-count').value,10)||20; count=Math.max(1,Math.min(100,count));
-  const title=(document.getElementById('tc-title').value||'').trim() || `${b.title} ${pages.join(',')} 단어시험`;
-  // 대상(전체/특정) + 기한
+  const mode=document.querySelector('input[name=tc-mode]:checked')?.value || 'fixed';
+  // 대상(전체/특정) + 기한 (공통)
   const target = document.querySelector('input[name=tc-target]:checked')?.value || 'all';
   let student_ids=null;
   if(target==='sel'){ student_ids=[...document.querySelectorAll('.tc-stu:checked')].map(c=>c.value); if(!student_ids.length){ toast('대상 학생을 선택하세요'); return; } }
   const due_date = document.getElementById('tc-due')?.value || null;
-  const questions=_buildQuestions(words, type, count);
-  if(!questions.length){ toast('문제를 만들 수 없어요'); return; }
+  let row, okMsg;
+  if(mode==='range'){
+    const from=document.getElementById('tc-from')?.value, to=document.getElementById('tc-to')?.value;
+    if(!from || !to){ toast('시작일과 종료일을 입력하세요'); return; }
+    if(from>to){ toast('종료일이 시작일보다 빨라요'); return; }
+    const title=(document.getElementById('tc-title').value||'').trim() || `기간 맞춤 시험 (${from}~${to})`;
+    row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:null, book_title:'기간 맞춤', pages:[], qtype:type, questions:[], num:count, mode:'range', from_date:from, to_date:to, student_ids, due_date, active:true };
+    okMsg=`기간 맞춤 시험 생성! (학생별 최대 ${count}문항) 🎉`;
+  } else {
+    const b=_tcSelectedBook(); const pages=_tcSelectedPages();
+    if(!b || !pages.length){ toast('단어장과 Day를 선택하세요'); return; }
+    const words=_tcPoolWords();
+    if(!words.length){ toast('선택 범위에 단어가 없어요'); return; }
+    const title=(document.getElementById('tc-title').value||'').trim() || `${b.title} ${pages.join(',')} 단어시험`;
+    const questions=_buildQuestions(words, type, count);
+    if(!questions.length){ toast('문제를 만들 수 없어요'); return; }
+    row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:b.id, book_title:b.title, pages, qtype:type, questions, num:questions.length, mode:'fixed', student_ids, due_date, active:true };
+    okMsg=`시험 "${title}" 생성! (${questions.length}문항) 🎉`;
+  }
   const btn=document.getElementById('tc-save'); if(btn){btn.disabled=true;btn.textContent='만드는 중…';}
-  const row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:b.id, book_title:b.title, pages, qtype:type, questions, num:questions.length, student_ids, due_date, active:true };
   const res=await authPost('/rest/v1/voca_tests', row, 'return=representation');
-  if(res && res.ok){ document.getElementById('tcreate-overlay')?.remove(); toast(`시험 "${title}" 생성! (${questions.length}문항) 🎉`); await loadTests(); _renderTestList(); }
+  if(res && res.ok){ document.getElementById('tcreate-overlay')?.remove(); toast(okMsg); await loadTests(); _renderTestList(); }
   else { toast('생성 실패 — 잠시 후 다시 시도'); if(btn){btn.disabled=false;btn.textContent='만들기';} }
 }
+// 기간 내 특정 학생이 공부한 단어 수집 → 문제 생성 (온라인·PDF 공용)
+function _wordsForActivity(acts){
+  const seen=new Set(), ws=[];
+  (acts||[]).forEach(a=>{
+    const b=findBook(a.book_id); if(!b||!b.pages) return;
+    const np=_norm(a.page_num); const p=b.pages.find(pp=>_norm(pp.num)===np); if(!p||!p.words) return;
+    p.words.forEach(w=>{ const k=String(w.en||'').toLowerCase(); if(w.en && _wordMeaning(w) && !seen.has(k)){ seen.add(k); ws.push(w); } });
+  });
+  return ws;
+}
+function _norm(s){ return String(s==null?'':s).replace(/[^0-9]/g,''); }
 async function deleteTest(id){
   if(!confirm('이 시험을 삭제할까요? (학생 응시 결과도 함께 삭제)')) return;
   const res=await _authDelete(`/rest/v1/voca_tests?id=eq.${id}`);
@@ -1700,24 +1748,10 @@ async function deleteTest(id){
 }
 
 // ── PDF 시험지 (새 창 → 인쇄/PDF 저장) ──
-function openTestPaper(id, variant){
-  const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
-  // A/B형: 문제 순서 + 보기 순서를 섞어 부정행위 방지 (문제+정답지 동일 셔플로 생성)
-  let qs=(t.questions||[]);
-  if(variant) qs = shuffle(qs.map(q=>({...q, choices:q.choices?shuffle(q.choices):q.choices})));
-  const circ=['①','②','③','④'];
-  const esc2=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const vLabel = variant?` · ${variant}형`:'';
-  const qhtml=qs.map((q,i)=>{
-    if(q.type==='mc') return `<div class="q"><div class="qt"><b>${i+1}.</b> ${esc2(q.prompt)}</div><div class="ch">${(q.choices||[]).map((c,j)=>`<span>${circ[j]||'·'} ${esc2(c)}</span>`).join('')}</div></div>`;
-    return `<div class="q"><div class="qt"><b>${i+1}.</b> ${esc2(q.prompt)}</div><div class="bl">________________________</div></div>`;
-  }).join('');
-  const keys=qs.map((q,i)=>`<span class="k"><b>${i+1}.</b> ${esc2(q.answer)}</span>`).join('');
-  const w=window.open('','_blank'); if(!w){ toast('팝업이 차단됐어요 — 허용 후 다시'); return; }
-  w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc2(t.title||'단어 시험')}</title>
-  <style>
+const _PAPER_CSS = `
     *{box-sizing:border-box;} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#111;margin:0;padding:22px;}
     .paper{max-width:760px;margin:0 auto 28px;}
+    .stu{page-break-before:always;} .stu:first-child{page-break-before:auto;}
     .hd{border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:16px;}
     .hd .t{font-size:21px;font-weight:800;} .hd .src{font-size:12px;color:#666;margin-top:3px;}
     .hd .meta{font-size:13px;margin-top:9px;display:flex;gap:18px;flex-wrap:wrap;}
@@ -1726,9 +1760,30 @@ function openTestPaper(id, variant){
     .bl{margin-top:7px;color:#999;letter-spacing:1px;}
     .answers{page-break-before:always;} .answers .t{font-size:18px;font-weight:800;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:12px;}
     .keys{display:flex;flex-wrap:wrap;gap:7px 16px;} .k{font-size:13px;white-space:nowrap;}
-    .noprint{text-align:center;} .noprint button{background:#1c3553;color:#fff;border:none;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;}
+    .noprint{text-align:center;margin:16px;} .noprint button{background:#1c3553;color:#fff;border:none;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;}
     @media print{ .noprint{display:none;} body{padding:0;} }
-  </style></head><body>
+`;
+const _CIRC=['①','②','③','④'];
+function _paperEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// 문제 배열 → 문제 HTML + 정답 HTML (1..N 재번호)
+function _paperQ(qs){
+  const qhtml=qs.map((q,i)=> q.type==='mc'
+    ? `<div class="q"><div class="qt"><b>${i+1}.</b> ${_paperEsc(q.prompt)}</div><div class="ch">${(q.choices||[]).map((c,j)=>`<span>${_CIRC[j]||'·'} ${_paperEsc(c)}</span>`).join('')}</div></div>`
+    : `<div class="q"><div class="qt"><b>${i+1}.</b> ${_paperEsc(q.prompt)}</div><div class="bl">________________________</div></div>`).join('');
+  const keys=qs.map((q,i)=>`<span class="k"><b>${i+1}.</b> ${_paperEsc(q.answer)}</span>`).join('');
+  return { qhtml, keys };
+}
+function openTestPaper(id, variant){
+  const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
+  if(t.mode==='range'){ openRangePapers(id); return; }   // 기간형은 학생별 시험지
+  let qs=(t.questions||[]);
+  if(variant) qs = shuffle(qs.map(q=>({...q, choices:q.choices?shuffle(q.choices):q.choices})));
+  const esc2=_paperEsc;
+  const vLabel = variant?` · ${variant}형`:'';
+  const {qhtml,keys}=_paperQ(qs);
+  const w=window.open('','_blank'); if(!w){ toast('팝업이 차단됐어요 — 허용 후 다시'); return; }
+  w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc2(t.title||'단어 시험')}</title>
+  <style>${_PAPER_CSS}</style></head><body>
    <div class="paper">
      <div class="hd"><div class="t">${esc2(t.title||'단어 시험')}${vLabel}</div><div class="src">${esc2(t.book_title||'')} · ${(t.pages||[]).join(', ')} · ${qs.length}문항</div>
        <div class="meta"><span>이름 ______________</span><span>날짜 __________</span><span>점수 ______ / ${qs.length}</span></div></div>
@@ -1737,6 +1792,28 @@ function openTestPaper(id, variant){
    <div class="paper answers"><div class="t">✔ 정답지</div><div class="keys">${keys}</div></div>
    <div class="noprint"><button onclick="window.print()">🖨️ 인쇄 / PDF로 저장</button></div>
   </body></html>`);
+  w.document.close();
+}
+// 기간 맞춤 시험 — 학생별 개별 시험지(문제+정답)를 한 문서로 (인쇄해서 각자 배부)
+async function openRangePapers(id){
+  const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
+  toast('학생별 시험지 생성 중…');
+  let studs=(window._orgStudentsList||[]).filter(m=>(m.org_status||'')==='approved' && m.org_role==='student');
+  if(t.student_ids && t.student_ids.length){ const set=new Set(t.student_ids); studs=studs.filter(s=>set.has(s.id)); }
+  if(!studs.length){ toast('대상 학생이 없어요 (학생·관리자 탭에서 승인 필요)'); return; }
+  const acts = await authGet(`/rest/v1/voca_activity?org_id=eq.${userOrg.id}&day=gte.${t.from_date}&day=lte.${t.to_date}&select=user_id,kind,book_id,page_num`) || [];
+  const byUser={}; (acts||[]).forEach(a=>{ (byUser[a.user_id]=byUser[a.user_id]||[]).push(a); });
+  let sections='', made=0;
+  studs.forEach(s=>{
+    const words=_wordsForActivity(byUser[s.id]||[]);
+    if(!words.length){ sections+=`<div class="stu"><div class="paper"><div class="hd"><div class="t">${_paperEsc(t.title)} · ${_paperEsc(s.name||'학생')}</div></div><div style="color:#999;font-size:14px;">이 기간에 공부한 단어가 없어요.</div></div></div>`; return; }
+    const qs=_buildQuestions(words, t.qtype, t.num||20);
+    const {qhtml,keys}=_paperQ(qs); made++;
+    sections+=`<div class="stu"><div class="paper"><div class="hd"><div class="t">${_paperEsc(t.title)} · ${_paperEsc(s.name||'학생')}</div><div class="src">${t.from_date}~${t.to_date} · ${qs.length}문항</div><div class="meta"><span>이름 ${_paperEsc(s.name||'')}</span><span>점수 ______ / ${qs.length}</span></div></div>${qhtml}</div><div class="paper answers"><div class="t">✔ 정답 · ${_paperEsc(s.name||'')}</div><div class="keys">${keys}</div></div></div>`;
+  });
+  if(!made){ toast('이 기간에 공부한 학생이 없어요 🙏'); return; }
+  const w=window.open('','_blank'); if(!w){ toast('팝업이 차단됐어요 — 허용 후 다시'); return; }
+  w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${_paperEsc(t.title||'시험')}</title><style>${_PAPER_CSS}</style></head><body>${sections}<div class="noprint"><button onclick="window.print()">🖨️ 인쇄 / PDF로 저장 (${made}명)</button></div></body></html>`);
   w.document.close();
 }
 
@@ -1803,8 +1880,18 @@ let _take = null;
 async function startTakeTest(id){
   const list=await loadMyTests(); const t=list.find(x=>String(x.id)===String(id)) || _tests.find(x=>String(x.id)===String(id));
   if(!t){ toast('시험을 찾을 수 없어요'); return; }
+  // 기간 맞춤: 내가 그 기간에 공부한 단어로 문제를 즉석 생성
+  let base = t.questions||[];
+  if(t.mode==='range'){
+    toast('내 학습 기록으로 문제 생성 중…');
+    const acts = await authGet(`/rest/v1/voca_activity?user_id=eq.${currentUser.id}&day=gte.${t.from_date}&day=lte.${t.to_date}&select=kind,book_id,page_num`) || [];
+    const words=_wordsForActivity(acts);
+    if(!words.length){ toast('이 기간에 공부한 단어가 없어 시험을 볼 수 없어요 🙏'); return; }
+    base=_buildQuestions(words, t.qtype, t.num||20);
+    if(!base.length){ toast('문제를 만들 수 없어요'); return; }
+  }
   // 학생별 셔플(문제·보기 순서) — 부정행위 방지. 채점은 셔플된 문제 객체 기준이라 정확.
-  const qs = shuffle((t.questions||[]).map(q=>({...q, choices:q.choices?shuffle(q.choices):q.choices})));
+  const qs = shuffle(base.map(q=>({...q, choices:q.choices?shuffle(q.choices):q.choices})));
   _take={ test:t, qs, answers:{}, idx:0 };
   document.getElementById('mytest-overlay')?.remove();
   let el=document.getElementById('take-overlay'); if(!el){ el=document.createElement('div'); el.id='take-overlay'; document.body.appendChild(el); }

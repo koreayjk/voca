@@ -16,13 +16,20 @@ create table if not exists public.voca_tests (
   book_title  text,
   pages       jsonb,                -- 출처 Day 목록 (["Day 1","Day 2"])
   qtype       text,                 -- 'mc'(객관식) | 'spell'(주관식) | 'mix'
-  questions   jsonb not null,       -- [{n,type,en,meaning,prompt,answer,choices?}]
-  num         int,                  -- 문항 수
+  questions   jsonb not null,       -- 고정형: [{n,type,en,meaning,prompt,answer,choices?}] · 기간형: []
+  num         int,                  -- 문항 수(목표)
+  mode        text default 'fixed', -- 'fixed'(범위 Day 고정) | 'range'(기간 맞춤·학생별 생성)
+  from_date   date,                 -- range: 시작일
+  to_date     date,                 -- range: 종료일
   student_ids uuid[],               -- 대상 학생(null=승인 학생 전원)
   due_date    date,
   active      boolean not null default true
 );
 create index if not exists idx_tests_org on public.voca_tests(org_id, created_at desc);
+-- 이미 테이블이 있던 경우 새 컬럼 보장(재실행 안전)
+alter table public.voca_tests add column if not exists mode text default 'fixed';
+alter table public.voca_tests add column if not exists from_date date;
+alter table public.voca_tests add column if not exists to_date date;
 
 -- 응시 결과
 create table if not exists public.voca_test_results (
