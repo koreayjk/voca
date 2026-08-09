@@ -38,10 +38,18 @@
       font-family: var(--sans); color: var(--ink); line-height: 1.55;
       -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
       background:
-        radial-gradient(120% 75% at 50% -8%, #37526f 0%, rgba(55,82,111,0) 55%),
-        linear-gradient(180deg, #253241 0%, #1f2937 45%, #1b2531 100%);
+        radial-gradient(120% 75% at 50% -8%, rgba(55,82,111,0.45) 0%, rgba(55,82,111,0) 55%),
+        linear-gradient(180deg, rgba(37,50,65,0.86) 0%, rgba(31,41,55,0.82) 45%, rgba(27,37,49,0.94) 100%),
+        url('https://imvoca.app/wordbooks/promo/lp-bg.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
       background-attachment: fixed;
     }
+    /* 한 장 고정 배경만 사용 — 섹션별 사진(sec-bg·final-bg·인용밴드·장식 스트립·배너)은
+       모두 숨겨 조잡함 제거. 내용만 고정 배경 위로 스크롤됨. */
+    .photo-sec > .sec-bg, .final-bg, .quote-band > img,
+    .strip, .features-bg, .ex-banner { display: none !important; }
     /* 세련된 그레인 텍스처 */
     body::before {
       content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
