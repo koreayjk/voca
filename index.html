@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v63';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v64';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -2354,6 +2354,31 @@ async function uploadOrgLogo(ev){
 
 function fmtSeenShort(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-'; return (d.getMonth()+1)+'.'+d.getDate(); }catch(e){ return '-'; } }
 
+// 결제 내역(실제 청구서) — Stripe 에서 가져와 리스트로 표시 (읽기 전용)
+async function loadOrgInvoices(){
+  const box=document.getElementById('org-invoices'); if(!box||!userOrg) return;
+  const ko=userNativeLang==='ko';
+  let invs=[];
+  try{ const res=await authPost('/functions/v1/org-invoices', { org_id: userOrg.id }); const data = res ? await res.json() : {}; invs=(data&&data.invoices)||[]; }
+  catch(e){ box.innerHTML=`<div class="muted" style="text-align:center;padding:18px;font-size:12.5px;">${ko?'결제 내역을 불러오지 못했어요':'Failed to load'}</div>`; return; }
+  if(!invs.length){ box.innerHTML=`<div class="muted" style="text-align:center;padding:18px;font-size:12.5px;line-height:1.6;">${ko?'아직 청구서가 없어요.<br>첫 결제(매월 1일) 후 여기에 한 줄씩 쌓여요.':'No invoices yet.'}</div>`; return; }
+  const cur=c=>({usd:'$',krw:'₩',eur:'€'}[String(c||'usd').toLowerCase()]||'$');
+  const stat=s=> s==='paid'?[ko?'결제완료':'Paid','#1c7c3c','#e6f4ea'] : s==='open'?[ko?'미결제':'Open','#b5720a','#fff4e0'] : s==='void'?[ko?'취소':'Void','#777','var(--ink-05)'] : [String(s||''),'#777','var(--ink-05)'];
+  const header=`<div style="display:flex;align-items:center;gap:10px;padding:0 0 8px;font-size:11px;font-weight:700;color:var(--ink-45);border-bottom:2px solid var(--ink-12);"><div style="flex:1;">${ko?'날짜':'Date'}</div><div style="width:92px;text-align:right;">${ko?'총계':'Total'}</div><div style="width:62px;text-align:center;">${ko?'상태':'Status'}</div><div style="width:40px;text-align:right;">${ko?'작업':''}</div></div>`;
+  box.innerHTML = header + invs.map(v=>{
+    const ts=((v.paid_at||v.created)||0)*1000; let d=''; try{ d=new Date(ts).toLocaleDateString(ko?'ko-KR':'en-US',{year:'numeric',month:'long',day:'numeric'}); }catch(e){}
+    const cents=(v.status==='paid'?v.amount_paid:v.amount_due)||0;
+    const amt=cur(v.currency)+(cents/100).toFixed(2);
+    const [sl,sc,sb]=stat(v.status);
+    const link=v.hosted_invoice_url||v.invoice_pdf;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--ink-07);">
+      <div style="flex:1;min-width:0;font-size:13.5px;font-weight:600;color:var(--ink-100);">${d}</div>
+      <div style="width:92px;text-align:right;font-weight:800;font-size:13.5px;color:var(--ink-100);font-variant-numeric:tabular-nums;">${amt}</div>
+      <div style="width:62px;text-align:center;"><span style="background:${sb};color:${sc};font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;">${sl}</span></div>
+      <div style="width:40px;text-align:right;">${link?`<a href="${esc(link)}" target="_blank" rel="noopener" style="font-size:12.5px;color:var(--accent);font-weight:700;text-decoration:none;">${ko?'보기':'View'}</a>`:''}</div>
+    </div>`;
+  }).join('');
+}
 async function loadOrgStudents(){
   if (!userOrg) return;
   // 학생 목록 컨테이너(org-students)는 '학생·관리자' 탭에만 있음. 대시보드 탭에는 없지만
@@ -3058,7 +3083,10 @@ function renderOrgAdminPage(root) {
         <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
         <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${ko?'결제하면 우리 학원 전원이 무제한이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.':'Everyone becomes unlimited. The primary admin is free; teachers and students are $2.99/month each.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
         ${isPrim ? `<button class="btn btn-solid" style="max-width:280px;" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>` : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${ko?'결제는 주 관리자만 진행할 수 있어요.':'Only the primary admin can start billing.'}</div>`}
-      `)}`;
+      `)}
+    ${userOrg.billing_active ? `
+      <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:22px 2px 10px;">${ko?'청구서 (결제 내역)':'Invoices'}</div>
+      ${card(`<div id="org-invoices"><div class="muted" style="text-align:center;padding:20px;font-size:12.5px;">${ko?'불러오는 중…':'Loading…'}</div></div>`)}` : ''}`;
 
   const secSettings = `
     <div class="org-main__title">⚙️ ${ko?'단체 설정':'Settings'}${_helpBtn('settings')}</div>
@@ -3119,6 +3147,7 @@ function renderOrgAdminPage(root) {
   setTimeout(loadOrgStudents, 0); setTimeout(loadDailyReport, 0);
   if (tab==='report') setTimeout(()=>loadOrgReport('report-body'), 0);
   if (tab==='tests') setTimeout(()=>{ loadTests().then(_renderTestList).catch(()=>_renderTestList()); }, 0);
+  if (tab==='billing') setTimeout(loadOrgInvoices, 0);
 }
 
 // ── 자주 묻는 질문(FAQ) ──
