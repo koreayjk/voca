@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v59';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v60';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1596,6 +1596,7 @@ function _renderTestList(){
           : `<button onclick="openTestPaper('${t.id}','A')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ A형</button>
         <button onclick="openTestPaper('${t.id}','B')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ B형</button>`}
         <button onclick="showTestResults('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">📊 결과</button>
+        <button onclick="reissueTest('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🔁 재시험</button>
         <button onclick="deleteTest('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:9px;padding:7px 11px;font-size:12.5px;cursor:pointer;color:#c0392b;margin-left:auto;">삭제</button>
       </div>
     </div>`;
@@ -1740,6 +1741,32 @@ function _wordsForActivity(acts){
   return ws;
 }
 function _norm(s){ return String(s==null?'':s).replace(/[^0-9]/g,''); }
+// 고정형 시험의 출제 범위(책+Day) 단어 풀
+function _wordsForFixed(t){
+  const b=findBook(t.book_id); if(!b||!b.pages) return [];
+  const set=new Set((t.pages||[]).map(p=>_norm(p)));
+  let ws=[]; b.pages.forEach(p=>{ if(set.has(_norm(p.num))) ws=ws.concat(p.words||[]); });
+  return ws.filter(w=>_wordMeaning(w));
+}
+// 재시험: 같은 진도(범위/기간)로 '새 문제'를 만들어 새 시험으로 배정 → 학생 재응시 가능
+async function reissueTest(id){
+  if(!_isTestAdmin()){ toast('관리자 전용'); return; }
+  const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
+  if(!confirm('같은 진도로 새 문제의 재시험을 만들까요?\n학생들이 다시 응시할 수 있어요.')) return;
+  const baseTitle=(t.title||'단어 시험').replace(/\s*\(재시험[^)]*\)\s*$/,'').trim();
+  const title=baseTitle+' (재시험)';
+  let questions=[];
+  if(t.mode!=='range'){
+    const words=_wordsForFixed(t);
+    if(words.length){ questions=_buildQuestions(words, t.qtype, t.num||20); }
+    else { questions=shuffle((t.questions||[]).map((q,i)=>({...q, n:i+1, choices:q.choices?shuffle(q.choices):q.choices}))); } // 폴백: 같은 단어·다른 배열
+    if(!questions.length){ toast('문제를 만들 수 없어요'); return; }
+  }
+  const row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:t.book_id, book_title:t.book_title, pages:t.pages, qtype:t.qtype, questions, num:(t.mode==='range'?(t.num||20):questions.length), mode:t.mode||'fixed', from_date:t.from_date||null, to_date:t.to_date||null, student_ids:t.student_ids||null, due_date:null, active:true };
+  const res=await authPost('/rest/v1/voca_tests', row, 'return=representation');
+  if(res && res.ok){ toast(`재시험 "${title}" 생성! 🔁`); await loadTests(); _renderTestList(); }
+  else toast('재시험 생성 실패 — 잠시 후 다시');
+}
 async function deleteTest(id){
   if(!confirm('이 시험을 삭제할까요? (학생 응시 결과도 함께 삭제)')) return;
   const res=await _authDelete(`/rest/v1/voca_tests?id=eq.${id}`);
