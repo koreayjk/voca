@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v61';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v62';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1610,7 +1610,7 @@ function showTestCreate(){
   let el=document.getElementById('tcreate-overlay'); if(!el){ el=document.createElement('div'); el.id='tcreate-overlay'; document.body.appendChild(el); }
   el.setAttribute('style','position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);display:flex;align-items:flex-end;justify-content:center;');
   el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:520px;max-height:90vh;overflow:auto;">
-    <div style="font-size:18px;font-weight:800;color:var(--ink-100);margin-bottom:14px;">📝 새 시험 만들기</div>
+    <div style="font-size:18px;font-weight:800;color:var(--ink-100);margin-bottom:14px;">📝 새 시험 만들기${_helpBtn('test.create')}</div>
     <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">시험명</div>
     <input id="tc-title" placeholder="예: 수능 기본 Day1-3 단어시험" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px;background:var(--bg-page);color:var(--ink-100);">
     <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:5px;">출제 방식</div>
@@ -1773,7 +1773,7 @@ async function showReissueModal(id){
     : `<div style="font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:14px;">아직 이 시험을 응시한 학생이 없어 점수로 고를 수 없어요.<br>그래도 <b>전체 학생</b>에게 재시험을 낼 수 있어요.</div>
       <button onclick="document.getElementById('reissue-overlay').remove();reissueTest('${id}',null)" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;">전체 학생에게 재시험 만들기</button>`;
   el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:88vh;overflow:auto;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="font-size:18px;font-weight:800;color:var(--ink-100);">🔁 재시험 대상 선택</div><button onclick="document.getElementById('reissue-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-40);">×</button></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="font-size:18px;font-weight:800;color:var(--ink-100);">🔁 재시험 대상 선택${_helpBtn('test.reissue')}</div><button onclick="document.getElementById('reissue-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-40);">×</button></div>
       ${inner}</div>`;
   el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
   _riApplyThreshold();
@@ -2894,6 +2894,52 @@ async function doAssignToStudent(studentId){
     toast(ko?`✅ 단어장 ${n}권 배정했어요`:`✅ Assigned ${n} wordbook(s)`);
   } catch(e){ toast((ko?'배정 오류: ':'Error: ')+(e&&e.message||e)); }
 }
+// ════════════════════════════════════════════════════════════════
+// ❓ 기능별 도움말(설명서) — 각 기능 옆 '?' 버튼 → 용도·사용법(+스냅샷)
+//   새 기능 추가 시 HELP 에 항목만 넣으면 됨.
+// ════════════════════════════════════════════════════════════════
+const _PROMO='https://imvoca.app/wordbooks/promo/';
+const HELP = {
+  dashboard: { icon:'📊', title:'대시보드', purpose:'우리 학생들이 오늘 공부했는지 실시간으로 한눈에 봐요.',
+    steps:['상단 숫자: 전체 / 오늘 공부 / 새 단어 / 복습 / 안 함','학생 이름을 누르면 그 학생이 오늘 무슨 Day를 했는지 상세','아래 “과제별 상세 리포트”로 진도표까지 확인'],
+    tip:'매일 밤 9시 자동 집계도 있지만, 이 화면은 지금 이 순간 기준 실시간이에요.' },
+  members: { icon:'👥', title:'학생·관리자', purpose:'학생 가입 승인, 담임 선생님 지정, 학생 정보를 관리해요.',
+    steps:['“승인 대기”에 뜬 가입 신청 학생을 승인','학생을 눌러 담임(선생님) 지정','담임을 지정하면 그 선생님 화면엔 담당 학생만 보여요'] },
+  report: { icon:'📈', title:'학습 리포트', purpose:'학생별 진도·밀린 복습을 보고, 학부모에게 “오늘 학습 리포트”를 보내요.',
+    steps:['학생별 / 진도표 / 과제별 탭으로 진행 상황 확인','🚨 “챙겨야 할 학생”(미시작·밀림·오늘 안 함)이 맨 위에','학생 옆 📤 → 오늘 외운 단어·복습·목표가 담긴 카드를 카톡·문자로 전송'],
+    tip:'시험 성적은 여기가 아니라 “시험 출제 → 📊 결과”에서 따로 보내요.' },
+  tests: { icon:'📝', title:'시험 출제', purpose:'단어 시험을 온라인(자동채점) 또는 종이(PDF)로 내고 성적을 관리해요.',
+    steps:['“새 시험 만들기” → 단어장·범위·유형·문항 수 선택','학생 앱 홈에 자동 배정 → 학생이 응시하면 자동 채점','🖨️ A형/B형: 종이 시험지(정답지 포함) · 순서 셔플로 부정 방지','📊 결과: 학생별 점수·반평균 · 옆 📤로 시험 성적표를 학부모에게','🔁 재시험: 같은 진도 다른 문제 · 기준 점수 미만 학생만 자동 선택'],
+    img:_PROMO+'student-screens.png', imgcap:'학생 화면(배정 알림 → 응시 → 자동채점)' },
+  'test.create': { icon:'✏️', title:'새 시험 만들기', purpose:'시험 문제를 만드는 화면이에요.',
+    steps:['출제 방식 — 범위 지정: Day 골라 전원 같은 문제 / 기간 맞춤: 학생마다 그 기간에 공부한 단어로 다른 문제','문제 유형 — 객관식(뜻 고르기)·주관식(스펠링)·혼합','대상 — 전체 또는 특정 학생만','기한 — 마감일 표시(선택)'],
+    tip:'진도가 제각각인 반은 “기간 맞춤”이 편해요 — 각자 공부한 만큼만 나와요.' },
+  'test.reissue': { icon:'🔁', title:'재시험', purpose:'이미 본 시험을 “다른 문제”로 다시 내요.',
+    steps:['🔁 재시험 → 원래 시험 점수가 뜸','기준 점수(기본 80) 미만 학생이 자동 선택 — 잘한 학생은 제외','“재시험 만들기” → 선택한 학생에게만 새 문제 배정'],
+    img:_PROMO+'reissue-modal.png', imgcap:'기준 점수 미만만 자동 선택' },
+  invite: { icon:'🎫', title:'초대 코드', purpose:'학생을 우리 단체로 초대하는 코드예요.',
+    steps:['코드를 학생에게 알려주기','학생이 가입할 때 코드 입력 → 우리 단체 소속','“재발급”하면 이전 코드는 더 이상 못 써요'] },
+  billing: { icon:'💳', title:'구독·결제', purpose:'학원 프리미엄 결제로 학생 전원을 무제한으로 열어줘요.',
+    steps:['원장(주 관리자)은 무료','선생님·학생 1명당 월 $2.99 · 승인 인원만큼 자동 청구','“결제 시작”은 주 관리자만 가능'] },
+  settings: { icon:'⚙️', title:'단체 설정', purpose:'단체 이름과 로고를 바꿔요.',
+    steps:['이름 변경','로고 등록 → 학생 화면 상단에 우리 학원 로고가 떠요'] },
+};
+function _helpBtn(key){ return `<button onclick="event.stopPropagation();showHelp('${key}')" title="사용법 보기" style="display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-60);font-size:11px;font-weight:800;cursor:pointer;line-height:1;margin-left:7px;">?</button>`; }
+function showHelp(key){
+  const h=HELP[key]; if(!h) return;
+  let el=document.getElementById('help-overlay'); if(!el){ el=document.createElement('div'); el.id='help-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:10002;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;');
+  el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:88vh;overflow:auto;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="font-size:19px;font-weight:800;color:var(--ink-100);">${h.icon} ${esc(h.title)}</div><button onclick="document.getElementById('help-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:24px;cursor:pointer;color:var(--ink-40);">×</button></div>
+      <div style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--ink-100);line-height:1.6;margin-bottom:14px;">💡 ${esc(h.purpose)}</div>
+      <div style="font-size:12px;font-weight:800;color:var(--ink-60);letter-spacing:.04em;margin:0 2px 8px;">이렇게 쓰세요</div>
+      <ol style="margin:0 0 4px;padding-left:22px;color:var(--ink-100);font-size:13.5px;line-height:1.75;">${(h.steps||[]).map(s=>`<li style="margin-bottom:5px;">${esc(s)}</li>`).join('')}</ol>
+      ${h.tip?`<div style="background:var(--bg-input,var(--bg-card));border:1px dashed var(--ink-12);border-radius:10px;padding:10px 13px;font-size:12.5px;color:var(--ink-60);line-height:1.6;margin-top:12px;">💡 ${esc(h.tip)}</div>`:''}
+      ${h.img?`<div style="margin-top:14px;"><img src="${esc(h.img)}" loading="lazy" style="width:100%;border:1px solid var(--ink-07);border-radius:12px;display:block;">${h.imgcap?`<div style="font-size:11px;color:var(--ink-45);text-align:center;margin-top:6px;">${esc(h.imgcap)}</div>`:''}</div>`:''}
+      <button onclick="document.getElementById('help-overlay').remove()" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">알겠어요</button>
+    </div>`;
+  el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
+}
 function setOrgTab(t){ window._orgTab = t; render(); }
 function renderOrgAdminPage(root) {
   const ko = userNativeLang==='ko';
@@ -2954,7 +3000,7 @@ function renderOrgAdminPage(root) {
 
   // ── 탭별 콘텐츠 ──
   const secDashboard = `
-    <div class="org-main__title">📊 ${ko?'대시보드':'Dashboard'}</div>
+    <div class="org-main__title">📊 ${ko?'대시보드':'Dashboard'}${_helpBtn('dashboard')}</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
       ${stat('org-stat-students', ko?'학생':'Students')}
       ${stat('org-stat-pending', ko?'승인 대기':'Pending', '#b5720a')}
@@ -2971,17 +3017,17 @@ function renderOrgAdminPage(root) {
       </div>`)}`;
 
   const secMembers = `
-    <div class="org-main__title">👥 ${ko?'학생·관리자':'Members'}</div>
+    <div class="org-main__title">👥 ${ko?'학생·관리자':'Members'}${_helpBtn('members')}</div>
     <div id="org-students"><div class="muted" style="font-size:13px;text-align:center;padding:24px;">${ko?'학생 정보를 불러오는 중...':'Loading...'}</div></div>`;
 
   const secReport = `
-    <div class="org-main__title">📈 ${ko?'학습 리포트':'Reports'}</div>
+    <div class="org-main__title">📈 ${ko?'학습 리포트':'Reports'}${_helpBtn('report')}</div>
     <div id="org-daily-report"></div>
     <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:22px 2px 12px;">${ko?'과제별 진행 · 학부모 카드':'By assignment'}</div>
     <div id="report-body"><div class="muted" style="text-align:center;padding:36px;font-size:13px;">${ko?'불러오는 중…':'Loading…'}</div></div>`;
 
   const secInvite = `
-    <div class="org-main__title">🎫 ${ko?'학생 초대':'Invite'}</div>
+    <div class="org-main__title">🎫 ${ko?'학생 초대':'Invite'}${_helpBtn('invite')}</div>
     ${card(`
       <div style="background:var(--gold-bg);border:1px dashed var(--ink-12);border-radius:12px;padding:18px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <div style="min-width:0;">
@@ -2996,7 +3042,7 @@ function renderOrgAdminPage(root) {
       <div class="muted" style="font-size:12.5px;margin-top:13px;line-height:1.55;">${ko?'학생들에게 이 코드를 알려주세요. 가입할 때 입력하면 우리 단체로 들어와요. 재발급하면 이전 코드는 더 이상 쓸 수 없어요.':'Share this code. Students enter it at signup to join.'}</div>`)}`;
 
   const secBilling = `
-    <div class="org-main__title">💳 ${ko?'구독·결제':'Billing'}</div>
+    <div class="org-main__title">💳 ${ko?'구독·결제':'Billing'}${_helpBtn('billing')}</div>
     ${card(userOrg.billing_active ? `
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">✨ ${ko?'프리미엄 활성':'Premium active'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
         <div class="muted" style="font-size:12.5px;line-height:1.7;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved member.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
@@ -3007,7 +3053,7 @@ function renderOrgAdminPage(root) {
       `)}`;
 
   const secSettings = `
-    <div class="org-main__title">⚙️ ${ko?'단체 설정':'Settings'}</div>
+    <div class="org-main__title">⚙️ ${ko?'단체 설정':'Settings'}${_helpBtn('settings')}</div>
     ${card(`
       <div style="font-size:13.5px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">${ko?'단체 이름':'Organization name'}</div>
       <div style="display:flex;align-items:center;gap:10px;">
@@ -3026,7 +3072,7 @@ function renderOrgAdminPage(root) {
       </div>`)}`;
 
   const secTests = `
-    <div class="org-main__title">📝 ${ko?'시험 출제':'Tests'}</div>
+    <div class="org-main__title">📝 ${ko?'시험 출제':'Tests'}${_helpBtn('tests')}</div>
     ${card(`<div style="font-size:12.5px;color:var(--ink-60);line-height:1.65;">${ko?'배정 단어장에서 문제를 뽑아 <b>온라인 시험(자동채점)</b> 또는 <b>PDF 시험지</b>로 출제하세요.<br>만든 시험은 <b>승인된 전체 학생에게 자동 배정</b>되고, 학생은 앱 홈의 <b>📝 배정된 시험</b> 배너(또는 상단 📝 시험)에서 응시합니다.':'Create online (auto-graded) or printable tests. New tests are auto-assigned to all approved students; students take them from the “📝 Tests” banner on their home.'}</div>`)}
     <button onclick="showTestCreate()" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:14px;">＋ ${ko?'새 시험 만들기':'New test'}</button>
     <div id="test-list"><div class="muted" style="text-align:center;padding:24px;font-size:13px;">${ko?'불러오는 중…':'Loading…'}</div></div>`;
