@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v56';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v57';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -2943,7 +2943,7 @@ function renderOrgAdminPage(root) {
     ['dashboard','📊', ko?'대시보드':'Dashboard'],
     ['members','👥', ko?'학생·관리자':'Members'],
     ['report','📈', ko?'리포트':'Reports'],
-    ['tests','📝', ko?'시험':'Tests'],
+    ['tests','📝', ko?'시험 출제':'Tests'],
     ['invite','🎫', ko?'초대 코드':'Invite'],
     ['billing','💳', ko?'구독·결제':'Billing'],
     ['settings','⚙️', ko?'설정':'Settings'],
