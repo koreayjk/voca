@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v62';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v63';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -2919,8 +2919,15 @@ const HELP = {
     img:_PROMO+'reissue-modal.png', imgcap:'기준 점수 미만만 자동 선택' },
   invite: { icon:'🎫', title:'초대 코드', purpose:'학생을 우리 단체로 초대하는 코드예요.',
     steps:['코드를 학생에게 알려주기','학생이 가입할 때 코드 입력 → 우리 단체 소속','“재발급”하면 이전 코드는 더 이상 못 써요'] },
-  billing: { icon:'💳', title:'구독·결제', purpose:'학원 프리미엄 결제로 학생 전원을 무제한으로 열어줘요.',
-    steps:['원장(주 관리자)은 무료','선생님·학생 1명당 월 $2.99 · 승인 인원만큼 자동 청구','“결제 시작”은 주 관리자만 가능'] },
+  billing: { icon:'💳', title:'구독·결제', purpose:'학원 프리미엄 결제로 학생·선생님 전원이 무제한이 돼요. 쓰는 인원수만큼만 매월 자동 청구됩니다.',
+    steps:['요금: 선생님·학생 1명당 월 $2.99 (원장·주 관리자는 무료)',
+      '청구일: 매월 1일(한국시간)에 자동 청구',
+      '인원 기준: 그 시점(매월 1일)에 “승인된” 인원수로 계산',
+      '중간에 승인한 학생: 남은 날짜만큼 일할계산되어 “다음 1일” 청구서에 합산',
+      '중간에 나간 학생: 남은 날짜만큼 자동 차감(크레딧)',
+      '“결제 시작”은 주 관리자만 가능'],
+    tip:'처음 결제할 땐 시작일부터 그달 말일까지 남은 기간이 일할계산으로 먼저 청구되고, 다음 1일부터 정상 월 청구가 시작돼요. 승인 대기 학생은 과금 대상이 아니에요.',
+    example:'📅 예시 (3월 15일 결제 시작 · 학생 10명)\n\n· 3/15 결제 시작 → 3/15~3/31(남은 17일)치 10명 일할요금이 먼저 청구\n· 4/1 → 10명 × $2.99 = $29.90 (4월 한 달)\n\n중간에 2명 더 승인(3/20)하면?\n· 그 2명의 3/20~3/31 일할요금은 4/1 청구서에 합산\n· 4/1 총청구 = 12명 정규요금 + 추가 2명 3월 일할분\n\n학생이 나가면?\n· 남은 날짜만큼 자동 차감되어 다음 1일 청구서에서 빠져요' },
   settings: { icon:'⚙️', title:'단체 설정', purpose:'단체 이름과 로고를 바꿔요.',
     steps:['이름 변경','로고 등록 → 학생 화면 상단에 우리 학원 로고가 떠요'] },
 };
@@ -2935,6 +2942,7 @@ function showHelp(key){
       <div style="font-size:12px;font-weight:800;color:var(--ink-60);letter-spacing:.04em;margin:0 2px 8px;">이렇게 쓰세요</div>
       <ol style="margin:0 0 4px;padding-left:22px;color:var(--ink-100);font-size:13.5px;line-height:1.75;">${(h.steps||[]).map(s=>`<li style="margin-bottom:5px;">${esc(s)}</li>`).join('')}</ol>
       ${h.tip?`<div style="background:var(--bg-input,var(--bg-card));border:1px dashed var(--ink-12);border-radius:10px;padding:10px 13px;font-size:12.5px;color:var(--ink-60);line-height:1.6;margin-top:12px;">💡 ${esc(h.tip)}</div>`:''}
+      ${h.example?`<div style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:12px;padding:13px 15px;font-size:12.5px;color:var(--ink-100);line-height:1.7;margin-top:12px;white-space:pre-wrap;">${esc(h.example)}</div>`:''}
       ${h.img?`<div style="margin-top:14px;"><img src="${esc(h.img)}" loading="lazy" style="width:100%;border:1px solid var(--ink-07);border-radius:12px;display:block;">${h.imgcap?`<div style="font-size:11px;color:var(--ink-45);text-align:center;margin-top:6px;">${esc(h.imgcap)}</div>`:''}</div>`:''}
       <button onclick="document.getElementById('help-overlay').remove()" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">알겠어요</button>
     </div>`;
