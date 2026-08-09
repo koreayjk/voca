@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v60';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v61';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1596,7 +1596,7 @@ function _renderTestList(){
           : `<button onclick="openTestPaper('${t.id}','A')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ A형</button>
         <button onclick="openTestPaper('${t.id}','B')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🖨️ B형</button>`}
         <button onclick="showTestResults('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">📊 결과</button>
-        <button onclick="reissueTest('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🔁 재시험</button>
+        <button onclick="showReissueModal('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer;">🔁 재시험</button>
         <button onclick="deleteTest('${t.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:9px;padding:7px 11px;font-size:12.5px;cursor:pointer;color:#c0392b;margin-left:auto;">삭제</button>
       </div>
     </div>`;
@@ -1748,11 +1748,45 @@ function _wordsForFixed(t){
   let ws=[]; b.pages.forEach(p=>{ if(set.has(_norm(p.num))) ws=ws.concat(p.words||[]); });
   return ws.filter(w=>_wordMeaning(w));
 }
-// 재시험: 같은 진도(범위/기간)로 '새 문제'를 만들어 새 시험으로 배정 → 학생 재응시 가능
-async function reissueTest(id){
+// 재시험 대상 선택 모달 — 원래 점수 보여주고 '기준 점수 미만' 자동 선택
+async function showReissueModal(id){
   if(!_isTestAdmin()){ toast('관리자 전용'); return; }
   const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
-  if(!confirm('같은 진도로 새 문제의 재시험을 만들까요?\n학생들이 다시 응시할 수 있어요.')) return;
+  const rows=await authGet(`/rest/v1/voca_test_results?test_id=eq.${id}&select=user_id,user_name,score,total&order=score.asc`) || [];
+  let el=document.getElementById('reissue-overlay'); if(!el){ el=document.createElement('div'); el.id='reissue-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;');
+  const inner = rows.length ? `
+      <div style="font-size:12.5px;color:var(--ink-60);line-height:1.6;margin-bottom:12px;">원래 시험 점수예요. <b>기준 점수 미만</b> 학생을 자동 선택했어요 — 필요하면 조정하세요. (잘한 학생은 재시험 안 봐도 됩니다)</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:13px;color:var(--ink-100);">
+        <span style="font-weight:700;">기준 점수</span>
+        <input id="ri-th" type="number" value="80" min="0" max="100" oninput="_riApplyThreshold()" style="width:72px;border:1px solid var(--ink-12);border-radius:8px;padding:7px 9px;font-size:14px;background:var(--bg-page);color:var(--ink-100);"> 점 미만 자동 선택
+      </div>
+      <div style="max-height:44vh;overflow:auto;border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;">
+        ${rows.map(r=>{ const pct=r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#27ae60':pct>=50?'#e67e22':'#e74c3c';
+          return `<label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><input type="checkbox" class="ri-stu" value="${r.user_id}" data-pct="${pct}" onchange="_riCount()" style="width:17px;height:17px;"><span style="flex:1;font-size:14px;color:var(--ink-100);">${esc(r.user_name||'학생')}</span><span style="font-size:12px;color:var(--ink-60);">${r.score}/${r.total}</span><span style="font-weight:800;color:${c};font-size:13px;min-width:40px;text-align:right;">${pct}%</span></label>`; }).join('')}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button onclick="_riAll(true)" style="flex:1;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:8px;font-size:12.5px;font-weight:700;cursor:pointer;">전체 선택</button>
+        <button onclick="_riAll(false)" style="flex:1;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-60);border-radius:9px;padding:8px;font-size:12.5px;cursor:pointer;">전체 해제</button>
+      </div>
+      <button id="ri-create" onclick="_riCreate('${id}')" style="width:100%;margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;">재시험 만들기</button>`
+    : `<div style="font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:14px;">아직 이 시험을 응시한 학생이 없어 점수로 고를 수 없어요.<br>그래도 <b>전체 학생</b>에게 재시험을 낼 수 있어요.</div>
+      <button onclick="document.getElementById('reissue-overlay').remove();reissueTest('${id}',null)" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;">전체 학생에게 재시험 만들기</button>`;
+  el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:88vh;overflow:auto;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="font-size:18px;font-weight:800;color:var(--ink-100);">🔁 재시험 대상 선택</div><button onclick="document.getElementById('reissue-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-40);">×</button></div>
+      ${inner}</div>`;
+  el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
+  _riApplyThreshold();
+}
+function _riApplyThreshold(){ const th=parseInt(document.getElementById('ri-th')?.value||'80',10); document.querySelectorAll('.ri-stu').forEach(c=>{ c.checked = Number(c.dataset.pct) < th; }); _riCount(); }
+function _riAll(on){ document.querySelectorAll('.ri-stu').forEach(c=>c.checked=on); _riCount(); }
+function _riCount(){ const n=document.querySelectorAll('.ri-stu:checked').length; const b=document.getElementById('ri-create'); if(b) b.textContent=`재시험 만들기 (${n}명)`; }
+async function _riCreate(id){ const ids=[...document.querySelectorAll('.ri-stu:checked')].map(c=>c.value); if(!ids.length){ toast('재시험 볼 학생을 선택하세요'); return; } document.getElementById('reissue-overlay')?.remove(); await reissueTest(id, ids); }
+
+// 재시험: 같은 진도(범위/기간)로 '새 문제'를 만들어 '선택 학생'에게 새 시험으로 배정
+async function reissueTest(id, studentIds){
+  if(!_isTestAdmin()){ toast('관리자 전용'); return; }
+  const t=_tests.find(x=>String(x.id)===String(id)); if(!t){ toast('시험을 찾을 수 없어요'); return; }
   const baseTitle=(t.title||'단어 시험').replace(/\s*\(재시험[^)]*\)\s*$/,'').trim();
   const title=baseTitle+' (재시험)';
   let questions=[];
@@ -1762,9 +1796,10 @@ async function reissueTest(id){
     else { questions=shuffle((t.questions||[]).map((q,i)=>({...q, n:i+1, choices:q.choices?shuffle(q.choices):q.choices}))); } // 폴백: 같은 단어·다른 배열
     if(!questions.length){ toast('문제를 만들 수 없어요'); return; }
   }
-  const row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:t.book_id, book_title:t.book_title, pages:t.pages, qtype:t.qtype, questions, num:(t.mode==='range'?(t.num||20):questions.length), mode:t.mode||'fixed', from_date:t.from_date||null, to_date:t.to_date||null, student_ids:t.student_ids||null, due_date:null, active:true };
+  const student_ids = (studentIds && studentIds.length) ? studentIds : (t.student_ids||null);
+  const row={ org_id:userOrg.id, created_by:currentUser.id, title, book_id:t.book_id, book_title:t.book_title, pages:t.pages, qtype:t.qtype, questions, num:(t.mode==='range'?(t.num||20):questions.length), mode:t.mode||'fixed', from_date:t.from_date||null, to_date:t.to_date||null, student_ids, due_date:null, active:true };
   const res=await authPost('/rest/v1/voca_tests', row, 'return=representation');
-  if(res && res.ok){ toast(`재시험 "${title}" 생성! 🔁`); await loadTests(); _renderTestList(); }
+  if(res && res.ok){ toast(`재시험 생성! ${student_ids?student_ids.length+'명 대상':'전체'} 🔁`); await loadTests(); _renderTestList(); }
   else toast('재시험 생성 실패 — 잠시 후 다시');
 }
 async function deleteTest(id){
