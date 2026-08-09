@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v58';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v59';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -1770,7 +1770,13 @@ function _paperQ(qs){
   const qhtml=qs.map((q,i)=> q.type==='mc'
     ? `<div class="q"><div class="qt"><b>${i+1}.</b> ${_paperEsc(q.prompt)}</div><div class="ch">${(q.choices||[]).map((c,j)=>`<span>${_CIRC[j]||'·'} ${_paperEsc(c)}</span>`).join('')}</div></div>`
     : `<div class="q"><div class="qt"><b>${i+1}.</b> ${_paperEsc(q.prompt)}</div><div class="bl">________________________</div></div>`).join('');
-  const keys=qs.map((q,i)=>`<span class="k"><b>${i+1}.</b> ${_paperEsc(q.answer)}</span>`).join('');
+  // 정답지: 객관식은 정답 '번호(①②③④)'만, 주관식은 '답(단어)'을 표기
+  const keys=qs.map((q,i)=>{
+    let a;
+    if(q.type==='mc'){ const idx=(q.choices||[]).indexOf(q.answer); a = idx>=0 ? _CIRC[idx] : _paperEsc(q.answer); }
+    else a = _paperEsc(q.answer);
+    return `<span class="k"><b>${i+1}.</b> ${a}</span>`;
+  }).join('');
   return { qhtml, keys };
 }
 function openTestPaper(id, variant){
