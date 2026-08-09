@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v64';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v65';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -3998,12 +3998,30 @@ function _setMyOfficialIds(arr){ try{ localStorage.setItem(_myOfficialKey(), JSO
 async function appendOfficialBooks() {
   try {
     // 단체 소속이면서 '승인된 관리자(owner)'가 아닌 사람 = 단체 학생/대기자.
-    // → 공식 단어장을 자동으로 보여주지 않는다. 배정(_assigned)받은 것만 loadAssignments 로 보임.
+    // → 공식 단어장 전체를 자동으로 보여주지 않는다. 배정(_assigned)받은 것만 loadAssignments 로 보임.
     const approvedOwner = (userOrgRole === 'owner' && userOrgStatus === 'approved');
-    if (userOrgId && !approvedOwner) return;
-
     const od = await ensureOfficialCatalog();
     if (!Array.isArray(od) || !od.length) return;
+
+    // ⚠️ 단체 학생: 카탈로그 전체는 감추되, '가입 전부터 외우던(복습 진도가 있는)'
+    // 공식책은 계속 책장에 유지한다. 개인 사용자가 공식 단어장을 담아 공부하다가
+    // 단체로 소속되면 그 책이 통째로 사라지던 문제 방지 — 진도(voca_review)는 DB에
+    // 남아 있으므로 책 타일만 되살려 준다. (배정받은 공식책은 loadAssignments 가 이미 주입)
+    if (userOrgId && !approvedOwner) {
+      try {
+        const offIds = od.map(b => b.id);
+        const rv = offIds.length
+          ? await sbFetch(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=in.(${offIds.join(',')})&select=book_id`)
+          : [];
+        const studied = new Set(Array.isArray(rv) ? rv.map(r => r.book_id) : []);
+        od.filter(b => studied.has(b.id)).forEach(b => {
+          const ex = findBook(b.id);
+          if (ex) { ex._official = true; ex._readonly = true; ex._officialContent = true; if (!ex.cover) ex.cover = _officialCover(b.title, b.cover_url); }
+          else books.push(_mapOfficialBook(b));
+        });
+      } catch(e){ console.warn('[studied official keep]', e); }
+      return;
+    }
     const have = new Set(books.map(b => b.id));
     // 승인된 관리자: 배정 위해 전체 언어 공식책 모두 노출.
     // 개인 사용자: 본인이 '추가'한 공식책만 노출(자동 노출 안 함).
