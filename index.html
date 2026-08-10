@@ -653,7 +653,7 @@ window._reviewBadgeCount = 0;
 // 복습 누락·점수 미지급 등 "조용히 실패하던" 문제를 어디서 몇 건 나는지 수집.
 // 반드시 절대 throw 하지 않게(로깅이 앱을 깨면 안 됨) 전부 try 로 감쌈.
 // ════════════════════════════════════════════════════════════════
-const APP_VERSION = 'v65';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
+const APP_VERSION = 'v66';       // 배포마다 갱신 → 에러가 어느 버전에서 났는지 추적
 const _errSeen = new Set();      // 같은 에러 반복 전송 방지(세션 내)
 let _errCount = 0;               // 세션당 전송 상한(폭주 방지)
 function logError(kind, context, message, detail){
@@ -691,6 +691,8 @@ window.addEventListener('unhandledrejection', (e) => {
 });
 let userPlan = 'free';      // 'free' or 'premium'
 let userStripeId = '';      // Stripe 고객 ID (결제한 사람만 있음)
+let userPremiumUntil = null; // 무료 제공(관리자 지급) 만료일 — 있으면 comp 지급 프리미엄
+let userCreatedAt = null;    // 가입일 (무료 제공 청구내역 시작 기준)
 let userScanCount = 0;      // 이번 달 스캔 횟수
 const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한 (총 누적)
 let userDailyScanCount = 0; // 오늘 스캔 횟수 (단체 학생용)
@@ -988,9 +990,9 @@ async function loadUserPlan() {
   try {
     // authGet: 토큰 만료 시 자동 갱신+재시도. (오래 유휴 후 새로고침하면 org 정보가
     // 안 실려 어드민 통계가 0으로 뜨던 문제 방지 — 이 값이 org 상태의 기준점)
-    let data = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status`);
+    let data = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status,premium_until,created_at`);
     // 일시적 실패면 짧게 재시도(모바일 실행 직후 등)
-    if (!Array.isArray(data)) { await new Promise(r=>setTimeout(r,500)); data = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status`); }
+    if (!Array.isArray(data)) { await new Promise(r=>setTimeout(r,500)); data = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status,premium_until,created_at`); }
     if (!Array.isArray(data)) return; // 그래도 실패 → 기존 값 유지(0으로 덮어쓰지 않음)
     if (data[0]) {
       userPlan = data[0].plan || 'free';
@@ -998,6 +1000,8 @@ async function loadUserPlan() {
       userDailyScanCount = data[0].daily_scan_count || 0;
       userDailyScanDate = data[0].daily_scan_date || null;
       userStripeId = data[0].stripe_customer_id || '';
+      userPremiumUntil = data[0].premium_until || null;
+      userCreatedAt = data[0].created_at || null;
       userOrgId = data[0].org_id || null;
       userOrgRole = data[0].org_role || null;
       userOrgStatus = data[0].org_status || null;
@@ -2070,6 +2074,68 @@ function incrementScanCount() {
 // 스캔 가능 여부 체크
 function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function isOrgBillingActive(){ return !!(userOrg && userOrg.billing_active); }
+
+// ── 무료 제공(100% 할인) 결제 표기 ──────────────────────────────
+// 관리자가 카드 등록 없이 무료로 지급한 프리미엄. Stripe 실제 청구서가 없으므로
+// '정가 → 100% 할인 → $0' 와 '매월 1일 $0 결제완료' 내역을 앱에서 합성해 보여준다.
+const PRICE_IND_MONTH  = 3.33;   // 개인 프리미엄 정가($/월)
+const PRICE_SEAT_MONTH = 2.99;   // 학원 1인당 정가($/월)
+// 개인: 프리미엄인데 Stripe 고객이 아니면(=결제 안 함) 관리자 무료 지급.
+function _indComp(){ return userPlan==='premium' && !userStripeId; }
+// 학원: 결제중이면서 free_until 이 지정돼 있으면(=grantFreeOrg) 무료 지급. (Stripe 결제 학원은 free_until 없음)
+function _orgComp(){ return !!(userOrg && userOrg.billing_active && userOrg.free_until); }
+function _money(n){ return '$'+Number(n||0).toFixed(2); }
+// 시작일~종료일 사이 '매월 1일' 목록(최신순, 최대 12개). $0 결제완료 영수증 합성용.
+function _compReceiptDates(startISO, endISO){
+  const now = new Date();
+  let end = endISO ? new Date(endISO) : null;
+  if (!end || end > now) end = now;                 // 미래 만료면 오늘까지만 '완료'로 표기
+  let start = startISO ? new Date(startISO) : new Date(end.getFullYear(), end.getMonth(), 1);
+  if (isNaN(start)) start = new Date(end.getFullYear(), end.getMonth(), 1);
+  // 시작월의 1일부터
+  let y = start.getFullYear(), m = start.getMonth();
+  const out = [];
+  // 최대 12개월치만(오래된 가입일이 있어도 과도한 목록 방지)
+  while ((y < end.getFullYear()) || (y === end.getFullYear() && m <= end.getMonth())) {
+    const d = new Date(y, m, 1);
+    if (d <= end) out.push(d);
+    m++; if (m > 11) { m = 0; y++; }
+  }
+  return out.slice(-12).reverse();                  // 최신월이 위로
+}
+// 다음 달 1일 (예정 결제일)
+function _nextFirst(){ const n=new Date(); return new Date(n.getFullYear(), n.getMonth()+1, 1); }
+function _fmtDateLong(d, ko){ try{ return d.toLocaleDateString(ko?'ko-KR':'en-US',{year:'numeric',month:'long',day:'numeric'}); }catch(e){ return ''; } }
+// 무료 제공 결제 카드 HTML (개인/학원 공용). fullPrice=정가($/월), seats=인원(학원만), startISO/endISO=영수증 범위
+function _compBillingHTML(fullPrice, seats, startISO, endISO){
+  const ko = userNativeLang==='ko';
+  const rows = _compReceiptDates(startISO, endISO);
+  const seatNote = seats ? (ko?` <span style="color:var(--ink-45);font-weight:600;">(${seats}명 × ${_money(PRICE_SEAT_MONTH)})</span>`:` <span style="color:var(--ink-45);font-weight:600;">(${seats} × ${_money(PRICE_SEAT_MONTH)})</span>`) : '';
+  const priceBlock = `
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+      <span style="font-size:13px;color:var(--ink-45);">${ko?'정가':'Regular'}</span>
+      <span style="font-size:15px;color:var(--ink-45);text-decoration:line-through;text-decoration-thickness:2px;">${_money(fullPrice)}${ko?'/월':'/mo'}</span>${seatNote}
+      <span style="background:#fde8e8;color:#c0392b;font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px;">100% ${ko?'할인':'OFF'}</span>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:8px;">
+      <span style="font-family:var(--font-display);font-size:30px;font-weight:700;color:#1c7c3c;line-height:1;">${_money(0)}</span>
+      <span style="font-size:13px;color:var(--ink-60);font-weight:600;">${ko?'/월 · 무료 제공':'/mo · Free'}</span>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:8px;line-height:1.6;">${ko?'관리자가 지급한 <b>100% 할인 쿠폰</b>이 적용돼 매월 1일 <b>$0로 자동 결제(완료)</b>돼요. 카드 등록 없이 프리미엄 전 기능을 그대로 쓰실 수 있어요.':'A 100% discount is applied — billed $0 automatically on the 1st each month. Full premium, no card needed.'}</div>`;
+  const next = _nextFirst();
+  const nextRow = `<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--ink-07);opacity:.7;">
+      <div style="flex:1;min-width:0;font-size:13.5px;font-weight:600;color:var(--ink-100);">${_fmtDateLong(next,ko)}</div>
+      <div style="width:92px;text-align:right;font-weight:800;font-size:13.5px;color:var(--ink-100);font-variant-numeric:tabular-nums;">${_money(0)}</div>
+      <div style="width:66px;text-align:center;"><span style="background:var(--ink-05);color:var(--ink-60);font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;">${ko?'예정':'Upcoming'}</span></div>
+    </div>`;
+  const header = `<div style="display:flex;align-items:center;gap:10px;padding:0 0 8px;font-size:11px;font-weight:700;color:var(--ink-45);border-bottom:2px solid var(--ink-12);"><div style="flex:1;">${ko?'날짜':'Date'}</div><div style="width:92px;text-align:right;">${ko?'총계':'Total'}</div><div style="width:66px;text-align:center;">${ko?'상태':'Status'}</div></div>`;
+  const paidRows = rows.map(d=>`<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--ink-07);">
+      <div style="flex:1;min-width:0;font-size:13.5px;font-weight:600;color:var(--ink-100);">${_fmtDateLong(d,ko)}</div>
+      <div style="width:92px;text-align:right;font-weight:800;font-size:13.5px;color:var(--ink-100);font-variant-numeric:tabular-nums;">${_money(0)}</div>
+      <div style="width:66px;text-align:center;"><span style="background:#e6f4ea;color:#1c7c3c;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;">${ko?'결제완료':'Paid'}</span></div>
+    </div>`).join('');
+  return { priceBlock, invoicesHTML: header + nextRow + paidRows };
+}
 function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved' && isOrgBillingActive()); }
 // 스캔 무제한 판정(개인 프리미엄 또는 결제중 학원의 원장). 헤더 표시와 canScan 을 일치시키기 위해 공용.
 function hasUnlimitedScan(){ return userPlan==='premium' || (userOrgRole==='owner' && isOrgBillingActive()); }
@@ -2232,10 +2298,10 @@ async function loadMyOrg() {
     let d;
     if (userOrgRole === 'owner') {
       // 공동 관리자 포함: 본인 org_id로 단체를 찾고, 없으면(주 관리자 레거시) owner_id로 폴백
-      if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
-      else d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
+      if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active,free_until,created_at&limit=1`);
+      else d = await sbFetch(`/rest/v1/orgs?owner_id=eq.${currentUser.id}&select=id,name,code,logo_url,owner_id,billing_active,free_until,created_at&limit=1`);
     }
-    else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active&limit=1`);
+    else if (userOrgId) d = await sbFetch(`/rest/v1/orgs?id=eq.${userOrgId}&select=id,name,code,logo_url,owner_id,billing_active,free_until,created_at&limit=1`);
     userOrg = (Array.isArray(d) && d[0]) ? d[0] : null;
     // 자기복구: 내가 직접 만든 단체(orgs.owner_id=본인)인데 하드닝 트리거 때문에 아직
     // owner/approved 로 못 올라간 계정을 자동 승격. (가드는 orgs.owner_id 로 이 변경을 허용)
@@ -2358,6 +2424,19 @@ function fmtSeenShort(iso){ try{ const d=new Date(iso); if(isNaN(d)) return '-';
 async function loadOrgInvoices(){
   const box=document.getElementById('org-invoices'); if(!box||!userOrg) return;
   const ko=userNativeLang==='ko';
+  // 무료 제공(100% 할인) 학원: Stripe 실제 청구서가 없으므로 '$0 결제완료' 내역을 합성한다.
+  if (_orgComp()) {
+    let seats = 0;
+    try {
+      const r = await authGet(`/rest/v1/members?org_id=eq.${userOrg.id}&org_status=eq.approved&id=neq.${userOrg.owner_id}&select=id`);
+      seats = Array.isArray(r) ? r.length : 0;
+    } catch(e){}
+    const full = Math.max(1, seats) * PRICE_SEAT_MONTH;
+    const { priceBlock, invoicesHTML } = _compBillingHTML(full, Math.max(1, seats), userOrg.created_at, userOrg.free_until);
+    const pb = document.getElementById('org-price-block'); if (pb) pb.innerHTML = priceBlock;
+    box.innerHTML = invoicesHTML;
+    return;
+  }
   let invs=[];
   try{ const res=await authPost('/functions/v1/org-invoices', { org_id: userOrg.id }); const data = res ? await res.json() : {}; invs=(data&&data.invoices)||[]; }
   catch(e){ box.innerHTML=`<div class="muted" style="text-align:center;padding:18px;font-size:12.5px;">${ko?'결제 내역을 불러오지 못했어요':'Failed to load'}</div>`; return; }
@@ -3076,10 +3155,13 @@ function renderOrgAdminPage(root) {
 
   const secBilling = `
     <div class="org-main__title">💳 ${ko?'구독·결제':'Billing'}${_helpBtn('billing')}</div>
-    ${card(userOrg.billing_active ? `
+    ${card(userOrg.billing_active ? (_orgComp() ? `
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">🎁 ${ko?'무료 제공 (100% 할인)':'Free grant (100% off)'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
+        <div id="org-price-block"><div class="muted" style="font-size:12px;">${ko?'불러오는 중…':'Loading…'}</div></div>
+      ` : `
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">✨ ${ko?'프리미엄 활성':'Premium active'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
         <div class="muted" style="font-size:12.5px;line-height:1.7;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved member.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
-      ` : `
+      `) : `
         <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
         <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${ko?'결제하면 우리 학원 전원이 무제한이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.':'Everyone becomes unlimited. The primary admin is free; teachers and students are $2.99/month each.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
         ${isPrim ? `<button class="btn btn-solid" style="max-width:280px;" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>` : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${ko?'결제는 주 관리자만 진행할 수 있어요.':'Only the primary admin can start billing.'}</div>`}
@@ -3217,12 +3299,43 @@ function showMyMenu() {
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
       ${(userOrgRole==='owner' || isPendingOwner()) ? row('🏫', (userOrgRole==='owner'?(ko?'단체 관리':'Org Admin'):(ko?'단체 만들기':'Create Org')), "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
       ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
+      ${_indComp() ? row('🎁', ko?'구독 상태 · 결제 내역':'Subscription · Invoices', "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
       ${row('🌐', ko?'언어 설정':'Language', "document.getElementById('my-modal').remove();showLangSettings()")}
       ${row('❓', ko?'자주 묻는 질문':'FAQ', "document.getElementById('my-modal').remove();showFaq()")}
       ${row('✉️', ko?'문의하기':'Contact Us', "document.getElementById('my-modal').remove();contactSupport()")}
       ${row(isDark?'☀️':'🌙', isDark?(ko?'라이트 모드':'Light Mode'):(ko?'다크 모드':'Dark Mode'), "document.getElementById('my-modal').remove();toggleDarkMode()")}
       ${row('🚪', ko?'로그아웃':'Logout', "document.getElementById('my-modal').remove();sbSignOut()")}
       <button onclick="document.getElementById('my-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${ko?'닫기':'Close'}</button>
+    </div>`;
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+}
+
+// 개인 무료 제공(100% 할인) 프리미엄: 구독 상태 + $0 결제 내역 모달
+function showPersonalBilling() {
+  const ko = userNativeLang === 'ko';
+  const { priceBlock, invoicesHTML } = _compBillingHTML(PRICE_IND_MONTH, 0, userCreatedAt, userPremiumUntil);
+  const untilTxt = userPremiumUntil
+    ? (ko?`무료 제공 만료: ${_fmtDateLong(new Date(userPremiumUntil), ko)}`:`Free until ${_fmtDateLong(new Date(userPremiumUntil), ko)}`)
+    : (ko?'무료 제공: 만료일 없음 (무기한)':'Free: no expiry');
+  const overlay = document.createElement('div');
+  overlay.id = 'pbill-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;max-width:400px;width:100%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
+      <div style="padding:20px 20px 12px;flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;color:var(--ink-100);">🎁 ${ko?'구독 상태':'Subscription'}</span>
+          <span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">${ko?'프리미엄':'Premium'}</span>
+        </div>
+        ${priceBlock}
+        <div class="muted" style="font-size:11.5px;margin-top:8px;">${untilTxt}</div>
+      </div>
+      <div style="overflow-y:auto;flex:1;padding:4px 20px 8px;">
+        <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:8px 2px 10px;">${ko?'결제 내역':'Invoices'}</div>
+        ${invoicesHTML}
+      </div>
+      <button onclick="document.getElementById('pbill-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;border-top:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:13px;cursor:pointer;font-family:var(--font-body);flex-shrink:0;">${ko?'닫기':'Close'}</button>
     </div>`;
   overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
   document.body.appendChild(overlay);
