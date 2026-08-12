@@ -7463,8 +7463,8 @@ function speak(word, onEnd) {
 async function loadHallOfFame() {
   try {
     let q;
-    if (userOrgId) q = `/rest/v1/members?org_id=eq.${userOrgId}&org_status=eq.approved&org_role=eq.student&select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`;
-    else q = `/rest/v1/members?org_id=is.null&select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`;
+    if (userOrgId) q = `/rest/v1/members_public?org_id=eq.${userOrgId}&org_status=eq.approved&org_role=eq.student&select=name,total_words,perfect_reviews&order=total_words.desc&limit=50`;
+    else q = `/rest/v1/members_public?org_id=is.null&select=name,total_words,perfect_reviews&order=total_words.desc&limit=20`;
     const data = await authGet(q);
     return Array.isArray(data) ? data.filter(m => m.total_words > 0) : [];
   } catch(e) { return []; }
@@ -7544,7 +7544,7 @@ async function renderStats(root, dock) {
     // 데이터 캐시 (탭/페이지 전환 시 재요청 안 함) — 성공(배열)일 때만 캐시.
     // 토큰 만료 등 실패 결과를 빈 배열로 캐시하면 새로고침 전까지 계속 비어 보임 → 방지.
     if (!Array.isArray(window._hallData)) {
-      const hq = `/rest/v1/members?select=name,total_words,perfect_reviews,last_scored_at,org_id,org_role,org_status&limit=2000`;
+      const hq = `/rest/v1/members_public?select=name,total_words,perfect_reviews,last_scored_at,org_id,org_role,org_status&limit=2000`;
       const data = await authGet(hq);
       if (Array.isArray(data)) window._hallData = data;
     }
