@@ -1,609 +1,1339 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 26,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 26,
+ "words": [
+  {
+   "en": "contentious",
+   "ipa": "/kənˈtenʃəs/",
+   "pos": "adj",
+   "meanings": [
     {
-      "en": "contentious",
-      "ipa": "/kənˈtenʃəs/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "논쟁을 일으키는, 논란이 많은", "ex": "The interpretation of the ancient text remains contentious among scholars of comparative religion.", "tr": "그 고대 문헌의 해석은 비교종교학 학자들 사이에서 여전히 논쟁을 일으킨다.", "src": "" }
-      ],
-      "syn": ["controversial", "disputed", "debatable"],
-      "deriv": ["contention (n) 논쟁, 주장", "contend (v) 다투다, 주장하다"],
-      "roots": ["con(=함께) + tendere(=뻗다, 다투다) → 서로 팽팽히 맞서는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "singularity",
-      "ipa": "/ˌsɪŋɡjəˈlærəti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "특이점", "ex": "At the center of a black hole lies a singularity, where the known laws of physics cease to apply.", "tr": "블랙홀의 중심에는 알려진 물리 법칙이 더 이상 적용되지 않는 특이점이 존재한다.", "src": "" }
-      ],
-      "syn": ["anomaly", "unique point"],
-      "deriv": ["singular (adj) 단일한, 특이한"],
-      "roots": ["singulus(=하나의) → 유일무이한 점"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "flux",
-      "ipa": "/flʌks/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "유동, 끊임없는 변화", "ex": "The composition of the microbial community is in constant flux as nutrients move through the soil.", "tr": "미생물 군집의 구성은 양분이 토양을 통과해 이동하면서 끊임없이 유동한다.", "src": "" },
-        { "pos": "n", "ko": "선속, 흐름의 양", "ex": "Researchers measured the flux of carbon dioxide across the boundary between the forest and the atmosphere.", "tr": "연구자들은 숲과 대기의 경계를 가로지르는 이산화탄소의 흐름의 양을 측정했다.", "src": "" }
-      ],
-      "syn": ["change", "flow", "instability"],
-      "deriv": ["fluctuate (v) 변동하다"],
-      "roots": ["fluere(=흐르다) → 흐르는 상태"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "contextualize",
-      "ipa": "/kənˈtekstʃuəlaɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "맥락화하다, 맥락 속에서 이해하다", "ex": "Historians contextualize each artifact by relating it to the economic conditions of its era.", "tr": "역사가들은 각 유물을 그 시대의 경제적 조건과 연관 지어 맥락화한다.", "src": "" }
-      ],
-      "syn": ["situate", "frame", "place in context"],
-      "deriv": ["context (n) 맥락", "contextual (adj) 맥락상의"],
-      "roots": ["con(=함께) + texere(=짜다) → 함께 짜인 배경 속에 놓다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "solarwind",
-      "ipa": "/ˈsoʊlər wɪnd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "태양풍", "ex": "The solar wind streams charged particles outward from the Sun, shaping the tails of passing comets.", "tr": "태양풍은 태양에서 바깥쪽으로 하전 입자를 내뿜어 지나가는 혜성의 꼬리를 형성한다.", "src": "" }
-      ],
-      "syn": ["stream of solar particles"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "forager",
-      "ipa": "/ˈfɔːrɪdʒər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "먹이를 찾아다니는 동물, 수렵채집자", "ex": "As a generalist forager, the raccoon exploits whatever food sources are seasonally abundant.", "tr": "일반종 먹이 탐색자로서 너구리는 계절에 따라 풍부해지는 어떤 먹이 자원이든 이용한다.", "src": "" }
-      ],
-      "syn": ["gatherer", "scavenger"],
-      "deriv": ["forage (v) 먹이를 찾아다니다"],
-      "roots": ["fodrum(=사료) → 먹이를 구하는 존재"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "contingent",
-      "ipa": "/kənˈtɪndʒənt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "~에 달려 있는, 조건부의", "ex": "The survival of the seedlings is contingent on adequate rainfall during the first growing season.", "tr": "그 묘목의 생존은 첫 생장기 동안 충분한 강우가 있는지에 달려 있다.", "src": "" }
-      ],
-      "syn": ["dependent", "conditional", "subject to"],
-      "deriv": ["contingency (n) 우발성, 만일의 사태"],
-      "roots": ["con(=함께) + tangere(=닿다) → 다른 것에 맞닿아 좌우되는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "spectrometer",
-      "ipa": "/spekˈtrɒmɪtər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "분광기", "ex": "Astronomers use a spectrometer to split starlight into its component wavelengths and identify the elements present.", "tr": "천문학자들은 분광기를 사용해 별빛을 구성 파장으로 분리하고 존재하는 원소를 식별한다.", "src": "" }
-      ],
-      "syn": ["spectroscope"],
-      "deriv": ["spectrometry (n) 분광 측정법"],
-      "roots": ["spectrum(=상, 스펙트럼) + metron(=측정) → 스펙트럼을 재는 기구"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "frond",
-      "ipa": "/frɒnd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "엽상체, (양치식물의) 큰 잎", "ex": "Each fern frond unfurls slowly from a tightly coiled structure known as a fiddlehead.", "tr": "각각의 양치류 잎은 매말이라 불리는 단단히 말린 구조에서 천천히 펼쳐진다.", "src": "" }
-      ],
-      "syn": ["leaf", "foliage blade"],
-      "deriv": [],
-      "roots": ["frons(=잎, 나뭇잎) → 잎사귀"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "continuum",
-      "ipa": "/kənˈtɪnjuəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "연속체", "ex": "Rather than falling into discrete types, personality traits are best described as a continuum.", "tr": "성격 특성은 별개의 유형으로 나뉘기보다 하나의 연속체로 설명하는 것이 가장 적절하다.", "src": "" }
-      ],
-      "syn": ["spectrum", "gradation"],
-      "deriv": ["continuous (adj) 연속적인"],
-      "roots": ["continuus(=이어진) → 끊김 없이 이어진 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "stellarwind",
-      "ipa": "/ˈstelər wɪnd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "항성풍", "ex": "A massive star sheds much of its outer material through a powerful stellar wind before it explodes.", "tr": "무거운 별은 폭발하기 전에 강력한 항성풍을 통해 바깥층 물질의 상당 부분을 방출한다.", "src": "" }
-      ],
-      "syn": ["stream of stellar particles"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "germline",
-      "ipa": "/ˈdʒɜːrmlaɪn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "생식 계열", "ex": "Mutations that arise in the germline can be passed on to an organism's offspring.", "tr": "생식 계열에서 발생하는 돌연변이는 개체의 자손에게 전달될 수 있다.", "src": "" }
-      ],
-      "syn": ["reproductive cell lineage"],
-      "deriv": [],
-      "roots": ["germen(=싹, 배아) + line(=계통) → 생식 세포의 계통"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "contrarily",
-      "ipa": "/ˈkɒntrərɪli/",
-      "pos": "adv",
-      "meanings": [
-        { "pos": "adv", "ko": "반대로, 그와는 달리", "ex": "Contrarily, the second sample showed no measurable decline in enzyme activity.", "tr": "반대로, 두 번째 시료에서는 효소 활성의 측정 가능한 감소가 나타나지 않았다.", "src": "" }
-      ],
-      "syn": ["conversely", "on the contrary"],
-      "deriv": ["contrary (adj) 반대의"],
-      "roots": ["contra(=반대로) → 반대되는 방식으로"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "suborbital",
-      "ipa": "/sʌbˈɔːrbɪtəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "준궤도의", "ex": "A suborbital flight reaches the edge of space but does not attain the speed required to circle the Earth.", "tr": "준궤도 비행은 우주의 가장자리에 도달하지만 지구를 도는 데 필요한 속도에는 이르지 못한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["orbit (n) 궤도"],
-      "roots": ["sub(=아래의) + orbita(=궤도) → 완전한 궤도에 못 미치는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "glycolysis",
-      "ipa": "/ɡlaɪˈkɒlɪsɪs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "해당 작용", "ex": "During glycolysis, a molecule of glucose is broken down to release usable chemical energy.", "tr": "해당 작용 동안 포도당 한 분자가 분해되어 이용 가능한 화학 에너지를 방출한다.", "src": "" }
-      ],
-      "syn": ["sugar breakdown"],
-      "deriv": [],
-      "roots": ["glykys(=단, 당) + lysis(=분해) → 당을 분해함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "contravene",
-      "ipa": "/ˌkɒntrəˈviːn/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "위반하다, ~에 저촉되다", "ex": "The proposed experiment would contravene established guidelines on the treatment of research animals.", "tr": "제안된 실험은 연구용 동물의 처우에 관한 확립된 지침을 위반하게 될 것이다.", "src": "" }
-      ],
-      "syn": ["violate", "breach", "go against"],
-      "deriv": ["contravention (n) 위반"],
-      "roots": ["contra(=반대) + venire(=오다) → 규정에 거슬러 가다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "supercluster",
-      "ipa": "/ˈsuːpərklʌstər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "초은하단", "ex": "Our galaxy belongs to a vast supercluster containing thousands of individual galaxies.", "tr": "우리 은하는 수천 개의 개별 은하를 품은 거대한 초은하단에 속해 있다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["cluster (n) 성단, 무리"],
-      "roots": ["super(=위, 초월) + cluster(=무리) → 은하단들의 거대한 집합"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "gravitropism",
-      "ipa": "/ˌɡrævɪˈtroʊpɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "굴중성, 중력 굴성", "ex": "Because of gravitropism, a plant's roots grow downward even when the seed lands upside down.", "tr": "굴중성 때문에 식물의 뿌리는 씨앗이 뒤집혀 떨어져도 아래쪽으로 자란다.", "src": "" }
-      ],
-      "syn": ["geotropism"],
-      "deriv": [],
-      "roots": ["gravis(=무거운, 중력) + tropos(=돌기, 향함) → 중력 방향으로 굽는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "convergence",
-      "ipa": "/kənˈvɜːrdʒəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "수렴, 한 점으로 모임", "ex": "The convergence of two ocean currents creates a zone unusually rich in marine life.", "tr": "두 해류의 수렴은 해양 생물이 유난히 풍부한 구역을 만들어 낸다.", "src": "" }
-      ],
-      "syn": ["merging", "coming together"],
-      "deriv": ["converge (v) 수렴하다", "convergent (adj) 수렴하는"],
-      "roots": ["con(=함께) + vergere(=기울다) → 한 점으로 함께 기울다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "synodic",
-      "ipa": "/sɪˈnɒdɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "삭망의, 회합의", "ex": "The synodic month measures the time the Moon takes to return to the same phase as seen from Earth.", "tr": "삭망월은 달이 지구에서 볼 때 같은 위상으로 되돌아오는 데 걸리는 시간을 나타낸다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["syn(=함께) + hodos(=길) → 천체가 같은 위치에서 만나는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "gregarious",
-      "ipa": "/ɡrɪˈɡeəriəs/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "군집성의, 무리 짓는", "ex": "Gregarious species such as starlings gain protection from predators by moving in dense flocks.", "tr": "찌르레기와 같은 군집성 종은 빽빽한 무리를 지어 이동함으로써 포식자로부터 보호를 얻는다.", "src": "" }
-      ],
-      "syn": ["social", "sociable", "flock-forming"],
-      "deriv": [],
-      "roots": ["grex(=무리, 떼) → 떼 지어 사는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "convoluted",
-      "ipa": "/ˈkɒnvəluːtɪd/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "복잡한, 뒤얽힌", "ex": "The theory's argument is so convoluted that even specialists struggle to follow its logic.", "tr": "그 이론의 논증은 너무 복잡해서 전문가들조차 그 논리를 따라가기 어려워한다.", "src": "" }
-      ],
-      "syn": ["complicated", "intricate", "tangled"],
-      "deriv": [],
-      "roots": ["con(=함께) + volvere(=말다) → 여러 겹으로 말려 얽힌"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "telemetry",
-      "ipa": "/təˈlemɪtri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "원격 측정", "ex": "Engineers rely on telemetry to monitor the spacecraft's temperature and fuel levels from millions of kilometers away.", "tr": "기술자들은 수백만 킬로미터 떨어진 곳에서 우주선의 온도와 연료량을 감시하기 위해 원격 측정에 의존한다.", "src": "" }
-      ],
-      "syn": ["remote measurement"],
-      "deriv": [],
-      "roots": ["tele(=멀리) + metron(=측정) → 멀리서 측정함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "gymnosperm",
-      "ipa": "/ˈdʒɪmnəspɜːrm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "겉씨식물", "ex": "Unlike flowering plants, a gymnosperm such as the pine bears its seeds on exposed cone scales.", "tr": "꽃식물과 달리 소나무 같은 겉씨식물은 노출된 솔방울 비늘 위에 씨앗을 맺는다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["gymnos(=벌거벗은) + sperma(=씨앗) → 씨앗이 드러난 식물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "corollary",
-      "ipa": "/ˈkɒrələri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "필연적 결과, 따름정리", "ex": "A natural corollary of the theory is that heavier elements can form only inside dying stars.", "tr": "그 이론의 자연스러운 필연적 결과는 무거운 원소가 죽어가는 별 내부에서만 형성될 수 있다는 것이다.", "src": "" }
-      ],
-      "syn": ["consequence", "logical result", "inference"],
-      "deriv": [],
-      "roots": ["corollarium(=덤, 부수적으로 딸린 것) → 논리적으로 딸려 나오는 결과"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "tether",
-      "ipa": "/ˈteðər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "연결끈, 계류줄", "ex": "During the spacewalk, a tether kept the astronaut securely attached to the station.", "tr": "우주 유영 동안 연결끈이 우주비행사를 정거장에 단단히 붙어 있게 했다.", "src": "" }
-      ],
-      "syn": ["cord", "leash", "line"],
-      "deriv": ["tether (v) 끈으로 묶다"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "haploid",
-      "ipa": "/ˈhæplɔɪd/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "반수체의", "ex": "A haploid cell carries only a single set of chromosomes, half the number found in ordinary body cells.", "tr": "반수체 세포는 일반 체세포에 있는 수의 절반인 단 한 벌의 염색체만을 지닌다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["haploidy (n) 반수성"],
-      "roots": ["haploos(=한 겹의) + eidos(=형태) → 염색체가 한 벌인"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "corpus",
-      "ipa": "/ˈkɔːrpəs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "말뭉치, 자료 전체", "ex": "Linguists analyzed a corpus of millions of sentences to trace how the word's meaning shifted over time.", "tr": "언어학자들은 그 단어의 의미가 시간이 지나며 어떻게 변했는지 추적하기 위해 수백만 문장의 말뭉치를 분석했다.", "src": "" }
-      ],
-      "syn": ["body of texts", "collection"],
-      "deriv": ["corpora (n) corpus의 복수형"],
-      "roots": ["corpus(=몸, 덩어리) → 자료의 총체"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "thruster",
-      "ipa": "/ˈθrʌstər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "추진기", "ex": "Small thrusters fire in short bursts to adjust the probe's orientation as it approaches the planet.", "tr": "탐사선이 행성에 접근할 때 작은 추진기들이 짧게 분사하여 탐사선의 자세를 조정한다.", "src": "" }
-      ],
-      "syn": ["propulsion jet"],
-      "deriv": ["thrust (n) 추력"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "herbaceous",
-      "ipa": "/hɜːrˈbeɪʃəs/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "초본의, 풀 같은", "ex": "Unlike a shrub, a herbaceous plant has soft green stems that die back at the end of the season.", "tr": "관목과 달리 초본 식물은 계절이 끝날 무렵 시들어 죽는 부드러운 녹색 줄기를 가진다.", "src": "" }
-      ],
-      "syn": ["non-woody", "leafy"],
-      "deriv": ["herb (n) 초본, 풀"],
-      "roots": ["herba(=풀) → 풀의 성질을 가진"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "correlative",
-      "ipa": "/kəˈrelətɪv/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "상관적인, 서로 관련된", "ex": "The study identified a correlative relationship between rainfall and the density of insect populations.", "tr": "그 연구는 강우량과 곤충 개체군 밀도 사이의 상관적 관계를 밝혀냈다.", "src": "" }
-      ],
-      "syn": ["related", "reciprocal", "corresponding"],
-      "deriv": ["correlate (v) 상관관계가 있다", "correlation (n) 상관관계"],
-      "roots": ["con(=함께) + relatus(=관련된) → 서로 맞물려 관련된"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "totality",
-      "ipa": "/toʊˈtæləti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "개기식, (일식·월식의) 완전히 가려진 상태", "ex": "During totality, the Sun's faint corona becomes visible to observers standing in the Moon's shadow.", "tr": "개기식 동안 달의 그림자 속에 서 있는 관측자에게 태양의 희미한 코로나가 보이게 된다.", "src": "" },
-        { "pos": "n", "ko": "전체, 총체", "ex": "One must consider the totality of the evidence before drawing a firm conclusion.", "tr": "확고한 결론을 내리기 전에 증거의 총체를 고려해야 한다.", "src": "" }
-      ],
-      "syn": ["entirety", "whole"],
-      "deriv": ["total (adj) 전체의"],
-      "roots": ["totus(=전체) → 완전히 이루어진 상태"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "herbivory",
-      "ipa": "/ˈhɜːrbɪvɔːri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "초식, 식물 섭식", "ex": "Intense herbivory by deer can prevent young trees from ever reaching maturity.", "tr": "사슴에 의한 심한 초식은 어린 나무가 성숙에 이르는 것을 아예 막을 수 있다.", "src": "" }
-      ],
-      "syn": ["plant-eating"],
-      "deriv": ["herbivore (n) 초식 동물"],
-      "roots": ["herba(=풀) + vorare(=먹다) → 풀을 먹는 습성"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "corroborate",
-      "ipa": "/kəˈrɒbəreɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "확증하다, 뒷받침하다", "ex": "Independent measurements from a second telescope corroborate the team's original finding.", "tr": "두 번째 망원경으로 얻은 독립적인 측정치가 그 연구팀의 원래 발견을 확증한다.", "src": "" }
-      ],
-      "syn": ["confirm", "support", "verify"],
-      "deriv": ["corroboration (n) 확증", "corroborative (adj) 확증하는"],
-      "roots": ["con(=완전히) + roborare(=강하게 하다) → 근거를 더 굳건히 하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "umbra",
-      "ipa": "/ˈʌmbrə/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "본영, 가장 어두운 그림자", "ex": "Only observers within the umbra of the Moon's shadow witness a total eclipse of the Sun.", "tr": "달 그림자의 본영 안에 있는 관측자만이 완전한 태양 일식을 목격한다.", "src": "" }
-      ],
-      "syn": ["full shadow", "darkest shadow"],
-      "deriv": ["penumbra (n) 반영"],
-      "roots": ["umbra(=그림자) → 가장 짙은 그림자 영역"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "heterotroph",
-      "ipa": "/ˈhetərətrɒf/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "종속 영양 생물", "ex": "As a heterotroph, a fungus cannot make its own food and must absorb nutrients from other organisms.", "tr": "종속 영양 생물로서 균류는 스스로 양분을 만들지 못하고 다른 생물로부터 영양분을 흡수해야 한다.", "src": "" }
-      ],
-      "syn": ["consumer"],
-      "deriv": ["heterotrophic (adj) 종속 영양의"],
-      "roots": ["heteros(=다른) + trophe(=영양) → 남에게서 영양을 얻는 생물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "corroboration",
-      "ipa": "/kəˌrɒbəˈreɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "확증, 뒷받침", "ex": "The hypothesis gained wide acceptance only after corroboration from several unrelated experiments.", "tr": "그 가설은 서로 무관한 여러 실험으로부터 확증을 받은 뒤에야 널리 받아들여졌다.", "src": "" }
-      ],
-      "syn": ["confirmation", "verification", "support"],
-      "deriv": ["corroborate (v) 확증하다"],
-      "roots": ["con(=완전히) + roborare(=강하게 하다) → 근거를 굳히는 일"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "waning",
-      "ipa": "/ˈweɪnɪŋ/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "(달이) 기우는, 줄어드는", "ex": "During the waning phase, the illuminated portion of the Moon grows smaller each night.", "tr": "기우는 위상 동안 달의 밝게 빛나는 부분은 매일 밤 점점 작아진다.", "src": "" }
-      ],
-      "syn": ["decreasing", "diminishing", "declining"],
-      "deriv": ["wane (v) 이지러지다, 약해지다"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "heterozygous",
-      "ipa": "/ˌhetərəˈzaɪɡəs/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "이형 접합의", "ex": "An individual that is heterozygous for the trait carries two different versions of the same gene.", "tr": "그 형질에 대해 이형 접합인 개체는 같은 유전자의 서로 다른 두 형태를 지닌다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["heterozygote (n) 이형 접합체"],
-      "roots": ["heteros(=다른) + zygon(=쌍, 접합) → 대립 유전자가 서로 다른"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "corrode",
-      "ipa": "/kəˈroʊd/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "부식시키다, 서서히 손상시키다", "ex": "Salt-laden air can corrode the metal framework of coastal structures within a few years.", "tr": "염분을 머금은 공기는 몇 년 안에 해안 구조물의 금속 골조를 부식시킬 수 있다.", "src": "" }
-      ],
-      "syn": ["erode", "eat away", "rust"],
-      "deriv": ["corrosion (n) 부식", "corrosive (adj) 부식성의"],
-      "roots": ["con(=완전히) + rodere(=갉다) → 조금씩 갉아 없애다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "adj",
+     "ko": "논쟁을 일으키는, 논란이 많은",
+     "ex": "The interpretation of the ancient text remains contentious among scholars of comparative religion.",
+     "tr": "그 고대 문헌의 해석은 비교종교학 학자들 사이에서 여전히 논쟁을 일으킨다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "controversial",
+    "disputed",
+    "debatable"
+   ],
+   "deriv": [
+    "contention (n) 논쟁, 주장",
+    "contend (v) 다투다, 주장하다"
+   ],
+   "roots": [
+    "con(=함께) + tendere(=뻗다, 다투다) → 서로 팽팽히 맞서는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "singularity",
+   "ipa": "/ˌsɪŋɡjəˈlærəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "특이점",
+     "ex": "At the center of a black hole lies a singularity, where the known laws of physics cease to apply.",
+     "tr": "블랙홀의 중심에는 알려진 물리 법칙이 더 이상 적용되지 않는 특이점이 존재한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "anomaly",
+    "unique point"
+   ],
+   "deriv": [
+    "singular (adj) 단일한, 특이한"
+   ],
+   "roots": [
+    "singulus(=하나의) → 유일무이한 점"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "flux",
+   "ipa": "/flʌks/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "유동, 끊임없는 변화",
+     "ex": "The composition of the microbial community is in constant flux as nutrients move through the soil.",
+     "tr": "미생물 군집의 구성은 양분이 토양을 통과해 이동하면서 끊임없이 유동한다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "선속, 흐름의 양",
+     "ex": "Researchers measured the flux of carbon dioxide across the boundary between the forest and the atmosphere.",
+     "tr": "연구자들은 숲과 대기의 경계를 가로지르는 이산화탄소의 흐름의 양을 측정했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "change",
+    "flow",
+    "instability"
+   ],
+   "deriv": [
+    "fluctuate (v) 변동하다"
+   ],
+   "roots": [
+    "fluere(=흐르다) → 흐르는 상태"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contextualize",
+   "ipa": "/kənˈtekstʃuəlaɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "맥락화하다, 맥락 속에서 이해하다",
+     "ex": "Historians contextualize each artifact by relating it to the economic conditions of its era.",
+     "tr": "역사가들은 각 유물을 그 시대의 경제적 조건과 연관 지어 맥락화한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "situate",
+    "frame",
+    "place in context"
+   ],
+   "deriv": [
+    "context (n) 맥락",
+    "contextual (adj) 맥락상의"
+   ],
+   "roots": [
+    "con(=함께) + texere(=짜다) → 함께 짜인 배경 속에 놓다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "solar wind",
+   "ipa": "/ˈsoʊlər wɪnd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "태양풍",
+     "ex": "The solar wind streams charged particles outward from the Sun, shaping the tails of passing comets.",
+     "tr": "태양풍은 태양에서 바깥쪽으로 하전 입자를 내뿜어 지나가는 혜성의 꼬리를 형성한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "stream of solar particles"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "forager",
+   "ipa": "/ˈfɔːrɪdʒər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "먹이를 찾아다니는 동물, 수렵채집자",
+     "ex": "As a generalist forager, the raccoon exploits whatever food sources are seasonally abundant.",
+     "tr": "일반종 먹이 탐색자로서 너구리는 계절에 따라 풍부해지는 어떤 먹이 자원이든 이용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "gatherer",
+    "scavenger"
+   ],
+   "deriv": [
+    "forage (v) 먹이를 찾아다니다"
+   ],
+   "roots": [
+    "fodrum(=사료) → 먹이를 구하는 존재"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contingent",
+   "ipa": "/kənˈtɪndʒənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "~에 달려 있는, 조건부의",
+     "ex": "The survival of the seedlings is contingent on adequate rainfall during the first growing season.",
+     "tr": "그 묘목의 생존은 첫 생장기 동안 충분한 강우가 있는지에 달려 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "dependent",
+    "conditional",
+    "subject to"
+   ],
+   "deriv": [
+    "contingency (n) 우발성, 만일의 사태"
+   ],
+   "roots": [
+    "con(=함께) + tangere(=닿다) → 다른 것에 맞닿아 좌우되는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "spectrometer",
+   "ipa": "/spekˈtrɒmɪtər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "분광기",
+     "ex": "Astronomers use a spectrometer to split starlight into its component wavelengths and identify the elements present.",
+     "tr": "천문학자들은 분광기를 사용해 별빛을 구성 파장으로 분리하고 존재하는 원소를 식별한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "spectroscope"
+   ],
+   "deriv": [
+    "spectrometry (n) 분광 측정법"
+   ],
+   "roots": [
+    "spectrum(=상, 스펙트럼) + metron(=측정) → 스펙트럼을 재는 기구"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "frond",
+   "ipa": "/frɒnd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "엽상체, (양치식물의) 큰 잎",
+     "ex": "Each fern frond unfurls slowly from a tightly coiled structure known as a fiddlehead.",
+     "tr": "각각의 양치류 잎은 매말이라 불리는 단단히 말린 구조에서 천천히 펼쳐진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "leaf",
+    "foliage blade"
+   ],
+   "deriv": [],
+   "roots": [
+    "frons(=잎, 나뭇잎) → 잎사귀"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "continuum",
+   "ipa": "/kənˈtɪnjuəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연속체",
+     "ex": "Rather than falling into discrete types, personality traits are best described as a continuum.",
+     "tr": "성격 특성은 별개의 유형으로 나뉘기보다 하나의 연속체로 설명하는 것이 가장 적절하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "spectrum",
+    "gradation"
+   ],
+   "deriv": [
+    "continuous (adj) 연속적인"
+   ],
+   "roots": [
+    "continuus(=이어진) → 끊김 없이 이어진 것"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "stellar wind",
+   "ipa": "/ˈstelər wɪnd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "항성풍",
+     "ex": "A massive star sheds much of its outer material through a powerful stellar wind before it explodes.",
+     "tr": "무거운 별은 폭발하기 전에 강력한 항성풍을 통해 바깥층 물질의 상당 부분을 방출한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "stream of stellar particles"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "germline",
+   "ipa": "/ˈdʒɜːrmlaɪn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "생식 계열",
+     "ex": "Mutations that arise in the germline can be passed on to an organism's offspring.",
+     "tr": "생식 계열에서 발생하는 돌연변이는 개체의 자손에게 전달될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reproductive cell lineage"
+   ],
+   "deriv": [],
+   "roots": [
+    "germen(=싹, 배아) + line(=계통) → 생식 세포의 계통"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contrarily",
+   "ipa": "/ˈkɒntrərɪli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "반대로, 그와는 달리",
+     "ex": "Contrarily, the second sample showed no measurable decline in enzyme activity.",
+     "tr": "반대로, 두 번째 시료에서는 효소 활성의 측정 가능한 감소가 나타나지 않았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conversely",
+    "on the contrary"
+   ],
+   "deriv": [
+    "contrary (adj) 반대의"
+   ],
+   "roots": [
+    "contra(=반대로) → 반대되는 방식으로"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "suborbital",
+   "ipa": "/sʌbˈɔːrbɪtəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "준궤도의",
+     "ex": "A suborbital flight reaches the edge of space but does not attain the speed required to circle the Earth.",
+     "tr": "준궤도 비행은 우주의 가장자리에 도달하지만 지구를 도는 데 필요한 속도에는 이르지 못한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "orbit (n) 궤도"
+   ],
+   "roots": [
+    "sub(=아래의) + orbita(=궤도) → 완전한 궤도에 못 미치는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "glycolysis",
+   "ipa": "/ɡlaɪˈkɒlɪsɪs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "해당 작용",
+     "ex": "During glycolysis, a molecule of glucose is broken down to release usable chemical energy.",
+     "tr": "해당 작용 동안 포도당 한 분자가 분해되어 이용 가능한 화학 에너지를 방출한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sugar breakdown"
+   ],
+   "deriv": [],
+   "roots": [
+    "glykys(=단, 당) + lysis(=분해) → 당을 분해함"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contravene",
+   "ipa": "/ˌkɒntrəˈviːn/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "위반하다, ~에 저촉되다",
+     "ex": "The proposed experiment would contravene established guidelines on the treatment of research animals.",
+     "tr": "제안된 실험은 연구용 동물의 처우에 관한 확립된 지침을 위반하게 될 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "violate",
+    "breach",
+    "go against"
+   ],
+   "deriv": [
+    "contravention (n) 위반"
+   ],
+   "roots": [
+    "contra(=반대) + venire(=오다) → 규정에 거슬러 가다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "supercluster",
+   "ipa": "/ˈsuːpərklʌstər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "초은하단",
+     "ex": "Our galaxy belongs to a vast supercluster containing thousands of individual galaxies.",
+     "tr": "우리 은하는 수천 개의 개별 은하를 품은 거대한 초은하단에 속해 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "cluster (n) 성단, 무리"
+   ],
+   "roots": [
+    "super(=위, 초월) + cluster(=무리) → 은하단들의 거대한 집합"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "gravitropism",
+   "ipa": "/ˌɡrævɪˈtroʊpɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "굴중성, 중력 굴성",
+     "ex": "Because of gravitropism, a plant's roots grow downward even when the seed lands upside down.",
+     "tr": "굴중성 때문에 식물의 뿌리는 씨앗이 뒤집혀 떨어져도 아래쪽으로 자란다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "geotropism"
+   ],
+   "deriv": [],
+   "roots": [
+    "gravis(=무거운, 중력) + tropos(=돌기, 향함) → 중력 방향으로 굽는 성질"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "convergence",
+   "ipa": "/kənˈvɜːrdʒəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수렴, 한 점으로 모임",
+     "ex": "The convergence of two ocean currents creates a zone unusually rich in marine life.",
+     "tr": "두 해류의 수렴은 해양 생물이 유난히 풍부한 구역을 만들어 낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "merging",
+    "coming together"
+   ],
+   "deriv": [
+    "converge (v) 수렴하다",
+    "convergent (adj) 수렴하는"
+   ],
+   "roots": [
+    "con(=함께) + vergere(=기울다) → 한 점으로 함께 기울다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "synodic",
+   "ipa": "/sɪˈnɒdɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "삭망의, 회합의",
+     "ex": "The synodic month measures the time the Moon takes to return to the same phase as seen from Earth.",
+     "tr": "삭망월은 달이 지구에서 볼 때 같은 위상으로 되돌아오는 데 걸리는 시간을 나타낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "syn(=함께) + hodos(=길) → 천체가 같은 위치에서 만나는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "gregarious",
+   "ipa": "/ɡrɪˈɡeəriəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "군집성의, 무리 짓는",
+     "ex": "Gregarious species such as starlings gain protection from predators by moving in dense flocks.",
+     "tr": "찌르레기와 같은 군집성 종은 빽빽한 무리를 지어 이동함으로써 포식자로부터 보호를 얻는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "social",
+    "sociable",
+    "flock-forming"
+   ],
+   "deriv": [],
+   "roots": [
+    "grex(=무리, 떼) → 떼 지어 사는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "convoluted",
+   "ipa": "/ˈkɒnvəluːtɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "복잡한, 뒤얽힌",
+     "ex": "The theory's argument is so convoluted that even specialists struggle to follow its logic.",
+     "tr": "그 이론의 논증은 너무 복잡해서 전문가들조차 그 논리를 따라가기 어려워한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "complicated",
+    "intricate",
+    "tangled"
+   ],
+   "deriv": [],
+   "roots": [
+    "con(=함께) + volvere(=말다) → 여러 겹으로 말려 얽힌"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "telemetry",
+   "ipa": "/təˈlemɪtri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "원격 측정",
+     "ex": "Engineers rely on telemetry to monitor the spacecraft's temperature and fuel levels from millions of kilometers away.",
+     "tr": "기술자들은 수백만 킬로미터 떨어진 곳에서 우주선의 온도와 연료량을 감시하기 위해 원격 측정에 의존한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "remote measurement"
+   ],
+   "deriv": [],
+   "roots": [
+    "tele(=멀리) + metron(=측정) → 멀리서 측정함"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "gymnosperm",
+   "ipa": "/ˈdʒɪmnəspɜːrm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "겉씨식물",
+     "ex": "Unlike flowering plants, a gymnosperm such as the pine bears its seeds on exposed cone scales.",
+     "tr": "꽃식물과 달리 소나무 같은 겉씨식물은 노출된 솔방울 비늘 위에 씨앗을 맺는다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "gymnos(=벌거벗은) + sperma(=씨앗) → 씨앗이 드러난 식물"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "corollary",
+   "ipa": "/ˈkɒrələri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "필연적 결과, 따름정리",
+     "ex": "A natural corollary of the theory is that heavier elements can form only inside dying stars.",
+     "tr": "그 이론의 자연스러운 필연적 결과는 무거운 원소가 죽어가는 별 내부에서만 형성될 수 있다는 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "consequence",
+    "logical result",
+    "inference"
+   ],
+   "deriv": [],
+   "roots": [
+    "corollarium(=덤, 부수적으로 딸린 것) → 논리적으로 딸려 나오는 결과"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "tether",
+   "ipa": "/ˈteðər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연결끈, 계류줄",
+     "ex": "During the spacewalk, a tether kept the astronaut securely attached to the station.",
+     "tr": "우주 유영 동안 연결끈이 우주비행사를 정거장에 단단히 붙어 있게 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cord",
+    "leash",
+    "line"
+   ],
+   "deriv": [
+    "tether (v) 끈으로 묶다"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "haploid",
+   "ipa": "/ˈhæplɔɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "반수체의",
+     "ex": "A haploid cell carries only a single set of chromosomes, half the number found in ordinary body cells.",
+     "tr": "반수체 세포는 일반 체세포에 있는 수의 절반인 단 한 벌의 염색체만을 지닌다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "haploidy (n) 반수성"
+   ],
+   "roots": [
+    "haploos(=한 겹의) + eidos(=형태) → 염색체가 한 벌인"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "corpus",
+   "ipa": "/ˈkɔːrpəs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "말뭉치, 자료 전체",
+     "ex": "Linguists analyzed a corpus of millions of sentences to trace how the word's meaning shifted over time.",
+     "tr": "언어학자들은 그 단어의 의미가 시간이 지나며 어떻게 변했는지 추적하기 위해 수백만 문장의 말뭉치를 분석했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "body of texts",
+    "collection"
+   ],
+   "deriv": [
+    "corpora (n) corpus의 복수형"
+   ],
+   "roots": [
+    "corpus(=몸, 덩어리) → 자료의 총체"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "thruster",
+   "ipa": "/ˈθrʌstər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "추진기",
+     "ex": "Small thrusters fire in short bursts to adjust the probe's orientation as it approaches the planet.",
+     "tr": "탐사선이 행성에 접근할 때 작은 추진기들이 짧게 분사하여 탐사선의 자세를 조정한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "propulsion jet"
+   ],
+   "deriv": [
+    "thrust (n) 추력"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "herbaceous",
+   "ipa": "/hɜːrˈbeɪʃəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "초본의, 풀 같은",
+     "ex": "Unlike a shrub, a herbaceous plant has soft green stems that die back at the end of the season.",
+     "tr": "관목과 달리 초본 식물은 계절이 끝날 무렵 시들어 죽는 부드러운 녹색 줄기를 가진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "non-woody",
+    "leafy"
+   ],
+   "deriv": [
+    "herb (n) 초본, 풀"
+   ],
+   "roots": [
+    "herba(=풀) → 풀의 성질을 가진"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "correlative",
+   "ipa": "/kəˈrelətɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "상관적인, 서로 관련된",
+     "ex": "The study identified a correlative relationship between rainfall and the density of insect populations.",
+     "tr": "그 연구는 강우량과 곤충 개체군 밀도 사이의 상관적 관계를 밝혀냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "related",
+    "reciprocal",
+    "corresponding"
+   ],
+   "deriv": [
+    "correlate (v) 상관관계가 있다",
+    "correlation (n) 상관관계"
+   ],
+   "roots": [
+    "con(=함께) + relatus(=관련된) → 서로 맞물려 관련된"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "totality",
+   "ipa": "/toʊˈtæləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "개기식, (일식·월식의) 완전히 가려진 상태",
+     "ex": "During totality, the Sun's faint corona becomes visible to observers standing in the Moon's shadow.",
+     "tr": "개기식 동안 달의 그림자 속에 서 있는 관측자에게 태양의 희미한 코로나가 보이게 된다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "전체, 총체",
+     "ex": "One must consider the totality of the evidence before drawing a firm conclusion.",
+     "tr": "확고한 결론을 내리기 전에 증거의 총체를 고려해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "entirety",
+    "whole"
+   ],
+   "deriv": [
+    "total (adj) 전체의"
+   ],
+   "roots": [
+    "totus(=전체) → 완전히 이루어진 상태"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "herbivory",
+   "ipa": "/ˈhɜːrbɪvɔːri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "초식, 식물 섭식",
+     "ex": "Intense herbivory by deer can prevent young trees from ever reaching maturity.",
+     "tr": "사슴에 의한 심한 초식은 어린 나무가 성숙에 이르는 것을 아예 막을 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "plant-eating"
+   ],
+   "deriv": [
+    "herbivore (n) 초식 동물"
+   ],
+   "roots": [
+    "herba(=풀) + vorare(=먹다) → 풀을 먹는 습성"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "corroborate",
+   "ipa": "/kəˈrɒbəreɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "확증하다, 뒷받침하다",
+     "ex": "Independent measurements from a second telescope corroborate the team's original finding.",
+     "tr": "두 번째 망원경으로 얻은 독립적인 측정치가 그 연구팀의 원래 발견을 확증한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "confirm",
+    "support",
+    "verify"
+   ],
+   "deriv": [
+    "corroboration (n) 확증",
+    "corroborative (adj) 확증하는"
+   ],
+   "roots": [
+    "con(=완전히) + roborare(=강하게 하다) → 근거를 더 굳건히 하다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "umbra",
+   "ipa": "/ˈʌmbrə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "본영, 가장 어두운 그림자",
+     "ex": "Only observers within the umbra of the Moon's shadow witness a total eclipse of the Sun.",
+     "tr": "달 그림자의 본영 안에 있는 관측자만이 완전한 태양 일식을 목격한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "full shadow",
+    "darkest shadow"
+   ],
+   "deriv": [
+    "penumbra (n) 반영"
+   ],
+   "roots": [
+    "umbra(=그림자) → 가장 짙은 그림자 영역"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "heterotroph",
+   "ipa": "/ˈhetərətrɒf/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "종속 영양 생물",
+     "ex": "As a heterotroph, a fungus cannot make its own food and must absorb nutrients from other organisms.",
+     "tr": "종속 영양 생물로서 균류는 스스로 양분을 만들지 못하고 다른 생물로부터 영양분을 흡수해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "consumer"
+   ],
+   "deriv": [
+    "heterotrophic (adj) 종속 영양의"
+   ],
+   "roots": [
+    "heteros(=다른) + trophe(=영양) → 남에게서 영양을 얻는 생물"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "corroboration",
+   "ipa": "/kəˌrɒbəˈreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "확증, 뒷받침",
+     "ex": "The hypothesis gained wide acceptance only after corroboration from several unrelated experiments.",
+     "tr": "그 가설은 서로 무관한 여러 실험으로부터 확증을 받은 뒤에야 널리 받아들여졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "confirmation",
+    "verification",
+    "support"
+   ],
+   "deriv": [
+    "corroborate (v) 확증하다"
+   ],
+   "roots": [
+    "con(=완전히) + roborare(=강하게 하다) → 근거를 굳히는 일"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "waning",
+   "ipa": "/ˈweɪnɪŋ/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "(달이) 기우는, 줄어드는",
+     "ex": "During the waning phase, the illuminated portion of the Moon grows smaller each night.",
+     "tr": "기우는 위상 동안 달의 밝게 빛나는 부분은 매일 밤 점점 작아진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "decreasing",
+    "diminishing",
+    "declining"
+   ],
+   "deriv": [
+    "wane (v) 이지러지다, 약해지다"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "heterozygous",
+   "ipa": "/ˌhetərəˈzaɪɡəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "이형 접합의",
+     "ex": "An individual that is heterozygous for the trait carries two different versions of the same gene.",
+     "tr": "그 형질에 대해 이형 접합인 개체는 같은 유전자의 서로 다른 두 형태를 지닌다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "heterozygote (n) 이형 접합체"
+   ],
+   "roots": [
+    "heteros(=다른) + zygon(=쌍, 접합) → 대립 유전자가 서로 다른"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "corrode",
+   "ipa": "/kəˈroʊd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "부식시키다, 서서히 손상시키다",
+     "ex": "Salt-laden air can corrode the metal framework of coastal structures within a few years.",
+     "tr": "염분을 머금은 공기는 몇 년 안에 해안 구조물의 금속 골조를 부식시킬 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "erode",
+    "eat away",
+    "rust"
+   ],
+   "deriv": [
+    "corrosion (n) 부식",
+    "corrosive (adj) 부식성의"
+   ],
+   "roots": [
+    "con(=완전히) + rodere(=갉다) → 조금씩 갉아 없애다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }
