@@ -6005,11 +6005,14 @@ function render() {
   if (route.name === 'library') {
     loadAssignments();
     if (typeof _refreshMyTestsBanner==='function') setTimeout(()=>{ try{ _refreshMyTestsBanner(); }catch(e){} }, 0);
-    // 재접속/새로고침으로 끊긴 시험이 있으면 자동으로 이어서 열기 (앱 로드당 1회만)
-    if (!window._takeResumeDone && !_take && !document.getElementById('take-overlay')
-        && typeof hasSavedTake==='function' && hasSavedTake()) {
+    // 재접속/새로고침으로 끊긴 시험/퀴즈가 있으면 자동으로 이어서 열기 (앱 로드당 1회만)
+    if (!window._takeResumeDone) {
       window._takeResumeDone = true;
-      setTimeout(()=>{ try{ resumeTakeTest(); }catch(e){} }, 300);
+      if (!_take && !document.getElementById('take-overlay') && typeof hasSavedTake==='function' && hasSavedTake()) {
+        setTimeout(()=>{ try{ resumeTakeTest(); }catch(e){} }, 300);
+      } else if (typeof hasSavedQuiz==='function' && hasSavedQuiz()) {
+        setTimeout(()=>{ try{ resumeQuiz(); }catch(e){} }, 300);
+      }
     }
     // 자가복구: 단체 관리자인데 공식 단어장(수능/중등/토익…)이 아직 안 붙어있으면(경합·캐시 등)
     // 화면을 볼 때 다시 불러온다. (owner 는 _seesAllOfficialLangs()=true 라 전체 언어 노출)
@@ -7982,11 +7985,51 @@ async function _awardFirstStudyPoints(bookId, pageNum, isNew){
   window._lastReviewFinished = false; window._lastReviewLate = false; window._lastBaseScore = base;
 }
 
+// ── 진행 중 퀴즈(암기 후 퀴즈) 저장/복원 — 재접속·새로고침해도 이어서 풀기 ──
+// 채점 게이트(_pendingReview/_pendingFirstStudy)까지 함께 보관해야 통과 시 점수가 정확히 반영됨.
+function _quizKey(){ return 'imvoca.quiz.' + (currentUser?.id || 'anon'); }
+function saveQuizState(){
+  try {
+    const q = window._quiz;
+    if (!q || !Array.isArray(q.words) || !q.words.length) return;
+    if (typeof q.idx === 'number' && q.idx >= q.words.length) return; // 결과 화면은 저장 안 함(진행 중만)
+    localStorage.setItem(_quizKey(), JSON.stringify({ quiz:q, pendingReview:window._pendingReview||null, pendingFirstStudy:window._pendingFirstStudy||null, savedAt:Date.now() }));
+  } catch(e){}
+}
+function clearQuizState(){ try { localStorage.removeItem(_quizKey()); } catch(e){} }
+function hasSavedQuiz(){
+  try {
+    const s = localStorage.getItem(_quizKey()); if (!s) return false;
+    const d = JSON.parse(s); const q = d && d.quiz;
+    if (!q || !Array.isArray(q.words) || !q.words.length || typeof q.idx !== 'number' || q.idx >= q.words.length) { clearQuizState(); return false; }
+    if (d.savedAt && Date.now() - d.savedAt > 12*3600*1000) { clearQuizState(); return false; } // 12시간 후 폐기
+    if (q.bookId && q.bookId !== '__fav__' && !findBook(q.bookId)) { clearQuizState(); return false; } // 책이 없으면 폐기
+    return true;
+  } catch(e){ return false; }
+}
+function resumeQuiz(){
+  try {
+    const s = localStorage.getItem(_quizKey()); if (!s) return;
+    const d = JSON.parse(s); const q = d && d.quiz; if (!q) return;
+    window._quiz = q;
+    window._pendingReview = d.pendingReview || null;
+    window._pendingFirstStudy = d.pendingFirstStudy || null;
+    // 첫 암기 재개: _registerFirstStudy 가 이미 만든 복습행 때문에 재시드된 _scoredPages 에
+    // 이 페이지가 들어가 점수가 막힐 수 있어, 이 페이지만 예외로 풀어 통과 시 점수 지급되게 함.
+    if (d.pendingFirstStudy && typeof _scoredPages !== 'undefined') {
+      _scoredPages.delete(d.pendingFirstStudy.book_id + '|' + d.pendingFirstStudy.page_num);
+    }
+    push({ name:'quiz', bookId:q.bookId, scope:q.scope, pageNum:q.pageNum });
+    toast(userNativeLang==='ko'?'이어서 퀴즈를 풀 수 있어요 ✍️':'Resumed your quiz ✍️');
+  } catch(e){}
+}
+
 function startWrongQuiz() {
   const q = window._quiz;
   if (!window._wrongWords?.length) return;
   // 복습-게이트 여부(_review)를 유지해야, 틀린 것만 다 맞혔을 때 복습 점수가 지급됨.
   window._quiz = {bookId:q.bookId,scope:q.scope,pageNum:q.pageNum,words:shuffle([...window._wrongWords]),idx:0,correct:0,_review:q._review};
+  saveQuizState();
   push({name:'quiz',bookId:q.bookId,scope:q.scope,pageNum:q.pageNum});
 }
 
@@ -8003,6 +8046,7 @@ function startReviewQuiz(bookId, pageNum){
     return;
   }
   window._quiz = { bookId, scope:'page', pageNum, words: ws, idx:0, correct:0, _review:true };
+  saveQuizState();
   replace({ name:'quiz', bookId, scope:'page', pageNum });
 }
 
@@ -8014,6 +8058,7 @@ function startQuiz(bookId, scope, pageNum) {
   else { const book = findBook(bookId); if (!book) return; ws = scope === 'page' ? (findPage(book,pageNum)?.words||[]) : allWords(book); }
   ws = shuffle([...ws]);
   window._quiz = { bookId, scope, pageNum, words: ws, idx: 0, correct: 0 };
+  saveQuizState();
   push({ name: 'quiz', bookId, scope, pageNum });
 }
 
@@ -8022,6 +8067,7 @@ function renderQuiz() {
   const q = window._quiz;
   if (!q) { goTab('books'); return; }
   if (q.idx >= q.words.length) {
+    clearQuizState(); // 결과 화면 도달 → 진행 저장 삭제(중복 채점·재개 방지)
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct, q.scope === 'page' ? q.pageNum : null);
     const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
@@ -8117,7 +8163,7 @@ function renderQuiz() {
   }
   const choices = shuffle([w, ...others]);
   root.innerHTML = `<div class="scr" style="padding-bottom:20px;">
-    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">${t('quizResult')}</span><span class="study__close" onclick="goTab('books')">✕</span></div>
+    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">${t('quizResult')}</span><span class="study__close" onclick="clearQuizState();goTab('books')">✕</span></div>
     <div class="study__bar"><div class="study__fill" style="width:${prog}%"></div></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0;">
       <div style="text-align:center;margin-bottom:30px;">
@@ -8144,7 +8190,7 @@ function answerQuiz(chosen, correct) {
     if (word?.en === correct) btn.style.background = '#eafaf1';
     else if (word?.en === chosen && !isCorrect) btn.style.background = '#fdeaea';
   });
-  setTimeout(() => { q.idx++; renderQuiz(); }, 800);
+  setTimeout(() => { q.idx++; saveQuizState(); renderQuiz(); }, 800);
 }
 
 async function checkReviews() {
