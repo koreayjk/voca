@@ -1,607 +1,1359 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 6,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 6,
+ "words": [
+  {
+   "en": "collusion",
+   "ipa": "/kəˈluːʒən/",
+   "pos": "n",
+   "meanings": [
     {
-      "en": "collusion",
-      "ipa": "/kəˈluːʒən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "담합, 공모", "ex": "Regulators fined the firms after uncovering collusion aimed at keeping prices artificially high.", "tr": "규제 당국은 가격을 인위적으로 높게 유지하려는 담합을 적발한 뒤 그 기업들에 벌금을 부과했다.", "src": "" }
-      ],
-      "syn": ["conspiracy", "connivance", "secret agreement"],
-      "deriv": ["collude (v) 공모하다", "collusive (adj) 공모의"],
-      "roots": ["com(=together) + ludere(=play) → 함께 짜고 벌이다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "flange",
-      "ipa": "/flændʒ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "플랜지, 테두리", "ex": "Each section of pipe is joined to the next by bolting together their raised flanges.", "tr": "각 배관 구간은 돌출된 플랜지를 볼트로 조여 다음 구간과 연결된다.", "src": "" }
-      ],
-      "syn": ["rim", "collar", "projecting edge"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "edify",
-      "ipa": "/ˈedɪfaɪ/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "교화하다, 계발하다", "ex": "The lecture series was designed to edify the public rather than merely entertain it.", "tr": "그 강연 시리즈는 단지 즐거움을 주기보다 대중을 교화하기 위해 기획되었다.", "src": "" }
-      ],
-      "syn": ["enlighten", "instruct", "improve"],
-      "deriv": ["edification (n) 교화", "edifying (adj) 교훈적인"],
-      "roots": ["aedes(=집) + facere(=make) → 정신을 세워 짓다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "angiosperm",
-      "ipa": "/ˈændʒiəspɜːrm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "속씨식물", "ex": "Unlike conifers, angiosperms enclose their seeds within a protective fruit.", "tr": "침엽수와 달리 속씨식물은 씨앗을 보호하는 열매 안에 감싸 넣는다.", "src": "" }
-      ],
-      "syn": ["flowering plant"],
-      "deriv": ["angiospermous (adj) 속씨식물의"],
-      "roots": ["angeion(=그릇) + sperma(=씨) → 씨를 그릇에 담은 식물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "chronicity",
-      "ipa": "/krəˈnɪsɪti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "만성도, 만성적 성질", "ex": "The chronicity of the illness meant that patients required care for the rest of their lives.", "tr": "그 질병의 만성적 성질은 환자들이 평생 치료를 받아야 함을 의미했다.", "src": "" }
-      ],
-      "syn": ["persistence", "long-lasting nature"],
-      "deriv": ["chronic (adj) 만성의", "chronically (adv) 만성적으로"],
-      "roots": ["chronos(=시간) → 오래 지속되는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "mechanization",
-      "ipa": "/ˌmekənaɪˈzeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "기계화", "ex": "The mechanization of farming allowed a smaller workforce to cultivate far larger areas.", "tr": "농업의 기계화 덕분에 더 적은 인력이 훨씬 넓은 지역을 경작할 수 있게 되었다.", "src": "" }
-      ],
-      "syn": ["automation", "industrialization"],
-      "deriv": ["mechanize (v) 기계화하다", "mechanized (adj) 기계화된"],
-      "roots": ["mechane(=기계) → 기계로 바꾸는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "centripetal",
-      "ipa": "/senˈtrɪpɪtəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "구심의, 중심으로 향하는", "ex": "A centripetal force pulls an orbiting satellite continuously toward the Earth.", "tr": "구심력은 궤도를 도는 위성을 끊임없이 지구 쪽으로 끌어당긴다.", "src": "" }
-      ],
-      "syn": ["inward", "center-seeking"],
-      "deriv": ["centripetally (adv) 구심적으로"],
-      "roots": ["centrum(=중심) + petere(=구하다) → 중심을 향하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cognitively",
-      "ipa": "/ˈkɒɡnɪtɪvli/",
-      "pos": "adv",
-      "meanings": [
-        { "pos": "adv", "ko": "인지적으로", "ex": "Tasks that are cognitively demanding tend to activate the brain's prefrontal cortex.", "tr": "인지적으로 부담이 큰 과제는 뇌의 전전두엽 피질을 활성화하는 경향이 있다.", "src": "" }
-      ],
-      "syn": ["mentally", "intellectually"],
-      "deriv": ["cognitive (adj) 인지의", "cognition (n) 인지"],
-      "roots": ["co(=완전히) + gnoscere(=알다) → 아는 작용으로"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "battlement",
-      "ipa": "/ˈbætəlmənt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "총안이 있는 흉벽", "ex": "Archers could fire through the gaps in the castle's battlements while remaining protected.", "tr": "궁수들은 몸을 보호받으면서 성의 흉벽 틈새로 화살을 쏠 수 있었다.", "src": "" }
-      ],
-      "syn": ["parapet", "rampart"],
-      "deriv": ["battlemented (adj) 흉벽이 있는"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "denouement",
-      "ipa": "/deɪˈnuːmɒ̃/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "대단원, 결말", "ex": "In the novel's denouement, the tangled subplots are finally resolved into a single conclusion.", "tr": "그 소설의 대단원에서 얽혀 있던 부차적 줄거리들이 마침내 하나의 결론으로 정리된다.", "src": "" }
-      ],
-      "syn": ["resolution", "conclusion", "ending"],
-      "deriv": [],
-      "roots": ["des(=풀다) + nodus(=매듭) → 매듭을 풀어 마무리함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "conglomerate",
-      "ipa": "/kənˈɡlɒmərət/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "역암", "ex": "Conglomerate forms when rounded pebbles are cemented together within finer sediment.", "tr": "역암은 둥근 자갈들이 더 고운 퇴적물 속에서 함께 굳어질 때 형성된다.", "src": "" }
-      ],
-      "syn": ["pudding stone"],
-      "deriv": ["conglomeratic (adj) 역암질의"],
-      "roots": ["com(=together) + glomus(=덩어리) → 함께 뭉쳐진 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "digitalization",
-      "ipa": "/ˌdɪdʒɪtəlaɪˈzeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "디지털 전환", "ex": "The digitalization of medical records has made patient histories accessible across hospitals.", "tr": "의료 기록의 디지털 전환은 환자 병력을 여러 병원에서 열람할 수 있게 만들었다.", "src": "" }
-      ],
-      "syn": ["digitization", "digital transformation"],
-      "deriv": ["digitalize (v) 디지털화하다", "digital (adj) 디지털의"],
-      "roots": ["digitus(=손가락, 숫자) → 숫자 형태로 바꾸는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "retrospective",
-      "ipa": "/ˌretrəˈspektɪv/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "회고적인, 소급하는", "ex": "In a retrospective study, researchers examine records of events that have already occurred.", "tr": "회고적 연구에서 연구자들은 이미 일어난 사건들의 기록을 검토한다.", "src": "" }
-      ],
-      "syn": ["backward-looking", "historical"],
-      "deriv": ["retrospect (n) 회고", "retrospectively (adv) 소급하여"],
-      "roots": ["retro(=뒤로) + spicere(=보다) → 뒤를 돌아보는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dirge",
-      "ipa": "/dɜːrdʒ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "애가, 만가", "ex": "The mourners sang a slow dirge as the procession moved toward the grave.", "tr": "조문객들은 행렬이 무덤을 향해 나아가는 동안 느린 만가를 불렀다.", "src": "" }
-      ],
-      "syn": ["lament", "elegy", "funeral song"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "factorize",
-      "ipa": "/ˈfæktəraɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "인수분해하다", "ex": "To solve the equation, students first factorize the expression into two simpler terms.", "tr": "그 방정식을 풀기 위해 학생들은 먼저 식을 두 개의 더 간단한 항으로 인수분해한다.", "src": "" }
-      ],
-      "syn": ["factor", "break into factors"],
-      "deriv": ["factorization (n) 인수분해", "factor (n) 인수"],
-      "roots": ["facere(=만들다) → 만들어 낸 인수로 나누다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "fresco",
-      "ipa": "/ˈfreskoʊ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "프레스코화", "ex": "A fresco is painted directly onto wet plaster so that the colors bind into the wall.", "tr": "프레스코화는 색이 벽에 스며들도록 젖은 회반죽 위에 직접 그린다.", "src": "" }
-      ],
-      "syn": ["wall painting", "mural"],
-      "deriv": [],
-      "roots": ["fresco(=신선한) → 신선한(젖은) 회반죽에 그린 그림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "amalgam",
-      "ipa": "/əˈmælɡəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "혼합물, 합금", "ex": "The city's culture is an amalgam of traditions brought by generations of immigrants.", "tr": "그 도시의 문화는 여러 세대의 이민자들이 가져온 전통이 뒤섞인 혼합물이다.", "src": "" }
-      ],
-      "syn": ["mixture", "blend", "combination"],
-      "deriv": ["amalgamate (v) 합병하다", "amalgamation (n) 합병"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "codex",
-      "ipa": "/ˈkoʊdeks/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "고사본, 필사본 책", "ex": "The ancient codex preserved texts that had survived nowhere else in the medieval world.", "tr": "그 고사본은 중세 세계 어디에도 남아 있지 않던 문헌들을 보존하고 있었다.", "src": "" }
-      ],
-      "syn": ["manuscript", "ancient book"],
-      "deriv": ["codices (n) codex의 복수형"],
-      "roots": ["codex(=나무판, 책) → 묶어 만든 책"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dualism",
-      "ipa": "/ˈdjuːəlɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "이원론", "ex": "Descartes advocated a dualism in which mind and body are fundamentally distinct substances.", "tr": "데카르트는 정신과 육체가 근본적으로 별개의 실체라는 이원론을 주장했다.", "src": "" }
-      ],
-      "syn": ["duality", "two-principle theory"],
-      "deriv": ["dualist (n) 이원론자", "dualistic (adj) 이원론적인"],
-      "roots": ["dualis(=둘의) → 둘로 나누어 보는 관점"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "carbonsink",
-      "ipa": "/ˈkɑːrbənsɪŋk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "탄소흡수원", "ex": "Old-growth forests act as a carbon sink, storing vast amounts of atmospheric carbon dioxide.", "tr": "원시림은 탄소흡수원 역할을 하며 대기 중 이산화탄소를 막대하게 저장한다.", "src": "" }
-      ],
-      "syn": ["carbon reservoir"],
-      "deriv": [],
-      "roots": ["carbo(=탄소) + sink(=흡수하는 곳) → 탄소를 빨아들이는 곳"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "astrophysics",
-      "ipa": "/ˌæstroʊˈfɪzɪks/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "천체물리학", "ex": "Astrophysics applies the laws of physics to explain how stars generate and radiate energy.", "tr": "천체물리학은 별이 어떻게 에너지를 생성하고 방출하는지 설명하기 위해 물리 법칙을 적용한다.", "src": "" }
-      ],
-      "syn": ["stellar physics"],
-      "deriv": ["astrophysical (adj) 천체물리학의", "astrophysicist (n) 천체물리학자"],
-      "roots": ["astron(=별) + physis(=자연) → 별의 물리를 다루는 학문"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "collectivism",
-      "ipa": "/kəˈlektɪvɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "집단주의", "ex": "Collectivism emphasizes the welfare of the group over the ambitions of any single individual.", "tr": "집단주의는 어떤 개인의 야망보다 집단의 복리를 우선시한다.", "src": "" }
-      ],
-      "syn": ["communalism"],
-      "deriv": ["collectivist (n) 집단주의자", "collective (adj) 집단의"],
-      "roots": ["com(=together) + legere(=모으다) → 함께 모으는 사상"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "caucus",
-      "ipa": "/ˈkɔːkəs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "당원 대회, 코커스", "ex": "At the caucus, party members gathered to debate and select their preferred candidate.", "tr": "코커스에서 당원들은 자신들이 선호하는 후보를 토론하고 선출하기 위해 모였다.", "src": "" }
-      ],
-      "syn": ["party meeting", "assembly"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dissociate",
-      "ipa": "/dɪˈsoʊsieɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "해리하다, 분리되다", "ex": "In water, table salt dissociates into separate sodium and chloride ions.", "tr": "물속에서 식염은 분리된 나트륨 이온과 염화물 이온으로 해리한다.", "src": "" }
-      ],
-      "syn": ["separate", "break apart", "split"],
-      "deriv": ["dissociation (n) 해리", "dissociative (adj) 해리성의"],
-      "roots": ["dis(=분리) + sociare(=결합하다) → 결합을 풀다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "commerciality",
-      "ipa": "/kəˌmɜːrʃiˈælɪti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "상업성", "ex": "Critics argued that the film's commerciality had come at the expense of its artistic depth.", "tr": "비평가들은 그 영화의 상업성이 예술적 깊이를 희생시킨 대가로 얻어졌다고 주장했다.", "src": "" }
-      ],
-      "syn": ["marketability", "profitability"],
-      "deriv": ["commercial (adj) 상업의", "commercialize (v) 상업화하다"],
-      "roots": ["com(=together) + merx(=상품) → 상품이 되는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "flywheel",
-      "ipa": "/ˈflaɪwiːl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "플라이휠, 관성 바퀴", "ex": "The heavy flywheel stores rotational energy and keeps the engine turning smoothly between strokes.", "tr": "무거운 플라이휠은 회전 에너지를 저장하여 행정 사이에 엔진이 부드럽게 돌아가도록 유지한다.", "src": "" }
-      ],
-      "syn": ["momentum wheel"],
-      "deriv": [],
-      "roots": ["fly(=돌다) + wheel(=바퀴) → 관성으로 도는 바퀴"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "elocution",
-      "ipa": "/ˌeləˈkjuːʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "발성법, 웅변술", "ex": "Training in elocution taught the students to speak clearly and project their voices.", "tr": "발성법 훈련은 학생들에게 또렷하게 말하고 목소리를 멀리 전달하는 법을 가르쳤다.", "src": "" }
-      ],
-      "syn": ["diction", "articulation", "public speaking"],
-      "deriv": ["elocutionary (adj) 웅변술의"],
-      "roots": ["e(=out) + loqui(=말하다) → 밖으로 말을 내는 기술"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "apoptosis",
-      "ipa": "/ˌæpəpˈtoʊsɪs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "세포 자멸사", "ex": "Through apoptosis, the body eliminates damaged cells before they can become harmful.", "tr": "세포 자멸사를 통해 몸은 손상된 세포가 해로워지기 전에 그것을 제거한다.", "src": "" }
-      ],
-      "syn": ["programmed cell death"],
-      "deriv": ["apoptotic (adj) 세포 자멸사의"],
-      "roots": ["apo(=떨어져) + ptosis(=떨어짐) → 잎이 지듯 세포가 떨어져 죽음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "coagulate",
-      "ipa": "/koʊˈæɡjuleɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "응고하다, 엉기다", "ex": "When a blood vessel is cut, platelets cause the blood to coagulate and seal the wound.", "tr": "혈관이 잘리면 혈소판은 혈액을 응고시켜 상처를 막는다.", "src": "" }
-      ],
-      "syn": ["clot", "congeal", "curdle"],
-      "deriv": ["coagulation (n) 응고", "coagulant (n) 응고제"],
-      "roots": ["co(=together) + agere(=몰다) → 함께 몰려 엉기다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "pasteurization",
-      "ipa": "/ˌpæstʃəraɪˈzeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "저온 살균", "ex": "Pasteurization heats milk just enough to kill harmful bacteria without spoiling its taste.", "tr": "저온 살균은 맛을 해치지 않으면서 해로운 세균을 죽일 만큼만 우유를 가열한다.", "src": "" }
-      ],
-      "syn": ["heat sterilization"],
-      "deriv": ["pasteurize (v) 저온 살균하다"],
-      "roots": ["Pasteur(파스퇴르) → 파스퇴르가 고안한 살균법"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "damping",
-      "ipa": "/ˈdæmpɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "감쇠, 제동", "ex": "Damping gradually reduces the amplitude of a vibration until the motion dies away.", "tr": "감쇠는 진동의 진폭을 점차 줄여 마침내 운동이 사그라지게 한다.", "src": "" }
-      ],
-      "syn": ["attenuation", "reduction of oscillation"],
-      "deriv": ["damp (v) 감쇠시키다", "damped (adj) 감쇠된"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cognizance",
-      "ipa": "/ˈkɒɡnɪzəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "인식, 지각", "ex": "The report brought the risks to the cognizance of officials who had previously ignored them.", "tr": "그 보고서는 이전에 위험을 무시했던 관리들에게 그 위험을 인식하게 만들었다.", "src": "" }
-      ],
-      "syn": ["awareness", "recognition", "perception"],
-      "deriv": ["cognizant (adj) 인식하고 있는"],
-      "roots": ["co(=완전히) + gnoscere(=알다) → 알아채는 상태"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "buttress",
-      "ipa": "/ˈbʌtrəs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "부벽, 버팀벽", "ex": "The cathedral's stone buttresses transfer the weight of the roof outward and down to the ground.", "tr": "그 대성당의 돌 부벽은 지붕의 무게를 바깥쪽과 아래쪽으로 지면까지 전달한다.", "src": "" }
-      ],
-      "syn": ["support", "brace", "prop"],
-      "deriv": ["buttress (v) 지지하다, 보강하다"],
-      "roots": ["bouter(=밀다) → 밀어 받치는 벽"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dialectal",
-      "ipa": "/ˌdaɪəˈlektəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "방언의", "ex": "Dialectal differences in pronunciation can reveal where a speaker grew up.", "tr": "발음에서의 방언적 차이는 화자가 어디서 자랐는지를 드러낼 수 있다.", "src": "" }
-      ],
-      "syn": ["regional", "vernacular"],
-      "deriv": ["dialect (n) 방언", "dialectally (adv) 방언상으로"],
-      "roots": ["dia(=사이) + legein(=말하다) → 지역 간 말투에 관한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "crustal",
-      "ipa": "/ˈkrʌstəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "지각의", "ex": "Crustal movements along the fault line released enormous amounts of stored energy.", "tr": "단층선을 따라 일어난 지각 운동은 축적된 막대한 에너지를 방출했다.", "src": "" }
-      ],
-      "syn": ["of the crust"],
-      "deriv": ["crust (n) 지각, 껍질"],
-      "roots": ["crusta(=껍질) → 지구 껍질에 관한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "emulate",
-      "ipa": "/ˈemjuleɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "모방하다, 흉내 내다", "ex": "The software can emulate an older machine so that legacy programs still run correctly.", "tr": "그 소프트웨어는 구형 기계를 모방할 수 있어 오래된 프로그램이 여전히 제대로 작동한다.", "src": "" }
-      ],
-      "syn": ["imitate", "reproduce", "mimic"],
-      "deriv": ["emulation (n) 모방", "emulator (n) 에뮬레이터"],
-      "roots": ["aemulari(=경쟁하며 본뜨다) → 본떠 재현하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "discordant",
-      "ipa": "/dɪsˈkɔːrdənt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "불협화음의, 조화되지 않는", "ex": "The discordant chords created a sense of tension that the composer resolved only at the end.", "tr": "그 불협화음의 화음은 긴장감을 자아냈고 작곡가는 그것을 마지막에서야 해소했다.", "src": "" }
-      ],
-      "syn": ["dissonant", "clashing", "jarring"],
-      "deriv": ["discord (n) 불화, 불협화음", "discordance (n) 불일치"],
-      "roots": ["dis(=떨어져) + cor(=마음) → 마음이 어긋난"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "hyperbola",
-      "ipa": "/haɪˈpɜːrbələ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "쌍곡선", "ex": "A hyperbola consists of two symmetric curves that open away from each other.", "tr": "쌍곡선은 서로 반대 방향으로 열리는 두 개의 대칭 곡선으로 이루어진다.", "src": "" }
-      ],
-      "syn": ["conic curve"],
-      "deriv": ["hyperbolic (adj) 쌍곡선의"],
-      "roots": ["hyper(=넘어) + ballein(=던지다) → 넘어서 뻗는 곡선"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "frieze",
-      "ipa": "/friːz/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "프리즈, 띠 장식", "ex": "A carved frieze depicting a battle ran along the upper wall of the ancient temple.", "tr": "전투를 묘사한 조각 프리즈가 그 고대 신전의 윗벽을 따라 이어져 있었다.", "src": "" }
-      ],
-      "syn": ["decorative band"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "ambivalence",
-      "ipa": "/æmˈbɪvələns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "양가감정, 상반된 감정", "ex": "The public's ambivalence toward the new technology reflected both its promise and its dangers.", "tr": "그 신기술에 대한 대중의 양가감정은 그것의 가능성과 위험성을 모두 반영했다.", "src": "" }
-      ],
-      "syn": ["mixed feelings", "uncertainty", "indecision"],
-      "deriv": ["ambivalent (adj) 양가적인"],
-      "roots": ["ambi(=양쪽) + valere(=힘이 있다) → 양쪽으로 끌리는 감정"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "n",
+     "ko": "담합, 공모",
+     "ex": "Regulators fined the firms after uncovering collusion aimed at keeping prices artificially high.",
+     "tr": "규제 당국은 가격을 인위적으로 높게 유지하려는 담합을 적발한 뒤 그 기업들에 벌금을 부과했다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "conspiracy",
+    "connivance",
+    "secret agreement"
+   ],
+   "deriv": [
+    "collude (v) 공모하다",
+    "collusive (adj) 공모의"
+   ],
+   "roots": [
+    "com(=together) + ludere(=play) → 함께 짜고 벌이다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "flange",
+   "ipa": "/flændʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "플랜지, 테두리",
+     "ex": "Each section of pipe is joined to the next by bolting together their raised flanges.",
+     "tr": "각 배관 구간은 돌출된 플랜지를 볼트로 조여 다음 구간과 연결된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "rim",
+    "collar",
+    "projecting edge"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "공학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "edify",
+   "ipa": "/ˈedɪfaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "교화하다, 계발하다",
+     "ex": "The lecture series was designed to edify the public rather than merely entertain it.",
+     "tr": "그 강연 시리즈는 단지 즐거움을 주기보다 대중을 교화하기 위해 기획되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "enlighten",
+    "instruct",
+    "improve"
+   ],
+   "deriv": [
+    "edification (n) 교화",
+    "edifying (adj) 교훈적인"
+   ],
+   "roots": [
+    "aedes(=집) + facere(=make) → 정신을 세워 짓다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "교육미디어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "angiosperm",
+   "ipa": "/ˈændʒiəspɜːrm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "속씨식물",
+     "ex": "Unlike conifers, angiosperms enclose their seeds within a protective fruit.",
+     "tr": "침엽수와 달리 속씨식물은 씨앗을 보호하는 열매 안에 감싸 넣는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "flowering plant"
+   ],
+   "deriv": [
+    "angiospermous (adj) 속씨식물의"
+   ],
+   "roots": [
+    "angeion(=그릇) + sperma(=씨) → 씨를 그릇에 담은 식물"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "chronicity",
+   "ipa": "/krəˈnɪsɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "만성도, 만성적 성질",
+     "ex": "The chronicity of the illness meant that patients required care for the rest of their lives.",
+     "tr": "그 질병의 만성적 성질은 환자들이 평생 치료를 받아야 함을 의미했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "persistence",
+    "long-lasting nature"
+   ],
+   "deriv": [
+    "chronic (adj) 만성의",
+    "chronically (adv) 만성적으로"
+   ],
+   "roots": [
+    "chronos(=시간) → 오래 지속되는 성질"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "mechanization",
+   "ipa": "/ˌmekənaɪˈzeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "기계화",
+     "ex": "The mechanization of farming allowed a smaller workforce to cultivate far larger areas.",
+     "tr": "농업의 기계화 덕분에 더 적은 인력이 훨씬 넓은 지역을 경작할 수 있게 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "automation",
+    "industrialization"
+   ],
+   "deriv": [
+    "mechanize (v) 기계화하다",
+    "mechanized (adj) 기계화된"
+   ],
+   "roots": [
+    "mechane(=기계) → 기계로 바꾸는 것"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "농업산업",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "centripetal",
+   "ipa": "/senˈtrɪpɪtəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "구심의, 중심으로 향하는",
+     "ex": "A centripetal force pulls an orbiting satellite continuously toward the Earth.",
+     "tr": "구심력은 궤도를 도는 위성을 끊임없이 지구 쪽으로 끌어당긴다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inward",
+    "center-seeking"
+   ],
+   "deriv": [
+    "centripetally (adv) 구심적으로"
+   ],
+   "roots": [
+    "centrum(=중심) + petere(=구하다) → 중심을 향하는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "물리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cognitively",
+   "ipa": "/ˈkɒɡnɪtɪvli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "인지적으로",
+     "ex": "Tasks that are cognitively demanding tend to activate the brain's prefrontal cortex.",
+     "tr": "인지적으로 부담이 큰 과제는 뇌의 전전두엽 피질을 활성화하는 경향이 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mentally",
+    "intellectually"
+   ],
+   "deriv": [
+    "cognitive (adj) 인지의",
+    "cognition (n) 인지"
+   ],
+   "roots": [
+    "co(=완전히) + gnoscere(=알다) → 아는 작용으로"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "battlement",
+   "ipa": "/ˈbætəlmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "총안이 있는 흉벽",
+     "ex": "Archers could fire through the gaps in the castle's battlements while remaining protected.",
+     "tr": "궁수들은 몸을 보호받으면서 성의 흉벽 틈새로 화살을 쏠 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "parapet",
+    "rampart"
+   ],
+   "deriv": [
+    "battlemented (adj) 흉벽이 있는"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "denouement",
+   "ipa": "/deɪˈnuːmɒ̃/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "대단원, 결말",
+     "ex": "In the novel's denouement, the tangled subplots are finally resolved into a single conclusion.",
+     "tr": "그 소설의 대단원에서 얽혀 있던 부차적 줄거리들이 마침내 하나의 결론으로 정리된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "resolution",
+    "conclusion",
+    "ending"
+   ],
+   "deriv": [],
+   "roots": [
+    "des(=풀다) + nodus(=매듭) → 매듭을 풀어 마무리함"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conglomerate",
+   "ipa": "/kənˈɡlɒmərət/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "역암",
+     "ex": "Conglomerate forms when rounded pebbles are cemented together within finer sediment.",
+     "tr": "역암은 둥근 자갈들이 더 고운 퇴적물 속에서 함께 굳어질 때 형성된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "pudding stone"
+   ],
+   "deriv": [
+    "conglomeratic (adj) 역암질의"
+   ],
+   "roots": [
+    "com(=together) + glomus(=덩어리) → 함께 뭉쳐진 것"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "digitalization",
+   "ipa": "/ˌdɪdʒɪtəlaɪˈzeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "디지털 전환",
+     "ex": "The digitalization of medical records has made patient histories accessible across hospitals.",
+     "tr": "의료 기록의 디지털 전환은 환자 병력을 여러 병원에서 열람할 수 있게 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "digitization",
+    "digital transformation"
+   ],
+   "deriv": [
+    "digitalize (v) 디지털화하다",
+    "digital (adj) 디지털의"
+   ],
+   "roots": [
+    "digitus(=손가락, 숫자) → 숫자 형태로 바꾸는 것"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "기술컴퓨팅",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "retrospective",
+   "ipa": "/ˌretrəˈspektɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "회고적인, 소급하는",
+     "ex": "In a retrospective study, researchers examine records of events that have already occurred.",
+     "tr": "회고적 연구에서 연구자들은 이미 일어난 사건들의 기록을 검토한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "backward-looking",
+    "historical"
+   ],
+   "deriv": [
+    "retrospect (n) 회고",
+    "retrospectively (adv) 소급하여"
+   ],
+   "roots": [
+    "retro(=뒤로) + spicere(=보다) → 뒤를 돌아보는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "연구방법",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dirge",
+   "ipa": "/dɜːrdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "애가, 만가",
+     "ex": "The mourners sang a slow dirge as the procession moved toward the grave.",
+     "tr": "조문객들은 행렬이 무덤을 향해 나아가는 동안 느린 만가를 불렀다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "lament",
+    "elegy",
+    "funeral song"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "factorize",
+   "ipa": "/ˈfæktəraɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "인수분해하다",
+     "ex": "To solve the equation, students first factorize the expression into two simpler terms.",
+     "tr": "그 방정식을 풀기 위해 학생들은 먼저 식을 두 개의 더 간단한 항으로 인수분해한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "factor",
+    "break into factors"
+   ],
+   "deriv": [
+    "factorization (n) 인수분해",
+    "factor (n) 인수"
+   ],
+   "roots": [
+    "facere(=만들다) → 만들어 낸 인수로 나누다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "수학통계",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "fresco",
+   "ipa": "/ˈfreskoʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "프레스코화",
+     "ex": "A fresco is painted directly onto wet plaster so that the colors bind into the wall.",
+     "tr": "프레스코화는 색이 벽에 스며들도록 젖은 회반죽 위에 직접 그린다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "wall painting",
+    "mural"
+   ],
+   "deriv": [],
+   "roots": [
+    "fresco(=신선한) → 신선한(젖은) 회반죽에 그린 그림"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "미술",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "amalgam",
+   "ipa": "/əˈmælɡəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "혼합물, 합금",
+     "ex": "The city's culture is an amalgam of traditions brought by generations of immigrants.",
+     "tr": "그 도시의 문화는 여러 세대의 이민자들이 가져온 전통이 뒤섞인 혼합물이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mixture",
+    "blend",
+    "combination"
+   ],
+   "deriv": [
+    "amalgamate (v) 합병하다",
+    "amalgamation (n) 합병"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "codex",
+   "ipa": "/ˈkoʊdeks/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "고사본, 필사본 책",
+     "ex": "The ancient codex preserved texts that had survived nowhere else in the medieval world.",
+     "tr": "그 고사본은 중세 세계 어디에도 남아 있지 않던 문헌들을 보존하고 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "manuscript",
+    "ancient book"
+   ],
+   "deriv": [
+    "codices (n) codex의 복수형"
+   ],
+   "roots": [
+    "codex(=나무판, 책) → 묶어 만든 책"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dualism",
+   "ipa": "/ˈdjuːəlɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "이원론",
+     "ex": "Descartes advocated a dualism in which mind and body are fundamentally distinct substances.",
+     "tr": "데카르트는 정신과 육체가 근본적으로 별개의 실체라는 이원론을 주장했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "duality",
+    "two-principle theory"
+   ],
+   "deriv": [
+    "dualist (n) 이원론자",
+    "dualistic (adj) 이원론적인"
+   ],
+   "roots": [
+    "dualis(=둘의) → 둘로 나누어 보는 관점"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "carbon sink",
+   "ipa": "/ˈkɑːrbən sɪŋk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "탄소흡수원",
+     "ex": "Old-growth forests act as a carbon sink, storing vast amounts of atmospheric carbon dioxide.",
+     "tr": "원시림은 탄소흡수원 역할을 하며 대기 중 이산화탄소를 막대하게 저장한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "carbon reservoir"
+   ],
+   "deriv": [],
+   "roots": [
+    "carbo(=탄소) + sink(=흡수하는 곳) → 탄소를 빨아들이는 곳"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "환경",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "astrophysics",
+   "ipa": "/ˌæstroʊˈfɪzɪks/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "천체물리학",
+     "ex": "Astrophysics applies the laws of physics to explain how stars generate and radiate energy.",
+     "tr": "천체물리학은 별이 어떻게 에너지를 생성하고 방출하는지 설명하기 위해 물리 법칙을 적용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "stellar physics"
+   ],
+   "deriv": [
+    "astrophysical (adj) 천체물리학의",
+    "astrophysicist (n) 천체물리학자"
+   ],
+   "roots": [
+    "astron(=별) + physis(=자연) → 별의 물리를 다루는 학문"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "collectivism",
+   "ipa": "/kəˈlektɪvɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "집단주의",
+     "ex": "Collectivism emphasizes the welfare of the group over the ambitions of any single individual.",
+     "tr": "집단주의는 어떤 개인의 야망보다 집단의 복리를 우선시한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "communalism"
+   ],
+   "deriv": [
+    "collectivist (n) 집단주의자",
+    "collective (adj) 집단의"
+   ],
+   "roots": [
+    "com(=together) + legere(=모으다) → 함께 모으는 사상"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "caucus",
+   "ipa": "/ˈkɔːkəs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "당원 대회, 코커스",
+     "ex": "At the caucus, party members gathered to debate and select their preferred candidate.",
+     "tr": "코커스에서 당원들은 자신들이 선호하는 후보를 토론하고 선출하기 위해 모였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "party meeting",
+    "assembly"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dissociate",
+   "ipa": "/dɪˈsoʊsieɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "해리하다, 분리되다",
+     "ex": "In water, table salt dissociates into separate sodium and chloride ions.",
+     "tr": "물속에서 식염은 분리된 나트륨 이온과 염화물 이온으로 해리한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "separate",
+    "break apart",
+    "split"
+   ],
+   "deriv": [
+    "dissociation (n) 해리",
+    "dissociative (adj) 해리성의"
+   ],
+   "roots": [
+    "dis(=분리) + sociare(=결합하다) → 결합을 풀다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "화학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "commerciality",
+   "ipa": "/kəˌmɜːrʃiˈælɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상업성",
+     "ex": "Critics argued that the film's commerciality had come at the expense of its artistic depth.",
+     "tr": "비평가들은 그 영화의 상업성이 예술적 깊이를 희생시킨 대가로 얻어졌다고 주장했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "marketability",
+    "profitability"
+   ],
+   "deriv": [
+    "commercial (adj) 상업의",
+    "commercialize (v) 상업화하다"
+   ],
+   "roots": [
+    "com(=together) + merx(=상품) → 상품이 되는 성질"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "flywheel",
+   "ipa": "/ˈflaɪwiːl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "플라이휠, 관성 바퀴",
+     "ex": "The heavy flywheel stores rotational energy and keeps the engine turning smoothly between strokes.",
+     "tr": "무거운 플라이휠은 회전 에너지를 저장하여 행정 사이에 엔진이 부드럽게 돌아가도록 유지한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "momentum wheel"
+   ],
+   "deriv": [],
+   "roots": [
+    "fly(=돌다) + wheel(=바퀴) → 관성으로 도는 바퀴"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "공학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "elocution",
+   "ipa": "/ˌeləˈkjuːʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "발성법, 웅변술",
+     "ex": "Training in elocution taught the students to speak clearly and project their voices.",
+     "tr": "발성법 훈련은 학생들에게 또렷하게 말하고 목소리를 멀리 전달하는 법을 가르쳤다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "diction",
+    "articulation",
+    "public speaking"
+   ],
+   "deriv": [
+    "elocutionary (adj) 웅변술의"
+   ],
+   "roots": [
+    "e(=out) + loqui(=말하다) → 밖으로 말을 내는 기술"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "교육미디어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "apoptosis",
+   "ipa": "/ˌæpəpˈtoʊsɪs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "세포 자멸사",
+     "ex": "Through apoptosis, the body eliminates damaged cells before they can become harmful.",
+     "tr": "세포 자멸사를 통해 몸은 손상된 세포가 해로워지기 전에 그것을 제거한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "programmed cell death"
+   ],
+   "deriv": [
+    "apoptotic (adj) 세포 자멸사의"
+   ],
+   "roots": [
+    "apo(=떨어져) + ptosis(=떨어짐) → 잎이 지듯 세포가 떨어져 죽음"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "coagulate",
+   "ipa": "/koʊˈæɡjuleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "응고하다, 엉기다",
+     "ex": "When a blood vessel is cut, platelets cause the blood to coagulate and seal the wound.",
+     "tr": "혈관이 잘리면 혈소판은 혈액을 응고시켜 상처를 막는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "clot",
+    "congeal",
+    "curdle"
+   ],
+   "deriv": [
+    "coagulation (n) 응고",
+    "coagulant (n) 응고제"
+   ],
+   "roots": [
+    "co(=together) + agere(=몰다) → 함께 몰려 엉기다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "pasteurization",
+   "ipa": "/ˌpæstʃəraɪˈzeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "저온 살균",
+     "ex": "Pasteurization heats milk just enough to kill harmful bacteria without spoiling its taste.",
+     "tr": "저온 살균은 맛을 해치지 않으면서 해로운 세균을 죽일 만큼만 우유를 가열한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "heat sterilization"
+   ],
+   "deriv": [
+    "pasteurize (v) 저온 살균하다"
+   ],
+   "roots": [
+    "Pasteur(파스퇴르) → 파스퇴르가 고안한 살균법"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "농업산업",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "damping",
+   "ipa": "/ˈdæmpɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "감쇠, 제동",
+     "ex": "Damping gradually reduces the amplitude of a vibration until the motion dies away.",
+     "tr": "감쇠는 진동의 진폭을 점차 줄여 마침내 운동이 사그라지게 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "attenuation",
+    "reduction of oscillation"
+   ],
+   "deriv": [
+    "damp (v) 감쇠시키다",
+    "damped (adj) 감쇠된"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "물리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cognizance",
+   "ipa": "/ˈkɒɡnɪzəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인식, 지각",
+     "ex": "The report brought the risks to the cognizance of officials who had previously ignored them.",
+     "tr": "그 보고서는 이전에 위험을 무시했던 관리들에게 그 위험을 인식하게 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "awareness",
+    "recognition",
+    "perception"
+   ],
+   "deriv": [
+    "cognizant (adj) 인식하고 있는"
+   ],
+   "roots": [
+    "co(=완전히) + gnoscere(=알다) → 알아채는 상태"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "buttress",
+   "ipa": "/ˈbʌtrəs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "부벽, 버팀벽",
+     "ex": "The cathedral's stone buttresses transfer the weight of the roof outward and down to the ground.",
+     "tr": "그 대성당의 돌 부벽은 지붕의 무게를 바깥쪽과 아래쪽으로 지면까지 전달한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "support",
+    "brace",
+    "prop"
+   ],
+   "deriv": [
+    "buttress (v) 지지하다, 보강하다"
+   ],
+   "roots": [
+    "bouter(=밀다) → 밀어 받치는 벽"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dialectal",
+   "ipa": "/ˌdaɪəˈlektəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "방언의",
+     "ex": "Dialectal differences in pronunciation can reveal where a speaker grew up.",
+     "tr": "발음에서의 방언적 차이는 화자가 어디서 자랐는지를 드러낼 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "regional",
+    "vernacular"
+   ],
+   "deriv": [
+    "dialect (n) 방언",
+    "dialectally (adv) 방언상으로"
+   ],
+   "roots": [
+    "dia(=사이) + legein(=말하다) → 지역 간 말투에 관한"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "crustal",
+   "ipa": "/ˈkrʌstəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "지각의",
+     "ex": "Crustal movements along the fault line released enormous amounts of stored energy.",
+     "tr": "단층선을 따라 일어난 지각 운동은 축적된 막대한 에너지를 방출했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "of the crust"
+   ],
+   "deriv": [
+    "crust (n) 지각, 껍질"
+   ],
+   "roots": [
+    "crusta(=껍질) → 지구 껍질에 관한"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "emulate",
+   "ipa": "/ˈemjuleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "모방하다, 흉내 내다",
+     "ex": "The software can emulate an older machine so that legacy programs still run correctly.",
+     "tr": "그 소프트웨어는 구형 기계를 모방할 수 있어 오래된 프로그램이 여전히 제대로 작동한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "imitate",
+    "reproduce",
+    "mimic"
+   ],
+   "deriv": [
+    "emulation (n) 모방",
+    "emulator (n) 에뮬레이터"
+   ],
+   "roots": [
+    "aemulari(=경쟁하며 본뜨다) → 본떠 재현하다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "기술컴퓨팅",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "discordant",
+   "ipa": "/dɪsˈkɔːrdənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "불협화음의, 조화되지 않는",
+     "ex": "The discordant chords created a sense of tension that the composer resolved only at the end.",
+     "tr": "그 불협화음의 화음은 긴장감을 자아냈고 작곡가는 그것을 마지막에서야 해소했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "dissonant",
+    "clashing",
+    "jarring"
+   ],
+   "deriv": [
+    "discord (n) 불화, 불협화음",
+    "discordance (n) 불일치"
+   ],
+   "roots": [
+    "dis(=떨어져) + cor(=마음) → 마음이 어긋난"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "hyperbola",
+   "ipa": "/haɪˈpɜːrbələ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "쌍곡선",
+     "ex": "A hyperbola consists of two symmetric curves that open away from each other.",
+     "tr": "쌍곡선은 서로 반대 방향으로 열리는 두 개의 대칭 곡선으로 이루어진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conic curve"
+   ],
+   "deriv": [
+    "hyperbolic (adj) 쌍곡선의"
+   ],
+   "roots": [
+    "hyper(=넘어) + ballein(=던지다) → 넘어서 뻗는 곡선"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "수학통계",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "frieze",
+   "ipa": "/friːz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "프리즈, 띠 장식",
+     "ex": "A carved frieze depicting a battle ran along the upper wall of the ancient temple.",
+     "tr": "전투를 묘사한 조각 프리즈가 그 고대 신전의 윗벽을 따라 이어져 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "decorative band"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "미술",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "ambivalence",
+   "ipa": "/æmˈbɪvələns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "양가감정, 상반된 감정",
+     "ex": "The public's ambivalence toward the new technology reflected both its promise and its dangers.",
+     "tr": "그 신기술에 대한 대중의 양가감정은 그것의 가능성과 위험성을 모두 반영했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mixed feelings",
+    "uncertainty",
+    "indecision"
+   ],
+   "deriv": [
+    "ambivalent (adj) 양가적인"
+   ],
+   "roots": [
+    "ambi(=양쪽) + valere(=힘이 있다) → 양쪽으로 끌리는 감정"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }
