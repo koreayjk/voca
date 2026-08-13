@@ -1978,6 +1978,36 @@ async function showMyTests(){
 
 // ── 학생: 응시 ──
 let _take = null;
+// 진행 중 시험을 기기에 저장 → 재접속/새로고침해도 이어서 응시 (문항·보기 셔플까지 통째로 보관)
+function _takeKey(){ return 'imvoca.take.' + (currentUser?.id || 'anon'); }
+function saveTakeState(){
+  try {
+    if (!_take || !_take.qs) return;
+    localStorage.setItem(_takeKey(), JSON.stringify({ test:_take.test, qs:_take.qs, answers:_take.answers||{}, idx:_take.idx||0, savedAt:Date.now() }));
+  } catch(e){}
+}
+function clearTakeState(){ try { localStorage.removeItem(_takeKey()); } catch(e){} }
+function hasSavedTake(){
+  try {
+    const s = localStorage.getItem(_takeKey()); if (!s) return false;
+    const d = JSON.parse(s);
+    if (!d || !Array.isArray(d.qs) || !d.qs.length) { clearTakeState(); return false; }
+    if (d.savedAt && Date.now() - d.savedAt > 24*3600*1000) { clearTakeState(); return false; } // 24시간 후 폐기
+    return true;
+  } catch(e){ return false; }
+}
+function resumeTakeTest(){
+  try {
+    const s = localStorage.getItem(_takeKey()); if (!s) return;
+    const d = JSON.parse(s); if (!d || !Array.isArray(d.qs)) return;
+    _take = { test:d.test, qs:d.qs, answers:d.answers||{}, idx:d.idx||0 };
+    document.getElementById('mytest-overlay')?.remove();
+    let el = document.getElementById('take-overlay'); if (!el){ el=document.createElement('div'); el.id='take-overlay'; document.body.appendChild(el); }
+    el.setAttribute('style','position:fixed;inset:0;z-index:10001;background:var(--bg-page);overflow-y:auto;padding:0 0 90px;');
+    _renderTake();
+    toast(userNativeLang==='ko'?'이어서 시험을 볼 수 있어요 ✍️':'Resumed your test ✍️');
+  } catch(e){}
+}
 async function startTakeTest(id){
   const list=await loadMyTests(); const t=list.find(x=>String(x.id)===String(id)) || _tests.find(x=>String(x.id)===String(id));
   if(!t){ toast('시험을 찾을 수 없어요'); return; }
@@ -1994,6 +2024,7 @@ async function startTakeTest(id){
   // 학생별 셔플(문제·보기 순서) — 부정행위 방지. 채점은 셔플된 문제 객체 기준이라 정확.
   const qs = shuffle(base.map(q=>({...q, choices:q.choices?shuffle(q.choices):q.choices})));
   _take={ test:t, qs, answers:{}, idx:0 };
+  saveTakeState();
   document.getElementById('mytest-overlay')?.remove();
   let el=document.getElementById('take-overlay'); if(!el){ el=document.createElement('div'); el.id='take-overlay'; document.body.appendChild(el); }
   el.setAttribute('style','position:fixed;inset:0;z-index:10001;background:var(--bg-page);overflow-y:auto;padding:0 0 90px;');
@@ -2005,7 +2036,7 @@ function _renderTake(){
   el.innerHTML=`<div style="max-width:560px;margin:0 auto;">
     <div style="background:var(--bg-card);border-bottom:1px solid var(--ink-07);padding:16px 18px;position:sticky;top:0;z-index:5;">
       <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:16px;font-weight:800;color:var(--ink-100);">${esc(t.title||'단어 시험')}</div>
-      <button onclick="if(confirm('시험을 그만두시겠어요? 답안은 저장되지 않아요.')){document.getElementById('take-overlay').remove();_take=null;}" style="margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-40);">✕</button></div>
+      <button onclick="if(confirm('시험을 그만두시겠어요? 진행 중인 답안이 삭제돼요.')){clearTakeState();document.getElementById('take-overlay').remove();_take=null;}" style="margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-40);">✕</button></div>
       <div style="font-size:12px;color:var(--ink-60);margin-top:3px;">${qs.length}문항 · ${t.qtype==='spell'?'뜻을 보고 영어 단어를 쓰세요':t.qtype==='mix'?'객관식+주관식':'알맞은 뜻을 고르세요'}</div>
     </div>
     <div style="padding:14px 16px;">
@@ -2020,11 +2051,11 @@ function _takeQ(q,i){
   if(q.type==='mc'){
     body=(q.choices||[]).map(c=>`<button onclick='_takePick(${i},${JSON.stringify(c)})' style="display:block;width:100%;text-align:left;border:1.5px solid ${cur===c?'var(--accent)':'var(--ink-12)'};background:${cur===c?'var(--gold-bg)':'var(--bg-card)'};color:var(--ink-100);border-radius:10px;padding:11px 13px;font-size:14px;margin-bottom:7px;cursor:pointer;">${esc(c)}</button>`).join('');
   } else {
-    body=`<input value="${esc(cur||'')}" oninput="_take.answers[${i}]=this.value" placeholder="영어 단어 입력" autocapitalize="off" autocomplete="off" style="width:100%;box-sizing:border-box;border:1.5px solid var(--ink-12);border-radius:10px;padding:12px 13px;font-size:15px;background:var(--bg-card);color:var(--ink-100);">`;
+    body=`<input value="${esc(cur||'')}" oninput="_take.answers[${i}]=this.value;saveTakeState()" placeholder="영어 단어 입력" autocapitalize="off" autocomplete="off" style="width:100%;box-sizing:border-box;border:1.5px solid var(--ink-12);border-radius:10px;padding:12px 13px;font-size:15px;background:var(--bg-card);color:var(--ink-100);">`;
   }
   return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:15px;margin-bottom:12px;">${head}${body}</div>`;
 }
-function _takePick(i,c){ _take.answers[i]=c; _renderTake(); window.scrollTo(0,window.scrollY); }
+function _takePick(i,c){ _take.answers[i]=c; saveTakeState(); _renderTake(); window.scrollTo(0,window.scrollY); }
 async function submitTest(){
   if(!_take) return;
   const t=_take.test, qs=_take.qs||[];
@@ -2035,6 +2066,7 @@ async function submitTest(){
   const row={ test_id:t.id, user_id:currentUser.id, user_name:userName||'학생', org_id:userOrgId||null, score:g.score, total:g.total, answers:g.per };
   const res=await authPost('/rest/v1/voca_test_results', row, 'return=minimal');
   if(!(res && res.ok)){ toast('제출 실패 — 잠시 후 다시 시도'); logError('write_fail','submitTest',res?('status '+res.status):'no response',{}); return; }
+  clearTakeState();
   window._myTestsDirty=true;
   _renderTakeResult(g);
 }
@@ -5973,6 +6005,12 @@ function render() {
   if (route.name === 'library') {
     loadAssignments();
     if (typeof _refreshMyTestsBanner==='function') setTimeout(()=>{ try{ _refreshMyTestsBanner(); }catch(e){} }, 0);
+    // 재접속/새로고침으로 끊긴 시험이 있으면 자동으로 이어서 열기 (앱 로드당 1회만)
+    if (!window._takeResumeDone && !_take && !document.getElementById('take-overlay')
+        && typeof hasSavedTake==='function' && hasSavedTake()) {
+      window._takeResumeDone = true;
+      setTimeout(()=>{ try{ resumeTakeTest(); }catch(e){} }, 300);
+    }
     // 자가복구: 단체 관리자인데 공식 단어장(수능/중등/토익…)이 아직 안 붙어있으면(경합·캐시 등)
     // 화면을 볼 때 다시 불러온다. (owner 는 _seesAllOfficialLangs()=true 라 전체 언어 노출)
     if (typeof _seesAllOfficialLangs==='function' && _seesAllOfficialLangs()
