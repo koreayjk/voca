@@ -24,8 +24,12 @@
 | 토익 핵심 | toeic2 | TOEIC-2 | 683 (18일·800점대) | ✅ | ⬜ | ⬜ |
 | 토익 고득점 | toeic3 | TOEIC-3 | 874 (23일·900점대) | ✅ | ⬜ | ⬜ |
 | 토익 숙어 | toeic4 | TOEIC-4 | 370 (10일·구동사·전치사) | ✅ | ⬜ | ⬜ |
+| 토플 기본 | toefl1 | TOEFL-1 | 1,200 (30일·B2) | ✅ | ⬜ | ⬜ |
+| 토플 핵심 | toefl2 | TOEFL-2 | 2,000 (50일·B2~C1) | ✅ | ⬜ | ⬜ |
+| 토플 고난도 | toefl3 | TOEFL-3 | 1,800 (45일·C1~C2) | ✅ | ⬜ | ⬜ |
 
 → **7권 전부 완성 + DB등록·발음 완료(2026-06-26).** 7권 모두 is_official로 Supabase 등록·Storage 음원 업로드됨.
+→ **TOEFL 3권 추가(2026-08-14, 최종 JSON):** 기본1,200(B2)·핵심2,000(B2~C1)·고난도1,800(C1~C2)=5,000, 125일. **기존 영어 공식책(수능·토익 ~7,990개)과 중복 허용**(옵션B, 겹치면 복습). corpus 없이 AWL+학술 6영역 풀생성: `toefl-build/pool[A-F].json`(학술일반1,794·생명1,000·물리1,000·사회1,000·인문1,000·기술700=6,498) → `toefl-build/integrate.py`(전역 중복제거 5,085 → 레벨별 3권배분: 기본=B2, 고난도=C2+어려운C1, 핵심=나머지 → 주제 라운드로빈 Day할당) → `toefl-build/toefl[123]-plan.json` → 콘텐츠 병렬생성(서브에이전트, 자작 학술예문·src없음) → `toefl-build/validate_days.py` 검증. 3권간 중복0. **QA:** wordfreq로 빈도0 스캔 → 조어/붙여쓴합성어 교정(acidrain→acid rain, dividendless→stagflation, aperturize→precess, compound* 3개→anhydrous/electrolyze/enthalpy 등). 파일명은 도구 호환 위해 `suneung-toefl<N>-day<D>.json` 유지(prefix=toefl1/2/3). **DB등록·발음 남음**(발행 워크플로우 3회, 영어 음성 기본).
 → **TOEIC 3권 추가(2026-07-06, 최종 JSON):** 기초493·핵심683·고득점874=2,050. 40회 실전모의고사(`toeic/` PDF=이미지) **OCR(tesseract 170dpi)** → 88만단어 코퍼스(`toeic-corpus/`) → `build_toeic_pool.py`(빈도+사전대조 노이즈제거+문제형식어 제외, `toeic-pool-full.json` 3,662) → `build_toeic_scaffolds.py`(빈출 tier: 기초=최빈출/고득점=희귀, prefix toeic1/2/3) → 콘텐츠 워크플로우(비즈니스 예문) → 관대한 merge(OCR노이즈 단어 드롭)+수동 노이즈제거(chet/cist 등 OCR잘린어 26개). LC/RC 미구분(빈도 tier). 예문 자작(출처 없음). **DB등록·발음 남음**(발행 워크플로우 3회, 영어 음성 기본). corpus·PDF gitignore(저작권). merge는 인라인 관대버전 사용(scaffold/content stale 가능).
 → **스페인어 회화 3권 추가(2026-06-26, 최종 JSON):** 기초500·중급600·선교400=1,500. 회화 최빈출+구어체 예문(선교=전도·교회 대화), 명사 성(el/la) `gen` 필드. 기초↔중급 중복0/선교 중복허용. corpus 없이 풀생성(`spa-gen-pool.json` 1,818·`spa-mis-pool.json` 448)→`build_spanish_scaffolds.py`→콘텐츠 워크플로우→merge. **DB등록·발음 남음**: 발행 워크플로우 prefix별 3회, **음원은 스페인어 음성 지정**(tts_voice=`es-US-Neural2-A`, tts_lang=`es-US`). merge_day가 `gen` 보존, gen_audio 빈값 안전처리.
 → **고난도 단어 교체(2026-06-26):** 쉬운 350개(B2 336 + C1오분류 14: candy/joke/plumber 등) 삭제 → 진짜 C1~C2 350개(sagacious/insidious/ubiquitous 등) 신규. 유지 450(기출). 신규어는 자체집필 예문(src 없음). 최종 JSON 직접 조립(scaffold/merge 우회)이라 hard scaffold·content는 stale.
