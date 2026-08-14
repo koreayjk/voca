@@ -46,6 +46,23 @@ def safe(en):
     s = re.sub(r"[^a-z0-9 ]", "", (en or "").lower())
     return re.sub(r"\s+", "-", s.strip())
 
+# 앱 _sentHash 와 동일 알고리즘(djb2 xor, unsigned 32bit, base36).
+# 예문 오디오 파일명 = <safe-en>_<sentHash(ex)>.mp3 → 같은 단어라도 예문이 다르면 다른 파일
+# (기존 책과 단어가 겹쳐도 예문 음원이 절대 섞이지 않음). index.html _audioUrl 과 정확히 일치해야 함.
+def sent_hash(text):
+    s = (text or "").strip()
+    h = 5381
+    for ch in s:
+        h = ((h * 33) ^ ord(ch)) & 0xFFFFFFFF
+    if h == 0:
+        return "0"
+    digits = "0123456789abcdefghijklmnopqrstuvwxyz"
+    out = ""
+    while h:
+        out = digits[h % 36] + out
+        h //= 36
+    return out
+
 # --words <file>: safe명 JSON 배열에 있는 단어만 재생성(--force 권장) — 스페인어 덮어쓰기 복구용
 WORDS_FILTER = None
 for i, a in enumerate(sys.argv):
@@ -69,7 +86,7 @@ def collect():
             seen.add(key)
             items.append(("w", w["en"], base/"w"/f"{sf}.mp3"))
             ex = (w["meanings"][0].get("ex") or "").strip()
-            if ex: items.append(("s", ex, base/"s"/f"{sf}.mp3"))
+            if ex: items.append(("s", ex, base/"s"/f"{sf}_{sent_hash(ex)}.mp3"))
     return items
 
 def tts(text):
