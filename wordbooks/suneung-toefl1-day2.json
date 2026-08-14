@@ -1,611 +1,1374 @@
 {
-  "book": "토플 기본",
-  "code": "TOEFL-1",
-  "day": 2,
-  "words": [
+ "book": "토플 기본",
+ "code": "TOEFL-1",
+ "day": 2,
+ "words": [
+  {
+   "en": "abandon",
+   "ipa": "/əˈbændən/",
+   "pos": "v",
+   "meanings": [
     {
-      "en": "abandon",
-      "ipa": "/əˈbændən/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "버리다, 포기하다", "ex": "When food became scarce, the early settlers were forced to abandon their coastal village.", "tr": "식량이 부족해지자 초기 정착민들은 해안 마을을 버릴 수밖에 없었다.", "src": "" }
-      ],
-      "syn": ["desert", "give up", "leave"],
-      "deriv": ["abandonment (n) 포기, 버림"],
-      "roots": ["a(=ad, ~에게) + bandon(=통제, 권한) → 마음대로 하도록 내맡기다 → 버리다"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "absorption",
-      "ipa": "/əbˈzɔːrpʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "흡수", "ex": "The absorption of nutrients takes place mainly in the small intestine.", "tr": "영양소의 흡수는 주로 소장에서 일어난다.", "src": "" }
-      ],
-      "syn": ["uptake", "assimilation"],
-      "deriv": ["absorb (v) 흡수하다", "absorbent (adj) 흡수성의"],
-      "roots": ["ab(=away) + sorbere(=빨아들이다) → 빨아들여 받아들임 → 흡수"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "academic",
-      "ipa": "/ˌækəˈdemɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "학업의, 학문의", "ex": "The university is known for its rigorous academic standards.", "tr": "그 대학은 엄격한 학문적 기준으로 유명하다.", "src": "" }
-      ],
-      "syn": ["scholarly", "educational"],
-      "deriv": ["academy (n) 학원, 학회", "academically (adv) 학업상"],
-      "roots": ["Akadēmeia(플라톤이 가르치던 학원) → 학문의"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "acceleration",
-      "ipa": "/əkˌseləˈreɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "가속도", "ex": "In physics, acceleration refers to the rate at which an object's velocity changes over time.", "tr": "물리학에서 가속도는 물체의 속도가 시간에 따라 변하는 비율을 가리킨다.", "src": "" }
-      ],
-      "syn": ["speeding up", "quickening"],
-      "deriv": ["accelerate (v) 가속하다", "accelerator (n) 가속 장치"],
-      "roots": ["ad(=to) + celer(=빠른) → 점점 더 빠르게 함 → 가속"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "accent",
-      "ipa": "/ˈæksent/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "억양, 말투", "ex": "Listeners could tell from her accent that she had grown up in the north.", "tr": "청자들은 그녀의 억양을 듣고 그녀가 북부에서 자랐음을 알 수 있었다.", "src": "" },
-        { "pos": "n", "ko": "강세", "ex": "In English, the accent usually falls on a particular syllable of each word.", "tr": "영어에서 강세는 보통 각 단어의 특정 음절에 놓인다.", "src": "" }
-      ],
-      "syn": ["intonation", "stress", "pronunciation"],
-      "deriv": ["accentuate (v) 강조하다"],
-      "roots": ["ad(=to) + cantus(=노래) → 말에 얹은 가락 → 억양"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "acid",
-      "ipa": "/ˈæsɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "산", "ex": "When an acid reacts with a metal, it typically produces hydrogen gas.", "tr": "산이 금속과 반응하면 보통 수소 기체가 발생한다.", "src": "" }
-      ],
-      "syn": ["acidic substance"],
-      "deriv": ["acidic (adj) 산성의", "acidity (n) 산성도"],
-      "roots": ["acere(=시다) → 신맛이 나는 물질 → 산"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "acidrain",
-      "ipa": "/ˈæsɪd ˌreɪn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "산성비", "ex": "Acid rain forms when pollutants in the air combine with water vapor.", "tr": "산성비는 공기 중의 오염 물질이 수증기와 결합할 때 형성된다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "acrylic",
-      "ipa": "/əˈkrɪlɪk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "아크릴 물감", "ex": "Many modern painters prefer acrylic because it dries far more quickly than oil paint.", "tr": "많은 현대 화가들은 아크릴 물감이 유화 물감보다 훨씬 빨리 마르기 때문에 그것을 선호한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "activism",
-      "ipa": "/ˈæktɪvɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "행동주의, 사회 운동", "ex": "Environmental activism grew rapidly as the public became aware of climate change.", "tr": "대중이 기후 변화를 인식하게 되면서 환경 운동이 빠르게 성장했다.", "src": "" }
-      ],
-      "syn": ["campaigning", "advocacy"],
-      "deriv": ["activist (n) 운동가", "active (adj) 적극적인"],
-      "roots": ["ag(=하다, 움직이다) + -ism → 적극적으로 행동하는 태도 → 행동주의"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "addiction",
-      "ipa": "/əˈdɪkʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "중독", "ex": "Researchers study how addiction alters the brain's reward system.", "tr": "연구자들은 중독이 뇌의 보상 체계를 어떻게 바꾸는지 연구한다.", "src": "" }
-      ],
-      "syn": ["dependence", "habit"],
-      "deriv": ["addict (n) 중독자", "addictive (adj) 중독성의"],
-      "roots": ["ad(=to) + dicere(=말하다, 선언하다) → ~에 매이도록 넘겨짐 → 중독"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "administration",
-      "ipa": "/ədˌmɪnɪˈstreɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "행정부, 정권", "ex": "The new administration promised to reform the country's healthcare system.", "tr": "새 정권은 그 나라의 의료 제도를 개혁하겠다고 약속했다.", "src": "" },
-        { "pos": "n", "ko": "관리, 운영", "ex": "Efficient administration of resources is essential for any large organization.", "tr": "자원의 효율적인 관리는 어떤 대규모 조직에나 필수적이다.", "src": "" }
-      ],
-      "syn": ["government", "management"],
-      "deriv": ["administer (v) 관리하다", "administrative (adj) 행정의", "administrator (n) 관리자"],
-      "roots": ["ad(=to) + minister(=봉사자) → 일을 맡아 관리함 → 행정"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "algebra",
-      "ipa": "/ˈældʒɪbrə/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "대수학", "ex": "In algebra, letters are used to represent unknown numbers in equations.", "tr": "대수학에서는 방정식에서 미지의 수를 나타내기 위해 문자를 사용한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["algebraic (adj) 대수학의"],
-      "roots": ["아랍어 al-jabr(=끊어진 것의 재결합) → 방정식을 다루는 학문 → 대수학"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "algorithm",
-      "ipa": "/ˈælɡərɪðəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "알고리즘", "ex": "A search engine uses a complex algorithm to rank web pages.", "tr": "검색 엔진은 웹 페이지의 순위를 매기기 위해 복잡한 알고리즘을 사용한다.", "src": "" }
-      ],
-      "syn": ["procedure", "formula"],
-      "deriv": ["algorithmic (adj) 알고리즘의"],
-      "roots": ["수학자 알콰리즈미(al-Khwarizmi)의 이름에서 → 계산 절차 → 알고리즘"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "allergic",
-      "ipa": "/əˈlɜːrdʒɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "알레르기의", "ex": "Some people are allergic to the pollen released by certain trees in spring.", "tr": "어떤 사람들은 봄철에 특정 나무가 방출하는 꽃가루에 알레르기가 있다.", "src": "" }
-      ],
-      "syn": ["hypersensitive"],
-      "deriv": ["allergy (n) 알레르기", "allergen (n) 알레르기 유발 항원"],
-      "roots": ["allos(=다른) + ergon(=반응) → 이상 반응을 보이는 → 알레르기의"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "alliance",
-      "ipa": "/əˈlaɪəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "동맹", "ex": "The two nations formed a military alliance to defend against a common enemy.", "tr": "두 나라는 공동의 적에 맞서 방어하기 위해 군사 동맹을 맺었다.", "src": "" }
-      ],
-      "syn": ["coalition", "union", "partnership"],
-      "deriv": ["ally (n) 동맹국, (v) 동맹을 맺다", "allied (adj) 동맹의"],
-      "roots": ["ad(=to) + ligare(=묶다) → 서로 단단히 묶음 → 동맹"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "altitude",
-      "ipa": "/ˈæltɪtjuːd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "고도", "ex": "As altitude increases, the air becomes thinner and temperatures drop.", "tr": "고도가 높아질수록 공기는 희박해지고 기온은 떨어진다.", "src": "" }
-      ],
-      "syn": ["elevation", "height"],
-      "deriv": [],
-      "roots": ["altus(=높은) → 높이, 고도"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "analytical",
-      "ipa": "/ˌænəˈlɪtɪkəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "분석적인", "ex": "A good scientist needs strong analytical skills to interpret complex data.", "tr": "훌륭한 과학자는 복잡한 데이터를 해석하기 위해 뛰어난 분석 능력이 필요하다.", "src": "" }
-      ],
-      "syn": ["logical", "systematic"],
-      "deriv": ["analyze (v) 분석하다", "analysis (n) 분석"],
-      "roots": ["ana(=완전히) + lysis(=풀다) → 풀어헤쳐 따지는 → 분석적인"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "applause",
-      "ipa": "/əˈplɔːz/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "박수 갈채", "ex": "The orchestra received enthusiastic applause at the end of the performance.", "tr": "그 오케스트라는 공연이 끝나자 열렬한 박수 갈채를 받았다.", "src": "" }
-      ],
-      "syn": ["clapping", "ovation"],
-      "deriv": ["applaud (v) 박수치다"],
-      "roots": ["ad(=to) + plaudere(=손뼉을 치다) → 손뼉을 침 → 박수"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "arch",
-      "ipa": "/ɑːrtʃ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "아치", "ex": "The stone arch allowed builders to span wide openings without internal supports.", "tr": "돌 아치 덕분에 건축가들은 내부 지지대 없이 넓은 공간을 가로지를 수 있었다.", "src": "" }
-      ],
-      "syn": ["archway", "vault"],
-      "deriv": ["arched (adj) 아치형의"],
-      "roots": ["arcus(=활, 곡선) → 활 모양의 구조물 → 아치"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "assembly",
-      "ipa": "/əˈsembli/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "조립", "ex": "On the assembly line, each worker adds a single part to the product.", "tr": "조립 라인에서 각 작업자는 제품에 부품 하나씩을 더한다.", "src": "" },
-        { "pos": "n", "ko": "집회, 의회", "ex": "The national assembly voted to pass the new law.", "tr": "국회는 새 법을 통과시키기로 표결했다.", "src": "" }
-      ],
-      "syn": ["construction", "gathering"],
-      "deriv": ["assemble (v) 조립하다, 모으다"],
-      "roots": ["ad(=to) + simul(=함께) → 함께 모아 놓음 → 조립, 집회"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "asteroid",
-      "ipa": "/ˈæstərɔɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "소행성", "ex": "Most asteroids orbit the Sun in a belt between Mars and Jupiter.", "tr": "대부분의 소행성은 화성과 목성 사이의 띠에서 태양을 공전한다.", "src": "" }
-      ],
-      "syn": ["minor planet"],
-      "deriv": [],
-      "roots": ["aster(=별) + -oid(=~같은) → 별처럼 보이는 작은 천체 → 소행성"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bankruptcy",
-      "ipa": "/ˈbæŋkrʌptsi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "파산", "ex": "The company filed for bankruptcy after failing to repay its enormous debts.", "tr": "그 회사는 막대한 부채를 갚지 못한 뒤 파산 신청을 했다.", "src": "" }
-      ],
-      "syn": ["insolvency", "financial ruin"],
-      "deriv": ["bankrupt (adj) 파산한"],
-      "roots": ["이탈리아어 banca rotta(=부서진 (환전상의) 책상) → 파산"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cattle",
-      "ipa": "/ˈkætl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "소", "ex": "The farmers raised cattle for both milk and meat.", "tr": "그 농부들은 우유와 고기를 모두 얻기 위해 소를 길렀다.", "src": "" }
-      ],
-      "syn": ["cows", "livestock"],
-      "deriv": [],
-      "roots": ["capitale(=재산) → 재산으로 여겨진 가축 → 소"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "conscience",
-      "ipa": "/ˈkɒnʃəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "양심", "ex": "His conscience would not allow him to ignore the suffering of others.", "tr": "그의 양심은 타인의 고통을 외면하도록 내버려 두지 않았다.", "src": "" }
-      ],
-      "syn": ["moral sense", "scruples"],
-      "deriv": ["conscientious (adj) 양심적인"],
-      "roots": ["con(=함께) + scire(=알다) → 옳고 그름을 함께 아는 마음 → 양심"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "absolute",
-      "ipa": "/ˈæbsəluːt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "절대적인", "ex": "In science, absolute certainty is rare, and most conclusions remain open to revision.", "tr": "과학에서 절대적인 확실성은 드물며, 대부분의 결론은 수정될 여지가 있다.", "src": "" }
-      ],
-      "syn": ["complete", "total", "unconditional"],
-      "deriv": ["absolutely (adv) 전적으로"],
-      "roots": ["ab(=away) + solvere(=풀다) → 제약에서 완전히 풀린 → 절대적인"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "abundance",
-      "ipa": "/əˈbʌndəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "풍부함, 다량", "ex": "The abundance of plankton in these waters supports a huge variety of marine life.", "tr": "이 해역의 풍부한 플랑크톤은 매우 다양한 해양 생물을 부양한다.", "src": "" }
-      ],
-      "syn": ["plenty", "profusion"],
-      "deriv": ["abundant (adj) 풍부한"],
-      "roots": ["ab(=넘쳐) + undare(=물결치다) → 물결처럼 넘쳐남 → 풍부함"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "advertisement",
-      "ipa": "/ədˈvɜːrtɪsmənt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "광고", "ex": "The advertisement was carefully designed to appeal to young consumers.", "tr": "그 광고는 젊은 소비자들의 마음을 끌도록 세심하게 제작되었다.", "src": "" }
-      ],
-      "syn": ["ad", "commercial", "promotion"],
-      "deriv": ["advertise (v) 광고하다", "advertiser (n) 광고주"],
-      "roots": ["ad(=to) + vertere(=돌리다) → 주의를 돌리게 함 → 광고"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "accuracy",
-      "ipa": "/ˈækjərəsi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "정확도", "ex": "The accuracy of the measurement depends on the quality of the instrument.", "tr": "측정의 정확도는 기기의 품질에 달려 있다.", "src": "" }
-      ],
-      "syn": ["precision", "exactness"],
-      "deriv": ["accurate (adj) 정확한", "accurately (adv) 정확하게"],
-      "roots": ["ad(=to) + cura(=주의, 돌봄) → 주의를 기울여 어긋남이 없음 → 정확도"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "adverb",
-      "ipa": "/ˈædvɜːrb/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "부사", "ex": "An adverb often describes how, when, or where an action takes place.", "tr": "부사는 흔히 행위가 어떻게, 언제, 어디서 일어나는지를 설명한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["adverbial (adj) 부사의"],
-      "roots": ["ad(=to) + verbum(=동사, 말) → 동사에 덧붙는 말 → 부사"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "adhesive",
-      "ipa": "/ədˈhiːsɪv/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "접착성의", "ex": "The adhesive surface of the tape sticks firmly to almost any material.", "tr": "그 테이프의 접착성 표면은 거의 모든 재료에 단단히 들러붙는다.", "src": "" }
-      ],
-      "syn": ["sticky", "gluey"],
-      "deriv": ["adhere (v) 들러붙다", "adhesion (n) 접착"],
-      "roots": ["ad(=to) + haerere(=붙다) → ~에 달라붙는 → 접착성의"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "atmosphere",
-      "ipa": "/ˈætməsfɪər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "대기", "ex": "The Earth's atmosphere protects living things from harmful solar radiation.", "tr": "지구의 대기는 생물을 해로운 태양 복사로부터 보호한다.", "src": "" },
-        { "pos": "n", "ko": "분위기", "ex": "The old library had a calm and studious atmosphere.", "tr": "그 오래된 도서관은 차분하고 학구적인 분위기가 있었다.", "src": "" }
-      ],
-      "syn": ["air", "mood"],
-      "deriv": ["atmospheric (adj) 대기의"],
-      "roots": ["atmos(=증기) + sphaira(=구) → 지구를 감싼 기체층 → 대기"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "background",
-      "ipa": "/ˈbækɡraʊnd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "배경", "ex": "In the painting, distant mountains form the background behind the seated figures.", "tr": "그 그림에서 멀리 있는 산들이 앉아 있는 인물들 뒤로 배경을 이룬다.", "src": "" }
-      ],
-      "syn": ["backdrop", "setting"],
-      "deriv": [],
-      "roots": ["back(=뒤) + ground(=바탕) → 뒤쪽 바탕 → 배경"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "activist",
-      "ipa": "/ˈæktɪvɪst/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "운동가, 활동가", "ex": "The activist devoted her life to fighting for equal rights.", "tr": "그 운동가는 평등한 권리를 위해 싸우는 데 일생을 바쳤다.", "src": "" }
-      ],
-      "syn": ["campaigner", "advocate"],
-      "deriv": ["activism (n) 행동주의", "active (adj) 적극적인"],
-      "roots": ["ag(=하다) + -ist(=사람) → 적극적으로 행동하는 사람 → 운동가"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "anxiety",
-      "ipa": "/æŋˈzaɪəti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "불안", "ex": "Psychologists have found that mild anxiety can actually improve performance on some tasks.", "tr": "심리학자들은 가벼운 불안이 실제로 어떤 과제에서는 수행 능력을 향상시킬 수 있음을 발견했다.", "src": "" }
-      ],
-      "syn": ["worry", "unease", "nervousness"],
-      "deriv": ["anxious (adj) 불안한"],
-      "roots": ["angere(=조이다) → 마음을 조이는 상태 → 불안"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "ambassador",
-      "ipa": "/æmˈbæsədər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "대사", "ex": "The ambassador represented her country at the international conference.", "tr": "그 대사는 국제 회의에서 자국을 대표했다.", "src": "" }
-      ],
-      "syn": ["envoy", "diplomat", "representative"],
-      "deriv": [],
-      "roots": ["ambactus(=심부름꾼) → 나라를 대표해 파견된 사람 → 대사"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "arithmetic",
-      "ipa": "/əˈrɪθmətɪk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "산수, 산술", "ex": "Basic arithmetic includes addition, subtraction, multiplication, and division.", "tr": "기본 산수에는 덧셈, 뺄셈, 곱셈, 나눗셈이 포함된다.", "src": "" }
-      ],
-      "syn": ["calculation", "computation"],
-      "deriv": ["arithmetical (adj) 산술의"],
-      "roots": ["arithmos(=수) → 수를 다루는 계산 → 산술"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "analog",
-      "ipa": "/ˈænəlɔːɡ/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "아날로그의", "ex": "Unlike digital clocks, analog clocks show time with moving hands.", "tr": "디지털 시계와 달리 아날로그 시계는 움직이는 바늘로 시간을 나타낸다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["ana(=따라) + logos(=비례) → 연속적으로 대응하는 → 아날로그의"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "allergy",
-      "ipa": "/ˈælərdʒi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "알레르기", "ex": "A peanut allergy can cause a severe reaction within minutes.", "tr": "땅콩 알레르기는 몇 분 안에 심각한 반응을 일으킬 수 있다.", "src": "" }
-      ],
-      "syn": ["hypersensitivity"],
-      "deriv": ["allergic (adj) 알레르기의"],
-      "roots": ["allos(=다른) + ergon(=반응) → 이상 반응 → 알레르기"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "burial",
-      "ipa": "/ˈberiəl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "매장", "ex": "Archaeologists discovered an ancient burial site containing hundreds of graves.", "tr": "고고학자들은 수백 개의 무덤이 있는 고대 매장지를 발견했다.", "src": "" }
-      ],
-      "syn": ["interment", "entombment"],
-      "deriv": ["bury (v) 묻다"],
-      "roots": ["고대영어 byrgan(=묻다) → 시신을 묻음 → 매장"],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "ash",
-      "ipa": "/æʃ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "화산재, 재", "ex": "The eruption covered nearby towns in a thick layer of volcanic ash.", "tr": "그 분화는 인근 마을들을 두꺼운 화산재 층으로 뒤덮었다.", "src": "" }
-      ],
-      "syn": ["cinders", "soot"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "B2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "v",
+     "ko": "버리다, 포기하다",
+     "ex": "When food became scarce, the early settlers were forced to abandon their coastal village.",
+     "tr": "식량이 부족해지자 초기 정착민들은 해안 마을을 버릴 수밖에 없었다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "desert",
+    "give up",
+    "leave"
+   ],
+   "deriv": [
+    "abandonment (n) 포기, 버림"
+   ],
+   "roots": [
+    "a(=ad, ~에게) + bandon(=통제, 권한) → 마음대로 하도록 내맡기다 → 버리다"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "absorption",
+   "ipa": "/əbˈzɔːrpʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "흡수",
+     "ex": "The absorption of nutrients takes place mainly in the small intestine.",
+     "tr": "영양소의 흡수는 주로 소장에서 일어난다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "uptake",
+    "assimilation"
+   ],
+   "deriv": [
+    "absorb (v) 흡수하다",
+    "absorbent (adj) 흡수성의"
+   ],
+   "roots": [
+    "ab(=away) + sorbere(=빨아들이다) → 빨아들여 받아들임 → 흡수"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "academic",
+   "ipa": "/ˌækəˈdemɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "학업의, 학문의",
+     "ex": "The university is known for its rigorous academic standards.",
+     "tr": "그 대학은 엄격한 학문적 기준으로 유명하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "scholarly",
+    "educational"
+   ],
+   "deriv": [
+    "academy (n) 학원, 학회",
+    "academically (adv) 학업상"
+   ],
+   "roots": [
+    "Akadēmeia(플라톤이 가르치던 학원) → 학문의"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "교육미디어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acceleration",
+   "ipa": "/əkˌseləˈreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "가속도",
+     "ex": "In physics, acceleration refers to the rate at which an object's velocity changes over time.",
+     "tr": "물리학에서 가속도는 물체의 속도가 시간에 따라 변하는 비율을 가리킨다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "speeding up",
+    "quickening"
+   ],
+   "deriv": [
+    "accelerate (v) 가속하다",
+    "accelerator (n) 가속 장치"
+   ],
+   "roots": [
+    "ad(=to) + celer(=빠른) → 점점 더 빠르게 함 → 가속"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "물리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "accent",
+   "ipa": "/ˈæksent/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "억양, 말투",
+     "ex": "Listeners could tell from her accent that she had grown up in the north.",
+     "tr": "청자들은 그녀의 억양을 듣고 그녀가 북부에서 자랐음을 알 수 있었다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "강세",
+     "ex": "In English, the accent usually falls on a particular syllable of each word.",
+     "tr": "영어에서 강세는 보통 각 단어의 특정 음절에 놓인다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "intonation",
+    "stress",
+    "pronunciation"
+   ],
+   "deriv": [
+    "accentuate (v) 강조하다"
+   ],
+   "roots": [
+    "ad(=to) + cantus(=노래) → 말에 얹은 가락 → 억양"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acid",
+   "ipa": "/ˈæsɪd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "산",
+     "ex": "When an acid reacts with a metal, it typically produces hydrogen gas.",
+     "tr": "산이 금속과 반응하면 보통 수소 기체가 발생한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "acidic substance"
+   ],
+   "deriv": [
+    "acidic (adj) 산성의",
+    "acidity (n) 산성도"
+   ],
+   "roots": [
+    "acere(=시다) → 신맛이 나는 물질 → 산"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "화학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acid rain",
+   "ipa": "/ˈæsɪd reɪn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "산성비",
+     "ex": "Acid rain forms when pollutants in the air combine with water vapor.",
+     "tr": "산성비는 공기 중의 오염 물질이 수증기와 결합할 때 형성된다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "환경",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acrylic",
+   "ipa": "/əˈkrɪlɪk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "아크릴 물감",
+     "ex": "Many modern painters prefer acrylic because it dries far more quickly than oil paint.",
+     "tr": "많은 현대 화가들은 아크릴 물감이 유화 물감보다 훨씬 빨리 마르기 때문에 그것을 선호한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "미술",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "activism",
+   "ipa": "/ˈæktɪvɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "행동주의, 사회 운동",
+     "ex": "Environmental activism grew rapidly as the public became aware of climate change.",
+     "tr": "대중이 기후 변화를 인식하게 되면서 환경 운동이 빠르게 성장했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "campaigning",
+    "advocacy"
+   ],
+   "deriv": [
+    "activist (n) 운동가",
+    "active (adj) 적극적인"
+   ],
+   "roots": [
+    "ag(=하다, 움직이다) + -ism → 적극적으로 행동하는 태도 → 행동주의"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "addiction",
+   "ipa": "/əˈdɪkʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "중독",
+     "ex": "Researchers study how addiction alters the brain's reward system.",
+     "tr": "연구자들은 중독이 뇌의 보상 체계를 어떻게 바꾸는지 연구한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "dependence",
+    "habit"
+   ],
+   "deriv": [
+    "addict (n) 중독자",
+    "addictive (adj) 중독성의"
+   ],
+   "roots": [
+    "ad(=to) + dicere(=말하다, 선언하다) → ~에 매이도록 넘겨짐 → 중독"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "administration",
+   "ipa": "/ədˌmɪnɪˈstreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "행정부, 정권",
+     "ex": "The new administration promised to reform the country's healthcare system.",
+     "tr": "새 정권은 그 나라의 의료 제도를 개혁하겠다고 약속했다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "관리, 운영",
+     "ex": "Efficient administration of resources is essential for any large organization.",
+     "tr": "자원의 효율적인 관리는 어떤 대규모 조직에나 필수적이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "government",
+    "management"
+   ],
+   "deriv": [
+    "administer (v) 관리하다",
+    "administrative (adj) 행정의",
+    "administrator (n) 관리자"
+   ],
+   "roots": [
+    "ad(=to) + minister(=봉사자) → 일을 맡아 관리함 → 행정"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "algebra",
+   "ipa": "/ˈældʒɪbrə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "대수학",
+     "ex": "In algebra, letters are used to represent unknown numbers in equations.",
+     "tr": "대수학에서는 방정식에서 미지의 수를 나타내기 위해 문자를 사용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "algebraic (adj) 대수학의"
+   ],
+   "roots": [
+    "아랍어 al-jabr(=끊어진 것의 재결합) → 방정식을 다루는 학문 → 대수학"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "수학통계",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "algorithm",
+   "ipa": "/ˈælɡərɪðəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "알고리즘",
+     "ex": "A search engine uses a complex algorithm to rank web pages.",
+     "tr": "검색 엔진은 웹 페이지의 순위를 매기기 위해 복잡한 알고리즘을 사용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "procedure",
+    "formula"
+   ],
+   "deriv": [
+    "algorithmic (adj) 알고리즘의"
+   ],
+   "roots": [
+    "수학자 알콰리즈미(al-Khwarizmi)의 이름에서 → 계산 절차 → 알고리즘"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "기술컴퓨팅",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "allergic",
+   "ipa": "/əˈlɜːrdʒɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "알레르기의",
+     "ex": "Some people are allergic to the pollen released by certain trees in spring.",
+     "tr": "어떤 사람들은 봄철에 특정 나무가 방출하는 꽃가루에 알레르기가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hypersensitive"
+   ],
+   "deriv": [
+    "allergy (n) 알레르기",
+    "allergen (n) 알레르기 유발 항원"
+   ],
+   "roots": [
+    "allos(=다른) + ergon(=반응) → 이상 반응을 보이는 → 알레르기의"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "alliance",
+   "ipa": "/əˈlaɪəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "동맹",
+     "ex": "The two nations formed a military alliance to defend against a common enemy.",
+     "tr": "두 나라는 공동의 적에 맞서 방어하기 위해 군사 동맹을 맺었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "coalition",
+    "union",
+    "partnership"
+   ],
+   "deriv": [
+    "ally (n) 동맹국, (v) 동맹을 맺다",
+    "allied (adj) 동맹의"
+   ],
+   "roots": [
+    "ad(=to) + ligare(=묶다) → 서로 단단히 묶음 → 동맹"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "altitude",
+   "ipa": "/ˈæltɪtjuːd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "고도",
+     "ex": "As altitude increases, the air becomes thinner and temperatures drop.",
+     "tr": "고도가 높아질수록 공기는 희박해지고 기온은 떨어진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "elevation",
+    "height"
+   ],
+   "deriv": [],
+   "roots": [
+    "altus(=높은) → 높이, 고도"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "analytical",
+   "ipa": "/ˌænəˈlɪtɪkəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "분석적인",
+     "ex": "A good scientist needs strong analytical skills to interpret complex data.",
+     "tr": "훌륭한 과학자는 복잡한 데이터를 해석하기 위해 뛰어난 분석 능력이 필요하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "logical",
+    "systematic"
+   ],
+   "deriv": [
+    "analyze (v) 분석하다",
+    "analysis (n) 분석"
+   ],
+   "roots": [
+    "ana(=완전히) + lysis(=풀다) → 풀어헤쳐 따지는 → 분석적인"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "연구방법",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "applause",
+   "ipa": "/əˈplɔːz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "박수 갈채",
+     "ex": "The orchestra received enthusiastic applause at the end of the performance.",
+     "tr": "그 오케스트라는 공연이 끝나자 열렬한 박수 갈채를 받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "clapping",
+    "ovation"
+   ],
+   "deriv": [
+    "applaud (v) 박수치다"
+   ],
+   "roots": [
+    "ad(=to) + plaudere(=손뼉을 치다) → 손뼉을 침 → 박수"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "arch",
+   "ipa": "/ɑːrtʃ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "아치",
+     "ex": "The stone arch allowed builders to span wide openings without internal supports.",
+     "tr": "돌 아치 덕분에 건축가들은 내부 지지대 없이 넓은 공간을 가로지를 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "archway",
+    "vault"
+   ],
+   "deriv": [
+    "arched (adj) 아치형의"
+   ],
+   "roots": [
+    "arcus(=활, 곡선) → 활 모양의 구조물 → 아치"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "assembly",
+   "ipa": "/əˈsembli/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "조립",
+     "ex": "On the assembly line, each worker adds a single part to the product.",
+     "tr": "조립 라인에서 각 작업자는 제품에 부품 하나씩을 더한다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "집회, 의회",
+     "ex": "The national assembly voted to pass the new law.",
+     "tr": "국회는 새 법을 통과시키기로 표결했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "construction",
+    "gathering"
+   ],
+   "deriv": [
+    "assemble (v) 조립하다, 모으다"
+   ],
+   "roots": [
+    "ad(=to) + simul(=함께) → 함께 모아 놓음 → 조립, 집회"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "공학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "asteroid",
+   "ipa": "/ˈæstərɔɪd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "소행성",
+     "ex": "Most asteroids orbit the Sun in a belt between Mars and Jupiter.",
+     "tr": "대부분의 소행성은 화성과 목성 사이의 띠에서 태양을 공전한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "minor planet"
+   ],
+   "deriv": [],
+   "roots": [
+    "aster(=별) + -oid(=~같은) → 별처럼 보이는 작은 천체 → 소행성"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "bankruptcy",
+   "ipa": "/ˈbæŋkrʌptsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "파산",
+     "ex": "The company filed for bankruptcy after failing to repay its enormous debts.",
+     "tr": "그 회사는 막대한 부채를 갚지 못한 뒤 파산 신청을 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "insolvency",
+    "financial ruin"
+   ],
+   "deriv": [
+    "bankrupt (adj) 파산한"
+   ],
+   "roots": [
+    "이탈리아어 banca rotta(=부서진 (환전상의) 책상) → 파산"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cattle",
+   "ipa": "/ˈkætl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "소",
+     "ex": "The farmers raised cattle for both milk and meat.",
+     "tr": "그 농부들은 우유와 고기를 모두 얻기 위해 소를 길렀다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cows",
+    "livestock"
+   ],
+   "deriv": [],
+   "roots": [
+    "capitale(=재산) → 재산으로 여겨진 가축 → 소"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "농업산업",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conscience",
+   "ipa": "/ˈkɒnʃəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "양심",
+     "ex": "His conscience would not allow him to ignore the suffering of others.",
+     "tr": "그의 양심은 타인의 고통을 외면하도록 내버려 두지 않았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "moral sense",
+    "scruples"
+   ],
+   "deriv": [
+    "conscientious (adj) 양심적인"
+   ],
+   "roots": [
+    "con(=함께) + scire(=알다) → 옳고 그름을 함께 아는 마음 → 양심"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "absolute",
+   "ipa": "/ˈæbsəluːt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "절대적인",
+     "ex": "In science, absolute certainty is rare, and most conclusions remain open to revision.",
+     "tr": "과학에서 절대적인 확실성은 드물며, 대부분의 결론은 수정될 여지가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "complete",
+    "total",
+    "unconditional"
+   ],
+   "deriv": [
+    "absolutely (adv) 전적으로"
+   ],
+   "roots": [
+    "ab(=away) + solvere(=풀다) → 제약에서 완전히 풀린 → 절대적인"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "abundance",
+   "ipa": "/əˈbʌndəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "풍부함, 다량",
+     "ex": "The abundance of plankton in these waters supports a huge variety of marine life.",
+     "tr": "이 해역의 풍부한 플랑크톤은 매우 다양한 해양 생물을 부양한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "plenty",
+    "profusion"
+   ],
+   "deriv": [
+    "abundant (adj) 풍부한"
+   ],
+   "roots": [
+    "ab(=넘쳐) + undare(=물결치다) → 물결처럼 넘쳐남 → 풍부함"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "advertisement",
+   "ipa": "/ədˈvɜːrtɪsmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "광고",
+     "ex": "The advertisement was carefully designed to appeal to young consumers.",
+     "tr": "그 광고는 젊은 소비자들의 마음을 끌도록 세심하게 제작되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ad",
+    "commercial",
+    "promotion"
+   ],
+   "deriv": [
+    "advertise (v) 광고하다",
+    "advertiser (n) 광고주"
+   ],
+   "roots": [
+    "ad(=to) + vertere(=돌리다) → 주의를 돌리게 함 → 광고"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "교육미디어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "accuracy",
+   "ipa": "/ˈækjərəsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "정확도",
+     "ex": "The accuracy of the measurement depends on the quality of the instrument.",
+     "tr": "측정의 정확도는 기기의 품질에 달려 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "precision",
+    "exactness"
+   ],
+   "deriv": [
+    "accurate (adj) 정확한",
+    "accurately (adv) 정확하게"
+   ],
+   "roots": [
+    "ad(=to) + cura(=주의, 돌봄) → 주의를 기울여 어긋남이 없음 → 정확도"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "물리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "adverb",
+   "ipa": "/ˈædvɜːrb/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "부사",
+     "ex": "An adverb often describes how, when, or where an action takes place.",
+     "tr": "부사는 흔히 행위가 어떻게, 언제, 어디서 일어나는지를 설명한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "adverbial (adj) 부사의"
+   ],
+   "roots": [
+    "ad(=to) + verbum(=동사, 말) → 동사에 덧붙는 말 → 부사"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "adhesive",
+   "ipa": "/ədˈhiːsɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "접착성의",
+     "ex": "The adhesive surface of the tape sticks firmly to almost any material.",
+     "tr": "그 테이프의 접착성 표면은 거의 모든 재료에 단단히 들러붙는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sticky",
+    "gluey"
+   ],
+   "deriv": [
+    "adhere (v) 들러붙다",
+    "adhesion (n) 접착"
+   ],
+   "roots": [
+    "ad(=to) + haerere(=붙다) → ~에 달라붙는 → 접착성의"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "화학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "atmosphere",
+   "ipa": "/ˈætməsfɪər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "대기",
+     "ex": "The Earth's atmosphere protects living things from harmful solar radiation.",
+     "tr": "지구의 대기는 생물을 해로운 태양 복사로부터 보호한다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "분위기",
+     "ex": "The old library had a calm and studious atmosphere.",
+     "tr": "그 오래된 도서관은 차분하고 학구적인 분위기가 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "air",
+    "mood"
+   ],
+   "deriv": [
+    "atmospheric (adj) 대기의"
+   ],
+   "roots": [
+    "atmos(=증기) + sphaira(=구) → 지구를 감싼 기체층 → 대기"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "환경",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "background",
+   "ipa": "/ˈbækɡraʊnd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "배경",
+     "ex": "In the painting, distant mountains form the background behind the seated figures.",
+     "tr": "그 그림에서 멀리 있는 산들이 앉아 있는 인물들 뒤로 배경을 이룬다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "backdrop",
+    "setting"
+   ],
+   "deriv": [],
+   "roots": [
+    "back(=뒤) + ground(=바탕) → 뒤쪽 바탕 → 배경"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "미술",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "activist",
+   "ipa": "/ˈæktɪvɪst/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "운동가, 활동가",
+     "ex": "The activist devoted her life to fighting for equal rights.",
+     "tr": "그 운동가는 평등한 권리를 위해 싸우는 데 일생을 바쳤다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "campaigner",
+    "advocate"
+   ],
+   "deriv": [
+    "activism (n) 행동주의",
+    "active (adj) 적극적인"
+   ],
+   "roots": [
+    "ag(=하다) + -ist(=사람) → 적극적으로 행동하는 사람 → 운동가"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "anxiety",
+   "ipa": "/æŋˈzaɪəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불안",
+     "ex": "Psychologists have found that mild anxiety can actually improve performance on some tasks.",
+     "tr": "심리학자들은 가벼운 불안이 실제로 어떤 과제에서는 수행 능력을 향상시킬 수 있음을 발견했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "worry",
+    "unease",
+    "nervousness"
+   ],
+   "deriv": [
+    "anxious (adj) 불안한"
+   ],
+   "roots": [
+    "angere(=조이다) → 마음을 조이는 상태 → 불안"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "ambassador",
+   "ipa": "/æmˈbæsədər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "대사",
+     "ex": "The ambassador represented her country at the international conference.",
+     "tr": "그 대사는 국제 회의에서 자국을 대표했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "envoy",
+    "diplomat",
+    "representative"
+   ],
+   "deriv": [],
+   "roots": [
+    "ambactus(=심부름꾼) → 나라를 대표해 파견된 사람 → 대사"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "arithmetic",
+   "ipa": "/əˈrɪθmətɪk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "산수, 산술",
+     "ex": "Basic arithmetic includes addition, subtraction, multiplication, and division.",
+     "tr": "기본 산수에는 덧셈, 뺄셈, 곱셈, 나눗셈이 포함된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "calculation",
+    "computation"
+   ],
+   "deriv": [
+    "arithmetical (adj) 산술의"
+   ],
+   "roots": [
+    "arithmos(=수) → 수를 다루는 계산 → 산술"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "수학통계",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "analog",
+   "ipa": "/ˈænəlɔːɡ/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "아날로그의",
+     "ex": "Unlike digital clocks, analog clocks show time with moving hands.",
+     "tr": "디지털 시계와 달리 아날로그 시계는 움직이는 바늘로 시간을 나타낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "ana(=따라) + logos(=비례) → 연속적으로 대응하는 → 아날로그의"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "기술컴퓨팅",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "allergy",
+   "ipa": "/ˈælərdʒi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "알레르기",
+     "ex": "A peanut allergy can cause a severe reaction within minutes.",
+     "tr": "땅콩 알레르기는 몇 분 안에 심각한 반응을 일으킬 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hypersensitivity"
+   ],
+   "deriv": [
+    "allergic (adj) 알레르기의"
+   ],
+   "roots": [
+    "allos(=다른) + ergon(=반응) → 이상 반응 → 알레르기"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "burial",
+   "ipa": "/ˈberiəl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "매장",
+     "ex": "Archaeologists discovered an ancient burial site containing hundreds of graves.",
+     "tr": "고고학자들은 수백 개의 무덤이 있는 고대 매장지를 발견했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "interment",
+    "entombment"
+   ],
+   "deriv": [
+    "bury (v) 묻다"
+   ],
+   "roots": [
+    "고대영어 byrgan(=묻다) → 시신을 묻음 → 매장"
+   ],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "ash",
+   "ipa": "/æʃ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "화산재, 재",
+     "ex": "The eruption covered nearby towns in a thick layer of volcanic ash.",
+     "tr": "그 분화는 인근 마을들을 두꺼운 화산재 층으로 뒤덮었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cinders",
+    "soot"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }
