@@ -1,609 +1,1230 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 29,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 29,
+ "words": [
+  {
+   "en": "conductance",
+   "ipa": "/kənˈdʌktəns/",
+   "pos": "n",
+   "meanings": [
     {
-      "en": "peptide",
-      "ipa": "/ˈpeptaɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "펩티드", "ex": "A peptide is a short chain of amino acids joined by chemical bonds, smaller than a full protein.", "tr": "펩티드는 화학 결합으로 이어진 아미노산의 짧은 사슬로, 온전한 단백질보다 작다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["polypeptide (n) 폴리펩티드"],
-      "roots": ["peptos(=소화된) → 소화·분해와 관련된 아미노산 사슬"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "efficacy",
-      "ipa": "/ˈefɪkəsi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "효능, 효험", "ex": "Clinical trials are designed to test the efficacy of a treatment under carefully controlled conditions.", "tr": "임상 시험은 신중하게 통제된 조건에서 치료법의 효능을 검증하도록 설계된다.", "src": "" }
-      ],
-      "syn": ["effectiveness", "potency"],
-      "deriv": ["efficacious (adj) 효험 있는"],
-      "roots": ["ex(=밖으로) + facere(=만들다) → 결과를 만들어 내는 힘"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "permeability",
-      "ipa": "/ˌpɜːrmiəˈbɪləti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "투과성", "ex": "The permeability of a cell membrane determines which substances can pass in and out of the cell.", "tr": "세포막의 투과성은 어떤 물질이 세포 안팎으로 드나들 수 있는지를 결정한다.", "src": "" }
-      ],
-      "syn": ["porosity"],
-      "deriv": ["permeable (adj) 투과성의", "permeate (v) 스며들다"],
-      "roots": ["per(=통과하여) + meare(=지나가다) → 통과시키는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "egalitarian",
-      "ipa": "/ɪˌɡælɪˈteəriən/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "평등주의의", "ex": "The reformers envisioned an egalitarian society in which every citizen had an equal voice.", "tr": "그 개혁가들은 모든 시민이 동등한 발언권을 갖는 평등주의 사회를 구상했다.", "src": "" }
-      ],
-      "syn": ["equal", "fair"],
-      "deriv": ["egalitarianism (n) 평등주의"],
-      "roots": ["프랑스어 égal(=같은) → 모두가 동등하다는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phosphorescence",
-      "ipa": "/ˌfɒsfəˈresəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "인광", "ex": "Unlike a brief flash, phosphorescence continues to glow long after the light source is removed.", "tr": "짧은 섬광과 달리 인광은 광원이 제거된 뒤에도 오랫동안 계속 빛난다.", "src": "" }
-      ],
-      "syn": ["afterglow"],
-      "deriv": ["phosphorescent (adj) 인광을 내는"],
-      "roots": ["phos(=빛) + phoros(=나르는) → 빛을 머금어 내보내는 현상"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "elemental",
-      "ipa": "/ˌelɪˈmentəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "기본적인, 근원적인", "ex": "The desire for safety is an elemental human drive that shapes much of our behavior.", "tr": "안전에 대한 욕구는 우리 행동의 많은 부분을 형성하는 근원적인 인간의 충동이다.", "src": "" }
-      ],
-      "syn": ["fundamental", "basic", "primal"],
-      "deriv": ["element (n) 요소, 원소"],
-      "roots": ["elementum(=요소) → 가장 기본이 되는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phosphorylation",
-      "ipa": "/ˌfɒsfərɪˈleɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "인산화", "ex": "The phosphorylation of a protein often acts as a switch that turns its activity on or off.", "tr": "단백질의 인산화는 흔히 그 활성을 켜거나 끄는 스위치 역할을 한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["phosphorylate (v) 인산화하다"],
-      "roots": ["phosphorus(=인) → 인산기를 붙이는 반응"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "elicit",
-      "ipa": "/ɪˈlɪsɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "이끌어내다, 유도하다", "ex": "The survey was worded carefully to elicit honest responses rather than socially acceptable ones.", "tr": "그 설문은 사회적으로 무난한 응답이 아니라 솔직한 응답을 이끌어내도록 신중하게 문구가 작성되었다.", "src": "" }
-      ],
-      "syn": ["draw out", "evoke", "obtain"],
-      "deriv": ["elicitation (n) 도출"],
-      "roots": ["e(=밖으로) + lacere(=꾀다) → 밖으로 끌어내다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "photic",
-      "ipa": "/ˈfoʊtɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "광층의, 빛이 드는", "ex": "Most ocean photosynthesis occurs in the sunlit photic zone near the surface.", "tr": "대부분의 해양 광합성은 표면 근처 햇빛이 드는 광층에서 일어난다.", "src": "" }
-      ],
-      "syn": ["light-related"],
-      "deriv": [],
-      "roots": ["phos(=빛) → 빛과 관련된"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "elucidate",
-      "ipa": "/ɪˈluːsɪdeɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "명료하게 설명하다, 밝히다", "ex": "The lecture sought to elucidate a process that most textbooks describe only vaguely.", "tr": "그 강의는 대부분의 교과서가 모호하게만 서술하는 과정을 명료하게 설명하고자 했다.", "src": "" }
-      ],
-      "syn": ["clarify", "explain", "illuminate"],
-      "deriv": ["elucidation (n) 해명, 설명"],
-      "roots": ["e(=밖으로) + lucidus(=밝은) → 환하게 드러내다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "photoperiod",
-      "ipa": "/ˈfoʊtoʊpɪəriəd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "광주기", "ex": "Many plants use the lengthening photoperiod of spring as a signal to begin flowering.", "tr": "많은 식물은 봄에 길어지는 광주기를 개화를 시작하라는 신호로 이용한다.", "src": "" }
-      ],
-      "syn": ["day length"],
-      "deriv": ["photoperiodic (adj) 광주기성의"],
-      "roots": ["phos(=빛) + period(=주기) → 하루 중 빛이 드는 기간"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "elusive",
-      "ipa": "/ɪˈluːsɪv/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "파악하기 어려운, 붙잡기 힘든", "ex": "A precise definition of consciousness has proved remarkably elusive for philosophers and scientists alike.", "tr": "의식에 대한 정확한 정의는 철학자와 과학자 모두에게 놀랍도록 파악하기 어려운 것으로 드러났다.", "src": "" }
-      ],
-      "syn": ["hard to grasp", "evasive", "intangible"],
-      "deriv": ["elude (v) 교묘히 피하다"],
-      "roots": ["e(=밖으로) + ludere(=놀다, 피하다) → 요리조리 빠져나가는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "photoreceptor",
-      "ipa": "/ˌfoʊtoʊrɪˈseptər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "광수용체", "ex": "Specialized photoreceptors in the retina convert incoming light into electrical nerve signals.", "tr": "망막의 특수한 광수용체는 들어오는 빛을 전기적 신경 신호로 변환한다.", "src": "" }
-      ],
-      "syn": ["light-sensing cell"],
-      "deriv": [],
-      "roots": ["phos(=빛) + receptor(=수용체) → 빛을 받아들이는 세포"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "emancipation",
-      "ipa": "/ɪˌmænsɪˈpeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "해방, 이탈", "ex": "The emancipation of enslaved people reshaped the economy and society of the entire region.", "tr": "노예로 있던 사람들의 해방은 그 지역 전체의 경제와 사회를 재편했다.", "src": "" }
-      ],
-      "syn": ["liberation", "freeing", "release"],
-      "deriv": ["emancipate (v) 해방하다"],
-      "roots": ["ex(=밖으로) + manus(=손) + capere(=잡다) → 손아귀에서 풀어 놓음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "photosensitive",
-      "ipa": "/ˌfoʊtoʊˈsensɪtɪv/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "빛에 민감한, 감광성의", "ex": "The pigment is highly photosensitive and breaks down quickly when exposed to bright light.", "tr": "그 색소는 빛에 매우 민감하여 밝은 빛에 노출되면 빠르게 분해된다.", "src": "" }
-      ],
-      "syn": ["light-sensitive"],
-      "deriv": ["photosensitivity (n) 감광성"],
-      "roots": ["phos(=빛) + sensitive(=민감한) → 빛에 반응하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "embodiment",
-      "ipa": "/ɪmˈbɒdimənt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "구현, 화신, 전형", "ex": "The cathedral is often described as the embodiment of medieval religious devotion in stone.", "tr": "그 대성당은 흔히 돌에 구현된 중세 종교적 헌신의 화신으로 묘사된다.", "src": "" }
-      ],
-      "syn": ["incarnation", "personification", "manifestation"],
-      "deriv": ["embody (v) 구현하다"],
-      "roots": ["en(=안에) + body(=몸) → 형체에 담아 드러냄"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "photosynthate",
-      "ipa": "/ˌfoʊtoʊˈsɪnθeɪt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "광합성 산물", "ex": "Sugars produced in the leaves as photosynthate are transported to the roots for storage.", "tr": "잎에서 광합성 산물로 생성된 당은 저장을 위해 뿌리로 운반된다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["photosynthesis (n) 광합성"],
-      "roots": ["phos(=빛) + synthesis(=합성) → 빛으로 합성된 산물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "embryonic",
-      "ipa": "/ˌembriˈɒnɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "초기의, 미발달의", "ex": "The technology is still in an embryonic stage and years away from practical use.", "tr": "그 기술은 아직 초기 단계에 있으며 실용화까지는 수년이 남아 있다.", "src": "" },
-        { "pos": "adj", "ko": "배아의", "ex": "During embryonic development, a single fertilized cell divides into the many tissues of the body.", "tr": "배아 발생 동안 하나의 수정된 세포가 분열하여 신체의 여러 조직이 된다.", "src": "" }
-      ],
-      "syn": ["undeveloped", "nascent", "early-stage"],
-      "deriv": ["embryo (n) 배아"],
-      "roots": ["en(=안에) + bryein(=부풀다) → 갓 자라기 시작한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phototroph",
-      "ipa": "/ˈfoʊtoʊtrɒf/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "광영양 생물", "ex": "As a phototroph, an alga harnesses sunlight to build the organic compounds it needs to live.", "tr": "광영양 생물로서 조류는 햇빛을 이용하여 생존에 필요한 유기 화합물을 만든다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["phototrophic (adj) 광영양의"],
-      "roots": ["phos(=빛) + trophe(=영양) → 빛에서 양분을 얻는 생물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "encapsulate",
-      "ipa": "/ɪnˈkæpsjuleɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "요약하다, 압축해서 담다", "ex": "The final chapter encapsulates the book's argument in a single memorable sentence.", "tr": "마지막 장은 그 책의 논지를 하나의 기억에 남을 문장으로 요약한다.", "src": "" }
-      ],
-      "syn": ["summarize", "condense", "sum up"],
-      "deriv": ["encapsulation (n) 요약, 캡슐화"],
-      "roots": ["en(=안에) + capsula(=작은 상자) → 작은 껍질 안에 담다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phototropism",
-      "ipa": "/foʊˈtɒtrəpɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "굴광성", "ex": "Because of phototropism, a plant on a windowsill bends its stem toward the incoming light.", "tr": "굴광성 때문에 창턱에 놓인 식물은 줄기를 들어오는 빛 쪽으로 굽힌다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["phototropic (adj) 굴광성의"],
-      "roots": ["phos(=빛) + tropos(=향함) → 빛을 향해 굽는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "endemic",
-      "ipa": "/enˈdemɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "고유의, 특정 지역 고유의", "ex": "The lemur is endemic to Madagascar and is found nowhere else on Earth.", "tr": "여우원숭이는 마다가스카르 고유종이며 지구상 다른 어디에서도 발견되지 않는다.", "src": "" },
-        { "pos": "adj", "ko": "풍토성의", "ex": "The disease remains endemic in regions where the mosquito that spreads it is common.", "tr": "그 질병은 그것을 옮기는 모기가 흔한 지역에서 여전히 풍토병으로 남아 있다.", "src": "" }
-      ],
-      "syn": ["native", "local", "indigenous"],
-      "deriv": [],
-      "roots": ["en(=안에) + demos(=지역, 사람들) → 특정 지역 안에서만 나는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phylogenetic",
-      "ipa": "/ˌfaɪloʊdʒəˈnetɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "계통 발생의", "ex": "A phylogenetic tree maps the evolutionary relationships among a group of related species.", "tr": "계통 발생 나무는 관련된 종 집단 사이의 진화적 관계를 나타낸다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["phylogeny (n) 계통 발생"],
-      "roots": ["phylon(=종족) + genesis(=발생) → 종족의 진화 계통에 관한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "engender",
-      "ipa": "/ɪnˈdʒendər/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "야기하다, 낳다, 불러일으키다", "ex": "Ambiguous results can engender fierce disagreement among otherwise like-minded researchers.", "tr": "모호한 결과는 원래 뜻이 같던 연구자들 사이에 격렬한 의견 대립을 야기할 수 있다.", "src": "" }
-      ],
-      "syn": ["produce", "give rise to", "generate"],
-      "deriv": [],
-      "roots": ["en(=만들다) + generare(=낳다) → 생겨나게 하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phylogeny",
-      "ipa": "/faɪˈlɒdʒəni/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "계통 발생, 진화 계통", "ex": "Reconstructing the phylogeny of whales revealed that they descended from land-dwelling mammals.", "tr": "고래의 계통 발생을 재구성한 결과 그들이 육지에 살던 포유류에서 유래했음이 밝혀졌다.", "src": "" }
-      ],
-      "syn": ["evolutionary history"],
-      "deriv": ["phylogenetic (adj) 계통 발생의"],
-      "roots": ["phylon(=종족) + genesis(=발생) → 종의 진화적 계통"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "enigma",
-      "ipa": "/ɪˈnɪɡmə/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "수수께끼, 불가사의", "ex": "The origin of the mysterious signal remained an enigma for more than a decade.", "tr": "그 신비한 신호의 기원은 10년 넘게 수수께끼로 남아 있었다.", "src": "" }
-      ],
-      "syn": ["mystery", "puzzle", "riddle"],
-      "deriv": ["enigmatic (adj) 수수께끼 같은"],
-      "roots": ["ainissesthai(=암시하여 말하다) → 알쏭달쏭한 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phylum",
-      "ipa": "/ˈfaɪləm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "문(門), 분류 단위", "ex": "Insects and crabs belong to the same phylum because they share a jointed external skeleton.", "tr": "곤충과 게는 마디가 있는 외골격을 공유하기 때문에 같은 문에 속한다.", "src": "" }
-      ],
-      "syn": ["division"],
-      "deriv": ["phyla (n) phylum의 복수형"],
-      "roots": ["phylon(=종족, 부류) → 생물 분류의 큰 갈래"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "ensuing",
-      "ipa": "/ɪnˈsuːɪŋ/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "뒤이은, 뒤따르는", "ex": "The eruption darkened the sky, and crops failed across the region in the ensuing years.", "tr": "그 분화는 하늘을 어둡게 했고, 뒤이은 여러 해 동안 그 지역 전역에서 작물이 흉작이 되었다.", "src": "" }
-      ],
-      "syn": ["subsequent", "following", "resulting"],
-      "deriv": ["ensue (v) 뒤따르다"],
-      "roots": ["en(=뒤에) + sequi(=따르다) → 뒤이어 일어나는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "phytochemical",
-      "ipa": "/ˌfaɪtoʊˈkemɪkəl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "식물 화학 물질", "ex": "Many plants produce a phytochemical that deters insects from feeding on their leaves.", "tr": "많은 식물은 곤충이 잎을 갉아먹지 못하게 막는 식물 화학 물질을 생산한다.", "src": "" }
-      ],
-      "syn": ["plant compound"],
-      "deriv": [],
-      "roots": ["phyton(=식물) + chemical(=화학 물질) → 식물이 만드는 화학 물질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "entrench",
-      "ipa": "/ɪnˈtrentʃ/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "확고히 하다, 고착시키다", "ex": "Repeating an unproven claim in textbooks can entrench it as accepted fact.", "tr": "입증되지 않은 주장을 교과서에서 반복하면 그것을 정설로 고착시킬 수 있다.", "src": "" }
-      ],
-      "syn": ["establish firmly", "embed", "ingrain"],
-      "deriv": ["entrenched (adj) 확고히 자리 잡은"],
-      "roots": ["en(=안에) + trench(=참호) → 참호처럼 깊이 파 굳히다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "pistil",
-      "ipa": "/ˈpɪstɪl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "암술", "ex": "Pollen must reach the pistil, the female part of the flower, before a seed can form.", "tr": "씨앗이 형성되려면 꽃가루가 꽃의 암컷 부분인 암술에 도달해야 한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["pistillum(=절굿공이) → 절굿공이 모양의 암꽃 기관"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "enumerate",
-      "ipa": "/ɪˈnjuːməreɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "열거하다, 하나하나 세다", "ex": "The introduction enumerates the three main obstacles the study set out to overcome.", "tr": "서론은 그 연구가 극복하려 한 세 가지 주요 장애물을 하나하나 열거한다.", "src": "" }
-      ],
-      "syn": ["list", "itemize", "spell out"],
-      "deriv": ["enumeration (n) 열거"],
-      "roots": ["e(=밖으로) + numerare(=세다) → 하나씩 꼽아 나가다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "plasmid",
-      "ipa": "/ˈplæzmɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "플라스미드", "ex": "Scientists insert a gene into a bacterial plasmid so that the microbe will produce the desired protein.", "tr": "과학자들은 미생물이 원하는 단백질을 생산하도록 세균의 플라스미드에 유전자를 삽입한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["plasma(=형성된 것) → 세포질 속 작은 고리형 DNA"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "enumeration",
-      "ipa": "/ɪˌnjuːməˈreɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "열거, 계산, 목록화", "ex": "A careful enumeration of every species in the reserve took the field team an entire season.", "tr": "보호구역 내 모든 종을 꼼꼼히 목록화하는 데 현장 조사팀은 한 계절 전체가 걸렸다.", "src": "" }
-      ],
-      "syn": ["listing", "count", "tally"],
-      "deriv": ["enumerate (v) 열거하다"],
-      "roots": ["e(=밖으로) + numerare(=세다) → 하나하나 세어 나감"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "plasticity",
-      "ipa": "/plæˈstɪsəti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "가소성, 유연성", "ex": "The plasticity of the young brain allows it to rewire itself after an injury.", "tr": "어린 뇌의 가소성은 손상 후에도 스스로 회로를 재구성할 수 있게 한다.", "src": "" }
-      ],
-      "syn": ["adaptability", "flexibility"],
-      "deriv": ["plastic (adj) 형태를 바꿀 수 있는"],
-      "roots": ["plassein(=빚다, 형성하다) → 모양을 바꿀 수 있는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "epitome",
-      "ipa": "/ɪˈpɪtəmi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "전형, 축약, 정수", "ex": "The elegant proof is often cited as the epitome of mathematical clarity.", "tr": "그 우아한 증명은 흔히 수학적 명료함의 전형으로 인용된다.", "src": "" }
-      ],
-      "syn": ["embodiment", "quintessence", "prime example"],
-      "deriv": ["epitomize (v) 전형을 보여주다"],
-      "roots": ["epi(=위에) + temnein(=자르다) → 핵심만 잘라낸 축약"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "proboscis",
-      "ipa": "/prəˈbɒsɪs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(곤충의) 주둥이, 긴 코", "ex": "A butterfly uncoils its long proboscis to sip nectar from deep within a flower.", "tr": "나비는 긴 주둥이를 풀어 꽃 깊숙한 곳의 꿀을 빨아 먹는다.", "src": "" }
-      ],
-      "syn": ["snout", "feeding tube"],
-      "deriv": [],
-      "roots": ["pro(=앞으로) + boskein(=먹이다) → 먹이를 얻는 앞으로 뻗은 기관"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "epitomize",
-      "ipa": "/ɪˈpɪtəmaɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "전형을 보여주다, 상징하다", "ex": "The discovery epitomizes how a chance observation can overturn a long-held assumption.", "tr": "그 발견은 우연한 관찰이 오래된 가정을 뒤엎을 수 있음을 전형적으로 보여준다.", "src": "" }
-      ],
-      "syn": ["embody", "typify", "represent"],
-      "deriv": ["epitome (n) 전형, 정수"],
-      "roots": ["epi(=위에) + temnein(=자르다) → 본질을 압축해 대표하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "progenitor",
-      "ipa": "/proʊˈdʒenɪtər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "조상, 선조, 기원이 되는 것", "ex": "This ancient fish is believed to be the progenitor of all four-limbed land animals.", "tr": "이 고대 어류는 네 다리를 가진 모든 육상 동물의 조상으로 여겨진다.", "src": "" }
-      ],
-      "syn": ["ancestor", "forerunner", "precursor"],
-      "deriv": [],
-      "roots": ["pro(=앞에) + genitor(=낳는 자) → 앞서 낳은 조상"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "equilibrate",
-      "ipa": "/ˌiːkwɪˈlɪbreɪt/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "평형을 이루다, 균형을 맞추다", "ex": "The two gases will equilibrate until their pressures on both sides of the membrane are equal.", "tr": "두 기체는 막 양쪽의 압력이 같아질 때까지 평형을 이룰 것이다.", "src": "" }
-      ],
-      "syn": ["balance", "stabilize"],
-      "deriv": ["equilibrium (n) 평형, 균형"],
-      "roots": ["aequus(=같은) + libra(=저울) → 저울이 수평을 이루게 하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "n",
+     "ko": "전도도",
+     "ex": "The conductance of a cell membrane changes as ion channels open and close during a nerve impulse.",
+     "tr": "세포막의 전도도는 신경 자극이 일어나는 동안 이온 통로가 열리고 닫힘에 따라 변한다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "conductivity"
+   ],
+   "deriv": [],
+   "roots": [
+    "con(=함께) + ducere(=이끌다) → 잘 흐르게 하는 정도"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "prophylactic",
+   "ipa": "/ˌproʊfɪˈlæktɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "예방적인",
+     "ex": "Doctors sometimes prescribe prophylactic antibiotics before surgery to prevent infection.",
+     "tr": "의사들은 감염을 막기 위해 수술 전에 예방적 항생제를 처방하기도 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "preventive"
+   ],
+   "deriv": [],
+   "roots": [
+    "pro(=미리) + phylassein(=지키다) → 미리 막는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "lintel",
+   "ipa": "/ˈlɪntl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상인방",
+     "ex": "A stone lintel bridges the top of the doorway and carries the load of the wall above it.",
+     "tr": "돌 상인방은 출입구 상단을 가로지르며 그 위 벽의 하중을 지탱한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "crossbeam"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "pyroclastic",
+   "ipa": "/ˌpaɪroʊˈklæstɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "화쇄성의",
+     "ex": "A pyroclastic flow of superheated gas and ash can race down a volcano at deadly speed.",
+     "tr": "과열된 기체와 화산재로 이루어진 화쇄류는 치명적인 속도로 화산을 타고 내려올 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "pyro(=불) + klastos(=부서진) → 불에 의해 부서진"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "vibrato",
+   "ipa": "/vɪˈbrɑːtoʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "비브라토",
+     "ex": "A violinist uses vibrato to add warmth and expressive color to a sustained note.",
+     "tr": "바이올리니스트는 길게 지속되는 음에 따뜻함과 표현적 색채를 더하기 위해 비브라토를 사용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "vibrare(=떨다) → 떨리는 소리"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "burgeon",
+   "ipa": "/ˈbɜːrdʒən/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "급성장하다, 싹트다",
+     "ex": "Interest in renewable energy has burgeoned as the costs of solar technology continue to fall.",
+     "tr": "태양광 기술의 비용이 계속 하락하면서 재생 에너지에 대한 관심이 급성장해 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "flourish",
+    "expand",
+    "grow"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "sectarian",
+   "ipa": "/sɛkˈtɛriən/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "종파적인",
+     "ex": "Sectarian disputes over doctrine repeatedly fractured the early religious community.",
+     "tr": "교리를 둘러싼 종파적 분쟁은 초기 종교 공동체를 거듭 분열시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "factional",
+    "denominational"
+   ],
+   "deriv": [
+    "sect (n) 종파"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "magnetosphere",
+   "ipa": "/mæɡˈniːtoʊˌsfɪr/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자기권",
+     "ex": "Earth's magnetosphere deflects most of the charged particles streaming outward from the Sun.",
+     "tr": "지구의 자기권은 태양에서 바깥으로 흘러나오는 하전 입자 대부분을 굴절시켜 막아 낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "magneto(=자기) + sphere(=구, 권) → 자기가 미치는 영역"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "secularization",
+   "ipa": "/ˌsɛkjələrɪˈzeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "세속화",
+     "ex": "Sociologists link the secularization of modern societies to rising education and scientific authority.",
+     "tr": "사회학자들은 현대 사회의 세속화를 교육 수준의 상승 및 과학의 권위와 연결한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "secular (adj) 세속적인"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "statutory",
+   "ipa": "/ˈstætʃətɔːri/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "법에 규정된",
+     "ex": "Employers must observe the statutory minimum wage set by national legislation.",
+     "tr": "고용주는 국가 법률로 정해진 법정 최저임금을 준수해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "legal",
+    "legislated"
+   ],
+   "deriv": [
+    "statute (n) 법령"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "throughput",
+   "ipa": "/ˈθruːˌpʊt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "처리량",
+     "ex": "Automating the assembly line dramatically increased the factory's daily throughput.",
+     "tr": "조립 라인을 자동화하자 공장의 일일 처리량이 극적으로 증가했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "output",
+    "capacity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conformation",
+   "ipa": "/ˌkɒnfɔːrˈmeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "입체 구조",
+     "ex": "The biological function of a protein depends heavily on its three-dimensional conformation.",
+     "tr": "단백질의 생물학적 기능은 그 3차원 입체 구조에 크게 좌우된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "configuration",
+    "shape"
+   ],
+   "deriv": [],
+   "roots": [
+    "con(=함께) + formare(=형성하다) → 전체적으로 이루어진 형태"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "prosthesis",
+   "ipa": "/prɒsˈθiːsɪs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "보철물, 인공 삽입물",
+     "ex": "A modern prosthesis can restore much of the movement lost after the amputation of a limb.",
+     "tr": "현대의 보철물은 사지 절단 후 상실된 움직임의 상당 부분을 회복시켜 줄 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "artificial limb"
+   ],
+   "deriv": [
+    "prosthetic (adj) 인공 삽입의"
+   ],
+   "roots": [
+    "pros(=향해) + thesis(=놓기) → 덧붙여 놓은 것"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "masonry",
+   "ipa": "/ˈmeɪsənri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "석조 건축",
+     "ex": "The cathedral's massive stone masonry has withstood earthquakes for over five centuries.",
+     "tr": "그 대성당의 육중한 석조 건축물은 5세기가 넘도록 지진을 견뎌 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "stonework",
+    "brickwork"
+   ],
+   "deriv": [
+    "mason (n) 석공"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "sedimentology",
+   "ipa": "/ˌsɛdɪmɛnˈtɒlədʒi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "퇴적학",
+     "ex": "Sedimentology examines how layers of sand and mud accumulate and harden into rock over time.",
+     "tr": "퇴적학은 모래와 진흙의 층이 시간이 지나며 어떻게 쌓이고 굳어 암석이 되는지를 연구한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "sedimentum(=침전물) + logos(=학문) → 퇴적물을 연구하는 학문"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "virtuosic",
+   "ipa": "/ˌvɜːrtʃuˈɒsɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "기교가 뛰어난",
+     "ex": "The pianist's virtuosic performance left the audience astonished by its technical brilliance.",
+     "tr": "그 피아니스트의 기교가 뛰어난 연주는 청중을 그 기술적 눈부심에 놀라게 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "masterful",
+    "brilliant"
+   ],
+   "deriv": [
+    "virtuoso (n) 거장"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "calibrate",
+   "ipa": "/ˈkælɪbreɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "조정하다, 눈금을 매기다",
+     "ex": "Technicians must calibrate the sensors regularly so that their measurements remain accurate.",
+     "tr": "기술자들은 측정값이 정확하게 유지되도록 센서를 정기적으로 조정해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "adjust",
+    "fine-tune"
+   ],
+   "deriv": [
+    "calibration (n) 교정, 눈금 조정"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "secularism",
+   "ipa": "/ˈsɛkjələrɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "세속주의",
+     "ex": "Secularism holds that government institutions should remain independent of religious authority.",
+     "tr": "세속주의는 정부 기관이 종교 권위로부터 독립해 있어야 한다고 본다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "secular (adj) 세속적인"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "meteoroid",
+   "ipa": "/ˈmiːtiərɔɪd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "유성체",
+     "ex": "A meteoroid is a small rocky fragment traveling through space before it enters a planet's atmosphere.",
+     "tr": "유성체는 행성의 대기에 진입하기 전에 우주 공간을 이동하는 작은 암석 조각이다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "meteor(=유성) + oid(=비슷한 것) → 유성이 되는 물체"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "sedentary",
+   "ipa": "/ˈsɛdntɛri/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "정주하는, 앉아 있는",
+     "ex": "The shift to a sedentary lifestyle in cities has been linked to a rise in chronic disease.",
+     "tr": "도시에서 앉아 있는 생활 방식으로의 전환은 만성 질환의 증가와 연관되어 왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inactive",
+    "settled"
+   ],
+   "deriv": [],
+   "roots": [
+    "sedere(=앉다) → 앉아 있는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "subpoena",
+   "ipa": "/səˈpiːnə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "소환장",
+     "ex": "The court issued a subpoena compelling the witness to appear and give testimony.",
+     "tr": "법원은 그 증인이 출석하여 증언하도록 강제하는 소환장을 발부했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "summons",
+    "writ"
+   ],
+   "deriv": [],
+   "roots": [
+    "sub(=아래) + poena(=처벌) → 벌을 조건으로 하는 명령"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "underemployment",
+   "ipa": "/ˌʌndərɪmˈplɔɪmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불완전 고용",
+     "ex": "Underemployment occurs when skilled workers can find only part-time or low-level jobs.",
+     "tr": "불완전 고용은 숙련 노동자가 시간제나 하급 일자리밖에 구하지 못할 때 발생한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "coniferous",
+   "ipa": "/kəˈnɪfərəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "침엽수의",
+     "ex": "Coniferous forests dominate cold northern regions where broad-leaved trees struggle to survive.",
+     "tr": "침엽수림은 활엽수가 살아남기 힘든 추운 북부 지역을 지배한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "evergreen"
+   ],
+   "deriv": [
+    "conifer (n) 침엽수"
+   ],
+   "roots": [
+    "conus(=솔방울) + ferre(=지니다) → 솔방울을 맺는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "prosthetic",
+   "ipa": "/prɒsˈθɛtɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "인공 삽입의",
+     "ex": "Advances in prosthetic limbs allow amputees to walk and even run with remarkable ease.",
+     "tr": "인공 삽입 사지의 발전으로 절단 환자들은 놀랄 만큼 수월하게 걷고 심지어 달릴 수 있게 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "artificial"
+   ],
+   "deriv": [
+    "prosthesis (n) 보철물"
+   ],
+   "roots": [
+    "pros(=향해) + thesis(=놓기) → 덧붙여 놓는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "mausoleum",
+   "ipa": "/ˌmɔːsəˈliːəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "영묘, 웅장한 무덤",
+     "ex": "The emperor was entombed in a vast marble mausoleum surrounded by guardian statues.",
+     "tr": "황제는 수호 조각상들로 둘러싸인 거대한 대리석 영묘에 안치되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "tomb",
+    "sepulchre"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "seismograph",
+   "ipa": "/ˈsaɪzməˌɡræf/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "지진계",
+     "ex": "A seismograph records the vibrations of the ground, allowing scientists to locate an earthquake.",
+     "tr": "지진계는 지면의 진동을 기록하여 과학자들이 지진의 위치를 파악할 수 있게 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "seismometer"
+   ],
+   "deriv": [],
+   "roots": [
+    "seismos(=지진) + graph(=기록기) → 지진을 기록하는 기구"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "virtuoso",
+   "ipa": "/ˌvɜːrtʃuˈoʊsoʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "거장, 명연주자",
+     "ex": "The young cellist was hailed as a virtuoso after her flawless debut concert.",
+     "tr": "그 젊은 첼리스트는 흠 없는 데뷔 연주 후 거장으로 칭송받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "master",
+    "maestro"
+   ],
+   "deriv": [
+    "virtuosic (adj) 기교가 뛰어난"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "candor",
+   "ipa": "/ˈkændər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "솔직함",
+     "ex": "The scientist discussed the flaws in her own study with unusual candor.",
+     "tr": "그 과학자는 자기 연구의 결함을 보기 드문 솔직함으로 논했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "frankness",
+    "honesty"
+   ],
+   "deriv": [
+    "candid (adj) 솔직한"
+   ],
+   "roots": [
+    "candere(=빛나다) → 투명하게 드러냄"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "stoicism",
+   "ipa": "/ˈstoʊɪsɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "금욕주의, 스토아 철학",
+     "ex": "Stoicism teaches that people should accept what lies beyond their control with calm reason.",
+     "tr": "스토아 철학은 사람들이 자신의 통제를 벗어난 것을 차분한 이성으로 받아들여야 한다고 가르친다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "fortitude"
+   ],
+   "deriv": [
+    "stoic (adj) 금욕적인, 냉철한"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "microgravity",
+   "ipa": "/ˌmaɪkroʊˈɡrævɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "미소중력",
+     "ex": "In the microgravity of orbit, astronauts and their tools appear to float weightlessly.",
+     "tr": "궤도의 미소중력 속에서 우주비행사와 그들의 도구는 무게 없이 떠 있는 것처럼 보인다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "micro(=매우 작은) + gravity(=중력) → 아주 약한 중력"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "suburbanization",
+   "ipa": "/səˌbɜːrbənɪˈzeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "교외화",
+     "ex": "Widespread car ownership accelerated the suburbanization of many industrial cities.",
+     "tr": "자동차의 널리 퍼진 보유는 많은 산업 도시의 교외화를 가속했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "suburban (adj) 교외의"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "suffrage",
+   "ipa": "/ˈsʌfrɪdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "참정권, 선거권",
+     "ex": "The movement for universal suffrage sought to extend the vote to every adult citizen.",
+     "tr": "보통 참정권 운동은 모든 성인 시민에게 투표권을 확대하려 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "franchise",
+    "vote"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "valuate",
+   "ipa": "/ˈvæljueɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "평가하다",
+     "ex": "Analysts valuate a company by estimating the future cash it is expected to generate.",
+     "tr": "분석가들은 기업이 창출할 것으로 예상되는 미래 현금을 추정하여 그 가치를 평가한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "appraise",
+    "assess"
+   ],
+   "deriv": [
+    "valuation (n) 평가, 가치 산정"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cotyledon",
+   "ipa": "/ˌkɒtɪˈliːdən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "떡잎",
+     "ex": "The cotyledon stores nutrients that nourish a young seedling before its first true leaves appear.",
+     "tr": "떡잎은 어린 묘목의 첫 본잎이 나기 전에 그것에 영양을 공급하는 양분을 저장한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "seed leaf"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "pulmonary",
+   "ipa": "/ˈpʌlmənəri/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "폐의",
+     "ex": "Pulmonary function declines when the delicate air sacs of the lungs are damaged.",
+     "tr": "폐의 섬세한 공기주머니가 손상되면 폐 기능이 저하된다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "pulmo(=폐) → 폐와 관련된"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "mezzanine",
+   "ipa": "/ˈmɛzəniːn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "중이층",
+     "ex": "A mezzanine overlooks the main hall from a low balcony inserted between two full floors.",
+     "tr": "중이층은 두 개의 완전한 층 사이에 삽입된 낮은 발코니에서 중앙 홀을 내려다본다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "medius(=가운데) → 층 사이의 중간층"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "seismology",
+   "ipa": "/saɪzˈmɒlədʒi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "지진학",
+     "ex": "Seismology uses waves traveling through the planet to reveal the structure of Earth's interior.",
+     "tr": "지진학은 행성을 통과하는 파동을 이용해 지구 내부의 구조를 밝혀낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [
+    "seismos(=지진) + logos(=학문) → 지진을 연구하는 학문"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cascade",
+   "ipa": "/kæsˈkeɪd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "연쇄적으로 일어나다",
+     "ex": "A single failure can cascade through a power grid, triggering blackouts across a wide region.",
+     "tr": "단 하나의 고장이 전력망을 따라 연쇄적으로 일어나 넓은 지역에 정전을 일으킬 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "chain",
+    "tumble"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "syllogism",
+   "ipa": "/ˈsɪlədʒɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "삼단논법",
+     "ex": "In a classic syllogism, two accepted premises lead logically to a single conclusion.",
+     "tr": "고전적 삼단논법에서는 인정된 두 전제가 논리적으로 하나의 결론으로 이어진다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "deduction"
+   ],
+   "deriv": [],
+   "roots": [
+    "syn(=함께) + logizesthai(=추론하다) → 전제를 엮어 추론함"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "nebular",
+   "ipa": "/ˈnɛbjələr/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "성운의",
+     "ex": "According to the nebular hypothesis, the solar system condensed from a rotating cloud of gas and dust.",
+     "tr": "성운설에 따르면 태양계는 회전하는 기체와 먼지 구름에서 응축되어 형성되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "nebula (n) 성운"
+   ],
+   "roots": [
+    "nebula(=구름, 안개) → 성운과 관련된"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }

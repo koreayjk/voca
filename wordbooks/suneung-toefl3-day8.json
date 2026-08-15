@@ -1,607 +1,1364 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 8,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 8,
+ "words": [
+  {
+   "en": "implicitly",
+   "ipa": "/ɪmˈplɪsɪtli/",
+   "pos": "adv",
+   "meanings": [
     {
-      "en": "denudation",
-      "ipa": "/ˌdiːnjuːˈdeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "삭박작용", "ex": "Over millions of years, denudation stripped the mountains down to gentle, rounded hills.", "tr": "수백만 년에 걸쳐 삭박작용은 산맥을 완만하고 둥근 언덕으로 깎아 내렸다.", "src": "" }
-      ],
-      "syn": ["erosion", "wearing away"],
-      "deriv": ["denude (v) 벌거벗기다, 깎아내다"],
-      "roots": ["de(=완전히) + nudare(=벗기다) → 표면을 완전히 벗겨냄"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "hash",
-      "ipa": "/hæʃ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "해시, 해시값", "ex": "A hash function converts any input into a fixed-length string that acts as its digital fingerprint.", "tr": "해시 함수는 어떤 입력이든 그것의 디지털 지문 역할을 하는 고정 길이의 문자열로 변환한다.", "src": "" }
-      ],
-      "syn": ["digest", "checksum"],
-      "deriv": ["hash (v) 해시화하다"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "falsetto",
-      "ipa": "/fɔːlˈsetoʊ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "가성", "ex": "The tenor slipped into a delicate falsetto to reach notes above his natural range.", "tr": "그 테너는 자신의 자연스러운 음역 위의 음에 도달하기 위해 섬세한 가성으로 넘어갔다.", "src": "" }
-      ],
-      "syn": ["head voice"],
-      "deriv": [],
-      "roots": ["falso(=거짓의) → 본래 음역이 아닌 꾸민 목소리"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "logarithm",
-      "ipa": "/ˈlɒɡərɪðəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "로그", "ex": "The logarithm of a number tells us the power to which a fixed base must be raised to produce it.", "tr": "어떤 수의 로그는 고정된 밑을 몇 제곱해야 그 수가 나오는지를 알려 준다.", "src": "" }
-      ],
-      "syn": ["exponent of a base"],
-      "deriv": ["logarithmic (adj) 로그의"],
-      "roots": ["logos(=비율) + arithmos(=수) → 비율을 나타내는 수"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "gilding",
-      "ipa": "/ˈɡɪldɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "금박 입히기", "ex": "The gilding on the manuscript's initials still gleams after several centuries.", "tr": "그 필사본 머리글자에 입혀진 금박은 수 세기가 지난 뒤에도 여전히 빛난다.", "src": "" }
-      ],
-      "syn": ["gold leaf", "gold coating"],
-      "deriv": ["gild (v) 금박을 입히다", "gilded (adj) 금박을 입힌"],
-      "roots": ["gold(=금) → 금으로 덮는 작업"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "analogously",
-      "ipa": "/əˈnæləɡəsli/",
-      "pos": "adv",
-      "meanings": [
-        { "pos": "adv", "ko": "유사하게, 비슷한 방식으로", "ex": "Analogously to the heart pumping blood, the sun drives the circulation of the atmosphere.", "tr": "심장이 혈액을 내보내는 것과 유사하게, 태양은 대기의 순환을 이끈다.", "src": "" }
-      ],
-      "syn": ["similarly", "comparably"],
-      "deriv": ["analogous (adj) 유사한", "analogy (n) 유추"],
-      "roots": ["ana(=따라) + logos(=비율) → 비슷한 비율로"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dynast",
-      "ipa": "/ˈdaɪnæst/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "왕조 통치자", "ex": "Each dynast in the line strengthened the family's grip on the throne for generations.", "tr": "그 가문의 각 왕조 통치자는 여러 세대에 걸쳐 왕위에 대한 일족의 지배력을 강화했다.", "src": "" }
-      ],
-      "syn": ["ruler", "monarch"],
-      "deriv": ["dynasty (n) 왕조", "dynastic (adj) 왕조의"],
-      "roots": ["dynasthai(=지배하다) → 지배하는 자"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "eschatology",
-      "ipa": "/ˌeskəˈtɒlədʒi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "종말론", "ex": "The religion's eschatology describes a final judgment that brings history to its close.", "tr": "그 종교의 종말론은 역사를 끝맺는 최후의 심판을 묘사한다.", "src": "" }
-      ],
-      "syn": ["doctrine of last things"],
-      "deriv": ["eschatological (adj) 종말론의"],
-      "roots": ["eschatos(=마지막) + logos(=학문) → 마지막 일에 관한 교리"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "deluge",
-      "ipa": "/ˈdeljuːdʒ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "호우, 대홍수", "ex": "The sudden deluge overwhelmed the drainage system and flooded the low-lying streets.", "tr": "갑작스러운 호우는 배수 시스템을 압도하여 저지대 거리를 침수시켰다.", "src": "" }
-      ],
-      "syn": ["downpour", "flood", "torrent"],
-      "deriv": ["deluge (v) 침수시키다, 쇄도하다"],
-      "roots": ["di(=away) + luere(=씻다) → 온통 씻어 내리는 물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "chromosphere",
-      "ipa": "/ˈkroʊməsfɪər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "채층", "ex": "The chromosphere is a thin layer of the sun's atmosphere visible as a red rim during an eclipse.", "tr": "채층은 일식 때 붉은 테두리로 보이는 태양 대기의 얇은 층이다.", "src": "" }
-      ],
-      "syn": ["solar atmospheric layer"],
-      "deriv": ["chromospheric (adj) 채층의"],
-      "roots": ["chroma(=색) + sphaira(=구) → 색을 띠는 대기층"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "communitarian",
-      "ipa": "/kəˌmjuːnɪˈteəriən/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "공동체주의의", "ex": "Communitarian thinkers argue that individual identity is shaped by the community one belongs to.", "tr": "공동체주의 사상가들은 개인의 정체성이 그가 속한 공동체에 의해 형성된다고 주장한다.", "src": "" }
-      ],
-      "syn": ["community-centered"],
-      "deriv": ["communitarianism (n) 공동체주의"],
-      "roots": ["communis(=공동의) → 공동체를 중시하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "confederation",
-      "ipa": "/kənˌfedəˈreɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "연합, 동맹", "ex": "The independent states formed a loose confederation to coordinate their defense.", "tr": "독립적인 주들은 방위를 조율하기 위해 느슨한 연합을 결성했다.", "src": "" }
-      ],
-      "syn": ["alliance", "league", "federation"],
-      "deriv": ["confederate (n) 동맹자", "confederacy (n) 연합"],
-      "roots": ["con(=together) + foedus(=조약) → 조약으로 함께 묶음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "electronegativity",
-      "ipa": "/ɪˌlektroʊneɡəˈtɪvɪti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "전기음성도", "ex": "Fluorine has the highest electronegativity, pulling shared electrons strongly toward itself.", "tr": "플루오린은 가장 높은 전기음성도를 지녀 공유된 전자를 자신 쪽으로 강하게 끌어당긴다.", "src": "" }
-      ],
-      "syn": ["electron-attracting power"],
-      "deriv": ["electronegative (adj) 전기음성의"],
-      "roots": ["elektron(=전기) + negativus(=음의) → 전자를 끌어당기는 정도"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "destitute",
-      "ipa": "/ˈdestɪtuːt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "극빈한, 궁핍한", "ex": "The famine left thousands of families destitute, without food or shelter of any kind.", "tr": "그 기근은 수천 가구를 어떤 식량이나 거처도 없는 극빈 상태로 몰아넣었다.", "src": "" }
-      ],
-      "syn": ["impoverished", "penniless", "poverty-stricken"],
-      "deriv": ["destitution (n) 궁핍"],
-      "roots": ["de(=아래로) + statuere(=세우다) → 버려져 무너진 처지의"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "hydraulics",
-      "ipa": "/haɪˈdrɔːlɪks/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "수력학", "ex": "Hydraulics explains how pressurized fluid can transmit force to lift enormous weights.", "tr": "수력학은 가압된 유체가 어떻게 힘을 전달하여 막대한 무게를 들어 올릴 수 있는지 설명한다.", "src": "" }
-      ],
-      "syn": ["fluid mechanics"],
-      "deriv": ["hydraulic (adj) 수력의"],
-      "roots": ["hydor(=물) + aulos(=관) → 물의 흐름을 다루는 학문"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "erudite",
-      "ipa": "/ˈerədaɪt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "박식한, 학식 있는", "ex": "The erudite scholar could cite obscure texts from memory in half a dozen languages.", "tr": "그 박식한 학자는 여섯 개 남짓한 언어로 된 잘 알려지지 않은 문헌을 기억에서 인용할 수 있었다.", "src": "" }
-      ],
-      "syn": ["learned", "scholarly", "well-read"],
-      "deriv": ["erudition (n) 박식"],
-      "roots": ["e(=out) + rudis(=거친) → 거친 무지에서 벗어난"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "assay",
-      "ipa": "/ˈæseɪ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "분석, 검정", "ex": "The laboratory ran an assay to measure the concentration of the enzyme in each sample.", "tr": "그 실험실은 각 시료 내 효소의 농도를 측정하기 위해 검정을 실시했다.", "src": "" }
-      ],
-      "syn": ["analysis", "test", "examination"],
-      "deriv": ["assay (v) 분석하다, 검정하다"],
-      "roots": ["exagium(=무게 달기) → 성분을 재어 판정함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "convalescence",
-      "ipa": "/ˌkɒnvəˈlesəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "회복기", "ex": "During her convalescence, the patient gradually regained strength through gentle exercise.", "tr": "회복기 동안 그 환자는 가벼운 운동을 통해 서서히 기력을 되찾았다.", "src": "" }
-      ],
-      "syn": ["recovery", "recuperation"],
-      "deriv": ["convalesce (v) 회복하다", "convalescent (adj) 회복기의"],
-      "roots": ["con(=완전히) + valescere(=강해지다) → 다시 건강해짐"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "smelting",
-      "ipa": "/ˈsmeltɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "제련", "ex": "Smelting extracts pure metal from its ore by heating it far above the melting point.", "tr": "제련은 광석을 녹는점보다 훨씬 높이 가열하여 순수한 금속을 추출한다.", "src": "" }
-      ],
-      "syn": ["ore refining"],
-      "deriv": ["smelt (v) 제련하다", "smelter (n) 제련소"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dissipation",
-      "ipa": "/ˌdɪsɪˈpeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "소산, 흩어짐", "ex": "Friction leads to the dissipation of kinetic energy as heat into the surroundings.", "tr": "마찰은 운동 에너지가 열로 바뀌어 주변으로 흩어지는 소산을 일으킨다.", "src": "" }
-      ],
-      "syn": ["dispersal", "scattering", "loss"],
-      "deriv": ["dissipate (v) 소산시키다, 흩어지다"],
-      "roots": ["dis(=따로) + supare(=던지다) → 사방으로 흩어짐"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "distractibility",
-      "ipa": "/dɪˌstræktəˈbɪlɪti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "산만함, 주의 산만성", "ex": "Heightened distractibility makes it difficult for the child to stay focused on a single task.", "tr": "높아진 산만함은 그 아이가 한 가지 과제에 집중을 유지하는 것을 어렵게 만든다.", "src": "" }
-      ],
-      "syn": ["inattentiveness"],
-      "deriv": ["distractible (adj) 산만해지기 쉬운", "distract (v) 주의를 흩뜨리다"],
-      "roots": ["dis(=따로) + trahere(=끌다) → 주의가 딴 데로 끌림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cladding",
-      "ipa": "/ˈklædɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "외장재, 외벽 마감재", "ex": "The building's metal cladding protects the structure beneath from wind and rain.", "tr": "그 건물의 금속 외장재는 아래의 구조물을 바람과 비로부터 보호한다.", "src": "" }
-      ],
-      "syn": ["facing", "covering", "sheathing"],
-      "deriv": ["clad (v) 외장을 입히다"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "epigraph",
-      "ipa": "/ˈepɪɡrɑːf/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "제사(題詞), 명구", "ex": "The author placed a line of ancient poetry as an epigraph at the start of each chapter.", "tr": "그 작가는 각 장의 서두에 고대 시 한 구절을 제사로 실었다.", "src": "" }
-      ],
-      "syn": ["inscription", "motto"],
-      "deriv": ["epigraphic (adj) 명문의"],
-      "roots": ["epi(=위에) + graphein(=쓰다) → 위에 새겨 적은 글"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dike",
-      "ipa": "/daɪk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "암맥", "ex": "A dike forms when magma forces its way into a vertical crack and hardens across the surrounding rock.", "tr": "암맥은 마그마가 수직 균열 속으로 밀고 들어가 주위 암석을 가로질러 굳을 때 형성된다.", "src": "" }
-      ],
-      "syn": ["intrusion", "magma sheet"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "interoperability",
-      "ipa": "/ˌɪntərˌɒpərəˈbɪlɪti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "상호 운용성", "ex": "Interoperability lets software from different vendors exchange data without special conversion.", "tr": "상호 운용성은 서로 다른 공급업체의 소프트웨어가 특별한 변환 없이 데이터를 주고받을 수 있게 한다.", "src": "" }
-      ],
-      "syn": ["compatibility"],
-      "deriv": ["interoperable (adj) 상호 운용 가능한"],
-      "roots": ["inter(=사이) + operari(=작동하다) → 서로 함께 작동하는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "fret",
-      "ipa": "/fret/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(현악기의) 프렛", "ex": "Pressing a string against a fret shortens its vibrating length and raises the pitch.", "tr": "현을 프렛에 눌러 붙이면 진동하는 길이가 짧아지고 음높이가 올라간다.", "src": "" }
-      ],
-      "syn": ["ridge", "fingerboard bar"],
-      "deriv": ["fretted (adj) 프렛이 있는"],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "logarithmic",
-      "ipa": "/ˌlɒɡəˈrɪðmɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "로그의, 로그를 이용한", "ex": "On a logarithmic scale, each step represents a tenfold increase rather than a fixed amount.", "tr": "로그 척도에서는 각 단계가 일정한 양이 아니라 열 배의 증가를 나타낸다.", "src": "" }
-      ],
-      "syn": ["log-scaled"],
-      "deriv": ["logarithm (n) 로그", "logarithmically (adv) 로그적으로"],
-      "roots": ["logos(=비율) + arithmos(=수) → 로그에 관한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "gouache",
-      "ipa": "/ɡwɑːʃ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "과슈", "ex": "Unlike transparent watercolor, gouache dries to an opaque, matte finish that hides the paper beneath.", "tr": "투명한 수채화 물감과 달리 과슈는 마르면 아래의 종이를 가리는 불투명하고 무광의 마감으로 굳는다.", "src": "" }
-      ],
-      "syn": ["opaque watercolor"],
-      "deriv": [],
-      "roots": [],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "analogue",
-      "ipa": "/ˈænəlɒɡ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "유사물, 대응물", "ex": "Researchers study the desert valley as an analogue for conditions that may exist on Mars.", "tr": "연구자들은 그 사막 계곡을 화성에 존재할지 모르는 환경의 대응물로 연구한다.", "src": "" }
-      ],
-      "syn": ["counterpart", "equivalent", "parallel"],
-      "deriv": ["analogous (adj) 유사한", "analogy (n) 유추"],
-      "roots": ["ana(=따라) + logos(=비율) → 대응되는 비율의 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "epochal",
-      "ipa": "/ˈepəkəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "획기적인, 시대를 여는", "ex": "The invention of the printing press was an epochal event that reshaped the spread of knowledge.", "tr": "인쇄기의 발명은 지식의 확산을 재편한 획기적인 사건이었다.", "src": "" }
-      ],
-      "syn": ["landmark", "momentous", "era-defining"],
-      "deriv": ["epoch (n) 시대"],
-      "roots": ["epoche(=멈춤, 시점) → 새 시대를 여는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "existentialism",
-      "ipa": "/ˌeɡzɪˈstenʃəlɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "실존주의", "ex": "Existentialism holds that individuals must create their own meaning in a universe that provides none.", "tr": "실존주의는 개인이 아무 의미도 주어지지 않은 우주에서 스스로 자신의 의미를 창조해야 한다고 본다.", "src": "" }
-      ],
-      "syn": ["philosophy of existence"],
-      "deriv": ["existential (adj) 실존의", "existentialist (n) 실존주의자"],
-      "roots": ["ex(=out) + sistere(=서다) → 존재함에 관한 사상"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dewpoint",
-      "ipa": "/ˈdjuːpɔɪnt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "이슬점", "ex": "When the air cools to its dewpoint, the water vapor it holds begins to condense into droplets.", "tr": "공기가 이슬점까지 식으면 그 안에 담긴 수증기가 물방울로 응결하기 시작한다.", "src": "" }
-      ],
-      "syn": ["condensation point"],
-      "deriv": [],
-      "roots": ["dew(=이슬) + point(=점) → 이슬이 맺히는 온도"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "circumstellar",
-      "ipa": "/ˌsɜːrkəmˈstelər/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "항성 주위의", "ex": "Planets condense out of the circumstellar disk of gas and dust surrounding a young star.", "tr": "행성은 어린 별을 둘러싼 항성 주위의 기체와 먼지 원반에서 응축되어 생겨난다.", "src": "" }
-      ],
-      "syn": ["around a star"],
-      "deriv": [],
-      "roots": ["circum(=주위) + stella(=별) → 별 주위의"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "conformist",
-      "ipa": "/kənˈfɔːrmɪst/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "순응주의자", "ex": "As a conformist, he preferred to follow established customs rather than challenge them.", "tr": "순응주의자로서 그는 관습에 도전하기보다 확립된 관습을 따르는 것을 선호했다.", "src": "" }
-      ],
-      "syn": ["follower", "traditionalist"],
-      "deriv": ["conform (v) 순응하다", "conformity (n) 순응"],
-      "roots": ["con(=together) + forma(=형태) → 틀에 맞추는 사람"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "covenant",
-      "ipa": "/ˈkʌvənənt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "계약, 서약", "ex": "The two nations entered into a solemn covenant never to wage war against each other.", "tr": "두 나라는 결코 서로 전쟁을 벌이지 않겠다는 엄숙한 서약을 맺었다.", "src": "" }
-      ],
-      "syn": ["pact", "agreement", "pledge"],
-      "deriv": ["covenantal (adj) 계약의"],
-      "roots": ["con(=together) + venire(=오다) → 함께 모여 맺은 약속"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "endothermic",
-      "ipa": "/ˌendoʊˈθɜːrmɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "흡열의", "ex": "An endothermic reaction absorbs heat from its surroundings, causing the container to feel cold.", "tr": "흡열 반응은 주변으로부터 열을 흡수하여 용기가 차갑게 느껴지게 한다.", "src": "" }
-      ],
-      "syn": ["heat-absorbing"],
-      "deriv": ["endotherm (n) 정온동물"],
-      "roots": ["endon(=안) + therme(=열) → 열을 안으로 흡수하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "devaluation",
-      "ipa": "/ˌdiːvæljuˈeɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "평가 절하", "ex": "The devaluation of the currency made imported goods far more expensive overnight.", "tr": "통화의 평가 절하는 수입품 가격을 하룻밤 사이에 훨씬 비싸게 만들었다.", "src": "" }
-      ],
-      "syn": ["depreciation", "markdown"],
-      "deriv": ["devalue (v) 평가 절하하다"],
-      "roots": ["de(=아래로) + valere(=가치가 있다) → 가치를 낮춤"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "impedance",
-      "ipa": "/ɪmˈpiːdəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "임피던스, 저항", "ex": "Impedance measures the total opposition a circuit presents to an alternating current.", "tr": "임피던스는 회로가 교류 전류에 제공하는 전체 저항을 측정한다.", "src": "" }
-      ],
-      "syn": ["resistance", "opposition"],
-      "deriv": ["impede (v) 방해하다"],
-      "roots": ["in(=안으로) + pes(=발) → 발이 얽혀 흐름을 막음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "erudition",
-      "ipa": "/ˌerəˈdɪʃən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "박식, 해박함", "ex": "The footnotes displayed an erudition that few readers could hope to match.", "tr": "그 각주들은 몇 안 되는 독자만이 견줄 수 있을 박식함을 드러냈다.", "src": "" }
-      ],
-      "syn": ["learning", "scholarship", "knowledge"],
-      "deriv": ["erudite (adj) 박식한"],
-      "roots": ["e(=out) + rudis(=거친) → 무지에서 벗어난 학식"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "autotroph",
-      "ipa": "/ˈɔːtətroʊf/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "독립 영양 생물", "ex": "As an autotroph, a plant makes its own food from sunlight, water, and carbon dioxide.", "tr": "독립 영양 생물로서 식물은 햇빛, 물, 이산화탄소로부터 스스로 양분을 만든다.", "src": "" }
-      ],
-      "syn": ["self-feeder", "producer"],
-      "deriv": ["autotrophic (adj) 독립 영양의"],
-      "roots": ["autos(=스스로) + trophe(=영양) → 스스로 양분을 만드는 생물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "adv",
+     "ko": "암시적으로, 은연중에",
+     "ex": "By staying silent, the committee implicitly approved the proposal.",
+     "tr": "침묵함으로써 위원회는 그 제안을 은연중에 승인했다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "tacitly",
+    "indirectly"
+   ],
+   "deriv": [
+    "implicit (adj) 암시적인"
+   ],
+   "roots": [
+    "im(=안에) + plicare(=접다) → 안에 접힌 채로"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "imposition",
+   "ipa": "/ˌɪmpəˈzɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "부과, 강요",
+     "ex": "The imposition of heavy taxes provoked widespread unrest.",
+     "tr": "무거운 세금의 부과는 광범위한 소요를 촉발했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "levying",
+    "enforcement",
+    "burden"
+   ],
+   "deriv": [
+    "impose (v) 부과하다"
+   ],
+   "roots": [
+    "im(=위에) + ponere(=놓다) → 위에 얹어 부과함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "inborn",
+   "ipa": "/ˌɪnˈbɔːrn/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "타고난, 선천적인",
+     "ex": "Some researchers argue that a sense of fairness is inborn.",
+     "tr": "일부 연구자들은 공정성에 대한 감각이 타고난 것이라고 주장한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "innate",
+    "inherent",
+    "natural"
+   ],
+   "deriv": [],
+   "roots": [
+    "in(=안에) + born(=태어난) → 태어날 때부터 지닌"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "incidence",
+   "ipa": "/ˈɪnsɪdəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "발생률, 발생 정도",
+     "ex": "The incidence of the disease is much higher in urban areas.",
+     "tr": "그 질병의 발생률은 도시 지역에서 훨씬 더 높다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "occurrence",
+    "rate",
+    "frequency"
+   ],
+   "deriv": [],
+   "roots": [
+    "in(=위에) + cadere(=떨어지다) → 일어나는 정도"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "incidental",
+   "ipa": "/ˌɪnsɪˈdentəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "부수적인, 우연한",
+     "ex": "The discovery was incidental to the main aim of the study.",
+     "tr": "그 발견은 연구의 주된 목적에 부수적인 것이었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "secondary",
+    "minor",
+    "chance"
+   ],
+   "deriv": [
+    "incidentally (adv) 우연히"
+   ],
+   "roots": [
+    "in(=위에) + cadere(=떨어지다) → 우연히 딸려 생기는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "incidentally",
+   "ipa": "/ˌɪnsɪˈdentəli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "덧붙여 말하면, 우연히",
+     "ex": "Incidentally, the same method has proven useful in other fields.",
+     "tr": "덧붙여 말하면, 같은 방법이 다른 분야에서도 유용한 것으로 드러났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "by the way",
+    "in passing"
+   ],
+   "deriv": [
+    "incidental (adj) 부수적인"
+   ],
+   "roots": [
+    "in(=위에) + cadere(=떨어지다) → 덧붙여 우연히"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "inclination",
+   "ipa": "/ˌɪnklɪˈneɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "경향, 성향",
+     "ex": "People have a natural inclination to seek out familiar information.",
+     "tr": "사람들은 익숙한 정보를 찾으려는 자연스러운 성향을 지닌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "tendency",
+    "disposition",
+    "leaning"
+   ],
+   "deriv": [
+    "incline (v) 기울다"
+   ],
+   "roots": [
+    "in(=쪽으로) + clinare(=기울다) → 어느 쪽으로 기욺"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "incline",
+   "ipa": "/ɪnˈklaɪn/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "~하는 경향을 갖게 하다, 기울게 하다",
+     "ex": "The evidence inclines most scholars to favor the earlier date.",
+     "tr": "그 증거는 대다수 학자가 더 이른 연대를 선호하는 경향을 갖게 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "dispose",
+    "tend",
+    "lean"
+   ],
+   "deriv": [
+    "inclination (n) 경향"
+   ],
+   "roots": [
+    "in(=쪽으로) + clinare(=기울다) → 어느 쪽으로 기울다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "incompatibility",
+   "ipa": "/ˌɪnkəmˌpætəˈbɪləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "양립 불가능성",
+     "ex": "The incompatibility of the two theories troubled physicists for decades.",
+     "tr": "그 두 이론의 양립 불가능성은 수십 년간 물리학자들을 괴롭혔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inconsistency",
+    "conflict",
+    "clash"
+   ],
+   "deriv": [
+    "incompatible (adj) 양립할 수 없는"
+   ],
+   "roots": [
+    "in(=아닌) + com(=함께) + pati(=견디다) → 함께 있을 수 없음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "inconceivable",
+   "ipa": "/ˌɪnkənˈsiːvəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "상상할 수 없는",
+     "ex": "It once seemed inconceivable that machines could recognize speech.",
+     "tr": "기계가 말을 인식할 수 있다는 것은 한때 상상할 수 없는 일로 보였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unimaginable",
+    "unthinkable"
+   ],
+   "deriv": [
+    "conceive (v) 상상하다"
+   ],
+   "roots": [
+    "in(=아닌) + con + capere(=붙잡다) → 마음에 붙잡을 수 없는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "inconclusive",
+   "ipa": "/ˌɪnkənˈkluːsɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "결론이 나지 않은",
+     "ex": "The early trials were inconclusive and required further study.",
+     "tr": "초기 실험들은 결론이 나지 않아 추가 연구가 필요했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "indefinite",
+    "unresolved",
+    "open"
+   ],
+   "deriv": [
+    "conclusive (adj) 결정적인"
+   ],
+   "roots": [
+    "in(=아닌) + con + claudere(=닫다) → 매듭짓지 못한"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "incorporation",
+   "ipa": "/ɪnˌkɔːrpəˈreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "통합, 편입",
+     "ex": "The incorporation of local knowledge improved the conservation plan.",
+     "tr": "현지 지식의 통합은 그 보전 계획을 개선했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "integration",
+    "inclusion",
+    "merging"
+   ],
+   "deriv": [
+    "incorporate (v) 통합하다"
+   ],
+   "roots": [
+    "in(=안에) + corpus(=몸) → 하나의 몸으로 합침"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "increment",
+   "ipa": "/ˈɪŋkrɪmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "증가분, 증분",
+     "ex": "The temperature was raised in small increments to avoid damaging the sample.",
+     "tr": "표본이 손상되지 않도록 온도를 작은 증가분으로 올렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "increase",
+    "step",
+    "addition"
+   ],
+   "deriv": [
+    "incremental (adj) 점진적인"
+   ],
+   "roots": [
+    "in(=위에) + crescere(=자라다) → 조금씩 늘어난 몫"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "indefinitely",
+   "ipa": "/ɪnˈdefɪnətli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "무기한으로",
+     "ex": "The samples can be stored indefinitely if kept frozen.",
+     "tr": "그 표본들은 냉동 보관하면 무기한으로 저장될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "endlessly",
+    "for good",
+    "permanently"
+   ],
+   "deriv": [
+    "indefinite (adj) 무기한의"
+   ],
+   "roots": [
+    "in(=아닌) + de + finire(=끝맺다) → 끝을 정하지 않고"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "indicative",
+   "ipa": "/ɪnˈdɪkətɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "나타내는, 시사하는",
+     "ex": "A sudden drop in oxygen is indicative of a serious problem in the tank.",
+     "tr": "산소의 갑작스러운 감소는 수조에 심각한 문제가 있음을 시사한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "suggestive",
+    "symptomatic",
+    "telling"
+   ],
+   "deriv": [
+    "indicate (v) 나타내다"
+   ],
+   "roots": [
+    "in(=향해) + dicare(=가리키다) → 가리켜 보이는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "indigenous",
+   "ipa": "/ɪnˈdɪdʒɪnəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "토착의, 고유의",
+     "ex": "The plant is indigenous to the highlands of Central America.",
+     "tr": "그 식물은 중앙아메리카 고지대에 토착한 종이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "native",
+    "local",
+    "aboriginal"
+   ],
+   "deriv": [],
+   "roots": [
+    "indi(=안에서) + gignere(=낳다) → 그 땅에서 태어난"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "abate",
+   "ipa": "/əˈbeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "약해지다, 완화되다, 누그러지다",
+     "ex": "As the storm finally abated, researchers were able to resume their measurements of the coastal erosion.",
+     "tr": "폭풍이 마침내 약해지자 연구자들은 해안 침식 측정을 재개할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "subside",
+    "diminish",
+    "let up"
+   ],
+   "deriv": [
+    "abatement (n) 감소, 완화"
+   ],
+   "roots": [
+    "a(=to) + battre(=beat) → 두들겨 약하게 하다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "abdicate",
+   "ipa": "/ˈæbdɪkeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "퇴위하다, (권리·책임을) 포기하다",
+     "ex": "The aging monarch chose to abdicate the throne rather than plunge the realm into a succession crisis.",
+     "tr": "노쇠한 군주는 왕국을 계승 위기에 빠뜨리기보다 왕위에서 퇴위하기로 택했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "renounce",
+    "step down",
+    "relinquish"
+   ],
+   "deriv": [
+    "abdication (n) 퇴위, 포기"
+   ],
+   "roots": [
+    "ab(=away) + dicare(=선언하다) → 물러남을 선언하다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "absolution",
+   "ipa": "/ˌæbsəˈluːʃn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "사면, 죄 사함, 면죄",
+     "ex": "In medieval theology, absolution could be granted only after the penitent had confessed and shown genuine contrition.",
+     "tr": "중세 신학에서 사면은 참회자가 고백하고 진정한 뉘우침을 보인 뒤에야 주어질 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "pardon",
+    "forgiveness",
+    "remission"
+   ],
+   "deriv": [
+    "absolve (v) 사면하다, 면제하다"
+   ],
+   "roots": [
+    "ab(=away) + solvere(=풀다) → 죄를 풀어 놓다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "abyssal",
+   "ipa": "/əˈbɪsl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "심해의, 심연의",
+     "ex": "Life on the abyssal plain endures crushing pressure and perpetual darkness far below the reach of sunlight.",
+     "tr": "심해 평원의 생명체는 햇빛이 닿지 못하는 깊은 곳에서 짓누르는 압력과 영원한 어둠을 견딘다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "deep-sea",
+    "bottomless",
+    "unfathomable"
+   ],
+   "deriv": [
+    "abyss (n) 심연, 나락"
+   ],
+   "roots": [
+    "a(=없는) + byssos(=바닥) → 바닥이 없는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "환경",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "accrete",
+   "ipa": "/əˈkriːt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "강착하다, 부착하여 점점 커지다",
+     "ex": "In the early solar system, dust grains gradually accreted into the planetesimals that would become planets.",
+     "tr": "초기 태양계에서 먼지 입자들은 점차 강착하여 행성이 될 미행성체를 이루었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "accumulate",
+    "aggregate",
+    "build up"
+   ],
+   "deriv": [
+    "accretion (n) 강착, 부착 증가"
+   ],
+   "roots": [
+    "ad(=to) + crescere(=자라다) → 붙어서 자라다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acculturate",
+   "ipa": "/əˈkʌltʃəreɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "(다른) 문화에 적응시키다, 문화적으로 동화하다",
+     "ex": "Immigrant children often acculturate more rapidly than their parents, absorbing the host language and customs at school.",
+     "tr": "이민자 자녀들은 학교에서 현지 언어와 관습을 흡수하며 부모보다 더 빠르게 문화에 적응하는 경우가 많다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "assimilate",
+    "adapt",
+    "integrate"
+   ],
+   "deriv": [
+    "acculturation (n) 문화 적응"
+   ],
+   "roots": [
+    "ad(=to) + cultura(=경작, 문화) → 문화 쪽으로 이끌다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "사회",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acquittal",
+   "ipa": "/əˈkwɪtl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "무죄 판결, 방면",
+     "ex": "The jury returned an acquittal after concluding that the prosecution had failed to prove guilt beyond a reasonable doubt.",
+     "tr": "배심원단은 검찰이 합리적 의심의 여지 없이 유죄를 입증하지 못했다고 판단한 뒤 무죄 판결을 내렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "exoneration",
+    "clearing",
+    "discharge"
+   ],
+   "deriv": [
+    "acquit (v) 무죄를 선고하다"
+   ],
+   "roots": [
+    "ad(=to) + quitare(=풀어 주다) → 혐의에서 풀어 주다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acrid",
+   "ipa": "/ˈækrɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "(맛·냄새가) 자극적인, 매캐한",
+     "ex": "The acrid fumes released during combustion warned chemists that the reaction was producing toxic byproducts.",
+     "tr": "연소 중 방출된 매캐한 연기는 그 반응이 독성 부산물을 만들어 내고 있음을 화학자들에게 경고했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "pungent",
+    "bitter",
+    "harsh"
+   ],
+   "deriv": [
+    "acridity (n) 자극성"
+   ],
+   "roots": [
+    "acer(=날카로운, 매운) → 코를 찌르는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "화학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "actuary",
+   "ipa": "/ˈæktʃueri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "보험 계리사",
+     "ex": "An actuary uses probability models to estimate how much an insurer must charge to remain solvent over decades.",
+     "tr": "보험 계리사는 보험사가 수십 년간 지급 능력을 유지하려면 얼마를 청구해야 하는지 확률 모형으로 추정한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "risk analyst",
+    "statistician"
+   ],
+   "deriv": [
+    "actuarial (adj) 보험 계리의"
+   ],
+   "roots": [
+    "actuarius(=회계 담당자) → 장부를 다루는 사람"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "경제",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "actuator",
+   "ipa": "/ˈæktʃueɪtər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "작동기, 구동 장치",
+     "ex": "The robotic arm relies on a hydraulic actuator to convert fluid pressure into precise mechanical motion.",
+     "tr": "그 로봇 팔은 유체 압력을 정밀한 기계적 운동으로 바꾸기 위해 유압 작동기에 의존한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "driver",
+    "motor",
+    "activating device"
+   ],
+   "deriv": [
+    "actuate (v) 작동시키다"
+   ],
+   "roots": [
+    "actus(=행위) + -ator(=~하는 것) → 움직이게 하는 장치"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "공학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "acumen",
+   "ipa": "/ˈækjəmən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "통찰력, 예리함, 명민함",
+     "ex": "The editor was praised for the critical acumen with which she distinguished rigorous scholarship from mere speculation.",
+     "tr": "그 편집자는 엄정한 학문과 단순한 억측을 구별해 내는 비평적 통찰력으로 찬사를 받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "insight",
+    "shrewdness",
+    "keenness"
+   ],
+   "deriv": [],
+   "roots": [
+    "acuere(=날카롭게 하다) → 예리한 판단력"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "교육미디어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "adenosine",
+   "ipa": "/əˈdenəsiːn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "아데노신 (뉴클레오사이드의 일종)",
+     "ex": "Adenosine forms the backbone of ATP, the molecule that stores and transfers energy within living cells.",
+     "tr": "아데노신은 살아 있는 세포 안에서 에너지를 저장하고 전달하는 분자인 ATP의 골격을 이룬다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "생명과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "adrenal",
+   "ipa": "/əˈdriːnl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "부신의, 신장 부근의",
+     "ex": "The adrenal glands release cortisol in response to stress, preparing the body to confront perceived threats.",
+     "tr": "부신은 스트레스에 반응하여 코르티솔을 분비함으로써 인지된 위협에 맞설 수 있도록 몸을 준비시킨다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "adrenaline (n) 아드레날린"
+   ],
+   "roots": [
+    "ad(=near) + renes(=신장) → 신장 곁에 있는"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "의학건강",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "adulteration",
+   "ipa": "/əˌdʌltəˈreɪʃn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불순물 섞기, (식품 등의) 변조",
+     "ex": "Regulators tightened inspections after the adulteration of milk with cheap fillers sickened thousands of consumers.",
+     "tr": "값싼 충전제를 우유에 섞는 불순물 혼입으로 수천 명의 소비자가 병에 걸리자 규제 당국은 검사를 강화했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "contamination",
+    "tampering",
+    "debasement"
+   ],
+   "deriv": [
+    "adulterate (v) 불순물을 섞다"
+   ],
+   "roots": [
+    "ad(=to) + alter(=다른 것) → 다른 것을 섞어 변질시키다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "농업산업",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "aerodynamics",
+   "ipa": "/ˌeroʊdaɪˈnæmɪks/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공기역학",
+     "ex": "Engineers study aerodynamics to understand how air flows around a wing and generates the lift needed for flight.",
+     "tr": "공학자들은 공기가 날개 주위로 어떻게 흐르며 비행에 필요한 양력을 만들어 내는지 이해하기 위해 공기역학을 연구한다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "aerodynamic (adj) 공기역학적인"
+   ],
+   "roots": [
+    "aero(=공기) + dynamis(=힘) → 공기의 힘에 관한 학문"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "물리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "affect",
+   "ipa": "/ˈæfekt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(심리학) 정서, 감정 상태, 정동",
+     "ex": "Clinicians noted that the patient displayed a flat affect, showing little emotional response even to distressing news.",
+     "tr": "임상의들은 그 환자가 괴로운 소식에도 감정적 반응을 거의 보이지 않는 둔마된 정서를 나타낸다고 기록했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "emotion",
+    "mood",
+    "feeling"
+   ],
+   "deriv": [
+    "affective (adj) 정서적인"
+   ],
+   "roots": [
+    "ad(=to) + facere(=하다) → 마음에 작용하는 상태"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "alcove",
+   "ipa": "/ˈælkoʊv/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "벽감, (벽이 움푹 들어간) 후미진 공간",
+     "ex": "The library was designed with quiet alcoves where scholars could examine rare manuscripts undisturbed.",
+     "tr": "그 도서관은 학자들이 방해받지 않고 희귀 필사본을 살펴볼 수 있는 조용한 벽감 공간을 갖추도록 설계되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "recess",
+    "nook",
+    "niche"
+   ],
+   "deriv": [],
+   "roots": [
+    "al-qubba(=아랍어 둥근 방) → 움푹한 공간"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "alliteration",
+   "ipa": "/əˌlɪtəˈreɪʃn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "두운 (같은 자음의 반복)",
+     "ex": "Old English poetry relied on alliteration, binding a line together through the repetition of initial consonant sounds.",
+     "tr": "고대 영시는 첫 자음의 반복을 통해 한 행을 묶어 주는 두운에 의존했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "consonance",
+    "initial rhyme"
+   ],
+   "deriv": [
+    "alliterative (adj) 두운의"
+   ],
+   "roots": [
+    "ad(=to) + littera(=문자) → 같은 글자를 잇대는 것"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "alluvial",
+   "ipa": "/əˈluːviəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "충적의, (강물이) 흙을 실어 쌓은",
+     "ex": "The fertile alluvial soil deposited by seasonal floods made the river valley ideal for early agriculture.",
+     "tr": "계절적 홍수가 실어다 쌓은 비옥한 충적토는 그 강 유역을 초기 농업에 이상적인 곳으로 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sedimentary",
+    "deposited"
+   ],
+   "deriv": [
+    "alluvium (n) 충적층"
+   ],
+   "roots": [
+    "ad(=to) + luere(=씻다) → 물에 씻겨 쌓인"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "지구과학",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "anonymize",
+   "ipa": "/əˈnɒnɪmaɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "익명화하다, 신원 정보를 제거하다",
+     "ex": "Before releasing the dataset, researchers must anonymize the records so that individual participants cannot be identified.",
+     "tr": "데이터셋을 공개하기 전에 연구자들은 개별 참가자가 식별될 수 없도록 기록을 익명화해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "de-identify",
+    "mask"
+   ],
+   "deriv": [
+    "anonymization (n) 익명화"
+   ],
+   "roots": [
+    "an(=없는) + onyma(=이름) → 이름을 없애다"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "기술컴퓨팅",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "arbitrarily",
+   "ipa": "/ˌɑːrbɪˈtrerəli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "임의로, 자의적으로",
+     "ex": "To avoid bias, subjects were not selected arbitrarily but assigned to groups through a randomized procedure.",
+     "tr": "편향을 피하기 위해 피험자들은 임의로 선정되지 않고 무작위 절차를 통해 집단에 배정되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "randomly",
+    "capriciously",
+    "at will"
+   ],
+   "deriv": [
+    "arbitrary (adj) 임의의, 자의적인"
+   ],
+   "roots": [
+    "arbiter(=재량으로 판단하는 자) → 마음대로"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "연구방법",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "aria",
+   "ipa": "/ˈɑːriə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "아리아 (오페라의 독창곡)",
+     "ex": "The soprano's aria brought the drama to a standstill, allowing a single character to voice her inner turmoil.",
+     "tr": "그 소프라노의 아리아는 극의 흐름을 잠시 멈추게 하여 한 인물이 자신의 내적 갈등을 토로하도록 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "solo",
+    "air"
+   ],
+   "deriv": [],
+   "roots": [
+    "aria(=이탈리아어 공기, 선율) → 독창 선율"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "음악공연",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "asymptote",
+   "ipa": "/ˈæsɪmptoʊt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "점근선",
+     "ex": "As the value of x grows without bound, the curve draws ever closer to its asymptote but never quite touches it.",
+     "tr": "x의 값이 무한히 커질수록 그 곡선은 점근선에 점점 더 가까워지지만 결코 닿지는 않는다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "asymptotic (adj) 점근적인"
+   ],
+   "roots": [
+    "a(=않는) + syn(=함께) + piptein(=떨어지다) → 만나지 않는 선"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "수학통계",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "chiaroscuro",
+   "ipa": "/kiˌɑːrəˈskjʊəroʊ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "명암법 (빛과 그림자의 대비 기법)",
+     "ex": "Caravaggio's dramatic chiaroscuro carved his figures out of deep shadow with sharp, theatrical shafts of light.",
+     "tr": "카라바조의 극적인 명암법은 날카롭고 연극적인 빛줄기로 짙은 그림자 속에서 인물들을 도드라지게 새겨 냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "light-and-shade",
+    "tonal contrast"
+   ],
+   "deriv": [],
+   "roots": [
+    "chiaro(=밝은) + scuro(=어두운) → 밝음과 어둠"
+   ],
+   "etymHint": "",
+   "level": "C2",
+   "topic": "미술",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }

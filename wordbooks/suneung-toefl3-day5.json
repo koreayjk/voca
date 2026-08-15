@@ -1,607 +1,1437 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 5,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 5,
+ "words": [
+  {
+   "en": "derivative",
+   "ipa": "/dɪˈrɪvətɪv/",
+   "pos": "n",
+   "meanings": [
     {
-      "en": "basilica",
-      "ipa": "/bəˈzɪlɪkə/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "바실리카 (긴 회랑형 대성당·공회당)", "ex": "The Roman basilica, with its long central nave flanked by aisles, later became the model for Christian churches.", "tr": "긴 중앙 신랑과 그 양옆의 측랑을 갖춘 로마의 바실리카는 훗날 기독교 교회의 본보기가 되었다.", "src": "" }
-      ],
-      "syn": ["cathedral", "great church"],
-      "deriv": [],
-      "roots": ["basileus(=왕) → 본래 왕의 회랑, 큰 공회당"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cryptic",
-      "ipa": "/ˈkrɪptɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "수수께끼 같은, 뜻이 숨겨진", "ex": "The poem's cryptic final line has invited centuries of conflicting interpretations from its readers.", "tr": "그 시의 수수께끼 같은 마지막 행은 수 세기 동안 독자들로부터 상충하는 해석을 불러왔다.", "src": "" }
-      ],
-      "syn": ["enigmatic", "obscure", "puzzling"],
-      "deriv": [],
-      "roots": ["kryptos(=숨은) → 뜻이 감춰진"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cementation",
-      "ipa": "/ˌsiːmenˈteɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(지질) 고결 작용 (광물이 퇴적물 알갱이를 붙여 굳힘)", "ex": "Cementation binds loose grains of sand into solid rock as minerals precipitate in the spaces between them.", "tr": "고결 작용은 알갱이 사이 공간에 광물이 침전되면서 느슨한 모래 알갱이를 단단한 암석으로 붙여 굳힌다.", "src": "" }
-      ],
-      "syn": ["consolidation"],
-      "deriv": ["cement (v) 접합시키다, 굳히다"],
-      "roots": ["caementum(=자갈, 굳히는 재료) → 알갱이를 붙여 굳힘"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cybernetic",
-      "ipa": "/ˌsaɪbərˈnetɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "인공두뇌학의, 제어·통신 이론의", "ex": "A cybernetic system uses feedback to compare its output with a goal and adjust its behavior automatically.", "tr": "인공두뇌 시스템은 피드백을 이용해 자신의 출력을 목표와 비교하고 그 동작을 자동으로 조정한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["cybernetics (n) 인공두뇌학"],
-      "roots": ["kybernetes(=키잡이) → 제어에 관한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "replicability",
-      "ipa": "/ˌreplɪkəˈbɪləti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "반복 가능성 (같은 방법으로 같은 결과를 얻을 수 있음)", "ex": "The replicability of a finding is tested when independent labs repeat the procedure and obtain the same result.", "tr": "어떤 발견의 반복 가능성은 독립된 실험실들이 그 절차를 되풀이하여 같은 결과를 얻을 때 검증된다.", "src": "" }
-      ],
-      "syn": ["reproducibility", "repeatability"],
-      "deriv": ["replicable (adj) 반복 가능한"],
-      "roots": ["replicare(=되풀이하다) → 되풀이할 수 있음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "crescendo",
-      "ipa": "/krəˈʃendoʊ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(음악) 점점 세게, 점강 (음량이 점점 커짐), 절정", "ex": "The orchestra built to a thunderous crescendo before falling abruptly into silence.", "tr": "관현악단은 우레와 같은 절정으로 소리를 키워 올린 뒤 갑작스레 침묵으로 내려앉았다.", "src": "" }
-      ],
-      "syn": ["buildup", "climax"],
-      "deriv": [],
-      "roots": ["crescere(=자라다) → 점점 커짐"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "estimator",
-      "ipa": "/ˈestɪmeɪtər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(통계) 추정량, 추정치를 계산하는 규칙", "ex": "The sample mean is an unbiased estimator of the population mean, centering on the true value over many samples.", "tr": "표본 평균은 모평균의 불편 추정량으로, 여러 표본에 걸쳐 참값을 중심으로 분포한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["estimate (v) 추정하다"],
-      "roots": ["aestimare(=값을 매기다) → 값을 추정하는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "finesse",
-      "ipa": "/fɪˈnes/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "섬세함, 정교한 솜씨, 노련함", "ex": "The restorer worked with such finesse that the retouched areas were indistinguishable from the original paint.", "tr": "그 복원가는 매우 섬세한 솜씨로 작업하여 덧칠한 부분이 원래 물감과 구별되지 않았다.", "src": "" }
-      ],
-      "syn": ["skill", "delicacy", "refinement"],
-      "deriv": [],
-      "roots": ["fin(=섬세한, 정제된) → 정교한 솜씨"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "allegiance",
-      "ipa": "/əˈliːdʒəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "충성, 지지, 충절", "ex": "Scholars debated whether the medieval oath bound a vassal's allegiance to the king or merely to the local lord.", "tr": "학자들은 그 중세의 서약이 봉신의 충성을 왕에게 묶었는지 아니면 그저 지역 영주에게만 묶었는지를 두고 논쟁했다.", "src": "" }
-      ],
-      "syn": ["loyalty", "fidelity", "devotion"],
-      "deriv": [],
-      "roots": ["ad(=to) + ligare(=묶다) → ~에 묶인 충성"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "chieftain",
-      "ipa": "/ˈtʃiːftən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "족장, 부족장, 우두머리", "ex": "Each clan followed its own chieftain, whose authority rested on kinship and success in war rather than written law.", "tr": "각 씨족은 자기 족장을 따랐는데, 그 권위는 성문법이 아니라 혈연과 전쟁에서의 성공에 기반했다.", "src": "" }
-      ],
-      "syn": ["chief", "leader", "headman"],
-      "deriv": [],
-      "roots": ["caput(=머리) → 무리의 우두머리"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cleric",
-      "ipa": "/ˈklerɪk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "성직자", "ex": "In many medieval societies a cleric was among the few who could read, giving the church a monopoly on learning.", "tr": "많은 중세 사회에서 성직자는 글을 읽을 수 있는 소수에 속했고, 이는 교회에 학문의 독점을 안겨 주었다.", "src": "" }
-      ],
-      "syn": ["clergyman", "priest", "minister"],
-      "deriv": ["clerical (adj) 성직자의"],
-      "roots": ["klerikos(=성직자) → 교회에 속한 사람"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "biomagnification",
-      "ipa": "/ˌbaɪoʊˌmæɡnɪfɪˈkeɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "생물 농축, 생물 확대 (먹이 사슬을 따라 독성 물질이 축적됨)", "ex": "Through biomagnification, mercury became far more concentrated in the top predators than in the fish they ate.", "tr": "생물 농축을 통해 수은은 최상위 포식자에게서 그들이 먹은 물고기보다 훨씬 더 높은 농도로 축적되었다.", "src": "" }
-      ],
-      "syn": ["bioamplification"],
-      "deriv": [],
-      "roots": ["bio(=생명) + magnificare(=크게 하다) → 생물체 안에서 농축이 커짐"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "astrobiology",
-      "ipa": "/ˌæstroʊbaɪˈɒlədʒi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "우주 생물학 (외계 생명의 가능성을 연구하는 학문)", "ex": "Astrobiology asks whether the conditions that gave rise to life on Earth might exist elsewhere in the universe.", "tr": "우주 생물학은 지구에서 생명을 일으킨 조건이 우주의 다른 곳에도 존재할 수 있는지를 묻는다.", "src": "" }
-      ],
-      "syn": ["exobiology"],
-      "deriv": [],
-      "roots": ["astron(=별) + bios(=생명) + logos(=학문) → 우주 생명을 다루는 학문"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cohabitation",
-      "ipa": "/koʊˌhæbɪˈteɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "동거 (결혼하지 않고 함께 삶)", "ex": "Sociologists tracked the rise of cohabitation as more couples chose to live together before, or instead of, marrying.", "tr": "사회학자들은 더 많은 커플이 결혼 전에, 또는 결혼 대신 함께 사는 쪽을 택하면서 동거가 증가하는 것을 추적했다.", "src": "" }
-      ],
-      "syn": ["living together"],
-      "deriv": ["cohabit (v) 동거하다"],
-      "roots": ["co(=함께) + habitare(=살다) → 함께 삶"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "autocrat",
-      "ipa": "/ˈɔːtəkræt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "독재자, 전제 군주", "ex": "The autocrat silenced the press and ruled by decree, brooking no challenge to his personal authority.", "tr": "그 독재자는 언론을 침묵시키고 칙령으로 통치하며 자신의 개인적 권위에 대한 어떤 도전도 용납하지 않았다.", "src": "" }
-      ],
-      "syn": ["dictator", "despot", "tyrant"],
-      "deriv": ["autocratic (adj) 독재적인"],
-      "roots": ["autos(=스스로) + kratos(=지배) → 혼자 지배하는 자"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "enthalpy",
-      "ipa": "/ˈenθəlpi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "엔탈피 (일정 압력에서 계가 지닌 총 열함량)", "ex": "The reaction releases heat, so the enthalpy of the products is lower than that of the reactants.", "tr": "그 반응은 열을 방출하므로 생성물의 엔탈피는 반응물의 엔탈피보다 낮다.", "src": "" }
-      ],
-      "syn": ["heat content"],
-      "deriv": [],
-      "roots": ["en(=안에) + thalpein(=데우다) → 안에 담긴 열"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "collateralize",
-      "ipa": "/kəˈlætərəlaɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "담보로 제공하다, 담보를 잡히다", "ex": "The firm collateralized the loan with its factory, pledging the property should it fail to repay.", "tr": "그 회사는 상환하지 못할 경우 그 부동산을 넘긴다는 조건으로 공장을 담보로 잡혀 대출을 받았다.", "src": "" }
-      ],
-      "syn": ["secure", "pledge"],
-      "deriv": ["collateral (n) 담보"],
-      "roots": ["con(=함께) + lateralis(=옆의) → 옆에 담보로 붙임"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "entropy",
-      "ipa": "/ˈentrəpi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "엔트로피 (무질서·무작위성의 척도)", "ex": "The second law of thermodynamics states that the entropy of an isolated system can only increase over time.", "tr": "열역학 제2법칙은 고립계의 엔트로피가 시간이 지남에 따라 증가할 수밖에 없다고 말한다.", "src": "" }
-      ],
-      "syn": ["disorder", "randomness"],
-      "deriv": [],
-      "roots": ["en(=안에) + trope(=변화) → 계 안의 무질서 정도"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "edification",
-      "ipa": "/ˌedɪfɪˈkeɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "교화, 계발, (도덕적·지적) 함양", "ex": "The lectures were offered for the edification of the public, aiming to raise general understanding of science.", "tr": "그 강연들은 과학에 대한 일반적 이해를 높이려는 목적에서 대중의 계발을 위해 제공되었다.", "src": "" }
-      ],
-      "syn": ["enlightenment", "instruction"],
-      "deriv": ["edify (v) 교화하다"],
-      "roots": ["aedificare(=세우다, 짓다) → 정신을 세워 올림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "anaerobic",
-      "ipa": "/ˌæneˈroʊbɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "혐기성의, 산소 없이 사는", "ex": "Anaerobic bacteria thrive in the oxygen-free mud at the bottom of the marsh, breaking down organic matter.", "tr": "혐기성 세균은 습지 바닥의 산소가 없는 진흙 속에서 번성하며 유기물을 분해한다.", "src": "" }
-      ],
-      "syn": ["oxygen-free"],
-      "deriv": [],
-      "roots": ["an(=없는) + aer(=공기) + bios(=생명) → 산소 없이 사는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "catheter",
-      "ipa": "/ˈkæθɪtər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "카테터, 도관 (체내에 삽입하는 가는 관)", "ex": "The surgeon threaded a thin catheter through the artery to reach the blockage deep within the heart.", "tr": "그 외과의는 심장 깊숙한 곳의 막힌 부위에 이르기 위해 동맥을 통해 가느다란 카테터를 밀어 넣었다.", "src": "" }
-      ],
-      "syn": ["tube"],
-      "deriv": [],
-      "roots": ["kathienai(=아래로 넣다) → 몸 안으로 넣는 관"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "husbandry",
-      "ipa": "/ˈhʌzbəndri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "사육, 농업 경영, (자원의) 알뜰한 관리", "ex": "Careful animal husbandry, including selective breeding and disease control, steadily improved the quality of the herd.", "tr": "선택적 교배와 질병 관리를 아우르는 세심한 가축 사육은 그 무리의 품질을 꾸준히 향상시켰다.", "src": "" }
-      ],
-      "syn": ["farming", "stewardship"],
-      "deriv": [],
-      "roots": ["husband(=농사 짓는 사람) + -ry → 농사·사육의 일"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "centrifugal",
-      "ipa": "/senˈtrɪfjəɡl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "원심의, 중심에서 멀어지려는", "ex": "As the drum spins, the centrifugal effect flings the wet clothes outward against its perforated wall.", "tr": "드럼이 회전하면 원심 효과가 젖은 옷을 바깥쪽으로 밀어 구멍 뚫린 벽에 밀착시킨다.", "src": "" }
-      ],
-      "syn": ["outward-directed"],
-      "deriv": [],
-      "roots": ["centrum(=중심) + fugere(=달아나다) → 중심에서 달아나는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cathartic",
-      "ipa": "/kəˈθɑːrtɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "카타르시스의, (감정을) 정화하는", "ex": "Writing about the loss proved cathartic, allowing her to release feelings she had long suppressed.", "tr": "그 상실에 대해 글을 쓰는 일은 정화의 효과가 있어, 그녀가 오래 억눌러 온 감정을 풀어낼 수 있게 했다.", "src": "" }
-      ],
-      "syn": ["purgative", "purifying"],
-      "deriv": ["catharsis (n) 카타르시스"],
-      "roots": ["katharsis(=정화) → 감정을 씻어 내는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bastion",
-      "ipa": "/ˈbæstiən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "보루, 요새, (사상 등의) 아성", "ex": "The fortified bastion projected from the wall, letting defenders fire along the flanks of any attacking force.", "tr": "성벽에서 돌출된 그 보루는 수비병들이 공격 부대의 측면을 따라 사격할 수 있게 해 주었다.", "src": "" }
-      ],
-      "syn": ["stronghold", "fortress", "rampart"],
-      "deriv": [],
-      "roots": ["bastir(=짓다) → 견고하게 지은 방어 시설"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "declension",
-      "ipa": "/dɪˈklenʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(문법) 격변화, 곡용 (명사·형용사의 어형 변화)", "ex": "Latin nouns follow a system of declension, changing their endings to mark case, number, and gender.", "tr": "라틴어 명사는 격, 수, 성을 표시하기 위해 어미를 바꾸는 격변화 체계를 따른다.", "src": "" }
-      ],
-      "syn": ["inflection"],
-      "deriv": ["decline (v) 격변화하다"],
-      "roots": ["de(=아래로) + clinare(=기울다) → 어형이 기울어 변함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cleavage",
-      "ipa": "/ˈkliːvɪdʒ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(광물의) 벽개 (일정한 면을 따라 쪼개지는 성질)", "ex": "Mica shows perfect cleavage, splitting into thin, flat sheets along a single plane of weakness.", "tr": "운모는 하나의 취약면을 따라 얇고 평평한 판으로 갈라지는 완전한 벽개를 보인다.", "src": "" }
-      ],
-      "syn": ["splitting", "fracture plane"],
-      "deriv": ["cleave (v) 쪼개다"],
-      "roots": ["cleofan(=쪼개다) → 갈라지는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "decompression",
-      "ipa": "/ˌdiːkəmˈpreʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "압축 해제, (압력의) 감압", "ex": "The program restores the original file through decompression, expanding the packed data back to its full size.", "tr": "그 프로그램은 압축 해제를 통해 원본 파일을 복원하여 압축된 데이터를 원래 크기로 되돌린다.", "src": "" }
-      ],
-      "syn": ["unpacking", "expansion"],
-      "deriv": ["decompress (v) 압축을 풀다"],
-      "roots": ["de(=반대) + comprimere(=압축하다) → 압축을 되돌림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "reproducibility",
-      "ipa": "/ˌriːprəˌduːsəˈbɪləti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "재현성 (다른 조건에서도 결과를 다시 얻을 수 있음)", "ex": "Concerns about reproducibility grew when many published experiments could not be repeated by other researchers.", "tr": "많은 발표된 실험이 다른 연구자들에 의해 되풀이될 수 없자 재현성에 대한 우려가 커졌다.", "src": "" }
-      ],
-      "syn": ["replicability", "repeatability"],
-      "deriv": ["reproducible (adj) 재현 가능한"],
-      "roots": ["re(=다시) + producere(=만들어 내다) → 다시 만들어 낼 수 있음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "crooner",
-      "ipa": "/ˈkruːnər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "저음으로 부드럽게 노래하는 가수", "ex": "Backed by a soft orchestra, the crooner delivered each ballad in a low, intimate voice close to the microphone.", "tr": "부드러운 관현악을 배경으로 그 저음 가수는 마이크에 바짝 붙어 낮고 친밀한 목소리로 발라드를 한 곡씩 불렀다.", "src": "" }
-      ],
-      "syn": ["balladeer"],
-      "deriv": ["croon (v) 낮게 흥얼거리다"],
-      "roots": ["kronen(=중얼거리다) → 낮게 흥얼대는 가수"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "factorial",
-      "ipa": "/fækˈtɔːriəl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(수학) 계승, 팩토리얼 (1부터 그 수까지의 곱)", "ex": "The factorial of five, written five with an exclamation mark, equals one hundred twenty.", "tr": "5의 계승은 느낌표를 붙여 표기하며 120과 같다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["factorial (adj) 계승의"],
-      "roots": ["factor(=인수) → 연속한 인수들의 곱"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "foreshortening",
-      "ipa": "/fɔːrˈʃɔːrtnɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(미술) 단축법 (원근에 따라 형태를 짧게 그리는 기법)", "ex": "Through foreshortening, the painter made the outstretched arm seem to jut sharply toward the viewer.", "tr": "단축법을 통해 그 화가는 뻗은 팔이 보는 이를 향해 날카롭게 튀어나오는 것처럼 보이게 했다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["foreshorten (v) 단축법으로 그리다"],
-      "roots": ["fore(=앞) + shorten(=짧게 하다) → 앞으로 짧아 보이게 그림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "allude",
-      "ipa": "/əˈluːd/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "넌지시 언급하다, 암시하다 (to)", "ex": "The author never names the war directly but alludes to it through scattered images of ruined cities.", "tr": "그 작가는 전쟁을 직접 언급하지는 않지만 폐허가 된 도시의 흩어진 이미지를 통해 그것을 넌지시 암시한다.", "src": "" }
-      ],
-      "syn": ["hint at", "refer to", "intimate"],
-      "deriv": ["allusion (n) 암시, 인유"],
-      "roots": ["ad(=to) + ludere(=놀다) → 넌지시 빗대어 말하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "chronicler",
-      "ipa": "/ˈkrɒnɪklər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "연대기 작가, 기록자", "ex": "The medieval chronicler recorded each year's harvests, battles, and royal deaths in careful sequence.", "tr": "그 중세 연대기 작가는 해마다의 수확, 전투, 왕의 죽음을 세심한 순서로 기록했다.", "src": "" }
-      ],
-      "syn": ["annalist", "recorder", "historian"],
-      "deriv": ["chronicle (n) 연대기"],
-      "roots": ["chronos(=시간) → 시간 순으로 기록하는 사람"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "damnation",
-      "ipa": "/dæmˈneɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "저주, 지옥살이, 영벌", "ex": "The preacher warned that unrepented sin led not to mere punishment but to eternal damnation.", "tr": "그 설교자는 회개하지 않은 죄가 단순한 벌이 아니라 영원한 영벌로 이어진다고 경고했다.", "src": "" }
-      ],
-      "syn": ["condemnation", "perdition"],
-      "deriv": ["damn (v) 저주하다"],
-      "roots": ["damnare(=단죄하다) → 지옥에 처함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "carbonic",
-      "ipa": "/kɑːrˈbɒnɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "탄산의, 탄소의", "ex": "When carbon dioxide dissolves in rain, it forms carbonic acid that slowly dissolves exposed limestone.", "tr": "이산화탄소가 빗물에 녹으면 탄산을 형성하여 노출된 석회암을 서서히 녹인다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["carbo(=숯, 탄소) → 탄소를 함유한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "astrometry",
-      "ipa": "/əˈstrɒmətri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "위치 천문학 (천체의 위치와 운동을 정밀 측정하는 분야)", "ex": "Precise astrometry can reveal a hidden planet by measuring the tiny wobble it induces in its parent star.", "tr": "정밀한 위치 천문학은 행성이 모항성에 일으키는 미세한 흔들림을 측정하여 숨은 행성을 드러낼 수 있다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["astron(=별) + metron(=측정) → 별의 위치를 재는 학문"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cohesiveness",
-      "ipa": "/koʊˈhiːsɪvnəs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "응집성, 결속력", "ex": "Shared rituals strengthened the group's cohesiveness, binding its members through a common sense of identity.", "tr": "공유된 의례는 집단의 응집성을 강화하여 구성원들을 공통의 정체성으로 묶어 주었다.", "src": "" }
-      ],
-      "syn": ["solidarity", "unity", "togetherness"],
-      "deriv": ["cohesive (adj) 응집력 있는"],
-      "roots": ["co(=함께) + haerere(=붙다) → 함께 달라붙는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bipartisan",
-      "ipa": "/baɪˈpɑːrtɪzn/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "초당적인, 양당이 협력하는", "ex": "The reform passed with rare bipartisan support, winning votes from both major parties in the legislature.", "tr": "그 개혁은 입법부의 양대 정당 모두에서 표를 얻으며 보기 드문 초당적 지지로 통과되었다.", "src": "" }
-      ],
-      "syn": ["cross-party"],
-      "deriv": [],
-      "roots": ["bi(=둘) + partis(=당) → 두 정당의"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dipole",
-      "ipa": "/ˈdaɪpoʊl/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "쌍극자 (크기가 같고 부호가 반대인 두 전하의 쌍)", "ex": "The uneven sharing of electrons gives the water molecule a dipole, with one end slightly positive and the other negative.", "tr": "전자의 불균등한 공유는 물 분자에 한쪽 끝이 약간 양전하이고 다른 쪽이 음전하인 쌍극자를 만든다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["dipolar (adj) 쌍극자의"],
-      "roots": ["di(=둘) + polos(=극) → 두 극을 가진 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "n",
+     "ko": "파생물, 파생어",
+     "ex": "Aspirin is a derivative of a compound found in willow bark.",
+     "tr": "아스피린은 버드나무 껍질에서 발견되는 화합물의 파생물이다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "by-product",
+    "offshoot"
+   ],
+   "deriv": [
+    "derive (v) 유래하다",
+    "derivation (n) 유래"
+   ],
+   "roots": [
+    "de(=아래로) + rivus(=물줄기) → 끌어내어 나온 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "designate",
+   "ipa": "/ˈdezɪɡneɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "지정하다, 명명하다",
+     "ex": "The region was later designated a protected wildlife reserve.",
+     "tr": "그 지역은 후에 보호 야생 동물 보호구역으로 지정되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "appoint",
+    "specify",
+    "assign"
+   ],
+   "deriv": [
+    "designation (n) 지정, 명칭"
+   ],
+   "roots": [
+    "de(=완전히) + signare(=표시하다) → 표시하여 정하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deter",
+   "ipa": "/dɪˈtɜː/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "단념시키다, 억제하다",
+     "ex": "High tariffs were meant to deter foreign competitors from entering the market.",
+     "tr": "높은 관세는 외국 경쟁자들이 시장에 진입하는 것을 단념시키기 위한 것이었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "discourage",
+    "prevent",
+    "dissuade"
+   ],
+   "deriv": [
+    "deterrent (n) 억제책",
+    "deterrence (n) 억제"
+   ],
+   "roots": [
+    "de(=떨어져) + terrere(=겁주다) → 겁을 주어 못하게 하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deterrent",
+   "ipa": "/dɪˈterənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "억제책, 제지 수단",
+     "ex": "The threat of heavy fines acts as a deterrent against illegal dumping.",
+     "tr": "무거운 벌금의 위협은 불법 투기에 대한 억제책으로 작용한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "disincentive",
+    "discouragement"
+   ],
+   "deriv": [
+    "deter (v) 억제하다"
+   ],
+   "roots": [
+    "de(=떨어져) + terrere(=겁주다) → 겁주어 막는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "detrimental",
+   "ipa": "/ˌdetrɪˈmentəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "해로운",
+     "ex": "Excessive exposure to noise can be detrimental to concentration.",
+     "tr": "과도한 소음 노출은 집중력에 해로울 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "harmful",
+    "damaging",
+    "adverse"
+   ],
+   "deriv": [
+    "detriment (n) 손해"
+   ],
+   "roots": [
+    "de(=완전히) + terere(=닳게 하다) → 닳게 하여 해로운"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deviate",
+   "ipa": "/ˈdiːvieɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "벗어나다, 일탈하다",
+     "ex": "The results deviate sharply from what the theory predicts.",
+     "tr": "그 결과는 이론이 예측하는 것에서 크게 벗어난다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "diverge",
+    "stray",
+    "depart"
+   ],
+   "deriv": [
+    "deviation (n) 일탈, 편차"
+   ],
+   "roots": [
+    "de(=벗어나) + via(=길) → 길에서 벗어나다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deviation",
+   "ipa": "/ˌdiːviˈeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "일탈, 편차",
+     "ex": "Any significant deviation from the norm was flagged for review.",
+     "tr": "기준에서 크게 벗어나는 편차는 모두 검토 대상으로 표시되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "divergence",
+    "departure",
+    "variance"
+   ],
+   "deriv": [
+    "deviate (v) 벗어나다"
+   ],
+   "roots": [
+    "de(=벗어나) + via(=길) → 길에서 벗어남"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "devise",
+   "ipa": "/dɪˈvaɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "고안하다",
+     "ex": "Engineers devised a clever method for filtering the contaminated water.",
+     "tr": "기술자들은 오염된 물을 여과하는 기발한 방법을 고안했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "invent",
+    "design",
+    "contrive"
+   ],
+   "deriv": [
+    "device (n) 장치, 고안물"
+   ],
+   "roots": [
+    "de(=따로) + videre(=나누어 살피다) → 궁리해 만들다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "diagnostic",
+   "ipa": "/ˌdaɪəɡˈnɒstɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "진단의, 진단용의",
+     "ex": "The test is a valuable diagnostic tool for detecting the disease early.",
+     "tr": "그 검사는 질병을 조기에 발견하는 귀중한 진단 도구이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "analytical",
+    "investigative"
+   ],
+   "deriv": [
+    "diagnose (v) 진단하다",
+    "diagnosis (n) 진단"
+   ],
+   "roots": [
+    "dia(=사이로) + gignoskein(=알다) → 꿰뚫어 알아내는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dictate",
+   "ipa": "/dɪkˈteɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "좌우하다, 결정짓다",
+     "ex": "Geography largely dictated where early cities could arise.",
+     "tr": "지리는 초기 도시가 어디에 생겨날 수 있었는지를 크게 좌우했다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "지시하다, 명령하다",
+     "ex": "The manager should not dictate every detail of the process.",
+     "tr": "관리자가 과정의 모든 세부 사항을 지시해서는 안 된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "determine",
+    "govern",
+    "impose"
+   ],
+   "deriv": [
+    "dictation (n) 받아쓰기",
+    "dictator (n) 독재자"
+   ],
+   "roots": [
+    "dicere(=말하다) → 말로 정하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "differentiation",
+   "ipa": "/ˌdɪfərenʃiˈeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "차별화, 구별, 분화",
+     "ex": "Cell differentiation allows a single embryo to form many tissue types.",
+     "tr": "세포 분화는 하나의 배아가 여러 조직 유형을 형성할 수 있게 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "distinction",
+    "specialization"
+   ],
+   "deriv": [
+    "differentiate (v) 구별하다"
+   ],
+   "roots": [
+    "dis(=따로) + ferre(=나르다) → 서로 다르게 함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "diffusion",
+   "ipa": "/dɪˈfjuːʒən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "확산, 보급",
+     "ex": "The diffusion of new farming techniques transformed rural economies.",
+     "tr": "새로운 농업 기술의 확산은 농촌 경제를 변모시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "spread",
+    "dispersal",
+    "dissemination"
+   ],
+   "deriv": [
+    "diffuse (v) 확산시키다"
+   ],
+   "roots": [
+    "dis(=사방으로) + fundere(=쏟다) → 사방으로 퍼짐"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dilute",
+   "ipa": "/daɪˈluːt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "희석하다, 약화시키다",
+     "ex": "Adding water to the acid dilutes it to a safer concentration.",
+     "tr": "산에 물을 더하면 더 안전한 농도로 희석된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "thin",
+    "water down",
+    "weaken"
+   ],
+   "deriv": [
+    "dilution (n) 희석"
+   ],
+   "roots": [
+    "di(=따로) + luere(=씻다) → 씻어 묽게 하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "directive",
+   "ipa": "/dɪˈrektɪv/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "지시, 지령",
+     "ex": "The agency issued a directive requiring stricter safety inspections.",
+     "tr": "그 기관은 더 엄격한 안전 점검을 요구하는 지시를 내렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "order",
+    "instruction",
+    "command"
+   ],
+   "deriv": [
+    "direct (v) 지시하다"
+   ],
+   "roots": [
+    "di(=완전히) + regere(=이끌다) → 방향을 정해 이끄는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "discernible",
+   "ipa": "/dɪˈsɜːnəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "식별할 수 있는, 알아볼 수 있는",
+     "ex": "There was no discernible difference between the two samples.",
+     "tr": "두 표본 사이에는 식별할 수 있는 차이가 없었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "perceptible",
+    "detectable",
+    "noticeable"
+   ],
+   "deriv": [
+    "discern (v) 식별하다"
+   ],
+   "roots": [
+    "dis(=따로) + cernere(=분간하다) → 갈라 알아볼 수 있는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disclose",
+   "ipa": "/dɪsˈkloʊz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "공개하다, 밝히다",
+     "ex": "Researchers are required to disclose any possible conflicts of interest.",
+     "tr": "연구자들은 있을 수 있는 이해충돌을 모두 공개해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reveal",
+    "divulge",
+    "make known"
+   ],
+   "deriv": [
+    "disclosure (n) 공개"
+   ],
+   "roots": [
+    "dis(=반대로) + claudere(=닫다) → 닫힌 것을 열어 드러내다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disclosure",
+   "ipa": "/dɪsˈkloʊʒər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공개, 폭로",
+     "ex": "Full disclosure of the funding source is essential for scientific transparency.",
+     "tr": "자금 출처의 완전한 공개는 과학적 투명성을 위해 필수적이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "revelation",
+    "exposure"
+   ],
+   "deriv": [
+    "disclose (v) 공개하다"
+   ],
+   "roots": [
+    "dis(=반대로) + claudere(=닫다) → 닫힌 것을 여는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "discourse",
+   "ipa": "/ˈdɪskɔːrs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "담론, 담화",
+     "ex": "The book reshaped academic discourse on the origins of language.",
+     "tr": "그 책은 언어의 기원에 관한 학문적 담론을 재편했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "discussion",
+    "debate",
+    "dialogue"
+   ],
+   "deriv": [],
+   "roots": [
+    "dis(=여기저기) + currere(=달리다) → 말이 오가며 펼쳐지는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "discrepancy",
+   "ipa": "/dɪsˈkrepənsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불일치, 차이",
+     "ex": "A discrepancy between the two measurements suggested an error in the instrument.",
+     "tr": "두 측정치 사이의 불일치는 기기의 오류를 시사했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inconsistency",
+    "difference",
+    "mismatch"
+   ],
+   "deriv": [],
+   "roots": [
+    "dis(=따로) + crepare(=삐걱거리다) → 서로 어긋나 삐걱거림"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "discrete",
+   "ipa": "/dɪˈskriːt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "별개의, 분리된",
+     "ex": "The process can be broken into several discrete stages.",
+     "tr": "그 과정은 여러 개의 별개 단계로 나눌 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "separate",
+    "distinct",
+    "individual"
+   ],
+   "deriv": [
+    "discretely (adv) 별개로"
+   ],
+   "roots": [
+    "dis(=따로) + cernere(=분간하다) → 따로 갈라진"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "discretion",
+   "ipa": "/dɪˈskreʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "재량, 판단",
+     "ex": "Judges are given wide discretion in sentencing offenders.",
+     "tr": "판사들은 범죄자를 처벌할 때 넓은 재량을 부여받는다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "신중함, 분별",
+     "ex": "She handled the sensitive matter with great discretion.",
+     "tr": "그녀는 그 민감한 문제를 매우 신중하게 처리했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "judgment",
+    "prudence",
+    "latitude"
+   ],
+   "deriv": [
+    "discreet (adj) 신중한",
+    "discretionary (adj) 임의의"
+   ],
+   "roots": [
+    "dis(=따로) + cernere(=분간하다) → 분별하여 판단함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disparity",
+   "ipa": "/dɪˈspærəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "격차, 불균형",
+     "ex": "The study documented a wide disparity in income between the two regions.",
+     "tr": "그 연구는 두 지역 간 소득의 큰 격차를 기록했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inequality",
+    "gap",
+    "imbalance"
+   ],
+   "deriv": [
+    "disparate (adj) 이질적인"
+   ],
+   "roots": [
+    "dis(=아닌) + par(=동등한) → 동등하지 않음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dispense",
+   "ipa": "/dɪˈspens/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "나누어 주다, 분배하다",
+     "ex": "The clinic dispenses medicine free of charge to low-income patients.",
+     "tr": "그 진료소는 저소득 환자들에게 약을 무료로 나누어 준다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "시행하다, 베풀다",
+     "ex": "The court is expected to dispense justice impartially.",
+     "tr": "법원은 정의를 공정하게 시행할 것으로 기대된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "distribute",
+    "hand out",
+    "administer"
+   ],
+   "deriv": [
+    "dispensation (n) 분배, 면제"
+   ],
+   "roots": [
+    "dis(=따로) + pendere(=무게를 달다) → 몫을 달아 나눠 주다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disperse",
+   "ipa": "/dɪˈspɜːrs/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "분산시키다, 흩어지다",
+     "ex": "The seeds are dispersed over great distances by the wind.",
+     "tr": "그 씨앗들은 바람에 의해 먼 거리로 분산된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "scatter",
+    "spread",
+    "disband"
+   ],
+   "deriv": [
+    "dispersal (n) 분산",
+    "dispersion (n) 분산"
+   ],
+   "roots": [
+    "dis(=사방으로) + spargere(=뿌리다) → 사방으로 흩뿌리다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "displace",
+   "ipa": "/dɪsˈpleɪs/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "대체하다, 밀어내다",
+     "ex": "New technologies gradually displaced the old manual methods.",
+     "tr": "새로운 기술이 점차 낡은 수작업 방식을 대체했다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "쫓아내다, 이주시키다",
+     "ex": "The rising waters displaced thousands of families from their homes.",
+     "tr": "불어난 물이 수천 가구를 그들의 집에서 쫓아냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "replace",
+    "supplant",
+    "uproot"
+   ],
+   "deriv": [
+    "displacement (n) 대체, 이동"
+   ],
+   "roots": [
+    "dis(=벗어나) + place(=자리) → 제자리에서 밀어내다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "displacement",
+   "ipa": "/dɪsˈpleɪsmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "이동, 대체, 이재",
+     "ex": "The war caused the displacement of millions of people.",
+     "tr": "그 전쟁은 수백만 명의 이재를 초래했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "relocation",
+    "replacement",
+    "shift"
+   ],
+   "deriv": [
+    "displace (v) 밀어내다"
+   ],
+   "roots": [
+    "dis(=벗어나) + place(=자리) → 제자리에서 벗어남"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dispose",
+   "ipa": "/dɪˈspoʊz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "~하는 경향을 갖게 하다",
+     "ex": "Certain genes may dispose people toward particular illnesses.",
+     "tr": "특정 유전자는 사람들이 특정 질병에 걸리는 경향을 갖게 할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "incline",
+    "predispose",
+    "make prone"
+   ],
+   "deriv": [
+    "disposition (n) 성향",
+    "disposal (n) 처리"
+   ],
+   "roots": [
+    "dis(=따로) + ponere(=놓다) → 마음을 어떤 쪽으로 놓다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disposition",
+   "ipa": "/ˌdɪspəˈzɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "성향, 기질",
+     "ex": "Some children show a cheerful disposition from a very early age.",
+     "tr": "어떤 아이들은 아주 어릴 때부터 명랑한 기질을 보인다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "temperament",
+    "tendency",
+    "inclination"
+   ],
+   "deriv": [
+    "dispose (v) 경향을 갖게 하다"
+   ],
+   "roots": [
+    "dis(=따로) + ponere(=놓다) → 마음이 놓인 상태"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disproportionate",
+   "ipa": "/ˌdɪsprəˈpɔːrʃənət/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "불균형한, 과도한",
+     "ex": "The poorest households bear a disproportionate share of the costs.",
+     "tr": "가장 가난한 가구들이 그 비용의 불균형하게 큰 몫을 떠안는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "excessive",
+    "unbalanced",
+    "uneven"
+   ],
+   "deriv": [
+    "disproportionately (adv) 불균형하게"
+   ],
+   "roots": [
+    "dis(=아닌) + proportion(=비율) → 비율에 맞지 않는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "disputable",
+   "ipa": "/dɪˈspjuːtəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "논쟁의 여지가 있는",
+     "ex": "The interpretation of the data is disputable and requires further testing.",
+     "tr": "그 데이터의 해석은 논쟁의 여지가 있으며 추가 검증이 필요하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "debatable",
+    "questionable",
+    "arguable"
+   ],
+   "deriv": [
+    "dispute (v) 반박하다"
+   ],
+   "roots": [
+    "dis(=따로) + putare(=생각하다) → 서로 다르게 따질 만한"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dissect",
+   "ipa": "/dɪˈsekt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "해부하다",
+     "ex": "Students dissect specimens to study the structure of internal organs.",
+     "tr": "학생들은 내부 장기의 구조를 연구하기 위해 표본을 해부한다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "상세히 분석하다",
+     "ex": "Critics dissected the argument to expose its hidden assumptions.",
+     "tr": "비평가들은 그 논증을 상세히 분석하여 숨은 가정들을 드러냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "analyze",
+    "examine",
+    "take apart"
+   ],
+   "deriv": [
+    "dissection (n) 해부"
+   ],
+   "roots": [
+    "dis(=따로) + secare(=자르다) → 따로따로 갈라 자르다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dissent",
+   "ipa": "/dɪˈsent/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "반대, 이의",
+     "ex": "The journal published a strong note of dissent from the prevailing view.",
+     "tr": "그 학술지는 지배적 견해에 대한 강한 반대의 글을 실었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "disagreement",
+    "objection",
+    "opposition"
+   ],
+   "deriv": [
+    "dissenter (n) 반대자"
+   ],
+   "roots": [
+    "dis(=따로) + sentire(=느끼다) → 다르게 느껴 반대함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "distortion",
+   "ipa": "/dɪˈstɔːrʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "왜곡",
+     "ex": "A biased sample can introduce serious distortion into the results.",
+     "tr": "편향된 표본은 결과에 심각한 왜곡을 초래할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "misrepresentation",
+    "deformation",
+    "warping"
+   ],
+   "deriv": [
+    "distort (v) 왜곡하다"
+   ],
+   "roots": [
+    "dis(=완전히) + torquere(=비틀다) → 비틀어 뒤틀림"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "diverge",
+   "ipa": "/daɪˈvɜːrdʒ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "갈라지다, 벗어나다",
+     "ex": "The two species diverged from a common ancestor millions of years ago.",
+     "tr": "그 두 종은 수백만 년 전에 공통 조상에서 갈라졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "separate",
+    "branch off",
+    "differ"
+   ],
+   "deriv": [
+    "divergence (n) 분기",
+    "divergent (adj) 갈라지는"
+   ],
+   "roots": [
+    "di(=따로) + vergere(=기울다) → 서로 다른 쪽으로 기울다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "divergent",
+   "ipa": "/daɪˈvɜːrdʒənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "갈라지는, 서로 다른",
+     "ex": "The two scholars reached sharply divergent conclusions from the same evidence.",
+     "tr": "그 두 학자는 같은 증거로부터 뚜렷이 갈라지는 결론에 이르렀다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "differing",
+    "conflicting",
+    "dissimilar"
+   ],
+   "deriv": [
+    "diverge (v) 갈라지다"
+   ],
+   "roots": [
+    "di(=따로) + vergere(=기울다) → 서로 다른 쪽으로 기우는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "diversification",
+   "ipa": "/daɪˌvɜːrsɪfɪˈkeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "다양화, 다각화",
+     "ex": "The diversification of crops helped farmers survive years of drought.",
+     "tr": "작물의 다양화는 농부들이 여러 해의 가뭄을 견디는 데 도움이 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "variation",
+    "spreading",
+    "broadening"
+   ],
+   "deriv": [
+    "diversify (v) 다양화하다"
+   ],
+   "roots": [
+    "di(=따로) + vertere(=돌리다) → 여러 갈래로 벌림"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "doctrine",
+   "ipa": "/ˈdɒktrɪn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "교리, 학설",
+     "ex": "The economic doctrine dominated policy thinking for several decades.",
+     "tr": "그 경제 학설은 수십 년간 정책적 사고를 지배했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "belief",
+    "principle",
+    "teaching"
+   ],
+   "deriv": [
+    "doctrinal (adj) 교리상의"
+   ],
+   "roots": [
+    "docere(=가르치다) → 가르쳐 전하는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "domain",
+   "ipa": "/doʊˈmeɪn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "영역, 분야",
+     "ex": "Questions of morality lie largely outside the domain of physics.",
+     "tr": "도덕에 관한 물음은 대체로 물리학의 영역 밖에 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "field",
+    "area",
+    "sphere"
+   ],
+   "deriv": [],
+   "roots": [
+    "dominus(=주인) → 주인이 다스리는 영역"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "downplay",
+   "ipa": "/ˌdaʊnˈpleɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "경시하다, 대수롭지 않게 하다",
+     "ex": "Officials tended to downplay the risks in their public statements.",
+     "tr": "관리들은 공개 발언에서 위험을 대수롭지 않게 하는 경향이 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "minimize",
+    "understate",
+    "play down"
+   ],
+   "deriv": [],
+   "roots": [
+    "down(=낮게) + play(=다루다) → 낮추어 다루다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dubious",
+   "ipa": "/ˈdjuːbiəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "의심스러운, 미심쩍은",
+     "ex": "The claim rests on dubious evidence that few experts accept.",
+     "tr": "그 주장은 소수의 전문가만 받아들이는 의심스러운 증거에 기대고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "doubtful",
+    "questionable",
+    "suspect"
+   ],
+   "deriv": [
+    "dubiously (adv) 의심스럽게"
+   ],
+   "roots": [
+    "dubium(=의심) → 의심스러운"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }

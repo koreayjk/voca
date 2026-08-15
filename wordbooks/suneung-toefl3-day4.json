@@ -1,607 +1,1429 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 4,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 4,
+ "words": [
+  {
+   "en": "construct",
+   "ipa": "/ˈkɒnstrʌkt/",
+   "pos": "n",
+   "meanings": [
     {
-      "en": "actualize",
-      "ipa": "/ˈæktʃuəlaɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "실현하다, 현실로 만들다", "ex": "A theory has little value until researchers actualize its predictions in a carefully controlled experiment.", "tr": "이론은 연구자들이 그 예측을 세심하게 통제된 실험에서 실현하기 전까지는 가치가 거의 없다.", "src": "" }
-      ],
-      "syn": ["realize", "materialize", "bring about"],
-      "deriv": ["actualization (n) 실현, 현실화"],
-      "roots": ["actus(=행위) → 행위로 옮겨 실현하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cartography",
-      "ipa": "/kɑːrˈtɒɡrəfi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "지도 제작 (법)", "ex": "Advances in cartography allowed Renaissance sailors to chart coastlines with an accuracy earlier maps had lacked.", "tr": "지도 제작술의 발전은 르네상스 시대 뱃사람들이 이전 지도에 없던 정확도로 해안선을 그릴 수 있게 했다.", "src": "" }
-      ],
-      "syn": ["mapmaking"],
-      "deriv": ["cartographer (n) 지도 제작자"],
-      "roots": ["charta(=종이, 지도) + graphein(=그리다) → 지도를 그리는 일"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "benevolence",
-      "ipa": "/bəˈnevələns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "자비, 선의, 선행", "ex": "Many ethical traditions hold that true benevolence expects nothing in return for the good it does.", "tr": "많은 윤리 전통은 진정한 자비란 베푸는 선행에 대해 아무런 대가도 바라지 않는 것이라고 본다.", "src": "" }
-      ],
-      "syn": ["kindness", "goodwill", "generosity"],
-      "deriv": ["benevolent (adj) 자애로운"],
-      "roots": ["bene(=좋게) + velle(=바라다) → 남이 잘되기를 바람"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bathymetry",
-      "ipa": "/bəˈθɪmətri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "수심 측량, 해저 지형 측정", "ex": "Detailed bathymetry of the seafloor revealed deep trenches and towering ridges hidden beneath the waves.", "tr": "해저의 상세한 수심 측량은 파도 아래 감춰진 깊은 해구와 우뚝 솟은 해령을 드러냈다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["bathos(=깊이) + metron(=측정) → 깊이를 재는 일"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "aphelion",
-      "ipa": "/æpˈhiːliən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "원일점 (궤도에서 태양과 가장 먼 점)", "ex": "At aphelion the planet moves most slowly, since it is then farthest from the Sun's gravitational pull.", "tr": "원일점에서 행성은 태양의 중력에서 가장 멀리 떨어져 있기 때문에 가장 느리게 움직인다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["apo(=멀리) + helios(=태양) → 태양에서 먼 점"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bourgeoisie",
-      "ipa": "/ˌbʊrʒwɑːˈziː/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "부르주아, 중산층, 유산 계급", "ex": "Marx argued that the industrial bourgeoisie accumulated wealth by controlling the factories and the labor within them.", "tr": "마르크스는 산업 부르주아가 공장과 그 안의 노동을 지배함으로써 부를 축적했다고 주장했다.", "src": "" }
-      ],
-      "syn": ["middle class", "propertied class"],
-      "deriv": ["bourgeois (adj) 부르주아의"],
-      "roots": ["burg(=성읍) → 도시의 유산 계급"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "authoritarianism",
-      "ipa": "/ɔːˌθɒrɪˈteəriənɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "권위주의 (강력한 통제와 복종을 요구하는 통치)", "ex": "Under authoritarianism the state concentrates power in a few hands and tolerates little dissent or open debate.", "tr": "권위주의 아래에서 국가는 권력을 소수에게 집중시키고 반대나 공개적 토론을 거의 용납하지 않는다.", "src": "" }
-      ],
-      "syn": ["autocracy", "despotism"],
-      "deriv": ["authoritarian (adj) 권위주의적인"],
-      "roots": ["auctoritas(=권위) → 권위에 절대 복종을 요구함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "anhydrous",
-      "ipa": "/ænˈhaɪdrəs/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "무수의, 물기가 없는 (결정수를 포함하지 않는)", "ex": "The chemist used anhydrous salt, since even a trace of water would spoil the reaction she was studying.", "tr": "그 화학자는 무수 염을 사용했는데, 미량의 물조차도 그녀가 연구하던 반응을 망칠 수 있었기 때문이다.", "src": "" }
-      ],
-      "syn": ["waterless", "dry"],
-      "deriv": [],
-      "roots": ["an(=없는) + hydor(=물) → 물이 없는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "brokerage",
-      "ipa": "/ˈbroʊkərɪdʒ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "중개업, 중개 수수료", "ex": "The brokerage matched buyers with sellers and collected a small commission on every completed transaction.", "tr": "그 중개업체는 매수자와 매도자를 연결해 주고 성사된 모든 거래에서 소액의 수수료를 받았다.", "src": "" }
-      ],
-      "syn": ["agency", "intermediation"],
-      "deriv": ["broker (n) 중개인"],
-      "roots": ["brocour(=중개인) + -age → 중개하는 일"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "ductility",
-      "ipa": "/dʌkˈtɪləti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "연성 (금속이 늘어나는 성질)", "ex": "The high ductility of copper lets it be drawn into fine wire without snapping under tension.", "tr": "구리의 높은 연성 덕분에 그것은 장력을 받아도 끊어지지 않고 가느다란 전선으로 뽑힐 수 있다.", "src": "" }
-      ],
-      "syn": ["malleability", "pliability"],
-      "deriv": ["ductile (adj) 연성의"],
-      "roots": ["ducere(=이끌다, 끌어당기다) → 늘여 뽑을 수 있는 성질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "didacticism",
-      "ipa": "/daɪˈdæktɪsɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "교훈주의 (교훈 전달을 앞세우는 경향)", "ex": "Critics faulted the film for its heavy didacticism, complaining that it lectured the audience instead of telling a story.", "tr": "비평가들은 그 영화가 이야기를 들려주기보다 관객을 훈계한다며 그 짙은 교훈주의를 지적했다.", "src": "" }
-      ],
-      "syn": ["moralism"],
-      "deriv": ["didactic (adj) 교훈적인"],
-      "roots": ["didaskein(=가르치다) + -ism → 가르치려는 태도"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "altruistic",
-      "ipa": "/ˌæltruˈɪstɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "이타적인, 남을 위하는", "ex": "The worker bee's altruistic behavior, defending the hive at the cost of its own life, puzzled early biologists.", "tr": "자신의 목숨을 내주며 벌집을 지키는 일벌의 이타적 행동은 초기 생물학자들을 당혹스럽게 했다.", "src": "" }
-      ],
-      "syn": ["selfless", "unselfish"],
-      "deriv": ["altruism (n) 이타주의"],
-      "roots": ["alter(=다른 사람) → 남을 위하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "carcinogen",
-      "ipa": "/kɑːrˈsɪnədʒən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "발암 물질", "ex": "Long-term exposure to the industrial carcinogen sharply raised the incidence of cancer among the plant's workers.", "tr": "그 산업용 발암 물질에 장기간 노출되면서 공장 노동자들 사이에서 암 발생률이 급격히 높아졌다.", "src": "" }
-      ],
-      "syn": ["cancer-causing agent"],
-      "deriv": ["carcinogenic (adj) 발암성의"],
-      "roots": ["karkinos(=게, 암) + -gen(=생성) → 암을 일으키는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "foundry",
-      "ipa": "/ˈfaʊndri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "주조 공장, 주물 공장", "ex": "At the foundry, molten iron is poured into molds and left to cool into finished machine parts.", "tr": "그 주조 공장에서는 녹인 쇳물을 주형에 부어 식혀 완성된 기계 부품으로 만든다.", "src": "" }
-      ],
-      "syn": ["casting works"],
-      "deriv": ["found (v) 주조하다"],
-      "roots": ["fundere(=붓다) → 쇳물을 부어 만드는 곳"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "buoyant",
-      "ipa": "/ˈbɔɪənt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "부력이 있는, 뜨는", "ex": "Because warm air is more buoyant than the cooler air around it, it rises and carries moisture upward.", "tr": "따뜻한 공기는 주변의 차가운 공기보다 부력이 커서 위로 떠오르며 수분을 끌어올린다.", "src": "" }
-      ],
-      "syn": ["floating", "light"],
-      "deriv": ["buoyancy (n) 부력"],
-      "roots": ["boya(=부표) → 물에 뜨는 성질의"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "catastrophize",
-      "ipa": "/kəˈtæstrəfaɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "파국적으로 생각하다, 최악을 상상하다", "ex": "Anxious patients often catastrophize, treating a minor setback as evidence of impending disaster.", "tr": "불안한 환자들은 흔히 파국적으로 생각하여, 사소한 차질을 임박한 재앙의 증거로 받아들인다.", "src": "" }
-      ],
-      "syn": ["overdramatize"],
-      "deriv": ["catastrophizing (n) 파국화"],
-      "roots": ["kata(=아래로) + strephein(=뒤집다) → 최악으로 뒤집어 생각함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "balustrade",
-      "ipa": "/ˈbæləstreɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "난간 (작은 기둥이 늘어선 손잡이 구조)", "ex": "A carved stone balustrade lined the terrace, guarding the edge while framing the view of the gardens below.", "tr": "조각된 돌 난간이 테라스를 둘러 가장자리를 지키면서 아래 정원의 경관을 감싸 주었다.", "src": "" }
-      ],
-      "syn": ["railing", "banister"],
-      "deriv": ["baluster (n) 난간 동자기둥"],
-      "roots": ["balaustion(=석류꽃) → 석류꽃 모양 기둥의 난간"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "colloquialism",
-      "ipa": "/kəˈloʊkwiəlɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "구어적 표현, 일상 회화체 말투", "ex": "The translator replaced each colloquialism with a formal equivalent to suit the document's official tone.", "tr": "그 번역가는 문서의 공식적 어조에 맞추기 위해 각 구어적 표현을 격식 있는 표현으로 바꾸었다.", "src": "" }
-      ],
-      "syn": ["informal expression", "slang"],
-      "deriv": ["colloquial (adj) 구어의, 일상적인"],
-      "roots": ["con(=함께) + loqui(=말하다) → 함께 나누는 일상 말투"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "caldera",
-      "ipa": "/kælˈderə/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "칼데라 (화산 폭발 후 함몰된 큰 분지)", "ex": "After the eruption emptied its magma chamber, the volcano's summit collapsed into a vast caldera.", "tr": "분화로 마그마 방이 비워진 뒤, 그 화산의 정상은 무너져 내려 거대한 칼데라를 이루었다.", "src": "" }
-      ],
-      "syn": ["volcanic crater"],
-      "deriv": [],
-      "roots": ["caldaria(=가마솥) → 솥 모양의 함몰 분지"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cryptography",
-      "ipa": "/krɪpˈtɒɡrəfi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "암호학, 암호 기술", "ex": "Modern cryptography relies on mathematical problems so hard that no computer can solve them in reasonable time.", "tr": "현대 암호학은 어떤 컴퓨터도 적절한 시간 안에 풀 수 없을 만큼 어려운 수학 문제에 의존한다.", "src": "" }
-      ],
-      "syn": ["encryption science"],
-      "deriv": ["cryptographic (adj) 암호의"],
-      "roots": ["kryptos(=숨은) + graphein(=쓰다) → 숨겨 쓰는 기술"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "longitudinal",
-      "ipa": "/ˌlɒndʒɪˈtuːdɪnl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "종단적인 (같은 대상을 오랜 기간 추적하는)", "ex": "The longitudinal study followed the same children for twenty years to trace how early habits shaped adult health.", "tr": "그 종단 연구는 초기 습관이 성인기 건강을 어떻게 형성하는지 추적하기 위해 같은 아이들을 20년간 관찰했다.", "src": "" }
-      ],
-      "syn": ["long-term", "over-time"],
-      "deriv": [],
-      "roots": ["longitudo(=길이) → 시간의 길이를 따라가는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "counterpoint",
-      "ipa": "/ˈkaʊntərpɔɪnt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(음악) 대위법, 대비 요소", "ex": "In counterpoint, two independent melodies unfold at once, each retaining its own shape while blending with the other.", "tr": "대위법에서는 두 개의 독립된 선율이 동시에 전개되어, 각각 자기 형태를 유지하면서도 서로 어우러진다.", "src": "" }
-      ],
-      "syn": ["polyphony", "contrast"],
-      "deriv": ["contrapuntal (adj) 대위법의"],
-      "roots": ["contra(=맞서) + punctus(=음표) → 음에 맞선 음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "deterministic",
-      "ipa": "/dɪˌtɜːrmɪˈnɪstɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "결정론적인 (초기 상태가 결과를 완전히 정하는)", "ex": "In a deterministic model, identical starting conditions always yield exactly the same outcome, leaving no room for chance.", "tr": "결정론적 모형에서는 동일한 초기 조건이 언제나 정확히 같은 결과를 낳아 우연이 개입할 여지가 없다.", "src": "" }
-      ],
-      "syn": ["predetermined"],
-      "deriv": ["determinism (n) 결정론"],
-      "roots": ["de(=완전히) + terminare(=한정하다) → 미리 완전히 정해진"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "figurine",
-      "ipa": "/ˌfɪɡjəˈriːn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "작은 입상, 작은 조각상", "ex": "Archaeologists unearthed a clay figurine of a seated woman, one of the oldest sculpted forms found at the site.", "tr": "고고학자들은 앉아 있는 여인을 빚은 점토 입상을 발굴했는데, 그 유적지에서 발견된 가장 오래된 조각 형태 중 하나였다.", "src": "" }
-      ],
-      "syn": ["statuette"],
-      "deriv": [],
-      "roots": ["figura(=형상) + -ine(=작은) → 작은 형상물"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "aggregation",
-      "ipa": "/ˌæɡrɪˈɡeɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "집합, 집계, 모임", "ex": "The report is built from the aggregation of thousands of individual surveys into a single set of statistics.", "tr": "그 보고서는 수천 건의 개별 설문을 하나의 통계 자료로 집계한 것에서 만들어진다.", "src": "" }
-      ],
-      "syn": ["accumulation", "collection", "clustering"],
-      "deriv": ["aggregate (v) 집계하다"],
-      "roots": ["ad(=to) + grex(=무리) → 하나의 무리로 모음"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "catacomb",
-      "ipa": "/ˈkætəkoʊm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "지하 묘지, 지하 납골 통로", "ex": "Early Christians buried their dead in the catacomb, a maze of underground passages carved from soft rock.", "tr": "초기 기독교인들은 무른 암반을 파서 만든 미로 같은 지하 통로인 카타콤에 죽은 이들을 묻었다.", "src": "" }
-      ],
-      "syn": ["underground cemetery", "crypt"],
-      "deriv": [],
-      "roots": ["kata(=아래) + kymbe(=우묵한 곳) → 지하의 묘실"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "blasphemy",
-      "ipa": "/ˈblæsfəmi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "신성 모독, 불경", "ex": "In the strict theocracy, questioning the sacred texts in public was condemned as blasphemy.", "tr": "그 엄격한 신정 국가에서 성스러운 경전을 공개적으로 의심하는 것은 신성 모독으로 단죄되었다.", "src": "" }
-      ],
-      "syn": ["sacrilege", "impiety", "profanity"],
-      "deriv": ["blasphemous (adj) 신성 모독적인"],
-      "roots": ["blasphemia(=비방) → 신성한 것에 대한 모독"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "biogeochemical",
-      "ipa": "/ˌbaɪoʊˌdʒiːoʊˈkemɪkl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "생지화학의 (생물·지질·화학 과정이 얽힌)", "ex": "The carbon cycle is a biogeochemical process, moving carbon among living things, the atmosphere, oceans, and rocks.", "tr": "탄소 순환은 생물, 대기, 해양, 암석 사이로 탄소를 이동시키는 생지화학적 과정이다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["bio(=생명) + geo(=지구) + chemical(=화학의) → 생명·지질·화학이 결합한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "apogee",
-      "ipa": "/ˈæpədʒiː/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "원지점 (궤도에서 지구와 가장 먼 점), 정점", "ex": "The satellite moves slowest at apogee, the point in its orbit where it is farthest from the Earth.", "tr": "그 위성은 궤도에서 지구와 가장 먼 지점인 원지점에서 가장 느리게 움직인다.", "src": "" }
-      ],
-      "syn": ["peak", "climax"],
-      "deriv": [],
-      "roots": ["apo(=멀리) + gaia(=지구) → 지구에서 먼 점"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "citizenry",
-      "ipa": "/ˈsɪtɪzənri/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "시민 전체, 국민 (집합적)", "ex": "An informed citizenry, capable of weighing competing arguments, is essential to the health of a democracy.", "tr": "서로 다른 주장을 저울질할 수 있는 견식 있는 시민 전체는 민주주의의 건강함에 필수적이다.", "src": "" }
-      ],
-      "syn": ["populace", "public"],
-      "deriv": ["citizen (n) 시민"],
-      "roots": ["civis(=시민) + -ry → 시민들의 집합"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "autocracy",
-      "ipa": "/ɔːˈtɒkrəsi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "독재 정치, 전제 정치", "ex": "In an autocracy a single ruler holds unchecked power, answerable to no legislature or independent court.", "tr": "독재 정치에서는 한 명의 통치자가 어떤 입법부나 독립된 법원에도 책임지지 않는 견제 없는 권력을 쥔다.", "src": "" }
-      ],
-      "syn": ["dictatorship", "despotism"],
-      "deriv": ["autocrat (n) 독재자"],
-      "roots": ["autos(=스스로) + kratos(=지배) → 혼자 지배함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "electrolyze",
-      "ipa": "/ɪˈlektrəlaɪz/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "전기 분해하다", "ex": "Passing a current through the solution electrolyzes the water, splitting it into hydrogen and oxygen gas.", "tr": "용액에 전류를 흘리면 물이 전기 분해되어 수소와 산소 기체로 갈라진다.", "src": "" }
-      ],
-      "syn": ["decompose electrically"],
-      "deriv": ["electrolysis (n) 전기 분해"],
-      "roots": ["electro(=전기) + lysis(=분해) → 전기로 분해하다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cartel",
-      "ipa": "/kɑːrˈtel/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "카르텔, 담합 조직 (가격·생산을 통제하는 기업 연합)", "ex": "The cartel kept prices artificially high by agreeing among its members to limit how much each would produce.", "tr": "그 카르텔은 회원사끼리 각자의 생산량을 제한하기로 합의함으로써 가격을 인위적으로 높게 유지했다.", "src": "" }
-      ],
-      "syn": ["syndicate", "monopoly bloc"],
-      "deriv": [],
-      "roots": ["carta(=문서, 협정) → 담합 협정 조직"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dynamo",
-      "ipa": "/ˈdaɪnəmoʊ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "발전기 (기계적 회전을 전류로 바꾸는 장치)", "ex": "The spinning dynamo converts the turbine's mechanical motion into the electric current that powers the grid.", "tr": "회전하는 발전기는 터빈의 기계적 운동을 전력망에 공급되는 전류로 바꾼다.", "src": "" }
-      ],
-      "syn": ["generator"],
-      "deriv": [],
-      "roots": ["dynamis(=힘) → 힘을 전기로 바꾸는 기계"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "disinformation",
-      "ipa": "/ˌdɪsɪnfərˈmeɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "허위 정보 (고의로 퍼뜨리는 조작된 정보)", "ex": "The campaign spread disinformation online, deliberately planting false claims to sway voters before the election.", "tr": "그 공작은 선거 전에 유권자를 흔들려고 거짓 주장을 고의로 심으며 온라인에 허위 정보를 퍼뜨렸다.", "src": "" }
-      ],
-      "syn": ["propaganda", "false information"],
-      "deriv": [],
-      "roots": ["dis(=반대) + information(=정보) → 고의로 왜곡한 정보"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "anabolism",
-      "ipa": "/əˈnæbəlɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "동화 작용 (작은 분자를 큰 분자로 합성하는 대사)", "ex": "Through anabolism, cells assemble simple amino acids into the large proteins their tissues require.", "tr": "동화 작용을 통해 세포는 단순한 아미노산을 조직에 필요한 큰 단백질로 조립한다.", "src": "" }
-      ],
-      "syn": ["biosynthesis"],
-      "deriv": ["anabolic (adj) 동화 작용의"],
-      "roots": ["ana(=위로) + ballein(=던지다) → 쌓아 올리는 대사"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cardiology",
-      "ipa": "/ˌkɑːrdiˈɒlədʒi/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "심장병학, 심장학", "ex": "Advances in cardiology have made it possible to repair a damaged heart valve without open-chest surgery.", "tr": "심장병학의 발전으로 가슴을 여는 수술 없이도 손상된 심장 판막을 고치는 것이 가능해졌다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["cardiologist (n) 심장 전문의"],
-      "roots": ["kardia(=심장) + logos(=학문) → 심장을 다루는 학문"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "fungicide",
-      "ipa": "/ˈfʌndʒɪsaɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "살균제 (곰팡이 등을 죽이는 약제)", "ex": "The farmers sprayed a fungicide to stop the mold that was rotting their grapes before harvest.", "tr": "농부들은 수확 전에 포도를 썩게 하던 곰팡이를 막기 위해 살균제를 뿌렸다.", "src": "" }
-      ],
-      "syn": ["antifungal"],
-      "deriv": [],
-      "roots": ["fungus(=균) + caedere(=죽이다) → 균을 죽이는 약"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "capacitance",
-      "ipa": "/kəˈpæsɪtəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "전기 용량 (전하를 저장하는 능력)", "ex": "A capacitor with greater capacitance can store more charge at the same voltage, releasing it in a sudden pulse.", "tr": "전기 용량이 큰 축전기는 같은 전압에서 더 많은 전하를 저장했다가 순간적인 펄스로 방출할 수 있다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["capacitor (n) 축전기"],
-      "roots": ["capax(=담을 수 있는) → 전하를 담는 능력"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "catharsis",
-      "ipa": "/kəˈθɑːrsɪs/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "카타르시스, (감정의) 정화", "ex": "Aristotle held that tragedy offers catharsis, purging the audience of pity and fear through the drama it presents.", "tr": "아리스토텔레스는 비극이 그것이 보여 주는 극을 통해 관객의 연민과 두려움을 씻어 내는 카타르시스를 준다고 보았다.", "src": "" }
-      ],
-      "syn": ["purging", "release"],
-      "deriv": ["cathartic (adj) 정화의"],
-      "roots": ["katharsis(=정화) → 감정을 씻어 냄"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "n",
+     "ko": "구성 개념, 구성체",
+     "ex": "Intelligence is a theoretical construct that is difficult to measure directly.",
+     "tr": "지능은 직접 측정하기 어려운 이론적 구성 개념이다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "concept",
+    "idea",
+    "notion"
+   ],
+   "deriv": [
+    "construction (n) 구성",
+    "constructive (adj) 건설적인"
+   ],
+   "roots": [
+    "con(=함께) + struere(=쌓다) → 함께 쌓아 만든 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contend",
+   "ipa": "/kənˈtend/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "주장하다",
+     "ex": "Some historians contend that the war was ultimately unavoidable.",
+     "tr": "일부 역사가들은 그 전쟁이 결국 불가피했다고 주장한다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "다투다, 겨루다",
+     "ex": "Early mammals had to contend with far larger predators.",
+     "tr": "초기 포유류는 훨씬 더 큰 포식자들과 겨루어야 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "argue",
+    "maintain",
+    "assert"
+   ],
+   "deriv": [
+    "contention (n) 주장",
+    "contender (n) 경쟁자"
+   ],
+   "roots": [
+    "con(=함께) + tendere(=뻗다) → 힘껏 겨루다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contention",
+   "ipa": "/kənˈtenʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "주장, 논지",
+     "ex": "The author's central contention is that trade drives cultural change.",
+     "tr": "저자의 핵심 주장은 무역이 문화적 변화를 이끈다는 것이다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "논쟁, 다툼",
+     "ex": "The exact date of the manuscript remains a point of contention.",
+     "tr": "그 필사본의 정확한 연대는 여전히 논쟁의 대상이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "assertion",
+    "argument",
+    "dispute"
+   ],
+   "deriv": [
+    "contend (v) 주장하다"
+   ],
+   "roots": [
+    "con(=함께) + tendere(=뻗다) → 힘껏 내세우는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contested",
+   "ipa": "/kənˈtestɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "논쟁이 되는, 이론이 분분한",
+     "ex": "The meaning of the ancient inscription is still hotly contested.",
+     "tr": "그 고대 비문의 의미는 여전히 격렬하게 논쟁이 되고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "disputed",
+    "debated",
+    "controversial"
+   ],
+   "deriv": [
+    "contest (v) 이의를 제기하다"
+   ],
+   "roots": [
+    "con(=함께) + testari(=증언하다) → 서로 맞서 다투는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contingency",
+   "ipa": "/kənˈtɪndʒənsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "우발 상황, 만일의 사태",
+     "ex": "Good research designs plan for every foreseeable contingency.",
+     "tr": "좋은 연구 설계는 예상 가능한 모든 우발 상황에 대비한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "eventuality",
+    "emergency"
+   ],
+   "deriv": [
+    "contingent (adj) ~에 달린, 우발적인"
+   ],
+   "roots": [
+    "con(=함께) + tangere(=닿다) → 우연히 맞닿아 생기는 일"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "continuity",
+   "ipa": "/ˌkɒntɪˈnjuːəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연속성",
+     "ex": "The tradition provided a sense of continuity across many generations.",
+     "tr": "그 전통은 여러 세대에 걸쳐 연속성의 감각을 제공했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "continuousness",
+    "coherence"
+   ],
+   "deriv": [
+    "continuous (adj) 연속적인",
+    "continual (adj) 거듭되는"
+   ],
+   "roots": [
+    "con(=함께) + tenere(=붙잡다) → 끊임없이 이어짐"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contraction",
+   "ipa": "/kənˈtrækʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수축, 축소",
+     "ex": "The contraction of the muscle pulls the bone into a new position.",
+     "tr": "근육의 수축이 뼈를 새로운 위치로 당긴다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "shrinking",
+    "tightening",
+    "reduction"
+   ],
+   "deriv": [
+    "contract (v) 수축하다"
+   ],
+   "roots": [
+    "con(=함께) + trahere(=끌다) → 안으로 끌어당겨 줄어듦"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "converge",
+   "ipa": "/kənˈvɜːdʒ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "수렴하다, 한 점으로 모이다",
+     "ex": "Independent lines of evidence converge on the same conclusion.",
+     "tr": "서로 독립적인 증거의 흐름들이 같은 결론으로 수렴한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "meet",
+    "come together",
+    "merge"
+   ],
+   "deriv": [
+    "convergence (n) 수렴",
+    "convergent (adj) 수렴하는"
+   ],
+   "roots": [
+    "con(=함께) + vergere(=기울다) → 함께 한 점으로 기울다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conversely",
+   "ipa": "/ˈkɒnvɜːsli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "반대로, 역으로",
+     "ex": "Warm water holds less oxygen; conversely, cold water holds more.",
+     "tr": "따뜻한 물은 산소를 덜 머금고, 반대로 차가운 물은 더 많이 머금는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "on the other hand",
+    "in contrast"
+   ],
+   "deriv": [
+    "converse (adj) 반대의"
+   ],
+   "roots": [
+    "con(=완전히) + vertere(=돌리다) → 방향을 돌려 반대로"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "correlate",
+   "ipa": "/ˈkɒrəleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "상관관계가 있다",
+     "ex": "Rising income tends to correlate with longer life expectancy.",
+     "tr": "소득 증가는 더 긴 기대 수명과 상관관계가 있는 경향이 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "be linked",
+    "associate"
+   ],
+   "deriv": [
+    "correlation (n) 상관관계",
+    "correlated (adj) 상관관계가 있는"
+   ],
+   "roots": [
+    "con(=함께) + relatus(=관계된) → 서로 관계 지어지다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "correlated",
+   "ipa": "/ˈkɒrəleɪtɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "상관관계가 있는",
+     "ex": "The two variables are strongly correlated but not causally linked.",
+     "tr": "그 두 변수는 강하게 상관관계가 있지만 인과적으로 연결된 것은 아니다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "linked",
+    "associated",
+    "related"
+   ],
+   "deriv": [
+    "correlate (v) 상관관계가 있다"
+   ],
+   "roots": [
+    "con(=함께) + relatus(=관계된) → 서로 관계 지어진"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "correlation",
+   "ipa": "/ˌkɒrəˈleɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상관관계",
+     "ex": "A correlation between two events does not prove that one causes the other.",
+     "tr": "두 사건 간의 상관관계가 하나가 다른 하나를 일으킨다는 것을 증명하지는 않는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "association",
+    "link",
+    "relationship"
+   ],
+   "deriv": [
+    "correlate (v) 상관관계가 있다"
+   ],
+   "roots": [
+    "con(=함께) + relatus(=관계된) → 서로 관계 지어짐"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "correspondingly",
+   "ipa": "/ˌkɒrəˈspɒndɪŋli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "상응하여, 그에 맞게",
+     "ex": "As the population grew, demand for water rose correspondingly.",
+     "tr": "인구가 늘면서 물 수요도 그에 상응하여 증가했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "accordingly",
+    "proportionately"
+   ],
+   "deriv": [
+    "correspond (v) 상응하다",
+    "corresponding (adj) 상응하는"
+   ],
+   "roots": [
+    "con(=함께) + respondere(=응하다) → 서로 맞게 응하여"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "counteract",
+   "ipa": "/ˌkaʊntərˈækt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "대응하다, 상쇄하다, 중화하다",
+     "ex": "Planting trees can partly counteract the effects of rising carbon levels.",
+     "tr": "나무를 심는 것은 탄소 농도 상승의 영향을 부분적으로 상쇄할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "offset",
+    "neutralize",
+    "counterbalance"
+   ],
+   "deriv": [],
+   "roots": [
+    "counter(=반대로) + act(=작용하다) → 반대로 작용하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "counterargument",
+   "ipa": "/ˈkaʊntərˌɑːɡjumənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "반론",
+     "ex": "A strong essay anticipates the most likely counterargument and answers it.",
+     "tr": "좋은 에세이는 가장 있을 법한 반론을 미리 예상하고 그에 답한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "rebuttal",
+    "objection"
+   ],
+   "deriv": [],
+   "roots": [
+    "counter(=반대의) + argument(=논증) → 맞서는 논증"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "credibility",
+   "ipa": "/ˌkredəˈbɪləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신빙성, 신뢰성",
+     "ex": "Citing reliable sources strengthens the credibility of an argument.",
+     "tr": "신뢰할 수 있는 출처를 인용하는 것은 주장의 신빙성을 강화한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "believability",
+    "trustworthiness"
+   ],
+   "deriv": [
+    "credible (adj) 신뢰할 수 있는"
+   ],
+   "roots": [
+    "credere(=믿다) → 믿을 만함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "credible",
+   "ipa": "/ˈkredəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "신뢰할 수 있는, 믿을 만한",
+     "ex": "A credible explanation must be consistent with all the available evidence.",
+     "tr": "신뢰할 수 있는 설명은 이용 가능한 모든 증거와 일치해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "believable",
+    "plausible",
+    "convincing"
+   ],
+   "deriv": [
+    "credibility (n) 신빙성",
+    "credibly (adv) 확실하게"
+   ],
+   "roots": [
+    "credere(=믿다) → 믿을 만한"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "critique",
+   "ipa": "/krɪˈtiːk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "비평, 평론",
+     "ex": "The article offers a thoughtful critique of the standard economic model.",
+     "tr": "그 논문은 표준 경제 모델에 대한 사려 깊은 비평을 제시한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "evaluation",
+    "review",
+    "analysis"
+   ],
+   "deriv": [
+    "critic (n) 비평가",
+    "critical (adj) 비판적인"
+   ],
+   "roots": [
+    "kritike(=판단하는 기술) → 판단하여 평함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "crucially",
+   "ipa": "/ˈkruːʃəli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "결정적으로, 중요하게",
+     "ex": "Crucially, the reaction proceeds only in the absence of oxygen.",
+     "tr": "결정적으로, 그 반응은 산소가 없을 때에만 진행된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "critically",
+    "vitally",
+    "decisively"
+   ],
+   "deriv": [
+    "crucial (adj) 결정적인"
+   ],
+   "roots": [
+    "crux(=십자가, 핵심) → 핵심적으로"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "culminate",
+   "ipa": "/ˈkʌlmɪneɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "정점에 이르다, 절정에 달하다",
+     "ex": "Decades of research culminated in the mapping of the human genome.",
+     "tr": "수십 년의 연구가 인간 게놈의 해독으로 정점에 이르렀다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "climax",
+    "peak",
+    "come to a head"
+   ],
+   "deriv": [
+    "culmination (n) 정점"
+   ],
+   "roots": [
+    "culmen(=꼭대기) → 꼭대기에 이르다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "culmination",
+   "ipa": "/ˌkʌlmɪˈneɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "정점, 절정",
+     "ex": "The discovery was the culmination of a lifetime of patient observation.",
+     "tr": "그 발견은 평생에 걸친 끈기 있는 관찰의 정점이었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "climax",
+    "peak",
+    "high point"
+   ],
+   "deriv": [
+    "culminate (v) 정점에 이르다"
+   ],
+   "roots": [
+    "culmen(=꼭대기) → 꼭대기에 이름"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cultivate",
+   "ipa": "/ˈkʌltɪveɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "기르다, 함양하다",
+     "ex": "Universities aim to cultivate independent and critical thinking.",
+     "tr": "대학은 독립적이고 비판적인 사고를 함양하는 것을 목표로 한다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "경작하다, 재배하다",
+     "ex": "Early farmers began to cultivate wheat along the fertile river valleys.",
+     "tr": "초기 농부들은 비옥한 강 유역을 따라 밀을 재배하기 시작했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "foster",
+    "develop",
+    "nurture"
+   ],
+   "deriv": [
+    "cultivation (n) 함양, 경작"
+   ],
+   "roots": [
+    "colere(=가꾸다, 경작하다) → 가꾸어 기르다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cumulative",
+   "ipa": "/ˈkjuːmjələtɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "누적되는",
+     "ex": "The cumulative effect of small daily errors can become significant over time.",
+     "tr": "작은 일일 오차의 누적 효과는 시간이 지나면 상당해질 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "accumulating",
+    "increasing",
+    "aggregate"
+   ],
+   "deriv": [
+    "cumulatively (adv) 누적적으로",
+    "accumulate (v) 축적하다"
+   ],
+   "roots": [
+    "cumulus(=더미) → 쌓여 더해지는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cumulatively",
+   "ipa": "/ˈkjuːmjələtɪvli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "누적적으로",
+     "ex": "Small savings can, cumulatively, amount to a substantial sum.",
+     "tr": "작은 절약도 누적적으로는 상당한 액수에 이를 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "progressively",
+    "increasingly"
+   ],
+   "deriv": [
+    "cumulative (adj) 누적되는"
+   ],
+   "roots": [
+    "cumulus(=더미) → 쌓여 더해져"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cyclical",
+   "ipa": "/ˈsɪklɪkəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "순환적인, 주기적인",
+     "ex": "Many economists view recessions as part of a cyclical pattern.",
+     "tr": "많은 경제학자들은 경기 침체를 순환적 양상의 일부로 본다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "recurring",
+    "periodic"
+   ],
+   "deriv": [
+    "cycle (n) 주기",
+    "cyclically (adv) 주기적으로"
+   ],
+   "roots": [
+    "kyklos(=원, 바퀴) → 원을 그리며 도는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dampen",
+   "ipa": "/ˈdæmpən/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "약화시키다, 억누르다",
+     "ex": "Rising costs dampened enthusiasm for the ambitious space program.",
+     "tr": "치솟는 비용이 그 야심찬 우주 계획에 대한 열의를 약화시켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reduce",
+    "lessen",
+    "subdue"
+   ],
+   "deriv": [],
+   "roots": [
+    "damp(=축축한, 기를 꺾는) → 기세를 눅이다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "dataset",
+   "ipa": "/ˈdeɪtəset/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "데이터 집합, 자료 집합",
+     "ex": "The researchers trained the model on a dataset of millions of images.",
+     "tr": "연구자들은 수백만 개의 이미지로 이루어진 데이터 집합으로 그 모델을 훈련했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "data collection"
+   ],
+   "deriv": [],
+   "roots": [
+    "data(=주어진 것들) + set(=묶음) → 자료의 묶음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "datum",
+   "ipa": "/ˈdeɪtəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자료, 데이터 (단수형)",
+     "ex": "Each datum was recorded carefully and checked against the original readings.",
+     "tr": "각 자료 값은 신중하게 기록되어 원래 측정치와 대조되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "data point",
+    "fact",
+    "figure"
+   ],
+   "deriv": [
+    "data (n) 자료 (복수)"
+   ],
+   "roots": [
+    "dare(=주다)의 과거분사 datum → 주어진 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "debatable",
+   "ipa": "/dɪˈbeɪtəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "논쟁의 여지가 있는",
+     "ex": "Whether the policy actually reduced poverty remains highly debatable.",
+     "tr": "그 정책이 실제로 빈곤을 줄였는지는 여전히 대단히 논쟁의 여지가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "arguable",
+    "disputable",
+    "questionable"
+   ],
+   "deriv": [
+    "debate (n) 논쟁"
+   ],
+   "roots": [
+    "battuere(=치다) → 서로 쳐서 다툴 만한"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deduce",
+   "ipa": "/dɪˈdjuːs/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "연역하다, 추론하다",
+     "ex": "From the footprints, scientists could deduce how the animal moved.",
+     "tr": "발자국으로부터 과학자들은 그 동물이 어떻게 움직였는지를 추론할 수 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "infer",
+    "conclude",
+    "reason out"
+   ],
+   "deriv": [
+    "deduction (n) 연역",
+    "deductive (adj) 연역적인"
+   ],
+   "roots": [
+    "de(=아래로) + ducere(=이끌다) → 결론을 이끌어 내다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deduction",
+   "ipa": "/dɪˈdʌkʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연역, 추론",
+     "ex": "Logical deduction moves from general principles to specific conclusions.",
+     "tr": "논리적 연역은 일반 원리에서 구체적 결론으로 나아간다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inference",
+    "reasoning"
+   ],
+   "deriv": [
+    "deduce (v) 연역하다",
+    "deductive (adj) 연역적인"
+   ],
+   "roots": [
+    "de(=아래로) + ducere(=이끌다) → 결론을 이끌어 냄"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deficient",
+   "ipa": "/dɪˈfɪʃənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "부족한, 결핍된",
+     "ex": "A diet deficient in iron can lead to chronic fatigue.",
+     "tr": "철분이 결핍된 식단은 만성 피로로 이어질 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "lacking",
+    "insufficient",
+    "inadequate"
+   ],
+   "deriv": [
+    "deficiency (n) 결핍",
+    "deficit (n) 부족"
+   ],
+   "roots": [
+    "de(=벗어나) + facere(=하다) → 갖추어야 할 것이 빠진"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "definitive",
+   "ipa": "/dɪˈfɪnətɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "확정적인, 결정적인",
+     "ex": "No definitive answer has yet emerged from the ongoing research.",
+     "tr": "진행 중인 연구에서 아직 확정적인 답은 나오지 않았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conclusive",
+    "authoritative",
+    "final"
+   ],
+   "deriv": [
+    "definitively (adv) 확정적으로",
+    "define (v) 정의하다"
+   ],
+   "roots": [
+    "de(=완전히) + finire(=끝맺다) → 완전히 매듭지은"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "degenerate",
+   "ipa": "/dɪˈdʒenəreɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "퇴화하다, 악화되다",
+     "ex": "Without regular use, muscle tissue gradually degenerates.",
+     "tr": "규칙적으로 사용하지 않으면 근육 조직은 점차 퇴화한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "deteriorate",
+    "decline",
+    "worsen"
+   ],
+   "deriv": [
+    "degeneration (n) 퇴화"
+   ],
+   "roots": [
+    "de(=아래로) + genus(=종류, 혈통) → 본래 상태에서 떨어지다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "degrade",
+   "ipa": "/dɪˈɡreɪd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "저하시키다, 훼손하다",
+     "ex": "Pollution can seriously degrade the quality of coastal habitats.",
+     "tr": "오염은 연안 서식지의 질을 심각하게 저하시킬 수 있다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "분해되다",
+     "ex": "Many plastics degrade extremely slowly in the natural environment.",
+     "tr": "많은 플라스틱은 자연환경에서 극도로 느리게 분해된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "diminish",
+    "impair",
+    "break down"
+   ],
+   "deriv": [
+    "degradation (n) 저하, 분해"
+   ],
+   "roots": [
+    "de(=아래로) + gradus(=단계) → 등급을 낮추다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "delegate",
+   "ipa": "/ˈdelɪɡeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "위임하다",
+     "ex": "Effective leaders learn to delegate routine tasks to their teams.",
+     "tr": "유능한 지도자들은 일상적인 업무를 팀에 위임하는 법을 배운다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "assign",
+    "entrust",
+    "hand over"
+   ],
+   "deriv": [
+    "delegation (n) 위임, 대표단"
+   ],
+   "roots": [
+    "de(=떨어져) + legare(=맡기다) → 남에게 맡기다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "denote",
+   "ipa": "/dɪˈnoʊt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "나타내다, 의미하다",
+     "ex": "In the diagram, each arrow denotes the flow of energy.",
+     "tr": "그 도표에서 각 화살표는 에너지의 흐름을 나타낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "indicate",
+    "signify",
+    "represent"
+   ],
+   "deriv": [
+    "denotation (n) 명시적 의미"
+   ],
+   "roots": [
+    "de(=완전히) + notare(=표시하다) → 분명히 가리키다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "depiction",
+   "ipa": "/dɪˈpɪkʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "묘사, 서술",
+     "ex": "The cave paintings offer a vivid depiction of prehistoric hunting.",
+     "tr": "그 동굴 벽화는 선사시대 사냥에 대한 생생한 묘사를 제공한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "portrayal",
+    "representation"
+   ],
+   "deriv": [
+    "depict (v) 묘사하다"
+   ],
+   "roots": [
+    "de(=완전히) + pingere(=그리다) → 그려 냄"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deprivation",
+   "ipa": "/ˌdeprɪˈveɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "박탈, 결핍",
+     "ex": "Prolonged sleep deprivation seriously impairs memory and judgment.",
+     "tr": "장기간의 수면 박탈은 기억력과 판단력을 심각하게 손상시킨다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "lack",
+    "shortage",
+    "loss"
+   ],
+   "deriv": [
+    "deprive (v) 박탈하다"
+   ],
+   "roots": [
+    "de(=완전히) + privare(=빼앗다) → 완전히 빼앗음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "derivation",
+   "ipa": "/ˌderɪˈveɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "유래, 도출",
+     "ex": "The derivation of the word can be traced back to ancient Greek.",
+     "tr": "그 단어의 유래는 고대 그리스어까지 거슬러 올라갈 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "origin",
+    "source",
+    "deriving"
+   ],
+   "deriv": [
+    "derive (v) 유래하다",
+    "derivative (n) 파생물"
+   ],
+   "roots": [
+    "de(=아래로) + rivus(=물줄기) → 끌어내어 나옴"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }

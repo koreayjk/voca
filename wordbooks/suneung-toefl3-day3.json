@@ -1,610 +1,1406 @@
 {
-  "book": "토플 고난도",
-  "code": "TOEFL-3",
-  "day": 3,
-  "words": [
+ "book": "토플 고난도",
+ "code": "TOEFL-3",
+ "day": 3,
+ "words": [
+  {
+   "en": "coherent",
+   "ipa": "/koʊˈhɪrənt/",
+   "pos": "adj",
+   "meanings": [
     {
-      "en": "arbitrage",
-      "ipa": "/ˈɑːrbɪtrɑːʒ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "차익 거래 (가격 차를 이용한 매매)", "ex": "Traders engage in arbitrage by buying an asset where it is cheap and selling it instantly where it is dearer.", "tr": "트레이더들은 어떤 자산을 싼 곳에서 사서 더 비싼 곳에 즉시 파는 방식으로 차익 거래를 한다.", "src": "" }
-      ],
-      "syn": ["price arbitrage"],
-      "deriv": ["arbitrageur (n) 차익 거래자"],
-      "roots": ["arbiter(=판정자) → 시세 차를 저울질하는 거래"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "combust",
-      "ipa": "/kəmˈbʌst/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "연소하다, 타다", "ex": "The fuel must combust completely inside the cylinder for the engine to convert chemical energy into motion efficiently.", "tr": "엔진이 화학 에너지를 효율적으로 운동으로 바꾸려면 연료가 실린더 안에서 완전히 연소해야 한다.", "src": "" }
-      ],
-      "syn": ["burn", "ignite", "oxidize"],
-      "deriv": ["combustion (n) 연소", "combustible (adj) 가연성의"],
-      "roots": ["com(=완전히) + urere(=태우다) → 완전히 태우다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "dialectic",
-      "ipa": "/ˌdaɪəˈlektɪk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "변증법 (대립을 통해 진리에 이르는 논법)", "ex": "In the Hegelian dialectic, a thesis provokes its opposite, and the tension between them yields a higher synthesis.", "tr": "헤겔의 변증법에서 하나의 정립은 그 반대를 불러일으키고, 둘 사이의 긴장이 더 높은 종합을 낳는다.", "src": "" }
-      ],
-      "syn": ["reasoning", "argumentation"],
-      "deriv": ["dialectical (adj) 변증법적인"],
-      "roots": ["dia(=서로) + legein(=말하다) → 주고받는 논변"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "alkaloid",
-      "ipa": "/ˈælkəlɔɪd/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "알칼로이드 (식물성 염기 화합물)", "ex": "Many plants defend themselves by producing a bitter alkaloid that is toxic to the insects feeding on them.", "tr": "많은 식물은 자신을 먹는 곤충에게 유독한 쓴 알칼로이드를 만들어 스스로를 방어한다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["alkali(=염기) + -oid(=~같은) → 염기성 물질"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "analgesic",
-      "ipa": "/ˌænəlˈdʒiːzɪk/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "진통제", "ex": "The physician prescribed a mild analgesic to dull the pain without leaving the patient drowsy.", "tr": "그 의사는 환자를 졸리게 하지 않으면서 통증을 무디게 하려고 순한 진통제를 처방했다.", "src": "" }
-      ],
-      "syn": ["painkiller"],
-      "deriv": ["analgesic (adj) 진통의"],
-      "roots": ["an(=없는) + algos(=통증) → 통증을 없애는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cultivable",
-      "ipa": "/ˈkʌltɪvəbl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "경작 가능한", "ex": "Irrigation turned a stretch of arid scrubland into cultivable fields capable of supporting two harvests a year.", "tr": "관개는 메마른 관목지 일대를 연 두 차례 수확을 지탱할 수 있는 경작 가능한 농지로 바꾸어 놓았다.", "src": "" }
-      ],
-      "syn": ["arable", "farmable", "tillable"],
-      "deriv": ["cultivate (v) 경작하다"],
-      "roots": ["colere(=경작하다) + -able → 경작할 수 있는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "aperture",
-      "ipa": "/ˈæpərtʃər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "조리개, (빛이 통과하는) 구멍", "ex": "Widening the aperture lets more light reach the sensor but reduces the depth of field in the image.", "tr": "조리개를 넓히면 더 많은 빛이 센서에 도달하지만 이미지의 심도는 얕아진다.", "src": "" }
-      ],
-      "syn": ["opening", "orifice"],
-      "deriv": [],
-      "roots": ["aperire(=열다) → 열린 구멍"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "attunement",
-      "ipa": "/əˈtuːnmənt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "조율, 교감, (정서적) 조응", "ex": "A caregiver's attunement to an infant's subtle cues fosters the secure bond on which later development depends.", "tr": "영아의 미묘한 신호에 대한 양육자의 조응은 이후 발달이 의존하는 안정적 유대를 길러 준다.", "src": "" }
-      ],
-      "syn": ["harmony", "responsiveness", "rapport"],
-      "deriv": ["attune (v) 맞추다, 조율하다"],
-      "roots": ["ad(=to) + tune(=음, 가락) → 서로 가락을 맞춤"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "architrave",
-      "ipa": "/ˈɑːrkɪtreɪv/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "아키트레이브 (기둥 위에 얹히는 수평 부재)", "ex": "The architrave rested directly on the capitals of the columns, bearing the weight of the frieze above.", "tr": "아키트레이브는 기둥의 주두 위에 곧바로 얹혀 그 위 프리즈의 무게를 떠받쳤다.", "src": "" }
-      ],
-      "syn": ["lintel", "epistyle"],
-      "deriv": [],
-      "roots": ["archi(=으뜸) + trabs(=들보) → 으뜸 들보"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "assonance",
-      "ipa": "/ˈæsənəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "모음운 (인접한 낱말의 모음 반복)", "ex": "The line's assonance, in the repeated long o of lonely and roam, lends it a slow, mournful music.", "tr": "그 행의 모음운은 lonely와 roam에서 반복되는 긴 o 소리로 느리고 애잔한 음악성을 부여한다.", "src": "" }
-      ],
-      "syn": ["vowel rhyme"],
-      "deriv": [],
-      "roots": ["ad(=to) + sonare(=소리 내다) → 소리가 서로 울림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "batholith",
-      "ipa": "/ˈbæθəlɪθ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "저반 (지하 깊은 곳에서 굳은 거대한 화성암체)", "ex": "The granite batholith formed as a vast body of magma cooled slowly, far beneath the ancient mountains.", "tr": "그 화강암 저반은 거대한 마그마 덩어리가 고대 산맥 깊은 아래에서 천천히 식으며 형성되었다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": [],
-      "roots": ["bathos(=깊이) + lithos(=돌) → 깊은 곳의 암체"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cipher",
-      "ipa": "/ˈsaɪfər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "암호, 암호 체계", "ex": "Without the key, the intercepted message was an unreadable cipher of jumbled letters and symbols.", "tr": "열쇠 없이는 가로챈 그 메시지가 뒤섞인 문자와 기호로 된 판독 불가능한 암호였다.", "src": "" }
-      ],
-      "syn": ["code", "encryption"],
-      "deriv": [],
-      "roots": ["sifr(=아랍어 영, 빈 것) → 비밀 기호"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "falsifiable",
-      "ipa": "/ˈfɔːlsɪfaɪəbl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "반증 가능한", "ex": "A hypothesis is scientific only if it is falsifiable, that is, if some conceivable observation could prove it wrong.", "tr": "가설은 반증 가능할 때에만, 곧 상상 가능한 어떤 관찰이 그것을 틀렸음을 입증할 수 있을 때에만 과학적이다.", "src": "" }
-      ],
-      "syn": ["testable", "refutable"],
-      "deriv": ["falsifiability (n) 반증 가능성"],
-      "roots": ["falsus(=거짓) + -fiable → 거짓임을 보일 수 있는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "canon",
-      "ipa": "/ˈkænən/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(음악) 카논, 돌림노래", "ex": "In a canon, each voice enters in turn with the same melody, weaving the parts into a single texture.", "tr": "카논에서는 각 성부가 같은 선율로 차례차례 들어와 여러 파트를 하나의 짜임새로 엮는다.", "src": "" },
-        { "pos": "n", "ko": "(문학·예술의) 정전, 표준 목록", "ex": "For centuries these plays formed the canon that every educated reader was expected to know.", "tr": "수 세기 동안 이 희곡들은 교양 있는 독자라면 누구나 알아야 할 정전을 이루었다.", "src": "" }
-      ],
-      "syn": ["round", "standard works"],
-      "deriv": ["canonical (adj) 정전의, 표준의"],
-      "roots": ["kanon(=자, 규범) → 기준이 되는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "congruent",
-      "ipa": "/ˈkɒŋɡruənt/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "합동의, 일치하는", "ex": "Two triangles are congruent when their corresponding sides and angles are equal in every respect.", "tr": "두 삼각형은 대응하는 변과 각이 모든 면에서 같을 때 합동이다.", "src": "" }
-      ],
-      "syn": ["identical", "matching", "coincident"],
-      "deriv": ["congruence (n) 합동, 일치"],
-      "roots": ["con(=함께) + gruere(=일치하다) → 서로 꼭 들어맞는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "etching",
-      "ipa": "/ˈetʃɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "에칭, 부식 판화", "ex": "To make an etching, the artist scratches a design into a waxed plate and lets acid bite the exposed lines.", "tr": "에칭을 만들기 위해 화가는 밀랍을 입힌 판에 도안을 긁어 새기고 산이 드러난 선을 부식시키도록 둔다.", "src": "" }
-      ],
-      "syn": ["engraving", "print"],
-      "deriv": ["etch (v) 부식시켜 새기다"],
-      "roots": ["etzen(=부식시키다) → 산으로 새긴 그림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "abstruse",
-      "ipa": "/əbˈstruːs/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "난해한, 심오하여 이해하기 어려운", "ex": "The paper's argument was so abstruse that even specialists struggled to follow its central claim.", "tr": "그 논문의 논증은 너무 난해해서 전문가들조차 핵심 주장을 따라가기 힘들어했다.", "src": "" }
-      ],
-      "syn": ["obscure", "recondite", "arcane"],
-      "deriv": [],
-      "roots": ["abs(=away) + trudere(=밀다) → 깊이 감춰져 파악하기 어려운"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "학술일반",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bygone",
-      "ipa": "/ˈbaɪɡɒn/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "지난, 과거의, 옛날의", "ex": "The ruined manor stands as a relic of a bygone era when the estate dominated the surrounding countryside.", "tr": "그 폐허가 된 저택은 그 영지가 주변 시골을 지배하던 지나간 시대의 유물로 서 있다.", "src": "" }
-      ],
-      "syn": ["former", "past", "erstwhile"],
-      "deriv": [],
-      "roots": ["by(=지나) + gone(=간) → 지나가 버린"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "역사",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "atonement",
-      "ipa": "/əˈtoʊnmənt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "속죄, 보상, 죗값을 치름", "ex": "In many traditions, fasting and charity are acts of atonement meant to repair a broken relationship with the divine.", "tr": "많은 전통에서 금식과 자선은 신과의 깨어진 관계를 회복하려는 속죄 행위이다.", "src": "" }
-      ],
-      "syn": ["reparation", "expiation", "amends"],
-      "deriv": ["atone (v) 속죄하다"],
-      "roots": ["at one(=하나가 됨) → 화해하여 하나 되는 것"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "철학종교",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "aridity",
-      "ipa": "/əˈrɪdəti/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "건조, 메마름", "ex": "The increasing aridity of the region forced farmers to abandon crops that had thrived there for generations.", "tr": "그 지역의 심해지는 건조함은 농부들에게 여러 세대 동안 그곳에서 잘 자라던 작물을 포기하게 만들었다.", "src": "" }
-      ],
-      "syn": ["dryness", "barrenness"],
-      "deriv": ["arid (adj) 건조한, 메마른"],
-      "roots": ["arere(=마르다) → 마른 상태"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "환경",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "precess",
-      "ipa": "/priːˈses/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "세차 운동을 하다 (회전축이 천천히 도는 원을 그리다)", "ex": "Like a slowing top, the Earth's axis precesses over roughly twenty-six thousand years, shifting the celestial pole.", "tr": "느려지는 팽이처럼 지구의 자전축은 약 2만 6천 년에 걸쳐 세차 운동을 하며 천구의 극을 이동시킨다.", "src": "" }
-      ],
-      "syn": ["wobble"],
-      "deriv": ["precession (n) 세차 운동"],
-      "roots": ["prae(=앞서) + cedere(=가다) → 축이 앞서 돌아 나아가다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "천문",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "assimilationist",
-      "ipa": "/əˌsɪmɪˈleɪʃənɪst/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "동화주의의 (소수 집단을 주류에 흡수시키려는)", "ex": "Assimilationist policies pressured immigrant communities to abandon their languages in favor of the dominant culture.", "tr": "동화주의 정책은 이민자 공동체가 자신들의 언어를 버리고 주류 문화를 받아들이도록 압박했다.", "src": "" }
-      ],
-      "syn": ["integrationist"],
-      "deriv": ["assimilation (n) 동화"],
-      "roots": ["ad(=to) + similis(=닮은) → 닮게 만들려는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "사회",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "appellate",
-      "ipa": "/əˈpelət/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "항소의, 상소심의", "ex": "The appellate court does not retry the facts but reviews whether the lower court applied the law correctly.", "tr": "항소 법원은 사실 관계를 다시 심리하지 않고 하급 법원이 법을 올바르게 적용했는지를 검토한다.", "src": "" }
-      ],
-      "syn": ["reviewing"],
-      "deriv": ["appeal (n) 항소, 상소"],
-      "roots": ["ad(=to) + pellere(=몰다) → 상급 법원에 호소하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "정치법률",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "caustic",
-      "ipa": "/ˈkɔːstɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "부식성의, (화학적으로) 강하게 침식하는", "ex": "The caustic solution ate through the metal container, so it had to be stored in an inert plastic vessel.", "tr": "그 부식성 용액은 금속 용기를 뚫고 녹여 내어 반응하지 않는 플라스틱 용기에 보관해야 했다.", "src": "" }
-      ],
-      "syn": ["corrosive", "acidic", "burning"],
-      "deriv": [],
-      "roots": ["kaiein(=태우다) → 살을 태우듯 침식하는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "화학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bootstrap",
-      "ipa": "/ˈbuːtstræp/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "자력으로 (사업을) 키우다, 외부 자금 없이 일구다", "ex": "The founders bootstrapped the company for years, reinvesting every profit rather than seeking outside investors.", "tr": "그 창업자들은 외부 투자자를 구하기보다 모든 이익을 재투자하며 여러 해 동안 회사를 자력으로 키웠다.", "src": "" }
-      ],
-      "syn": ["self-fund", "self-start"],
-      "deriv": [],
-      "roots": ["boot(=장화) + strap(=끈) → 제 힘으로 끌어올림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "경제",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "conduit",
-      "ipa": "/ˈkɒnduɪt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "도관, 관로, (전달) 통로", "ex": "The buried conduit protects the electrical cables and channels rainwater away from the building's foundation.", "tr": "매설된 도관은 전기 케이블을 보호하고 빗물을 건물 기초에서 멀리 흘려보낸다.", "src": "" }
-      ],
-      "syn": ["channel", "duct", "pipe"],
-      "deriv": [],
-      "roots": ["con(=함께) + ducere(=이끌다) → 무언가를 이끌어 나르는 관"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "공학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "didactic",
-      "ipa": "/daɪˈdæktɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "교훈적인, 설교적인, 가르치려 드는", "ex": "The novel is openly didactic, pausing its story to instruct the reader in the virtues it admires.", "tr": "그 소설은 노골적으로 교훈적이어서, 이야기를 멈추고 독자에게 그것이 찬양하는 미덕을 가르친다.", "src": "" }
-      ],
-      "syn": ["instructive", "moralizing", "preachy"],
-      "deriv": ["didacticism (n) 교훈주의"],
-      "roots": ["didaskein(=가르치다) → 가르치려는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "교육미디어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "altruism",
-      "ipa": "/ˈæltruɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "이타주의, (생물) 이타적 행동", "ex": "Biologists explain apparent altruism among animals by showing how helping relatives can spread shared genes.", "tr": "생물학자들은 친족을 돕는 것이 어떻게 공유된 유전자를 퍼뜨리는지를 보여 줌으로써 동물의 겉보기 이타 행동을 설명한다.", "src": "" }
-      ],
-      "syn": ["selflessness", "self-sacrifice"],
-      "deriv": ["altruistic (adj) 이타적인"],
-      "roots": ["alter(=다른 사람) → 남을 위함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "생명과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bronchial",
-      "ipa": "/ˈbrɒŋkiəl/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "기관지의", "ex": "Chronic irritation inflames the bronchial passages, narrowing them and making each breath more difficult.", "tr": "만성적 자극은 기관지를 염증으로 붓게 하여 좁히고 숨쉬기를 더 힘들게 만든다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["bronchus (n) 기관지"],
-      "roots": ["bronchos(=숨통) → 기관지에 관한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "의학건강",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "fodder",
-      "ipa": "/ˈfɒdər/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "사료, 여물 (가축 먹이)", "ex": "During the long winter the farmers relied on stored hay and grain as fodder for their cattle.", "tr": "긴 겨울 동안 농부들은 저장해 둔 건초와 곡물을 소의 사료로 삼았다.", "src": "" }
-      ],
-      "syn": ["feed", "forage"],
-      "deriv": [],
-      "roots": ["fodian(=먹이다) → 가축의 먹이"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "농업산업",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "attenuation",
-      "ipa": "/əˌtenjuˈeɪʃn/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "감쇠, (세기의) 약화", "ex": "As the signal travels through the cable, attenuation gradually weakens it until amplifiers restore its strength.", "tr": "신호가 케이블을 지나는 동안 감쇠가 그것을 점차 약화시키다가 증폭기가 세기를 회복시킨다.", "src": "" }
-      ],
-      "syn": ["weakening", "damping", "reduction"],
-      "deriv": ["attenuate (v) 감쇠시키다"],
-      "roots": ["ad(=to) + tenuis(=얇은) → 점점 얇아져 약해짐"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "물리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "behaviorism",
-      "ipa": "/bɪˈheɪvjərɪzəm/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "행동주의 (관찰 가능한 행동만을 다루는 심리학파)", "ex": "Behaviorism insisted that psychology confine itself to observable behavior rather than to unseen mental states.", "tr": "행동주의는 심리학이 보이지 않는 정신 상태가 아니라 관찰 가능한 행동에만 국한되어야 한다고 주장했다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["behaviorist (n) 행동주의자"],
-      "roots": ["behavior(=행동) + -ism → 행동을 중시하는 학설"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "심리",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "austere",
-      "ipa": "/ɔːˈstɪr/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "간소한, 꾸밈없는, 엄숙한", "ex": "The chapel's austere interior, free of ornament, directs all attention toward its single stained-glass window.", "tr": "장식이 없는 그 예배당의 간소한 내부는 모든 시선을 하나뿐인 스테인드글라스 창으로 이끈다.", "src": "" }
-      ],
-      "syn": ["plain", "severe", "unadorned"],
-      "deriv": ["austerity (n) 간소함, 긴축"],
-      "roots": ["austeros(=거친, 엄한) → 꾸밈없이 엄격한"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "건축",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cognate",
-      "ipa": "/ˈkɒɡneɪt/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "동족어 (같은 어원에서 나온 낱말)", "ex": "The English night and the German Nacht are cognates descended from a single ancestral word.", "tr": "영어 night와 독일어 Nacht는 하나의 조상어에서 갈라져 나온 동족어이다.", "src": "" }
-      ],
-      "syn": ["related word"],
-      "deriv": ["cognate (adj) 동족의"],
-      "roots": ["co(=함께) + gnatus(=태어난) → 함께 태어난 말"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "문학언어",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "bedding",
-      "ipa": "/ˈbedɪŋ/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(지질) 층리, 지층의 켜", "ex": "The distinct bedding of the cliff records successive layers of sediment laid down over millions of years.", "tr": "그 절벽의 뚜렷한 층리는 수백만 년에 걸쳐 쌓인 잇단 퇴적층을 기록하고 있다.", "src": "" }
-      ],
-      "syn": ["stratification", "layering"],
-      "deriv": [],
-      "roots": ["bed(=바닥, 층) → 겹겹이 쌓인 켜"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "지구과학",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "cryptographic",
-      "ipa": "/ˌkrɪptəˈɡræfɪk/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "암호의, 암호 기법의", "ex": "The messaging app uses cryptographic keys so that only the intended recipient can decode each message.", "tr": "그 메시지 앱은 의도된 수신자만이 각 메시지를 해독할 수 있도록 암호 키를 사용한다.", "src": "" }
-      ],
-      "syn": ["encrypted", "encoded"],
-      "deriv": ["cryptography (n) 암호학"],
-      "roots": ["kryptos(=숨은) + graphein(=쓰다) → 숨겨 쓰는 기법의"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "기술컴퓨팅",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "falsify",
-      "ipa": "/ˈfɔːlsɪfaɪ/",
-      "pos": "v",
-      "meanings": [
-        { "pos": "v", "ko": "반증하다, 틀렸음을 입증하다", "ex": "A single reliable counterexample is enough to falsify a theory that claims to hold in every case.", "tr": "모든 경우에 성립한다고 주장하는 이론은 믿을 만한 반례 하나만으로도 반증하기에 충분하다.", "src": "" },
-        { "pos": "v", "ko": "위조하다, (자료를) 조작하다", "ex": "The researcher was dismissed after an inquiry found that he had falsified his experimental data.", "tr": "그 연구자는 실험 자료를 조작했다는 사실이 조사에서 드러난 뒤 해임되었다.", "src": "" }
-      ],
-      "syn": ["disprove", "refute", "forge"],
-      "deriv": ["falsification (n) 반증, 위조"],
-      "roots": ["falsus(=거짓) + facere(=만들다) → 거짓임을 드러내다"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "연구방법",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "consonance",
-      "ipa": "/ˈkɒnsənəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "(음악) 협화음, 조화", "ex": "The passage resolves from tense dissonance into calm consonance, releasing the harmonic pressure it built.", "tr": "그 악절은 긴장된 불협화음에서 잔잔한 협화음으로 해소되며, 쌓아 올린 화성적 긴장을 풀어 준다.", "src": "" }
-      ],
-      "syn": ["harmony", "concord"],
-      "deriv": ["consonant (adj) 조화로운"],
-      "roots": ["con(=함께) + sonare(=울리다) → 함께 어울려 울림"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "음악공연",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "covariance",
-      "ipa": "/koʊˈveriəns/",
-      "pos": "n",
-      "meanings": [
-        { "pos": "n", "ko": "공분산 (두 변수가 함께 변하는 정도)", "ex": "A positive covariance indicates that the two variables tend to rise and fall together across the sample.", "tr": "양의 공분산은 표본 전체에서 두 변수가 함께 오르내리는 경향이 있음을 나타낸다.", "src": "" }
-      ],
-      "syn": [],
-      "deriv": ["covary (v) 함께 변하다"],
-      "roots": ["co(=함께) + variare(=변하다) → 함께 변함"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "수학통계",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
-    },
-    {
-      "en": "figurative",
-      "ipa": "/ˈfɪɡjərətɪv/",
-      "pos": "adj",
-      "meanings": [
-        { "pos": "adj", "ko": "(미술) 구상적인, 형상을 그린", "ex": "After decades of abstraction, the painter returned to figurative work, filling the canvas with recognizable human forms.", "tr": "수십 년간의 추상 작업 끝에 그 화가는 구상 작업으로 돌아와 알아볼 수 있는 인간의 형상으로 화폭을 채웠다.", "src": "" },
-        { "pos": "adj", "ko": "비유적인, 은유적인", "ex": "Read in a figurative sense, the storm in the poem stands for the turmoil within the speaker's mind.", "tr": "비유적 의미로 읽으면 그 시의 폭풍은 화자의 마음속 격동을 나타낸다.", "src": "" }
-      ],
-      "syn": ["representational", "metaphorical"],
-      "deriv": ["figure (n) 형상, 인물상"],
-      "roots": ["figura(=형상) → 형상을 나타내는"],
-      "etymHint": "",
-      "level": "C2",
-      "topic": "미술",
-      "exam": { "tested": false, "count": 0, "exams": 0, "recentYear": "", "stars": 3 }
+     "pos": "adj",
+     "ko": "일관된, 논리 정연한",
+     "ex": "The scattered observations were finally woven into a coherent theory.",
+     "tr": "흩어진 관찰들이 마침내 하나의 일관된 이론으로 엮였다.",
+     "src": ""
     }
-  ]
+   ],
+   "syn": [
+    "consistent",
+    "logical",
+    "unified"
+   ],
+   "deriv": [
+    "coherence (n) 일관성"
+   ],
+   "roots": [
+    "co(=함께) + haerere(=붙다) → 논리가 맞물린"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cohesion",
+   "ipa": "/koʊˈhiːʒn̩/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "응집력, 결속",
+     "ex": "Shared traditions can strengthen the cohesion of a community.",
+     "tr": "공유된 전통은 공동체의 결속을 강화할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unity",
+    "solidarity",
+    "bonding"
+   ],
+   "deriv": [
+    "cohesive (adj) 응집력 있는"
+   ],
+   "roots": [
+    "co(=함께) + haerere(=붙다) → 서로 달라붙는 힘"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cohesive",
+   "ipa": "/koʊˈhiːsɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "응집력 있는, 결합된",
+     "ex": "A cohesive narrative binds the otherwise disparate chapters together.",
+     "tr": "응집력 있는 서사가 자칫 이질적일 장들을 하나로 묶어 준다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unified",
+    "integrated",
+    "tight-knit"
+   ],
+   "deriv": [
+    "cohesion (n) 응집력"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "coincide",
+   "ipa": "/ˌkoʊɪnˈsaɪd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "일치하다, 동시에 일어나다",
+     "ex": "The economic downturn happened to coincide with a severe drought.",
+     "tr": "경기 침체가 공교롭게도 심각한 가뭄과 동시에 일어났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "concur",
+    "overlap",
+    "correspond"
+   ],
+   "deriv": [
+    "coincidence (n) 우연의 일치"
+   ],
+   "roots": [
+    "co(=함께) + in(=위에) + cadere(=떨어지다) → 같은 지점에 떨어지다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "coincidental",
+   "ipa": "/koʊˌɪnsɪˈdentl̩/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "우연의",
+     "ex": "The resemblance between the two accounts is probably coincidental.",
+     "tr": "두 기록 사이의 유사성은 아마도 우연일 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "accidental",
+    "chance",
+    "fortuitous"
+   ],
+   "deriv": [
+    "coincidence (n) 우연"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "commence",
+   "ipa": "/kəˈmens/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "시작하다",
+     "ex": "Excavation of the site is scheduled to commence next spring.",
+     "tr": "그 유적지의 발굴은 내년 봄에 시작될 예정이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "begin",
+    "start",
+    "initiate"
+   ],
+   "deriv": [
+    "commencement (n) 시작"
+   ],
+   "roots": [
+    "com(=함께) + initiare(=시작하다) → 착수하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "commentary",
+   "ipa": "/ˈkɑːmənteri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "논평, 해설",
+     "ex": "The edition includes a scholarly commentary on each difficult passage.",
+     "tr": "그 판본에는 어려운 구절마다 학술적 해설이 실려 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "analysis",
+    "exposition",
+    "annotation"
+   ],
+   "deriv": [],
+   "roots": [
+    "commentari(=곰곰이 생각하다) → 풀어 설명한 글"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "commodity",
+   "ipa": "/kəˈmɑːdəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상품, 필수품",
+     "ex": "Fresh water is becoming an increasingly scarce commodity in many regions.",
+     "tr": "깨끗한 물은 많은 지역에서 점점 더 귀한 필수품이 되고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "good",
+    "product",
+    "merchandise"
+   ],
+   "deriv": [],
+   "roots": [
+    "commodus(=알맞은, 유용한) → 쓸모 있는 물품"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compel",
+   "ipa": "/kəmˈpel/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "강요하다, ~하게 만들다",
+     "ex": "The mounting evidence compelled scholars to reconsider the old consensus.",
+     "tr": "쌓여 가는 증거는 학자들이 오랜 통설을 재고하지 않을 수 없게 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "force",
+    "oblige",
+    "drive"
+   ],
+   "deriv": [
+    "compulsion (n) 강요"
+   ],
+   "roots": [
+    "com(=함께) + pellere(=밀다) → 강하게 밀어붙이다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compelling",
+   "ipa": "/kəmˈpelɪŋ/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "설득력 있는, 강력한",
+     "ex": "The study presents compelling evidence for the ancient migration route.",
+     "tr": "그 연구는 고대 이주 경로에 대한 설득력 있는 증거를 제시한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "convincing",
+    "persuasive",
+    "forceful"
+   ],
+   "deriv": [
+    "compel (v) 강요하다"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compilation",
+   "ipa": "/ˌkɑːmpɪˈleɪʃn̩/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "편집물, 모음",
+     "ex": "The volume is a compilation of essays by leading experts in the field.",
+     "tr": "그 책은 그 분야의 저명한 전문가들이 쓴 에세이 모음집이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "collection",
+    "anthology",
+    "assembly"
+   ],
+   "deriv": [
+    "compile (v) 편집하다"
+   ],
+   "roots": [
+    "com(=함께) + pilare(=모으다) → 한데 모아 엮음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "complementary",
+   "ipa": "/ˌkɑːmplɪˈmentri/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "상호 보완적인",
+     "ex": "The two methods are complementary rather than mutually exclusive.",
+     "tr": "그 두 방법은 상호 배타적이라기보다 상호 보완적이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reciprocal",
+    "mutually supportive"
+   ],
+   "deriv": [
+    "complement (n) 보완물"
+   ],
+   "roots": [
+    "complere(=채우다) → 서로 채워 주는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compliance",
+   "ipa": "/kəmˈplaɪəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "준수, 순응",
+     "ex": "Regular inspections ensure compliance with safety regulations.",
+     "tr": "정기 점검은 안전 규정의 준수를 보장한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conformity",
+    "adherence",
+    "observance"
+   ],
+   "deriv": [
+    "comply (v) 준수하다"
+   ],
+   "roots": [
+    "com(=함께) + plere(=채우다) → 요구를 채워 따름"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compliant",
+   "ipa": "/kəmˈplaɪənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "순응하는, 준수하는",
+     "ex": "Only products fully compliant with the standard may bear the label.",
+     "tr": "기준을 완전히 준수하는 제품만이 그 표시를 달 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conforming",
+    "obedient",
+    "acquiescent"
+   ],
+   "deriv": [
+    "compliance (n) 준수"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compress",
+   "ipa": "/kəmˈpres/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "압축하다",
+     "ex": "The algorithm compresses large files without significant loss of quality.",
+     "tr": "그 알고리즘은 상당한 품질 손실 없이 큰 파일을 압축한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "condense",
+    "compact",
+    "squeeze"
+   ],
+   "deriv": [
+    "compression (n) 압축"
+   ],
+   "roots": [
+    "com(=함께) + premere(=누르다) → 눌러서 줄이다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "comprise",
+   "ipa": "/kəmˈpraɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "구성하다, 이루다",
+     "ex": "The federation comprises a dozen semi-independent states.",
+     "tr": "그 연방은 열두 개의 반독립 주로 구성된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "constitute",
+    "consist of",
+    "make up"
+   ],
+   "deriv": [],
+   "roots": [
+    "com(=함께) + prehendere(=잡다) → 아울러 담아 이룸"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "computation",
+   "ipa": "/ˌkɒmpjuˈteɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "계산, 연산",
+     "ex": "Modern climate models require an enormous amount of computation to simulate the atmosphere.",
+     "tr": "현대 기후 모델은 대기를 모사하기 위해 엄청난 양의 계산을 필요로 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "calculation",
+    "reckoning"
+   ],
+   "deriv": [
+    "compute (v) 계산하다",
+    "computational (adj) 계산의"
+   ],
+   "roots": [
+    "com(=함께) + putare(=셈하다) → 함께 셈하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compute",
+   "ipa": "/kəmˈpjuːt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "계산하다, 산출하다",
+     "ex": "Astronomers compute the distance to a star from the way its light shifts.",
+     "tr": "천문학자들은 별빛이 이동하는 방식으로부터 그 별까지의 거리를 계산한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "calculate",
+    "work out",
+    "reckon"
+   ],
+   "deriv": [
+    "computation (n) 계산",
+    "computer (n) 컴퓨터"
+   ],
+   "roots": [
+    "com(=함께) + putare(=셈하다) → 함께 셈하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "concede",
+   "ipa": "/kənˈsiːd/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "인정하다, 마지못해 시인하다",
+     "ex": "Even its critics concede that the theory explains the data remarkably well.",
+     "tr": "비판자들조차 그 이론이 데이터를 놀랍도록 잘 설명한다는 점은 인정한다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "양보하다, 내주다",
+     "ex": "The government was unwilling to concede any territory during the negotiations.",
+     "tr": "정부는 협상 중에 어떤 영토도 양보하려 하지 않았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "admit",
+    "acknowledge",
+    "grant"
+   ],
+   "deriv": [
+    "concession (n) 양보"
+   ],
+   "roots": [
+    "con(=완전히) + cedere(=물러나다) → 물러나 인정하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conceive",
+   "ipa": "/kənˈsiːv/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "구상하다, 상상하다",
+     "ex": "It is hard to conceive of a society entirely without written language.",
+     "tr": "문자 언어가 전혀 없는 사회는 상상하기 어렵다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "imagine",
+    "envision",
+    "think up"
+   ],
+   "deriv": [
+    "conception (n) 구상",
+    "conceivable (adj) 상상할 수 있는"
+   ],
+   "roots": [
+    "con(=완전히) + capere(=붙잡다) → 마음속에 붙잡다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conception",
+   "ipa": "/kənˈsepʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "개념, 구상",
+     "ex": "The Greek conception of the atom differed greatly from the modern one.",
+     "tr": "원자에 대한 그리스인의 개념은 현대의 개념과 크게 달랐다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "notion",
+    "idea",
+    "concept"
+   ],
+   "deriv": [
+    "conceive (v) 구상하다",
+    "conceptual (adj) 개념적인"
+   ],
+   "roots": [
+    "con(=완전히) + capere(=붙잡다) → 마음에 붙잡은 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conceptual",
+   "ipa": "/kənˈseptʃuəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "개념적인",
+     "ex": "The paper offers a new conceptual framework for studying memory.",
+     "tr": "그 논문은 기억을 연구하기 위한 새로운 개념적 틀을 제시한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "theoretical",
+    "abstract"
+   ],
+   "deriv": [
+    "concept (n) 개념",
+    "conceptually (adv) 개념적으로"
+   ],
+   "roots": [
+    "con(=완전히) + capere(=붙잡다) → 마음에 붙잡은"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "concession",
+   "ipa": "/kənˈseʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "양보",
+     "ex": "Reaching a treaty required painful concessions from both sides.",
+     "tr": "조약에 이르기 위해서는 양측 모두의 고통스러운 양보가 필요했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "compromise",
+    "allowance"
+   ],
+   "deriv": [
+    "concede (v) 양보하다"
+   ],
+   "roots": [
+    "con(=완전히) + cedere(=물러나다) → 물러나 내줌"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conclusive",
+   "ipa": "/kənˈkluːsɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "결정적인, 확실한",
+     "ex": "The single study was suggestive but not conclusive on its own.",
+     "tr": "그 한 편의 연구는 시사적이었으나 그 자체로 결정적이지는 않았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "decisive",
+    "definitive",
+    "clear-cut"
+   ],
+   "deriv": [
+    "conclude (v) 결론짓다",
+    "conclusively (adv) 결정적으로"
+   ],
+   "roots": [
+    "con(=완전히) + claudere(=닫다) → 완전히 닫아 매듭짓는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "concurrent",
+   "ipa": "/kənˈkʌrənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "동시에 일어나는",
+     "ex": "The two economic crises were concurrent, making recovery far harder.",
+     "tr": "그 두 경제 위기는 동시에 일어나 회복을 훨씬 더 어렵게 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "simultaneous",
+    "coinciding"
+   ],
+   "deriv": [
+    "concur (v) 동의하다, 동시에 일어나다",
+    "concurrently (adv) 동시에"
+   ],
+   "roots": [
+    "con(=함께) + currere(=달리다) → 함께 달리는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "concurrently",
+   "ipa": "/kənˈkʌrəntli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "동시에",
+     "ex": "The chemical processes occur concurrently rather than one after another.",
+     "tr": "그 화학 과정들은 차례로가 아니라 동시에 일어난다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "simultaneously",
+    "at once"
+   ],
+   "deriv": [
+    "concurrent (adj) 동시에 일어나는"
+   ],
+   "roots": [
+    "con(=함께) + currere(=달리다) → 함께 달려"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "condense",
+   "ipa": "/kənˈdens/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "응축하다, 액화하다",
+     "ex": "As the warm air rises and cools, water vapor condenses into clouds.",
+     "tr": "따뜻한 공기가 상승하며 식으면 수증기가 응축되어 구름이 된다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "요약하다, 압축하다",
+     "ex": "The author condensed years of research into a single readable chapter.",
+     "tr": "저자는 수년간의 연구를 읽기 쉬운 한 장으로 압축했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "compress",
+    "concentrate",
+    "abridge"
+   ],
+   "deriv": [
+    "condensation (n) 응축"
+   ],
+   "roots": [
+    "con(=함께) + densus(=빽빽한) → 빽빽하게 모으다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conducive",
+   "ipa": "/kənˈdjuːsɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "도움이 되는, 이바지하는",
+     "ex": "A quiet environment is conducive to sustained concentration.",
+     "tr": "조용한 환경은 지속적인 집중에 도움이 된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "favorable",
+    "helpful",
+    "beneficial"
+   ],
+   "deriv": [
+    "conduce (v) 이바지하다"
+   ],
+   "roots": [
+    "con(=함께) + ducere(=이끌다) → 어떤 결과로 이끄는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "configuration",
+   "ipa": "/kənˌfɪɡjəˈreɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "배치, 구성",
+     "ex": "The configuration of the planets affects the tides on distant moons.",
+     "tr": "행성들의 배치는 멀리 있는 위성들의 조수에 영향을 미친다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "arrangement",
+    "layout",
+    "setup"
+   ],
+   "deriv": [
+    "configure (v) 배치하다"
+   ],
+   "roots": [
+    "con(=함께) + figura(=모양) → 함께 이루는 모양"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "confine",
+   "ipa": "/kənˈfaɪn/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "한정하다, 국한하다",
+     "ex": "The disease was once confined to a small region of the tropics.",
+     "tr": "그 질병은 한때 열대의 좁은 지역에 국한되어 있었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "restrict",
+    "limit",
+    "restrain"
+   ],
+   "deriv": [
+    "confinement (n) 감금, 국한"
+   ],
+   "roots": [
+    "con(=함께) + finis(=경계) → 경계 안에 가두다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conform",
+   "ipa": "/kənˈfɔːm/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "순응하다, 따르다",
+     "ex": "New members are expected to conform to the group's established norms.",
+     "tr": "새 구성원들은 집단의 확립된 규범에 순응할 것으로 기대된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "comply",
+    "adapt",
+    "fit in"
+   ],
+   "deriv": [
+    "conformity (n) 순응",
+    "conformist (n) 순응주의자"
+   ],
+   "roots": [
+    "con(=함께) + forma(=모양) → 같은 모양이 되다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "consensus",
+   "ipa": "/kənˈsensəs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "합의, 의견 일치",
+     "ex": "There is now broad scientific consensus that the planet is warming.",
+     "tr": "이제 지구가 더워지고 있다는 데에 폭넓은 과학적 합의가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "agreement",
+    "accord"
+   ],
+   "deriv": [],
+   "roots": [
+    "con(=함께) + sentire(=느끼다) → 함께 느껴 뜻이 맞음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "consequent",
+   "ipa": "/ˈkɒnsɪkwənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "결과로 생기는",
+     "ex": "Rising temperatures and the consequent melting of ice threaten coastal cities.",
+     "tr": "상승하는 기온과 그에 따라 생기는 얼음의 융해는 해안 도시들을 위협한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "resulting",
+    "ensuing"
+   ],
+   "deriv": [
+    "consequence (n) 결과",
+    "consequently (adv) 결과적으로"
+   ],
+   "roots": [
+    "con(=함께) + sequi(=따르다) → 뒤따라 생기는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "consequential",
+   "ipa": "/ˌkɒnsɪˈkwenʃəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "중대한, 영향이 큰",
+     "ex": "The vote proved far more consequential than anyone had expected.",
+     "tr": "그 표결은 누구도 예상했던 것보다 훨씬 더 중대한 것으로 드러났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "significant",
+    "momentous",
+    "important"
+   ],
+   "deriv": [
+    "consequence (n) 결과"
+   ],
+   "roots": [
+    "con(=함께) + sequi(=따르다) → 뒤따르는 영향이 큰"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "consolidate",
+   "ipa": "/kənˈsɒlɪdeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "공고히 하다, 통합하다",
+     "ex": "The empire consolidated its power by absorbing smaller neighboring states.",
+     "tr": "그 제국은 인접한 작은 국가들을 흡수하여 세력을 공고히 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "strengthen",
+    "unify",
+    "merge"
+   ],
+   "deriv": [
+    "consolidation (n) 통합"
+   ],
+   "roots": [
+    "con(=함께) + solidus(=단단한) → 함께 단단하게 하다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "consolidation",
+   "ipa": "/kənˌsɒlɪˈdeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "통합, 강화",
+     "ex": "The consolidation of many small farms into large estates changed rural life.",
+     "tr": "많은 소규모 농장이 대규모 영지로 통합되면서 농촌 생활이 바뀌었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unification",
+    "strengthening",
+    "merger"
+   ],
+   "deriv": [
+    "consolidate (v) 통합하다"
+   ],
+   "roots": [
+    "con(=함께) + solidus(=단단한) → 함께 단단하게 함"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "conspicuous",
+   "ipa": "/kənˈspɪkjuəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "눈에 띄는, 뚜렷한",
+     "ex": "The bright plumage makes the male bird conspicuous to predators.",
+     "tr": "화려한 깃털은 그 수컷 새를 포식자의 눈에 띄게 만든다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "noticeable",
+    "prominent",
+    "obvious"
+   ],
+   "deriv": [
+    "conspicuously (adv) 눈에 띄게"
+   ],
+   "roots": [
+    "con(=완전히) + specere(=보다) → 완전히 잘 보이는"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "constituent",
+   "ipa": "/kənˈstɪtjuənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "구성 요소, 성분",
+     "ex": "Each constituent of the mixture reacts differently to heat.",
+     "tr": "그 혼합물의 각 구성 성분은 열에 다르게 반응한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "component",
+    "element",
+    "ingredient"
+   ],
+   "deriv": [
+    "constitute (v) 구성하다",
+    "constitution (n) 구성"
+   ],
+   "roots": [
+    "con(=함께) + statuere(=세우다) → 함께 세워 이루는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "constrain",
+   "ipa": "/kənˈstreɪn/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "제약하다, 제한하다",
+     "ex": "Limited funding severely constrained the scope of the experiment.",
+     "tr": "제한된 자금이 그 실험의 범위를 심하게 제약했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "restrict",
+    "limit",
+    "hamper"
+   ],
+   "deriv": [
+    "constraint (n) 제약"
+   ],
+   "roots": [
+    "con(=완전히) + stringere(=조이다) → 꽉 조여 묶다"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "constraint",
+   "ipa": "/kənˈstreɪnt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "제약, 제한",
+     "ex": "Time constraints forced the researchers to narrow their focus.",
+     "tr": "시간 제약 때문에 연구자들은 초점을 좁힐 수밖에 없었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "restriction",
+    "limitation"
+   ],
+   "deriv": [
+    "constrain (v) 제약하다"
+   ],
+   "roots": [
+    "con(=완전히) + stringere(=조이다) → 꽉 조여 묶는 것"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "학술일반",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  }
+ ]
 }
