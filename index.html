@@ -8474,6 +8474,8 @@ async function renderReviewPage(root, dock) {
       if (Array.isArray(_r2)) reviews = _r2;
     }
     const el = document.getElementById('review-list');
+    // 비동기 로드 중 사용자가 다른 화면으로 이동하면 review-list 가 사라짐(el=null) → 조용히 종료
+    if (!el) return;
     // 인증 실패(토큰 만료 등) → 빈 목록으로 오인하지 않게 재시도 안내
     if (reviews == null || !Array.isArray(reviews)) {
       logError('load_fail','renderReviewPage','review list load failed', null);
@@ -8605,7 +8607,7 @@ async function renderReviewPage(root, dock) {
     if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">${t('scheduledTitle')} (${upcoming.length}${userNativeLang==='ko'?'개':''}${_weekCount?` · ${userNativeLang==='ko'?'이번 주':'this week'} ${_weekCount}${userNativeLang==='ko'?'개':''}`:''})</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
     if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">${t('completedTitle')} (${done.length}${userNativeLang==='ko'?'개':''})</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
     el.innerHTML = html || `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noReviewSchedule')}</div>`;
-  } catch(e) { document.getElementById('review-list').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
+  } catch(e) { const _el = document.getElementById('review-list'); if (_el) _el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
 }
 
 async function startSingleReview(bookId, pageNum, reviewId, stepKey, scheduledDate) {
