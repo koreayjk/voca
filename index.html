@@ -4068,8 +4068,16 @@ async function sbSignOut() {
 async function loadBooksFromDB() {
   try {
     // 책 + 페이지 + 단어를 한 번에 (embed)
-    const bd = await sbFetch(`/rest/v1/voca_books?user_id=eq.${currentUser.id}&select=*,voca_pages(*,voca_words(*))&order=created_at`);
-    if (!Array.isArray(bd)) return;
+    // 일시적 오류(네트워크/토큰 타이밍)로 null 이 오면 재시도 — 한 번 삐끗해서
+    // 책장이 통째로 '0권'으로 비어 뜨던 문제 방지(복습 화면과 동일한 재시도 패턴).
+    let bd = null;
+    for (let _a = 0; _a < 4; _a++) {
+      bd = await sbFetch(`/rest/v1/voca_books?user_id=eq.${currentUser.id}&select=*,voca_pages(*,voca_words(*))&order=created_at`);
+      if (Array.isArray(bd)) break;
+      await new Promise(r => setTimeout(r, 400 * (_a + 1)));
+    }
+    // 끝내 실패하면 기존 books 를 비우지 말고(빈 책장 오인 방지) 조용히 종료
+    if (!Array.isArray(bd)) { console.error('DB load failed after retries'); return; }
     books = bd.map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
       desc: b.description || '', cover: b.is_official ? _officialCover(b.title, b.cover_url) : (b.cover_url || ''), category: b.category || 'general',
@@ -4116,7 +4124,13 @@ function _officialLang(title){ return String(title||'').startsWith('스페인어
 async function ensureOfficialCatalog(){
   if (Array.isArray(window._officialCatalogFull)) return window._officialCatalogFull;
   try {
-    const od = await sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`);
+    // 일시적 오류로 null 이 오면 재시도 — 공식책이 가끔 안 뜨던 문제 방지
+    let od = null;
+    for (let _a = 0; _a < 4; _a++) {
+      od = await sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`);
+      if (Array.isArray(od)) break;
+      await new Promise(r => setTimeout(r, 400 * (_a + 1)));
+    }
     if (Array.isArray(od)) window._officialCatalogFull = od;
   } catch(e){ console.warn('[official catalog]', e); }
   return Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
