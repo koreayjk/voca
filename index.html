@@ -3070,6 +3070,70 @@ const HELP = {
     example:'📅 예시 (3월 15일 결제 시작 · 학생 10명)\n\n· 3/15 결제 시작 → 3/15~3/31(남은 17일)치 10명 일할요금이 먼저 청구\n· 4/1 → 10명 × $2.99 = $29.90 (4월 한 달)\n\n중간에 2명 더 승인(3/20)하면?\n· 그 2명의 3/20~3/31 일할요금은 4/1 청구서에 합산\n· 4/1 총청구 = 12명 정규요금 + 추가 2명 3월 일할분\n\n학생이 나가면?\n· 남은 날짜만큼 자동 차감되어 다음 1일 청구서에서 빠져요' },
   settings: { icon:'⚙️', title:'단체 설정', purpose:'단체 이름과 로고를 바꿔요.',
     steps:['이름 변경','로고 등록 → 학생 화면 상단에 우리 학원 로고가 떠요'] },
+
+  // ── 개인 사용 가이드 (책장에서 '📖 앱 사용법' → showUserGuide) ──
+  'use.add': { icon:'📚', title:'책 추가하기', purpose:'교재를 사진 찍거나, 단어를 직접 입력하거나, 공식 단어장을 담아 나만의 책장을 만들어요.',
+    steps:[
+      '책장 오른쪽 위 “+ 책 추가”를 눌러요',
+      '방법 3가지 — 📷 사진 촬영(교재를 찍으면 AI가 단어 자동 추출) · ✏️ 직접 입력(단어만 넣으면 뜻 자동) · 📗 공식 단어장 담기(수능·토익·토플 등)',
+      '책 이름·카테고리를 정하면 책장에 새 책이 생겨요',
+      '책을 누르면 Day(페이지)별로 단어가 정리돼 있어요'],
+    tip:'한 책 안에 Day를 계속 추가할 수 있어요 — 교재 진도에 맞춰 페이지를 늘려가면 돼요.',
+    img:_PROMO+'shots/07-personal-bookshelf.png', imgcap:'내 책장 — 만든 책이 카드로 쌓여요' },
+
+  'use.scan': { icon:'📷', title:'사진으로 단어 추출 (여러 장 한번에)', purpose:'교재 페이지를 찍으면 AI가 단어와 뜻을 자동으로 뽑아줘요. 여러 장을 한 번에 처리할 수도 있어요.',
+    steps:[
+      '“+ 책 추가” → 📷 페이지 촬영을 선택',
+      '한 장씩 찍거나, 갤러리에서 여러 장을 한꺼번에 선택할 수 있어요',
+      '여러 장이면 “장 순서대로 추출하기” — 1장씩 순서대로 단어를 뽑아요',
+      '각 장마다 페이지 번호(Day)를 입력하면 그 순서로 정리돼요',
+      'AI가 글자를 읽고(OCR) 학습할 단어만 골라 뜻·발음·예문까지 만들어줘요'],
+    tip:'흐리거나 기울면 인식이 떨어져요 — 글자가 선명하게, 페이지가 반듯하게 나오게 찍어 주세요.' },
+
+  'use.select': { icon:'✅', title:'추출된 단어 선택·저장', purpose:'AI가 뽑은 단어를 뜻·난이도(CEFR)와 함께 보여줘요. 탭해서 필요한 것만 골라 저장해요.',
+    steps:[
+      '추출이 끝나면 단어가 뜻·CEFR 배지와 함께 카드로 떠요',
+      '카드를 탭하면 선택/해제 — 아는 단어는 빼고 모르는 것만 남겨요 (“전체선택”도 있어요)',
+      '“선택한 단어 저장”을 누르면 그 페이지(Day)에 담겨요',
+      '저장 후에도 책 안에서 단어를 추가·삭제(🗑)·수정할 수 있어요',
+      '단어마다 🔊 발음, 뜻·예문이 자동으로 들어가 있어요'],
+    tip:'여러 장을 찍으면 전체를 한 번에 추출한 뒤, 모르는 단어만 한 화면에 모아 골라요.',
+    img:_PROMO+'shots/08-ai-word-extract.png', imgcap:'저장하면 이렇게 — 뜻·예문·발음(🔊)·삭제(🗑)' },
+
+  'use.study': { icon:'🎴', title:'암기 카드로 외우기', purpose:'플래시카드로 단어를 외워요. 앞면은 단어, 뒤집으면 뜻·예문·발음이 나와요.',
+    steps:[
+      '책 → Day를 누르면 암기 카드가 시작돼요',
+      '카드를 탭하면 앞(단어) ↔ 뒤(뜻·예문·발음)로 뒤집혀요',
+      '🔊 버튼으로 원어민 발음 듣기 · 자동 읽기도 지원해요',
+      '“알아요/몰라요”로 넘기면 모르는 단어를 다시 보여줘요',
+      'Day를 한 번 끝내면 복습 일정에 자동으로 등록돼요'],
+    img:_PROMO+'shots/09-flashcard-study.png', imgcap:'암기 카드 — 탭하면 뒤집혀요' },
+
+  'use.review': { icon:'🔁', title:'복습 (에빙하우스 망각곡선)', purpose:'외운 단어를 잊지 않도록, 과학적 간격(1·2·3·6·15·30일)으로 자동 복습해줘요.',
+    steps:[
+      '하단 “복습” 탭에서 오늘 할 복습이 떠요',
+      '한 단어장은 30일 동안 6번에 나눠 복습해요 — 오늘 것만 하면 나머지는 예정일에 자동으로 떠요',
+      '“오늘 복습”을 누르면 그 Day 단어로 복습 카드가 시작돼요',
+      '끝내면 다음 복습일이 자동으로 잡혀요',
+      '예정·완료 목록으로 이번 주 복습량도 미리 볼 수 있어요'],
+    tip:'복습이 하루에 몰리지 않아요 — 한 Day를 6번에 나눠 분산하니 매일 조금씩만 하면 돼요.',
+    img:_PROMO+'shots/10-ebbinghaus-review.png', imgcap:'복습 — 오늘 것만 끝내면 끝' },
+
+  'use.manual': { icon:'✏️', title:'단어 직접 입력', purpose:'사진 없이 단어만 입력해도 뜻·예문을 자동으로 만들어줘요.',
+    steps:[
+      '“+ 책 추가” 또는 책 안에서 ✏️ 직접 입력을 선택',
+      '페이지(Day) 번호와 단어를 입력해요 (영어·스페인어 등)',
+      '여러 단어를 줄바꿈으로 한꺼번에 입력할 수 있어요',
+      'AI가 각 단어의 뜻·발음·예문을 채워줘요'],
+    tip:'사진 인식이 어려운 필기 노트나, 딱 몇 개만 추가할 때 편해요.' },
+
+  'use.official': { icon:'📗', title:'공식 단어장 담기 (수능·토익·토플)', purpose:'직접 안 만들어도, 검증된 공식 단어장을 책장에 담아 바로 공부할 수 있어요.',
+    steps:[
+      '“+ 책 추가” → 공식 단어장에서 원하는 책 선택 (수능·토익·토플·중등 등)',
+      '무료로 각 권의 Day 1을 체험할 수 있어요',
+      '프리미엄이면 모든 Day가 열려요',
+      '공식책도 개인책과 똑같이 암기·복습·시험이 돼요'],
+    tip:'토플은 기본→핵심→고난도 순으로 난이도가 올라가요. 수준에 맞춰 고르세요.' },
 };
 function _helpBtn(key){ return `<button onclick="event.stopPropagation();showHelp('${key}')" title="사용법 보기" style="display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-60);font-size:11px;font-weight:800;cursor:pointer;line-height:1;margin-left:7px;">?</button>`; }
 function showHelp(key){
@@ -3085,6 +3149,29 @@ function showHelp(key){
       ${h.example?`<div style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:12px;padding:13px 15px;font-size:12.5px;color:var(--ink-100);line-height:1.7;margin-top:12px;white-space:pre-wrap;">${esc(h.example)}</div>`:''}
       ${h.img?`<div style="margin-top:14px;"><img src="${esc(h.img)}" loading="lazy" style="width:100%;border:1px solid var(--ink-07);border-radius:12px;display:block;">${h.imgcap?`<div style="font-size:11px;color:var(--ink-45);text-align:center;margin-top:6px;">${esc(h.imgcap)}</div>`:''}</div>`:''}
       <button onclick="document.getElementById('help-overlay').remove()" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">알겠어요</button>
+    </div>`;
+  el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
+}
+// 📖 개인 사용 가이드 인덱스 — 기능 목록 → 각 항목이 showHelp(사진 포함) 상세를 열어줌
+function showUserGuide(){
+  const ko = userNativeLang === 'ko';
+  const topics = [
+    ['use.add','📚', ko?'책 추가하기':'Add a book'],
+    ['use.scan','📷', ko?'사진으로 단어 추출 (여러 장)':'Scan photos to extract words'],
+    ['use.select','✅', ko?'추출 단어 선택·저장':'Select & save extracted words'],
+    ['use.study','🎴', ko?'암기 카드로 외우기':'Study with flashcards'],
+    ['use.review','🔁', ko?'복습 (망각곡선)':'Review (spaced repetition)'],
+    ['use.manual','✏️', ko?'단어 직접 입력':'Add words manually'],
+    ['use.official','📗', ko?'공식 단어장 담기 (수능·토익·토플)':'Add official books'],
+  ];
+  let el=document.getElementById('uguide-overlay'); if(!el){ el=document.createElement('div'); el.id='uguide-overlay'; document.body.appendChild(el); }
+  el.setAttribute('style','position:fixed;inset:0;z-index:10002;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;');
+  const row=(k,ic,lb)=>`<button onclick="document.getElementById('uguide-overlay').remove();showHelp('${k}')" style="display:flex;align-items:center;gap:12px;width:100%;padding:15px 14px;background:none;border:none;border-bottom:1px solid var(--ink-12);font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);"><span style="font-size:20px;">${ic}</span><span style="font-weight:600;">${lb}</span><span style="margin-left:auto;color:var(--ink-45);font-size:18px;">›</span></button>`;
+  el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:88vh;overflow:auto;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div style="font-size:20px;font-weight:800;color:var(--ink-100);">📖 ${ko?'앱 사용법':'How to use'}</div><button onclick="document.getElementById('uguide-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:24px;cursor:pointer;color:var(--ink-40);">×</button></div>
+      <div style="font-size:12.5px;color:var(--ink-60);line-height:1.6;margin:0 2px 12px;">${ko?'궁금한 기능을 누르면 사진과 함께 자세히 알려드려요.':'Tap a feature for a step-by-step guide with screenshots.'}</div>
+      ${topics.map(t=>row(t[0],t[1],t[2])).join('')}
+      <button onclick="document.getElementById('uguide-overlay').remove()" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">${ko?'닫기':'Close'}</button>
     </div>`;
   el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
 }
@@ -3331,6 +3418,7 @@ function showMyMenu() {
   overlay.innerHTML = `
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
+      ${row('📖', ko?'앱 사용법':'How to use', "document.getElementById('my-modal').remove();showUserGuide()")}
       ${row('🎉', ko?'이벤트 · 사용후기':'Event · Reviews', "document.getElementById('my-modal').remove();showEvent()")}
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
       ${(userOrgRole==='owner' || isPendingOwner()) ? row('🏫', (userOrgRole==='owner'?(ko?'단체 관리':'Org Admin'):(ko?'단체 만들기':'Create Org')), "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
