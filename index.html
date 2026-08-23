@@ -3071,7 +3071,7 @@ const HELP = {
   settings: { icon:'⚙️', title:'단체 설정', purpose:'단체 이름과 로고를 바꿔요.',
     steps:['이름 변경','로고 등록 → 학생 화면 상단에 우리 학원 로고가 떠요'] },
 
-  // ── 개인 사용 가이드 (책장에서 '📖 앱 사용법' → showUserGuide) ──
+  // ── (참고용·미사용) 개인 사용 가이드 데이터 — 현재는 별도 페이지 guide.html 로 노출됨 ──
   'use.add': { icon:'📚', title:'책 추가하기', purpose:'교재를 사진 찍거나, 단어를 직접 입력하거나, 공식 단어장을 담아 나만의 책장을 만들어요.',
     steps:[
       '책장 오른쪽 위 “+ 책 추가”를 눌러요',
@@ -3149,29 +3149,6 @@ function showHelp(key){
       ${h.example?`<div style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:12px;padding:13px 15px;font-size:12.5px;color:var(--ink-100);line-height:1.7;margin-top:12px;white-space:pre-wrap;">${esc(h.example)}</div>`:''}
       ${h.img?`<div style="margin-top:14px;"><img src="${esc(h.img)}" loading="lazy" style="width:100%;border:1px solid var(--ink-07);border-radius:12px;display:block;">${h.imgcap?`<div style="font-size:11px;color:var(--ink-45);text-align:center;margin-top:6px;">${esc(h.imgcap)}</div>`:''}</div>`:''}
       <button onclick="document.getElementById('help-overlay').remove()" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">알겠어요</button>
-    </div>`;
-  el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
-}
-// 📖 개인 사용 가이드 인덱스 — 기능 목록 → 각 항목이 showHelp(사진 포함) 상세를 열어줌
-function showUserGuide(){
-  const ko = userNativeLang === 'ko';
-  const topics = [
-    ['use.add','📚', ko?'책 추가하기':'Add a book'],
-    ['use.scan','📷', ko?'사진으로 단어 추출 (여러 장)':'Scan photos to extract words'],
-    ['use.select','✅', ko?'추출 단어 선택·저장':'Select & save extracted words'],
-    ['use.study','🎴', ko?'암기 카드로 외우기':'Study with flashcards'],
-    ['use.review','🔁', ko?'복습 (망각곡선)':'Review (spaced repetition)'],
-    ['use.manual','✏️', ko?'단어 직접 입력':'Add words manually'],
-    ['use.official','📗', ko?'공식 단어장 담기 (수능·토익·토플)':'Add official books'],
-  ];
-  let el=document.getElementById('uguide-overlay'); if(!el){ el=document.createElement('div'); el.id='uguide-overlay'; document.body.appendChild(el); }
-  el.setAttribute('style','position:fixed;inset:0;z-index:10002;background:rgba(0,0,0,0.55);display:flex;align-items:flex-end;justify-content:center;');
-  const row=(k,ic,lb)=>`<button onclick="document.getElementById('uguide-overlay').remove();showHelp('${k}')" style="display:flex;align-items:center;gap:12px;width:100%;padding:15px 14px;background:none;border:none;border-bottom:1px solid var(--ink-12);font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);"><span style="font-size:20px;">${ic}</span><span style="font-weight:600;">${lb}</span><span style="margin-left:auto;color:var(--ink-45);font-size:18px;">›</span></button>`;
-  el.innerHTML=`<div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:88vh;overflow:auto;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div style="font-size:20px;font-weight:800;color:var(--ink-100);">📖 ${ko?'앱 사용법':'How to use'}</div><button onclick="document.getElementById('uguide-overlay').remove()" style="margin-left:auto;background:none;border:none;font-size:24px;cursor:pointer;color:var(--ink-40);">×</button></div>
-      <div style="font-size:12.5px;color:var(--ink-60);line-height:1.6;margin:0 2px 12px;">${ko?'궁금한 기능을 누르면 사진과 함께 자세히 알려드려요.':'Tap a feature for a step-by-step guide with screenshots.'}</div>
-      ${topics.map(t=>row(t[0],t[1],t[2])).join('')}
-      <button onclick="document.getElementById('uguide-overlay').remove()" style="width:100%;margin-top:16px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">${ko?'닫기':'Close'}</button>
     </div>`;
   el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
 }
@@ -3418,7 +3395,6 @@ function showMyMenu() {
   overlay.innerHTML = `
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
-      ${row('📖', ko?'앱 사용법':'How to use', "document.getElementById('my-modal').remove();showUserGuide()")}
       ${row('🎉', ko?'이벤트 · 사용후기':'Event · Reviews', "document.getElementById('my-modal').remove();showEvent()")}
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
       ${(userOrgRole==='owner' || isPendingOwner()) ? row('🏫', (userOrgRole==='owner'?(ko?'단체 관리':'Org Admin'):(ko?'단체 만들기':'Create Org')), "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
@@ -5987,6 +5963,7 @@ function buildDockBottom() {
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
     + `<button class="dock-mini dock-mini--accent" onclick="showEvent()">🎉 ${ko?'이벤트':'Event'}</button>`
+    + `<button class="dock-mini" onclick="location.href='https://imvoca.app/guide.html?lang='+(userNativeLang==='ko'?'ko':'en')">📖 ${ko?'사용법':'Guide'}</button>`
     + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(ko?'시험 출제':'Tests'):(ko?'시험':'Tests')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${ko?'상태':'Health'}</button>` : '')
@@ -6186,6 +6163,7 @@ function render() {
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="showEvent()" class="topbar-btn" style="background:linear-gradient(135deg,#f5a623,#e67e22);border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">🎉 ${userNativeLang==='ko'?'이벤트':'Event'}</button>
+          <button onclick="location.href='https://imvoca.app/guide.html?lang='+(userNativeLang==='ko'?'ko':'en')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${userNativeLang==='ko'?'사용법':'Guide'}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(userNativeLang==='ko'?'시험 출제':'Tests'):(userNativeLang==='ko'?'시험':'Tests')}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>

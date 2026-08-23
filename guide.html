@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>IM VOCA 사용법</title>
+<link rel="icon" href="https://imvoca.app/2.png">
+<style>
+  :root{
+    --bg:#f5f1e8; --card:#fffdf7; --ink:#2a2622; --ink60:#6b6358; --ink40:#9a9186;
+    --line:#eadfce; --accent:#c98a3a; --gold:#faf3e4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1b1815; --card:#241f1a; --ink:#f0ece4; --ink60:#b7ad9e; --ink40:#8a8175;
+           --line:#3a332b; --accent:#e0a250; --gold:#2b241b; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:10px;
+    padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:var(--bg);border-bottom:1px solid var(--line);}
+  .back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer;flex-shrink:0;}
+  .back:active{opacity:.6}
+  .top h1{font-size:18px;font-weight:800;margin:0;}
+  .lang{margin-left:auto;display:flex;gap:4px;}
+  .lang button{border:1px solid var(--line);background:var(--card);color:var(--ink60);border-radius:99px;
+    padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;}
+  .lang button.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:720px;margin:0 auto;padding:16px 14px calc(60px + env(safe-area-inset-bottom));}
+  .lead{font-size:13.5px;color:var(--ink60);line-height:1.6;margin:2px 2px 18px;}
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 16px;margin-bottom:14px;
+    box-shadow:0 2px 10px rgba(120,90,40,.05);}
+  .sec h2{font-size:17px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
+  .sec .ic{font-size:22px;}
+  .purpose{background:var(--gold);border:1px solid var(--line);border-radius:12px;padding:11px 13px;
+    font-size:13.5px;line-height:1.6;margin:10px 0 12px;}
+  .howto{font-size:11.5px;font-weight:800;letter-spacing:.05em;color:var(--ink40);margin:0 2px 7px;}
+  ol.steps{margin:0;padding-left:20px;font-size:14px;line-height:1.7;}
+  ol.steps li{margin-bottom:6px;}
+  .tip{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;
+    font-size:12.5px;color:var(--ink60);line-height:1.6;margin-top:12px;}
+  .shot{margin-top:14px;}
+  .shot img{width:100%;border:1px solid var(--line);border-radius:12px;display:block;}
+  .shot .cap{font-size:11px;color:var(--ink40);text-align:center;margin-top:6px;}
+  .foot{text-align:center;font-size:12px;color:var(--ink40);margin-top:22px;line-height:1.7;}
+  .foot a{color:var(--accent);text-decoration:none;font-weight:700;}
+</style>
+</head>
+<body>
+  <div class="top">
+    <button class="back" onclick="goBack()" aria-label="back">‹</button>
+    <h1 id="pgTitle">📖 앱 사용법</h1>
+    <div class="lang">
+      <button id="lko" onclick="setLang('ko')">한</button>
+      <button id="len" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="lead" id="lead"></div>
+    <div id="sections"></div>
+    <div class="foot" id="foot"></div>
+  </div>
+
+<script>
+const SHOTS = 'https://imvoca.app/wordbooks/promo/shots/';
+const DATA = {
+  ko: {
+    title:'📖 앱 사용법',
+    lead:'IM VOCA를 처음 쓰시나요? 아래에서 궁금한 기능을 사진과 함께 단계별로 확인하세요.',
+    howto:'이렇게 쓰세요',
+    foot:'더 궁금한 점이 있으면 앱 안 <b>My → 문의하기</b>로 알려주세요.',
+    back:'앱으로 돌아가기',
+    secs:[
+      { ic:'📚', title:'책 추가하기',
+        purpose:'교재를 사진 찍거나, 단어를 직접 입력하거나, 공식 단어장을 담아 나만의 책장을 만들어요.',
+        steps:[
+          '책장 오른쪽 위 “+ 책 추가”를 눌러요',
+          '방법 3가지 — 📷 사진 촬영(교재를 찍으면 AI가 단어 자동 추출) · ✏️ 직접 입력(단어만 넣으면 뜻 자동) · 📗 공식 단어장 담기(수능·토익·토플 등)',
+          '책 이름·카테고리를 정하면 책장에 새 책이 생겨요',
+          '책을 누르면 Day(페이지)별로 단어가 정리돼 있어요'],
+        tip:'한 책 안에 Day를 계속 추가할 수 있어요 — 교재 진도에 맞춰 페이지를 늘려가면 돼요.',
+        img:SHOTS+'07-personal-bookshelf.png', cap:'내 책장 — 만든 책이 카드로 쌓여요' },
+      { ic:'📷', title:'사진으로 단어 추출 (여러 장 한번에)',
+        purpose:'교재 페이지를 찍으면 AI가 단어와 뜻을 자동으로 뽑아줘요. 여러 장을 한 번에 처리할 수도 있어요.',
+        steps:[
+          '“+ 책 추가” → 📷 페이지 촬영을 선택',
+          '한 장씩 찍거나, 갤러리에서 여러 장을 한꺼번에 선택할 수 있어요',
+          '여러 장이면 전체를 한 번에 추출한 뒤, 다음 화면에서 모르는 단어만 골라요',
+          '각 장마다 페이지 번호(Day)를 정하면 그 순서로 정리돼요',
+          'AI가 글자를 읽고(OCR) 학습할 단어만 골라 뜻·발음·예문까지 만들어줘요'],
+        tip:'흐리거나 기울면 인식이 떨어져요 — 글자가 선명하게, 페이지가 반듯하게 나오게 찍어 주세요.' },
+      { ic:'✅', title:'추출된 단어 선택·저장',
+        purpose:'AI가 뽑은 단어를 뜻·난이도(CEFR)와 함께 보여줘요. 탭해서 필요한 것만 골라 저장해요.',
+        steps:[
+          '추출이 끝나면 단어가 뜻·CEFR 배지와 함께 카드로 떠요',
+          '카드를 탭하면 선택/해제 — 아는 단어는 빼고 모르는 것만 남겨요 (“전체선택”도 있어요)',
+          '“선택한 단어 저장”을 누르면 그 페이지(Day)에 담겨요',
+          '저장 후에도 책 안에서 단어를 추가·삭제(🗑)·수정할 수 있어요',
+          '단어마다 🔊 발음, 뜻·예문이 자동으로 들어가 있어요'],
+        tip:'여러 장을 찍으면 전체를 한 번에 추출한 뒤, 모르는 단어만 한 화면에 모아 골라요.',
+        img:SHOTS+'08-ai-word-extract.png', cap:'저장하면 이렇게 — 뜻·예문·발음(🔊)·삭제(🗑)' },
+      { ic:'🎴', title:'암기 카드로 외우기',
+        purpose:'플래시카드로 단어를 외워요. 앞면은 단어, 뒤집으면 뜻·예문·발음이 나와요.',
+        steps:[
+          '책 → Day를 누르면 암기 카드가 시작돼요',
+          '카드를 탭하면 앞(단어) ↔ 뒤(뜻·예문·발음)로 뒤집혀요',
+          '🔊 버튼으로 원어민 발음 듣기 · 자동 읽기도 지원해요',
+          '“알아요/몰라요”로 넘기면 모르는 단어를 다시 보여줘요',
+          'Day를 한 번 끝내면 복습 일정에 자동으로 등록돼요'],
+        img:SHOTS+'09-flashcard-study.png', cap:'암기 카드 — 탭하면 뒤집혀요' },
+      { ic:'🔁', title:'복습 (에빙하우스 망각곡선)',
+        purpose:'외운 단어를 잊지 않도록, 과학적 간격(1·2·3·6·15·30일)으로 자동 복습해줘요.',
+        steps:[
+          '하단 “복습” 탭에서 오늘 할 복습이 떠요',
+          '한 단어장은 30일 동안 6번에 나눠 복습해요 — 오늘 것만 하면 나머지는 예정일에 자동으로 떠요',
+          '“오늘 복습”을 누르면 그 Day 단어로 복습 카드가 시작돼요',
+          '끝내면 다음 복습일이 자동으로 잡혀요',
+          '예정·완료 목록으로 이번 주 복습량도 미리 볼 수 있어요'],
+        tip:'복습이 하루에 몰리지 않아요 — 한 Day를 6번에 나눠 분산하니 매일 조금씩만 하면 돼요.',
+        img:SHOTS+'10-ebbinghaus-review.png', cap:'복습 — 오늘 것만 끝내면 끝' },
+      { ic:'✏️', title:'단어 직접 입력',
+        purpose:'사진 없이 단어만 입력해도 뜻·예문을 자동으로 만들어줘요.',
+        steps:[
+          '“+ 책 추가” 또는 책 안에서 ✏️ 직접 입력을 선택',
+          '페이지(Day) 번호와 단어를 입력해요 (영어·스페인어 등)',
+          '여러 단어를 줄바꿈으로 한꺼번에 입력할 수 있어요',
+          'AI가 각 단어의 뜻·발음·예문을 채워줘요'],
+        tip:'사진 인식이 어려운 필기 노트나, 딱 몇 개만 추가할 때 편해요.' },
+      { ic:'📗', title:'공식 단어장 담기 (수능·토익·토플)',
+        purpose:'직접 안 만들어도, 검증된 공식 단어장을 책장에 담아 바로 공부할 수 있어요.',
+        steps:[
+          '“+ 책 추가” → 공식 단어장에서 원하는 책 선택 (수능·토익·토플·중등 등)',
+          '무료로 각 권의 Day 1을 체험할 수 있어요',
+          '프리미엄이면 모든 Day가 열려요',
+          '공식책도 개인책과 똑같이 암기·복습·시험이 돼요'],
+        tip:'토플은 기본→핵심→고난도 순으로 난이도가 올라가요. 수준에 맞춰 고르세요.' },
+    ],
+  },
+  en: {
+    title:'📖 How to use',
+    lead:'New to IM VOCA? Tap through the features below — each with step-by-step instructions and screenshots.',
+    howto:'How to',
+    foot:'Questions? Reach us via <b>My → Contact Us</b> inside the app.',
+    back:'Back to app',
+    secs:[
+      { ic:'📚', title:'Add a book',
+        purpose:'Build your own shelf by photographing a textbook, typing words in, or adding an official book.',
+        steps:[
+          'Tap “+ Add Book” at the top right of your shelf',
+          '3 ways — 📷 Photo (AI auto-extracts words) · ✏️ Manual (type a word, get the meaning) · 📗 Official books (SAT/TOEIC/TOEFL, etc.)',
+          'Set a title and category — a new book appears on your shelf',
+          'Open a book to see words organized by Day (page)'],
+        tip:'You can keep adding Days to one book — grow the pages as you move through your textbook.',
+        img:SHOTS+'07-personal-bookshelf.png', cap:'Your shelf — books stack up as cards' },
+      { ic:'📷', title:'Scan photos to extract words (multiple at once)',
+        purpose:'Snap a textbook page and AI pulls out the words and meanings. You can process several photos at once.',
+        steps:[
+          '“+ Add Book” → choose 📷 Shoot Page',
+          'Take one photo, or select several from your gallery at once',
+          'For multiple photos, all are extracted first — then you pick the unknown words on the next screen',
+          'Set a page number (Day) for each photo to keep them in order',
+          'AI reads the text (OCR), keeps the words worth studying, and generates meanings, pronunciation & examples'],
+        tip:'Blurry or tilted photos reduce accuracy — keep text sharp and the page straight.' },
+      { ic:'✅', title:'Select & save extracted words',
+        purpose:'AI shows the words with meanings and CEFR level. Tap to keep only the ones you need.',
+        steps:[
+          'When extraction finishes, words appear as cards with meaning + CEFR badge',
+          'Tap a card to select/deselect — drop the ones you know, keep the unknown (“Select all” is available too)',
+          'Tap “Save selected words” to add them to that page (Day)',
+          'After saving you can still add, delete (🗑) or edit words inside the book',
+          'Each word already includes 🔊 pronunciation, meaning & example'],
+        tip:'With multiple photos, everything is extracted first, then you pick unknown words on a single screen.',
+        img:SHOTS+'08-ai-word-extract.png', cap:'After saving — meaning, example, 🔊 audio, 🗑 delete' },
+      { ic:'🎴', title:'Study with flashcards',
+        purpose:'Memorize with flashcards — front shows the word, flip for meaning, example & pronunciation.',
+        steps:[
+          'Open a book → tap a Day to start flashcards',
+          'Tap a card to flip front (word) ↔ back (meaning, example, pronunciation)',
+          'Use 🔊 for native pronunciation · auto-read is supported',
+          '“Know / Don’t know” brings unknown words back around',
+          'Finishing a Day once auto-schedules it for review'],
+        img:SHOTS+'09-flashcard-study.png', cap:'Flashcard — tap to flip' },
+      { ic:'🔁', title:'Review (Ebbinghaus curve)',
+        purpose:'So you don’t forget, words are reviewed automatically at scientific intervals (1·2·3·6·15·30 days).',
+        steps:[
+          'The “Review” tab shows what’s due today',
+          'Each book is reviewed 6 times over 30 days — finish today’s and the rest appear on their dates',
+          'Tap “Review today” to start review cards for that Day',
+          'When you finish, the next review date is set automatically',
+          'Scheduled / done lists let you preview this week’s review load'],
+        tip:'Reviews never pile up in one day — each Day is spread over 6 sessions, so a little each day is enough.',
+        img:SHOTS+'10-ebbinghaus-review.png', cap:'Review — just finish today’s' },
+      { ic:'✏️', title:'Add words manually',
+        purpose:'No photo needed — type a word and meanings & examples are generated automatically.',
+        steps:[
+          'Choose ✏️ Manual Input from “+ Add Book” or inside a book',
+          'Enter a page (Day) number and the word (English, Spanish, etc.)',
+          'Add several words at once, one per line',
+          'AI fills in each word’s meaning, pronunciation & example'],
+        tip:'Handy for handwritten notes that are hard to scan, or when adding just a few words.' },
+      { ic:'📗', title:'Add official books (SAT·TOEIC·TOEFL)',
+        purpose:'No need to build one — add a vetted official book and start studying right away.',
+        steps:[
+          '“+ Add Book” → pick an official book (SAT / TOEIC / TOEFL / middle-school, etc.)',
+          'Day 1 of each book is free to try',
+          'Premium unlocks every Day',
+          'Official books support flashcards, review & tests just like your own'],
+        tip:'TOEFL goes Basic → Core → Advanced in difficulty — pick the level that fits you.' },
+    ],
+  },
+};
+
+function goBack(){ if (history.length > 1) history.back(); else location.href = 'https://imvoca.app/'; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function render(lang){
+  const d = DATA[lang] || DATA.ko;
+  document.documentElement.lang = lang;
+  document.getElementById('pgTitle').textContent = d.title;
+  document.getElementById('lead').textContent = d.lead;
+  document.getElementById('foot').innerHTML = d.foot;
+  document.getElementById('lko').className = lang==='ko'?'on':'';
+  document.getElementById('len').className = lang==='en'?'on':'';
+  document.getElementById('sections').innerHTML = d.secs.map(s => `
+    <div class="sec">
+      <h2><span class="ic">${s.ic}</span>${esc(s.title)}</h2>
+      <div class="purpose">💡 ${esc(s.purpose)}</div>
+      <div class="howto">${esc(d.howto)}</div>
+      <ol class="steps">${s.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+      ${s.tip?`<div class="tip">💡 ${esc(s.tip)}</div>`:''}
+      ${s.img?`<div class="shot"><img src="${s.img}" loading="lazy" alt="">${s.cap?`<div class="cap">${esc(s.cap)}</div>`:''}</div>`:''}
+    </div>`).join('');
+  try{ localStorage.setItem('imvoca_guide_lang', lang); }catch(e){}
+}
+function setLang(l){ render(l); }
+
+// 언어 결정: URL ?lang= (앱이 넘김) > 저장값 > 브라우저 언어 > 한국어
+(function(){
+  let lang;
+  try{
+    const q = new URLSearchParams(location.search).get('lang');
+    if (q === 'en' || q === 'ko') lang = q;
+    else lang = localStorage.getItem('imvoca_guide_lang')
+              || ((navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'ko');
+  }catch(e){ lang = 'ko'; }
+  render(lang || 'ko');
+})();
+</script>
+</body>
+</html>
