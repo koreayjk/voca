@@ -2288,7 +2288,7 @@ function showUpgradePopup() {
         ${userNativeLang==='ko'?`무료 플랜은 ${FREE_SCAN_LIMIT}장까지 스캔할 수 있어요.`:`Free plan includes ${FREE_SCAN_LIMIT} scans total.`}
       </div>
       <div style="font-size:13px;color:var(--ink-40);margin-bottom:24px;">
-        ${userNativeLang==='ko'?'Premium으로 업그레이드하면 무제한으로 사용할 수 있어요!':'Upgrade to Premium for unlimited scans!'}
+        ${userNativeLang==='ko'?'Premium으로 업그레이드하면 매일 20장씩 스캔할 수 있어요!':'Upgrade to Premium for 20 AI scans every day!'}
       </div>
       <div style="background:var(--gold-bg);border-radius:12px;padding:16px;margin-bottom:20px;">
         <div style="font-size:13px;color:var(--accent);font-weight:700;margin-bottom:4px;">✨ Premium</div>
@@ -2296,7 +2296,7 @@ function showUpgradePopup() {
         <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $39.99 (16% 할인)':'$39.99/year (save 16%)'}</div>
       </div>
       <div style="font-size:12px;color:var(--ink-40);margin-bottom:16px;">
-        ✓ ${userNativeLang==='ko'?'무제한 AI 스캔':'Unlimited AI scans'}<br>
+        ✓ ${userNativeLang==='ko'?'AI 스캔 하루 20장':'20 AI scans per day'}<br>
         ✓ ${userNativeLang==='ko'?'무제한 단어 저장':'Unlimited word storage'}<br>
         ✓ ${userNativeLang==='ko'?'에빙하우스 복습':'Ebbinghaus review'}
       </div>
@@ -2425,7 +2425,7 @@ async function startOrgBilling(){
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
   if (!orgIsPrimary()) { toast(ko?'결제는 주 관리자만 할 수 있어요':'Only the primary admin can manage billing'); return; }
-  if (!confirm(ko?'학원 프리미엄 결제를 시작할까요?\n\n원장님을 제외한 모든 구성원(선생님·학생) 1명당 매월 $2.99로 청구돼요. 결제하면 전원이 무제한이 돼요.':'Start academy billing? $2.99/month per member (teachers + students, excluding the primary admin). Everyone becomes unlimited.')) return;
+  if (!confirm(ko?'학원 프리미엄 결제를 시작할까요?\n\n원장님을 제외한 모든 구성원(선생님·학생) 1명당 매월 $2.99로 청구돼요. 결제하면 전원이 프리미엄(AI 스캔 하루 20장)이 돼요.':'Start academy billing? $2.99/month per member (teachers + students, excluding the primary admin). Everyone gets Premium (20 AI scans/day).')) return;
   try{
     toast(ko?'결제 페이지로 이동 중...':'Redirecting to checkout...');
     const res = await fetch(SB_URL+'/functions/v1/create-checkout',{
@@ -3103,7 +3103,7 @@ const HELP = {
     img:_PROMO+'reissue-modal.png', imgcap:'기준 점수 미만만 자동 선택' },
   invite: { icon:'🎫', title:'초대 코드', purpose:'학생을 우리 단체로 초대하는 코드예요.',
     steps:['코드를 학생에게 알려주기','학생이 가입할 때 코드 입력 → 우리 단체 소속','“재발급”하면 이전 코드는 더 이상 못 써요'] },
-  billing: { icon:'💳', title:'구독·결제', purpose:'학원 프리미엄 결제로 학생·선생님 전원이 무제한이 돼요. 쓰는 인원수만큼만 매월 자동 청구됩니다.',
+  billing: { icon:'💳', title:'구독·결제', purpose:'학원 프리미엄 결제로 학생·선생님 전원이 프리미엄(AI 스캔 하루 20장)이 돼요. 쓰는 인원수만큼만 매월 자동 청구됩니다.',
     steps:['요금: 선생님·학생 1명당 월 $2.99 (원장·주 관리자는 무료)',
       '청구일: 매월 1일(한국시간)에 자동 청구',
       '인원 기준: 그 시점(매월 1일)에 “승인된” 인원수로 계산',
@@ -3304,10 +3304,10 @@ function renderOrgAdminPage(root) {
         <div id="org-price-block"><div class="muted" style="font-size:12px;">${ko?'불러오는 중…':'Loading…'}</div></div>
       ` : `
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">✨ ${ko?'프리미엄 활성':'Premium active'}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
-        <div class="muted" style="font-size:12.5px;line-height:1.7;">${ko?'학원 학생 전원이 무제한으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.':'All students unlimited. Billed monthly per approved member.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+        <div class="muted" style="font-size:12.5px;line-height:1.7;">${ko?'학원 학생 전원이 프리미엄(AI 스캔 하루 20장)으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.':'All students on Premium (20 AI scans/day). Billed monthly per approved member.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
       `) : `
         <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">💳 ${ko?'학원 프리미엄 결제':'Academy premium'}</div>
-        <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${ko?'결제하면 우리 학원 전원이 무제한이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.':'Everyone becomes unlimited. The primary admin is free; teachers and students are $2.99/month each.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
+        <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${ko?'결제하면 우리 학원 전원이 프리미엄(AI 스캔 하루 20장)이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.':'Everyone gets Premium (20 AI scans/day). The primary admin is free; teachers and students are $2.99/month each.'}<br>${ko?'예상 월 청구':'Est. monthly'}: <b id="org-bill-est">—</b></div>
         ${isPrim ? `<button class="btn btn-solid" style="max-width:280px;" onclick="startOrgBilling()">${ko?'💳 결제 시작':'💳 Start billing'}</button>` : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${ko?'결제는 주 관리자만 진행할 수 있어요.':'Only the primary admin can start billing.'}</div>`}
       `)}
     ${userOrg.billing_active ? `
@@ -3382,7 +3382,7 @@ const FAQ_ITEMS = [
   { q: '단어는 어떻게 추가하나요?',
     a: '영어책이나 교재 페이지를 사진으로 찍으면 AI가 어려운 단어를 골라 자동으로 단어장에 추가해요.' },
   { q: '무료로 얼마나 쓸 수 있나요?',
-    a: '가입하면 사진 스캔을 무료로 10번 할 수 있어요. 그 후에는 프리미엄으로 업그레이드하면 무제한으로 사용할 수 있어요.' },
+    a: '가입하면 사진 스캔을 무료로 10번 할 수 있어요. 그 후에는 프리미엄으로 업그레이드하면 매일 20장씩 스캔할 수 있어요.' },
   { q: '복습은 어떻게 되나요?',
     a: '망각곡선에 따라 복습할 단어를 자동으로 알려드려요. 잊어버릴 때쯤 다시 보여줘서 오래 기억에 남게 도와줘요.' },
   { q: '단어 뜻이 책 내용과 다르게 나와요.',
@@ -6161,7 +6161,7 @@ function render() {
                 <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
               `}
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${hasUnlimitedScan()?(userNativeLang==='ko'?` · ✨ 무제한 스캔`:` · ✨ Unlimited`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${userNativeLang==='ko'?'단어':'words'}${hasUnlimitedScan()?(userNativeLang==='ko'?` · ✨ 스캔 하루 20장`:` · ✨ 20 scans/day`):(isOrgStudentActive()?(userNativeLang==='ko'?` · 📷 오늘 스캔 ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}장`:` · 📷 Today ${dailyScansToday()}/${STUDENT_DAILY_LIMIT}`):(userNativeLang==='ko'?` · 📷 무료 스캔 ${userScanCount}/${FREE_SCAN_LIMIT}장 사용됨`:` · 📷 Free scans ${userScanCount}/${FREE_SCAN_LIMIT}`))}</div>
             <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:4px 11px;">
               <span style="font-size:11px;">🏅</span><span style="font-size:10.5px;font-weight:700;color:var(--accent);letter-spacing:0.01em;">${userNativeLang==='ko'?'특허출원 기술 · 제10-2026-0127089호':'Patent Pending · KR 10-2026-0127089'}</span>
             </div>
