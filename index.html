@@ -7133,13 +7133,24 @@ function _pcPaint(ctx, W, d){
   ctx.textAlign='left'; ctx.textBaseline='alphabetic';
   ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,1400);
 
-  // 헤더 (남색 그라데이션)
+  // 헤더 (남색 그라데이션 · 학원 로고 있으면 왼쪽에)
   const hH=84, g=ctx.createLinearGradient(0,0,W,hH);
   g.addColorStop(0,'#1c3553'); g.addColorStop(1,'#2a4a73');
   ctx.fillStyle=g; ctx.fillRect(0,0,W,hH);
-  ctx.fillStyle='#fff'; ctx.font='800 19px '+F; ctx.fillText(d.orgName||'IM VOCA', P, 36);
+  let tx=P;
+  if(d._logoImg){
+    const ls=44, lx=P, ly=(hH-ls)/2;
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(lx+10,ly); ctx.arcTo(lx+ls,ly,lx+ls,ly+ls,10); ctx.arcTo(lx+ls,ly+ls,lx,ly+ls,10); ctx.arcTo(lx,ly+ls,lx,ly,10); ctx.arcTo(lx,ly,lx+ls,ly,10); ctx.closePath();
+    ctx.fillStyle='#fff'; ctx.fill(); ctx.clip();
+    const im=d._logoImg, sc=Math.min((ls-8)/im.width,(ls-8)/im.height), dw=im.width*sc, dh=im.height*sc;
+    ctx.drawImage(im, lx+(ls-dw)/2, ly+(ls-dh)/2, dw, dh);
+    ctx.restore();
+    tx=P+56;
+  }
+  ctx.fillStyle='#fff'; ctx.font='800 19px '+F; ctx.fillText(d.orgName||'IM VOCA', tx, 36);
   ctx.fillStyle='#cdd6e0'; ctx.font='500 11.5px '+F;
-  ctx.fillText((ko?'영어 단어 학습 리포트 · ':'Vocabulary Report · ')+(d.dateLabel||''), P, 56);
+  ctx.fillText((ko?'영어 단어 학습 리포트 · ':'Vocabulary Report · ')+(d.dateLabel||''), tx, 56);
   ctx.textAlign='right'; ctx.fillStyle='#fff'; ctx.font='800 16px '+F; ctx.fillText(d.studentName||'', W-P, 40);
   ctx.textAlign='left';
   let y=hH+16;
@@ -7243,6 +7254,12 @@ function _showParentImageCardModal(d){
   const ta=ov.querySelector('#pcard-comment');
   let tmr=null; if(ta) ta.addEventListener('input', ()=>{ clearTimeout(tmr); tmr=setTimeout(_pcRefresh, 350); });
   _pcRefresh();
+  // 학원 로고: 비동기 로드 후 다시 그림 (실패하면 로고 없이 그대로)
+  if(d.logoUrl && !d._logoImg){
+    const im=new Image(); im.crossOrigin='anonymous';
+    im.onload=()=>{ if(window._pcData===d && im.width>0){ d._logoImg=im; _pcRefresh(); } };
+    im.src=d.logoUrl;
+  }
 }
 function _pcRefresh(){
   const d=window._pcData; if(!d) return;
@@ -7250,7 +7267,11 @@ function _pcRefresh(){
   try{
     window._pcCanvas=_drawParentCard(d);
     const img=document.getElementById('pcard-img'); if(img) img.src=window._pcCanvas.toDataURL('image/png');
-  }catch(e){ logError && logError('pcard_draw', e&&e.message); _pcAsText(); }
+  }catch(e){
+    // 로고 이미지가 캔버스를 오염시키는 환경(CORS 미지원)이면 로고만 빼고 재시도
+    if(d._logoImg){ d._logoImg=null; d.logoUrl=''; _pcRefresh(); return; }
+    logError && logError('pcard_draw', e&&e.message); _pcAsText();
+  }
 }
 function _pcFileName(){
   const d=window._pcData||{};
@@ -7584,7 +7605,8 @@ async function shareParentCard(studentId, studentName){
   }
 
   _showParentImageCardModal({
-    orgName, studentName: sName||(ko?'학생':'Student'), dateLabel,
+    orgName, logoUrl: (userOrg && userOrg.logo_url) || '',
+    studentName: sName||(ko?'학생':'Student'), dateLabel,
     streak, totalDaysStudied, totalWordsLabel: cnt(allStudy, totalWords),
     hero1, hero2, weekCal, weekNewLabel, diffLabel, reviewLabel, overdue,
     todayLabel, ebbLine, comment
