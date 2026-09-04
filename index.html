@@ -7102,66 +7102,199 @@ function assignmentBannerHTML(){
   </div>`;
 }
 
-// ===== 교사 리포트 + 학부모 카드 (Phase 4) =====
-// ===== 학부모용 한 장 리포트 (세련된 디자인) =====
-// d = {orgName, logoUrl, studentName, periodLabel, dateLabel, summary:{daysStudied,totalDays,avgScore,reviewDone,reviewTotal,dueSoon}, rows:[{day,studied,score,stage,nextDate}], message}
-function parentReportHTML(d){
-  const ko = userNativeLang==='ko';
-  const s = d.summary||{};
-  const pct = (a,b)=> b>0?Math.round(a/b*100):0;
-  const scoreColor = v => v>=80?'#1c7c3c':v>=50?'#b35900':'#c0392b';
-  const stageChip = st => st==='done'
-      ? `<span style="font-size:10px;font-weight:700;color:#1c7c3c;background:#e6f4ea;border-radius:99px;padding:2px 8px;">${ko?'복습완료':'Done'}</span>`
-      : st==='doing'
-      ? `<span style="font-size:10px;font-weight:700;color:#b35900;background:#fff3e0;border-radius:99px;padding:2px 8px;">${ko?'복습중':'Reviewing'}</span>`
-      : `<span style="font-size:10px;font-weight:700;color:#999;background:#f0f0f0;border-radius:99px;padding:2px 8px;">${ko?'예정':'Upcoming'}</span>`;
-  const rows = (d.rows||[]).map(r=>`
-    <tr style="border-bottom:1px solid #eee;">
-      <td style="padding:9px 6px;font-weight:700;color:#1c3553;">${esc(r.day)}</td>
-      <td style="padding:9px 6px;text-align:center;">${r.studied?'✅':'<span style=\"color:#ccc\">·</span>'}</td>
-      <td style="padding:9px 6px;text-align:center;">${r.score!=null?`<span style="font-weight:800;color:${scoreColor(r.score)};">${r.score}<span style="font-size:10px;">%</span></span>`:'<span style="color:#ccc">—</span>'}</td>
-      <td style="padding:9px 6px;text-align:center;">${stageChip(r.stage)}</td>
-      <td style="padding:9px 6px;text-align:right;font-size:11px;color:#8a8a8a;">${r.nextDate?esc(r.nextDate):''}</td>
-    </tr>`).join('');
-  const stat = (label,val,sub,color)=>`
-    <div style="flex:1;background:#faf7f1;border:1px solid #efe7d6;border-radius:12px;padding:13px 10px;text-align:center;">
-      <div style="font-size:23px;font-weight:800;color:${color||'#1c3553'};line-height:1.1;">${val}</div>
-      <div style="font-size:10.5px;color:#8a8a8a;margin-top:3px;">${label}</div>
-      ${sub?`<div style="font-size:9.5px;color:#b0a890;margin-top:1px;">${sub}</div>`:''}
+// ===== 교사 리포트 + 학부모 카드 =====
+// ── 학부모 이미지 카드('자랑 카드') ─────────────────────────────
+// shareParentCard 가 모은 데이터(연속·누적·주간 달력·에빙하우스·선생님 한마디)를
+// 외부 라이브러리 없이 캔버스에 직접 그려 PNG로 공유/저장. (오프라인 OK, 폰트/이미지 오염 문제 없음)
+function _drawParentCard(d){
+  const S=2, DW=540;                                   // 2배 해상도(1080px)로 선명하게
+  const big=document.createElement('canvas'); big.width=DW*S; big.height=1400*S;
+  const bctx=big.getContext('2d'); bctx.scale(S,S);
+  const h=_pcPaint(bctx, DW, d);                        // 실제 높이만큼 잘라서 반환
+  const out=document.createElement('canvas'); out.width=DW*S; out.height=Math.round(h*S);
+  out.getContext('2d').drawImage(big,0,0);
+  return out;
+}
+function _pcPaint(ctx, W, d){
+  const ko=userNativeLang==='ko';
+  const F='-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif';
+  const P=22, CW=W-P*2;
+  const rr=(x,y,w,h,r)=>{ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); };
+  const wrap=(text,font,maxW)=>{ ctx.font=font; const out=[]; let line='';
+    String(text||'').split(/\s+/).forEach(w=>{
+      const t=line?line+' '+w:w;
+      if(ctx.measureText(t).width<=maxW){ line=t; return; }
+      if(line){ out.push(line); line=''; }
+      let buf=''; for(const ch of w){ if(ctx.measureText(buf+ch).width>maxW && buf){ out.push(buf); buf=ch; } else buf+=ch; } line=buf;
+    });
+    if(line) out.push(line); return out; };
+  const seg=(x,y,parts)=>{ let cx=x; parts.forEach(p=>{ ctx.font=p.f; ctx.fillStyle=p.c; ctx.fillText(p.t,cx,y); cx+=ctx.measureText(p.t).width; }); };
+
+  ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,1400);
+
+  // 헤더 (남색 그라데이션)
+  const hH=84, g=ctx.createLinearGradient(0,0,W,hH);
+  g.addColorStop(0,'#1c3553'); g.addColorStop(1,'#2a4a73');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,hH);
+  ctx.fillStyle='#fff'; ctx.font='800 19px '+F; ctx.fillText(d.orgName||'IM VOCA', P, 36);
+  ctx.fillStyle='#cdd6e0'; ctx.font='500 11.5px '+F;
+  ctx.fillText((ko?'영어 단어 학습 리포트 · ':'Vocabulary Report · ')+(d.dateLabel||''), P, 56);
+  ctx.textAlign='right'; ctx.fillStyle='#fff'; ctx.font='800 16px '+F; ctx.fillText(d.studentName||'', W-P, 40);
+  ctx.textAlign='left';
+  let y=hH+16;
+
+  // 히어로 통계 2칸 (연속 학습 · 누적 암기)
+  const bw=(CW-10)/2, bh=82;
+  const hero=(x,hd)=>{ ctx.fillStyle='#faf7f1'; rr(x,y,bw,bh,14); ctx.fill();
+    ctx.strokeStyle='#efe7d6'; ctx.lineWidth=1; rr(x+0.5,y+0.5,bw-1,bh-1,14); ctx.stroke();
+    ctx.fillStyle='#8a8a8a'; ctx.font='700 11.5px '+F; ctx.fillText(hd.emo+' '+hd.label, x+14, y+24);
+    ctx.fillStyle=hd.color; ctx.font='800 30px '+F; ctx.fillText(hd.val, x+14, y+60);
+    const vw=ctx.measureText(hd.val).width;
+    ctx.fillStyle='#b0a890'; ctx.font='700 13px '+F; ctx.fillText(hd.unit||'', x+16+vw, y+60); };
+  hero(P, d.hero1); hero(P+bw+10, d.hero2);
+  y+=bh+12;
+
+  // 이번 주 달력 (월~일 ✓)
+  const wh=88;
+  ctx.fillStyle='#fff'; rr(P,y,CW,wh,14); ctx.fill();
+  ctx.strokeStyle='#ececec'; ctx.lineWidth=1; rr(P+0.5,y+0.5,CW-1,wh-1,14); ctx.stroke();
+  ctx.fillStyle='#9a7b3a'; ctx.font='700 10.5px '+F; ctx.fillText(ko?'이번 주':'THIS WEEK', P+14, y+20);
+  const cal=d.weekCal||[], step=(CW-28-26)/6;
+  cal.forEach((c,i)=>{ const cx=P+14+13+i*step, cy=y+44;
+    ctx.beginPath(); ctx.arc(cx,cy,13,0,Math.PI*2);
+    ctx.fillStyle=c.on?'#1c7c3c':(c.future?'#fbfbfb':'#f0f0f0'); ctx.fill();
+    if(!c.on){ ctx.strokeStyle='#e8e8e8'; ctx.lineWidth=1; ctx.stroke(); }
+    if(c.isToday){ ctx.beginPath(); ctx.arc(cx,cy,16.5,0,Math.PI*2); ctx.strokeStyle='#b8860b'; ctx.lineWidth=1.8; ctx.stroke(); }
+    ctx.textAlign='center';
+    if(c.on){ ctx.fillStyle='#fff'; ctx.font='800 13px '+F; ctx.fillText('✓', cx, cy+4.5); }
+    ctx.fillStyle=c.on?'#1c7c3c':(c.future?'#d5d5d5':'#b5b5b5'); ctx.font=(c.on?'800':'600')+' 10.5px '+F;
+    ctx.fillText(c.label, cx, y+76); ctx.textAlign='left'; });
+  y+=wh+12;
+
+  // 이번 주 요약
+  const B='#2b2b2b', GN='#1c7c3c', OR='#b35900', AC='#1c3553';
+  const f13='500 13px '+F, f13b='800 13px '+F, f12='500 12px '+F;
+  const lines=[];
+  lines.push([{t:'✏️ ',f:f13,c:B},{t:(ko?'이번 주 새로 외운 단어 ':'New words this week: '),f:f13,c:B},{t:d.weekNewLabel,f:f13b,c:AC}]
+    .concat(d.diffLabel?[{t:'  '+d.diffLabel,f:'700 11.5px '+F,c:GN}]:[]));
+  lines.push([{t:'🔁 ',f:f13,c:B},{t:d.reviewLabel,f:f13,c:(d.overdue>0?OR:GN)}]);
+  if(d.todayLabel) lines.push([{t:'☀️ ',f:f12,c:'#8a8a8a'},{t:(ko?'오늘: ':'Today: ')+d.todayLabel,f:f12,c:'#8a8a8a'}]);
+  const sh=14+lines.length*23+6;
+  ctx.fillStyle='#fff'; rr(P,y,CW,sh,14); ctx.fill();
+  ctx.strokeStyle='#ececec'; ctx.lineWidth=1; rr(P+0.5,y+0.5,CW-1,sh-1,14); ctx.stroke();
+  lines.forEach((L,i)=> seg(P+14, y+26+i*23, L));
+  y+=sh+12;
+
+  // 에빙하우스 안내 (과학적 관리 어필)
+  const ebbLines=wrap(d.ebbLine||'', '500 12px '+F, CW-56);
+  const eh=14+ebbLines.length*18+8;
+  ctx.fillStyle='#eef4fb'; rr(P,y,CW,eh,12); ctx.fill();
+  ctx.fillStyle='#2a4a73'; ctx.fillRect(P,y+3,3,eh-6);
+  ctx.font='16px '+F; ctx.fillText('🧠', P+12, y+25);
+  ctx.fillStyle='#2c4058'; ctx.font='500 12px '+F;
+  ebbLines.forEach((ln,i)=> ctx.fillText(ln, P+38, y+23+i*18));
+  y+=eh+10;
+
+  // 선생님 한마디
+  if(d.comment){
+    const cmLines=wrap(d.comment, '500 12.5px '+F, CW-28);
+    const chh=32+cmLines.length*19+8;
+    ctx.fillStyle='#f4f8f4'; rr(P,y,CW,chh,12); ctx.fill();
+    ctx.fillStyle='#1c7c3c'; ctx.fillRect(P,y+3,3,chh-6);
+    ctx.fillStyle='#1c7c3c'; ctx.font='800 11px '+F; ctx.fillText('💬 '+(ko?'선생님 한마디':"Teacher's note"), P+14, y+20);
+    ctx.fillStyle='#2e4a36'; ctx.font='500 12.5px '+F;
+    cmLines.forEach((ln,i)=> ctx.fillText(ln, P+14, y+40+i*19));
+    y+=chh+10;
+  }
+
+  // 푸터
+  y+=4;
+  ctx.strokeStyle='#eee'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(P,y); ctx.lineTo(W-P,y); ctx.stroke();
+  ctx.fillStyle='#9a9a9a'; ctx.font='500 10.5px '+F; ctx.fillText(d.orgName||'', P, y+22);
+  ctx.textAlign='right'; ctx.fillStyle='#b8860b'; ctx.font='700 10.5px '+F;
+  ctx.fillText('by IM VOCA · 기출 빅데이터 영단어', W-P, y+22);
+  ctx.textAlign='left';
+  return y+34;
+}
+
+// 이미지 카드 미리보기·편집 모달 — 코멘트를 고치면 카드가 즉시 다시 그려짐
+function _showParentImageCardModal(d){
+  const ko=userNativeLang==='ko';
+  window._pcData=d;
+  const old=document.getElementById('pcard-overlay'); if(old) old.remove();
+  const ov=document.createElement('div'); ov.id='pcard-overlay';
+  ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+  ov.innerHTML=`
+    <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:90vh;overflow:auto;">
+      <div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--ink-100);margin-bottom:2px;">📤 ${ko?'학부모에게 보내기':'Send to parent'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'이미지 카드로 보내면 카톡에서 훨씬 보기 좋아요.':'Send as an image card.'}</div>
+      <img id="pcard-img" alt="report card" style="width:100%;border-radius:14px;box-shadow:0 6px 24px rgba(28,53,83,0.18);display:block;">
+      <div style="font-size:11px;font-weight:700;color:var(--ink-60);margin:12px 0 5px;">💬 ${ko?'선생님 한마디 (카드에 들어가요)':'Teacher comment (shown on card)'}</div>
+      <textarea id="pcard-comment" rows="2" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:10px 12px;font-family:var(--font-body);font-size:13px;line-height:1.5;color:var(--ink-100);box-sizing:border-box;resize:vertical;">${esc(d.comment||'')}</textarea>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="_pcAsText()">📝 ${ko?'텍스트로':'Text'}</button>
+        <button class="btn btn-outline" style="flex:1;" onclick="_pcSaveImage()">⬇️ ${ko?'저장':'Save'}</button>
+        <button class="btn" style="flex:1.4;background:var(--accent);color:#fff;border:none;font-weight:700;" onclick="_pcShareImage()">📤 ${ko?'이미지 공유':'Share'}</button>
+      </div>
     </div>`;
-  return `<div style="max-width:600px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 6px 30px rgba(28,53,83,0.10);font-family:'Apple SD Gothic Neo','Pretendard',sans-serif;color:#2b2b2b;">
-    <div style="background:linear-gradient(135deg,#1c3553,#2a4a73);color:#fff;padding:22px 24px;display:flex;align-items:center;gap:14px;">
-      ${d.logoUrl?`<img src="${esc(d.logoUrl)}" style="width:48px;height:48px;border-radius:11px;object-fit:cover;background:#fff;flex-shrink:0;">`:`<div style="width:48px;height:48px;border-radius:11px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">🏫</div>`}
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:18px;font-weight:800;line-height:1.2;">${esc(d.orgName||'학원')}</div>
-        <div style="font-size:12px;color:#cdd6e0;margin-top:2px;">${ko?'영어 단어 학습 리포트':'Vocabulary Report'}${d.periodLabel?` · ${esc(d.periodLabel)}`:''}</div>
-      </div>
-      <div style="text-align:right;flex-shrink:0;">
-        <div style="font-size:15px;font-weight:700;">${esc(d.studentName||'')}</div>
-        <div style="font-size:10.5px;color:#9fb0c2;">${esc(d.dateLabel||'')}</div>
-      </div>
-    </div>
-    <div style="padding:18px 22px;">
-      <div style="display:flex;gap:9px;margin-bottom:18px;">
-        ${stat(ko?'학습한 Day':'Days', `${s.daysStudied||0}<span style="font-size:13px;color:#b0a890;">/${s.totalDays||0}</span>`, '', '#1c3553')}
-        ${stat(ko?'평균 테스트':'Avg test', `${s.avgScore!=null?s.avgScore+'%':'—'}`, '', scoreColor(s.avgScore||0))}
-        ${stat(ko?'복습 완료율':'Reviews', `${pct(s.reviewDone||0,s.reviewTotal||0)}%`, `${s.reviewDone||0}/${s.reviewTotal||0}`, '#b8860b')}
-        ${stat(ko?'이번주 복습':'Due', `${s.dueSoon||0}`, ko?'예정':'this week', '#c0392b')}
-      </div>
-      <div style="font-size:12px;font-weight:700;color:#9a7b3a;letter-spacing:0.04em;margin-bottom:6px;">${ko?'DAY별 진행':'PROGRESS BY DAY'}</div>
-      <table style="width:100%;border-collapse:collapse;font-size:13px;">
-        <thead><tr style="border-bottom:2px solid #1c3553;color:#1c3553;font-size:11px;">
-          <th style="padding:6px;text-align:left;">Day</th><th style="padding:6px;">${ko?'암기':'Study'}</th><th style="padding:6px;">${ko?'테스트':'Test'}</th><th style="padding:6px;">${ko?'복습':'Review'}</th><th style="padding:6px;text-align:right;">${ko?'다음 복습':'Next'}</th>
-        </tr></thead>
-        <tbody>${rows||`<tr><td colspan="5" style="padding:20px;text-align:center;color:#aaa;font-size:12px;">${ko?'아직 학습 기록이 없어요':'No records yet'}</td></tr>`}</tbody>
-      </table>
-      ${d.message?`<div style="background:#f4f8f4;border-left:3px solid #1c7c3c;border-radius:8px;padding:11px 14px;margin-top:16px;font-size:12.5px;color:#2e4a36;line-height:1.6;">${esc(d.message)}</div>`:''}
-    </div>
-    <div style="border-top:1px solid #eee;padding:11px 22px;display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-size:11px;color:#9a9a9a;">${esc(d.orgName||'')}</span>
-      <span style="font-size:10.5px;color:#b8860b;font-weight:700;">by IM VOCA · 기출 빅데이터 영단어</span>
-    </div>
-  </div>`;
+  ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
+  document.body.appendChild(ov);
+  const ta=ov.querySelector('#pcard-comment');
+  let tmr=null; if(ta) ta.addEventListener('input', ()=>{ clearTimeout(tmr); tmr=setTimeout(_pcRefresh, 350); });
+  _pcRefresh();
+}
+function _pcRefresh(){
+  const d=window._pcData; if(!d) return;
+  const ta=document.getElementById('pcard-comment'); if(ta) d.comment=ta.value.trim();
+  try{
+    window._pcCanvas=_drawParentCard(d);
+    const img=document.getElementById('pcard-img'); if(img) img.src=window._pcCanvas.toDataURL('image/png');
+  }catch(e){ logError && logError('pcard_draw', e&&e.message); _pcAsText(); }
+}
+function _pcFileName(){
+  const d=window._pcData||{};
+  return 'IMVOCA-'+String(d.studentName||'report').replace(/[\\/:*?"<>|\s]+/g,'_')+'-'+new Date(Date.now()+9*3600*1000).toISOString().slice(0,10)+'.png';
+}
+function _pcShareImage(){
+  const ko=userNativeLang==='ko', cv=window._pcCanvas; if(!cv) return;
+  cv.toBlob(async blob=>{
+    if(!blob){ _pcSaveImage(); return; }
+    const file=new File([blob], _pcFileName(), {type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file], title:(window._pcData||{}).orgName||'IM VOCA'}); }catch(e){}
+    } else {
+      toast(ko?'이 기기는 이미지 공유가 안 돼요 — 저장해 드릴게요. 카톡에 첨부해 보내세요':'Sharing not supported — saving instead');
+      _pcSaveImage();
+    }
+  }, 'image/png');
+}
+function _pcSaveImage(){
+  const ko=userNativeLang==='ko', cv=window._pcCanvas; if(!cv) return;
+  const a=document.createElement('a'); a.href=cv.toDataURL('image/png'); a.download=_pcFileName();
+  document.body.appendChild(a); a.click(); a.remove();
+  toast(ko?'이미지를 저장했어요 — 카톡에 첨부해서 보내세요 🖼':'Image saved 🖼');
+}
+function _pcAsText(){
+  const d=window._pcData; if(!d) return;
+  const ov=document.getElementById('pcard-overlay'); if(ov) ov.remove();
+  _showParentShareModal(`${d.orgName} ${userNativeLang==='ko'?'학습 리포트':'Learning Report'}`, _parentCardText(d));
+}
+// 이미지가 안 되는 환경용 텍스트판 — 같은 데이터로 같은 이야기
+function _parentCardText(d){
+  const ko=userNativeLang==='ko', L=[];
+  L.push(`${d.studentName||(ko?'학생':'Student')} ${ko?'학습 리포트':'Report'} · ${d.dateLabel}`);
+  L.push('');
+  if(d.streak>0) L.push(ko?`🔥 연속 학습 ${d.streak}일째`:`🔥 ${d.streak}-day streak`);
+  L.push(`📚 ${ko?'누적 암기':'Total memorized'}: ${d.totalWordsLabel}`);
+  L.push(`🗓 ${ko?'이번 주':'This week'}: `+(d.weekCal||[]).map(c=>c.on?'✅':(c.future?'　':'·')).join(' '));
+  L.push(`✏️ ${ko?'이번 주 새 단어':'New this week'}: ${d.weekNewLabel}${d.diffLabel?` (${d.diffLabel})`:''}`);
+  L.push(`🔁 ${d.reviewLabel}`);
+  if(d.todayLabel) L.push(`☀️ ${ko?'오늘':'Today'}: ${d.todayLabel}`);
+  L.push('');
+  L.push(`🧠 ${d.ebbLine}`);
+  if(d.comment){ L.push(''); L.push(`💬 ${d.comment}`); }
+  return L.join('\n');
 }
 
 async function renderReportPage(root){
@@ -7355,42 +7488,50 @@ async function shareParentCard(studentId, studentName){
   if (!sName) {
     (window._lastReport||[]).some(asg=>(asg.students||[]).some(st=>{ if(st.student_id===sid){ sName=st.name||''; return true; } return false; }));
   }
-  const s = { name: sName };
   const orgName = (userOrg && userOrg.name) ? userOrg.name : 'IM VOCA';
-  const title = orgName + ' ' + (ko?'학습 리포트':'Learning Report');
   toast(ko?'리포트 준비 중…':'Preparing…');
 
-  // 오늘(KST) 기준 날짜
-  const kstToday = new Date(Date.now() + 9*3600*1000).toISOString().slice(0,10);
-  const _p = kstToday.split('-'); const dLabel = ko ? `${+_p[1]}월 ${+_p[2]}일` : `${+_p[1]}/${+_p[2]}`;
+  // KST 날짜 도우미 (n일 전 'YYYY-MM-DD')
+  const kstStr = n => new Date(Date.now() + 9*3600*1000 - n*86400000).toISOString().slice(0,10);
+  const kstToday = kstStr(0);
+  const _p = kstToday.split('-'); const dateLabel = ko ? `${+_p[1]}월 ${+_p[2]}일` : `${+_p[1]}/${+_p[2]}`;
 
-  // 오늘 활동(새 단어/복습)만 REST로 로드 — 단체 원장은 voca_activity 읽기 정책 있음(검증됨)
+  // 활동 이력 로드(연속·누적·주간 계산용) — 단체 원장은 voca_activity 읽기 정책 있음(검증됨)
   let acts = [];
-  try { acts = (sid ? await sbFetch(`/rest/v1/voca_activity?user_id=eq.${sid}&day=eq.${kstToday}&select=kind,book_id,page_num`) : []) || []; } catch(e){}
+  try { acts = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${sid}&select=day,kind,book_id,page_num&order=day.desc&limit=2000`) || []; } catch(e){}
   if (!Array.isArray(acts)) acts = [];
 
-  // 책 제목 매핑 + 단어 수 계산(수치 중심 리포트)
-  const btitle = (bid)=> (findBook(bid) && findBook(bid).title) || (ko?'단어장':'Wordbook');
+  // 책 제목·단어 수 도우미
+  const btitle = bid => (findBook(bid) && findBook(bid).title) || (ko?'단어장':'Wordbook');
   const _norm = s => String(s==null?'':s).replace(/[^0-9]/g,'');       // 'Day 31'↔'31' 매칭용
   const wc = (bid,page)=>{ const b=findBook(bid); if(!b||!b.pages) return 0; const np=_norm(page); const p=b.pages.find(pp=>_norm(pp.num)===np); return (p&&p.words)?p.words.length:0; };
-  // (book_id,page) 중복 제거된 목록
-  const pairs = (kind)=>{ const seen=new Set(), out=[]; acts.filter(x=>x.kind===kind).forEach(x=>{ const k=x.book_id+'|'+x.page_num; if(seen.has(k))return; seen.add(k); out.push({bid:x.book_id, page:String(x.page_num||'')}); }); return out; };
+  // 기간 내 (book_id,page) 중복 제거 목록
+  const pairsIn = (kind,from,to)=>{ const seen=new Set(), out=[]; acts.forEach(x=>{ const dd=String(x.day||'').slice(0,10); if(x.kind!==kind||dd<from||dd>to) return; const k=x.book_id+'|'+x.page_num; if(seen.has(k)) return; seen.add(k); out.push({bid:x.book_id, page:String(x.page_num||'')}); }); return out; };
+  const sumW = list => list.reduce((s,p)=>s+wc(p.bid,p.page),0);
   // "책제목 Day a, b" 라벨 (책별 묶음)
-  const compactLabel = (list)=>{ const m={}; list.forEach(({bid,page})=>{ const t=btitle(bid); (m[t]=m[t]||[]).push(page); }); return Object.entries(m).map(([t,ps])=>`${t} ${ps.join(', ')}`).join(', '); };
-  const studyList = pairs('study'), reviewList = pairs('review');
-  const studyN  = studyList.reduce((s,p)=>s+wc(p.bid,p.page),0);
-  const reviewN = reviewList.reduce((s,p)=>s+wc(p.bid,p.page),0);
-  // 목표·전망 기준 책 = 오늘 학습(없으면 복습)한 책
-  const mainBid = (studyList[0]||reviewList[0]||{}).bid;
-  const mainBook = mainBid ? findBook(mainBid) : null;
-  const totalWords = mainBook ? (typeof countWords==='function'?countWords(mainBook):0) : 0;
-  const totalDays  = (mainBook && mainBook.pages) ? mainBook.pages.filter(p=>p.words&&p.words.length).length : 0;
+  const compactLabel = list => { const m={}; list.forEach(({bid,page})=>{ const t=btitle(bid); (m[t]=m[t]||[]).push(page); }); return Object.entries(m).map(([t,ps])=>`${t} ${ps.join(', ')}`).join(', '); };
 
-  // 밀린 복습 = 이 학생의 배정 과제 중 '다음 복습 예정일'이 오늘보다 이전인 것 (org-report=서버 권위).
-  //   (다른 학생 voca_review 를 REST로 읽으면 RLS로 빈 값이 올 수 있어 신뢰 가능한 리포트 데이터로 계산)
-  //   리포트 탭에서 열면 _lastReport 사용, 대시보드 등에서 열어 없으면 이 학생만 org-report 재조회.
+  // 연속 학습일 (오늘 활동 없으면 어제까지 이어진 연속으로 계산)
+  const daySet = new Set(acts.map(a=>String(a.day||'').slice(0,10)).filter(Boolean));
+  let streak=0; { const base = daySet.has(kstToday)?0:1; while(daySet.has(kstStr(base+streak))) streak++; }
+
+  // 이번 주(월~일) 달력
+  const dow = (new Date(Date.now()+9*3600*1000).getUTCDay()+6)%7;   // 월=0 … 일=6
+  const wLabels = ko?['월','화','수','목','금','토','일']:['M','T','W','T','F','S','S'];
+  const weekCal=[]; for(let i=0;i<7;i++) weekCal.push({label:wLabels[i], on:daySet.has(kstStr(dow-i)), isToday:i===dow, future:i>dow});
+
+  // 이번 주 · 지난주 · 누적 · 오늘
+  const weekStart=kstStr(dow), lwStart=kstStr(dow+7), lwEnd=kstStr(dow+1);
+  const wkStudy=pairsIn('study',weekStart,kstToday), wkReview=pairsIn('review',weekStart,kstToday);
+  const lwStudy=pairsIn('study',lwStart,lwEnd);
+  const allStudy=pairsIn('study','0000-01-01',kstToday);
+  const todayStudy=pairsIn('study',kstToday,kstToday);
+  const totalWords=sumW(allStudy), weekNewWords=sumW(wkStudy), lastWeekWords=sumW(lwStudy);
+  const totalDaysStudied=daySet.size;
+
+  // 밀린 복습 + 에빙하우스 단계 = org-report(서버 권위) — RLS로 타 학생 voca_review 직접 조회는 불가
   let reportRows = [];
-  const _pushRows = (arr)=> (arr||[]).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push({ ...st, _book: asg.title || btitle(asg.book_id) }); }));
+  const _pushRows = arr => (arr||[]).forEach(asg=>(asg.students||[]).forEach(st=>{ if(st.student_id===sid) reportRows.push({ ...st, _book: asg.title || btitle(asg.book_id) }); }));
   _pushRows(window._lastReport);
   if (!reportRows.length && userOrg) {
     try {
@@ -7398,55 +7539,56 @@ async function shareParentCard(studentId, studentName){
       if (rr && rr.ok) { const rd = await rr.json().catch(()=>({})); _pushRows(rd.report); }
     } catch(e){}
   }
-  // 정확한 밀린 복습 = 배정별 페이지별 밀림 합산(엣지함수 reviewsOverdue). 상세(책·Day)도 수집.
   // (구버전 함수 호환: reviewsOverdue 필드가 없으면 예전 '책당 1개' 방식으로 폴백)
-  let overdue = 0; const overdueDetail = [];
-  const _hasNew = reportRows.some(st=>typeof st.reviewsOverdue === 'number');
-  if (_hasNew) {
-    reportRows.forEach(st=>{
-      const n = st.reviewsOverdue || 0;
-      if (n>0) { overdue += n; if (Array.isArray(st.overduePages) && st.overduePages.length) overdueDetail.push(`${st._book||''} ${st.overduePages.join('·')}`.trim()); }
-    });
-  } else {
-    reportRows.forEach(st=>{ if(st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++; });
+  let overdue = 0;
+  if (reportRows.some(st=>typeof st.reviewsOverdue === 'number')) reportRows.forEach(st=>{ overdue += st.reviewsOverdue || 0; });
+  else reportRows.forEach(st=>{ if(st.exists && !st.completed && st.nextReviewDate && String(st.nextReviewDate).slice(0,10) < kstToday) overdue++; });
+
+  // ── 카드 표시용 라벨 (자랑 카드 프레이밍: 쌓인 것·꾸준함 먼저, 밀림은 '조금만 더') ──
+  const cnt = (list,words)=> words>0 ? `${words.toLocaleString()}${ko?'개':' words'}` : `${list.length}${ko?'과':' lessons'}`;
+  const hero1 = streak>0
+    ? {emo:'🔥', label:ko?'연속 학습':'Streak', val:String(streak), unit:ko?'일째':'days', color:'#c0392b'}
+    : {emo:'🗓', label:ko?'누적 학습일':'Days studied', val:String(totalDaysStudied), unit:ko?'일':'days', color:'#1c3553'};
+  const hero2 = totalWords>0
+    ? {emo:'📚', label:ko?'누적 암기 단어':'Words memorized', val:totalWords.toLocaleString(), unit:ko?'단어':'words', color:'#1c3553'}
+    : {emo:'📚', label:ko?'누적 학습':'Lessons done', val:String(allStudy.length), unit:ko?'과':'lessons', color:'#1c3553'};
+  const diff = weekNewWords - lastWeekWords;
+  const diffLabel = (diff>0 && lastWeekWords>0) ? (ko?`지난주보다 +${diff} ↑`:`+${diff} vs last wk ↑`) : '';
+  const weekNewLabel = wkStudy.length ? cnt(wkStudy, weekNewWords) : (ko?'아직 없음':'none yet');
+  const rN = wkReview.length;
+  const reviewLabel = overdue>0
+    ? (rN>0 ? (ko?`복습 ${rN}세트 완료 · ${overdue}개만 더 하면 완성!`:`${rN} review sets done · ${overdue} to go!`)
+            : (ko?`밀린 복습 ${overdue}개 — 오늘 하면 따라잡아요!`:`${overdue} reviews to catch up today`))
+    : (rN>0 ? (ko?`복습 ${rN}세트 완료 · 밀린 복습 없음 👏`:`${rN} review sets done · nothing overdue 👏`)
+            : (ko?'밀린 복습 없음 👏':'Nothing overdue 👏'));
+  const todayLabel = todayStudy.length ? compactLabel(todayStudy) : '';
+  // 에빙하우스 문구 — 진행 중 과제의 단계(stageLabel: 'N일차 복습 중' 등)를 학부모 언어로
+  const stRow = reportRows.find(r=>r.exists && !r.completed && r.stageLabel && r.stageLabel!=='시작 전');
+  const doneRow = reportRows.find(r=>r.completed);
+  const ebbLine = stRow
+    ? (ko?`『${stRow._book}』 단어들이 지금 ${stRow.stageLabel} — 2·3·6·15·30·60일 반복 복습으로 장기기억에 저장되는 중이에요.`
+        :`"${stRow._book}" is now at ${stRow.stageLabel} — spaced reviews (2·3·6·15·30·60 days) move words into long-term memory.`)
+    : doneRow
+    ? (ko?`『${doneRow._book}』 60일 복습까지 완주했어요 🎉 외운 단어가 장기기억에 단단히 저장됐습니다.`
+        :`"${doneRow._book}" finished the full 60-day review cycle 🎉`)
+    : (ko?'외운 단어는 2·3·6·15·30·60일 주기로 자동 복습되어 장기기억으로 저장됩니다.'
+        :'Words are auto-reviewed on a 2·3·6·15·30·60-day schedule for long-term memory.');
+  // 선생님 한마디 기본 문구 (모달에서 수정 가능)
+  const wkDaysN = weekCal.filter(c=>c.on).length;
+  let comment;
+  if (wkDaysN===0) comment = ko?'이번 주 학습을 시작하면 이 카드가 채워져요. 함께 응원해주세요!':'Cheer them on to start this week!';
+  else {
+    comment = ko?`이번 주 ${wkDaysN}일 학습했어요.`:`Studied ${wkDaysN} day(s) this week.`;
+    if (streak>=3) comment += ko?` ${streak}일 연속, 꾸준함이 아주 좋아요 👏`:` ${streak}-day streak 👏`;
+    comment += overdue>0 ? (ko?' 남은 복습만 마치면 완벽해요.':' Just a few reviews left.') : (ko?' 복습도 밀리지 않고 제때 하고 있어요.':' Reviews are right on schedule.');
   }
 
-  const lines = [];
-  lines.push(`${s.name || (ko?'학생':'Student')} ${ko?'학습 리포트':'Report'} · ${dLabel}`);
-  lines.push('');
-  // ── 오늘 (수치 중심) ──
-  if (studyList.length) {
-    const cnt = studyN>0 ? `${studyN}${ko?'개':' words'}` : `${studyList.length}${ko?'과':' lessons'}`;
-    lines.push(`📚 ${ko?'오늘 외운 단어':'New today'}: ${cnt}`);
-    lines.push(`   └ ${compactLabel(studyList)}`);
-  } else {
-    lines.push(`📚 ${ko?'오늘 외운 단어':'New today'}: ${ko?'아직 기록 없음':'none yet'}`);
-  }
-  if (reviewList.length) {
-    const cnt = (reviewN>0 ? `${reviewN}${ko?'개 · ':' words · '}` : '') + `${reviewList.length}${ko?'세트':' sets'}`;
-    lines.push(`🔁 ${ko?'오늘 복습':'Reviewed'}: ${cnt}`);
-    lines.push(`   └ ${compactLabel(reviewList)}`);
-  } else {
-    lines.push(`🔁 ${ko?'오늘 복습':'Reviewed'}: ${ko?'아직 기록 없음':'none yet'}`);
-  }
-  lines.push(`⏰ ${ko?'밀린 복습':'Overdue'}: ${overdue>0 ? `${overdue}${ko?'개 — 오늘 꼭 챙겨주세요 🙏':' due 🙏'}` : (ko?'없어요 👍':'none 👍')}`);
-  if (overdue>0 && overdueDetail.length) lines.push(`   └ ${overdueDetail.join(', ')}`);
-  // ── 목표 & 수치 전망 (예: 수능 기본 30일 → 60일차 복습 완료 시 90% 완벽 암기) ──
-  if (mainBook && totalWords>0 && totalDays>0) {
-    const n90 = Math.round(totalWords*0.9);
-    const finishDay = totalDays + 30;   // 마지막 과의 30일차 복습 ≈ (총일수+30)
-    lines.push('');
-    lines.push(`🎯 ${ko?'목표':'Goal'} — ${mainBook.title}`);
-    lines.push(ko?`   • 총 ${totalDays}일 과정 · ${totalWords}단어`:`   • ${totalDays}-day course · ${totalWords} words`);
-    lines.push(ko?`   • 매일 1과씩 → ${totalDays}일 후 ${totalWords}단어 암기`:`   • 1 lesson/day → all ${totalWords} words in ${totalDays} days`);
-    lines.push(ko?`   • ${finishDay}일차까지 복습 완료 → 약 ${n90}단어(90%) 완벽 암기`:`   • Finish reviews by day ${finishDay} → ~${n90} words (90%) mastered`);
-  }
-  lines.push('');
-  lines.push((studyList.length||reviewList.length)
-    ? (ko?'꾸준함이 실력이 됩니다 💪':'Consistency builds mastery 💪')
-    : (ko?'오늘 10분이면 충분해요. 함께 챙겨주세요 🙏':'Just 10 minutes today 🙏'));
-  const bodyText = lines.join('\n');
-  _showParentShareModal(title, bodyText);
+  _showParentImageCardModal({
+    orgName, studentName: sName||(ko?'학생':'Student'), dateLabel,
+    streak, totalDaysStudied, totalWordsLabel: cnt(allStudy, totalWords),
+    hero1, hero2, weekCal, weekNewLabel, diffLabel, reviewLabel, overdue,
+    todayLabel, ebbLine, comment
+  });
 }
 
 // 학부모 공유 미리보기·편집 모달 (평상시 리포트 / 시험 결과 리포트 공용)
