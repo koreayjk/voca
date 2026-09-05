@@ -2902,11 +2902,12 @@ async function openStudentDetail(id){
     }).join('');
 
     // 배정된 과제(공식책 등) 진행 — org-report 를 이 학생만 조회. (학생 본인 소유가 아니라 별도로 가져와야 함)
-    let assignedHtml = '';
+    let assignedHtml = '', assignedCount = 0;
     try {
       const rr = await fetch(SB_URL+'/functions/v1/org-report', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken}, body: JSON.stringify({ org_id:userOrg.id, student_id:id }) });
       const rd = await rr.json().catch(()=>({}));
       const rep = await _filterSelectedAssignments(Array.isArray(rd.report)?rd.report:[]);
+      assignedCount = rep.length;
       if (rep.length){
         assignedHtml = `<div style="font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ink-60);margin:2px 2px 8px;">📌 ${ko?'배정된 과제':'Assignments'} (${rep.length})</div>` + rep.map(a=>{
           const s=(a.students||[])[0]||{};
@@ -2959,7 +2960,7 @@ async function openStudentDetail(id){
         <div style="min-width:0;"><div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>${email?`<div class="muted" style="font-size:12px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">✉️ ${esc(email)}</div>`:''}</div>
         <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;flex-shrink:0;">✕</button>
       </div>
-      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?'책':'Books'} ${list.length} · ${ko?'총 단어':'Total'} ${totalWords} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?`배정 과제 ${assignedCount}개 · 개인 단어장 ${list.length}권(${totalWords}단어)`:`Assignments ${assignedCount} · Personal books ${list.length} (${totalWords} words)`} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
       ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:10px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
       ${orgIsAdmin()?`<button onclick="shareParentCard('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:#FEE500;color:#191600;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📤 ${ko?'학부모에게 학습 리포트 보내기':'Send report to parent'}</button>`:''}
       ${assignedHtml}
