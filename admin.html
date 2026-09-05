@@ -338,6 +338,15 @@ function showTab(name, btn){
 
 // ── DATA LOAD ──
 async function loadAll(){
+  // 저장된 access_token은 약 1시간이면 만료됨. 만료 토큰으로 조회하면 전부 401→빈 값이라
+  // '모든 수치 0'으로 보이므로, 먼저 토큰을 확인하고 죽었으면 refresh_token으로 갱신한다.
+  try{
+    const chk = await fetch(SB_URL+'/auth/v1/user',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}});
+    if(!chk.ok){
+      const ok = await refreshToken();
+      if(!ok){ toast('세션이 만료됐어요 — 다시 로그인해주세요'); logout(); return; }
+    }
+  }catch(e){}
   await loadMembers();
   await loadOrgs();
   await loadApiKey();
@@ -373,6 +382,8 @@ async function loadMembers(retry){
     const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
+    // 탭을 오래 열어둔 사이 토큰 만료(401) → 갱신 후 한 번 재시도
+    if(res.status===401 && !retry){ await refreshToken(); return loadMembers(true); }
     _allMembers = await res.json();
     if(!Array.isArray(_allMembers)) _allMembers = [];
     // 처음 로그인 직후 빈 결과가 오면 토큰 적용 타이밍 문제일 수 있어 한 번 재시도
@@ -777,11 +788,12 @@ async function setPlan(id, toPremium){
 }
 
 // ── 단체 관리자 ──
-async function loadOrgs(){
+async function loadOrgs(retry){
   try{
     const res = await fetch(SB_URL+'/rest/v1/orgs?select=id,name,code,owner_id,active,created_at,billing_active,free_until,stripe_subscription_id&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
+    if(res.status===401 && !retry){ await refreshToken(); return loadOrgs(true); }
     _allOrgs = await res.json();
     if(!Array.isArray(_allOrgs)) _allOrgs = [];
   }catch(e){ _allOrgs=[]; }
