@@ -910,9 +910,18 @@ function renderOrgAdmins(){
       billStatus = '<span style="color:var(--green);font-weight:700;font-size:12px;">💳 결제중</span>';
     } else if(org.billing_active){
       const until = org.free_until ? ` ~${esc(org.free_until)}까지` : '';
-      billStatus = `<span style="color:var(--amber);font-weight:700;font-size:12px;">🎁 무료 활성${until}</span>`;
-      // 이미 무료부여됨 → 무료해제 버튼만
-      freeBtn = `<button class="act-btn down" onclick="event.stopPropagation();revokeFreeOrg('${org.id}','${esc(org.name||'')}')">무료해제</button>`;
+      const kstToday = new Date(Date.now()+9*3600*1000).toISOString().slice(0,10);
+      const expired = org.free_until && String(org.free_until).slice(0,10) < kstToday;
+      if(expired){
+        // 만료: 앱은 이미 무료로 취급 중(클라 판정) — 여기서 플래그 정리만 하면 됨
+        billStatus = `<span style="color:#e74c3c;font-weight:700;font-size:12px;">⏰ 무료 만료 (${esc(org.free_until)})</span>`;
+        freeBtn = `<button class="act-btn down" onclick="event.stopPropagation();revokeFreeOrg('${org.id}','${esc(org.name||'')}')">만료 정리</button>`
+                + `<button class="act-btn up" onclick="event.stopPropagation();grantFreeOrg('${org.id}','${esc(org.name||'')}')">🎁 연장</button>`;
+      } else {
+        billStatus = `<span style="color:var(--amber);font-weight:700;font-size:12px;">🎁 무료 활성${until}</span>`;
+        // 이미 무료부여됨 → 무료해제 버튼만
+        freeBtn = `<button class="act-btn down" onclick="event.stopPropagation();revokeFreeOrg('${org.id}','${esc(org.name||'')}')">무료해제</button>`;
+      }
     } else {
       billStatus = '<span style="color:var(--ink-45);font-size:12px;">⚪ 비활성</span>';
       freeBtn = `<button class="act-btn up" onclick="event.stopPropagation();grantFreeOrg('${org.id}','${esc(org.name||'')}')">🎁 무료부여</button>`;
