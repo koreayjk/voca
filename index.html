@@ -362,12 +362,12 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   transform: scale(0.97);
   transition: opacity 0.05s, transform 0.05s;
 }
-.btn:active { filter: brightness(0.88); transform: scale(0.98); transition: all 0.05s; }
-.ox-btn:active { filter: brightness(0.85); transform: scale(0.96); transition: all 0.05s; }
+.btn:active { filter: brightness(0.88); transform: scale(0.98); transition: transform 0.05s, filter 0.05s; }
+.ox-btn:active { filter: brightness(0.85); transform: scale(0.96); transition: transform 0.05s, filter 0.05s; }
 .dock__glyph { font-family: var(--font-display); font-size: 22px; line-height: 1; letter-spacing: -0.04em; }
 .btn { width: 100%; padding: 15px 14px; border-radius: 13px; font-family: var(--font-body); font-weight: 600; font-size: 15px; cursor: pointer; border: none; text-align: center; letter-spacing: -0.01em; transition: transform .12s ease, box-shadow .18s ease, filter .12s ease; }
 .btn-solid { background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 60%), var(--accent); color: #fff; box-shadow: 0 2px 6px rgba(15,34,56,0.18), 0 10px 22px rgba(15,34,56,0.18); }
-.btn-solid:hover { box-shadow: 0 3px 8px rgba(15,34,56,0.22), 0 14px 30px rgba(15,34,56,0.22); transform: translateY(-1px); }
+@media (hover: hover) and (pointer: fine) { .btn-solid:hover { box-shadow: 0 3px 8px rgba(15,34,56,0.22), 0 14px 30px rgba(15,34,56,0.22); transform: translateY(-1px); } }
 .btn-outline { background: var(--bg-card); color: var(--ink-100); border: 1.5px solid var(--ink-12); box-shadow: var(--shadow-sm); }
 /* ── 단체 관리(LMS) 앱셸: 왼쪽 고정 사이드바 + 오른쪽 콘텐츠 ── */
 .org-app { position: fixed; inset: 0; background: var(--bg-page); }
@@ -413,7 +413,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .book-cover { position: relative; width: 100%; aspect-ratio: 30/43; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 1px 2px rgba(40,25,10,0.12), 0 10px 22px rgba(40,25,10,0.20), 0 22px 46px rgba(40,25,10,0.14); transition: transform .18s ease, box-shadow .18s ease; }
 /* 표지 상단 광택 + 미세한 안쪽 테두리로 '실제 책' 질감 */
 .book-cover::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(157deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 46%); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 -18px 30px rgba(0,0,0,0.14); pointer-events: none; }
-.book-tile:hover .book-cover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(40,25,10,0.14), 0 16px 30px rgba(40,25,10,0.24), 0 30px 60px rgba(40,25,10,0.16); }
+@media (hover: hover) and (pointer: fine) { .book-tile:hover .book-cover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(40,25,10,0.14), 0 16px 30px rgba(40,25,10,0.24), 0 30px 60px rgba(40,25,10,0.16); } }
 /* aspect-ratio 미지원 안드로이드 폴백 */
 @supports not (aspect-ratio: 1/1) {
   .book-tile { position: relative; }
@@ -467,7 +467,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .study__info { font-size: 11px; color: var(--ink-60); }
 .study__close { font-size: 16px; cursor: pointer; padding: 4px; color: var(--ink-100); }
 .study__bar { height: 3px; background: var(--ink-07); border-radius: 99px; margin-top: 10px; overflow: hidden; }
-.study__fill { height: 100%; background: var(--accent); transition: width 250ms ease; }
+.study__fill { height: 100%; background: var(--accent); } /* width transition은 매 카드 innerHTML 재렌더로 재생된 적 없는 죽은 코드라 제거 — 살리려면 scaleX+엘리먼트 유지로 별도 작업 */
 .study__round { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-40); margin-top: 8px; }
 .card-wrap { flex: 1 1 auto; min-height: 0; position: relative; perspective: 1400px; cursor: pointer; margin: 10px 0 8px; }
 .ox-row { display: flex; gap: 10px; flex: 0 0 auto; margin-top: 4px; }
@@ -480,7 +480,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .kbd-only { display: none; }
 @media (hover: hover) and (pointer: fine) { .kbd-only { display: inline; } }
 .kbd-only kbd { font-family: var(--font-body); font-size: 9.5px; background: var(--gold-bg); border: 1px solid var(--ink-12); border-radius: 5px; padding: 1px 6px; color: var(--accent); }
-.card { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.4,0,.2,1); }
+.card { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 260ms cubic-bezier(0.32, 0.72, 0, 1); }
 .card--flip { transform: rotateY(180deg); }
 .face { position: absolute; inset: 0; border-radius: 22px; -webkit-backface-visibility: hidden; backface-visibility: hidden; padding: 26px; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(70,45,15,0.13), 0 2px 6px rgba(70,45,15,0.08); }
 .face-front { background: #fbf8f2; border: 1px solid rgba(120,90,60,0.1); }
@@ -514,7 +514,7 @@ body.dark .card--official .card__tap { color:#9a8f7a !important; }
 .celebrate-hint { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(180,140,40,0.35); font-size: 11px; font-weight: 600; color: #b8860b; }
 @keyframes bonusPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 .celebrate-sub { font-size: 12px; color: #a8862f; margin-top: 4px; }
-@keyframes coinPop { 0% { transform: scale(0) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes coinPop { 0% { transform: scale(0.6) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
 @keyframes coinFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .done__label { font-size: 14px; color: var(--ink-60); }
 .done__grid { margin-top: 24px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -541,7 +541,7 @@ body.dark .card--official .card__tap { color:#9a8f7a !important; }
 .action-sheet__item.danger { color: #c0392b; }
 .action-sheet__divider { height: 1px; background: var(--ink-07); margin: 4px 0; }
 .action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
-.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: opacity 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--bg-card); border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
 .install-banner.show { display: block; }
@@ -549,6 +549,16 @@ body.dark .card--official .card__tap { color:#9a8f7a !important; }
 .install-banner__desc { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
 .install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
 .install-banner__icon { font-size: 24px; margin-bottom: 6px; }
+
+/* 모션 민감 사용자(prefers-reduced-motion): 장식용 무한 모션은 끄고,
+   상태 표시(스피너·투명도)는 유지. 이동은 줄이되 0으로 만들지는 않음 */
+@media (prefers-reduced-motion: reduce) {
+  .celebrate-coin, .celebrate-bonus { animation: none; }
+  [style*="imvocaPulse"] { animation: none !important; }
+  .card { transition-duration: 80ms; }
+  .toast { transition-duration: 120ms; }
+  .btn-solid:hover, .book-tile:hover .book-cover { transform: none; }
+}
 </style>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
 </head>
@@ -1284,7 +1294,7 @@ async function showNotices() {
             ${isNew?`<span style="background:#e74c3c;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">NEW</span>`:''}
             <span style="font-size:11px;color:var(--ink-40);margin-left:auto;">${dateStr}</span>
             <button onclick="event.stopPropagation();shareNotice('${n.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-45);padding:2px 4px;" title="${ko?'공유':'Share'}">🔗</button>
-            <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s;${expanded?'transform:rotate(180deg);':''}">▾</span>
+            <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s cubic-bezier(0.23,1,0.32,1);${expanded?'transform:rotate(180deg);':''}">▾</span>
           </div>
           <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${esc(n.title)}</div>
           <div class="notice-body" style="font-size:12px;color:var(--ink-60);line-height:1.7;white-space:pre-wrap;overflow:hidden;${expanded?'margin-top:8px;max-height:none;':'max-height:0;'}">${(n.image_url && /^https?:\/\//i.test(n.image_url))?`<img src="${esc(n.image_url)}" style="width:100%;border-radius:10px;margin-bottom:8px;display:block;">`:''}${safeBody}</div>
@@ -3415,7 +3425,7 @@ function showFaq() {
     <div style="border-bottom:1px solid var(--ink-12,rgba(0,0,0,0.07));">
       <button onclick="(function(b){var p=b.nextElementSibling;var open=p.style.display==='block';p.style.display=open?'none':'block';b.querySelector('.faq-arrow').style.transform=open?'rotate(0deg)':'rotate(180deg)';})(this)" style="display:flex;align-items:center;gap:10px;width:100%;padding:14px 18px;background:none;border:none;font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);font-weight:600;">
         <span style="flex:1;">${esc(it.q)}</span>
-        <span class="faq-arrow" style="color:var(--ink-45);transition:transform 0.2s;font-size:12px;">▾</span>
+        <span class="faq-arrow" style="color:var(--ink-45);transition:transform 0.2s cubic-bezier(0.23,1,0.32,1);font-size:12px;">▾</span>
       </button>
       <div style="display:none;padding:0 18px 16px;font-size:13px;line-height:1.7;color:var(--ink-70);">${esc(it.a)}</div>
     </div>`).join('');
