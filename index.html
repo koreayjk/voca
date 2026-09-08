@@ -22,17 +22,22 @@
 <meta name="twitter:description" content="책 페이지를 사진 찍으면 AI가 어려운 단어를 골라 문맥 뜻과 복습까지. 특허출원 기술(제10-2026-0127089호).">
 <meta name="twitter:image" content="https://imvoca.app/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- 본문 폰트 Pretendard: --font-body 선언만 있고 실제 로드가 없어 기기별 시스템 폰트로 보이던 것을 통일 (dynamic subset = 쓰는 글자만 다운로드) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
 :root {
   --font-display: 'Fraunces', 'Noto Serif KR', Georgia, serif;
   --font-serif-ko: 'Noto Serif KR', 'Fraunces', serif;
   --font-body: 'Pretendard', -apple-system, system-ui, sans-serif;
-  --ink-100: #2c2118; --ink-60: rgba(44,33,24,0.6); --ink-40: rgba(44,33,24,0.42);
+  /* 보조 텍스트 대비: 크림 배경에서 4.5:1 이상이 되도록 상향 (구: 0.6 / 0.42) */
+  --ink-100: #2c2118; --ink-60: rgba(44,33,24,0.72); --ink-50: rgba(44,33,24,0.64); --ink-45: rgba(44,33,24,0.6); --ink-40: rgba(44,33,24,0.58);
   --ink-12: rgba(44,33,24,0.1); --ink-07: rgba(44,33,24,0.07); --ink-05: rgba(44,33,24,0.04);
   --gold: #1c3553; --gold-bg: rgba(28,53,83,0.09);
   --bg-page: #f3ece0; --bg-card: #faf6ef; --bg-input: #efe7d8;
   --accent: #1c3553; --accent-dark: #0f2238;
+  /* 상태색 (통일 1벌) — 신규 코드는 raw hex 대신 이 토큰 사용 */
+  --ok: #1c7c3c; --ok-bg: #e6f4ea; --warn: #b35900; --warn-bg: #fff3e0; --danger: #c0392b; --danger-bg: #fdecea;
   /* 프리미엄 그림자 스케일 (레이어드 소프트 섀도우) */
   --shadow-sm: 0 1px 2px rgba(44,33,24,0.05), 0 1px 3px rgba(44,33,24,0.05);
   --shadow-md: 0 2px 5px rgba(44,33,24,0.05), 0 10px 24px rgba(44,33,24,0.09);
@@ -40,8 +45,9 @@
   --hairline: rgba(44,33,24,0.08);
 }
 body.dark {
-  --ink-100: #f0ece4; --ink-60: rgba(240,236,228,0.6); --ink-40: rgba(240,236,228,0.4);
+  --ink-100: #f0ece4; --ink-60: rgba(240,236,228,0.72); --ink-50: rgba(240,236,228,0.64); --ink-45: rgba(240,236,228,0.6); --ink-40: rgba(240,236,228,0.58);
   --ink-12: rgba(240,236,228,0.12); --ink-07: rgba(240,236,228,0.07); --ink-05: rgba(240,236,228,0.04);
+  --ok: #4caf72; --ok-bg: rgba(76,175,114,0.14); --warn: #e0913c; --warn-bg: rgba(224,145,60,0.14); --danger: #e06555; --danger-bg: rgba(224,101,85,0.14);
   --gold-bg: rgba(90,122,168,0.16);
   --bg-page: #1a1714; --bg-card: #242019; --bg-input: #2e2923;
   --accent: #5a7aa8; --accent-dark: #1c3553;
@@ -1268,11 +1274,11 @@ async function showNotices() {
   await loadNoticeReactions(_notices.map(n => n.id));
   const ko = userNativeLang === 'ko';
   const catMap = {
-    notice:   { icon:'📢', label: ko?'공지':'Notice',   color:'#e74c3c' },
+    notice:   { icon:'📢', label: ko?'공지':'Notice',   color:'#c0392b' },
     update:   { icon:'✨', label: ko?'업데이트':'Update', color:'#1c3553' },
-    bugfix:   { icon:'🐛', label: ko?'버그 수정':'Bug Fix', color:'#e67e22' },
+    bugfix:   { icon:'🐛', label: ko?'버그 수정':'Bug Fix', color:'#b35900' },
     event:    { icon:'🎉', label: ko?'이벤트':'Event',   color:'#9b59b6' },
-    tip:      { icon:'💡', label: ko?'꿀팁':'Tip',      color:'#27ae60' }
+    tip:      { icon:'💡', label: ko?'꿀팁':'Tip',      color:'#1c7c3c' }
   };
   const last = getLastNoticeView();
   // 모달 열면서 "마지막 본 시간" 갱신
@@ -1293,7 +1299,7 @@ async function showNotices() {
         return `<div class="notice-item" data-idx="${i}" style="border-bottom:1px solid var(--ink-07);padding:14px 4px;cursor:pointer;" onclick="toggleNotice(${i})">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
             <span style="background:${c.color};color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;">${c.icon} ${c.label}</span>
-            ${isNew?`<span style="background:#e74c3c;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">NEW</span>`:''}
+            ${isNew?`<span style="background:#c0392b;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">NEW</span>`:''}
             <span style="font-size:11px;color:var(--ink-40);margin-left:auto;">${dateStr}</span>
             <button onclick="event.stopPropagation();shareNotice('${n.id}')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-45);padding:2px 4px;" title="${ko?'공유':'Share'}">🔗</button>
             <span class="notice-chevron" style="font-size:12px;color:var(--ink-40);transition:transform 0.2s cubic-bezier(0.23,1,0.32,1);${expanded?'transform:rotate(180deg);':''}">▾</span>
@@ -1701,7 +1707,7 @@ async function showReissueModal(id){
         <input id="ri-th" type="number" value="80" min="0" max="100" oninput="_riApplyThreshold()" style="width:72px;border:1px solid var(--ink-12);border-radius:8px;padding:7px 9px;font-size:14px;background:var(--bg-page);color:var(--ink-100);"> 점 미만 자동 선택
       </div>
       <div style="max-height:44vh;overflow:auto;border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;">
-        ${rows.map(r=>{ const pct=r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#27ae60':pct>=50?'#e67e22':'#e74c3c';
+        ${rows.map(r=>{ const pct=r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#1c7c3c':pct>=50?'#b35900':'#c0392b';
           return `<label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><input type="checkbox" class="ri-stu" value="${r.user_id}" data-pct="${pct}" onchange="_riCount()" style="width:17px;height:17px;"><span style="flex:1;font-size:14px;color:var(--ink-100);">${esc(r.user_name||'학생')}</span><span style="font-size:12px;color:var(--ink-60);">${r.score}/${r.total}</span><span style="font-weight:800;color:${c};font-size:13px;min-width:40px;text-align:right;">${pct}%</span></label>`; }).join('')}
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;">
@@ -1833,7 +1839,7 @@ async function showTestResults(id){
   el.setAttribute('style','position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);display:flex;align-items:flex-end;justify-content:center;');
   const avg = rows.length ? Math.round(rows.reduce((s,r)=>s+(r.total?r.score/r.total*100:0),0)/rows.length) : 0;
   const list = rows.length ? rows.map((r,i)=>{
-    const pct = r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#27ae60':pct>=50?'#e67e22':'#e74c3c';
+    const pct = r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#1c7c3c':pct>=50?'#b35900':'#c0392b';
     return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ink-07);">
       <span style="width:22px;color:var(--ink-40);font-size:12px;">${i+1}</span>
       <span style="flex:1;font-size:14px;font-weight:600;color:var(--ink-100);">${esc(r.user_name||'학생')}</span>
@@ -2004,7 +2010,7 @@ async function submitTest(){
 function _renderTakeResult(g){
   const el=document.getElementById('take-overlay'); if(!el) return;
   const t=_take.test, qs=_take.qs||[];
-  const pct=g.total?Math.round(g.score/g.total*100):0; const c=pct>=80?'#27ae60':pct>=50?'#e67e22':'#e74c3c';
+  const pct=g.total?Math.round(g.score/g.total*100):0; const c=pct>=80?'#1c7c3c':pct>=50?'#b35900':'#c0392b';
   const review=qs.map((q,i)=>{ const p=g.per[i]; return `<div style="display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--ink-07);">
       <span style="font-size:15px;">${p.ok?'✅':'❌'}</span>
       <div style="flex:1;font-size:13px;"><div style="color:var(--ink-100);font-weight:600;">${i+1}. ${esc(q.prompt)}</div>
@@ -2789,7 +2795,7 @@ async function openStudentDetail(id){
           <div style="font-weight:700;color:var(--ink-100);font-size:14px;">${esc(b.title||(ko?'(제목없음)':'(untitled)'))}</div>
           <div class="muted" style="font-size:11px;margin-bottom:8px;">${esc(b.author||'')}${b.author?' · ':''}${ko?'단어':'Words'} ${wc} · ${ko?'복습완료':'Done'} ${donePages}/${pages.length}p</div>
           <div style="display:flex;flex-wrap:wrap;gap:4px;">
-            ${pages.map(p=>{ const st=revMap[b.id+'|'+p.page_num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'var(--ink-12)'; const tc= st?'#fff':'var(--ink-60)'; return `<span style="font-size:9px;padding:2px 6px;border-radius:99px;background:${c};color:${tc};">${esc(String(p.page_num))}·${(p.voca_words||[]).length}</span>`; }).join('')}
+            ${pages.map(p=>{ const st=revMap[b.id+'|'+p.page_num]; const c= st==='done'?'#1c3553': st==='doing'?'#c0392b':'var(--ink-12)'; const tc= st?'#fff':'var(--ink-60)'; return `<span style="font-size:9px;padding:2px 6px;border-radius:99px;background:${c};color:${tc};">${esc(String(p.page_num))}·${(p.voca_words||[]).length}</span>`; }).join('')}
           </div>
         </div>`;
     }).join('');
@@ -2853,7 +2859,7 @@ async function openStudentDetail(id){
         <div style="min-width:0;"><div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);">👤 ${esc(name||'')}</div>${email?`<div class="muted" style="font-size:12px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">✉️ ${esc(email)}</div>`:''}</div>
         <button onclick="document.getElementById('student-detail-modal').remove()" style="background:none;border:none;font-size:18px;color:var(--ink-45);cursor:pointer;flex-shrink:0;">✕</button>
       </div>
-      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?`배정 과제 ${assignedCount}개 · 개인 단어장 ${list.length}권(${totalWords}단어)`:`Assignments ${assignedCount} · Personal books ${list.length} (${totalWords} words)`} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#e23d3d;">●</span>${ko?'진행':'doing'}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:12px;">${ko?`배정 과제 ${assignedCount}개 · 개인 단어장 ${list.length}권(${totalWords}단어)`:`Assignments ${assignedCount} · Personal books ${list.length} (${totalWords} words)`} · <span style="color:#1c3553;">●</span>${ko?'완료':'done'} <span style="color:#c0392b;">●</span>${ko?'진행':'doing'}</div>
       ${orgIsAdmin()?`<button onclick="assignBooksToStudent('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:10px;">📚 ${ko?'이 학생에게 단어장 배정':'Assign wordbooks'}</button>`:''}
       ${orgIsAdmin()?`<button onclick="shareParentCard('${jsq(id)}','${jsq(name||'')}')" style="width:100%;background:#FEE500;color:#191600;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer;margin-bottom:14px;">📤 ${ko?'학부모에게 학습 리포트 보내기':'Send report to parent'}</button>`:''}
       ${assignedHtml}
@@ -5001,7 +5007,7 @@ function updateCameraCounter() {
     thumbWrap.innerHTML = shots.map((d,i) => `
       <div style="position:relative;flex-shrink:0;">
         <img src="${d}" style="width:52px;height:52px;object-fit:cover;border-radius:8px;border:2px solid var(--accent);">
-        <button onclick="removeCameraShot(${i})" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#e74c3c;border:none;color:#fff;font-size:10px;cursor:pointer;line-height:18px;text-align:center;padding:0;">✕</button>
+        <button onclick="removeCameraShot(${i})" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#c0392b;border:none;color:#fff;font-size:10px;cursor:pointer;line-height:18px;text-align:center;padding:0;">✕</button>
       </div>`).join('');
     thumbWrap.style.display = shots.length > 0 ? 'flex' : 'none';
   }
@@ -5569,7 +5575,7 @@ function renderWordSelection(words) {
           <span style="width:10px;height:10px;border-radius:50%;background:#2980b9;display:inline-block;"></span>
           <span style="font-size:11px;font-weight:700;color:#2980b9;">B1</span>
         </div>
-        <div style="display:flex;align-items:center;gap:5px;background:rgba(39,174,96,0.1);border-radius:99px;padding:4px 10px;">
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(28,124,60,0.1);border-radius:99px;padding:4px 10px;">
           <span style="width:10px;height:10px;border-radius:50%;background:#27ae60;display:inline-block;"></span>
           <span style="font-size:11px;font-weight:700;color:#27ae60;">A2</span>
         </div>
@@ -5893,14 +5899,14 @@ function initStudy(bookId, scope, pageNum) {
 }
 
 function renderScanLoading(current=1, total=1) {
-  const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#27ae60':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
+  const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#1c7c3c':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
   const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : t('analyzing');
   document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">${t('scanning')}</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — ${userNativeLang==='ko'?'원어민 수준':'Native level'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — ${userNativeLang==='ko'?'대학/원서 수준':'Academic level'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — ${userNativeLang==='ko'?'고급 중급':'Upper intermediate'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — ${userNativeLang==='ko'?'중급':'Intermediate'}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — ${userNativeLang==='ko'?'초급':'Beginner'}</span></div></div></div></div></div>`;
 }
 
 function buildDock() {
   const tab = currentTab();
-  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='favorites'?'dock__btn--active':''}" onclick="goTab('favorites')"><span style="font-size:22px;line-height:1;">⭐</span><span>${userNativeLang==='ko'?'즐겨찾기':'Favorites'}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#e74c3c;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button>`
+  return `<div class="dock"><button class="dock__btn ${tab==='books'?'dock__btn--active':''}" onclick="goTab('books')"><span style="font-size:22px;line-height:1;">📚</span><span>${t('booksTab')}</span></button><button class="dock__btn ${tab==='favorites'?'dock__btn--active':''}" onclick="goTab('favorites')"><span style="font-size:22px;line-height:1;">⭐</span><span>${userNativeLang==='ko'?'즐겨찾기':'Favorites'}</span></button><button class="dock__btn ${tab==='review'?'dock__btn--active':''}" onclick="goTab('review')" style="position:relative;"><span style="position:relative;display:inline-block;font-size:22px;line-height:1;">📆${window._reviewBadgeCount>0?`<span style="position:absolute;top:-6px;right:-8px;background:#c0392b;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1;pointer-events:none;">${window._reviewBadgeCount}</span>`:''}</span><span>${t('review')}</span></button><button class="dock__btn ${tab==='stats'?'dock__btn--active':''}" onclick="goTab('stats')"><span style="font-size:22px;line-height:1;">🏆</span><span>${userNativeLang==='ko'?'명예의 전당':'Hall'}</span></button><button class="dock__btn ${tab==='search'?'dock__btn--active':''}" onclick="goTab('search')"><span style="font-size:22px;line-height:1;">🔍</span><span>${t('search')}</span></button>`
     + buildDockBottom()
     + `</div>`;
 }
@@ -5921,7 +5927,7 @@ function buildDockBottom() {
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${ko?'상태':'Health'}</button>` : '')
     + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
-    + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${ko?'알림':'Notices'}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
+    + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${ko?'알림':'Notices'}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
     + `<button class="dock-mini" onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')">${ko?'📖 앱 소개':'📖 About'}</button>`
     + `<button class="dock-mini" onclick="showMyMenu()">${ko?'👤 마이페이지':'👤 My'}</button>`
     + ((userOrgRole==='owner' || isPendingOwner())
@@ -5975,10 +5981,10 @@ function _renderHealth(integ, errs){
   if (!integ.length) {
     html += `<div class="muted" style="font-size:12px;padding:10px 0;">점검 함수를 못 불러왔어요 (integrity-checks.sql 실행 필요)</div>`;
   } else if (!integBad.length) {
-    html += `<div style="background:rgba(39,174,96,0.08);border:1px solid #27ae60;border-radius:12px;padding:12px 14px;font-size:13px;color:#1c7c3c;font-weight:700;">✅ 이상 없음 (전 항목 0)</div>`;
+    html += `<div style="background:rgba(28,124,60,0.08);border:1px solid #1c7c3c;border-radius:12px;padding:12px 14px;font-size:13px;color:#1c7c3c;font-weight:700;">✅ 이상 없음 (전 항목 0)</div>`;
   } else {
     html += integBad.map(r=>{
-      const sev = r.severity==='high'?'#c0392b':r.severity==='medium'?'#e67e22':'#8a8a8a';
+      const sev = r.severity==='high'?'#c0392b':r.severity==='medium'?'#b35900':'#8a8a8a';
       const copy = _b64(`[IMVOCA 정합성 이상]\n항목: ${r.check_name}\n건수: ${r.issues}\n심각도: ${r.severity}\n설명: ${r.note}\n→ 이거 고쳐줘(정리 SQL 만들어줘)`);
       return `<div style="display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-left:4px solid ${sev};border-radius:12px;padding:11px 13px;margin-bottom:8px;">
         <div style="flex:1;min-width:0;">
@@ -6000,10 +6006,10 @@ function _renderHealth(integ, errs){
   });
   const arr = Object.values(groups).sort((a,b)=>b.count-a.count);
   if (!arr.length) {
-    html += `<div style="background:rgba(39,174,96,0.08);border:1px solid #27ae60;border-radius:12px;padding:12px 14px;font-size:13px;color:#1c7c3c;font-weight:700;">✅ 최근 48시간 에러 없음</div>`;
+    html += `<div style="background:rgba(28,124,60,0.08);border:1px solid #1c7c3c;border-radius:12px;padding:12px 14px;font-size:13px;color:#1c7c3c;font-weight:700;">✅ 최근 48시간 에러 없음</div>`;
   } else {
     html += arr.map(g=>{
-      const sev = g.kind==='write_fail'||g.kind==='js_error'?'#c0392b':'#e67e22';
+      const sev = g.kind==='write_fail'||g.kind==='js_error'?'#c0392b':'#b35900';
       const detailStr = g.detail ? JSON.stringify(g.detail) : '';
       const copy = _b64(`[IMVOCA 에러 리포트]\n종류: ${g.kind}\n위치: ${g.context}\n건수: ${g.count} (최근 48h)\n영향 사용자: ${g.users.size}명\n앱버전: ${g.ver||''}\n메시지: ${g.msg||''}\n예시 detail: ${detailStr}\n마지막: ${g.last}\n→ 이거 고쳐줘`);
       return `<div style="display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--ink-07);border-left:4px solid ${sev};border-radius:12px;padding:11px 13px;margin-bottom:8px;">
@@ -6097,7 +6103,7 @@ function render() {
                   ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:bookCoverDeco(b)}
                   ${b.cover?'':`<div class="book-cover__title" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${esc(b.title)}</div>
                   <div class="book-cover__author" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${esc(b.author)}</div>`}
-                  ${(b._assigned && !orgIsAdmin())?`<div style="position:absolute;top:7px;right:7px;z-index:2;background:#e23d3d;color:#fff;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:0.02em;padding:3px 8px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.35);transform:rotate(4deg);">📌 ${userNativeLang==='ko'?'과제':'Task'}</div>`:''}
+                  ${(b._assigned && !orgIsAdmin())?`<div style="position:absolute;top:7px;right:7px;z-index:2;background:#c0392b;color:#fff;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:0.02em;padding:3px 8px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.35);transform:rotate(4deg);">📌 ${userNativeLang==='ko'?'과제':'Task'}</div>`:''}
                 </div>
                 <div class="book-tile__title">${esc(b.title)}</div>
                 <div class="book-tile__sub">${esc(b.author)} · ${countWords(b)} ${userNativeLang==='ko'?'단어':'words'}</div>
@@ -6110,7 +6116,7 @@ function render() {
           <button onclick="showEvent()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">💬 ${userNativeLang==='ko'?'후기':'Reviews'}</button>
           <button onclick="location.href='https://imvoca.app/guide.html?lang='+(userNativeLang==='ko'?'ko':'en')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${userNativeLang==='ko'?'사용법':'Guide'}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(userNativeLang==='ko'?'시험 출제':'Tests'):(userNativeLang==='ko'?'시험':'Tests')}</button>`:''}
-          <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
+          <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           <button onclick="window.open('https://imvoca.app/'+(userNativeLang==='ko'?'ad_ko.html':'ad_en.html'),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
         </div>
@@ -6159,7 +6165,7 @@ function render() {
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
           ${book.pages.length>0?`<div style="display:flex;gap:14px;flex-wrap:wrap;padding:2px 0 10px;font-size:11px;color:var(--ink-50);">
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid rgba(44,33,24,0.25);box-sizing:border-box;"></span>${userNativeLang==='ko'?'복습 전':'Not yet'}</span>
-            <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#e23d3d;"></span>${userNativeLang==='ko'?'복습 중':'In progress'}</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#c0392b;"></span>${userNativeLang==='ko'?'복습 중':'In progress'}</span>
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#1c3553;"></span>${userNativeLang==='ko'?'복습 완료':'Done'}</span>
           </div>`:''}
           ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
@@ -6169,8 +6175,8 @@ function render() {
             const go = locked ? 'showOfficialPaywall()' : `push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})`;
             return `
             <div class="page-row" style="${locked?'opacity:0.55;':''}">
-              ${locked ? `<span style="margin-right:10px;flex-shrink:0;">🔒</span>` : (()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#e23d3d':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
-              <span class="page-row__num" onclick="${go}" style="flex:1;cursor:pointer;">${label}${(!locked && _testScore[book.id+'|'+p.num]!=null)?` <span style="font-size:10px;font-weight:700;color:#fff;background:${_testScore[book.id+'|'+p.num]>=80?'#27ae60':_testScore[book.id+'|'+p.num]>=50?'#e67e22':'#e74c3c'};border-radius:99px;padding:1px 7px;margin-left:6px;">🎯 ${_testScore[book.id+'|'+p.num]}%</span>`:''}</span>
+              ${locked ? `<span style="margin-right:10px;flex-shrink:0;">🔒</span>` : (()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#c0392b':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
+              <span class="page-row__num" onclick="${go}" style="flex:1;cursor:pointer;">${label}${(!locked && _testScore[book.id+'|'+p.num]!=null)?` <span style="font-size:10px;font-weight:700;color:#fff;background:${_testScore[book.id+'|'+p.num]>=80?'#1c7c3c':_testScore[book.id+'|'+p.num]>=50?'#b35900':'#c0392b'};border-radius:99px;padding:1px 7px;margin-left:6px;">🎯 ${_testScore[book.id+'|'+p.num]}%</span>`:''}</span>
               <span class="page-row__right">
                 ${p.words.length} words
                 <span onclick="${go}" style="font-size:16px;color:var(--ink-40);cursor:pointer;">${locked?'🔒':'›'}</span>
@@ -6261,12 +6267,12 @@ function render() {
                 <button id="camera-capture-btn" onclick="capturePhoto()" style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;">${userNativeLang==='ko'?'📸 촬영하기':'📸 Capture'}</button>
                 <button onclick="cancelCamera()" style="padding:12px 16px;background:var(--bg-input);border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">${t('cancelBtn')}</button>
               </div>
-              <button id="camera-use-btn" onclick="useCameraShots()" style="display:none;width:100%;margin-top:8px;padding:12px;background:#27ae60;color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;"></button>
+              <button id="camera-use-btn" onclick="useCameraShots()" style="display:none;width:100%;margin-top:8px;padding:12px;background:#1c7c3c;color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;"></button>
               <div style="font-size:10px;color:var(--ink-40);margin-top:6px;text-align:center;">${t('maxShots')}</div>
             </div>
             <canvas id="camera-canvas" style="display:none;"></canvas>
             <div style="font-size:10px;color:var(--ink-40);margin-top:8px;text-align:center;">${t('fileTypes')}</div>
-            <div style="font-size:10px;color:#e67e22;margin-top:3px;text-align:center;">${t('iphoneHint')}</div>
+            <div style="font-size:10px;color:#b35900;margin-top:3px;text-align:center;">${t('iphoneHint')}</div>
           </div>
         </div>
       </div>`;
@@ -6416,7 +6422,7 @@ function render() {
             <button class="btn btn-solid" onclick="initStudy('${route.bookId}','${route.scope}','${route.pageNum}');push({name:'study-cards',bookId:'${route.bookId}',scope:'${route.scope}',pageNum:'${route.pageNum}'})">${t('studyAgain')}</button>
             <button class="btn btn-outline" onclick="startQuiz('${route.bookId}','${route.scope}','${route.pageNum}')">${t('quizMode')}</button>
             ${route.isReview ?
-              `<button class="btn btn-solid" style="background:#27ae60;" onclick="goTab('review')">${userNativeLang==='ko'?'📆 복습 목록으로 돌아가기':'📆 Back to Review'}</button>` :
+              `<button class="btn btn-solid" style="background:#1c7c3c;" onclick="goTab('review')">${userNativeLang==='ko'?'📆 복습 목록으로 돌아가기':'📆 Back to Review'}</button>` :
               `<button class="btn btn-outline" onclick="goTab('books')">${t('toBookshelf')}</button>`}
           </div>
         </div>
@@ -8282,7 +8288,7 @@ function renderQuiz() {
     clearQuizState(); // 결과 화면 도달 → 진행 저장 삭제(중복 채점·재개 방지)
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct, q.scope === 'page' ? q.pageNum : null);
-    const rateColor = rate>=80?'#27ae60':rate>=50?'#e67e22':'#e74c3c';
+    const rateColor = rate>=80?'#1c7c3c':rate>=50?'#b35900':'#c0392b';
     const rateMsg = rate>=80?t('rateMsg80'):rate>=50?t('rateMsg50'):t('rateMsgBad');
     const wrongWords = q.words.filter((_,i)=>!q._correct?.includes(i));
     window._wrongWords = wrongWords;
@@ -8345,8 +8351,8 @@ function renderQuiz() {
         <div style="font-size:14px;color:${rateColor};margin-top:4px;font-weight:600;">${rateMsg}</div>
         ${gateNote}${nudgeNote}
         <div class="done__grid" style="margin-top:16px;">
-          <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('correct')}</div><div class="done__tile-value" style="color:#27ae60;">${q.correct}</div></div>
-          <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('wrong')}</div><div class="done__tile-value" style="color:#e74c3c;">${wrongWords.length}</div></div>
+          <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('correct')}</div><div class="done__tile-value" style="color:#1c7c3c;">${q.correct}</div></div>
+          <div class="done__tile" style="text-align:center;"><div class="done__tile-label">${t('wrong')}</div><div class="done__tile-value" style="color:#c0392b;">${wrongWords.length}</div></div>
         </div>
         ${wrongWords.length>0?`<div style="width:100%;margin-top:16px;text-align:left;"><div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-bottom:8px;">${t('wrongWordList')} (${wrongWords.length}${userNativeLang==='ko'?'개':''})</div><div style="background:var(--bg-card);border-radius:12px;padding:12px;max-height:160px;overflow-y:auto;">${wrongWords.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ink-07);"><span style="font-size:13px;font-weight:600;">${esc(w.en)}</span><span style="font-size:12px;color:var(--ink-60);">${esc(w.base)}</span></div>`).join('')}</div></div>`:''}
         <div style="width:100%;margin-top:16px;display:flex;flex-direction:column;gap:10px;">
@@ -8776,7 +8782,7 @@ async function renderReviewPage(root, dock) {
               <div style="height:100%;width:${progress}%;background:var(--accent);border-radius:99px;"></div>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:6px;">
-              ${STEPS.map((s,i) => `<span style="font-size:9px;color:${stepDone(i)?'#27ae60':'var(--ink-40)'};font-weight:${stepDone(i)?'700':'400'}">${s.label}${stepDone(i)?'✓':''}</span>`).join('')}
+              ${STEPS.map((s,i) => `<span style="font-size:9px;color:${stepDone(i)?'#1c7c3c':'var(--ink-40)'};font-weight:${stepDone(i)?'700':'400'}">${s.label}${stepDone(i)?'✓':''}</span>`).join('')}
             </div>
           </div>
           <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 ${t('nextReview')}: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>
@@ -8784,17 +8790,17 @@ async function renderReviewPage(root, dock) {
       }
 
       // done
-      return `<div style="background:rgba(39,174,96,0.07);border:1.5px solid #27ae60;border-radius:14px;padding:14px 16px;margin-bottom:10px;opacity:0.75;">
+      return `<div style="background:rgba(28,124,60,0.07);border:1.5px solid #1c7c3c;border-radius:14px;padding:14px 16px;margin-bottom:10px;opacity:0.75;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div style="flex:1;">
             <div style="font-size:13px;font-weight:700;color:var(--ink-100);">${book?.title||t('deletedBook')}</div>
             <div style="font-size:11px;color:var(--ink-60);margin-top:2px;">Page ${r.page_num} · ${wordCount}${t('wordsUnit')} · ${t('studiedDate')} ${studiedDate}</div>
           </div>
-          <span style="font-size:11px;background:#27ae60;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${t('completedLabel')} ✓</span>
+          <span style="font-size:11px;background:#1c7c3c;color:#fff;border-radius:99px;padding:3px 10px;font-weight:700;flex-shrink:0;margin-left:8px;">${t('completedLabel')} ✓</span>
         </div>
         <div style="margin-top:8px;">
           <div style="height:4px;background:var(--ink-07);border-radius:99px;overflow:hidden;">
-            <div style="height:100%;width:100%;background:#27ae60;border-radius:99px;"></div>
+            <div style="height:100%;width:100%;background:#1c7c3c;border-radius:99px;"></div>
           </div>
         </div>
       </div>`;
@@ -8816,7 +8822,7 @@ async function renderReviewPage(root, dock) {
       html += todayDue.map(r => reviewCard(r, 'due')).join('');
     }
     if (upcoming.length) { html += `<div style="font-size:12px;font-weight:700;color:var(--ink-60);margin-top:16px;margin-bottom:8px;">${t('scheduledTitle')} (${upcoming.length}${userNativeLang==='ko'?'개':''}${_weekCount?` · ${userNativeLang==='ko'?'이번 주':'this week'} ${_weekCount}${userNativeLang==='ko'?'개':''}`:''})</div>`; html += upcoming.map(r => reviewCard(r, 'upcoming')).join(''); }
-    if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#27ae60;margin-top:16px;margin-bottom:8px;">${t('completedTitle')} (${done.length}${userNativeLang==='ko'?'개':''})</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
+    if (done.length) { html += `<div style="font-size:12px;font-weight:700;color:#1c7c3c;margin-top:16px;margin-bottom:8px;">${t('completedTitle')} (${done.length}${userNativeLang==='ko'?'개':''})</div>`; html += done.map(r => reviewCard(r, 'done')).join(''); }
     el.innerHTML = html || `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('noReviewSchedule')}</div>`;
   } catch(e) { const _el = document.getElementById('review-list'); if (_el) _el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);">${userNativeLang==='ko'?'오류':'Error'}: ${e.message}</div>`; }
 }
