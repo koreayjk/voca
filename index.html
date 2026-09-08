@@ -781,7 +781,7 @@ async function cleanupReviews(bookId, pageNum, newPageNum) {
    기준으로 찾으세요(줄번호는 수정마다 변하니 Ctrl+F 로 함수명 검색 권장).
    · 데이터 계층: sbFetch / authGet / fetchRetry / cleanupReviews / refreshSession
    · 로그인·회원: loadUserData / sbSignOut / checkRecoveryToken
-   · 공지·이벤트: showNotices / showEvent / EVENT_CFG
+   · 공지·후기:   showNotices / showEvent(사용자 후기 페이지)
    · 시험(단체):  buildQuiz~ / tc* / reissue* / 종이시험 _paper*
    · 요금·결제:   hasOfficialAccess / startOrgBilling / openBillingPortal / pricing.html
    · 도움말:      HELP / showHelp / _helpBtn (개인 가이드는 별도 guide.html)
@@ -1316,22 +1316,11 @@ async function showNotices() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// 🎉 이벤트 / 사용후기 — 후기·영상 남기면 1·2·3등에 1년 무료
-//   · 후기(글) + 영상 링크(유튜브·인스타·틱톡) → 자동 임베드 재생
-//   · 관리자(_isEventAdmin)만 1·2·3등 선정/삭제 가능
-//   메뉴 이름은 EVENT_CFG.label 만 바꾸면 '사용후기' 로도 전환됨.
+// 💬 사용자 후기 — 후기(글) + 영상 링크(유튜브·인스타·틱톡 자동 임베드 재생)
+//   · 누구나 열람 · 로그인하면 작성 · 본인/관리자(_isEventAdmin)만 삭제
+//   (구 '후기 이벤트'는 2026-08-30 종료 — 시상·등수 UI를 걷어내고 후기 열람 페이지로 전환.
+//    showEvent/closeEvent 함수명은 기존 진입점 호환을 위해 유지)
 // ════════════════════════════════════════════════════════════════
-const EVENT_CFG = {
-  label:       '이벤트',            // 메뉴 표기 (원하면 '사용후기'로 변경)
-  deadline:    '2026-08-30',        // 마감
-  announce:    '2026-08-31',        // 결과 발표
-  rewardStart: '2026-09-01',        // 1년 무료 시작
-  price:       '$39.99',            // 1년(12개월) 이용권 정가
-  reviewMonths: 6,                  // 후기 부문 상품(개월)
-  reviewValue: '$19.99',            // 6개월 상당 가치
-  videoMonths: 12,                  // 영상 부문 상품(개월)
-  videoValue:  '$39.99'             // 12개월 상당 가치
-};
 const _EVENT_ADMINS = ['koreayjk@gmail.com','imamerica2414@gmail.com'];
 function _isEventAdmin(){ return !!(currentUser && _EVENT_ADMINS.includes(String(currentUser.email||'').toLowerCase())); }
 let _reviews = [];
@@ -1375,86 +1364,38 @@ async function loadReviews(){
   _sortReviews();
   return _reviews;
 }
-// 내 후기 최상단 고정 → 당첨(후기/영상 등수) 우선 → 최신순.
-// (자기 등수를 바로 확인할 수 있게 본인 글을 맨 위에 픽스)
+// 내 후기 최상단 고정 → 최신순. (본인 글을 바로 확인·삭제할 수 있게 맨 위에 픽스)
 function _sortReviews(){
   const myId = currentUser && currentUser.id;
   _reviews.sort((a,b)=>{
     const am=(myId&&a.user_id===myId)?0:1, bm=(myId&&b.user_id===myId)?0:1;
     if(am!==bm) return am-bm;                                  // 내 후기 픽스
-    const ba=Math.min(a.rank||99, a.video_rank||99);
-    const bb=Math.min(b.rank||99, b.video_rank||99);
-    if(ba!==bb) return ba-bb;                                  // 당첨 우선
     return new Date(b.created_at)-new Date(a.created_at);      // 최신순
   });
 }
 
-function _evFmt(s){
+function showEvent(){   // 사용자 후기 페이지 (함수명은 기존 진입점 호환용으로 유지)
   const ko = userNativeLang==='ko';
-  const p = String(s).split('-').map(Number);
-  if(ko) return `${p[1]}월 ${p[2]}일`;
-  try { return new Date(s+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}); } catch(e){ return s; }
-}
-
-function showEvent(){
-  const ko = userNativeLang==='ko';
-  const d = EVENT_CFG;
   let el = document.getElementById('event-overlay');
   if(!el){ el=document.createElement('div'); el.id='event-overlay'; document.body.appendChild(el); }
   el.setAttribute('style','position:fixed;inset:0;z-index:9999;background:var(--bg-page);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 70px;');
-  const tl=(ic,lb,va)=>`<div style="flex:1;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;text-align:center;"><div style="font-size:18px;">${ic}</div><div style="font-size:10px;color:var(--ink-45);margin-top:3px;font-weight:700;">${lb}</div><div style="font-size:13px;font-weight:800;color:var(--ink-100);margin-top:1px;">${va}</div></div>`;
-  const step=(n,ti,ds)=>`<div style="display:flex;gap:11px;align-items:flex-start;margin-bottom:10px;"><div style="flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;">${n}</div><div style="font-size:13.5px;color:var(--ink-100);line-height:1.5;"><b>${ti}</b><div style="font-size:12px;color:var(--ink-60);margin-top:2px;">${ds}</div></div></div>`;
   const canPost = !!currentUser;
-  const adminPost = _isEventAdmin()
-    ? `<button onclick="postEventNotice(this)" style="width:100%;margin-top:8px;background:none;border:1px dashed var(--ink-12);border-radius:10px;padding:10px;font-size:12px;font-weight:700;color:var(--ink-60);cursor:pointer;">📢 ${ko?'이 이벤트를 공지함에 올리기 (관리자)':'Post to notices (admin)'}</button>`
-    : '';
   el.innerHTML = `
    <div style="max-width:560px;margin:0 auto;">
-     <div style="background:linear-gradient(160deg,#5a4bd6,#2a1f6b);color:#fff;padding:24px 20px 26px;position:relative;">
+     <div style="background:linear-gradient(160deg,#1c3553,#2a4a73);color:#fff;padding:24px 20px 26px;position:relative;">
        <button onclick="closeEvent()" style="position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;width:34px;height:34px;font-size:17px;cursor:pointer;">✕</button>
-       <div style="font-size:12px;font-weight:800;letter-spacing:.12em;opacity:.92;">🎉 ${ko?'사용후기 이벤트':'REVIEW EVENT'}</div>
-       <div style="font-size:25px;font-weight:900;line-height:1.28;margin-top:9px;">${ko?'후기 또는 영상 남기고<br>최대 <span style="color:#FFC94D;">1년 무료</span>!':'Post a review or video,<br>up to <span style="color:#FFC94D;">1 year free</span>!'}</div>
-       <div style="font-size:13.5px;opacity:.92;margin-top:12px;line-height:1.65;">${ko?`<b>후기</b>와 <b>영상</b>을 부문별로 나눠 시상해요.<br>둘 중 <b>하나만 올려도 참여 OK</b> (둘 다 올리면 두 부문 모두 도전!)`:`Reviews and videos are judged separately. Post <b>just one</b> to enter — or both to compete in both!`}</div>
-       <div style="display:flex;gap:9px;margin-top:15px;">
-         <div style="flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:11px 12px;">
-           <div style="font-size:12px;font-weight:800;">✍️ ${ko?'후기 부문':'Reviews'}</div>
-           <div style="font-size:11px;opacity:.85;margin-top:2px;">${ko?'1·2·3등':'Top 1·2·3'}</div>
-           <div style="font-size:15px;font-weight:900;color:#FFC94D;margin-top:3px;">${ko?`${d.reviewMonths}개월 무료`:`${d.reviewMonths} mo free`}</div>
-         </div>
-         <div style="flex:1;background:rgba(255,201,77,.16);border:1px solid rgba(255,201,77,.6);border-radius:12px;padding:11px 12px;">
-           <div style="font-size:12px;font-weight:800;">🎬 ${ko?'영상 부문':'Videos'}</div>
-           <div style="font-size:11px;opacity:.85;margin-top:2px;">${ko?'1·2·3등':'Top 1·2·3'}</div>
-           <div style="font-size:15px;font-weight:900;color:#FFC94D;margin-top:3px;">${ko?`${d.videoMonths}개월 무료`:`${d.videoMonths} mo free`}</div>
-         </div>
-       </div>
-       <div style="font-size:11.5px;opacity:.8;margin-top:9px;">${ko?`* 영상 부문 12개월 = 정가 ${d.videoValue} 상당`:`* 12 months = ${d.videoValue} value`}</div>
+       <div style="font-size:12px;font-weight:800;letter-spacing:.12em;opacity:.92;">💬 ${ko?'사용자 후기':'USER REVIEWS'}</div>
+       <div style="font-size:24px;font-weight:900;line-height:1.3;margin-top:9px;">${ko?'IM VOCA를 쓰는 분들의<br>진짜 이야기':'Real stories from<br>IM VOCA users'}</div>
      </div>
-     <div style="display:flex;gap:8px;padding:16px 16px 2px;">
-       ${tl('📅',ko?'마감':'Deadline',_evFmt(d.deadline))}
-       ${tl('🏆',ko?'결과 발표':'Results',_evFmt(d.announce))}
-       ${tl('🎁',ko?'무료 시작':'Free from',_evFmt(d.rewardStart))}
-     </div>
-     <div style="padding:10px 16px 4px;">
-       <div style="font-size:13px;font-weight:800;color:var(--ink-100);margin:8px 2px 10px;">${ko?'참여 방법 (하나만 올려도 돼요)':'How to join (either one)'}</div>
-       ${step('✍️',ko?'후기 작성 → 후기 부문':'Write a review',ko?'아래 칸에 솔직한 후기를 적으면 후기 부문 참여! (6개월 무료 대상)':'Write an honest review → Reviews track (6 mo).')}
-       ${step('🎬',ko?'영상 업로드 → 영상 부문':'Upload a video',ko?'후기 영상을 만들어 유튜브·인스타·틱톡에 올리고 링크를 붙여넣으면 영상 부문 참여! (12개월 무료 대상)':'Upload a video & paste the link → Videos track (12 mo).')}
-       <div style="display:flex;gap:9px;align-items:center;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:10px;padding:10px 12px;margin:4px 0 2px;">
-         <span style="font-size:16px;">✅</span>
-         <span style="font-size:12.5px;color:var(--ink-100);line-height:1.5;font-weight:600;">${ko?`후기 <b>또는</b> 영상 링크 중 <b>하나 이상</b>을 등록하면 참여 완료! (둘 다 등록하면 두 부문 모두 도전)`:`Post a review <b>or</b> a video link (or both) here to enter.`}</span>
-       </div>
-     </div>
-     <div style="padding:6px 16px 4px;">
+     <div style="padding:14px 16px 4px;">
        ${canPost ? `
         <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:14px;">
-          <div style="font-size:11.5px;font-weight:800;color:var(--ink-60);margin-bottom:5px;">✍️ ${ko?'후기 (후기 부문 · 6개월)':'Review (6 mo)'}</div>
+          <div style="font-size:11.5px;font-weight:800;color:var(--ink-60);margin-bottom:5px;">✍️ ${ko?'후기 남기기':'Write a review'}</div>
           <textarea id="rv-body" rows="3" placeholder="${ko?'앱을 써보니 어떠셨나요? 솔직한 후기를 남겨주세요 😊':'How was IM VOCA for you?'}" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:11px 12px;font-size:14px;font-family:var(--font-body);resize:vertical;background:var(--bg-page);color:var(--ink-100);"></textarea>
-          <div style="font-size:11.5px;font-weight:800;color:var(--ink-60);margin:10px 0 5px;">🎬 ${ko?'영상 링크 (영상 부문 · 12개월)':'Video link (12 mo)'}</div>
-          <input id="rv-link" type="url" inputmode="url" placeholder="${ko?'유튜브·인스타·틱톡 링크 붙여넣기':'Paste YouTube/Instagram/TikTok link'}" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:11px 12px;font-size:14px;font-family:var(--font-body);background:var(--bg-page);color:var(--ink-100);">
-          <div style="font-size:11px;color:var(--ink-45);margin-top:7px;">${ko?'둘 중 하나만 채워도 등록돼요. 둘 다 채우면 두 부문 모두 참여!':'Fill in either one — or both.'}</div>
+          <input id="rv-link" type="url" inputmode="url" placeholder="${ko?'후기 영상 링크가 있다면 붙여넣기 (선택)':'Video link — optional'}" style="width:100%;box-sizing:border-box;border:1px solid var(--ink-12);border-radius:10px;padding:11px 12px;font-size:14px;font-family:var(--font-body);background:var(--bg-page);color:var(--ink-100);margin-top:8px;">
           <button id="rv-submit" onclick="submitReview()" style="width:100%;margin-top:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;">${ko?'등록하기':'Submit'}</button>
         </div>` : `
-        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:18px;text-align:center;font-size:13px;color:var(--ink-60);">${ko?'로그인 후 참여할 수 있어요':'Please log in to join'}</div>`}
-       ${adminPost}
+        <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:18px;text-align:center;font-size:13px;color:var(--ink-60);">${ko?'로그인 후 후기를 남길 수 있어요':'Please log in to write a review'}</div>`}
      </div>
      <div style="padding:14px 16px 0;">
        <div style="font-size:13px;font-weight:800;color:var(--ink-100);margin:6px 2px 10px;">${ko?'모두의 후기':'Everyone\'s reviews'}</div>
@@ -1470,37 +1411,18 @@ function _renderReviewList(){
   const ko = userNativeLang==='ko';
   const admin = _isEventAdmin();
   if(!_reviews.length){ box.innerHTML = `<div style="text-align:center;color:var(--ink-40);font-size:13px;padding:26px 0;">${ko?'아직 후기가 없어요. 첫 후기를 남겨보세요! 🙌':'No reviews yet — be the first!'}</div>`; return; }
-  const medal = {1:'🥇',2:'🥈',3:'🥉'};
-  const rMo = EVENT_CFG.reviewMonths, vMo = EVENT_CFG.videoMonths;
-  const rankRow = (r, kind) => {
-    const col = kind==='video' ? 'video_rank' : 'rank';
-    const cur = r[col];
-    const label = kind==='video' ? '🎬 영상' : '✍️ 후기';
-    const on = kind==='video' ? '#f5a623' : '#8b7ff0';
-    const onbg = kind==='video' ? '#FFF4DA' : '#EEEAFF';
-    return `<div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:11px;font-weight:800;color:var(--ink-60);margin-right:2px;">${label}</span>
-        ${[1,2,3].map(n=>`<button onclick="setReviewRank('${r.id}',${n},'${kind}')" style="border:1px solid ${cur===n?on:'var(--ink-12)'};background:${cur===n?onbg:'var(--bg-card)'};color:var(--ink-100);border-radius:8px;padding:4px 9px;font-size:12px;font-weight:700;cursor:pointer;">${medal[n]}${n}</button>`).join('')}
-        <button onclick="setReviewRank('${r.id}',0,'${kind}')" style="border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-60);border-radius:8px;padding:4px 9px;font-size:12px;cursor:pointer;">${ko?'해제':'Clear'}</button>
-      </div>`;
-  };
   box.innerHTML = _reviews.map(r=>{
     let date=''; try{ date=new Date(r.created_at).toLocaleDateString(ko?'ko-KR':'en-US',{month:'short',day:'numeric'}); }catch(e){}
-    const rRank = (r.rank>=1&&r.rank<=3)?r.rank:0;
-    const vRank = (r.video_rank>=1&&r.video_rank<=3)?r.video_rank:0;
-    const win = rRank || vRank;
-    const bestMedal = medal[Math.min(rRank||9, vRank||9)] || '';
     const mine = currentUser && r.user_id===currentUser.id;
-    const badges = `${rRank?`<span style="background:#8b7ff0;color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;white-space:nowrap;">✍️ ${ko?`후기 ${rRank}등 · ${rMo}개월`:`Review #${rRank} · ${rMo}mo`}</span>`:''}${vRank?`<span style="background:#f5a623;color:#3a2b00;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;white-space:nowrap;">🎬 ${ko?`영상 ${vRank}등 · ${vMo}개월`:`Video #${vRank} · ${vMo}mo`}</span>`:''}`;
-    const adminControls = admin ? `${r.body?rankRow(r,'review'):''}${r.link?rankRow(r,'video'):''}<div style="margin-top:8px;"><button onclick="deleteReview('${r.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#c0392b;">${ko?'삭제':'Delete'}</button></div>` : (mine ? `<button onclick="deleteReview('${r.id}')" style="background:none;border:none;color:var(--ink-40);font-size:11px;cursor:pointer;margin-top:8px;padding:0;">${ko?'내 후기 삭제':'Delete mine'}</button>` : '');
-    return `<div style="border:1px solid ${mine?'var(--accent)':win?'#f5a623':'var(--ink-07)'};background:${win?'linear-gradient(180deg,#FFFBF0,var(--bg-card))':'var(--bg-card)'};border-radius:14px;padding:14px 15px;margin-bottom:12px;${mine?'box-shadow:0 0 0 2px var(--gold-bg);':''}">
+    const adminControls = admin
+      ? `<div style="margin-top:8px;"><button onclick="deleteReview('${r.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#c0392b;">${ko?'삭제':'Delete'}</button></div>`
+      : (mine ? `<button onclick="deleteReview('${r.id}')" style="background:none;border:none;color:var(--ink-40);font-size:11px;cursor:pointer;margin-top:8px;padding:0;">${ko?'내 후기 삭제':'Delete mine'}</button>` : '');
+    return `<div style="border:1px solid ${mine?'var(--accent)':'var(--ink-07)'};background:var(--bg-card);border-radius:14px;padding:14px 15px;margin-bottom:12px;${mine?'box-shadow:0 0 0 2px var(--gold-bg);':''}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        ${win?`<span style="font-size:20px;">${bestMedal}</span>`:''}
         <span style="font-weight:700;font-size:14px;color:var(--ink-100);">${esc(r.user_name||(ko?'익명':'Anonymous'))}</span>
         ${mine?`<span style="background:var(--gold-bg);color:var(--accent);font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;">📌 ${ko?'내 후기':'Mine'}</span>`:''}
         <span style="margin-left:auto;font-size:11px;color:var(--ink-40);">${date}</span>
       </div>
-      ${badges?`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;">${badges}</div>`:''}
       ${r.body?`<div style="font-size:13.5px;color:var(--ink-100);line-height:1.65;margin-top:8px;white-space:pre-wrap;word-break:break-word;">${esc(r.body)}</div>`:''}
       ${r.link?_reviewEmbed(r.link):''}
       ${adminControls}
@@ -1530,23 +1452,6 @@ async function submitReview(){
   if(btn){ btn.disabled=false; btn.textContent=ko?'등록하기':'Submit'; }
 }
 
-// kind: 'review'(후기 부문→rank) | 'video'(영상 부문→video_rank). rank 0=해제.
-async function setReviewRank(id, rank, kind){
-  const ko = userNativeLang==='ko';
-  if(!_isEventAdmin()){ toast(ko?'관리자 전용':'Admin only'); return; }
-  const col = kind==='video' ? 'video_rank' : 'rank';
-  const catLabel = kind==='video' ? (ko?'영상':'Video') : (ko?'후기':'Review');
-  const val = rank===0 ? null : rank;
-  // 같은 부문·같은 등수는 한 명만 — 기존 동일 등수는 자동 해제
-  if(val){ const dup=_reviews.find(x=>x[col]===val && x.id!==id); if(dup){ await _authPatch(`/rest/v1/voca_reviews?id=eq.${dup.id}`,{[col]:null}); dup[col]=null; } }
-  const res = await _authPatch(`/rest/v1/voca_reviews?id=eq.${id}`,{[col]:val});
-  if(res && res.ok){
-    const r=_reviews.find(x=>x.id===id); if(r) r[col]=val;
-    _sortReviews(); _renderReviewList();
-    toast(val?(ko?`${catLabel} ${val}등으로 선정했어요 ${({1:'🥇',2:'🥈',3:'🥉'})[val]}`:`${catLabel} #${val} set`):(ko?`${catLabel} 선정 해제`:'Cleared'));
-  } else { toast(ko?'변경 실패':'Update failed'); }
-}
-
 async function deleteReview(id){
   const ko = userNativeLang==='ko';
   const r=_reviews.find(x=>x.id===id);
@@ -1555,36 +1460,6 @@ async function deleteReview(id){
   const res = await _authDelete(`/rest/v1/voca_reviews?id=eq.${id}`);
   if(res && res.ok){ _reviews=_reviews.filter(x=>x.id!==id); _renderReviewList(); toast(ko?'삭제됐어요':'Deleted'); }
   else { toast(ko?'삭제 실패':'Delete failed'); }
-}
-
-// 관리자: 이벤트를 공지함에 게시 (admin.html 의 공지 작성과 동일 형식)
-async function postEventNotice(btn){
-  const ko = userNativeLang==='ko';
-  if(!_isEventAdmin()){ toast(ko?'관리자 전용':'Admin only'); return; }
-  if(btn){ btn.disabled=true; btn.textContent=ko?'올리는 중…':'Posting…'; }
-  const d = EVENT_CFG;
-  const title = '🎉 후기·영상 이벤트 — 최대 1년 무료 이용권 (~'+_evFmt(d.deadline)+')';
-  const body = [
-    '앱 후기 또는 후기 영상을 남기고 무료 이용권을 받으세요!',
-    '',
-    '✍️ 후기 부문 1·2·3등 → '+d.reviewMonths+'개월 무료',
-    '🎬 영상 부문 1·2·3등 → '+d.videoMonths+'개월 무료 ('+d.videoValue+' 상당)',
-    '',
-    '참여 방법 (하나만 올려도 돼요)',
-    '· 후기 작성 → 후기 부문 참여',
-    '· 후기 영상을 만들어 유튜브·인스타·틱톡에 올리고 링크 등록 → 영상 부문 참여',
-    '· 둘 다 올리면 두 부문 모두 도전!',
-    '→ 앱 [🎉 이벤트] 페이지에서 등록하면 참여 완료 (별도 제출 없음)',
-    '',
-    '📅 마감: '+_evFmt(d.deadline),
-    '🏆 발표: '+_evFmt(d.announce),
-    '🎁 무료 시작: '+_evFmt(d.rewardStart)
-  ].join('\n');
-  const res = await authPost('/rest/v1/voca_notices',
-    { category:'event', title, body, image_url:'https://imvoca.app/wordbooks/promo/imvoca-promo-01.png', published:true, created_at:new Date().toISOString() },
-    'return=representation');
-  if(res && res.ok){ toast(ko?'공지함에 올렸어요! 🔔':'Posted to notices!'); _notices=[]; if(typeof loadNotices==='function') loadNotices(); if(btn){ btn.textContent=ko?'✅ 공지함에 올림':'✅ Posted'; } }
-  else { toast(ko?'공지 등록 실패':'Failed'); if(btn){ btn.disabled=false; btn.textContent=ko?'📢 이 이벤트를 공지함에 올리기 (관리자)':'📢 Post to notices (admin)'; } }
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -3452,7 +3327,7 @@ function showMyMenu() {
   overlay.innerHTML = `
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${ko?'My 메뉴':'My Menu'}</div>
-      ${row('🎉', ko?'이벤트 · 사용후기':'Event · Reviews', "document.getElementById('my-modal').remove();showEvent()")}
+      ${row('💬', ko?'사용자 후기':'User Reviews', "document.getElementById('my-modal').remove();showEvent()")}
       ${row('👤', ko?'개인정보 변경':'My Info', "document.getElementById('my-modal').remove();showMyInfo()")}
       ${(userOrgRole==='owner' || isPendingOwner()) ? row('🏫', (userOrgRole==='owner'?(ko?'단체 관리':'Org Admin'):(ko?'단체 만들기':'Create Org')), "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
       ${userPlan==='premium' && userStripeId ? row('💳', ko?'구독 관리':'Manage Subscription', "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
@@ -6033,7 +5908,7 @@ function buildDockBottom() {
   const ko = userNativeLang==='ko';
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
-    + `<button class="dock-mini dock-mini--accent" onclick="showEvent()">🎉 ${ko?'이벤트':'Event'}</button>`
+    + `<button class="dock-mini" onclick="showEvent()">💬 ${ko?'후기':'Reviews'}</button>`
     + `<button class="dock-mini" onclick="location.href='https://imvoca.app/guide.html?lang='+(userNativeLang==='ko'?'ko':'en')">📖 ${ko?'사용법':'Guide'}</button>`
     + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(ko?'시험 출제':'Tests'):(ko?'시험':'Tests')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${ko?'⚙️ 관리':'⚙️ Admin'}</button>` : '')
@@ -6207,14 +6082,6 @@ function render() {
         </div>
         <div class="scr-scroll">
           <div id="my-tests-banner"></div>
-          <div onclick="showEvent()" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#3a2b9e,#5a4bd6);color:#fff;border-radius:14px;padding:13px 15px;margin-top:16px;margin-bottom:14px;cursor:pointer;box-shadow:0 8px 22px -12px rgba(90,75,214,0.9);">
-            <div style="font-size:26px;">🎉</div>
-            <div style="flex:1;min-width:0;">
-              <div style="font-size:14px;font-weight:800;">${userNativeLang==='ko'?'후기·영상 이벤트 · 최대 1년 무료':'Review & Video Event · Up to 1 Year Free'}</div>
-              <div style="font-size:11.5px;opacity:0.92;margin-top:1px;">${userNativeLang==='ko'?'후기 6개월 · 영상 12개월! 하나만 올려도 OK · ~8/30':'Review 6mo · Video 12mo — post just one! ~Aug 30'}</div>
-            </div>
-            <div style="font-size:18px;opacity:0.85;">›</div>
-          </div>
           ${assignmentBannerHTML()}
           <div class="book-grid">
             ${myBooks.map(b=>`
@@ -6233,7 +6100,7 @@ function render() {
         <div class="topbar-actions" style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:60%;">
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${userNativeLang==='ko'?'⚙️ 관리':'⚙️ Admin'}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
-          <button onclick="showEvent()" class="topbar-btn" style="background:linear-gradient(135deg,#f5a623,#e67e22);border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">🎉 ${userNativeLang==='ko'?'이벤트':'Event'}</button>
+          <button onclick="showEvent()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">💬 ${userNativeLang==='ko'?'후기':'Reviews'}</button>
           <button onclick="location.href='https://imvoca.app/guide.html?lang='+(userNativeLang==='ko'?'ko':'en')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${userNativeLang==='ko'?'사용법':'Guide'}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(userNativeLang==='ko'?'시험 출제':'Tests'):(userNativeLang==='ko'?'시험':'Tests')}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
