@@ -53,7 +53,7 @@ body.dark {
   --accent: #5a7aa8; --accent-dark: #1c3553;
 }
 /* 기본 */
-body.dark { background: #111; color: #f0ece4; }
+body.dark { background: var(--bg-page); color: #f0ece4; } /* 하드코딩 #111 → 토큰: 다크모드 표면을 따뜻한 갈색 계열로 통일 */
 body.dark #root { background: #1a1714; }
 
 /* 화면 전체 */
@@ -2167,39 +2167,32 @@ function handleScanBlocked() {
   }
 }
 
-// 업그레이드 팝업
+// 업그레이드 팝업 — 성취 프레임 헤드라인 + 혜택 타일 + 하루 단위 가격 재프레이밍 (리디자인 감사 B안)
 function showUpgradePopup() {
+  const ko = userNativeLang==='ko';
   const overlay = document.createElement('div');
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  const tile = (emo,l1,l2)=>`<div style="flex:1;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:11px 5px;text-align:center;"><div style="font-size:19px;line-height:1;margin-bottom:5px;">${emo}</div><div style="font-size:11px;color:var(--ink-60);line-height:1.45;">${l1}<br><b style="color:var(--ink-100);">${l2}</b></div></div>`;
   overlay.innerHTML = `
-    <div style="background:var(--bg-card);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;text-align:center;">
-      <div style="font-size:40px;margin-bottom:12px;">🚀</div>
-      <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">
-        ${userNativeLang==='ko'?'무료 스캔을 모두 사용했어요':'Free scans used up'}
+    <div style="background:var(--bg-card);border-radius:20px;padding:26px 22px;width:100%;max-width:380px;text-align:center;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:8px;">✨ PREMIUM</div>
+      <div style="font-family:var(--font-serif-ko);font-size:20px;font-weight:700;line-height:1.4;margin-bottom:14px;color:var(--ink-100);">
+        ${ko?`${FREE_SCAN_LIMIT}장으로 여기까지 왔어요.<br>이제 매일 20장씩 계속하세요`:`You made it through ${FREE_SCAN_LIMIT} free scans.<br>Keep going with 20 a day`}
       </div>
-      <div style="font-size:14px;color:var(--ink-60);margin-bottom:6px;">
-        ${userNativeLang==='ko'?`무료 플랜은 ${FREE_SCAN_LIMIT}장까지 스캔할 수 있어요.`:`Free plan includes ${FREE_SCAN_LIMIT} scans total.`}
+      <div style="display:flex;gap:8px;background:var(--bg-page);border-radius:14px;padding:10px;margin-bottom:14px;">
+        ${tile('📷', ko?'스캔':'Scans', ko?'하루 20장':'20 / day')}
+        ${tile('📚', ko?'단어장 묶음':'Wordbooks', ko?'무료 포함':'included')}
+        ${tile('🧠', ko?'60일 복습':'60-day review', ko?'자동 관리':'automatic')}
       </div>
-      <div style="font-size:13px;color:var(--ink-40);margin-bottom:24px;">
-        ${userNativeLang==='ko'?'Premium으로 업그레이드하면 매일 20장씩 스캔할 수 있어요!':'Upgrade to Premium for 20 AI scans every day!'}
-      </div>
-      <div style="background:var(--gold-bg);border-radius:12px;padding:16px;margin-bottom:20px;">
-        <div style="font-size:13px;color:var(--accent);font-weight:700;margin-bottom:4px;">✨ Premium</div>
-        <div style="font-size:24px;font-weight:700;color:var(--ink-100);">$3.99<span style="font-size:14px;font-weight:400;color:var(--ink-60);">/월</span></div>
-        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${userNativeLang==='ko'?'연간 결제 시 $39.99 (16% 할인)':'$39.99/year (save 16%)'}</div>
-      </div>
-      <div style="font-size:12px;color:var(--ink-40);margin-bottom:16px;">
-        ✓ ${userNativeLang==='ko'?'AI 스캔 하루 20장':'20 AI scans per day'}<br>
-        ✓ ${userNativeLang==='ko'?'무제한 단어 저장':'Unlimited word storage'}<br>
-        ✓ ${userNativeLang==='ko'?'에빙하우스 복습':'Ebbinghaus review'}
-      </div>
+      <div style="font-size:13px;color:var(--ink-60);margin-bottom:3px;"><b style="font-size:21px;color:var(--ink-100);">$3.99</b>/${ko?'월':'mo'} · ${ko?'연간':'yearly'} $39.99 (16%↓)</div>
+      <div style="font-size:12px;color:var(--ok);font-weight:700;margin-bottom:16px;">${ko?'커피 한 잔 값으로 한 달 — 하루 약 130원':'That’s about $0.13 a day'}</div>
       <button onclick="location.href='https://imvoca.app/pricing.html'"
         style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">
-        ${userNativeLang==='ko'?'✨ Premium 업그레이드':'✨ Upgrade to Premium'}
+        ${ko?'지금 이어서 학습하기 →':'Continue learning →'}
       </button>
-      <button onclick="this.closest('[style*=fixed]').remove()" 
+      <button onclick="this.closest('[style*=fixed]').remove()"
         style="width:100%;padding:12px;background:none;border:none;font-family:var(--font-body);font-size:13px;cursor:pointer;color:var(--ink-60);">
-        ${userNativeLang==='ko'?'나중에':'Later'}
+        ${ko?'나중에':'Later'}
       </button>
     </div>`;
   document.body.appendChild(overlay);
@@ -6170,7 +6163,18 @@ function render() {
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#c0392b;"></span>${userNativeLang==='ko'?'복습 중':'In progress'}</span>
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:#1c3553;"></span>${userNativeLang==='ko'?'복습 완료':'Done'}</span>
           </div>`:''}
-          ${book.pages.length===0?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:
+          ${book.pages.length===0?((book._readonly||book._officialContent)?`<div style="padding:20px 0;font-size:13px;color:var(--ink-40);text-align:center">${t('noWords')}</div>`:`
+          <div style="background:var(--bg-page);border-radius:16px;padding:26px 18px;text-align:center;margin-top:8px;">
+            <div style="font-size:38px;line-height:1;margin-bottom:8px;">📖</div>
+            <div style="font-family:var(--font-serif-ko);font-size:17px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">${userNativeLang==='ko'?'첫 페이지를 찍어볼까요?':'Snap your first page'}</div>
+            <div style="font-size:12.5px;color:var(--ink-60);margin-bottom:16px;">${userNativeLang==='ko'?'책 한 장이면 AI가 단어장을 만들어 드려요':'One photo and AI builds your word list'}</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px;">
+              <div style="flex:1;max-width:110px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:10px;padding:9px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:16px;margin-bottom:2px;">📷</div>${userNativeLang==='ko'?'페이지 촬영':'Snap a page'}</div>
+              <div style="flex:1;max-width:110px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:10px;padding:9px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:16px;margin-bottom:2px;">✨</div>${userNativeLang==='ko'?'AI 단어 추출':'AI extracts'}</div>
+              <div style="flex:1;max-width:110px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:10px;padding:9px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:16px;margin-bottom:2px;">🔁</div>${userNativeLang==='ko'?'자동 복습':'Auto review'}</div>
+            </div>
+            <button class="btn btn-solid" style="max-width:240px;" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
+          </div>`):
           [...book.pages].filter(p=>(p.words&&p.words.length>0)).sort((a,b)=>pageSort(a,b)).map(p=>{
             const locked = isPageLocked(book.id, p.num);
             const label = (book._official || book._officialContent) ? String(p.num) : ('Page '+p.num);
