@@ -1973,7 +1973,7 @@ function _renderTake(){
   el.innerHTML=`<div style="max-width:560px;margin:0 auto;">
     <div style="background:var(--bg-card);border-bottom:1px solid var(--ink-07);padding:16px 18px;position:sticky;top:0;z-index:5;">
       <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:16px;font-weight:800;color:var(--ink-100);">${esc(t.title||'단어 시험')}</div>
-      <button onclick="if(confirm('시험을 그만두시겠어요? 진행 중인 답안이 삭제돼요.')){clearTakeState();document.getElementById('take-overlay').remove();_take=null;}" style="margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-40);">✕</button></div>
+      <button onclick="if(confirm(userNativeLang==='ko'?'시험을 그만두시겠어요? 진행 중인 답안이 삭제돼요.':'Quit the test? Your answers so far will be discarded.')){clearTakeState();document.getElementById('take-overlay').remove();_take=null;}" style="margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-40);">✕</button></div>
       <div style="font-size:12px;color:var(--ink-60);margin-top:3px;">${qs.length}문항 · ${t.qtype==='spell'?'뜻을 보고 영어 단어를 쓰세요':t.qtype==='mix'?'객관식+주관식':'알맞은 뜻을 고르세요'}</div>
     </div>
     <div style="padding:14px 16px;">
@@ -1998,7 +1998,7 @@ async function submitTest(){
   const t=_take.test, qs=_take.qs||[];
   const answers=qs.map((q,i)=>_take.answers[i]);
   const blanks=answers.filter(a=>a==null||a==='').length;
-  if(blanks>0 && !confirm(`${blanks}문항이 비어 있어요. 그대로 제출할까요?`)) return;
+  if(blanks>0 && !confirm(userNativeLang==='ko'?`${blanks}문항이 비어 있어요. 그대로 제출할까요?`:`${blanks} question(s) are blank. Submit anyway?`)) return;
   const g=gradeTest(qs, answers);
   const row={ test_id:t.id, user_id:currentUser.id, user_name:userName||'학생', org_id:userOrgId||null, score:g.score, total:g.total, answers:g.per };
   const res=await authPost('/rest/v1/voca_test_results', row, 'return=minimal');
@@ -4687,7 +4687,53 @@ const _toastDict = {
   '페이지 번호를 입력해주세요':'Please enter a page number',
   '🔄 스캔 카운트가 초기화됐어요!':'🔄 Scan count reset!',
   '🔄 전체 스캔 카운트 초기화됐어요!':'🔄 All scan counts reset!',
-  '책 제목을 입력해주세요':'Please enter the book title'
+  '책 제목을 입력해주세요':'Please enter the book title',
+  // ── 영어 모드 검수(2026-09)에서 추가: 사전에 없던 토스트 ──
+  '관리자 전용':'Admins only',
+  '출제할 단어장이 없어요 (단어가 있는 책 필요)':'No wordbook to use (needs a book with words)',
+  '대상 학생을 선택하세요':'Select students first',
+  '시작일과 종료일을 입력하세요':'Enter start and end dates',
+  '종료일이 시작일보다 빨라요':'End date is before start date',
+  '단어장과 Day를 선택하세요':'Select a wordbook and Day',
+  '선택 범위에 단어가 없어요':'No words in the selected range',
+  '문제를 만들 수 없어요':'Could not build questions',
+  '생성 실패 — 잠시 후 다시 시도':'Failed to create — try again shortly',
+  '시험을 찾을 수 없어요':'Test not found',
+  '재시험 볼 학생을 선택하세요':'Select students for the retest',
+  '재시험 생성 실패 — 잠시 후 다시':'Retest creation failed — try again',
+  '삭제됐어요':'Deleted',
+  '삭제 실패':'Delete failed',
+  '복사 실패':'Copy failed',
+  '팝업이 차단됐어요 — 허용 후 다시':'Popup blocked — allow popups and retry',
+  '학생별 시험지 생성 중…':'Building per-student test sheets…',
+  '대상 학생이 없어요 (학생·관리자 탭에서 승인 필요)':'No eligible students (approve them first)',
+  '이 기간에 공부한 학생이 없어요 🙏':'No students studied in this period 🙏',
+  '결과를 찾을 수 없어요':'Result not found',
+  '내 학습 기록으로 문제 생성 중…':'Building questions from your study log…',
+  '이 기간에 공부한 단어가 없어 시험을 볼 수 없어요 🙏':'No words studied in this period — nothing to test 🙏',
+  '제출 실패 — 잠시 후 다시 시도':'Submit failed — try again shortly',
+  '유효하지 않은 링크예요':'Invalid link',
+  '링크가 만료됐어요. 새 링크를 받아주세요':'Link expired — request a new one',
+  '✅ 입장했어요!':'✅ Welcome!',
+  '로그인 상태가 아니에요':'You are not logged in',
+  '링크 생성 중...':'Creating link...',
+  '제목을 입력해주세요':'Please enter a title',
+  '수정됐어요!':'Updated!',
+  '⚠️ Gemini API 키가 없어요. 관리자에게 문의해주세요':'⚠️ No Gemini API key — please contact the admin',
+  '네트워크 오류. 재시도 중...':'Network error. Retrying...',
+  // 접두어형(뒤에 상세 메시지가 붙는 것) — toast() 가 startsWith 로 매칭
+  '오류: ':'Error: ',
+  '링크 오류: ':'Link error: ',
+  '링크 생성 실패: ':'Link creation failed: ',
+  '저장 실패: ':'Save failed: ',
+  '저장 오류: ':'Save error: ',
+  '수정 실패: ':'Update failed: ',
+  '삭제 실패: ':'Delete failed: ',
+  '로그인 이동 실패: ':'Login redirect failed: ',
+  '로그인 오류: ':'Login error: ',
+  '가입 실패: ':'Sign-up failed: ',
+  '가입 오류: ':'Sign-up error: ',
+  'DB 오류: ':'Database error: '
 };
 // 정적 HTML 요소 다국어 적용 (data-i18n 속성)
 const _staticI18n = {
@@ -4720,7 +4766,13 @@ function applyStaticI18n() {
 }
 
 function toast(m, dur) {
-  if (typeof userNativeLang !== 'undefined' && userNativeLang !== 'ko' && _toastDict[m]) m = _toastDict[m];
+  if (typeof userNativeLang !== 'undefined' && userNativeLang !== 'ko') {
+    if (_toastDict[m]) m = _toastDict[m];
+    else if (/[가-힣]/.test(m)) {
+      // '저장 실패: <상세>' 처럼 동적 메시지가 붙는 경우: 접두어(': ' 로 끝나는 키)로 매칭
+      for (const k in _toastDict) { if (k.endsWith(': ') && m.startsWith(k)) { m = _toastDict[k] + m.slice(k.length); break; } }
+    }
+  }
   const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show');
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(()=>t.classList.remove('show'), dur||2600);
