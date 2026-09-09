@@ -4424,7 +4424,9 @@ async function sendResetEmail() {
   }
 }
 
-function renderLogin(tab='login') {
+function renderLogin(tab) {
+  // 랜딩페이지 CTA(?signup=1)로 들어온 방문자는 회원가입 탭을 기본으로 (로그인 화면 마찰 줄이기)
+  if (!tab) tab = /[?&]signup=1/.test(location.search) ? 'signup' : 'login';
   const feats = userNativeLang==='ko' ? [
     ['📷','사진 한 장으로 단어 추출'],
     ['🎯','문맥에 맞는 정확한 뜻'],
