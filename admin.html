@@ -352,32 +352,11 @@ async function loadAll(){
   await loadApiKey();
 }
 
-// 회원별 실제 단어 개수 집계 (voca_books → voca_pages → voca_words)
-window._wordCountsByUser = {};
-async function fetchWordCountsByUser() {
-  try {
-    const r = await fetch(SB_URL + '/rest/v1/voca_books?select=user_id,voca_pages(voca_words(count))', {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken }
-    });
-    console.log('[fetchWordCountsByUser] status:', r.status);
-    if (!r.ok) { console.warn('[fetchWordCountsByUser] failed:', await r.text()); return; }
-    const data = await r.json();
-    console.log('[fetchWordCountsByUser] 받은 책 수:', data?.length, '유저 수:', new Set((data||[]).map(b=>b.user_id)).size);
-    console.log('[fetchWordCountsByUser] 첫 책 샘플:', data?.[0]);
-    const counts = {};
-    for (const b of (data || [])) {
-      const wc = (b.voca_pages || []).reduce((s, p) => s + ((p.voca_words && p.voca_words[0] && p.voca_words[0].count) || 0), 0);
-      counts[b.user_id] = (counts[b.user_id] || 0) + wc;
-    }
-    window._wordCountsByUser = counts;
-    if (typeof renderMembers === 'function' && document.getElementById('member-table')) {
-      renderMembers();
-    }
-  } catch(e) { console.warn('단어수 집계 실패', e); }
-}
+// 회원별 단어 수치 = members.total_words (앱이 학습 시마다 갱신하는 CEFR 가중 점수).
+// 예전의 voca_words(count) 실시간 집계는 Supabase REST 집계 비활성 + RLS 때문에
+// 항상 빈 값을 돌려줘 전원이 '단어 0'으로 보이던 원인이라 제거함.
 
 async function loadMembers(retry){
-  fetchWordCountsByUser(); // 실제 단어 개수 집계를 병렬로 시작
   try{
     const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
@@ -557,7 +536,7 @@ function renderMembers(){
         <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
         <td>${planPill(m)}</td>
         <td style="color:var(--ink-45);">${m.scan_count||0}</td>
-        <td style="color:var(--ink-45);">${((window._wordCountsByUser && window._wordCountsByUser[m.id]) || 0).toLocaleString()}</td>
+        <td style="color:var(--ink-45);" title="CEFR 가중 점수 (A2=1 … C2=5)">${(m.total_words||0).toLocaleString()}</td>
         <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}</td>
         <td style="text-align:right;">
           ${isAdmin ? '<span class="pill admin">관리자</span>' : `
