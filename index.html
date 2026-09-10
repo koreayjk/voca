@@ -7977,6 +7977,9 @@ async function loadAssignments(force){
   // (준비되면 다음 호출에서 실제로 로드. 예전엔 여기서 _assignLoaded=true 로 막혀
   //  단체 학생이 첫 진입 때 배정 단어장이 안 뜨던 버그가 있었음)
   if (!(userOrgId && userOrgStatus === 'approved' && _authToken)) return;
+  // 관리자(원장)는 과제를 '주는' 사람 — 배정 책을 책장에 주입하지 않는다.
+  // (예전엔 여기서 주입된 배정 공식책이, 책장에서 빼도 로그인마다 되살아났음)
+  if (orgIsAdmin()) { _assignLoaded = true; return; }
   _assignLoaded = true;
   try {
     const res = await fetch(SB_URL + '/functions/v1/assignments-for-student', {
