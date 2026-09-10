@@ -877,8 +877,38 @@ const TARGET_LANG_OPTIONS = [
   {code:'ja',name:'日本語',flag:'🇯🇵'},{code:'fr',name:'Français',flag:'🇫🇷'},
   {code:'de',name:'Deutsch',flag:'🇩🇪'},{code:'pt',name:'Português',flag:'🇧🇷'},
 ];
-let userNativeLang = localStorage.getItem('imvoca.nativeLang')||'ko';
+// 첫 방문(저장된 언어 설정 없음): 브라우저 언어로 모국어 자동 설정
+// — 중국 브라우저면 중국어, 미국이면 영어, 한국이면 한국어. IP와 달리 VPN·여행 중에도 사용자 실제 언어를 따른다.
+// 지원 목록에 없는 언어는 영어로. 배우는 언어 기본값은 항상 영어.
+function _detectNativeLang(){
+  try {
+    const supported = LANG_OPTIONS.map(l=>l.code);
+    const prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language||''];
+    for (const c of prefs) {
+      const base = String(c).toLowerCase().split('-')[0];
+      if (supported.includes(base)) return base;
+    }
+  } catch(e){}
+  return 'en';
+}
+let userNativeLang = localStorage.getItem('imvoca.nativeLang')||_detectNativeLang();
 let userTargetLang = localStorage.getItem('imvoca.targetLang')||'en';
+// 초기 설정 1순위: 나라 IP → 언어. 위 브라우저 언어는 IP 조회가 끝나기 전/실패 시의 폴백.
+// 사용자가 언어 설정을 한 번이라도 저장하면(localStorage) 그 설정이 항상 우선 — 자동 감지는 다시 개입하지 않는다.
+(function _geoLangInit(){
+  if (localStorage.getItem('imvoca.nativeLang')) return;
+  const GEO_LANG = { KR:'ko', CN:'zh', TW:'zh', HK:'zh', MO:'zh', JP:'ja',
+    US:'en', GB:'en', AU:'en', CA:'en', NZ:'en', IE:'en', SG:'en', PH:'en', IN:'en',
+    ES:'es', MX:'es', AR:'es', CO:'es', CL:'es', PE:'es', FR:'fr', DE:'de', AT:'de',
+    BR:'pt', PT:'pt', VN:'vi', ID:'id' };
+  fetch('https://get.geojs.io/v1/ip/country.json').then(r=>r.json()).then(d=>{
+    if (localStorage.getItem('imvoca.nativeLang')) return; // 그 사이 사용자가 저장했으면 존중
+    const code = GEO_LANG[String((d&&d.country)||'').toUpperCase()];
+    if (!code || code===userNativeLang || !LANG_OPTIONS.some(l=>l.code===code)) return;
+    userNativeLang = code; // 저장은 안 함 — 사용자가 설정 화면에서 직접 저장할 때만 고정
+    try { if (typeof applyStaticI18n==='function') applyStaticI18n(); if (typeof render==='function') render(); } catch(e){}
+  }).catch(()=>{});
+})();
 // AI 프롬프트용 언어명 — 모델이 확실히 인식하도록 영문+원어 병기 (UI 표기용 LANG_OPTIONS.name 과 별도)
 const PROMPT_LANG_NAMES = { ko:'한국어(Korean)', en:'English', es:'Spanish (Español)', zh:'Simplified Chinese (简体中文)', ja:'Japanese (日本語)', fr:'French (Français)', de:'German (Deutsch)', pt:'Portuguese (Português)', vi:'Vietnamese (Tiếng Việt)', id:'Indonesian (Bahasa Indonesia)' };
 function promptLangName(code){ return PROMPT_LANG_NAMES[code] || 'English'; }
@@ -5183,19 +5213,25 @@ const _staticI18n = {
   '책 소개':'Description'
 };
 function applyStaticI18n() {
-  if (typeof userNativeLang === 'undefined' || userNativeLang === 'ko') return;
+  if (typeof userNativeLang === 'undefined') return;
+  const isKo = userNativeLang === 'ko';
   const xd = (typeof UI_XL !== 'undefined') && UI_XL[userNativeLang];
   const xl = (en) => (xd && xd[en] !== undefined) ? xd[en] : en;
+  // data-i18n 속성값이 곧 한국어 원문이라, ko로 되돌릴 때는 그 값으로 원복한다 (언어 왕복 시 잔상 방지)
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const k = el.getAttribute('data-i18n');
+    if (isKo) { el.textContent = k; return; }
     if (_staticI18n[k]) el.textContent = xl(_staticI18n[k]);
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(el => {
     const k = el.getAttribute('data-i18n-ph');
+    if (isKo) { el.placeholder = k; return; }
     if (_staticI18n[k]) el.placeholder = xl(_staticI18n[k]);
   });
   const apiNote = document.querySelector('[data-i18n-html="api-note"]');
-  if (apiNote) apiNote.innerHTML = 'Enter your Google Gemini API key to <strong>auto-extract</strong> words from photos.<br><br>Get one: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key';
+  if (apiNote) apiNote.innerHTML = isKo
+    ? '구글 Gemini API 키를 입력하면 사진에서 단어를 <strong>자동 추출</strong>해요.<br><br>발급: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key'
+    : 'Enter your Google Gemini API key to <strong>auto-extract</strong> words from photos.<br><br>Get one: <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key → Create API Key';
 }
 
 function toast(m, dur) {
@@ -5298,14 +5334,13 @@ function openAddBookModal() {
   document.getElementById('modal-add').classList.add('open');
   const catSel = document.getElementById('nb-category');
   const catCustom = document.getElementById('nb-category-custom');
-  // 정적 마크업이 한국어라 ko 외 언어는 여기서 라벨을 교체
-  if (catSel && userNativeLang !== 'ko' && !catSel._i18nDone) {
+  // 정적 마크업이 한국어라, 열 때마다 현재 언어로 라벨을 다시 쓴다 (언어를 바꿨다 되돌려도 항상 최신 언어 반영)
+  if (catSel) {
     const catLabels = { general:'📖 '+TT('일반 / 원서 (기본)','General / Original Book'), suneung:'🇰🇷 '+TT('수능 영단어','Suneung (Korean SAT)'), business:'💼 '+TT('비즈니스 영어','Business English'), medical:'⚕️ '+TT('의학 영어','Medical English'), legal:'⚖️ '+TT('법률 영어','Legal English'), it:'💻 IT / '+TT('컴퓨터','Computer'), daily:'🗣️ '+TT('일상 회화','Daily Conversation'), custom:'✏️ '+TT('직접 입력 (아래에 종류 적기)','Custom (type below)') };
     [...catSel.options].forEach(o => { if (catLabels[o.value]) o.textContent = catLabels[o.value]; });
     const catTitle = document.querySelector('#nb-category-wrap > div');
     if (catTitle) catTitle.textContent = '📚 ' + TT('책 종류 (직접 입력 시) — 단어 뜻을 더 정확하게 찾기 위해서예요','Book category — helps find more accurate meanings');
     if (catCustom) catCustom.placeholder = TT('예: 의학 전문 용어, 우주 과학 용어 등','e.g. Medical terminology, Space science...');
-    catSel._i18nDone = true;
   }
   if (catSel && catCustom) {
     catSel.value = 'general';
@@ -7209,7 +7244,8 @@ function selectTargetLang(code) {
 }
 
 async function applyLangSettings() {
-  if (window._pendingNative===window._pendingTarget) { toast('모국어와 학습 언어는 달라야 해요!'); return; }
+  // 영어는 예외: 영어 네이티브도 영어 어휘(SAT·GRE 등)를 영영사전식으로 공부할 수 있게 en→en 허용
+  if (window._pendingNative===window._pendingTarget && window._pendingTarget!=='en') { toast('모국어와 학습 언어는 달라야 해요!'); return; }
   const targetChanged = window._pendingTarget !== userTargetLang;
   saveLangSettings(window._pendingNative, window._pendingTarget);
   document.getElementById('lang-settings-overlay')?.remove();
