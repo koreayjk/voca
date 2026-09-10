@@ -8065,7 +8065,7 @@ function renderHallBody() {
         .map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
         .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else {
-      list = all.map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
+      list = all.map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName, org:(m.org_id&&m.org_status==='approved')?(window._hallOrgNames[m.org_id]||''):'' }))
         .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     }
   } else {
@@ -8106,7 +8106,7 @@ function renderHallBody() {
         .map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:scoreOf(u), sub:lastOf(u), mine:u.uid===myId }))
         .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else { // indiv — 전체 사용자
-      list = users.map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:scoreOf(u), sub:lastOf(u), mine:u.uid===myId }))
+      list = users.map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:scoreOf(u), sub:lastOf(u), mine:u.uid===myId, org:(u.org_id&&u.org_status==='approved')?(window._hallOrgNames[u.org_id]||''):'' }))
         .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     }
   }
@@ -8149,8 +8149,9 @@ function renderHallBody() {
     <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ink-07);${m.mine?'background:var(--gold-bg);':''}">
       <div style="font-size:${rank<3?'22px':'14px'};width:32px;text-align:center;font-weight:700;color:${rank<3?'inherit':'var(--ink-40)'};">${rank<3?medals[rank]:rank+1}</div>
       <div style="flex:1;min-width:0;">
-        <div style="font-size:14px;font-weight:${m.mine?'700':'500'};color:var(--ink-100);display:flex;align-items:center;gap:6px;">
+        <div style="font-size:14px;font-weight:${m.mine?'700':'500'};color:var(--ink-100);display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
           ${esc(m.name)}
+          ${m.org?`<span style="font-size:9.5px;font-weight:600;color:var(--ink-45);background:var(--ink-05);border:1px solid var(--ink-07);border-radius:99px;padding:1px 7px;white-space:nowrap;">🏫 ${esc(m.org)}</span>`:''}
           ${m.mine?`<span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;">${tab==='team'?(ko?'우리':'Mine'):(ko?'나':'Me')}</span>`:''}
         </div>
         <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">⚡ ${m._score}${ko?'점':'pts'}${m.sub?' · '+m.sub:''}</div>
