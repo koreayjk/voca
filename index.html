@@ -5180,6 +5180,14 @@ async function appendOfficialBooks() {
         books.push(_mapOfficialBook(b));
       }
     });
+    // 공식책 '제작 계정'(공식책이 본인 소유 DB 행): loadBooksFromDB 가 매 로그인마다
+    // 공식책을 개인 책으로 다시 불러오므로, '추가'하지 않은 공식책은 여기서 책장에서 제외.
+    // (배정·시험출제는 adminBookPool 이 카탈로그에서 직접 가져가므로 기능 지장 없음)
+    const _offIds = new Set(od.map(b => b.id));
+    for (let i = books.length - 1; i >= 0; i--) {
+      const b = books[i];
+      if ((_offIds.has(b.id) || b._officialContent) && !picked.has(b.id)) books.splice(i, 1);
+    }
   } catch(e) { console.warn('[official load]', e); }
 }
 
