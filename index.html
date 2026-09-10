@@ -1494,6 +1494,10 @@ const UI_XL = {
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'点击单词上的 <b style="color:#f39c12;">☆</b> 即可收藏到这里。',
     'Quiz':'测验','✨ Update available':'✨ 有新版本','Refresh':'刷新',
     'Translated from Korean':'已从韩语翻译','Show original':'查看原文','Show translation':'查看译文','About':'应用介绍',
+    'Your shelf is empty':'书架还是空的',
+    'Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.':'点击<b>添加书籍</b>加入官方单词本，或拍摄教材创建单词本。<br>即使书架上没有书，布置作业和出题也照常可用。',
+    'Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.':'点击<b>添加书籍</b>创建你的第一本单词本。<br>拍一张照片，剩下的交给 AI。',
+    'Official books':'官方单词本','Scan a page':'拍摄教材','Type words':'手动输入',
     'Set New Password':'设置新密码','Please enter your new password.':'请输入新密码。','New password (6+ characters)':'新密码（6个字符以上）',
     'Custom (type below)':'自定义（在下方填写）','Book category — helps find more accurate meanings':'书籍类型 — 帮助更准确地查找释义',
     // ── 로그인 화면·배너 (혼합형 정리분) ──
@@ -1864,6 +1868,10 @@ const UI_XL = {
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'Toca la <b style="color:#f39c12;">☆</b> de cualquier palabra para guardarla aquí.',
     'Quiz':'Test','✨ Update available':'✨ Actualización disponible','Refresh':'Actualizar',
     'Translated from Korean':'Traducido del coreano','Show original':'Ver original','Show translation':'Ver traducción','About':'Acerca de la app',
+    'Your shelf is empty':'Tu estantería está vacía',
+    'Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.':'Toca <b>Añadir libro</b> para agregar libros oficiales o fotografiar un libro.<br>Asignar y crear exámenes funciona aunque no tengas libros en la estantería.',
+    'Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.':'Toca <b>Añadir libro</b> para crear tu primer cuaderno de vocabulario.<br>Una foto y la IA hace el resto.',
+    'Official books':'Libros oficiales','Scan a page':'Fotografiar página','Type words':'Escribir a mano',
     '🔊 Auto-read on':'🔊 Lectura automática activada — repite palabras y ejemplos','🔇 Auto-read off':'🔇 Lectura automática desactivada',
     'Official wordbook':'Libro oficial · basado en exámenes reales',
     'Official wordbook · Day 1 free · rest with Premium/academy':'Libro oficial · Día 1 gratis · el resto con Premium/academia',
@@ -7126,6 +7134,20 @@ function render() {
         <div class="scr-scroll">
           <div id="my-tests-banner"></div>
           ${assignmentBannerHTML()}
+          ${!myBooks.length ? `
+          <div style="text-align:center;padding:46px 18px 30px;max-width:420px;margin:0 auto;">
+            <div style="font-size:44px;line-height:1;margin-bottom:12px;">📚</div>
+            <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${TT('책장이 비어 있어요','Your shelf is empty')}</div>
+            <div style="font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:18px;">${orgIsAdmin()
+              ? TT('<b>책 추가</b>에서 공식 단어장을 담거나 교재를 촬영해 단어장을 만들어보세요.<br>학생 배정·시험 출제는 책장에 담지 않아도 그대로 할 수 있어요.','Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.')
+              : TT('<b>책 추가</b>를 눌러 첫 단어장을 만들어보세요.<br>책 한 장이면 AI가 단어장을 만들어 드려요.','Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.')}</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;">
+              <div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">📗</div>${TT('공식 단어장 담기','Official books')}</div>
+              <div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">📷</div>${TT('교재 촬영','Scan a page')}</div>
+              <div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">✏️</div>${TT('직접 입력','Type words')}</div>
+            </div>
+            <button class="btn btn-solid" style="padding:13px 26px;font-size:14px;" onclick="openAddBookModal()">＋ ${TT('책 추가','Add Book')}</button>
+          </div>` : ''}
           <div class="book-grid">
             ${myBooks.map(b=>`
               <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
