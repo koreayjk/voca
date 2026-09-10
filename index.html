@@ -7899,7 +7899,7 @@ async function renderStats(root, dock) {
     // 1순위: 월별 집계 뷰(hall_monthly_public → 이번 달/올해/전체 순위).
     // 뷰가 아직 없으면(서버 SQL 미실행) members_public 누적 점수로 폴백(_hallLegacy).
     if (!Array.isArray(window._hallMonthly) && !window._hallLegacy) {
-      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,acts&limit=20000`);
+      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,score&limit=20000`);
       if (Array.isArray(md)) { window._hallMonthly = md; window._hallAggCache = null; }
       else window._hallLegacy = true;
     }
@@ -7963,7 +7963,7 @@ function renderHallTabs() {
   const note = document.getElementById('hall-note');
   if (note) note.textContent = window._hallLegacy
     ? (ko?'※ 월별·연도별 순위는 서버 업데이트 후 제공돼요 (현재: 누적 점수)':'※ Monthly/yearly ranks arrive after a server update (showing all-time)')
-    : (ko?'학습·복습 활동 1회 = 1점':'1 point per study/review activity');
+    : (ko?'A2=1 · B1=2 · B2=3 · C1=4 · C2=5 (CEFR 가중치) · 첫 암기 + 복습 완료 시 적립':'A2=1 · B1=2 · B2=3 · C1=4 · C2=5 (CEFR weighted) · earned on first study + each review');
 }
 
 // 월별 뷰 → 사용자별 {이번 달/올해/누적} 점수 집계 (KST 기준, 캐시)
@@ -7975,7 +7975,7 @@ function _hallAgg() {
   (window._hallMonthly||[]).forEach(r => {
     const k = r.user_id; if (!k) return;
     if (!u[k]) u[k] = { uid:k, name:r.name, org_id:r.org_id, org_role:r.org_role, org_status:r.org_status, m:0, y:0, all:0, last:'' };
-    const a = r.acts||0;
+    const a = r.score||0;
     u[k].all += a;
     if (r.month === curM) u[k].m += a;
     if (r.month && r.month.slice(0,4) === curY) u[k].y += a;
