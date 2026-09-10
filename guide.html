@@ -55,6 +55,7 @@
     <div class="lang">
       <button id="lko" onclick="setLang('ko')">한</button>
       <button id="len" onclick="setLang('en')">EN</button>
+      <button id="lzh" onclick="setLang('zh')">中</button>
     </div>
   </div>
   <div class="wrap">
@@ -210,6 +211,78 @@ const DATA = {
         tip:'TOEFL goes Basic → Core → Advanced in difficulty — pick the level that fits you.' },
     ],
   },
+  zh: {
+    title:'📖 使用指南',
+    lead:'第一次使用 IM VOCA？下面按功能分步说明，并配有截图。',
+    howto:'这样使用',
+    foot:'还有疑问？请在应用内 <b>我的 → 联系我们</b> 告诉我们。',
+    back:'返回应用',
+    secs:[
+      { ic:'📚', title:'添加书籍',
+        purpose:'拍摄教材、手动输入单词，或直接添加官方单词本，打造属于你的书架。',
+        steps:[
+          '点击书架右上角的"+ 添加书籍"',
+          '3 种方式 — 📷 拍照（AI 自动提取单词）· ✏️ 手动输入（输入单词自动查释义）· 📗 添加官方单词本（高考·托业·托福等）',
+          '设置书名和类型后，书架上就会出现一本新书',
+          '打开书，可以看到按 Day（页）整理好的单词'],
+        tip:'一本书里可以不断添加 Day — 跟着教材进度增加页数即可。',
+        img:SHOTS+'07-personal-bookshelf.png', cap:'我的书架 — 创建的书以卡片形式排列' },
+      { ic:'📷', title:'拍照提取单词（可多张同时）',
+        purpose:'拍下教材页面，AI 自动提取单词和释义。多张照片也能一次处理。',
+        steps:[
+          '"+ 添加书籍" → 选择 📷 拍摄书页',
+          '可以一张张拍，也可以从相册一次选择多张',
+          '多张照片会先全部提取，然后在下一屏只挑不认识的单词',
+          '为每张照片设置页码（Day），就会按顺序整理好',
+          'AI 读取文字（OCR），只保留值得学习的单词，并生成释义、发音和例句'],
+        tip:'照片模糊或倾斜会降低识别率 — 请保持文字清晰、页面端正。' },
+      { ic:'✅', title:'选择并保存提取的单词',
+        purpose:'AI 会连同释义和 CEFR 难度一起展示单词。点击挑选，只保存需要的。',
+        steps:[
+          '提取完成后，单词会以卡片形式出现，带有释义 + CEFR 徽章',
+          '点击卡片选择/取消 — 去掉认识的，只留不认识的（也有"全选"）',
+          '点击"保存所选单词"，它们就会存入那一页（Day）',
+          '保存后仍可在书里添加、删除（🗑）或修改单词',
+          '每个单词都自带 🔊 发音、释义和例句'],
+        tip:'拍多张时会先全部提取，再在同一屏幕上集中挑选生词。',
+        img:SHOTS+'08-ai-word-extract.png', cap:'保存后的样子 — 释义、例句、🔊 发音、🗑 删除' },
+      { ic:'🎴', title:'用记忆卡片背单词',
+        purpose:'用卡片背单词 — 正面是单词，翻过来是释义、例句和发音。',
+        steps:[
+          '打开书 → 点击 Day 即可开始记忆卡片',
+          '点击卡片在正面（单词）↔ 背面（释义·例句·发音）之间翻转',
+          '用 🔊 听母语者发音 · 也支持自动朗读',
+          '用"认识 / 不认识"翻页，不认识的单词会再次出现',
+          '完成一个 Day 后会自动加入复习日程'],
+        img:SHOTS+'09-flashcard-study.png', cap:'记忆卡片 — 点击即可翻面' },
+      { ic:'🔁', title:'复习（艾宾浩斯遗忘曲线）',
+        purpose:'为了不遗忘，按科学间隔（1·2·3·6·15·30 天）自动安排复习。',
+        steps:[
+          '底部"复习"标签会显示今天要做的复习',
+          '每个单词本会在 30 天里分 6 次复习 — 完成今天的，其余会在预定日期自动出现',
+          '点击"今日复习"，就会开始那个 Day 的复习卡片',
+          '完成后，下一次复习日期会自动排好',
+          '通过已安排/已完成列表，还能预览本周的复习量'],
+        tip:'复习不会挤到同一天 — 每个 Day 分 6 次分散进行，每天做一点就够了。',
+        img:SHOTS+'10-ebbinghaus-review.png', cap:'复习 — 只要完成今天的就好' },
+      { ic:'✏️', title:'手动输入单词',
+        purpose:'不用拍照，只输入单词也能自动生成释义和例句。',
+        steps:[
+          '从"+ 添加书籍"或书内选择 ✏️ 手动输入',
+          '输入页码（Day）和单词（英语、西班牙语等）',
+          '换行可以一次输入多个单词',
+          'AI 会为每个单词补全释义、发音和例句'],
+        tip:'适合难以拍照识别的手写笔记，或只想加几个词的时候。' },
+      { ic:'📗', title:'添加官方单词本（高考·托业·托福）',
+        purpose:'不用自己做，把经过验证的官方单词本加入书架，马上开始学习。',
+        steps:[
+          '"+ 添加书籍" → 在官方单词本中选择想要的书（高考·托业·托福·初中等）',
+          '每本书的 Day 1 都可以免费体验',
+          '高级版可解锁全部 Day',
+          '官方书和个人书一样支持背诵、复习和测验'],
+        tip:'托福按基础→核心→高阶的顺序递增难度，请按自己的水平选择。' },
+    ],
+  },
 };
 
 function goBack(){ if (history.length > 1) history.back(); else location.href = 'https://imvoca.app/'; }
@@ -223,6 +296,7 @@ function render(lang){
   document.getElementById('foot').innerHTML = d.foot;
   document.getElementById('lko').className = lang==='ko'?'on':'';
   document.getElementById('len').className = lang==='en'?'on':'';
+  document.getElementById('lzh').className = lang==='zh'?'on':'';
   document.getElementById('sections').innerHTML = d.secs.map(s => `
     <div class="sec">
       <h2><span class="ic">${s.ic}</span>${esc(s.title)}</h2>
@@ -241,9 +315,15 @@ function setLang(l){ render(l); }
   let lang;
   try{
     const q = new URLSearchParams(location.search).get('lang');
-    if (q === 'en' || q === 'ko') lang = q;
-    else lang = localStorage.getItem('imvoca_guide_lang')
-              || ((navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'ko');
+    if (q === 'en' || q === 'ko' || q === 'zh') lang = q;
+    else {
+      const saved = localStorage.getItem('imvoca_guide_lang');
+      if (saved && DATA[saved]) lang = saved;
+      else {
+        const bl = (navigator.language || '').toLowerCase();
+        lang = bl.startsWith('zh') ? 'zh' : (bl.startsWith('ko') ? 'ko' : (bl.startsWith('en') ? 'en' : 'ko'));
+      }
+    }
   }catch(e){ lang = 'ko'; }
   render(lang || 'ko');
 })();

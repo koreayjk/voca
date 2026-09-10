@@ -912,6 +912,9 @@ let userTargetLang = localStorage.getItem('imvoca.targetLang')||'en';
 // AI 프롬프트용 언어명 — 모델이 확실히 인식하도록 영문+원어 병기 (UI 표기용 LANG_OPTIONS.name 과 별도)
 const PROMPT_LANG_NAMES = { ko:'한국어(Korean)', en:'English', es:'Spanish (Español)', zh:'Simplified Chinese (简体中文)', ja:'Japanese (日本語)', fr:'French (Français)', de:'German (Deutsch)', pt:'Portuguese (Português)', vi:'Vietnamese (Tiếng Việt)', id:'Indonesian (Bahasa Indonesia)' };
 function promptLangName(code){ return PROMPT_LANG_NAMES[code] || 'English'; }
+// 외부 페이지(사용법·앱소개) 언어 라우팅 — 페이지가 존재하는 언어만 연결, 그 외엔 영어
+function guideLang(){ return ['ko','en','zh'].includes(userNativeLang) ? userNativeLang : 'en'; }
+function adPage(){ return userNativeLang==='ko' ? 'ad_ko.html' : (userNativeLang==='zh' ? 'ad_zh.html' : 'ad_en.html'); }
 function getNativeLang(){return LANG_OPTIONS.find(l=>l.code===userNativeLang)||LANG_OPTIONS[0];}
 function getTargetLang(){return TARGET_LANG_OPTIONS.find(l=>l.code===userTargetLang)||TARGET_LANG_OPTIONS[0];}
 function saveLangSettings(native,target){userNativeLang=native;userTargetLang=target;localStorage.setItem('imvoca.nativeLang',native);localStorage.setItem('imvoca.targetLang',target);if(typeof applyStaticI18n==='function')applyStaticI18n();}
@@ -6453,13 +6456,13 @@ function buildDockBottom() {
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
     + `<button class="dock-mini" onclick="showEvent()">💬 ${TT('후기','Reviews')}</button>`
-    + `<button class="dock-mini" onclick="location.href='https://imvoca.app/guide.html?lang='+(TT('ko','en'))">📖 ${TT('사용법','Guide')}</button>`
+    + `<button class="dock-mini" onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()">📖 ${TT('사용법','Guide')}</button>`
     + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${TT('⚙️ 관리','⚙️ Admin')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${TT('상태','Health')}</button>` : '')
     + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
     + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${TT('알림','Notices')}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
-    + `<button class="dock-mini" onclick="window.open('https://imvoca.app/'+(TT('ad_ko.html','ad_en.html')),'_blank')">${TT('📖 앱 소개','📖 About')}</button>`
+    + `<button class="dock-mini" onclick="window.open('https://imvoca.app/'+adPage(),'_blank')">${TT('📖 앱 소개','📖 About')}</button>`
     + `<button class="dock-mini" onclick="showMyMenu()">${TT('👤 마이페이지','👤 My')}</button>`
     + ((userOrgRole==='owner' || isPendingOwner())
         ? `<button class="dock-mini dock-mini--accent" onclick="goOrgAdmin()">${userOrgRole==='owner'?(TT('🏫 단체 관리','🏫 Org Admin')):(TT('🏫 단체 만들기','🏫 Create Org'))}</button>`
@@ -6645,10 +6648,10 @@ function render() {
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           <button onclick="showEvent()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">💬 ${TT('후기','Reviews')}</button>
-          <button onclick="location.href='https://imvoca.app/guide.html?lang='+(TT('ko','en'))" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
+          <button onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
-          <button onclick="window.open('https://imvoca.app/'+(TT('ad_ko.html','ad_en.html')),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
+          <button onclick="window.open('https://imvoca.app/'+adPage(),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
         </div>
       </div>` + dock;

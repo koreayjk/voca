@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IM VOCA — 英文原版书读者的 AI 单词本</title>
+<meta name="description" content="拍下英文书的一页，AI 自动挑出生词、给出语境释义，并帮你按遗忘曲线复习。">
+<meta property="og:title" content="IM VOCA — 英文原版书读者的 AI 单词本">
+<meta property="og:description" content="拍下书页，AI 自动挑出生词、给出语境释义，并帮你复习。">
+<meta property="og:image" content="https://imvoca.app/og-image.png">
+<meta property="og:url" content="https://imvoca.app/ad_zh.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IM VOCA — 英文原版书读者的 AI 单词本">
+<meta name="twitter:description" content="拍下书页，AI 自动挑出生词、给出语境释义，并帮你复习。">
+<meta name="twitter:image" content="https://imvoca.app/og-image.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: #f5f0e8; color: #1a1511; }
+  .page { max-width: 680px; margin: 0 auto; padding: 40px 32px; background: #fff; min-height: 100vh; }
+
+  /* 히어로 */
+  .hero { text-align: center; padding: 32px 0 24px; }
+
+  /* ── 로고 크게, 가운데 ── */
+  .hero-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .hero-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 28px;
+    box-shadow: 0 8px 32px rgba(28,53,83,0.18), 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 12px;
+  }
+  .hero-logo-name {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #1c3553;
+  }
+
+  .badge { display: inline-block; background: #fff0e8; color: #1c3553; font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 99px; margin-bottom: 16px; border: 1px solid rgba(28,53,83,0.2); letter-spacing: 0.03em; }
+  .hero-title { font-size: 36px; font-weight: 700; line-height: 1.25; margin-bottom: 10px; color: #1a1511; }
+  .hero-title span { color: #1c3553; }
+  .hero-sub { font-size: 14px; color: #888; line-height: 1.8; max-width: 460px; margin: 0 auto 24px; }
+  .hero-btn { display: inline-block; background: #1c3553; color: #fff; font-size: 14px; font-weight: 600; padding: 12px 28px; border-radius: 12px; text-decoration: none; }
+  .hero-url { font-size: 11px; color: #aaa; margin-top: 10px; }
+  .divider { height: 1px; background: #f0ece4; margin: 24px 0; }
+
+  /* 섹션 라벨 */
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #1c3553; text-align: center; margin: 28px 0 12px; }
+
+  /* 플로우 */
+  .flow { display: flex; align-items: flex-start; gap: 0; background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 20px 12px; overflow-x: auto; }
+  .flow-step { flex: 1; min-width: 90px; text-align: center; padding: 0 6px; }
+  .flow-num { width: 30px; height: 30px; border-radius: 50%; background: #1c3553; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+  .flow-label { font-size: 11px; font-weight: 600; color: #1a1511; line-height: 1.4; margin-bottom: 4px; }
+  .flow-desc { font-size: 10px; color: #999; line-height: 1.4; }
+  .flow-arrow { color: #1c3553; font-size: 20px; flex-shrink: 0; padding: 0 4px; margin-top: 8px; opacity: 0.4; }
+
+  /* 기능 카드 */
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+  .feat { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 16px; }
+  .feat-icon { font-size: 20px; margin-bottom: 8px; }
+  .feat-title { font-size: 13px; font-weight: 600; color: #1a1511; margin-bottom: 5px; }
+  .feat-desc { font-size: 11px; color: #999; line-height: 1.6; }
+
+  /* 에빙하우스 */
+  .ebb { background: #fff0e8; border: 1px solid rgba(28,53,83,0.15); border-radius: 12px; padding: 20px; }
+  .ebb-title { font-size: 13px; font-weight: 600; color: #1c3553; margin-bottom: 12px; }
+  .ebb-days { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ebb-day { background: #fff; border: 1px solid rgba(28,53,83,0.25); border-radius: 99px; padding: 4px 11px; font-size: 11px; color: #1c3553; font-weight: 500; }
+  .ebb-desc { font-size: 11px; color: #888; margin-top: 10px; line-height: 1.6; }
+
+  /* 비교 */
+  .diff { background: #fafafa; border: 1px solid #eee; border-radius: 12px; overflow: hidden; }
+  .diff-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid #f0ece4; font-size: 12px; }
+  .diff-row:last-child { border-bottom: none; }
+  .diff-row.head { background: #f5f2ee; font-weight: 600; font-size: 11px; }
+  .diff-label { flex: 1; color: #888; }
+  .diff-label.head { color: #1a1511; }
+  .diff-imvoca { width: 90px; text-align: center; color: #1c3553; font-weight: 600; }
+  .diff-others { width: 90px; text-align: center; color: #bbb; }
+
+  /* 인용구 */
+  .quote { text-align: center; padding: 24px 16px; }
+  .quote p { font-size: 14px; color: #888; line-height: 1.8; }
+  .quote strong { color: #1c3553; }
+
+  /* CTA */
+  .cta { background: #1c3553; border-radius: 14px; padding: 32px 24px; text-align: center; margin-top: 8px; }
+  .cta-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .cta-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+  .cta-url { font-size: 14px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.2); padding: 10px 24px; border-radius: 8px; display: inline-block; text-decoration: none; }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 상단 뒤로가기 -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;">
+    <button onclick="window.close();history.back();" style="display:flex;align-items:center;gap:6px;background:none;border:1px solid #eee;border-radius:99px;padding:7px 14px;font-size:12px;color:#888;cursor:pointer;font-family:-apple-system,sans-serif;">
+      ← 返回应用
+    </button>
+  </div>
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <div class="hero-logo-wrap">
+      <img src="https://imvoca.app/2.png" class="hero-logo" alt="IM VOCA">
+      <div class="hero-logo-name">IM VOCA</div>
+    </div>
+
+    <div style="display:inline-flex;align-items:center;gap:7px;background:#fff6e8;border:1px solid #e8b84a;border-radius:99px;padding:7px 16px;margin-bottom:14px;">
+      <span style="font-size:14px;">🏅</span>
+      <span style="font-size:12.5px;font-weight:700;color:#a76b00;letter-spacing:0.02em;">专利申请中 · KR 10-2026-0127089</span>
+    </div>
+    <div class="badge">英文原版书读者的 AI 单词本</div>
+    <div class="hero-title">一边读原版书<br>一边把<span>词汇</span>真正变成你的</div>
+    <div class="hero-sub">拍下书中任意一页，AI 自动挑出生词。<br>在语境中学习，用艾宾浩斯间隔复习牢牢记住。</div>
+    <a class="hero-btn" href="https://imvoca.app/">立即开始</a>
+    <div class="hero-url">imvoca.app</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 사용 방법 -->
+  <div class="section-label">使用流程</div>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-label">拍摄书页</div>
+      <div class="flow-desc">给书页拍张照</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-label">AI 提取单词</div>
+      <div class="flow-desc">按难度自动分类</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-label">保存单词</div>
+      <div class="flow-desc">只留下不认识的</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-label">记忆卡片</div>
+      <div class="flow-desc">卡片背诵 + 测验</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-label">自动复习</div>
+      <div class="flow-desc">艾宾浩斯日程</div>
+    </div>
+  </div>
+
+  <!-- How to study -->
+  <div class="section-label">推荐学习法</div>
+  <div style="background:#fff;border-radius:16px;padding:24px 20px;margin-bottom:4px;">
+    <div style="font-size:16px;font-weight:700;color:#1a1511;margin-bottom:6px;text-align:center;">📖 今天背单词，明天读那一页</div>
+    <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:20px;text-align:center;">
+      IM VOCA 最有效的用法是<strong style="color:#1c3553;">「预习」</strong>。<br>
+      今天先背好明天要读那几页里的生词，<br>
+      第二天再读，那一页就读得毫不费力。
+    </div>
+
+    <!-- Daily routine steps -->
+    <div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">
+      <div style="display:flex;gap:14px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:30px;height:30px;border-radius:50%;background:#1c3553;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+          <div style="width:2px;flex:1;background:#eee;margin:4px 0;"></div>
+        </div>
+        <div style="padding-bottom:18px;">
+          <div style="font-size:14px;font-weight:600;color:#1a1511;margin-bottom:3px;">今天 — 定好明天要读的页数</div>
+          <div style="font-size:12px;color:#888;line-height:1.6;">比如每天读 30 分钟 ≈ 10 页。先选好明天要读的那部分。</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:30px;height:30px;border-radius:50%;background:#1c3553;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+          <div style="width:2px;flex:1;background:#eee;margin:4px 0;"></div>
+        </div>
+        <div style="padding-bottom:18px;">
+          <div style="font-size:14px;font-weight:600;color:#1a1511;margin-bottom:3px;">给那几页拍照</div>
+          <div style="font-size:12px;color:#888;line-height:1.6;">AI 只挑出那几页里的生词，按难度排好，生成单词表。</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:30px;height:30px;border-radius:50%;background:#1c3553;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+          <div style="width:2px;flex:1;background:#eee;margin:4px 0;"></div>
+        </div>
+        <div style="padding-bottom:18px;">
+          <div style="font-size:14px;font-weight:600;color:#1a1511;margin-bottom:3px;">只背不认识的单词</div>
+          <div style="font-size:12px;color:#888;line-height:1.6;">认识的直接跳过。剩下的一小组用卡片和测验背完 — 毫无负担。</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:30px;height:30px;border-radius:50%;background:#27ae60;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#1a1511;margin-bottom:3px;">第二天 — 读那几页</div>
+          <div style="font-size:12px;color:#888;line-height:1.6;">单词已经认识，读起来非常顺。在书里再次遇到它们，记忆就此定型。</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff3ec;border-radius:10px;padding:14px 16px;font-size:12px;color:#666;line-height:1.7;border:1px solid rgba(28,53,83,0.15);">
+      💡 <strong style="color:#1c3553;">为什么有效：</strong>普通背单词软件很少让你再次遇到那个词，所以忘得快。
+      而这个方法让你<strong style="color:#1a1511;">第二天就在书里真实地再遇到它。</strong>
+      预习时一次、阅读时一次、艾宾浩斯复习再一次 — 三次相遇，进入长期记忆。
+    </div>
+  </div>
+
+  <!-- Choosing the Right Book -->
+  <div class="section-label">找到适合你的书</div>
+  <div style="background:#fff;border:1px solid #f0e6d8;border-radius:16px;padding:22px 20px;margin-bottom:14px;box-shadow:0 2px 12px rgba(120,80,30,0.05);">
+    <div style="font-size:15px;font-weight:700;color:#2c2118;margin-bottom:6px;">这本书对你来说太难？还是太简单？</div>
+    <div style="font-size:13px;color:#7a6e5d;line-height:1.7;margin-bottom:18px;">
+      一本书在<b>难度刚刚好</b>的时候读起来最舒服、学到的也最多。用 IM VOCA 有个简单的测法。
+    </div>
+
+    <div style="background:#faf6ef;border-radius:12px;padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:#1c3553;margin-bottom:8px;">📷 测试方法</div>
+      <div style="font-size:13px;color:#5a4e3d;line-height:1.7;">
+        把想读的书扫描 <b>5 页左右</b>，数一数一页提取出的 <b>20 个单词里有几个不认识</b>。
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid #f0e6d8;">
+      <div style="font-size:22px;flex-shrink:0;">🎯</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#2e7d32;">5–10 个生词 — 刚刚好</div>
+        <div style="font-size:12px;color:#7a6e5d;line-height:1.6;margin-top:3px;">
+          黄金区间：读起来有趣，学起来有收获。放心开读！
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid #f0e6d8;">
+      <div style="font-size:22px;flex-shrink:0;">🌊</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#1565c0;">少于 5 个 — 轻松阅读</div>
+        <div style="font-size:12px;color:#7a6e5d;line-height:1.6;margin-top:3px;">
+          与其说是学习，更适合放松地享受阅读。好好享受故事吧！
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid #f0e6d8;">
+      <div style="font-size:22px;flex-shrink:0;">⛰️</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#c62828;">15 个以上 — 有点吃力</div>
+        <div style="font-size:12px;color:#7a6e5d;line-height:1.6;margin-top:3px;">
+          先从更简单的书开始。等积累了信心再回来，会读得顺畅得多。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 핵심 기능 -->
+  <div class="section-label">核心功能</div>
+  <div class="features">
+    <div class="feat">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:#1c3553;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+        <div class="feat-icon" style="margin-bottom:0;">📷</div>
+      </div>
+      <div class="feat-title">AI 提取单词</div>
+      <div class="feat-desc">一张照片自动提取单词，并按难度分类</div>
+    </div>
+    <div class="feat">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:#1c3553;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+        <div class="feat-icon" style="margin-bottom:0;">📖</div>
+      </div>
+      <div class="feat-title">语境释义</div>
+      <div class="feat-desc">显示单词在你这本书里的实际含义</div>
+    </div>
+    <div class="feat">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:#1c3553;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+        <div class="feat-icon" style="margin-bottom:0;">🃏</div>
+      </div>
+      <div class="feat-title">记忆卡片 + 测验</div>
+      <div class="feat-desc">用卡片背诵，再用选择题测验巩固</div>
+    </div>
+    <div class="feat">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:#1c3553;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+        <div class="feat-icon" style="margin-bottom:0;">🧠</div>
+      </div>
+      <div class="feat-title">艾宾浩斯复习</div>
+      <div class="feat-desc">在遗忘之前自动提醒 — 建立长期记忆</div>
+    </div>
+    <div class="feat">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:#1c3553;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+        <div class="feat-icon" style="margin-bottom:0;">🏆</div>
+      </div>
+      <div class="feat-title">名人堂</div>
+      <div class="feat-desc">按学习的单词攀登排行榜 — 和朋友一起保持动力</div>
+    </div>
+  </div>
+
+  <!-- ① CEFR -->
+  <div class="section-label">① CEFR 国际语言标准</div>
+  <div style="background:#f8f6ff;border:1px solid rgba(123,45,139,0.15);border-radius:14px;padding:20px;">
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+      <div style="font-size:28px;flex-shrink:0;">🎓</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#1a1511;margin-bottom:6px;">什么是 CEFR？</div>
+        <div style="font-size:12px;color:#555;line-height:1.8;">
+          <strong style="color:#1a1511;">欧洲语言共同参考框架（CEFR）</strong>是全球公认的语言水平衡量标准。<br>
+          <strong>雅思、托福、剑桥</strong>等主要考试和世界各地的教育机构都采用这一标准。
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+      <div style="display:grid;grid-template-columns:68px 1fr;gap:8px;align-items:center;">
+        <div style="display:flex;gap:4px;">
+          <span style="background:#95a5a6;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;">A1</span>
+          <span style="background:#27ae60;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;">A2</span>
+        </div>
+        <div style="font-size:12px;color:#555;"><strong style="color:#27ae60;">初级 (A1-A2)</strong> — 基础单词、简单日常会话</div>
+      </div>
+      <div style="display:grid;grid-template-columns:68px 1fr;gap:8px;align-items:center;">
+        <div style="display:flex;gap:4px;">
+          <span style="background:#2980b9;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;">B1</span>
+          <span style="background:#e67e22;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;">B2</span>
+        </div>
+        <div style="font-size:12px;color:#555;"><strong style="color:#2980b9;">中级 (B1-B2)</strong> — 旅行和工作中的交流</div>
+      </div>
+      <div style="display:grid;grid-template-columns:68px 1fr;gap:8px;align-items:center;">
+        <div style="display:flex;gap:4px;">
+          <span style="background:#c0392b;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;">C1</span>
+          <span style="background:#7b2d8b;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;">C2</span>
+        </div>
+        <div style="font-size:12px;color:#555;"><strong style="color:#c0392b;">高级 (C1-C2)</strong> — 阅读原著和论文、流利表达</div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(28,53,83,0.15);">
+      <div style="font-size:12px;font-weight:700;color:#1c3553;margin-bottom:6px;">📱 IM VOCA 如何运用 CEFR</div>
+      <div style="font-size:12px;color:#555;line-height:1.8;">
+        提取单词时，AI 会<strong style="color:#1a1511;">自动按 CEFR 分级</strong>：C1~C2 难词优先，然后是 B2、B1。<br>
+        每张单词卡都带有 <span style="background:#c0392b;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;">CEFR C1</span> <span style="background:#e67e22;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;">CEFR B2</span> 等级徽章，难度一目了然。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② Comprehensible Input -->
+  <div class="section-label">② 可理解输入理论</div>
+  <div style="background:#fff8f0;border:1px solid rgba(28,53,83,0.2);border-radius:14px;padding:20px;">
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
+      <div style="font-size:28px;flex-shrink:0;">📖</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#1a1511;margin-bottom:4px;">可理解输入（Comprehensible Input）</div>
+        <div style="font-size:11px;color:#1c3553;font-weight:600;">语言学家 Stephen Krashen 博士提出</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#555;line-height:1.9;margin-bottom:14px;">
+      语言不是靠硬背获得的，而是<strong style="color:#1a1511;">在语境中被理解时自然习得</strong>的。<br>
+      <strong style="color:#1a1511;">在语境中</strong>学到的单词，比孤立背诵的单词记得久得多。<br>
+      来自你自己正在读的书的单词效果更好 — 因为你已经了解上下文。
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(28,53,83,0.15);">
+      <div style="font-size:12px;font-weight:700;color:#1c3553;margin-bottom:6px;">📱 IM VOCA 如何应用</div>
+      <div style="font-size:12px;color:#555;line-height:1.8;">
+        每个单词都会同时保存<strong style="color:#1a1511;">基本释义 + 书中语境释义</strong>。<br>
+        两种释义都会出现在卡片背面，帮助你在语境中记住单词。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ Flashcard 암기법 -->
+  <div class="section-label">③ 记忆卡片学习法</div>
+  <div style="background:#f0f8ff;border:1px solid rgba(41,128,185,0.2);border-radius:14px;padding:20px;">
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
+      <div style="font-size:28px;flex-shrink:0;">🃏</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#1a1511;margin-bottom:4px;">循环重复记忆法</div>
+        <div style="font-size:11px;color:#2980b9;font-weight:600;">莱特纳系统 · 测试效应</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#555;line-height:1.9;margin-bottom:14px;">
+      不要试图把每个词都背到完美再进入下一个。<br>
+      先快速<strong style="color:#1a1511;">过一遍所有单词</strong>，认识的用 <strong style="color:#27ae60;">○</strong> 移除 — 只留下不认识的。<br>
+      关键是最终<strong style="color:#1a1511;">只集中攻克真正不会的单词</strong>。
+    </div>
+    <!-- 사이클 흐름도 -->
+    <div style="background:#fff;border-radius:10px;padding:16px;border:1px solid rgba(41,128,185,0.15);margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:#2980b9;margin-bottom:12px;text-align:center;">记忆卡片学习流程</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;">
+        <div style="background:#f0f8ff;border:1.5px solid #2980b9;border-radius:10px;padding:10px 12px;font-size:11px;">
+          <div style="font-size:16px;margin-bottom:4px;">📚</div>
+          <div style="font-weight:600;color:#1a1511;">全部单词<br>第 1 轮</div>
+        </div>
+        <div style="font-size:18px;color:#2980b9;">→</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="background:#eafaf1;border:1.5px solid #27ae60;border-radius:10px;padding:8px 12px;font-size:11px;text-align:center;">
+            <span style="color:#27ae60;font-weight:700;">○ 认识</span><br>
+            <span style="color:#888;font-size:10px;">下一轮移除</span>
+          </div>
+          <div style="background:#fdeaea;border:1.5px solid #e74c3c;border-radius:10px;padding:8px 12px;font-size:11px;text-align:center;">
+            <span style="color:#e74c3c;font-weight:700;">✕ 不认识</span><br>
+            <span style="color:#888;font-size:10px;">下一轮保留</span>
+          </div>
+        </div>
+        <div style="font-size:18px;color:#2980b9;">→</div>
+        <div style="background:#fff3cd;border:1.5px solid #f39c12;border-radius:10px;padding:10px 12px;font-size:11px;">
+          <div style="font-size:16px;margin-bottom:4px;">🎯</div>
+          <div style="font-weight:600;color:#1a1511;">生词<br>反复出现</div>
+        </div>
+        <div style="font-size:18px;color:#2980b9;">→</div>
+        <div style="background:#eafaf1;border:1.5px solid #27ae60;border-radius:10px;padding:10px 12px;font-size:11px;">
+          <div style="font-size:16px;margin-bottom:4px;">✅</div>
+          <div style="font-weight:600;color:#27ae60;">全部记住！</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#e8f4fd;border-radius:10px;padding:12px 14px;border-left:3px solid #2980b9;">
+      <div style="font-size:12px;color:#555;line-height:1.8;">
+        💡 <strong style="color:#1a1511;">研究表明：</strong>用卡片回忆一次单词，胜过把单词表读十遍。<br>
+        大脑在<strong style="color:#1a1511;">「等等……是什么来着？哦！」</strong>的瞬间记得最牢。 — <em style="color:#888;">测试效应 · 华盛顿大学研究</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ Hermann Ebbinghaus -->
+  <div class="section-label">④ 艾宾浩斯遗忘曲线</div>
+  <div class="ebb">
+    <div class="ebb-title">📊 经科学验证的复习日程</div>
+
+    <div style="font-size:13px;color:#555;line-height:1.8;margin-bottom:16px;">
+      19 世纪德国心理学家<strong style="color:#1a1511;">赫尔曼·艾宾浩斯</strong>研究了记忆随时间消退的规律。<br>
+      他发现，学习之后人们会在 <strong style="color:#1c3553;">20 分钟内忘掉 42%、一天内忘掉 67%、一个月内忘掉 79%</strong>。<br>
+      但只要<strong style="color:#1a1511;">在即将遗忘之前复习</strong>，记忆就会得到强化，下一次遗忘的时间也随之推迟。
+    </div>
+
+    <!-- 그래프 -->
+    <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid rgba(28,53,83,0.12);">
+      <div style="font-size:11px;font-weight:600;color:#1c3553;margin-bottom:12px;text-align:center;">记忆保持率（不复习 vs 使用 IM VOCA）</div>
+      <div style="position:relative;width:100%;height:180px;">
+        <canvas id="ebbChart" role="img" aria-label="艾宾浩斯遗忘曲线图：不复习时记忆快速下降，使用 IM VOCA 复习时保持高位"></canvas>
+      </div>
+      <div style="display:flex;gap:20px;justify-content:center;margin-top:10px;font-size:11px;color:#888;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#ddd;display:inline-block;border-radius:2px;"></span>不复习</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#1c3553;display:inline-block;border-radius:2px;"></span>使用 IM VOCA</span>
+      </div>
+    </div>
+
+    <!-- 복습 일정 -->
+    <div style="font-size:12px;color:#888;margin-bottom:10px;">IM VOCA 自动复习日程</div>
+    <div class="ebb-days">
+      <span class="ebb-day">第 0 天</span>
+      <span class="ebb-day">+1 天</span>
+      <span class="ebb-day">+2 天</span>
+      <span class="ebb-day">+3 天</span>
+      <span class="ebb-day">+6 天</span>
+      <span class="ebb-day">+15 天</span>
+      <span class="ebb-day">+30 天</span>
+      <span class="ebb-day">+60 天</span>
+    </div>
+    <div class="ebb-desc" style="margin-top:12px;">完成记忆卡片后，复习日程自动登记。在遗忘之前复习，建立长期记忆。</div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script>
+  (function() {
+    const ctx = document.getElementById('ebbChart');
+    if (!ctx || typeof Chart === 'undefined') return;
+    const labels = ['第0天', '第1天', '第2天', '第3天', '第6天', '第15天', '第30天', '第60天'];
+    const forgetting = [100, 33, 28, 25, 22, 20, 18, 16];
+    const withReview = [100, 95, 98, 97, 96, 95, 94, 93];
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: '不复习',
+            data: forgetting,
+            borderColor: '#ccc',
+            backgroundColor: 'rgba(200,200,200,0.08)',
+            borderWidth: 2,
+            borderDash: [5, 4],
+            pointRadius: 3,
+            pointBackgroundColor: '#ccc',
+            fill: true,
+            tension: 0.4,
+          },
+          {
+            label: '使用 IM VOCA 复习',
+            data: withReview,
+            borderColor: '#1c3553',
+            backgroundColor: 'rgba(28,53,83,0.08)',
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: '#1c3553',
+            fill: true,
+            tension: 0.4,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%'
+            }
+          }
+        },
+        scales: {
+          y: {
+            min: 0, max: 110,
+            ticks: {
+              callback: v => v + '%',
+              font: { size: 10 },
+              color: '#999',
+              stepSize: 25,
+            },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          },
+          x: {
+            ticks: { font: { size: 10 }, color: '#999', autoSkip: false },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  })();
+  </script>
+
+  <!-- ⑤ Hall of Fame -->
+  <div class="section-label">⑤ 名人堂</div>
+  <div style="background:#fff;border-radius:16px;padding:24px 20px;margin-bottom:4px;">
+    <div style="font-size:16px;font-weight:700;color:#1a1511;margin-bottom:6px;text-align:center;">🏆 按单词难度计分</div>
+    <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:18px;text-align:center;">
+      不是保存得多就能排第一。<br>
+      <strong style="color:#1a1511;">越难的单词，得分越高。</strong><br>
+      挑战真书里真正的难词越多，排名就爬得越高。
+    </div>
+
+    <!-- Score table -->
+    <div style="font-size:12px;font-weight:600;color:#1c3553;margin-bottom:10px;text-align:center;">难度积分表（CEFR）</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+      <div style="display:flex;align-items:center;gap:10px;background:#f5f0ea;border-radius:10px;padding:10px 14px;">
+        <span style="width:34px;height:24px;border-radius:6px;background:#27ae60;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">A2</span>
+        <span style="flex:1;font-size:13px;color:#1a1511;">初级</span>
+        <span style="font-size:14px;font-weight:700;color:#1a1511;">1 分</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#f5f0ea;border-radius:10px;padding:10px 14px;">
+        <span style="width:34px;height:24px;border-radius:6px;background:#2980b9;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B1</span>
+        <span style="flex:1;font-size:13px;color:#1a1511;">中级</span>
+        <span style="font-size:14px;font-weight:700;color:#1a1511;">2 分</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#f5f0ea;border-radius:10px;padding:10px 14px;">
+        <span style="width:34px;height:24px;border-radius:6px;background:#e67e22;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B2</span>
+        <span style="flex:1;font-size:13px;color:#1a1511;">中高级</span>
+        <span style="font-size:14px;font-weight:700;color:#1a1511;">3 分</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#fff3ec;border-radius:10px;padding:10px 14px;border:1px solid rgba(28,53,83,0.2);">
+        <span style="width:34px;height:24px;border-radius:6px;background:#c0392b;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">C1</span>
+        <span style="flex:1;font-size:13px;color:#1a1511;">高级 · 大学/原著水平</span>
+        <span style="font-size:14px;font-weight:700;color:#1c3553;">4 分</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#fff3ec;border-radius:10px;padding:10px 14px;border:1px solid rgba(28,53,83,0.2);">
+        <span style="width:34px;height:24px;border-radius:6px;background:#7b2d8b;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">C2</span>
+        <span style="flex:1;font-size:13px;color:#1a1511;">精通 · 母语者水平</span>
+        <span style="font-size:14px;font-weight:700;color:#1c3553;">5 分</span>
+      </div>
+    </div>
+
+    <div style="background:#f5f0ea;border-radius:10px;padding:14px 16px;font-size:12px;color:#666;line-height:1.7;">
+      💡 举个例子：10 个 C1 单词（40 分）比 10 个 A2 单词（10 分）<strong style="color:#1c3553;">高出 4 倍</strong>。
+      排名分数是你保存的所有单词的积分总和，你的<strong style="color:#1a1511;">完美复习（⚡）次数</strong>也会一并展示。
+      和朋友比一比，会让你更愿意挑战难词。
+    </div>
+  </div>
+
+  <!-- 비교 -->
+  <div class="section-label">IM VOCA 有什么不同</div>
+  <div class="diff">
+    <div class="diff-row head">
+      <div class="diff-label head">功能</div>
+      <div class="diff-imvoca">IM VOCA</div>
+      <div class="diff-others">其他应用</div>
+    </div>
+    <div class="diff-row">
+      <div class="diff-label">拍摄书页 → 提取单词</div>
+      <div class="diff-imvoca">✅</div>
+      <div class="diff-others">部分支持</div>
+    </div>
+    <div class="diff-row">
+      <div class="diff-label">语境释义</div>
+      <div class="diff-imvoca">✅</div>
+      <div class="diff-others">❌</div>
+    </div>
+    <div class="diff-row">
+      <div class="diff-label">CEFR 自动分级</div>
+      <div class="diff-imvoca">✅</div>
+      <div class="diff-others">❌</div>
+    </div>
+    <div class="diff-row">
+      <div class="diff-label">艾宾浩斯多轮复习</div>
+      <div class="diff-imvoca">✅</div>
+      <div class="diff-others">部分支持</div>
+    </div>
+  </div>
+
+  <!-- 인용구 -->
+  <div class="quote">
+    <p>「不要硬背。<br>让词汇<strong>在阅读中自然地</strong>变成你的。」</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-title">现在就开始</div>
+    <div class="cta-sub">注册即可使用 · IM Mission</div>
+    <a class="cta-url" href="https://imvoca.app/">imvoca.app</a>
+    <br><br>
+    <button onclick="window.close();history.back();" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:10px;padding:10px 24px;color:#fff;font-size:13px;font-family:-apple-system,sans-serif;cursor:pointer;">← 返回应用</button>
+  </div>
+
+  <div style="text-align:center;padding:22px 16px 30px;font-size:11.5px;color:#b8a894;line-height:1.7;">
+    🏅 核心技术<strong style="color:#a76b00;">专利申请中</strong>（韩国申请号 10-2026-0127089）：<br>
+    「基于 AI 的个性化词汇学习数据生成与管理方法及系统」
+  </div>
+
+</div>
+</body>
+</html>
