@@ -407,14 +407,15 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 .lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
 .dock-bottom { display: none; }
 .dock--detail { display: none; }  /* 상세화면 사이드바는 모바일에서 숨김 */
-.topbar-actions { align-items: flex-start; }
-/* 좁은 화면: 상단 버튼이 작아지고 줄바꿈되며, 제목은 그 아래로 내려와 겹침 방지 */
+/* 책장 상단 버튼: 항상 한 줄 — My 는 오른쪽 고정, 나머지는 넘치면 좌우 스크롤 */
+.topbar-actions { display: flex; align-items: center; gap: 6px; }
+.topbar-scroll { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow-x: auto; margin-left: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.topbar-scroll::-webkit-scrollbar { display: none; }
+.topbar-actions .topbar-btn { flex-shrink: 0; font-size: 12px !important; padding: 6px 12px !important; }
+/* 좁은 화면: 책장 화면만 제목을 버튼 한 줄 아래로 내려 겹침 방지 —
+   즐겨찾기·검색 등 다른 scr-wide 화면은 복습·명예의 전당과 같은 높이(50px) 유지 */
 @media (max-width: 640px) {
-  .topbar-actions { max-width: 70% !important; gap: 4px !important; }
-  .topbar-actions .topbar-btn { padding: 4px 8px !important; font-size: 10px !important; }
-  /* 상단 버튼(topbar-actions)이 있는 책장 화면만 제목을 그 아래로 내림 —
-     즐겨찾기·검색 등 다른 scr-wide 화면은 복습·명예의 전당과 같은 높이(50px) 유지 */
-  .scr-shelf.scr { padding-top: 96px !important; }
+  .scr-shelf.scr { padding-top: 64px !important; }
   .scr-shelf .lib-header { margin-top: 0; }
 }
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
@@ -2462,7 +2463,13 @@ function gradeTest(questions, answers){
   (questions||[]).forEach((q,i)=>{ const a=answers[i]; const ok = q.type==='mc' ? (a===q.answer) : (!!a && _normAns(a)===_normAns(q.answer)); if(ok)score++; per.push({n:q.n,en:q.en,prompt:q.prompt,given:a==null?'':a,answer:q.answer,ok}); });
   return { score, total:(questions||[]).length, per };
 }
-function _testBooks(){ return (books||[]).filter(b=>b.pages && b.pages.some(p=>p.words&&p.words.length)); }
+// 관리자용 배정·출제 후보: 내 책장 + (책장에서 뺐더라도) 공식 카탈로그 전체
+function adminBookPool(){
+  const cat = (typeof window!=='undefined' && Array.isArray(window._officialCatalogFull)) ? window._officialCatalogFull : [];
+  const have = new Set((books||[]).map(b=>b.id));
+  return [...(books||[]), ...cat.filter(b=>!have.has(b.id)).map(b=>_mapOfficialBook(b))];
+}
+function _testBooks(){ return adminBookPool().filter(b=>b.pages && b.pages.some(p=>p.words&&p.words.length)); }
 function _pageLabel(b,p){ return (b._official||b._officialContent) ? String(p.num) : ('Page '+p.num); }
 
 async function loadTests(){
@@ -3868,7 +3875,8 @@ async function unassignTask(assignmentId, targetType, studentId, label){
 async function assignBooksToStudent(studentId, studentName){
   const ko = userNativeLang==='ko';
   if (!orgIsAdmin() || !userOrg) { toast(TT('관리자만 배정할 수 있어요','Admins only')); return; }
-  const assignable = books.filter(b=>!b._assigned);   // 내 책 + 공식책 (배정받은 책 제외)
+  await ensureOfficialCatalog();   // 책장에서 뺀 공식책도 배정 목록엔 항상 포함
+  const assignable = adminBookPool().filter(b=>!b._assigned);
   // 이 학생에게 이미 배정된 책 파악
   let assignedBooks = new Set();
   try {
@@ -5139,11 +5147,10 @@ async function appendOfficialBooks() {
       return;
     }
     const have = new Set(books.map(b => b.id));
-    // 승인된 관리자: 배정 위해 전체 언어 공식책 모두 노출.
-    // 개인 사용자: 본인이 '추가'한 공식책만 노출(자동 노출 안 함).
-    const allLangs = approvedOwner;
-    // 개인 사용자 최초 1회: 이미 복습 진도가 있는 공식책은 유지(공부 중이던 책이 사라지지 않도록 시딩).
-    if (!allLangs && currentUser && localStorage.getItem(_myOfficialKey()) === null) {
+    // 책장 노출: 관리자·개인 모두 본인이 '추가'한 공식책만 (관리자도 자유롭게 추가/빼기 가능).
+    // 배정·시험출제는 책장이 아니라 adminBookPool()(카탈로그 유니온)을 쓰므로 빼도 기능에 지장 없음.
+    // 최초 1회: 이미 복습 진도가 있는 공식책은 유지(공부 중이던 책이 사라지지 않도록 시딩).
+    if (currentUser && localStorage.getItem(_myOfficialKey()) === null) {
       try {
         const offIds = od.map(b => b.id);
         const rv = offIds.length
@@ -5152,8 +5159,8 @@ async function appendOfficialBooks() {
         _setMyOfficialIds(Array.isArray(rv) ? rv.map(r => r.book_id) : []);
       } catch(e){ _setMyOfficialIds([]); }
     }
-    const picked = allLangs ? null : new Set(getMyOfficialIds());
-    od.filter(b => allLangs ? true : picked.has(b.id)).forEach(b => {
+    const picked = new Set(getMyOfficialIds());
+    od.filter(b => picked.has(b.id)).forEach(b => {
       const ex = findBook(b.id);
       if (ex) {
         // 이미 책장에 있음(예: 배정 로드가 먼저 실행돼 _assigned 로 주입된 경우) →
@@ -5188,13 +5195,13 @@ function removeOfficialFromShelf(id){
   try { render(); } catch(e){}
   toast(TT('책장에서 뺐어요','Removed from shelf'));
 }
-// 추가 모달의 '우리가 만든 단어장' 선택 목록 렌더 (개인 사용자에게만 노출)
+// 추가 모달의 '우리가 만든 단어장' 선택 목록 렌더 (개인 사용자 + 단체 관리자)
 async function renderOfficialPicker(){
   const box = document.getElementById('official-picker');
   if (!box) return;
   const ko = userNativeLang==='ko';
-  // 단체 소속(관리자·학생) 에게는 선택 목록을 보이지 않음(관리자는 이미 다 보이고, 학생은 배정만).
-  if (userOrgId) { box.innerHTML = ''; return; }
+  // 단체 '학생'에게는 선택 목록을 보이지 않음(배정받은 책만) — 관리자는 개인처럼 추가/빼기 가능.
+  if (userOrgId && !_seesAllOfficialLangs()) { box.innerHTML = ''; return; }
   box.innerHTML = `<div style="font-size:12px;color:var(--ink-40);padding:8px 2px;">${TT('불러오는 중…','Loading…')}</div>`;
   const od = await ensureOfficialCatalog();
   // 전 언어 공식책 모두 노출 — 스페인어 단어장도 토익·토플처럼 누구나 추가해서 공부할 수 있게 (학습언어 필터 제거)
@@ -7077,10 +7084,10 @@ function render() {
         setTimeout(()=>{ try{ resumeQuiz(); }catch(e){} }, 300);
       }
     }
-    // 자가복구: 단체 관리자인데 공식 단어장(수능/중등/토익…)이 아직 안 붙어있으면(경합·캐시 등)
-    // 화면을 볼 때 다시 불러온다. (owner 는 _seesAllOfficialLangs()=true 라 전체 언어 노출)
+    // 자가복구: 단체 관리자인데 공식 카탈로그가 아직 안 불려왔으면(경합·캐시 등) 화면을 볼 때 로드.
+    // (책장 노출은 사용자가 '추가'한 공식책만 — 카탈로그는 배정·출제 목록용으로만 필요)
     if (typeof _seesAllOfficialLangs==='function' && _seesAllOfficialLangs()
-        && !books.some(b=>b._official) && !window._officialFetching) {
+        && !Array.isArray(window._officialCatalogFull) && !window._officialFetching) {
       window._officialFetching = true;
       appendOfficialBooks().then(()=>{ window._officialFetching=false; updateTotalWords(); render(); })
                            .catch(()=>{ window._officialFetching=false; });
@@ -7135,15 +7142,17 @@ function render() {
               </div>`).join('')}
           </div>
         </div>
-        <div class="topbar-actions" style="position:absolute;top:14px;right:22px;z-index:30;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:60%;">
-          ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
-          ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
-          <button onclick="showEvent()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">💬 ${TT('후기','Reviews')}</button>
-          <button onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
-          ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;padding:5px 11px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>`:''}
-          <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
-          <button onclick="window.open('https://imvoca.app/'+adPage(),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 10px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
-          <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;padding:5px 12px;font-size:11px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
+        <div class="topbar-actions" style="position:absolute;top:14px;left:22px;right:22px;z-index:30;">
+          <div class="topbar-scroll">
+          ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
+          ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
+          <button onclick="showEvent()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">💬 ${TT('후기','Reviews')}</button>
+          <button onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
+          ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>`:''}
+          <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
+          <button onclick="window.open('https://imvoca.app/'+adPage(),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
+          </div>
+          <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
         </div>
       </div>` + dock;
   }
