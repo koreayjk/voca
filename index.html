@@ -850,7 +850,7 @@ document.addEventListener('visibilitychange', async () => {
       const _r = (typeof stack !== 'undefined' && stack.length) ? stack[stack.length-1] : null;
       const _busy = ['study-cards', 'quiz', 'study-done'];
       if (currentUser && _r && !_busy.includes(_r.name)) {
-        window._hallData = null; // 명예의 전당 캐시 무효화 → 재요청
+        window._hallData = null; window._hallMonthly = null; window._hallAggCache = null; // 명예의 전당 캐시 무효화 → 재요청
         if (typeof render === 'function') render();
       }
     } catch(e) {}
@@ -4785,7 +4785,7 @@ function back() { if (stack.length > 1) { stack.pop(); render(); } }
 function goTab(t) {
   if (t==='study') stack = [{name:'study-setup'}];
   else if (t==='favorites') stack = [{name:'favorites'}];
-  else if (t==='stats') { window._hallData=null; window._hallOrgNames=null; window._hallPage=1; stack = [{name:'stats'}]; }
+  else if (t==='stats') { window._hallData=null; window._hallMonthly=null; window._hallAggCache=null; window._hallLegacy=false; window._hallOrgNames=null; window._hallPage=1; stack = [{name:'stats'}]; }
   else if (t==='search') stack = [{name:'search'}];
   else if (t==='review') stack = [{name:'review'}];
   else stack = [{name:'library'}];
@@ -7886,10 +7886,9 @@ async function renderStats(root, dock) {
       <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
       <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🏆 ${ko?'명예의 전당':'Hall of Fame'}</div>
     </div>
-    <div id="hall-tabs" style="display:flex;gap:6px;margin-bottom:12px;"></div>
-    <div class="muted" style="font-size:11px;margin-bottom:14px;">
-      ${ko?'A2=1 · B1=2 · B2=3 · C1=4 · C2=5 (CEFR 난이도 가중치)':'A2=1 · B1=2 · B2=3 · C1=4 · C2=5 (CEFR weighted)'}
-    </div>
+    <div id="hall-tabs" style="display:flex;gap:6px;margin-bottom:8px;"></div>
+    <div id="hall-periods" style="display:flex;gap:6px;margin-bottom:10px;"></div>
+    <div class="muted" id="hall-note" style="font-size:11px;margin-bottom:14px;"></div>
     <div class="scr-scroll" id="hall-inner">
       <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div>
     </div>
@@ -7897,18 +7896,24 @@ async function renderStats(root, dock) {
 
   try {
     // 데이터 캐시 (탭/페이지 전환 시 재요청 안 함) — 성공(배열)일 때만 캐시.
-    // 토큰 만료 등 실패 결과를 빈 배열로 캐시하면 새로고침 전까지 계속 비어 보임 → 방지.
-    if (!Array.isArray(window._hallData)) {
+    // 1순위: 월별 집계 뷰(hall_monthly_public → 이번 달/올해/전체 순위).
+    // 뷰가 아직 없으면(서버 SQL 미실행) members_public 누적 점수로 폴백(_hallLegacy).
+    if (!Array.isArray(window._hallMonthly) && !window._hallLegacy) {
+      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,acts&limit=20000`);
+      if (Array.isArray(md)) { window._hallMonthly = md; window._hallAggCache = null; }
+      else window._hallLegacy = true;
+    }
+    if (window._hallLegacy && !Array.isArray(window._hallData)) {
       const hq = `/rest/v1/members_public?select=name,total_words,perfect_reviews,last_scored_at,org_id,org_role,org_status&limit=2000`;
       const data = await authGet(hq);
       if (Array.isArray(data)) window._hallData = data;
     }
-    if (!Array.isArray(window._hallData)) {
+    if (!Array.isArray(window._hallMonthly) && !Array.isArray(window._hallData)) {
       const el = document.getElementById('hall-inner');
-      if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${ko?'불러오지 못했어요<br><button onclick="delete window._hallData;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load<br><button onclick="delete window._hallData;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>'}</div>`;
+      if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${ko?'불러오지 못했어요<br><button onclick="delete window._hallData;delete window._hallMonthly;window._hallLegacy=false;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load<br><button onclick="delete window._hallData;delete window._hallMonthly;window._hallLegacy=false;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>'}</div>`;
       return;
     }
-    const all = window._hallData;
+    const all = window._hallLegacy ? window._hallData : window._hallMonthly;
 
     // 단체 이름 매핑 (단체전/멤버순위용)
     if (!window._hallOrgNames) {
@@ -7933,53 +7938,124 @@ function renderHallTabs() {
   const ko = userNativeLang==='ko';
   const tabsEl = document.getElementById('hall-tabs');
   if (!tabsEl) return;
+  // 탭: 단체 소속만 '우리 학원(멤버끼리)'과 '단체전(학원 대항)'을 봄. 개인에겐 개인전만.
   const tabs = [];
-  if (userOrgId) tabs.push(['members', ko?'멤버 순위':'Members']);
+  if (userOrgId) { tabs.push(['members', ko?'우리 학원':'My Academy']); tabs.push(['team', ko?'단체전':'Teams']); }
   tabs.push(['indiv', ko?'개인전':'Individuals']);
-  tabs.push(['team', ko?'단체전':'Teams']);
-  tabsEl.innerHTML = tabs.map(([key,label]) => {
+  if (!tabs.some(t=>t[0]===window._hallTab)) window._hallTab = tabs[0][0];
+  tabsEl.innerHTML = tabs.length>1 ? tabs.map(([key,label]) => {
     const active = window._hallTab === key;
     return `<button onclick="window._hallTab='${key}';window._hallPage=1;renderHallTabs();renderHallBody();" style="flex:1;padding:9px 8px;border:1.5px solid ${active?'var(--accent)':'var(--ink-12)'};background:${active?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;font-weight:${active?700:500};color:var(--ink-100);cursor:pointer;">${label}</button>`;
-  }).join('');
+  }).join('') : '';
+  // 기간 선택: 이번 달 / 올해 / 전체 누적 (월별 뷰가 있을 때만)
+  const pEl = document.getElementById('hall-periods');
+  if (pEl) {
+    if (window._hallLegacy) pEl.innerHTML = '';
+    else {
+      if (!window._hallPeriod) window._hallPeriod = 'month';
+      const ps = [['month', ko?'이번 달':'This month'], ['year', ko?'올해':'This year'], ['all', ko?'전체 누적':'All-time']];
+      pEl.innerHTML = ps.map(([k,l]) => {
+        const a = window._hallPeriod === k;
+        return `<button onclick="window._hallPeriod='${k}';window._hallPage=1;renderHallTabs();renderHallBody();" style="flex:1;padding:7px 6px;border:1px solid ${a?'var(--accent)':'var(--ink-12)'};background:${a?'var(--accent)':'transparent'};color:${a?'#fff':'var(--ink-60)'};border-radius:99px;font-family:var(--font-body);font-size:12px;font-weight:${a?700:500};cursor:pointer;">${l}</button>`;
+      }).join('');
+    }
+  }
+  const note = document.getElementById('hall-note');
+  if (note) note.textContent = window._hallLegacy
+    ? (ko?'※ 월별·연도별 순위는 서버 업데이트 후 제공돼요 (현재: 누적 점수)':'※ Monthly/yearly ranks arrive after a server update (showing all-time)')
+    : (ko?'학습·복습 활동 1회 = 1점':'1 point per study/review activity');
+}
+
+// 월별 뷰 → 사용자별 {이번 달/올해/누적} 점수 집계 (KST 기준, 캐시)
+function _hallAgg() {
+  if (window._hallAggCache) return window._hallAggCache;
+  const kst = new Date(Date.now()+9*3600*1000).toISOString();
+  const curM = kst.slice(0,7), curY = kst.slice(0,4);
+  const u = {};
+  (window._hallMonthly||[]).forEach(r => {
+    const k = r.user_id; if (!k) return;
+    if (!u[k]) u[k] = { uid:k, name:r.name, org_id:r.org_id, org_role:r.org_role, org_status:r.org_status, m:0, y:0, all:0, last:'' };
+    const a = r.acts||0;
+    u[k].all += a;
+    if (r.month === curM) u[k].m += a;
+    if (r.month && r.month.slice(0,4) === curY) u[k].y += a;
+    if (a>0 && r.month > u[k].last) u[k].last = r.month;
+  });
+  return window._hallAggCache = Object.values(u);
 }
 
 function renderHallBody() {
   const ko = userNativeLang==='ko';
   const el = document.getElementById('hall-inner');
   if (!el) return;
-  const all = window._hallData || [];
   const medals = ['🥇','🥈','🥉'];
   const PER = 10, MAXR = 100;
   const tab = window._hallTab;
 
   // ── 순위 목록 만들기 ──
-  let list = []; // {name, _score, sub, mine, crown?}
-  if (tab === 'team') {
-    const orgMap = {};
-    all.forEach(m => {
-      if (m.org_id && m.org_status==='approved' && m.org_role==='student') {
-        const sc=(m.perfect_reviews||0);
-        if(!orgMap[m.org_id]) orgMap[m.org_id]={score:0,count:0};
-        orgMap[m.org_id].score+=sc; if(sc>0) orgMap[m.org_id].count+=1;
-      }
-    });
-    list = Object.keys(orgMap).filter(id=>orgMap[id].score>0)
-      .map(id=>({ name:'🏫 '+( window._hallOrgNames[id]||(ko?'단체':'Org')), _score:orgMap[id].score, sub:`👥 ${orgMap[id].count}${ko?'명':''}`, mine: id===userOrgId }))
-      .sort((a,b)=>b._score-a._score).slice(0,MAXR);
-  } else if (tab === 'members') {
-    list = all.filter(m=>m.org_id===userOrgId && m.org_status==='approved' && m.org_role==='student')
-      .map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
-      .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
-  } else { // indiv — 전체 사용자
-    list = all.map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
-      .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
+  let list = []; // {name, _score, sub, mine}
+  if (window._hallLegacy) {
+    // 폴백(월별 뷰 미설치): 기존 누적(perfect_reviews) 랭킹
+    const all = window._hallData || [];
+    if (tab === 'team') {
+      const orgMap = {};
+      all.forEach(m => {
+        if (m.org_id && m.org_status==='approved' && m.org_role==='student') {
+          const sc=(m.perfect_reviews||0);
+          if(!orgMap[m.org_id]) orgMap[m.org_id]={score:0,count:0};
+          orgMap[m.org_id].score+=sc; if(sc>0) orgMap[m.org_id].count+=1;
+        }
+      });
+      list = Object.keys(orgMap).filter(id=>orgMap[id].score>0)
+        .map(id=>({ name:'🏫 '+( window._hallOrgNames[id]||(ko?'단체':'Org')), _score:orgMap[id].score, sub:`👥 ${orgMap[id].count}${ko?'명':''}`, mine: id===userOrgId }))
+        .sort((a,b)=>b._score-a._score).slice(0,MAXR);
+    } else if (tab === 'members') {
+      list = all.filter(m=>m.org_id===userOrgId && m.org_status==='approved' && m.org_role==='student')
+        .map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
+        .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
+    } else {
+      list = all.map(m=>({ name:m.name||(ko?'익명':'Anon'), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
+        .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
+    }
+  } else {
+    // 월별 뷰 기반: 이번 달 / 올해 / 전체 누적
+    const period = window._hallPeriod || 'month';
+    const F = period==='month' ? 'm' : period==='year' ? 'y' : 'all';
+    const users = _hallAgg();
+    const myId = currentUser && currentUser.id;
+    const fmtLast = mm => mm ? ('📅 '+(ko?`${+mm.slice(0,4)!==+new Date(Date.now()+9*3600*1000).toISOString().slice(0,4)?mm.slice(0,4)+'년 ':''}${+mm.slice(5,7)}월 활동`:('active '+mm))) : '';
+    if (tab === 'team') {
+      const orgMap = {};
+      users.forEach(u => {
+        if (u.org_id && u.org_status==='approved' && u.org_role==='student') {
+          const sc = u[F];
+          if(!orgMap[u.org_id]) orgMap[u.org_id]={score:0,count:0};
+          orgMap[u.org_id].score+=sc; if(sc>0) orgMap[u.org_id].count+=1;
+        }
+      });
+      list = Object.keys(orgMap).filter(id=>orgMap[id].score>0)
+        .map(id=>({ name:'🏫 '+( window._hallOrgNames[id]||(ko?'단체':'Org')), _score:orgMap[id].score, sub:`👥 ${orgMap[id].count}${ko?'명':''}`, mine: id===userOrgId }))
+        .sort((a,b)=>b._score-a._score).slice(0,MAXR);
+    } else if (tab === 'members') {
+      list = users.filter(u=>u.org_id===userOrgId && u.org_status==='approved' && u.org_role==='student')
+        .map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:u[F], sub:fmtLast(u.last), mine:u.uid===myId }))
+        .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
+    } else { // indiv — 전체 사용자
+      list = users.map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:u[F], sub:fmtLast(u.last), mine:u.uid===myId }))
+        .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
+    }
   }
 
   if (list.length === 0) {
+    const p = window._hallPeriod || 'month';
+    const emptyTitle = window._hallLegacy ? (ko?'아직 등록된 기록이 없어요':'No records yet')
+      : p==='month' ? (ko?'이번 달 기록이 아직 없어요':'No records this month yet')
+      : p==='year' ? (ko?'올해 기록이 아직 없어요':'No records this year yet')
+      : (ko?'아직 등록된 기록이 없어요':'No records yet');
     el.innerHTML = `<div style="text-align:center;padding:60px 20px;">
       <div style="font-size:48px;margin-bottom:16px;">🏆</div>
-      <div style="font-size:15px;color:var(--ink-60);">${ko?'아직 등록된 기록이 없어요':'No records yet'}</div>
-      <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${ko?'복습을 완료하면 순위에 올라가요!':'Complete reviews to appear!'}</div>
+      <div style="font-size:15px;color:var(--ink-60);">${emptyTitle}</div>
+      <div style="font-size:13px;color:var(--ink-40);margin-top:8px;">${ko?'단어를 외우거나 복습하면 순위에 올라가요!':'Study or review to appear!'}</div>
     </div>`;
     return;
   }
