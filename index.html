@@ -7900,7 +7900,7 @@ async function renderStats(root, dock) {
     // 1순위: 월별 집계 뷰(hall_monthly_public → 이번 달/올해/전체 순위).
     // 뷰가 아직 없으면(서버 SQL 미실행) members_public 누적 점수로 폴백(_hallLegacy).
     if (!Array.isArray(window._hallMonthly) && !window._hallLegacy) {
-      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,score,last_day&limit=20000`);
+      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,score,last_day,perfect_total&limit=20000`);
       if (Array.isArray(md)) { window._hallMonthly = md; window._hallAggCache = null; }
       else window._hallLegacy = true;
     }
@@ -7993,19 +7993,25 @@ function renderHallTabs() {
 }
 
 // 월별 뷰 → 사용자별 월 점수 맵 집계 (캐시). months = 데이터가 있는 달 목록(오름차순).
+// 월별 표시 점수 = 원본 총점수(perfect_total)를 재계산 점수 비율로 배분(factor).
+// → 사용자의 월별 합 = 연도별 = 전체 누적(원본)이 정확히 일치.
 function _hallAgg() {
   if (window._hallAggCache) return window._hallAggCache;
   const u = {}, monthSet = new Set();
   (window._hallMonthly||[]).forEach(r => {
     const k = r.user_id; if (!k || !r.month) return;
-    if (!u[k]) u[k] = { uid:k, name:r.name, org_id:r.org_id, org_role:r.org_role, org_status:r.org_status, months:{}, lastBy:{} };
+    if (!u[k]) u[k] = { uid:k, name:r.name, org_id:r.org_id, org_role:r.org_role, org_status:r.org_status, months:{}, lastBy:{}, perfect:0, rawAll:0 };
     const s = r.score||0;
     if (s>0) monthSet.add(r.month);
     u[k].months[r.month] = (u[k].months[r.month]||0) + s;
+    u[k].rawAll += s;
+    if ((r.perfect_total||0) > u[k].perfect) u[k].perfect = r.perfect_total||0;
     const d = String(r.last_day||'').slice(0,10);
     if (d && (!u[k].lastBy[r.month] || d > u[k].lastBy[r.month])) u[k].lastBy[r.month] = d;
   });
-  return window._hallAggCache = { users: Object.values(u), months: [...monthSet].sort() };
+  const users = Object.values(u);
+  users.forEach(x => { x.factor = (x.rawAll>0 && x.perfect>0) ? (x.perfect / x.rawAll) : 0; });
+  return window._hallAggCache = { users, months: [...monthSet].sort() };
 }
 // 달/연도 넘김: 데이터가 있는 가장 이른 달 ~ 이번 달(KST) 범위 안에서 이동
 function hallNav(delta) {
@@ -8066,8 +8072,8 @@ function renderHallBody() {
     const selY = window._hallYearSel || kst.slice(0,4);
     const users = _hallAgg().users;
     const myId = currentUser && currentUser.id;
-    const scoreOf = u => period==='month' ? (u.months[selM]||0)
-      : Object.keys(u.months).reduce((s,mm)=> s + (mm.slice(0,4)===selY ? u.months[mm] : 0), 0);
+    const scoreOf = u => Math.round(u.factor * (period==='month' ? (u.months[selM]||0)
+      : Object.keys(u.months).reduce((s,mm)=> s + (mm.slice(0,4)===selY ? u.months[mm] : 0), 0)));
     const lastOf = u => {
       let d = '';
       if (period==='month') d = u.lastBy[selM]||'';

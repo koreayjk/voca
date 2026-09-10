@@ -1,5 +1,6 @@
 -- ============================================================
--- IM VOCA — 명예의 전당 월별 집계 뷰 v3 (2026-09-10 · last_day 추가)
+-- IM VOCA — 명예의 전당 월별 집계 뷰 v4 (2026-09-10 · perfect_total 추가)
+-- 월별 점수 = 원본 총점수(perfect_reviews)를 활동 기록 비율로 배분 → 월별 합 = 연도별 = 누적 일치
 -- 점수 = 기존 방식 그대로 CEFR 가중 페이지 점수 (A2=1 · B1=2 · B2=3 · C1=4 · C2=5)
 --   · 첫 암기(study): 페이지당 1회만 페이지 점수 적립 (앱의 _awardFirstStudyPoints 와 동일)
 --   · 복습(review): 완료할 때마다 페이지 점수 적립 (앱의 updateReviewStep 와 동일)
@@ -38,8 +39,9 @@ select
   max(m.org_role)            as org_role,
   max(m.org_status)          as org_status,
   ac.month,                                  -- 'YYYY-MM'
-  sum(coalesce(ps.score, 0))::int as score,  -- 그 달에 적립된 CEFR 가중 점수
-  max(ac.day)                as last_day     -- 그 달의 마지막 점수 획득일 'YYYY-MM-DD'
+  sum(coalesce(ps.score, 0))::int as score,  -- 그 달의 재계산 점수 (배분 비율용)
+  max(ac.day)                as last_day,    -- 그 달의 마지막 점수 획득일 'YYYY-MM-DD'
+  max(coalesce(m.perfect_reviews, 0))::int as perfect_total  -- 원본 총점수 (앱이 월별로 비율 배분)
 from acts ac
 join public.members m on m.id = ac.user_id
 left join page_scores ps
