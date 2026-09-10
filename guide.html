@@ -56,6 +56,7 @@
       <button id="lko" onclick="setLang('ko')">한</button>
       <button id="len" onclick="setLang('en')">EN</button>
       <button id="lzh" onclick="setLang('zh')">中</button>
+      <button id="les" onclick="setLang('es')">ES</button>
     </div>
   </div>
   <div class="wrap">
@@ -283,6 +284,78 @@ const DATA = {
         tip:'托福按基础→核心→高阶的顺序递增难度，请按自己的水平选择。' },
     ],
   },
+  es: {
+    title:'📖 Cómo se usa',
+    lead:'¿Primera vez con IM VOCA? Aquí tienes cada función explicada paso a paso, con capturas.',
+    howto:'Así se hace',
+    foot:'¿Dudas? Escríbenos desde <b>Yo → Contacto</b> dentro de la app.',
+    back:'Volver a la app',
+    secs:[
+      { ic:'📚', title:'Añadir un libro',
+        purpose:'Crea tu estantería fotografiando un libro, escribiendo palabras a mano o añadiendo un libro oficial.',
+        steps:[
+          'Toca "+ Añadir libro" arriba a la derecha de tu estantería',
+          '3 formas — 📷 Foto (la IA extrae las palabras) · ✏️ A mano (escribe la palabra y sale el significado) · 📗 Libros oficiales',
+          'Pon título y categoría — aparece un libro nuevo en tu estantería',
+          'Abre el libro para ver las palabras organizadas por Day (página)'],
+        tip:'Puedes seguir añadiendo Days a un mismo libro — crece al ritmo de tu lectura.',
+        img:SHOTS+'07-personal-bookshelf.png', cap:'Tu estantería — los libros se apilan como tarjetas' },
+      { ic:'📷', title:'Extraer palabras con fotos (varias a la vez)',
+        purpose:'Fotografía una página y la IA saca las palabras con su significado. Puedes procesar varias fotos a la vez.',
+        steps:[
+          '"+ Añadir libro" → elige 📷 Fotografiar página',
+          'Haz una foto, o elige varias de tu galería a la vez',
+          'Con varias fotos, primero se extrae todo y luego eliges las palabras nuevas en la siguiente pantalla',
+          'Pon un número de página (Day) a cada foto para mantener el orden',
+          'La IA lee el texto (OCR), se queda con las palabras útiles y genera significado, pronunciación y ejemplos'],
+        tip:'Las fotos borrosas o torcidas reducen la precisión — texto nítido y página recta.' },
+      { ic:'✅', title:'Elegir y guardar las palabras',
+        purpose:'La IA muestra las palabras con significado y nivel CEFR. Toca para quedarte solo con las que necesitas.',
+        steps:[
+          'Al terminar, las palabras aparecen como tarjetas con significado + nivel CEFR',
+          'Toca una tarjeta para seleccionar/quitar — descarta las que ya sabes ("Seleccionar todo" también existe)',
+          'Toca "Guardar las seleccionadas" y se añaden a esa página (Day)',
+          'Después puedes añadir, borrar (🗑) o editar palabras dentro del libro',
+          'Cada palabra ya incluye 🔊 pronunciación, significado y ejemplo'],
+        tip:'Con varias fotos, todo se extrae primero y eliges las palabras nuevas en una sola pantalla.',
+        img:SHOTS+'08-ai-word-extract.png', cap:'Así queda — significado, ejemplo, 🔊 audio, 🗑 borrar' },
+      { ic:'🎴', title:'Estudiar con tarjetas',
+        purpose:'Memoriza con tarjetas — delante la palabra; al girar, significado, ejemplo y pronunciación.',
+        steps:[
+          'Abre un libro → toca un Day para empezar',
+          'Toca la tarjeta para girar: palabra ↔ significado, ejemplo y pronunciación',
+          'Usa 🔊 para oír la pronunciación nativa · también hay lectura automática',
+          'Con "Lo sé / No lo sé", las que no sabes vuelven a aparecer',
+          'Al terminar un Day, se programa su repaso automáticamente'],
+        img:SHOTS+'09-flashcard-study.png', cap:'Tarjeta — toca para girar' },
+      { ic:'🔁', title:'Repaso (curva de Ebbinghaus)',
+        purpose:'Para que no se te olvide, las palabras se repasan automáticamente a intervalos científicos (1·2·3·6·15·30 días).',
+        steps:[
+          'La pestaña "Repaso" muestra lo que toca hoy',
+          'Cada libro se repasa 6 veces en 30 días — completa el de hoy y el resto aparece en su fecha',
+          'Toca "Repaso de hoy" para empezar las tarjetas de ese Day',
+          'Al terminar, la próxima fecha de repaso se fija sola',
+          'Las listas de programados/hechos te muestran la carga de la semana'],
+        tip:'Los repasos nunca se acumulan en un día — cada Day se reparte en 6 sesiones; con un poco al día basta.',
+        img:SHOTS+'10-ebbinghaus-review.png', cap:'Repaso — con terminar el de hoy es suficiente' },
+      { ic:'✏️', title:'Añadir palabras a mano',
+        purpose:'Sin foto — escribe la palabra y el significado y los ejemplos se generan solos.',
+        steps:[
+          'Elige ✏️ A mano desde "+ Añadir libro" o dentro de un libro',
+          'Escribe el número de página (Day) y la palabra (inglés, español, etc.)',
+          'Puedes añadir varias a la vez, una por línea',
+          'La IA completa significado, pronunciación y ejemplo de cada una'],
+        tip:'Ideal para apuntes a mano difíciles de escanear o cuando solo quieres añadir unas pocas.' },
+      { ic:'📗', title:'Añadir libros oficiales',
+        purpose:'Sin crear nada — añade un libro oficial verificado y empieza a estudiar ya.',
+        steps:[
+          '"+ Añadir libro" → elige un libro oficial de la lista',
+          'El Day 1 de cada libro es gratis para probar',
+          'Premium desbloquea todos los Days',
+          'Los libros oficiales tienen tarjetas, repaso y tests igual que los tuyos'],
+        tip:'Elige el nivel que te encaje — la dificultad va subiendo por niveles.' },
+    ],
+  },
 };
 
 function goBack(){ if (history.length > 1) history.back(); else location.href = 'https://imvoca.app/'; }
@@ -297,6 +370,7 @@ function render(lang){
   document.getElementById('lko').className = lang==='ko'?'on':'';
   document.getElementById('len').className = lang==='en'?'on':'';
   document.getElementById('lzh').className = lang==='zh'?'on':'';
+  document.getElementById('les').className = lang==='es'?'on':'';
   document.getElementById('sections').innerHTML = d.secs.map(s => `
     <div class="sec">
       <h2><span class="ic">${s.ic}</span>${esc(s.title)}</h2>
@@ -315,13 +389,14 @@ function setLang(l){ render(l); }
   let lang;
   try{
     const q = new URLSearchParams(location.search).get('lang');
-    if (q === 'en' || q === 'ko' || q === 'zh') lang = q;
+    const LANGS = ['ko','en','zh','es'];
+    if (LANGS.includes(q)) lang = q;
     else {
       const saved = localStorage.getItem('imvoca_guide_lang');
-      if (saved && DATA[saved]) lang = saved;
+      if (LANGS.includes(saved)) lang = saved;
       else {
         const bl = (navigator.language || '').toLowerCase();
-        lang = bl.startsWith('zh') ? 'zh' : (bl.startsWith('ko') ? 'ko' : (bl.startsWith('en') ? 'en' : 'ko'));
+        lang = bl.startsWith('zh') ? 'zh' : (bl.startsWith('es') ? 'es' : (bl.startsWith('ko') ? 'ko' : (bl.startsWith('en') ? 'en' : 'ko')));
       }
     }
   }catch(e){ lang = 'ko'; }
