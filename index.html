@@ -1493,7 +1493,7 @@ const UI_XL = {
     'No favorites yet':'还没有收藏',
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'点击单词上的 <b style="color:#f39c12;">☆</b> 即可收藏到这里。',
     'Quiz':'测验','✨ Update available':'✨ 有新版本','Refresh':'刷新',
-    'Translated from Korean':'已从韩语翻译','Show original':'查看原文','Show translation':'查看译文',
+    'Translated from Korean':'已从韩语翻译','Show original':'查看原文','Show translation':'查看译文','About':'应用介绍',
     'Set New Password':'设置新密码','Please enter your new password.':'请输入新密码。','New password (6+ characters)':'新密码（6个字符以上）',
     'Custom (type below)':'自定义（在下方填写）','Book category — helps find more accurate meanings':'书籍类型 — 帮助更准确地查找释义',
     // ── 로그인 화면·배너 (혼합형 정리분) ──
@@ -1863,7 +1863,7 @@ const UI_XL = {
     'No favorites yet':'Aún no hay favoritas',
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'Toca la <b style="color:#f39c12;">☆</b> de cualquier palabra para guardarla aquí.',
     'Quiz':'Test','✨ Update available':'✨ Actualización disponible','Refresh':'Actualizar',
-    'Translated from Korean':'Traducido del coreano','Show original':'Ver original','Show translation':'Ver traducción',
+    'Translated from Korean':'Traducido del coreano','Show original':'Ver original','Show translation':'Ver traducción','About':'Acerca de la app',
     '🔊 Auto-read on':'🔊 Lectura automática activada — repite palabras y ejemplos','🔇 Auto-read off':'🔇 Lectura automática desactivada',
     'Official wordbook':'Libro oficial · basado en exámenes reales',
     'Official wordbook · Day 1 free · rest with Premium/academy':'Libro oficial · Día 1 gratis · el resto con Premium/academia',
@@ -4305,8 +4305,8 @@ function showMyMenu() {
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${TT('My 메뉴','My Menu')}</div>
       ${row('💬', TT('사용자 후기','User Reviews'), "document.getElementById('my-modal').remove();showEvent()")}
+      ${row('📖', TT('앱 소개','About'), "document.getElementById('my-modal').remove();window.open('https://imvoca.app/'+adPage(),'_blank')")}
       ${row('👤', TT('개인정보 변경','My Info'), "document.getElementById('my-modal').remove();showMyInfo()")}
-      ${(userOrgRole==='owner' || isPendingOwner()) ? row('🏫', (userOrgRole==='owner'?(TT('단체 관리','Org Admin')):(TT('단체 만들기','Create Org'))), "document.getElementById('my-modal').remove();goOrgAdmin()") : ''}
       ${userPlan==='premium' && userStripeId ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
       ${row('🌐', TT('언어 설정','Language'), "document.getElementById('my-modal').remove();showLangSettings()")}
@@ -6953,14 +6953,12 @@ function buildDockBottom() {
   const ko = userNativeLang==='ko';
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
-    + `<button class="dock-mini" onclick="showEvent()">💬 ${TT('후기','Reviews')}</button>`
     + `<button class="dock-mini" onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()">📖 ${TT('사용법','Guide')}</button>`
     + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${TT('⚙️ 관리','⚙️ Admin')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${TT('상태','Health')}</button>` : '')
     + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
     + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${TT('알림','Notices')}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
-    + `<button class="dock-mini" onclick="window.open('https://imvoca.app/'+adPage(),'_blank')">${TT('📖 앱 소개','📖 About')}</button>`
     + `<button class="dock-mini" onclick="showMyMenu()">${TT('👤 마이페이지','👤 My')}</button>`
     + ((userOrgRole==='owner' || isPendingOwner())
         ? `<button class="dock-mini dock-mini--accent" onclick="goOrgAdmin()">${userOrgRole==='owner'?(TT('🏫 단체 관리','🏫 Org Admin')):(TT('🏫 단체 만들기','🏫 Create Org'))}</button>`
@@ -7146,11 +7144,10 @@ function render() {
           <div class="topbar-scroll">
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
           ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
-          <button onclick="showEvent()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">💬 ${TT('후기','Reviews')}</button>
+          ${(userOrgRole==='owner' || isPendingOwner())?`<button onclick="goOrgAdmin()" class="topbar-btn" style="background:var(--gold-bg);border:1px solid rgba(28,53,83,0.25);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:var(--accent);font-weight:800;">${userOrgRole==='owner'?(TT('🏫 단체 관리','🏫 Org Admin')):(TT('🏫 단체 만들기','🏫 Create Org'))}</button>`:''}
           <button onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
-          <button onclick="window.open('https://imvoca.app/'+adPage(),'_blank')" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6)">${t('appInfo')}</button>
           </div>
           <button onclick="showMyMenu()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);font-weight:700;">My ▾</button>
         </div>
