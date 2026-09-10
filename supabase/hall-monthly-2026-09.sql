@@ -1,5 +1,5 @@
 -- ============================================================
--- IM VOCA — 명예의 전당 월별 집계 뷰 v2 (2026-09-10)
+-- IM VOCA — 명예의 전당 월별 집계 뷰 v3 (2026-09-10 · last_day 추가)
 -- 점수 = 기존 방식 그대로 CEFR 가중 페이지 점수 (A2=1 · B1=2 · B2=3 · C1=4 · C2=5)
 --   · 첫 암기(study): 페이지당 1회만 페이지 점수 적립 (앱의 _awardFirstStudyPoints 와 동일)
 --   · 복습(review): 완료할 때마다 페이지 점수 적립 (앱의 updateReviewStep 와 동일)
@@ -24,7 +24,8 @@ with page_scores as (
   group by p.book_id::text, p.page_num
 ),
 acts as (
-  select a.user_id, substr(a.day::text,1,7) as month, a.kind,
+  select a.user_id, substr(a.day::text,1,7) as month,
+         substr(a.day::text,1,10) as day, a.kind,
          a.book_id::text as book_id, a.page_num,
          row_number() over (partition by a.user_id, a.book_id::text, a.page_num, a.kind
                             order by a.day) as rn
@@ -37,7 +38,8 @@ select
   max(m.org_role)            as org_role,
   max(m.org_status)          as org_status,
   ac.month,                                  -- 'YYYY-MM'
-  sum(coalesce(ps.score, 0))::int as score   -- 그 달에 적립된 CEFR 가중 점수
+  sum(coalesce(ps.score, 0))::int as score,  -- 그 달에 적립된 CEFR 가중 점수
+  max(ac.day)                as last_day     -- 그 달의 마지막 점수 획득일 'YYYY-MM-DD'
 from acts ac
 join public.members m on m.id = ac.user_id
 left join page_scores ps

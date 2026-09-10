@@ -4785,7 +4785,7 @@ function back() { if (stack.length > 1) { stack.pop(); render(); } }
 function goTab(t) {
   if (t==='study') stack = [{name:'study-setup'}];
   else if (t==='favorites') stack = [{name:'favorites'}];
-  else if (t==='stats') { window._hallData=null; window._hallMonthly=null; window._hallAggCache=null; window._hallLegacy=false; window._hallOrgNames=null; window._hallPage=1; stack = [{name:'stats'}]; }
+  else if (t==='stats') { window._hallData=null; window._hallMonthly=null; window._hallAggCache=null; window._hallLegacy=false; window._hallOrgNames=null; window._hallPage=1; window._hallMonthSel=null; window._hallYearSel=null; stack = [{name:'stats'}]; }
   else if (t==='search') stack = [{name:'search'}];
   else if (t==='review') stack = [{name:'review'}];
   else stack = [{name:'library'}];
@@ -7888,6 +7888,7 @@ async function renderStats(root, dock) {
     </div>
     <div id="hall-tabs" style="display:flex;gap:6px;margin-bottom:8px;"></div>
     <div id="hall-periods" style="display:flex;gap:6px;margin-bottom:10px;"></div>
+    <div id="hall-nav" style="display:none;align-items:center;gap:8px;margin-bottom:10px;"></div>
     <div class="muted" id="hall-note" style="font-size:11px;margin-bottom:14px;"></div>
     <div class="scr-scroll" id="hall-inner">
       <div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${t('reviewLoading')}</div>
@@ -7899,11 +7900,12 @@ async function renderStats(root, dock) {
     // 1순위: 월별 집계 뷰(hall_monthly_public → 이번 달/올해/전체 순위).
     // 뷰가 아직 없으면(서버 SQL 미실행) members_public 누적 점수로 폴백(_hallLegacy).
     if (!Array.isArray(window._hallMonthly) && !window._hallLegacy) {
-      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,score&limit=20000`);
+      const md = await authGet(`/rest/v1/hall_monthly_public?select=user_id,name,org_id,org_role,org_status,month,score,last_day&limit=20000`);
       if (Array.isArray(md)) { window._hallMonthly = md; window._hallAggCache = null; }
       else window._hallLegacy = true;
     }
-    if (window._hallLegacy && !Array.isArray(window._hallData)) {
+    // 전체 누적 탭은 원본 총점수(members_public.perfect_reviews)를 그대로 사용 → 항상 로드
+    if (!Array.isArray(window._hallData)) {
       const hq = `/rest/v1/members_public?select=name,total_words,perfect_reviews,last_scored_at,org_id,org_role,org_status&limit=2000`;
       const data = await authGet(hq);
       if (Array.isArray(data)) window._hallData = data;
@@ -7913,7 +7915,7 @@ async function renderStats(root, dock) {
       if (el) el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink-40);font-size:13px;">${ko?'불러오지 못했어요<br><button onclick="delete window._hallData;delete window._hallMonthly;window._hallLegacy=false;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">다시 시도</button>':'Failed to load<br><button onclick="delete window._hallData;delete window._hallMonthly;window._hallLegacy=false;render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>'}</div>`;
       return;
     }
-    const all = window._hallLegacy ? window._hallData : window._hallMonthly;
+    const all = Array.isArray(window._hallData) ? window._hallData : (window._hallMonthly || []);
 
     // 단체 이름 매핑 (단체전/멤버순위용)
     if (!window._hallOrgNames) {
@@ -7947,17 +7949,41 @@ function renderHallTabs() {
     const active = window._hallTab === key;
     return `<button onclick="window._hallTab='${key}';window._hallPage=1;renderHallTabs();renderHallBody();" style="flex:1;padding:9px 8px;border:1.5px solid ${active?'var(--accent)':'var(--ink-12)'};background:${active?'var(--gold-bg)':'var(--bg-input)'};border-radius:10px;font-family:var(--font-body);font-size:13px;font-weight:${active?700:500};color:var(--ink-100);cursor:pointer;">${label}</button>`;
   }).join('') : '';
-  // 기간 선택: 이번 달 / 올해 / 전체 누적 (월별 뷰가 있을 때만)
+  // 기간 선택: 월별 / 연도별 / 전체 누적 (월별 뷰가 있을 때만)
   const pEl = document.getElementById('hall-periods');
   if (pEl) {
     if (window._hallLegacy) pEl.innerHTML = '';
     else {
       if (!window._hallPeriod) window._hallPeriod = 'month';
-      const ps = [['month', ko?'이번 달':'This month'], ['year', ko?'올해':'This year'], ['all', ko?'전체 누적':'All-time']];
+      const ps = [['month', ko?'월별':'Monthly'], ['year', ko?'연도별':'Yearly'], ['all', ko?'전체 누적':'All-time']];
       pEl.innerHTML = ps.map(([k,l]) => {
         const a = window._hallPeriod === k;
         return `<button onclick="window._hallPeriod='${k}';window._hallPage=1;renderHallTabs();renderHallBody();" style="flex:1;padding:7px 6px;border:1px solid ${a?'var(--accent)':'var(--ink-12)'};background:${a?'var(--accent)':'transparent'};color:${a?'#fff':'var(--ink-60)'};border-radius:99px;font-family:var(--font-body);font-size:12px;font-weight:${a?700:500};cursor:pointer;">${l}</button>`;
       }).join('');
+    }
+  }
+  // 달/연도 넘김 (◀ 2026년 9월 ▶) — 월별·연도별에서만 표시
+  const navEl = document.getElementById('hall-nav');
+  if (navEl) {
+    const period = window._hallPeriod || 'month';
+    if (window._hallLegacy || period === 'all') { navEl.innerHTML=''; navEl.style.display='none'; }
+    else {
+      navEl.style.display = 'flex';
+      const kst = new Date(Date.now()+9*3600*1000).toISOString();
+      const agg = _hallAgg();
+      const minM = agg.months[0] || kst.slice(0,7);
+      let label, canPrev, canNext;
+      if (period === 'month') {
+        const sel = window._hallMonthSel || (window._hallMonthSel = kst.slice(0,7));
+        label = ko ? `${+sel.slice(0,4)}년 ${+sel.slice(5,7)}월` : sel;
+        canPrev = sel > minM; canNext = sel < kst.slice(0,7);
+      } else {
+        const sel = window._hallYearSel || (window._hallYearSel = kst.slice(0,4));
+        label = ko ? `${sel}년` : sel;
+        canPrev = sel > minM.slice(0,4); canNext = sel < kst.slice(0,4);
+      }
+      const btn = (d,en,ch)=>`<button onclick="hallNav(${d})" ${en?'':'disabled'} style="width:34px;height:30px;border:1px solid var(--ink-12);background:var(--bg-card);border-radius:9px;font-size:12px;cursor:${en?'pointer':'default'};color:${en?'var(--ink-100)':'var(--ink-12)'};">${ch}</button>`;
+      navEl.innerHTML = btn(-1,canPrev,'◀') + `<div style="flex:1;text-align:center;font-size:13.5px;font-weight:700;color:var(--ink-100);">${label}</div>` + btn(1,canNext,'▶');
     }
   }
   const note = document.getElementById('hall-note');
@@ -7966,22 +7992,37 @@ function renderHallTabs() {
     : (ko?'A2=1 · B1=2 · B2=3 · C1=4 · C2=5 (CEFR 가중치) · 첫 암기 + 복습 완료 시 적립':'A2=1 · B1=2 · B2=3 · C1=4 · C2=5 (CEFR weighted) · earned on first study + each review');
 }
 
-// 월별 뷰 → 사용자별 {이번 달/올해/누적} 점수 집계 (KST 기준, 캐시)
+// 월별 뷰 → 사용자별 월 점수 맵 집계 (캐시). months = 데이터가 있는 달 목록(오름차순).
 function _hallAgg() {
   if (window._hallAggCache) return window._hallAggCache;
-  const kst = new Date(Date.now()+9*3600*1000).toISOString();
-  const curM = kst.slice(0,7), curY = kst.slice(0,4);
-  const u = {};
+  const u = {}, monthSet = new Set();
   (window._hallMonthly||[]).forEach(r => {
-    const k = r.user_id; if (!k) return;
-    if (!u[k]) u[k] = { uid:k, name:r.name, org_id:r.org_id, org_role:r.org_role, org_status:r.org_status, m:0, y:0, all:0, last:'' };
-    const a = r.score||0;
-    u[k].all += a;
-    if (r.month === curM) u[k].m += a;
-    if (r.month && r.month.slice(0,4) === curY) u[k].y += a;
-    if (a>0 && r.month > u[k].last) u[k].last = r.month;
+    const k = r.user_id; if (!k || !r.month) return;
+    if (!u[k]) u[k] = { uid:k, name:r.name, org_id:r.org_id, org_role:r.org_role, org_status:r.org_status, months:{}, lastBy:{} };
+    const s = r.score||0;
+    if (s>0) monthSet.add(r.month);
+    u[k].months[r.month] = (u[k].months[r.month]||0) + s;
+    const d = String(r.last_day||'').slice(0,10);
+    if (d && (!u[k].lastBy[r.month] || d > u[k].lastBy[r.month])) u[k].lastBy[r.month] = d;
   });
-  return window._hallAggCache = Object.values(u);
+  return window._hallAggCache = { users: Object.values(u), months: [...monthSet].sort() };
+}
+// 달/연도 넘김: 데이터가 있는 가장 이른 달 ~ 이번 달(KST) 범위 안에서 이동
+function hallNav(delta) {
+  const kst = new Date(Date.now()+9*3600*1000).toISOString();
+  const minM = (_hallAgg().months[0] || kst.slice(0,7));
+  if ((window._hallPeriod||'month') === 'month') {
+    const cur = window._hallMonthSel || kst.slice(0,7);
+    const d = new Date(Date.UTC(+cur.slice(0,4), +cur.slice(5,7)-1+delta, 1));
+    const next = d.toISOString().slice(0,7);
+    if (next < minM || next > kst.slice(0,7)) return;
+    window._hallMonthSel = next;
+  } else {
+    const next = String((+(window._hallYearSel || kst.slice(0,4))) + delta);
+    if (next < minM.slice(0,4) || next > kst.slice(0,4)) return;
+    window._hallYearSel = next;
+  }
+  window._hallPage = 1; renderHallTabs(); renderHallBody();
 }
 
 function renderHallBody() {
@@ -7994,8 +8035,8 @@ function renderHallBody() {
 
   // ── 순위 목록 만들기 ──
   let list = []; // {name, _score, sub, mine}
-  if (window._hallLegacy) {
-    // 폴백(월별 뷰 미설치): 기존 누적(perfect_reviews) 랭킹
+  if (window._hallLegacy || (window._hallPeriod||'month') === 'all') {
+    // 전체 누적 = 원본 총점수(members_public.perfect_reviews) 그대로 (월별 뷰 미설치 폴백도 동일)
     const all = window._hallData || [];
     if (tab === 'team') {
       const orgMap = {};
@@ -8018,17 +8059,26 @@ function renderHallBody() {
         .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     }
   } else {
-    // 월별 뷰 기반: 이번 달 / 올해 / 전체 누적
+    // 월별/연도별: 활동 기록 기반 재계산 점수 (선택한 달/연도, 날짜는 그 기간의 마지막 점수일)
     const period = window._hallPeriod || 'month';
-    const F = period==='month' ? 'm' : period==='year' ? 'y' : 'all';
-    const users = _hallAgg();
+    const kst = new Date(Date.now()+9*3600*1000).toISOString();
+    const selM = window._hallMonthSel || kst.slice(0,7);
+    const selY = window._hallYearSel || kst.slice(0,4);
+    const users = _hallAgg().users;
     const myId = currentUser && currentUser.id;
-    const fmtLast = mm => mm ? ('📅 '+(ko?`${+mm.slice(0,4)!==+new Date(Date.now()+9*3600*1000).toISOString().slice(0,4)?mm.slice(0,4)+'년 ':''}${+mm.slice(5,7)}월 활동`:('active '+mm))) : '';
+    const scoreOf = u => period==='month' ? (u.months[selM]||0)
+      : Object.keys(u.months).reduce((s,mm)=> s + (mm.slice(0,4)===selY ? u.months[mm] : 0), 0);
+    const lastOf = u => {
+      let d = '';
+      if (period==='month') d = u.lastBy[selM]||'';
+      else Object.keys(u.lastBy).forEach(mm=>{ if(mm.slice(0,4)===selY && u.lastBy[mm]>d) d=u.lastBy[mm]; });
+      return d ? ('📅 '+fmtScoreDate(d+'T00:00:00')) : '';
+    };
     if (tab === 'team') {
       const orgMap = {};
       users.forEach(u => {
         if (u.org_id && u.org_status==='approved' && u.org_role==='student') {
-          const sc = u[F];
+          const sc = scoreOf(u);
           if(!orgMap[u.org_id]) orgMap[u.org_id]={score:0,count:0};
           orgMap[u.org_id].score+=sc; if(sc>0) orgMap[u.org_id].count+=1;
         }
@@ -8038,20 +8088,21 @@ function renderHallBody() {
         .sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else if (tab === 'members') {
       list = users.filter(u=>u.org_id===userOrgId && u.org_status==='approved' && u.org_role==='student')
-        .map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:u[F], sub:fmtLast(u.last), mine:u.uid===myId }))
+        .map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:scoreOf(u), sub:lastOf(u), mine:u.uid===myId }))
         .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else { // indiv — 전체 사용자
-      list = users.map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:u[F], sub:fmtLast(u.last), mine:u.uid===myId }))
+      list = users.map(u=>({ name:u.name||(ko?'익명':'Anon'), _score:scoreOf(u), sub:lastOf(u), mine:u.uid===myId }))
         .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     }
   }
 
   if (list.length === 0) {
     const p = window._hallPeriod || 'month';
-    const emptyTitle = window._hallLegacy ? (ko?'아직 등록된 기록이 없어요':'No records yet')
-      : p==='month' ? (ko?'이번 달 기록이 아직 없어요':'No records this month yet')
-      : p==='year' ? (ko?'올해 기록이 아직 없어요':'No records this year yet')
-      : (ko?'아직 등록된 기록이 없어요':'No records yet');
+    const _kst = new Date(Date.now()+9*3600*1000).toISOString();
+    const _selM = window._hallMonthSel || _kst.slice(0,7), _selY = window._hallYearSel || _kst.slice(0,4);
+    const emptyTitle = (window._hallLegacy || p==='all') ? (ko?'아직 등록된 기록이 없어요':'No records yet')
+      : p==='month' ? (ko?`${+_selM.slice(5,7)}월 기록이 아직 없어요`:`No records in ${_selM} yet`)
+      : (ko?`${_selY}년 기록이 아직 없어요`:`No records in ${_selY} yet`);
     el.innerHTML = `<div style="text-align:center;padding:60px 20px;">
       <div style="font-size:48px;margin-bottom:16px;">🏆</div>
       <div style="font-size:15px;color:var(--ink-60);">${emptyTitle}</div>
