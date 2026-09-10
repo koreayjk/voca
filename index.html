@@ -1386,6 +1386,8 @@ const UI_XL = {
     'No favorites yet':'还没有收藏',
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'点击单词上的 <b style="color:#f39c12;">☆</b> 即可收藏到这里。',
     'Quiz':'测验','✨ Update available':'✨ 有新版本','Refresh':'刷新',
+    'Set New Password':'设置新密码','Please enter your new password.':'请输入新密码。','New password (6+ characters)':'新密码（6个字符以上）',
+    'Custom (type below)':'自定义（在下方填写）','Book category — helps find more accurate meanings':'书籍类型 — 帮助更准确地查找释义',
     // ── 로그인 화면·배너 (혼합형 정리분) ──
     'try again':'请重试','Upload error: ':'上传错误：','Retry':'重试',
     'Welcome back 📚':'欢迎回来 📚','Start in 30 seconds 📚':'30秒即可开始 📚',
@@ -2677,21 +2679,20 @@ function checkRecoveryToken() {
 }
 
 function showNewPasswordForm() {
-  const _ko = (localStorage.getItem('imvoca.nativeLang')||'ko')==='ko';
   document.getElementById('root').innerHTML = `
     <div class="scr" style="justify-content:center;">
       <div style="text-align:center;margin-bottom:28px;">
         <img src="https://imvoca.app/2.png" style="width:100px;height:100px;object-fit:contain;">
       </div>
-      <div style="font-size:20px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">🔑 ${_ko?'새 비밀번호 설정':'Set New Password'}</div>
-      <div style="font-size:13px;color:var(--ink-60);margin-bottom:24px;">${_ko?'새로운 비밀번호를 입력해주세요.':'Please enter your new password.'}</div>
-      <input id="new-pw" type="password" placeholder="${_ko?'새 비밀번호 (6자 이상)':'New password (6+ characters)'}"
+      <div style="font-size:20px;font-weight:700;margin-bottom:8px;color:var(--ink-100);">🔑 ${TT('새 비밀번호 설정','Set New Password')}</div>
+      <div style="font-size:13px;color:var(--ink-60);margin-bottom:24px;">${TT('새로운 비밀번호를 입력해주세요.','Please enter your new password.')}</div>
+      <input id="new-pw" type="password" placeholder="${TT('새 비밀번호 (6자 이상)','New password (6+ characters)')}"
         style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px;">
-      <input id="new-pw2" type="password" placeholder="${_ko?'비밀번호 확인':'Confirm password'}"
+      <input id="new-pw2" type="password" placeholder="${TT('비밀번호 확인','Confirm password')}"
         style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:16px;">
       <button onclick="updatePassword()"
         style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;">
-        ${_ko?'비밀번호 변경하기':'Change Password'}
+        ${TT('비밀번호 변경하기','Change Password')}
       </button>
     </div>`;
 }
@@ -3906,7 +3907,7 @@ async function updatePassword() {
         renderLogin();
       }, 1500);
     } else {
-      toast(data.msg || '변경 실패. 다시 시도해주세요');
+      toast(data.msg || TT('변경 실패. 다시 시도해주세요','Failed. Please try again'));
     }
   } catch(e) {
     toast('오류가 발생했어요');
@@ -4379,7 +4380,7 @@ async function sbSignIn(email, pw) {
     const data = await sbFetch('/auth/v1/token?grant_type=password', 'POST', { email, password: pw }, false);
     if (data.error || !data.access_token) {
       toast('로그인 실패: 이메일 또는 비밀번호를 확인해주세요');
-      if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
+      if (btn) { btn.disabled = false; btn.textContent = t('loginBtn'); }
       if (emailEl) emailEl.disabled = false;
       if (pwEl) { pwEl.disabled = false; pwEl.value = ''; pwEl.focus(); }
       return;
@@ -4398,7 +4399,7 @@ async function sbSignIn(email, pw) {
           toast('아직 승인 대기 중이에요. 관리자 승인 후 사용 가능해요');
           _authToken = null; currentUser = null;
           localStorage.removeItem('imvoca.session');
-          if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
+          if (btn) { btn.disabled = false; btn.textContent = t('loginBtn'); }
           if (emailEl) emailEl.disabled = false;
           if (pwEl) pwEl.disabled = false;
           return;
@@ -4408,7 +4409,7 @@ async function sbSignIn(email, pw) {
     await loadUserPlan(); await loadBooksFromDB(); await maybeSeedSampleBook(); applyEntryStack(); render(); setTimeout(checkReviews, 1000);
   } catch(e) {
     toast('로그인 오류: ' + e.message);
-    if (btn) { btn.disabled = false; btn.textContent = '로그인'; }
+    if (btn) { btn.disabled = false; btn.textContent = t('loginBtn'); }
     if (emailEl) emailEl.disabled = false;
     if (pwEl) pwEl.disabled = false;
   }
@@ -5297,6 +5298,15 @@ function openAddBookModal() {
   document.getElementById('modal-add').classList.add('open');
   const catSel = document.getElementById('nb-category');
   const catCustom = document.getElementById('nb-category-custom');
+  // 정적 마크업이 한국어라 ko 외 언어는 여기서 라벨을 교체
+  if (catSel && userNativeLang !== 'ko' && !catSel._i18nDone) {
+    const catLabels = { general:'📖 '+TT('일반 / 원서 (기본)','General / Original Book'), suneung:'🇰🇷 '+TT('수능 영단어','Suneung (Korean SAT)'), business:'💼 '+TT('비즈니스 영어','Business English'), medical:'⚕️ '+TT('의학 영어','Medical English'), legal:'⚖️ '+TT('법률 영어','Legal English'), it:'💻 IT / '+TT('컴퓨터','Computer'), daily:'🗣️ '+TT('일상 회화','Daily Conversation'), custom:'✏️ '+TT('직접 입력 (아래에 종류 적기)','Custom (type below)') };
+    [...catSel.options].forEach(o => { if (catLabels[o.value]) o.textContent = catLabels[o.value]; });
+    const catTitle = document.querySelector('#nb-category-wrap > div');
+    if (catTitle) catTitle.textContent = '📚 ' + TT('책 종류 (직접 입력 시) — 단어 뜻을 더 정확하게 찾기 위해서예요','Book category — helps find more accurate meanings');
+    if (catCustom) catCustom.placeholder = TT('예: 의학 전문 용어, 우주 과학 용어 등','e.g. Medical terminology, Space science...');
+    catSel._i18nDone = true;
+  }
   if (catSel && catCustom) {
     catSel.value = 'general';
     catCustom.style.display = 'none';
