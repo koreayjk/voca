@@ -914,6 +914,8 @@ const PROMPT_LANG_NAMES = { ko:'한국어(Korean)', en:'English', es:'Spanish (E
 function promptLangName(code){ return PROMPT_LANG_NAMES[code] || 'English'; }
 // 외부 페이지(사용법·앱소개) 언어 라우팅 — 페이지가 존재하는 언어만 연결, 그 외엔 영어
 function guideLang(){ return ['ko','en','zh','es'].includes(userNativeLang) ? userNativeLang : 'en'; }
+// 날짜 표기용 로캘 — 모국어에 맞는 날짜 형식 (예: 2026年9月10日 / 10 sept 2026)
+function uiLocale(){ return ({ko:'ko-KR',zh:'zh-CN',es:'es-ES',ja:'ja-JP',fr:'fr-FR',de:'de-DE',pt:'pt-BR',vi:'vi-VN',id:'id-ID'})[userNativeLang] || 'en-US'; }
 function adPage(){ return userNativeLang==='ko' ? 'ad_ko.html' : (userNativeLang==='zh' ? 'ad_zh.html' : 'ad_en.html'); }
 function getNativeLang(){return LANG_OPTIONS.find(l=>l.code===userNativeLang)||LANG_OPTIONS[0];}
 function getTargetLang(){return TARGET_LANG_OPTIONS.find(l=>l.code===userTargetLang)||TARGET_LANG_OPTIONS[0];}
@@ -1488,6 +1490,7 @@ const UI_XL = {
     'No favorites yet':'还没有收藏',
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'点击单词上的 <b style="color:#f39c12;">☆</b> 即可收藏到这里。',
     'Quiz':'测验','✨ Update available':'✨ 有新版本','Refresh':'刷新',
+    'Translated from Korean':'已从韩语翻译','Show original':'查看原文','Show translation':'查看译文',
     'Set New Password':'设置新密码','Please enter your new password.':'请输入新密码。','New password (6+ characters)':'新密码（6个字符以上）',
     'Custom (type below)':'自定义（在下方填写）','Book category — helps find more accurate meanings':'书籍类型 — 帮助更准确地查找释义',
     // ── 로그인 화면·배너 (혼합형 정리분) ──
@@ -1857,6 +1860,7 @@ const UI_XL = {
     'No favorites yet':'Aún no hay favoritas',
     'Tap the <b style="color:#f39c12;">☆</b> on any word to save it here.':'Toca la <b style="color:#f39c12;">☆</b> de cualquier palabra para guardarla aquí.',
     'Quiz':'Test','✨ Update available':'✨ Actualización disponible','Refresh':'Actualizar',
+    'Translated from Korean':'Traducido del coreano','Show original':'Ver original','Show translation':'Ver traducción',
     '🔊 Auto-read on':'🔊 Lectura automática activada — repite palabras y ejemplos','🔇 Auto-read off':'🔇 Lectura automática desactivada',
     'Official wordbook':'Libro oficial · basado en exámenes reales',
     'Official wordbook · Day 1 free · rest with Premium/academy':'Libro oficial · Día 1 gratis · el resto con Premium/academia',
@@ -2200,7 +2204,7 @@ async function showNotices() {
         const c = catMap[n.category] || catMap.notice;
         const isNew = new Date(n.created_at).getTime() > last;
         const expanded = i === 0; // 최신은 처음부터 펼침
-        const dateStr = new Date(n.created_at).toLocaleDateString(TT('ko-KR','en-US'), { year:'numeric', month:'short', day:'numeric' });
+        const dateStr = new Date(n.created_at).toLocaleDateString(uiLocale(), { year:'numeric', month:'short', day:'numeric' });
         // 본문에서 따옴표·줄바꿈 안전 처리해서 data 속성에 저장
         const safeBody = (n.body||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         return `<div class="notice-item" data-idx="${i}" style="border-bottom:1px solid var(--ink-07);padding:14px 4px;cursor:pointer;" onclick="toggleNotice(${i})">
@@ -2325,7 +2329,7 @@ function _renderReviewList(){
   const admin = _isEventAdmin();
   if(!_reviews.length){ box.innerHTML = `<div style="text-align:center;color:var(--ink-40);font-size:13px;padding:26px 0;">${TT('아직 후기가 없어요. 첫 후기를 남겨보세요! 🙌','No reviews yet — be the first!')}</div>`; return; }
   box.innerHTML = _reviews.map(r=>{
-    let date=''; try{ date=new Date(r.created_at).toLocaleDateString(TT('ko-KR','en-US'),{month:'short',day:'numeric'}); }catch(e){}
+    let date=''; try{ date=new Date(r.created_at).toLocaleDateString(uiLocale(),{month:'short',day:'numeric'}); }catch(e){}
     const mine = currentUser && r.user_id===currentUser.id;
     const adminControls = admin
       ? `<div style="margin-top:8px;"><button onclick="deleteReview('${r.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#c0392b;">${TT('삭제','Delete')}</button></div>`
@@ -2336,11 +2340,65 @@ function _renderReviewList(){
         ${mine?`<span style="background:var(--gold-bg);color:var(--accent);font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;">📌 ${TT('내 후기','Mine')}</span>`:''}
         <span style="margin-left:auto;font-size:11px;color:var(--ink-40);">${date}</span>
       </div>
-      ${r.body?`<div style="font-size:13.5px;color:var(--ink-100);line-height:1.65;margin-top:8px;white-space:pre-wrap;word-break:break-word;">${esc(r.body)}</div>`:''}
+      ${r.body?`<div id="rv-body-${esc(String(r.id))}" style="font-size:13.5px;color:var(--ink-100);line-height:1.65;margin-top:8px;white-space:pre-wrap;word-break:break-word;">${esc(r.body)}</div>${(userNativeLang!=='ko'&&/[가-힣]/.test(r.body))?`<div id="rv-xl-${esc(String(r.id))}" data-showing="xl" style="display:none;font-size:10.5px;color:var(--ink-40);margin-top:5px;">🌐 ${TT('번역됨','Translated from Korean')} · <a href="#" onclick="event.preventDefault();_rvToggleOrig('${esc(String(r.id))}')" style="color:var(--accent);text-decoration:none;font-weight:700;">${TT('원문 보기','Show original')}</a></div>`:''}`:''}
       ${r.link?_reviewEmbed(r.link):''}
       ${adminControls}
     </div>`;
   }).join('');
+  if (userNativeLang!=='ko') setTimeout(_translateReviews, 0);
+}
+
+// ── 후기 자동 번역 ─────────────────────────────────────────────
+// 한국어로 적힌 후기를 보는 사람의 모국어로 번역해 보여준다 (Gemini 프록시 사용).
+// 기기별 localStorage 캐시로 같은 후기는 언어당 한 번만 번역하고, 실패하면 원문 그대로 둔다.
+function _rvXlKey(){ return 'imvoca_rvxl_' + userNativeLang; }
+function _rvXlCache(){ try{ const v=JSON.parse(localStorage.getItem(_rvXlKey())||'{}'); return v&&typeof v==='object'?v:{}; }catch(e){ return {}; } }
+let _rvXlBusy = false;
+async function _translateReviews(){
+  if (userNativeLang==='ko' || _rvXlBusy) return;
+  const cache = _rvXlCache();
+  const targets = _reviews.filter(r=>r.body && /[가-힣]/.test(r.body)).slice(0,30);
+  if (!targets.length) return;
+  targets.forEach(r=>{ if(cache[r.id]) _rvApplyXl(r.id, cache[r.id]); });
+  const need = targets.filter(r=>!cache[r.id]);
+  if (!need.length) return;
+  _rvXlBusy = true;
+  try {
+    const prompt = 'Translate the following app user reviews from Korean into ' + promptLangName(userNativeLang) + '.\n'
+      + 'Keep the casual tone, emojis and line breaks. Do not add or omit anything.\n'
+      + 'Return ONLY a JSON object mapping each id to its translation. No code fences, no commentary.\n\n'
+      + JSON.stringify(need.map(r=>({ id:String(r.id), text:r.body })));
+    const model = GEMINI_MODELS[_geminiModelIdx] || GEMINI_MODELS[0];
+    const res = await fetch(SB_URL + '/functions/v1/gemini-proxy', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(_authToken||SB_KEY)}, body:JSON.stringify({ model, body:{ contents:[{ parts:[{ text: prompt }] }], generationConfig:{ temperature:0.2 } } }) });
+    const data = await res.json();
+    let txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    txt = txt.trim().replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,'');
+    const map = JSON.parse(txt);
+    let dirty = false;
+    need.forEach(r=>{ const v = map[String(r.id)]; if (typeof v==='string' && v.trim()){ cache[r.id]=v.trim(); dirty=true; _rvApplyXl(r.id, cache[r.id]); } });
+    if (dirty) { try { const keep={}; _reviews.forEach(r=>{ if(cache[r.id]) keep[r.id]=cache[r.id]; }); localStorage.setItem(_rvXlKey(), JSON.stringify(keep)); } catch(e){} }
+  } catch(e) { /* 번역 실패 → 원문 유지 (다음 방문 때 재시도) */ }
+  finally { _rvXlBusy = false; }
+}
+function _rvApplyXl(id, xl){
+  const el = document.getElementById('rv-body-'+id); if(!el) return;
+  el.textContent = xl;
+  const note = document.getElementById('rv-xl-'+id);
+  if (note) { note.style.display='block'; note.dataset.showing='xl'; }
+}
+function _rvToggleOrig(id){
+  const r = _reviews.find(x=>String(x.id)===String(id)); if(!r) return;
+  const el = document.getElementById('rv-body-'+id), note = document.getElementById('rv-xl-'+id);
+  if (!el || !note) return;
+  const link = note.querySelector('a');
+  if (note.dataset.showing==='xl') {
+    el.textContent = r.body; note.dataset.showing='orig';
+    if (link) link.textContent = TT('번역 보기','Show translation');
+  } else {
+    const c = _rvXlCache(); if (c[r.id]) el.textContent = c[r.id];
+    note.dataset.showing='xl';
+    if (link) link.textContent = TT('원문 보기','Show original');
+  }
 }
 
 async function submitReview(){
@@ -2985,7 +3043,7 @@ function _compReceiptDates(startISO, endISO){
 }
 // 다음 달 1일 (예정 결제일)
 function _nextFirst(){ const n=new Date(); return new Date(n.getFullYear(), n.getMonth()+1, 1); }
-function _fmtDateLong(d, ko){ try{ return d.toLocaleDateString(TT('ko-KR','en-US'),{year:'numeric',month:'long',day:'numeric'}); }catch(e){ return ''; } }
+function _fmtDateLong(d, ko){ try{ return d.toLocaleDateString(uiLocale(),{year:'numeric',month:'long',day:'numeric'}); }catch(e){ return ''; } }
 // 무료 제공 결제 카드 HTML (개인/학원 공용). fullPrice=정가($/월), seats=인원(학원만), startISO/endISO=영수증 범위
 function _compBillingHTML(fullPrice, seats, startISO, endISO){
   const ko = userNativeLang==='ko';
@@ -3321,7 +3379,7 @@ async function loadOrgInvoices(){
   const stat=s=> s==='paid'?[TT('결제완료','Paid'),'#1c7c3c','#e6f4ea'] : s==='open'?[TT('미결제','Open'),'#b5720a','#fff4e0'] : s==='void'?[TT('취소','Void'),'#777','var(--ink-05)'] : [String(s||''),'#777','var(--ink-05)'];
   const header=`<div style="display:flex;align-items:center;gap:10px;padding:0 0 8px;font-size:11px;font-weight:700;color:var(--ink-45);border-bottom:2px solid var(--ink-12);"><div style="flex:1;">${TT('날짜','Date')}</div><div style="width:92px;text-align:right;">${TT('총계','Total')}</div><div style="width:62px;text-align:center;">${TT('상태','Status')}</div><div style="width:40px;text-align:right;">${TT('작업','')}</div></div>`;
   box.innerHTML = header + invs.map(v=>{
-    const ts=((v.paid_at||v.created)||0)*1000; let d=''; try{ d=new Date(ts).toLocaleDateString(TT('ko-KR','en-US'),{year:'numeric',month:'long',day:'numeric'}); }catch(e){}
+    const ts=((v.paid_at||v.created)||0)*1000; let d=''; try{ d=new Date(ts).toLocaleDateString(uiLocale(),{year:'numeric',month:'long',day:'numeric'}); }catch(e){}
     const cents=(v.status==='paid'?v.amount_paid:v.amount_due)||0;
     const amt=cur(v.currency)+(cents/100).toFixed(2);
     const [sl,sc,sb]=stat(v.status);
@@ -9848,7 +9906,7 @@ async function renderReviewPage(root, dock) {
       if (!book) return '';
       const page = book ? findPage(book, r.page_num) : null;
       const wordCount = page?.words.length || 0;
-      const studiedDate = new Date(r.first_studied_at).toLocaleDateString('ko-KR');
+      const studiedDate = new Date(r.first_studied_at).toLocaleDateString(uiLocale());
       const totalSteps = STEPS.length;
       // 단조 표시: 현재(첫 미완료) 단계 앞까지만 '완료(✓)'로 본다. 순서 꼬임이 있어도
       // "1일차✓ 2일차(현재) 3일차✓" 처럼 중간이 빈 채로 보이지 않게.
@@ -9901,7 +9959,7 @@ async function renderReviewPage(root, dock) {
               ${STEPS.map((s,i) => `<span style="font-size:9px;color:${stepDone(i)?'#1c7c3c':'var(--ink-40)'};font-weight:${stepDone(i)?'700':'400'}">${s.label}${stepDone(i)?'✓':''}</span>`).join('')}
             </div>
           </div>
-          <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 ${t('nextReview')}: ${new Date(r._nextDate).toLocaleDateString('ko-KR')}</div>
+          <div style="margin-top:8px;font-size:11px;color:var(--ink-40);">📅 ${t('nextReview')}: ${new Date(r._nextDate).toLocaleDateString(uiLocale())}</div>
         </div>`;
       }
 
