@@ -309,7 +309,7 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   /* 책장 격자: 넓은 화면이니 여러 열 자동 채움 */
   .book-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)) !important; gap: 30px 26px !important; }
   .scr-wide .book-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; gap: 36px 30px !important; }
-  .scr-wide .lib-header { max-width: 100%; }
+  .scr-wide .lib-header { max-width: 100%; margin-top: 0; }
 
   /* 모달/시트/오버레이는 화면 전체 기준 가운데 */
   .overlay { left: 0; right: 0; max-width: none; transform: none; }
@@ -412,8 +412,10 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 @media (max-width: 640px) {
   .topbar-actions { max-width: 70% !important; gap: 4px !important; }
   .topbar-actions .topbar-btn { padding: 4px 8px !important; font-size: 10px !important; }
-  .scr-wide.scr { padding-top: 96px !important; }
-  .scr-wide .lib-header { margin-top: 0; }
+  /* 상단 버튼(topbar-actions)이 있는 책장 화면만 제목을 그 아래로 내림 —
+     즐겨찾기·검색 등 다른 scr-wide 화면은 복습·명예의 전당과 같은 높이(50px) 유지 */
+  .scr-shelf.scr { padding-top: 96px !important; }
+  .scr-shelf .lib-header { margin-top: 0; }
 }
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
 .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
@@ -7091,7 +7093,7 @@ function render() {
     // (학생이 과제로 받은 단어장도 동일한 표지의 책 타일로 보이게 — 과제는 '📌 과제' 스티커로 구분)
     const myBooks = books;
     root.innerHTML = `
-      <div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
+      <div class="scr scr-wide scr-shelf" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
@@ -8853,7 +8855,7 @@ async function renderStats(root, dock) {
   if (!window._hallTab) window._hallTab = userOrgId ? 'members' : 'indiv';
   if (!window._hallPage) window._hallPage = 1;
 
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
+  root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:11px;margin-bottom:10px">
       <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
       <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">🏆 ${TT('명예의 전당','Hall of Fame')}</div>
@@ -9836,7 +9838,7 @@ function runWordSearch() {
 }
 
 async function renderReviewPage(root, dock) {
-  root.innerHTML = `<div class="scr" style="padding-bottom:90px;padding-top:50px;">
+  root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">
     <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">
       <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
       <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${t('reviewStatus')}</div>
