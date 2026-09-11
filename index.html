@@ -4606,6 +4606,9 @@ async function sbInit() {
         userData = sess.user;
       }
       currentUser = userData;
+      // ⏱️ 부팅 가속: 직전 세션의 책 캐시로 즉시 첫 화면을 그린다 (뒤에서 최신 데이터로 교체)
+      let _fastBoot = false;
+      try { _fastBoot = await _bootShelfFromCache(); if (_fastBoot) { applyEntryStack(); render(); } } catch(e){}
       // ⚠️ loadUserPlan(→loadMyOrg) 이 org 역할/승인을 세팅해야 loadBooksFromDB 안의
       // appendOfficialBooks 가 _seesAllOfficialLangs()=true 로 공식책 전체를 로드함(경합 방지).
       await loadUserPlan();
@@ -4617,8 +4620,9 @@ async function sbInit() {
         loadAssignments()   // 단체 학생: 배정 단어장을 첫 렌더 전에 미리 로드(안 보이던 문제 방지)
       ]);
       await maybeSeedSampleBook();
-      applyEntryStack();
-      render();
+      // 빠른 부팅으로 이미 화면을 그렸다면 사용자가 이동했을 수 있으니 스택은 유지하고 다시 그리기만
+      if (!_fastBoot) applyEntryStack();
+      renderKeepScroll();
       // 렌더 후 배지 업데이트 (상단 버튼이 그려진 다음)
       setTimeout(updateNoticeBadge, 100);
       setTimeout(checkReviews, 1000);
@@ -5052,6 +5056,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
 }
 
 async function sbSignOut() {
+  try { idbSet(_booksCacheKey(), null); } catch(e){}   // 공용 기기: 다음 사람에게 내 책이 안 보이게
   localStorage.removeItem('imvoca.session');
   try { localStorage.removeItem('imvoca.ownerIntent'); } catch(e){} // 공용 브라우저: 다음 사용자에게 '단체 만들기'가 뜨지 않도록 정리
   _authToken = null; currentUser = null; books = [];
@@ -5059,8 +5064,33 @@ async function sbSignOut() {
   renderLogin();
 }
 
+// ── 부팅 가속: 책 데이터 로컬 캐시(IndexedDB) ─────────────────────
+// 앱을 켜면 직전 세션의 책 데이터로 즉시 그리고, 뒤에서 서버 최신본으로 교체한다.
+// (localStorage 는 5MB 제한이라 단어+분석까지 담기엔 작음 → IndexedDB 사용)
+function _idbOpen(){ return new Promise((res, rej) => { const r = indexedDB.open('imvoca', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function idbGet(key){ try { const db = await _idbOpen(); return await new Promise((res) => { const t = db.transaction('kv').objectStore('kv').get(key); t.onsuccess = () => res(t.result); t.onerror = () => res(null); }); } catch(e){ return null; } }
+async function idbSet(key, val){ try { const db = await _idbOpen(); return await new Promise((res) => { const t = db.transaction('kv','readwrite').objectStore('kv').put(val, key); t.onsuccess = () => res(true); t.onerror = () => res(false); }); } catch(e){ return false; } }
+function _booksCacheKey(){ return 'books:' + ((currentUser && currentUser.id) || ''); }
+async function _bootShelfFromCache(){
+  try {
+    const cached = await idbGet(_booksCacheKey());
+    if (!cached || !Array.isArray(cached.books) || !cached.books.length) return false;
+    books = cached.books;
+    updateTotalWords();
+    return true;
+  } catch(e){ return false; }
+}
+// 렌더를 방해하지 않게 잠시 뒤 저장 (여러 번 불려도 마지막 상태가 남으면 됨)
+function _saveBooksCache(){
+  try { const uid = currentUser && currentUser.id; if (!uid) return;
+    clearTimeout(window._bcTimer);
+    window._bcTimer = setTimeout(() => { try { idbSet('books:' + uid, { books, savedAt: Date.now() }); } catch(e){} }, 600);
+  } catch(e){}
+}
+
 async function loadBooksFromDB() {
   try {
+    const _hiddenP = loadHiddenWords();   // 큰 책 데이터와 병렬로 (직렬 대기 제거)
     // 책 + 페이지 + 단어를 한 번에 (embed)
     // 일시적 오류(네트워크/토큰 타이밍)로 null 이 오면 재시도 — 한 번 삐끗해서
     // 책장이 통째로 '0권'으로 비어 뜨던 문제 방지(공용 fetchRetry).
@@ -5090,12 +5120,13 @@ async function loadBooksFromDB() {
       books = books.filter(b => !b._officialContent || _picked0.has(b.id));
     }
     updateTotalWords();
-    // 숨긴 단어(나에게만 제외) 목록 로드 후 메모리에서 제거
-    await loadHiddenWords(); _stripHiddenWords();
+    // 숨긴 단어(나에게만 제외): 병렬 로드 완료 후 메모리에서 제거
+    await _hiddenP; _stripHiddenWords();
     // 공식 단어장(~6천 단어, 큰 payload)은 비동기로 붙임 → 소유 책 먼저 그려 첫 화면
     // 블로킹을 없애고, 로드 완료 후 현재 화면을 다시 렌더한다.
     appendOfficialBooks().then(() => {
       updateTotalWords();
+      _saveBooksCache();
       if (currentUser && typeof render === 'function') { try { render(); } catch(e){} }
     }).catch(e => console.warn('[official load]', e));
   } catch(e) { console.error('DB load error:', e); }
@@ -8159,6 +8190,7 @@ async function loadAssignments(force){
       existingIds.add(b.id);
     });
     _stripHiddenWords();
+    _saveBooksCache();
     // 배정 책 복습 상태 미리 로드(배지용)
     [...new Set(assignments.map(a=>a.book_id))].forEach(bid=>{ try{ loadReviewStatus(bid); }catch(e){} });
     const top = stack[stack.length-1];
@@ -10526,6 +10558,10 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (_swUpdateTriggered) location.reload();
   });
+  // SW가 백그라운드에서 새 index.html 을 받아오면(스테일-와일-리밸리데이트) 안내 토스트
+  navigator.serviceWorker.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'HTML_UPDATED') _promptHtmlUpdate();
+  });
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then((reg) => {
@@ -10541,6 +10577,19 @@ if ('serviceWorker' in navigator) {
       })
       .catch((e) => console.warn('[SW] 등록 실패:', e));
   });
+}
+// HTML이 백그라운드에서 갱신됨: 탭하면 새로고침으로 새 버전 적용
+function _promptHtmlUpdate(){
+  try {
+    if (document.getElementById('sw-update-bar')) return;
+    const bar = document.createElement('div');
+    bar.id = 'sw-update-bar';
+    bar.style.cssText = 'position:fixed;left:50%;bottom:88px;transform:translateX(-50%);z-index:99999;background:#1c3553;color:#fff;border-radius:999px;padding:11px 18px;font-size:13px;font-family:var(--font-body,sans-serif);box-shadow:0 6px 22px rgba(0,0,0,0.3);cursor:pointer;display:flex;align-items:center;gap:10px;max-width:calc(100% - 32px);';
+    bar.innerHTML = `<span>${TT('✨ 새 버전이 있어요','✨ Update available')}</span><span style="font-weight:700;text-decoration:underline;">${TT('새로고침','Refresh')}</span>`;
+    bar.onclick = () => { try { location.reload(); } catch(e){} };
+    document.body.appendChild(bar);
+    setTimeout(()=>{ try{ bar.remove(); }catch(e){} }, 15000);
+  } catch(e){}
 }
 // 업데이트 토스트: 탭하면 새 버전 활성화 → controllerchange → 새로고침
 function _promptSwUpdate(worker){

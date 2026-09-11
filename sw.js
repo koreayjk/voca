@@ -1,7 +1,7 @@
 // IM VOCA Service Worker
 // 전략: HTML은 항상 네트워크 우선 (최신 유지), 정적 자원은 캐시 우선 (속도)
 
-const CACHE_VERSION = 'imvoca-v4';
+const CACHE_VERSION = 'imvoca-v5';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -59,23 +59,33 @@ self.addEventListener('fetch', (event) => {
     return; // 기본 네트워크 동작 사용
   }
 
-  // HTML/Document 요청: 네트워크 우선 (최신 콘텐츠 보장)
+  // HTML/Document 요청: 캐시 즉시 표시 + 백그라운드 갱신 (stale-while-revalidate)
+  // → 앱 재시작이 네트워크를 기다리지 않고 바로 뜸. 새 버전이 받아지면 앱에 알려
+  //   '✨ 새 버전 — 새로고침' 토스트가 뜬다 (HTML_UPDATED 메시지).
   if (request.mode === 'navigate' || request.destination === 'document') {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          // 성공하면 캐시 업데이트
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, clone));
-          }
-          return response;
-        })
-        .catch(() => {
-          // 인터넷 끊기면 캐시에서 가져옴
-          return caches.match(request).then((cached) => cached || caches.match('/'));
-        })
-    );
+    event.respondWith((async () => {
+      const cached = (await caches.match(request)) || (await caches.match('/'));
+      const network = fetch(request).then(async (response) => {
+        if (response.ok) {
+          const cache = await caches.open(RUNTIME_CACHE);
+          const clone = response.clone();
+          await cache.put(request, clone);
+          // 내용이 실제로 바뀌었을 때만 열려있는 앱에 알림 (ETag/Last-Modified 비교)
+          try {
+            const prevTag = cached && (cached.headers.get('etag') || cached.headers.get('last-modified'));
+            const newTag = response.headers.get('etag') || response.headers.get('last-modified');
+            if (prevTag && newTag && prevTag !== newTag) {
+              const clients = await self.clients.matchAll({ type: 'window' });
+              clients.forEach((c) => c.postMessage({ type: 'HTML_UPDATED' }));
+            }
+          } catch (e) {}
+        }
+        return response;
+      }).catch(() => null);
+      if (cached) { event.waitUntil(network); return cached; }
+      const fresh = await network;
+      return fresh || caches.match('/');
+    })());
     return;
   }
 
