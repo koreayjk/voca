@@ -709,7 +709,12 @@ function logError(kind, context, message, detail){
   } catch(e) { /* 로깅 실패는 무시 */ }
 }
 window.addEventListener('error', (e) => {
-  try { logError('js_error', 'window', e.message, { file: e.filename, line: e.lineno, col: e.colno, stack: ((e.error && e.error.stack) || '').slice(0,600) }); } catch(_){}
+  try {
+    // 크로스오리진 스크립트의 불투명 오류("Script error.", 파일·줄·스택 전부 없음)는
+    // 추적 불가능한 노이즈라 전송하지 않음 (브라우저 확장·서드파티 스크립트가 원인)
+    if (e.message === 'Script error.' && !e.filename && !e.lineno) return;
+    logError('js_error', 'window', e.message, { file: e.filename, line: e.lineno, col: e.colno, stack: ((e.error && e.error.stack) || '').slice(0,600) });
+  } catch(_){}
 });
 window.addEventListener('unhandledrejection', (e) => {
   try { const r = e.reason; logError('unhandled_rejection', 'promise', (r && (r.message || r)) || 'unknown', { stack: ((r && r.stack) || '').slice(0,600) }); } catch(_){}
@@ -5290,11 +5295,13 @@ async function savePageWordsToDB(bookId, pageNum, words) {
         if (Array.isArray(found) && found[0]?.id) pageId = found[0].id;
       } catch(e) {}
     }
+    let pageCreatedHere = false;
     if (!pageId) {
       const data = await sbFetch('/rest/v1/voca_pages', 'POST',
         { book_id:bookId, page_num:String(pageNum) },
         true, { 'Prefer': 'return=representation' });
       pageId = (Array.isArray(data) ? data[0] : data)?.id;
+      pageCreatedHere = !!pageId;
     }
     if (!pageId) return null;
 
@@ -5325,6 +5332,12 @@ async function savePageWordsToDB(bookId, pageNum, words) {
     if (failed.length > 0) {
       toast(TX(`⚠️ 단어 {v0}개 저장 실패 — 다시 시도해주세요`,`⚠️ {v0} word(s) failed to save — please retry`,{v0:(failed.length)}));
       window._failedWords = { bookId, pageNum, words: failed };
+    }
+    // 단어가 하나도 저장되지 않았고 이 호출에서 페이지를 새로 만들었다면 → 빈 페이지 롤백
+    // (네트워크 중단 시 '단어 0개 페이지'가 DB에 남던 정합성 이상의 원인)
+    if (savedRows.length === 0 && pageCreatedHere) {
+      try { await sbFetch(`/rest/v1/voca_pages?id=eq.${pageId}`, 'DELETE', null, true, { 'Prefer':'return=minimal' }); } catch(e){}
+      return null;
     }
     return { pageId, savedRows };
   } catch(e) {
