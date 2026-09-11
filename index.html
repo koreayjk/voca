@@ -5218,7 +5218,7 @@ function addOfficialToShelf(id){
   _setMyOfficialIds([...getMyOfficialIds(), id]);
   try { loadReviewStatus(id); } catch(e){}
   renderOfficialPicker();
-  try { render(); } catch(e){}
+  try { renderKeepScroll(); } catch(e){}
   toast(TT('📚 단어장을 책장에 추가했어요','Added to your shelf'));
 }
 function removeOfficialFromShelf(id){
@@ -5226,7 +5226,7 @@ function removeOfficialFromShelf(id){
   if (i >= 0) books.splice(i, 1);
   _setMyOfficialIds(getMyOfficialIds().filter(x => x !== id));
   renderOfficialPicker();
-  try { render(); } catch(e){}
+  try { renderKeepScroll(); } catch(e){}
   toast(TT('책장에서 뺐어요','Removed from shelf'));
 }
 
@@ -5271,7 +5271,7 @@ async function hideWordForMe(bookId, pageNum, wordId){
   p.words.splice(i, 1);
   (_hiddenStash[bookId] = _hiddenStash[bookId] || []).push({ pageNum: p.num, w });
   _hiddenWords.add(wordId); _hiddenLoaded = true;
-  updateTotalWords(); render();
+  updateTotalWords(); renderKeepScroll();
   toast(TT('나에게만 숨겼어요 — 🙈 숨긴 단어에서 복원할 수 있어요','Hidden for you only — restore from 🙈'));
   try { await authPost('/rest/v1/voca_hidden_words', { user_id: currentUser.id, word_id: wordId }, 'return=minimal'); } catch(e){}
 }
@@ -5287,7 +5287,7 @@ async function unhideWord(bookId, wordId){
   updateTotalWords();
   const ov = document.getElementById('hidden-words-modal'); if (ov) ov.remove();
   if (list.length) showHiddenWords(bookId);
-  try { render(); } catch(e){}
+  try { renderKeepScroll(); } catch(e){}
   try { await _authDelete(`/rest/v1/voca_hidden_words?user_id=eq.${currentUser.id}&word_id=eq.${wordId}`); } catch(e){}
 }
 function showHiddenWords(bookId){
@@ -6858,7 +6858,7 @@ window._analysisExpanded = window._analysisExpanded || {};
 function toggleAnalysis(bookId, pageNum, wordIdx) {
   const key = bookId + '|' + pageNum + '|' + wordIdx;
   window._analysisExpanded[key] = !window._analysisExpanded[key];
-  render();
+  renderKeepScroll();
 }
 function renderWordAnalysis(a, bookId, pageNum, wordIdx) {
   if (!a) return '';
@@ -6976,13 +6976,14 @@ function favToggleByEn(bookId, pageNum, en){
   if(idx>=0) toggleFavorite(bookId, pageNum, idx);
 }
 
-// 재렌더하되 현재 스크롤 위치를 유지 (즐겨찾기/삭제 시 목록이 맨 위로 튀는 것 방지)
+// 재렌더하되 현재 스크롤 위치를 유지 (즐겨찾기/삭제/숨기기 시 목록이 맨 위로 튀는 것 방지)
+// 모바일은 .scr-scroll, PC는 .scr 이 스크롤 컨테이너라 둘 다 보존한다.
 function renderKeepScroll(){
-  const before = document.querySelector('.scr-scroll') || document.querySelector('.scr');
-  const y = before ? before.scrollTop : 0;
+  const sels = ['.scr-scroll', '.scr'];
+  const pos = sels.map(s => { const el = document.querySelector(s); return el ? el.scrollTop : 0; });
   render();
-  const after = document.querySelector('.scr-scroll') || document.querySelector('.scr');
-  if (after) { after.scrollTop = y; requestAnimationFrame(()=>{ try { after.scrollTop = y; } catch(e){} }); }
+  const apply = () => sels.forEach((s, i) => { if (!pos[i]) return; const el = document.querySelector(s); if (el) try { el.scrollTop = pos[i]; } catch(e){} });
+  apply(); requestAnimationFrame(apply);
 }
 
 async function toggleFavorite(bookId, pageNum, wordIdx) {
