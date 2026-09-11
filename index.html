@@ -5082,6 +5082,13 @@ async function loadBooksFromDB() {
             .map(w => ({ id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: w.analysis || null }))
         }))
 }));
+    // 공식책(내 소유 행 포함)은 '추가'한 것만 즉시 남김 — 공식 카탈로그(큰 fetch)를 기다리는
+    // appendOfficialBooks 전에 걸러서, 전체 공식책이 잠깐 보였다 나중에 사라지는 깜빡임 방지.
+    // (선택 기록이 아직 없는 첫 실행은 건너뛰고 appendOfficialBooks 의 시딩에 맡김)
+    if (localStorage.getItem(_myOfficialKey()) !== null) {
+      const _picked0 = new Set(getMyOfficialIds());
+      books = books.filter(b => !b._officialContent || _picked0.has(b.id));
+    }
     updateTotalWords();
     // 숨긴 단어(나에게만 제외) 목록 로드 후 메모리에서 제거
     await loadHiddenWords(); _stripHiddenWords();
