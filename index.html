@@ -1503,6 +1503,11 @@ const UI_XL = {
     'Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.':'点击<b>添加书籍</b>加入官方单词本，或拍摄教材创建单词本。<br>即使书架上没有书，布置作业和出题也照常可用。',
     'Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.':'点击<b>添加书籍</b>创建你的第一本单词本。<br>拍一张照片，剩下的交给 AI。',
     'Official books':'官方单词本','Scan a page':'拍摄教材','Type words':'手动输入',
+    'I know this — hide for me':'我认识这个词 — 仅对我隐藏',
+    'Hidden for you only — restore from 🙈':'已仅对你隐藏 — 可在 🙈 中恢复',
+    'Hidden words':'隐藏的单词','Restore':'恢复','No hidden words':'没有隐藏的单词',
+    'Hidden only for you — restore to include them again':'这些单词仅对你隐藏 — 恢复后会重新加入背诵和复习',
+    'Hidden {v0}':'已隐藏 {v0} 个','p.{v0}':'第{v0}页',
     'Set New Password':'设置新密码','Please enter your new password.':'请输入新密码。','New password (6+ characters)':'新密码（6个字符以上）',
     'Custom (type below)':'自定义（在下方填写）','Book category — helps find more accurate meanings':'书籍类型 — 帮助更准确地查找释义',
     // ── 로그인 화면·배너 (혼합형 정리분) ──
@@ -1877,6 +1882,11 @@ const UI_XL = {
     'Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.':'Toca <b>Añadir libro</b> para agregar libros oficiales o fotografiar un libro.<br>Asignar y crear exámenes funciona aunque no tengas libros en la estantería.',
     'Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.':'Toca <b>Añadir libro</b> para crear tu primer cuaderno de vocabulario.<br>Una foto y la IA hace el resto.',
     'Official books':'Libros oficiales','Scan a page':'Fotografiar página','Type words':'Escribir a mano',
+    'I know this — hide for me':'Ya la sé — ocultar solo para mí',
+    'Hidden for you only — restore from 🙈':'Oculta solo para ti — restaura desde 🙈',
+    'Hidden words':'Palabras ocultas','Restore':'Restaurar','No hidden words':'No hay palabras ocultas',
+    'Hidden only for you — restore to include them again':'Ocultas solo para ti — restáuralas para incluirlas de nuevo',
+    'Hidden {v0}':'{v0} ocultas','p.{v0}':'pág. {v0}',
     '🔊 Auto-read on':'🔊 Lectura automática activada — repite palabras y ejemplos','🔇 Auto-read off':'🔇 Lectura automática desactivada',
     'Official wordbook':'Libro oficial · basado en exámenes reales',
     'Official wordbook · Day 1 free · rest with Premium/academy':'Libro oficial · Día 1 gratis · el resto con Premium/academia',
@@ -5073,6 +5083,8 @@ async function loadBooksFromDB() {
         }))
 }));
     updateTotalWords();
+    // 숨긴 단어(나에게만 제외) 목록 로드 후 메모리에서 제거
+    await loadHiddenWords(); _stripHiddenWords();
     // 공식 단어장(~6천 단어, 큰 payload)은 비동기로 붙임 → 소유 책 먼저 그려 첫 화면
     // 블로킹을 없애고, 로드 완료 후 현재 화면을 다시 렌더한다.
     appendOfficialBooks().then(() => {
@@ -5193,6 +5205,7 @@ async function appendOfficialBooks() {
       const b = books[i];
       if ((_offIds.has(b.id) || b._officialContent) && !picked.has(b.id)) books.splice(i, 1);
     }
+    _stripHiddenWords();
   } catch(e) { console.warn('[official load]', e); }
 }
 
@@ -5215,6 +5228,90 @@ function removeOfficialFromShelf(id){
   renderOfficialPicker();
   try { render(); } catch(e){}
   toast(TT('책장에서 뺐어요','Removed from shelf'));
+}
+
+// ── 공식·과제 책의 단어 '나에게만 숨기기' ─────────────────────────
+// 공식 단어장은 모두가 공유하므로 진짜 삭제 대신, 사용자별로 숨김(voca_hidden_words).
+// 숨긴 단어는 내 목록·암기·퀴즈·복습·단어 수에서만 빠지고 다른 사용자에겐 그대로.
+let _hiddenWords = new Set();   // 내가 숨긴 word_id 집합
+let _hiddenStash = {};          // bookId → [{pageNum, w}] 숨겨서 메모리에서 뺀 단어(복원 목록용)
+let _hiddenLoaded = false;
+async function loadHiddenWords(){
+  if (!currentUser || !_authToken || _hiddenLoaded) return;
+  try {
+    const rows = await authGet(`/rest/v1/voca_hidden_words?user_id=eq.${currentUser.id}&select=word_id&limit=5000`);
+    if (Array.isArray(rows)) { _hiddenWords = new Set(rows.map(r => r.word_id)); _hiddenLoaded = true; }
+  } catch(e){}
+}
+// 메모리 books 에서 숨긴 단어 제거 (읽기전용 책만) — 여러 번 불려도 안전
+function _stripHiddenWords(){
+  if (!_hiddenLoaded || !_hiddenWords.size) return;
+  let changed = false;
+  (books||[]).forEach(b => {
+    if (!(b._readonly || b._official || b._assigned || b._officialContent)) return;
+    (b.pages||[]).forEach(p => {
+      for (let i = (p.words||[]).length - 1; i >= 0; i--) {
+        const w = p.words[i];
+        if (w && w.id && _hiddenWords.has(w.id)) {
+          p.words.splice(i, 1);
+          (_hiddenStash[b.id] = _hiddenStash[b.id] || []).push({ pageNum: p.num, w });
+          changed = true;
+        }
+      }
+    });
+  });
+  if (changed) updateTotalWords();
+}
+async function hideWordForMe(bookId, pageNum, wordId){
+  const b = findBook(bookId); if (!b) return;
+  const p = findPage(b, pageNum); if (!p) return;
+  const i = (p.words||[]).findIndex(w => w && w.id === wordId);
+  if (i < 0) return;
+  const w = p.words[i];
+  p.words.splice(i, 1);
+  (_hiddenStash[bookId] = _hiddenStash[bookId] || []).push({ pageNum: p.num, w });
+  _hiddenWords.add(wordId); _hiddenLoaded = true;
+  updateTotalWords(); render();
+  toast(TT('나에게만 숨겼어요 — 🙈 숨긴 단어에서 복원할 수 있어요','Hidden for you only — restore from 🙈'));
+  try { await authPost('/rest/v1/voca_hidden_words', { user_id: currentUser.id, word_id: wordId }, 'return=minimal'); } catch(e){}
+}
+async function unhideWord(bookId, wordId){
+  const list = _hiddenStash[bookId] || [];
+  const i = list.findIndex(x => x.w && x.w.id === wordId);
+  if (i < 0) return;
+  const { pageNum, w } = list[i];
+  list.splice(i, 1);
+  _hiddenWords.delete(wordId);
+  const b = findBook(bookId); const p = b && findPage(b, pageNum);
+  if (p) p.words.push(w);
+  updateTotalWords();
+  const ov = document.getElementById('hidden-words-modal'); if (ov) ov.remove();
+  if (list.length) showHiddenWords(bookId);
+  try { render(); } catch(e){}
+  try { await _authDelete(`/rest/v1/voca_hidden_words?user_id=eq.${currentUser.id}&word_id=eq.${wordId}`); } catch(e){}
+}
+function showHiddenWords(bookId){
+  const list = _hiddenStash[bookId] || [];
+  const overlay = document.createElement('div');
+  overlay.id = 'hidden-words-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:flex-end;justify-content:center;';
+  const rows = list.length ? list.map(x => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--ink-05);">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${esc(x.w.en||'')}</div>
+        <div style="font-size:12px;color:var(--ink-60);">${esc(x.w.base||'')} · ${TX(`{v0}쪽`,`p.{v0}`,{v0:esc(String(x.pageNum))})}</div>
+      </div>
+      <button onclick="unhideWord('${jsq(bookId)}','${x.w.id}')" style="flex-shrink:0;background:var(--gold-bg);border:1px solid rgba(28,53,83,0.25);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;font-family:var(--font-body);">${TT('복원','Restore')}</button>
+    </div>`).join('') : `<div class="muted" style="font-size:13px;text-align:center;padding:22px 0;">${TT('숨긴 단어가 없어요','No hidden words')}</div>`;
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:20px 20px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;max-height:80vh;overflow:auto;">
+      <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:2px;">🙈 ${TT('숨긴 단어','Hidden words')} · ${list.length}</div>
+      <div class="muted" style="font-size:12px;margin-bottom:10px;">${TT('나에게만 숨겨진 단어예요 — 복원하면 다시 암기·복습에 포함돼요','Hidden only for you — restore to include them again')}</div>
+      ${rows}
+      <button onclick="document.getElementById('hidden-words-modal').remove()" style="width:100%;margin-top:12px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;padding:10px;font-family:var(--font-body);">${TT('닫기','Close')}</button>
+    </div>`;
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
 }
 // 추가 모달의 '우리가 만든 단어장' 선택 목록 렌더 (개인 사용자 + 단체 관리자)
 async function renderOfficialPicker(){
@@ -7385,6 +7482,8 @@ function render() {
       page._lastSync = Date.now();
       sbFetch(`/rest/v1/voca_words?page_id=eq.${page._pid}&order=created_at`).then(fresh => {
         if (Array.isArray(fresh)) {
+          // 숨긴 단어(나에게만 제외)는 동기화 대상에서 제외 — 아니면 여기서 되살아남
+          fresh = fresh.filter(w => !_hiddenWords.has(w.id));
           // DB가 로컬보다 많으면 (다른 기기에서 추가됨) → DB로 업데이트
           // DB가 로컬과 같거나 적으면 → 로컬 유지 (방금 추가한 게 아직 반영 안 됐을 수도)
           if (fresh.length > (page.words?.length || 0)) {
@@ -7402,9 +7501,9 @@ function render() {
       <div class="scr" style="padding-bottom:110px">
         <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${esc(book.title)} · ${book._official ? String(page.num) : ('Page '+page.num)}</span><span></span></div>
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
-        <div class="muted" style="font-size:11px;margin-top:4px">${TT('기본 뜻 + 문맥 뜻','Meaning + Context')}</div>
+        <div class="muted" style="font-size:11px;margin-top:4px">${TT('기본 뜻 + 문맥 뜻','Meaning + Context')}${(_hiddenStash[book.id]||[]).length?` · <span onclick="showHiddenWords('${jsq(book.id)}')" style="cursor:pointer;color:var(--accent);font-weight:700;">🙈 ${TX(`숨긴 단어 {v0}`,`Hidden {v0}`,{v0:(_hiddenStash[book.id]||[]).length})}</span>`:''}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${esc(w.en)}</div>${(lv&&!/^\d+$/.test(lv))?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${isFav(book.id,page.num,w)?'#f39c12':'var(--ink-40)'};" title="${TT('즐겨찾기','Favorite')}">${isFav(book.id,page.num,w)?'⭐':'☆'}</button>${book._readonly ? `` : `<button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('단어 삭제','Delete word')}">🗑️</button>`}</div><div class="word-item__base">${esc(w.base)}</div><div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${esc(w.sentence)}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${esc(w.en)}</div>${(lv&&!/^\d+$/.test(lv))?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${isFav(book.id,page.num,w)?'#f39c12':'var(--ink-40)'};" title="${TT('즐겨찾기','Favorite')}">${isFav(book.id,page.num,w)?'⭐':'☆'}</button>${book._readonly ? (w.id?`<button onclick="hideWordForMe('${jsq(book.id)}','${jsq(page.num)}','${w.id}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('아는 단어 — 나에게만 숨기기','I know this — hide for me')}">🙈</button>`:``) : `<button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('단어 삭제','Delete word')}">🗑️</button>`}</div><div class="word-item__base">${esc(w.base)}</div><div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${esc(w.sentence)}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${TT('📚 암기 카드','📚 Study')}</button>
@@ -8051,6 +8150,7 @@ async function loadAssignments(force){
       });
       existingIds.add(b.id);
     });
+    _stripHiddenWords();
     // 배정 책 복습 상태 미리 로드(배지용)
     [...new Set(assignments.map(a=>a.book_id))].forEach(bid=>{ try{ loadReviewStatus(bid); }catch(e){} });
     const top = stack[stack.length-1];
