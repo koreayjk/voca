@@ -1508,6 +1508,14 @@ const UI_XL = {
     'Hidden words':'隐藏的单词','Restore':'恢复','No hidden words':'没有隐藏的单词',
     'Hidden only for you — restore to include them again':'这些单词仅对你隐藏 — 恢复后会重新加入背诵和复习',
     'Hidden {v0}':'已隐藏 {v0} 个','p.{v0}':'第{v0}页',
+    'Delete Account':'注销账号','DELETE':'注销',
+    'This permanently deletes <b>all your wordbooks, study records and scores</b>. Active subscriptions are cancelled. <b>This cannot be undone.</b>':'注销后将立即删除<b>所有单词本、学习记录和积分</b>，订阅会自动取消。<b>此操作无法撤销。</b>',
+    'Type <b>{v0}</b> below to continue':'要继续，请在下方输入 <b>{v0}</b>',
+    'Please type {v0} exactly':'请准确输入 {v0}',
+    'Delete permanently':'永久删除','Deleting…':'删除中…',
+    'Your account has been deleted. Thank you for using IM VOCA 🙏':'账号已注销。感谢你使用 IM VOCA 🙏',
+    'Your organization still has members. Remove them first in Org Admin.':'你的团体中还有其他成员，请先在团体管理中处理后再注销。',
+    'Failed to delete account — please try again.':'注销失败 — 请稍后重试。',
     'Set New Password':'设置新密码','Please enter your new password.':'请输入新密码。','New password (6+ characters)':'新密码（6个字符以上）',
     'Custom (type below)':'自定义（在下方填写）','Book category — helps find more accurate meanings':'书籍类型 — 帮助更准确地查找释义',
     // ── 로그인 화면·배너 (혼합형 정리분) ──
@@ -1887,6 +1895,14 @@ const UI_XL = {
     'Hidden words':'Palabras ocultas','Restore':'Restaurar','No hidden words':'No hay palabras ocultas',
     'Hidden only for you — restore to include them again':'Ocultas solo para ti — restáuralas para incluirlas de nuevo',
     'Hidden {v0}':'{v0} ocultas','p.{v0}':'pág. {v0}',
+    'Delete Account':'Eliminar cuenta','DELETE':'ELIMINAR',
+    'This permanently deletes <b>all your wordbooks, study records and scores</b>. Active subscriptions are cancelled. <b>This cannot be undone.</b>':'Esto elimina para siempre <b>todos tus libros, registros de estudio y puntos</b>. Las suscripciones activas se cancelan. <b>No se puede deshacer.</b>',
+    'Type <b>{v0}</b> below to continue':'Escribe <b>{v0}</b> abajo para continuar',
+    'Please type {v0} exactly':'Escribe {v0} exactamente',
+    'Delete permanently':'Eliminar para siempre','Deleting…':'Eliminando…',
+    'Your account has been deleted. Thank you for using IM VOCA 🙏':'Tu cuenta ha sido eliminada. Gracias por usar IM VOCA 🙏',
+    'Your organization still has members. Remove them first in Org Admin.':'Tu organización aún tiene miembros. Quítalos primero en Administración.',
+    'Failed to delete account — please try again.':'No se pudo eliminar la cuenta — inténtalo de nuevo.',
     '🔊 Auto-read on':'🔊 Lectura automática activada — repite palabras y ejemplos','🔇 Auto-read off':'🔇 Lectura automática desactivada',
     'Official wordbook':'Libro oficial · basado en exámenes reales',
     'Official wordbook · Day 1 free · rest with Premium/academy':'Libro oficial · Día 1 gratis · el resto con Premium/academia',
@@ -4337,6 +4353,7 @@ function showMyMenu() {
       ${row('✉️', TT('문의하기','Contact Us'), "document.getElementById('my-modal').remove();contactSupport()")}
       ${row(isDark?'☀️':'🌙', isDark?(TT('라이트 모드','Light Mode')):(TT('다크 모드','Dark Mode')), "document.getElementById('my-modal').remove();toggleDarkMode()")}
       ${row('🚪', TT('로그아웃','Logout'), "document.getElementById('my-modal').remove();sbSignOut()")}
+      ${row('🗑️', `<span style="color:#c0392b;">${TT('회원 탈퇴','Delete Account')}</span>`, "document.getElementById('my-modal').remove();showDeleteAccount()")}
       <button onclick="document.getElementById('my-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('닫기','Close')}</button>
     </div>`;
   overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
@@ -5053,6 +5070,58 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
     window._suType = 'personal';
     renderLogin('login');
   } catch(e) { toast('가입 오류: ' + e.message); }
+}
+
+// ── 회원 탈퇴 (앱스토어 요건: 앱 내 계정 삭제) ─────────────────────
+// delete-account Edge Function 호출 → 모든 데이터·구독·계정 삭제. 되돌릴 수 없음.
+function showDeleteAccount(){
+  const overlay = document.createElement('div');
+  overlay.id = 'delacct-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const word = TT('탈퇴','DELETE');
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:24px;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.25);">
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:700;color:#c0392b;margin-bottom:10px;">🗑️ ${TT('회원 탈퇴','Delete Account')}</div>
+      <div style="font-size:13px;color:var(--ink-100);line-height:1.7;margin-bottom:12px;">${TT('탈퇴하면 <b>모든 단어장·학습 기록·점수</b>가 즉시 삭제되고 <b>되돌릴 수 없어요</b>. 구독 중이면 자동으로 해지돼요.','This permanently deletes <b>all your wordbooks, study records and scores</b>. Active subscriptions are cancelled. <b>This cannot be undone.</b>')}</div>
+      <div style="font-size:12px;color:var(--ink-60);margin-bottom:8px;">${TX(`계속하려면 아래에 <b>{v0}</b> 라고 입력하세요`,`Type <b>{v0}</b> below to continue`,{v0:word})}</div>
+      <input id="delacct-word" type="text" autocomplete="off" style="width:100%;box-sizing:border-box;border:1.5px solid #c0392b;border-radius:10px;padding:11px 12px;font-size:14px;font-family:var(--font-body);background:var(--bg-page);color:var(--ink-100);margin-bottom:12px;" placeholder="${word}">
+      <button id="delacct-go" onclick="doDeleteAccount()" style="width:100%;background:#c0392b;color:#fff;border:none;border-radius:11px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--font-body);">${TT('영구 삭제하기','Delete permanently')}</button>
+      <button onclick="document.getElementById('delacct-modal').remove()" style="width:100%;margin-top:8px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;padding:10px;font-family:var(--font-body);">${TT('취소','Cancel')}</button>
+    </div>`;
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+}
+async function doDeleteAccount(){
+  const word = TT('탈퇴','DELETE');
+  const inp = document.getElementById('delacct-word');
+  if (!inp || inp.value.trim() !== word) { toast(TX(`{v0} 라고 정확히 입력해주세요`,`Please type {v0} exactly`,{v0:word})); inp?.focus(); return; }
+  const btn = document.getElementById('delacct-go');
+  if (btn) { btn.disabled = true; btn.textContent = TT('삭제 중…','Deleting…'); }
+  try {
+    const res = await fetch(SB_URL + '/functions/v1/delete-account', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + _authToken },
+      body: '{}'
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      try { idbSet(_booksCacheKey(), null); } catch(e){}
+      try { localStorage.removeItem('imvoca.session'); localStorage.removeItem(_myOfficialKey()); } catch(e){}
+      document.getElementById('delacct-modal')?.remove();
+      toast(TT('탈퇴가 완료됐어요. 그동안 함께해주셔서 감사합니다 🙏','Your account has been deleted. Thank you for using IM VOCA 🙏'), 5000);
+      _authToken = null; currentUser = null; books = [];
+      setTimeout(() => renderLogin(), 800);
+      return;
+    }
+    if (data.error === 'org_has_members') {
+      toast(TT('단체에 다른 멤버가 있어 탈퇴할 수 없어요. 단체 관리에서 멤버를 먼저 정리해주세요.','Your organization still has members. Remove them first in Org Admin.'), 5000);
+    } else {
+      toast(TT('탈퇴 처리에 실패했어요. 잠시 후 다시 시도해주세요.','Failed to delete account — please try again.'));
+    }
+  } catch(e) {
+    toast(TT('네트워크 오류','Network error'));
+  }
+  if (btn) { btn.disabled = false; btn.textContent = TT('영구 삭제하기','Delete permanently'); }
 }
 
 async function sbSignOut() {
