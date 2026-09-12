@@ -10673,9 +10673,11 @@ if ('serviceWorker' in navigator) {
   });
 }
 // HTML이 백그라운드에서 갱신됨: 탭하면 새로고침으로 새 버전 적용
+let _htmlUpdateShown = false;   // 한 페이지 세션에 한 번만 (토스트가 사라진 뒤 재등장 방지)
 function _promptHtmlUpdate(){
   try {
-    if (document.getElementById('sw-update-bar')) return;
+    if (_htmlUpdateShown || document.getElementById('sw-update-bar')) return;
+    _htmlUpdateShown = true;
     const bar = document.createElement('div');
     bar.id = 'sw-update-bar';
     bar.style.cssText = 'position:fixed;left:50%;bottom:88px;transform:translateX(-50%);z-index:99999;background:#1c3553;color:#fff;border-radius:999px;padding:11px 18px;font-size:13px;font-family:var(--font-body,sans-serif);box-shadow:0 6px 22px rgba(0,0,0,0.3);cursor:pointer;display:flex;align-items:center;gap:10px;max-width:calc(100% - 32px);';
