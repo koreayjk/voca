@@ -6,14 +6,20 @@
   "start_url": "https://imvoca.app/",
   "scope": "https://imvoca.app/",
   "display": "standalone",
-  "display_override": ["standalone"],
+  "display_override": [
+    "standalone"
+  ],
   "background_color": "#f3ece0",
   "theme_color": "#1c3553",
   "orientation": "portrait",
   "lang": "ko",
   "dir": "ltr",
-  "categories": ["education", "books", "productivity"],
- "icons": [
+  "categories": [
+    "education",
+    "books",
+    "productivity"
+  ],
+  "icons": [
     {
       "src": "https://imvoca.app/icon-192.png",
       "sizes": "192x192",
@@ -61,6 +67,13 @@
       "type": "image/png",
       "form_factor": "narrow",
       "label": "에빙하우스 망각곡선 복습"
+    },
+    {
+      "src": "https://imvoca.app/screenshot5.png",
+      "sizes": "1206x2622",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "명예의 전당 — 친구와 점수 경쟁"
     }
   ],
   "shortcuts": [
