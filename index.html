@@ -1,5 +1,17 @@
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics 4 (GA4) — 측정 ID G-GYR0GQC304 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYR0GQC304"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  // anonymize_ip: 개인정보 보호를 위해 IP 마지막 자리 익명화
+  gtag('config', 'G-GYR0GQC304', { anonymize_ip: true });
+  // 앱 어디서나 쓰는 전환 추적 헬퍼 (GA4 미로드/차단 시에도 오류 없이 무시됨)
+  window.track = function(name, params){ try { gtag('event', name, params || {}); } catch(e){} };
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="preconnect" href="https://ziatqkjlafucqtwshhla.supabase.co" crossorigin>
 <link rel="icon" type="image/png" href="https://imvoca.app/2.png">
@@ -3355,6 +3367,7 @@ async function startOrgBilling(){
   if (!confirm(TT('학원 프리미엄 결제를 시작할까요?\n\n원장님을 제외한 모든 구성원(선생님·학생) 1명당 매월 $2.99로 청구돼요. 결제하면 전원이 프리미엄(AI 스캔 하루 20장)이 돼요.','Start academy billing? $2.99/month per member (teachers + students, excluding the primary admin). Everyone gets Premium (20 AI scans/day).'))) return;
   try{
     toast(TT('결제 페이지로 이동 중...','Redirecting to checkout...'));
+    track('begin_checkout', { plan: 'org' });
     const res = await fetch(SB_URL+'/functions/v1/create-checkout',{
       method:'POST',
       headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+_authToken},
@@ -4875,6 +4888,7 @@ function signInWithProvider(provider){
     // 회원가입에서는 구글 계정 선택 화면을 강제로 띄운다.
     // (브라우저에 이미 로그인된 계정으로 자동 진행돼 원치 않는 아이디로 가입/로그인되는 문제 방지)
     if (onSignupTab) authUrl += '&prompt=select_account';
+    track(onSignupTab ? 'sign_up' : 'login', { method: provider });
     location.href = authUrl;
   }catch(e){ toast('로그인 이동 실패: ' + e.message); }
 }
@@ -5092,6 +5106,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
     else if (org) msg = TX(`가입 완료! '{v0}' 승인 후 이용할 수 있어요 😊`,`Signed up! Active after '{v0}' approves you.`,{v0:(org.name)});
     else msg = TT('가입 완료! 바로 로그인해서 사용할 수 있어요 😊','Signed up! Log in to start.');
     toast(msg);
+    track('sign_up', { method: 'email', account_type: acctType || 'personal' });
     window._suType = 'personal';
     renderLogin('login');
   } catch(e) { toast('가입 오류: ' + e.message); }
@@ -6675,6 +6690,7 @@ async function finalizeMultiScan() {
   updateTotalWords();
   window._multiImgData=null; window._multiAccumWords=[]; window._multiPageNums=[]; window._aiPageNum='';
   toast(TX(`✅ Page {v0} 저장 완료 ({v1}개)`,`✅ Page {v0} saved ({v1})`,{v0:(finalTitle),v1:(words.length)}));
+  track('scan_saved', { words: words.length });
   stack = [{ name:'library' }, { name:'book', bookId:bId }, { name:'page-words', bookId:bId, pageNum:finalTitle }];
   render();
 }
@@ -7216,7 +7232,7 @@ function buildDockBottom() {
     + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${TT('⚙️ 관리','⚙️ Admin')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${TT('상태','Health')}</button>` : '')
-    + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
+    + (userPlan!=='premium' ? `<button class="dock-mini dock-mini--accent" onclick="track('view_pricing',{from:'sidebar'});location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
     + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${TT('알림','Notices')}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
     + `<button class="dock-mini" onclick="showMyMenu()">${TT('👤 마이페이지','👤 My')}</button>`
     + ((userOrgRole==='owner' || isPendingOwner())
@@ -7416,7 +7432,7 @@ function render() {
         <div class="topbar-actions" style="position:absolute;top:14px;left:22px;right:22px;z-index:30;">
           <div class="topbar-scroll">
           ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
-          ${userPlan!=='premium'?`<button onclick="location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
+          ${userPlan!=='premium'?`<button onclick="track('view_pricing',{from:'topbar'});location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           ${(userOrgRole==='owner' || isPendingOwner())?`<button onclick="goOrgAdmin()" class="topbar-btn" style="background:var(--gold-bg);border:1px solid rgba(28,53,83,0.25);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:var(--accent);font-weight:800;">${userOrgRole==='owner'?(TT('🏫 단체 관리','🏫 Org Admin')):(TT('🏫 단체 만들기','🏫 Create Org'))}</button>`:''}
           <button onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>`:''}
