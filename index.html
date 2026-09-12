@@ -1509,6 +1509,8 @@ const UI_XL = {
     'Hidden only for you — restore to include them again':'这些单词仅对你隐藏 — 恢复后会重新加入背诵和复习',
     'Hidden {v0}':'已隐藏 {v0} 个','p.{v0}':'第{v0}页',
     'Delete Account':'注销账号','DELETE':'注销',
+    'Report':'举报','Reported — an admin will review it 🙏':'已举报，管理员会进行审核 🙏',
+    'Report this review as inappropriate?\nIt will be hidden for you and reviewed by an admin.':'要举报这条评价为不当内容吗？\n举报后将在你的界面隐藏，并由管理员审核。',
     'This permanently deletes <b>all your wordbooks, study records and scores</b>. Active subscriptions are cancelled. <b>This cannot be undone.</b>':'注销后将立即删除<b>所有单词本、学习记录和积分</b>，订阅会自动取消。<b>此操作无法撤销。</b>',
     'Type <b>{v0}</b> below to continue':'要继续，请在下方输入 <b>{v0}</b>',
     'Please type {v0} exactly':'请准确输入 {v0}',
@@ -1896,6 +1898,8 @@ const UI_XL = {
     'Hidden only for you — restore to include them again':'Ocultas solo para ti — restáuralas para incluirlas de nuevo',
     'Hidden {v0}':'{v0} ocultas','p.{v0}':'pág. {v0}',
     'Delete Account':'Eliminar cuenta','DELETE':'ELIMINAR',
+    'Report':'Reportar','Reported — an admin will review it 🙏':'Reportado — un administrador lo revisará 🙏',
+    'Report this review as inappropriate?\nIt will be hidden for you and reviewed by an admin.':'¿Reportar esta opinión como inapropiada?\nSe ocultará para ti y un administrador la revisará.',
     'This permanently deletes <b>all your wordbooks, study records and scores</b>. Active subscriptions are cancelled. <b>This cannot be undone.</b>':'Esto elimina para siempre <b>todos tus libros, registros de estudio y puntos</b>. Las suscripciones activas se cancelan. <b>No se puede deshacer.</b>',
     'Type <b>{v0}</b> below to continue':'Escribe <b>{v0}</b> abajo para continuar',
     'Please type {v0} exactly':'Escribe {v0} exactamente',
@@ -2369,13 +2373,18 @@ function _renderReviewList(){
   const box = document.getElementById('rv-list'); if(!box) return;
   const ko = userNativeLang==='ko';
   const admin = _isEventAdmin();
+  // 내가 신고한 후기는 내 화면에서 숨김 (관리자는 검토해야 하므로 계속 보임)
+  if (!admin) { const rep = new Set(_rvReported()); if (rep.size) _reviews = _reviews.filter(x => !rep.has(String(x.id))); }
   if(!_reviews.length){ box.innerHTML = `<div style="text-align:center;color:var(--ink-40);font-size:13px;padding:26px 0;">${TT('아직 후기가 없어요. 첫 후기를 남겨보세요! 🙌','No reviews yet — be the first!')}</div>`; return; }
   box.innerHTML = _reviews.map(r=>{
     let date=''; try{ date=new Date(r.created_at).toLocaleDateString(uiLocale(),{month:'short',day:'numeric'}); }catch(e){}
     const mine = currentUser && r.user_id===currentUser.id;
+    // 신고: 남의 후기에만 (구글플레이 UGC 정책 — 부적절한 콘텐츠 신고 수단 필요)
+    const reportBtn = (!mine && currentUser)
+      ? `<button onclick="reportReview('${r.id}')" style="background:none;border:none;color:var(--ink-40);font-size:11px;cursor:pointer;margin-top:8px;padding:0;">🚩 ${TT('신고','Report')}</button>` : '';
     const adminControls = admin
-      ? `<div style="margin-top:8px;"><button onclick="deleteReview('${r.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#c0392b;">${TT('삭제','Delete')}</button></div>`
-      : (mine ? `<button onclick="deleteReview('${r.id}')" style="background:none;border:none;color:var(--ink-40);font-size:11px;cursor:pointer;margin-top:8px;padding:0;">${TT('내 후기 삭제','Delete mine')}</button>` : '');
+      ? `<div style="margin-top:8px;display:flex;gap:10px;align-items:center;"><button onclick="deleteReview('${r.id}')" style="border:1px solid var(--ink-12);background:var(--bg-card);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#c0392b;">${TT('삭제','Delete')}</button>${reportBtn}</div>`
+      : (mine ? `<button onclick="deleteReview('${r.id}')" style="background:none;border:none;color:var(--ink-40);font-size:11px;cursor:pointer;margin-top:8px;padding:0;">${TT('내 후기 삭제','Delete mine')}</button>` : reportBtn);
     return `<div style="border:1px solid ${mine?'var(--accent)':'var(--ink-07)'};background:var(--bg-card);border-radius:14px;padding:14px 15px;margin-bottom:12px;${mine?'box-shadow:0 0 0 2px var(--gold-bg);':''}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <span style="font-weight:700;font-size:14px;color:var(--ink-100);">${esc(r.user_name||(TT('익명','Anonymous')))}</span>
@@ -2463,6 +2472,22 @@ async function submitReview(){
     logError('write_fail','submitReview', res?('status '+res.status):'no response', {});
   }
   if(btn){ btn.disabled=false; btn.textContent=TT('등록하기','Submit'); }
+}
+
+// ── 후기 신고 (구글플레이 UGC 정책 요건) ─────────────────────────
+// 신고하면 ① 내 화면에서 즉시 숨김 ② 관리자에게 알림(voca_errors 경유)
+// 같은 후기를 여러 명이 신고하면 관리자가 확인 후 삭제.
+function _rvReportKey(){ return 'imvoca_rvreport_' + ((currentUser && currentUser.id) || 'anon'); }
+function _rvReported(){ try{ const v=JSON.parse(localStorage.getItem(_rvReportKey())||'[]'); return Array.isArray(v)?v:[]; }catch(e){ return []; } }
+async function reportReview(id){
+  const r = _reviews.find(x=>String(x.id)===String(id));
+  if (!r) return;
+  if (!confirm(TT('이 후기를 부적절한 내용으로 신고할까요?\n신고하면 내 화면에서 숨겨지고 관리자가 검토해요.','Report this review as inappropriate?\nIt will be hidden for you and reviewed by an admin.'))) return;
+  try { const list=_rvReported(); list.push(String(id)); localStorage.setItem(_rvReportKey(), JSON.stringify([...new Set(list)])); } catch(e){}
+  _reviews = _reviews.filter(x=>String(x.id)!==String(id));
+  _renderReviewList();
+  toast(TT('신고했어요. 관리자가 검토할게요 🙏','Reported — an admin will review it 🙏'));
+  try { logError('report','review', 'review reported', { review_id:String(id), by:(currentUser&&currentUser.id)||null, author:r.user_id||null, body:String(r.body||'').slice(0,200) }); } catch(e){}
 }
 
 async function deleteReview(id){
