@@ -74,12 +74,12 @@ body.dark .scr-scroll { color: #f0ece4; }
 
 /* 텍스트 */
 body.dark h1, body.dark h2, body.dark h3,
-body.dark .h-display, body.dark .book-tile__title,
+body.dark .h-display, body.dark .book-tile__title, body.dark .book-row__title,
 body.dark .book-hero__title, body.dark .sect-row__name,
 body.dark .page-row__num, body.dark .word-item__en,
 body.dark .scope-card__name, 
 
-body.dark .muted, body.dark .book-tile__sub,
+body.dark .muted, body.dark .book-tile__sub, body.dark .book-row__sub,
 body.dark .book-hero__author, body.dark .label-xs,
 body.dark .word-item__base, body.dark .word-item__ctx,
 body.dark .page-row__right, body.dark .sect-row__count { color: rgba(240,236,228,0.55); }
@@ -432,6 +432,73 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 }
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
 .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; margin-top: 24px; padding: 0 6px; }
+/* ── 책장 도구줄: 정렬 · 순서 편집 · 보기 방식 ─────────────────── */
+.shelf-tools { display: flex; align-items: center; gap: 8px; margin-top: 18px; padding: 0 6px; flex-wrap: wrap; }
+.shelf-spacer { flex: 1 1 auto; min-width: 0; }
+.shelf-sort { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 12px; color: var(--ink-60); }
+.shelf-sort select {
+  font-family: var(--font-body); font-size: 12.5px; font-weight: 700; color: var(--ink-100);
+  background: var(--bg-card); border: 1px solid var(--ink-12); border-radius: 999px;
+  padding: 6px 26px 6px 11px; cursor: pointer; -webkit-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 14px) 52%, calc(100% - 9px) 52%;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+}
+.shelf-btn {
+  font-family: var(--font-body); font-size: 12.5px; font-weight: 700; color: var(--ink-60);
+  background: var(--bg-card); border: 1px solid var(--ink-12); border-radius: 999px;
+  padding: 6px 13px; cursor: pointer; white-space: nowrap;
+}
+.shelf-btn--on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.shelf-seg { display: inline-flex; border: 1px solid var(--ink-12); border-radius: 999px; overflow: hidden; background: var(--bg-card); }
+.shelf-seg button {
+  font-size: 14px; line-height: 1; color: var(--ink-40); background: none; border: none;
+  padding: 7px 12px; cursor: pointer;
+}
+.shelf-seg button.on { background: var(--accent); color: #fff; }
+.shelf-hint { margin: 10px 6px 0; font-size: 11.5px; color: var(--ink-60); line-height: 1.6; }
+
+/* ── 리스트 보기 ──────────────────────────────────────────────── */
+.book-list { display: flex; flex-direction: column; margin-top: 16px; padding: 0 6px; }
+.book-row {
+  display: flex; align-items: center; gap: 13px; padding: 11px 4px;
+  border-bottom: 1px solid var(--ink-07); cursor: pointer;
+}
+.book-row:last-child { border-bottom: none; }
+.book-row__cover {
+  width: 42px; height: 58px; flex-shrink: 0; border-radius: 5px; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(40,25,10,0.22); display: flex; align-items: center; justify-content: center;
+}
+.book-row__cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.book-row__cover span { font-family: var(--font-display); font-size: 19px; font-weight: 600; color: rgba(255,255,255,0.92); }
+.book-row__meta { flex: 1; min-width: 0; }
+.book-row__title {
+  font-family: var(--font-display); font-size: 15px; font-weight: 500; color: var(--ink-100);
+  letter-spacing: -0.01em; line-height: 1.3; overflow-wrap: anywhere;
+}
+.book-row__tag { font-family: var(--font-body); font-size: 10px; font-weight: 800; color: #c0392b; white-space: nowrap; }
+.book-row__sub { font-family: var(--font-body); font-size: 11.5px; color: var(--ink-60); margin-top: 3px; }
+.book-row__chev { color: var(--ink-40); font-size: 20px; flex-shrink: 0; line-height: 1; }
+
+/* ── 순서 편집 ────────────────────────────────────────────────── */
+.tile-move {
+  position: absolute; inset: 0; z-index: 3; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: rgba(22,16,10,0.34); backdrop-filter: blur(1px);
+}
+.tile-move--row { position: static; inset: auto; background: none; backdrop-filter: none; gap: 6px; flex-shrink: 0; border-radius: 0; }
+.tile-move button {
+  width: 34px; height: 34px; border-radius: 10px; border: none; cursor: pointer;
+  background: rgba(255,255,255,0.94); color: #1c3553; font-size: 13px; font-weight: 700; line-height: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+.tile-move--row button { width: 30px; height: 30px; border-radius: 9px; }
+.tile-move--row button { background: var(--bg-card); border: 1px solid var(--ink-12); color: var(--ink-60); box-shadow: none; }
+.tile-move button[disabled] { opacity: 0.3; cursor: default; }
+.book-tile.is-edit, .book-row.is-edit { touch-action: none; -webkit-user-select: none; user-select: none; }
+.book-tile.is-edit .book-cover { box-shadow: 0 0 0 2px var(--accent); border-radius: 10px; }
+.shelf-drag { opacity: 0.45; }
+.shelf-drop-target { outline: 2px dashed var(--accent); outline-offset: 3px; border-radius: 10px; }
 .book-tile { cursor: pointer; }
 .book-cover { position: relative; width: 100%; aspect-ratio: 30/43; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 13px 15px; color: #fff; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.02; overflow: hidden; box-shadow: 0 1px 2px rgba(40,25,10,0.12), 0 10px 22px rgba(40,25,10,0.20), 0 22px 46px rgba(40,25,10,0.14); transition: transform .18s ease, box-shadow .18s ease; }
 /* 표지 상단 광택 + 미세한 안쪽 테두리로 '실제 책' 질감 */
@@ -1512,6 +1579,10 @@ const UI_XL = {
     'Quiz':'测验','✨ Update available':'✨ 有新版本','Refresh':'刷新',
     'Translated from Korean':'已从韩语翻译','Show original':'查看原文','Show translation':'查看译文','About':'应用介绍',
     'Your shelf is empty':'书架还是空的',
+    'Sort':'排序','Newest':'最新','Oldest':'最早','Title':'书名','My order':'我的顺序',
+    'Reorder':'排序','Done':'完成','Sort bookshelf':'书架排序','View':'显示方式',
+    'Cover view':'大封面','List view':'列表','Up':'上移','Down':'下移',
+    'Long-press a book to drag it, or use ▲▼ to move one step.':'长按书本拖动，或用 ▲▼ 逐格移动。',
     'Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.':'点击<b>添加书籍</b>加入官方单词本，或拍摄教材创建单词本。<br>即使书架上没有书，布置作业和出题也照常可用。',
     'Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.':'点击<b>添加书籍</b>创建你的第一本单词本。<br>拍一张照片，剩下的交给 AI。',
     'Official books':'官方单词本','Scan a page':'拍摄教材','Type words':'手动输入',
@@ -1901,6 +1972,10 @@ const UI_XL = {
     'Quiz':'Test','✨ Update available':'✨ Actualización disponible','Refresh':'Actualizar',
     'Translated from Korean':'Traducido del coreano','Show original':'Ver original','Show translation':'Ver traducción','About':'Acerca de la app',
     'Your shelf is empty':'Tu estantería está vacía',
+    'Sort':'Orden','Newest':'Recientes','Oldest':'Antiguos','Title':'Título','My order':'Mi orden',
+    'Reorder':'Ordenar','Done':'Listo','Sort bookshelf':'Ordenar estantería','View':'Vista',
+    'Cover view':'Portadas','List view':'Lista','Up':'Subir','Down':'Bajar',
+    'Long-press a book to drag it, or use ▲▼ to move one step.':'Mantén pulsado un libro para arrastrarlo, o usa ▲▼ para moverlo un paso.',
     'Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.':'Toca <b>Añadir libro</b> para agregar libros oficiales o fotografiar un libro.<br>Asignar y crear exámenes funciona aunque no tengas libros en la estantería.',
     'Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.':'Toca <b>Añadir libro</b> para crear tu primer cuaderno de vocabulario.<br>Una foto y la IA hace el resto.',
     'Official books':'Libros oficiales','Scan a page':'Fotografiar página','Type words':'Escribir a mano',
@@ -5208,6 +5283,7 @@ async function loadBooksFromDB() {
     if (!Array.isArray(bd)) { console.error('DB load failed after retries'); return; }
     books = bd.map(b => ({
       id: b.id, title: b.title, author: b.author, color: b.color,
+      _added: b.created_at || '',          // 책장 정렬(최신순) 기준
       desc: b.description || '', cover: b.is_official ? _officialCover(b.title, b.cover_url) : (b.cover_url || ''), category: b.category || 'general',
       _officialContent: !!b.is_official, // 공식 콘텐츠 책: 촬영/직접입력 버튼 숨김(소유자 본인이 봐도)
       // 소유자 본인이 봐도 공식 책은 잠금(Day1만 무료) 적용 → _official/_readonly 부여(무료=다 락, 유료만 풀림)
@@ -5272,6 +5348,7 @@ async function ensureOfficialCatalog(){
 function _mapOfficialBook(b){
   return {
     id: b.id, title: b.title, author: b.author, color: b.color,
+    _added: (getMyOfficialAt()[b.id] || b.created_at || ''),   // 책장에 담은 시각
     desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
     _official: true, _readonly: true, _officialContent: true,
     pages: (b.voca_pages || [])
@@ -5286,6 +5363,94 @@ function _mapOfficialBook(b){
 }
 // 개인(비단체) 사용자가 '추가'한 공식책 id 목록 — 기기별 기억(학습 진도는 DB에 저장돼 기기 무관 유지)
 function _myOfficialKey(){ return 'imvoca_offbooks_' + ((currentUser && currentUser.id) || 'anon'); }
+// 공식책을 '언제 책장에 담았는지' — 최신순 정렬에서 내가 만든 책과 동일하게 취급하기 위해 기록.
+// (공식책 행의 created_at 은 모두가 공유하는 원본 생성일이라 개인 책장 순서로는 못 쓴다)
+function _myOfficialAtKey(){ return 'imvoca_offbooks_at_' + ((currentUser && currentUser.id) || 'anon'); }
+function getMyOfficialAt(){
+  try { const v = JSON.parse(localStorage.getItem(_myOfficialAtKey())||'{}'); return (v && typeof v==='object') ? v : {}; } catch(e){ return {}; }
+}
+function _setMyOfficialAt(id, iso){
+  try { const m = getMyOfficialAt(); m[id] = iso; localStorage.setItem(_myOfficialAtKey(), JSON.stringify(m)); } catch(e){}
+}
+
+// ── 책장 정렬 / 보기 모드 ──────────────────────────────────────────
+// 정렬: recent(기본·최신순) | oldest | title | custom(내가 직접 옮긴 순서)
+// 보기: grid(기본·표지 크게) | list(작은 표지 + 제목)
+const SHELF_SORTS = ['recent','oldest','title','custom'];
+function _shelfKey(n){ return 'imvoca_shelf' + n + '_' + ((currentUser && currentUser.id) || 'anon'); }
+function getShelfSort(){ try { const v = localStorage.getItem(_shelfKey('Sort')); return SHELF_SORTS.indexOf(v)>=0 ? v : 'recent'; } catch(e){ return 'recent'; } }
+function getShelfView(){ try { return localStorage.getItem(_shelfKey('View'))==='list' ? 'list' : 'grid'; } catch(e){ return 'grid'; } }
+function getShelfOrder(){ try { const v = JSON.parse(localStorage.getItem(_shelfKey('Order'))||'[]'); return Array.isArray(v)?v:[]; } catch(e){ return []; } }
+function _setShelfOrder(ids){ try { localStorage.setItem(_shelfKey('Order'), JSON.stringify(ids)); } catch(e){} }
+let _shelfEditing = false;   // 순서 편집 모드(▲▼ 노출 + 드래그 활성 + 탭해도 안 열림)
+
+function setShelfSort(v){
+  if (SHELF_SORTS.indexOf(v) < 0) return;
+  // '내 순서'로 처음 들어오면 지금 보이는 순서를 그대로 출발점으로 굳힌다 (책이 갑자기 뒤섞이지 않게)
+  if (v === 'custom' && !getShelfOrder().length) _setShelfOrder(sortedShelfBooks().map(b=>b.id));
+  try { localStorage.setItem(_shelfKey('Sort'), v); } catch(e){}
+  if (v !== 'custom') _shelfEditing = false;
+  try { renderKeepScroll(); } catch(e){ render(); }
+}
+function setShelfView(v){
+  try { localStorage.setItem(_shelfKey('View'), v==='list'?'list':'grid'); } catch(e){}
+  try { renderKeepScroll(); } catch(e){ render(); }
+}
+function toggleShelfEdit(){
+  _shelfEditing = !_shelfEditing;
+  // 편집을 시작하면 자동으로 '내 순서'로 전환 — 옮겨놓고 정렬에 덮어써지는 일이 없도록
+  if (_shelfEditing && getShelfSort() !== 'custom') { setShelfSort('custom'); return; }
+  try { renderKeepScroll(); } catch(e){ render(); }
+}
+
+// 이 책을 책장에 담은 시각 (공식책은 개인 기록 우선)
+function _bookAddedAt(b){
+  if (b && b._officialContent) { const m = getMyOfficialAt(); if (m[b.id]) return m[b.id]; }
+  return (b && b._added) || '';
+}
+// 현재 정렬 기준으로 정돈한 책 목록 (books 원본은 건드리지 않는다)
+function sortedShelfBooks(){
+  const list = books.slice();
+  const mode = getShelfSort();
+  const newest = (a,b) => String(_bookAddedAt(b)).localeCompare(String(_bookAddedAt(a)));
+  if (mode === 'title')  return list.sort((a,b) => String(a.title||'').localeCompare(String(b.title||''), undefined, { numeric:true, sensitivity:'base' }));
+  if (mode === 'oldest') return list.sort((a,b) => String(_bookAddedAt(a)).localeCompare(String(_bookAddedAt(b))));
+  if (mode === 'custom') {
+    const pos = new Map(getShelfOrder().map((id,i) => [id,i]));
+    // 저장된 순서에 없는 책 = 그 뒤에 새로 담은 책 → 맨 위로 (그들끼리는 최신순)
+    return list.sort((a,b) => {
+      const pa = pos.has(a.id) ? pos.get(a.id) : -1;
+      const pb = pos.has(b.id) ? pos.get(b.id) : -1;
+      if (pa < 0 && pb < 0) return newest(a,b);
+      if (pa < 0) return -1;
+      if (pb < 0) return 1;
+      return pa - pb;
+    });
+  }
+  return list.sort(newest);   // recent (기본)
+}
+
+// ▲▼ 한 칸 이동
+function moveShelfBook(id, dir){
+  const cur = sortedShelfBooks().map(b=>b.id);
+  const i = cur.indexOf(id), j = i + dir;
+  if (i < 0 || j < 0 || j >= cur.length) return;
+  cur.splice(j, 0, cur.splice(i,1)[0]);
+  _setShelfOrder(cur);
+  try { localStorage.setItem(_shelfKey('Sort'), 'custom'); } catch(e){}
+  try { renderKeepScroll(); } catch(e){ render(); }
+}
+// 드래그해서 다른 책 자리에 놓기
+function dropShelfBook(dragId, targetId){
+  if (!dragId || !targetId || dragId === targetId) return;
+  const cur = sortedShelfBooks().map(b=>b.id);
+  const from = cur.indexOf(dragId), to = cur.indexOf(targetId);
+  if (from < 0 || to < 0) return;
+  cur.splice(to, 0, cur.splice(from,1)[0]);
+  _setShelfOrder(cur);
+  try { localStorage.setItem(_shelfKey('Sort'), 'custom'); } catch(e){}
+  try { renderKeepScroll(); } catch(e){ render(); }
+}
 function getMyOfficialIds(){
   try { const v = JSON.parse(localStorage.getItem(_myOfficialKey())||'[]'); return Array.isArray(v)?v:[]; } catch(e){ return []; }
 }
@@ -5361,6 +5526,7 @@ function addOfficialToShelf(id){
   const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
   const row = od.find(b => b.id === id);
   if (!row) return;
+  _setMyOfficialAt(id, new Date().toISOString());   // 최신순 정렬에서 방금 담은 책이 맨 위로
   if (!books.some(b => b.id === id)) books.push(_mapOfficialBook(row));
   _setMyOfficialIds([...getMyOfficialIds(), id]);
   try { loadReviewStatus(id); } catch(e){}
@@ -7371,7 +7537,8 @@ function render() {
     //  사라지던 버그 방지 — 원장은 배정하는 사람이지 그 과제를 받는 학생이 아님)
     // 책장 그리드: 개인 책 + 공식 책 + 배정받은 과제 책까지 모두 표시.
     // (학생이 과제로 받은 단어장도 동일한 표지의 책 타일로 보이게 — 과제는 '📌 과제' 스티커로 구분)
-    const myBooks = books;
+    const myBooks = sortedShelfBooks();
+    const _sv = getShelfView(), _ss = getShelfSort();
     root.innerHTML = `
       <div class="scr scr-wide scr-shelf" style="padding-bottom:90px;padding-top:50px;">
         <div class="lib-header">
@@ -7415,19 +7582,59 @@ function render() {
             </div>
             <button class="btn btn-solid" style="padding:13px 26px;font-size:14px;" onclick="openAddBookModal()">＋ ${TT('책 추가','Add Book')}</button>
           </div>` : ''}
-          <div class="book-grid">
-            ${myBooks.map(b=>`
-              <div class="book-tile" onclick="push({name:'book',bookId:'${b.id}'})">
+          ${myBooks.length>1?`
+          <div class="shelf-tools">
+            <label class="shelf-sort">
+              <span>${TT('정렬','Sort')}</span>
+              <select id="shelf-sort-sel" onchange="setShelfSort(this.value)" aria-label="${TT('책장 정렬','Sort bookshelf')}">
+                <option value="recent" ${_ss==='recent'?'selected':''}>${TT('최신순','Newest')}</option>
+                <option value="oldest" ${_ss==='oldest'?'selected':''}>${TT('오래된순','Oldest')}</option>
+                <option value="title"  ${_ss==='title' ?'selected':''}>${TT('이름순','Title')}</option>
+                <option value="custom" ${_ss==='custom'?'selected':''}>${TT('내 순서','My order')}</option>
+              </select>
+            </label>
+            <div class="shelf-spacer"></div>
+            <button class="shelf-btn${_shelfEditing?' shelf-btn--on':''}" onclick="toggleShelfEdit()" title="${TT('순서 편집','Reorder')}">${_shelfEditing?('✓ '+TT('완료','Done')):('⇅ '+TT('순서','Reorder'))}</button>
+            <div class="shelf-seg" role="group" aria-label="${TT('보기 방식','View')}">
+              <button class="${_sv==='grid'?'on':''}" onclick="setShelfView('grid')" title="${TT('표지 크게 보기','Cover view')}" aria-pressed="${_sv==='grid'}">▦</button>
+              <button class="${_sv==='list'?'on':''}" onclick="setShelfView('list')" title="${TT('목록으로 보기','List view')}" aria-pressed="${_sv==='list'}">☰</button>
+            </div>
+          </div>`:''}
+          ${_shelfEditing?`<div class="shelf-hint">${TT('책을 길게 눌러 끌어 옮기거나, ▲▼ 로 한 칸씩 옮기세요.','Long-press a book to drag it, or use ▲▼ to move one step.')}</div>`:''}
+          ${_sv==='list' ? `
+          <div class="book-list" id="shelf-container">
+            ${myBooks.map((b,i)=>`
+              <div class="book-row${_shelfEditing?' is-edit':''}" data-bid="${jsq(b.id)}" ${_shelfEditing?'':`onclick="push({name:'book',bookId:'${jsq(b.id)}'})"`}>
+                <div class="book-row__cover" style="background:${bookCoverBg(b)};">
+                  ${b.cover?`<img src="${b.cover}" alt="">`:`<span>${esc((b.title||'?').slice(0,1))}</span>`}
+                </div>
+                <div class="book-row__meta">
+                  <div class="book-row__title">${esc(b.title)}${(b._assigned && !orgIsAdmin())?` <span class="book-row__tag">📌 ${TT('과제','Task')}</span>`:''}</div>
+                  <div class="book-row__sub">${esc(b.author)} · ${countWords(b)} ${TT('단어','words')}</div>
+                </div>
+                ${_shelfEditing?`<div class="tile-move tile-move--row">
+                  <button onclick="event.stopPropagation();moveShelfBook('${jsq(b.id)}',-1)" ${i===0?'disabled':''} aria-label="${TT('위로','Up')}">▲</button>
+                  <button onclick="event.stopPropagation();moveShelfBook('${jsq(b.id)}',1)" ${i===myBooks.length-1?'disabled':''} aria-label="${TT('아래로','Down')}">▼</button>
+                </div>`:`<div class="book-row__chev">›</div>`}
+              </div>`).join('')}
+          </div>` : `
+          <div class="book-grid" id="shelf-container">
+            ${myBooks.map((b,i)=>`
+              <div class="book-tile${_shelfEditing?' is-edit':''}" data-bid="${jsq(b.id)}" ${_shelfEditing?'':`onclick="push({name:'book',bookId:'${jsq(b.id)}'})"`}>
                 <div class="book-cover" style="background:${bookCoverBg(b)};position:relative;overflow:hidden;">
                   ${b.cover?`<img src="${b.cover}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;">`:bookCoverDeco(b)}
                   ${b.cover?'':`<div class="book-cover__title" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${esc(b.title)}</div>
                   <div class="book-cover__author" style="position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.45)">${esc(b.author)}</div>`}
                   ${(b._assigned && !orgIsAdmin())?`<div style="position:absolute;top:7px;right:7px;z-index:2;background:#c0392b;color:#fff;font-family:var(--font-body);font-size:10px;font-weight:800;letter-spacing:0.02em;padding:3px 8px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.35);transform:rotate(4deg);">📌 ${TT('과제','Task')}</div>`:''}
+                  ${_shelfEditing?`<div class="tile-move">
+                    <button onclick="event.stopPropagation();moveShelfBook('${jsq(b.id)}',-1)" ${i===0?'disabled':''} aria-label="${TT('앞으로','Up')}">▲</button>
+                    <button onclick="event.stopPropagation();moveShelfBook('${jsq(b.id)}',1)" ${i===myBooks.length-1?'disabled':''} aria-label="${TT('뒤로','Down')}">▼</button>
+                  </div>`:''}
                 </div>
                 <div class="book-tile__title">${esc(b.title)}</div>
                 <div class="book-tile__sub">${esc(b.author)} · ${countWords(b)} ${TT('단어','words')}</div>
               </div>`).join('')}
-          </div>
+          </div>`}
         </div>
         <div class="topbar-actions" style="position:absolute;top:14px;left:22px;right:22px;z-index:30;">
           <div class="topbar-scroll">
@@ -10660,6 +10867,60 @@ sbInit();
 setTimeout(() => { try { _seedTestScoresFromLocal(); _overlayLocalStudied(); flushPending(); } catch(e){} }, 3500);
 // 정적 모달 다국어 적용 (언어 로드 후)
 setTimeout(applyStaticI18n, 300);
+// ── 책장 순서 편집: 길게 눌러 끌어 옮기기 ────────────────────────
+// 화면은 매번 innerHTML 로 다시 그려지므로 document 에 한 번만 위임해서 붙인다.
+// HTML5 draggable 은 모바일에서 동작하지 않아 포인터 이벤트로 직접 구현.
+(function _shelfDragInit(){
+  const HOLD_MS = 320;      // 이만큼 누르고 있어야 드래그 시작 (스크롤과 구분)
+  const SLOP = 10;          // 시작 전 이만큼 움직이면 스크롤로 간주하고 취소
+  let timer = null, dragId = null, el = null, target = null, sx = 0, sy = 0, armed = false;
+
+  const tileOf = (n) => n && n.closest ? n.closest('[data-bid]') : null;
+  function clearTarget(){ if (target) { target.classList.remove('shelf-drop-target'); target = null; } }
+  function cancel(){
+    clearTimeout(timer); timer = null; armed = false;
+    if (el) el.classList.remove('shelf-drag');
+    clearTarget(); dragId = null; el = null;
+  }
+
+  document.addEventListener('pointerdown', (e) => {
+    if (!_shelfEditing || e.button) return;
+    if (e.target.closest('.tile-move')) return;          // ▲▼ 버튼은 그대로 클릭
+    const t = tileOf(e.target);
+    if (!t || !t.dataset.bid) return;
+    sx = e.clientX; sy = e.clientY;
+    timer = setTimeout(() => {
+      armed = true; dragId = t.dataset.bid; el = t;
+      el.classList.add('shelf-drag');
+      try { navigator.vibrate && navigator.vibrate(12); } catch(_){}
+    }, HOLD_MS);
+  }, true);
+
+  document.addEventListener('pointermove', (e) => {
+    if (timer && !armed) {
+      if (Math.abs(e.clientX - sx) > SLOP || Math.abs(e.clientY - sy) > SLOP) { clearTimeout(timer); timer = null; }
+      return;
+    }
+    if (!armed) return;
+    e.preventDefault();
+    const over = tileOf(document.elementFromPoint(e.clientX, e.clientY));
+    if (over === target) return;
+    clearTarget();
+    if (over && over !== el) { target = over; target.classList.add('shelf-drop-target'); }
+  }, { passive: false });
+
+  document.addEventListener('pointerup', () => {
+    if (armed && dragId && target && target.dataset.bid) {
+      const to = target.dataset.bid, from = dragId;
+      cancel();
+      dropShelfBook(from, to);   // 재렌더가 뒤따르므로 상태를 먼저 정리
+      return;
+    }
+    cancel();
+  });
+  document.addEventListener('pointercancel', cancel);
+})();
+
 // Service Worker 등록 (오프라인 지원 + 속도 향상)
 // 업데이트는 조용히 처리한다: 새 HTML 은 SW 가 백그라운드에서 받아 캐시에 넣어두고,
 // 다음 실행 때 자동으로 새 버전이 뜬다. 예전엔 '✨ 새 버전이 있어요' 토스트를 띄웠는데
