@@ -15,7 +15,11 @@ create table if not exists public.voca_activity (
   page_num   text,
   kind       text not null,                -- 'study'(첫 암기) | 'review'(복습 완료)
   words      int  not null default 0,      -- 그 페이지 단어 수
-  day        date not null default (now() at time zone 'Asia/Seoul')::date,  -- KST 기준 날짜
+  -- ⚠️ 이 기본값은 '클라이언트가 day 를 안 보냈을 때'의 보조값일 뿐이다.
+  --    앱은 항상 사용자 현지 날짜(_todayStr())를 day 에 실어 보내므로 이 값은 적용되지 않는다.
+  --    KST 로 고정돼 있으면 미국 사용자는 현지 오전 10시부터 '내일' 로 기록돼
+  --    하루가 두 날짜로 쪼개지고 연속일·일별 집계가 깨진다.
+  day        date not null default (now() at time zone 'Asia/Seoul')::date,
   created_at timestamptz not null default now()
 );
 create index if not exists idx_activity_user_day on public.voca_activity(user_id, day desc);

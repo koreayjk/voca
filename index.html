@@ -3170,7 +3170,13 @@ function incrementScanCount() {
 }
 
 // 스캔 가능 여부 체크
-function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+// 앱 전체의 '오늘' 기준 = 사용자가 있는 나라의 달력 날짜(로컬).
+// ⚠️ 예전에는 곳곳이 KST(+9) 로 못박혀 있었다. 그러면 예컨대 텍사스 사용자는 현지
+//    오전 10시부터 기록이 '내일' 로 넘어가, 하루가 두 날짜로 쪼개져 연속일·집계가 깨진다.
+//    한국 사용자는 로컬 == KST 이므로 이 기준으로 바꿔도 동작이 동일하다.
+function _todayStr(){ return _dayStr(new Date()); }
+function _dayStr(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function _daysAgoStr(n){ const d=new Date(); d.setDate(d.getDate()-n); return _dayStr(d); }
 function isOrgBillingActive(){ return !!(userOrg && userOrg.billing_active); }
 
 // ── 무료 제공(100% 할인) 결제 표기 ──────────────────────────────
@@ -3394,8 +3400,8 @@ async function loadMyOrg() {
     // 무료 지급(free_until) 자동 만료: 날짜가 지났으면 결제 상태를 무효로 취급.
     // (Stripe 결제 학원은 free_until 이 없어 영향 없음. DB 플래그 정리는 관리자 페이지에서)
     if (userOrg && userOrg.billing_active && userOrg.free_until) {
-      const _kstToday = new Date(Date.now()+9*3600*1000).toISOString().slice(0,10);
-      if (String(userOrg.free_until).slice(0,10) < _kstToday) { userOrg.billing_active = false; userOrg._freeExpired = true; }
+      const _todayLocal = _todayStr();
+      if (String(userOrg.free_until).slice(0,10) < _todayLocal) { userOrg.billing_active = false; userOrg._freeExpired = true; }
     }
     // 자기복구: 내가 직접 만든 단체(orgs.owner_id=본인)인데 하드닝 트리거 때문에 아직
     // owner/approved 로 못 올라간 계정을 자동 승격. (가드는 orgs.owner_id 로 이 변경을 허용)
@@ -3596,9 +3602,9 @@ async function loadDailyReport(){
   const myId = currentUser && currentUser.id;
   const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id===myId);
   try {
-    const kstToday = new Date(new Date().getTime()+9*3600*1000).toISOString().slice(0,10);
+    const todayLocal = _todayStr();
     const [acts, studs] = await Promise.all([
-      sbFetch(`/rest/v1/voca_activity?org_id=eq.${userOrg.id}&day=eq.${kstToday}&select=user_id,kind`),
+      sbFetch(`/rest/v1/voca_activity?org_id=eq.${userOrg.id}&day=eq.${todayLocal}&select=user_id,kind`),
       sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email,teacher_id&order=name`)
     ]);
     let students = Array.isArray(studs)?studs:[];
@@ -8738,7 +8744,7 @@ function _pcRefresh(){
 }
 function _pcFileName(){
   const d=window._pcData||{};
-  return 'IMVOCA-'+String(d.studentName||'report').replace(/[\\/:*?"<>|\s]+/g,'_')+'-'+new Date(Date.now()+9*3600*1000).toISOString().slice(0,10)+'.png';
+  return 'IMVOCA-'+String(d.studentName||'report').replace(/[\\/:*?"<>|\s]+/g,'_')+'-'+_todayStr()+'.png';
 }
 function _pcShareImage(){
   const ko=userNativeLang==='ko', cv=window._pcCanvas; if(!cv) return;
@@ -8975,8 +8981,8 @@ async function shareParentCard(studentId, studentName){
   const orgName = (userOrg && userOrg.name) ? userOrg.name : 'IM VOCA';
   toast(TT('리포트 준비 중…','Preparing…'));
 
-  // KST 날짜 도우미 (n일 전 'YYYY-MM-DD')
-  const kstStr = n => new Date(Date.now() + 9*3600*1000 - n*86400000).toISOString().slice(0,10);
+  // 로컬 날짜 도우미 (n일 전 'YYYY-MM-DD')
+  const kstStr = n => _daysAgoStr(n);
   const kstToday = kstStr(0);
   const _p = kstToday.split('-'); const dateLabel = TX(`{v0}월 {v1}일`,`{v0}/{v1}`,{v0:(+_p[1]),v1:(+_p[2])});
 
@@ -9000,7 +9006,7 @@ async function shareParentCard(studentId, studentName){
   let streak=0; { const base = daySet.has(kstToday)?0:1; while(daySet.has(kstStr(base+streak))) streak++; }
 
   // 이번 주(월~일) 달력
-  const dow = (new Date(Date.now()+9*3600*1000).getUTCDay()+6)%7;   // 월=0 … 일=6
+  const dow = (new Date().getDay()+6)%7;   // 월=0 … 일=6 (로컬 기준)
   const wLabels = userNativeLang==='ko'?['월','화','수','목','금','토','일']:(userNativeLang==='zh'?['一','二','三','四','五','六','日']:(userNativeLang==='es'?['L','M','X','J','V','S','D']:['M','T','W','T','F','S','S']));
   const weekCal=[]; for(let i=0;i<7;i++) weekCal.push({label:wLabels[i], on:daySet.has(kstStr(dow-i)), isToday:i===dow, future:i>dow});
 
@@ -9452,7 +9458,7 @@ function renderHallTabs() {
     if (window._hallLegacy || period === 'all') { navEl.innerHTML=''; navEl.style.display='none'; }
     else {
       navEl.style.display = 'flex';
-      const kst = new Date(Date.now()+9*3600*1000).toISOString();
+      const kst = _todayStr();
       const agg = _hallAgg();
       const minM = agg.months[0] || kst.slice(0,7);
       let label, canPrev, canNext;
@@ -9500,9 +9506,9 @@ function _hallAgg() {
   });
   return window._hallAggCache = { users, months: [...monthSet].sort() };
 }
-// 달/연도 넘김: 데이터가 있는 가장 이른 달 ~ 이번 달(KST) 범위 안에서 이동
+// 달/연도 넘김: 데이터가 있는 가장 이른 달 ~ 이번 달(로컬 기준) 범위 안에서 이동
 function hallNav(delta) {
-  const kst = new Date(Date.now()+9*3600*1000).toISOString();
+  const kst = _todayStr();
   const minM = (_hallAgg().months[0] || kst.slice(0,7));
   if ((window._hallPeriod||'month') === 'month') {
     const cur = window._hallMonthSel || kst.slice(0,7);
@@ -9554,7 +9560,7 @@ function renderHallBody() {
   } else {
     // 월별/연도별: 활동 기록 기반 재계산 점수 (선택한 달/연도, 날짜는 그 기간의 마지막 점수일)
     const period = window._hallPeriod || 'month';
-    const kst = new Date(Date.now()+9*3600*1000).toISOString();
+    const kst = _todayStr();
     const selM = window._hallMonthSel || kst.slice(0,7);
     const selY = window._hallYearSel || kst.slice(0,4);
     const users = _hallAgg().users;
@@ -9596,7 +9602,7 @@ function renderHallBody() {
 
   if (list.length === 0) {
     const p = window._hallPeriod || 'month';
-    const _kst = new Date(Date.now()+9*3600*1000).toISOString();
+    const _kst = _todayStr();
     const _selM = window._hallMonthSel || _kst.slice(0,7), _selY = window._hallYearSel || _kst.slice(0,4);
     const emptyTitle = (window._hallLegacy || p==='all') ? (TT('아직 등록된 기록이 없어요','No records yet'))
       : p==='month' ? (TX(`{v1}월 기록이 아직 없어요`,`No records in {v0} yet`,{v0:(_selM),v1:(+_selM.slice(5,7))}))
@@ -9767,7 +9773,8 @@ async function saveStats(bookId, total, correct, pageNum) {
 // 복습 단계 컬럼 → 몇 회차 복습인지 (1~6). review_2d=1회차, review_3d=2회차, ...
 const _REVIEW_STEP_NUM = { review_2d:1, review_3d:2, review_6d:3, review_15d:4, review_30d:5, review_60d:6 };
 async function logActivity(bookId, pageNum, kind, words, step){
-  const body = { user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0 };
+  // day 를 명시해서 보내면 DB 의 default(Asia/Seoul) 가 적용되지 않는다 → 사용자 현지 날짜로 기록
+  const body = { user_id: currentUser.id, org_id: userOrgId||null, book_id: bookId, page_num: pageNum!=null?String(pageNum):null, kind, words: words||0, day: _todayStr() };
   if (step!=null) body.step = step;   // 복습이면 회차(1~6)
   const res = await authPost('/rest/v1/voca_activity', body, 'return=minimal');
   if (!res || !res.ok) { logError('write_fail','logActivity',(res&&res.status)||'network',{ bookId, pageNum, kind }); _enqueueWrite({ type:'activity', book_id:bookId, page_num:body.page_num, body }); }
@@ -9809,7 +9816,7 @@ async function saveReviewSchedule(bookId, pageNum) {
       _markLocalStudied(bookId, pageNum, _words0);
       const nowF=new Date(), midF=(n)=>{const d=new Date(nowF);d.setDate(d.getDate()+n);d.setHours(0,0,0,0);return d.toISOString();};
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, book_id:bookId, page_num:String(pageNum), first_studied_at:nowF.toISOString(), review_2d:midF(1), review_3d:midF(2), review_6d:midF(3), review_15d:midF(6), review_30d:midF(15), review_60d:midF(30) } });
-      _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
+      _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0, day:_todayStr() } });
       return _localNew;
     }
     if (existing.length > 0) {
@@ -9843,7 +9850,7 @@ async function saveReviewSchedule(bookId, pageNum) {
       // 지급 대상(true)으로 본다. (일시 오류로 새 단어 점수를 놓치지 않게)
       logError('write_fail','saveReviewSchedule.insert',(res&&res.status)||'network',{ bookId, pageNum });
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:reviewBody });
-      _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0 } });
+      _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0, day:_todayStr() } });
       return true;
     }
     return true; // 새 복습 일정을 실제로 등록함 → 첫 암기 점수 지급 대상(호출측에서 처리)
