@@ -107,7 +107,7 @@ Deno.serve(async (req) => {
   if (sErr) return json({ error: 'subs_failed', detail: sErr.message }, 500)
 
   let sent = 0, skipped = 0, dropped = 0
-  const failed: string[] = []
+  const failed: unknown[] = []
 
   for (const s of (subs ?? []) as Sub[]) {
     const lp = localParts(s.tz)
@@ -141,10 +141,21 @@ Deno.serve(async (req) => {
       } else {
         await svc.from('voca_push_subs')
           .update({ fail_count: s.fail_count + 1 }).eq('id', s.id)
-        failed.push(String(code ?? (e as Error).message))
+        // 상태 코드만으로는 원인을 알 수 없다(400 은 VAPID 서명 불일치·잘못된 subject·
+        // 페이로드 문제 등 여러 경우에 나온다). 푸시 서버가 돌려준 본문을 그대로 올린다.
+        const err = e as { statusCode?: number; body?: string; message?: string }
+        failed.push({
+          code: err.statusCode ?? null,
+          host: (() => { try { return new URL(s.endpoint).host } catch { return '?' } })(),
+          body: String(err.body ?? err.message ?? e).slice(0, 300),
+        })
       }
     }
   }
 
-  return json({ ok: true, sent, skipped, dropped, failed })
+  return json({
+    ok: true, sent, skipped, dropped, failed,
+    // 진단용 — 키 값은 노출하지 않고 '앞 8자 + 길이'만. 앱의 공개키와 대조하기 위함.
+    vapid: { pub: VAPID_PUBLIC.slice(0, 8) + '…(' + VAPID_PUBLIC.length + ')', subject: VAPID_SUBJECT },
+  })
 })
