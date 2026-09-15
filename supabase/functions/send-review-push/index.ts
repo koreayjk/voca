@@ -78,6 +78,14 @@ Deno.serve(async (req) => {
   if (req.method !== 'POST') return json({ error: 'method' }, 405)
   if (!VAPID_PUBLIC || !VAPID_PRIVATE) return json({ error: 'vapid_not_configured' }, 500)
 
+  // 호출자 검증 — 이 함수는 cron(서버)만 부르는 기계용이다.
+  // 기본 verify_jwt 는 'anon 키로도 통과'라, 이게 없으면 누구나 {"force":true} 로
+  // 전체 구독자에게 알림을 난사할 수 있다. service_role 키로만 부르게 막는다.
+  const caller = (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '')
+  if (!caller || caller !== (Deno.env.get('SB_SERVICE_ROLE_KEY') ?? '')) {
+    return json({ error: 'forbidden' }, 403)
+  }
+
   webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE)
 
   const { force } = await req.json().catch(() => ({ force: false }))
