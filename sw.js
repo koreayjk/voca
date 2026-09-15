@@ -1,7 +1,7 @@
 // IM VOCA Service Worker
 // 전략: HTML은 항상 네트워크 우선 (최신 유지), 정적 자원은 캐시 우선 (속도)
 
-const CACHE_VERSION = 'imvoca-v7';
+const CACHE_VERSION = 'imvoca-v8';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -35,6 +35,46 @@ self.addEventListener('activate', (event) => {
       );
     }).then(() => self.clients.claim())
   );
+});
+
+// ── 웹 푸시: 복습 알림 ─────────────────────────────────────────────
+// 안드로이드는 navigator.setAppBadge() 를 지원하지 않는다. 대신 '읽지 않은 알림'이
+// 있으면 OS 가 런처 아이콘에 배지(숫자 또는 점)를 붙여준다 — 그래서 배지를 띄우려면
+// 알림을 보내야 한다. iOS 16.4+/PC 는 setAppBadge 로 숫자까지 직접 찍는다.
+self.addEventListener('push', (event) => {
+  let d = {};
+  try { d = event.data ? event.data.json() : {}; } catch (e) {}
+  const title = d.title || '🔁 복습할 단어가 있어요';
+  const opts = {
+    body: d.body || '',
+    icon: '/icon-192.png?v=3',
+    badge: '/icon-192.png?v=3',
+    tag: d.tag || 'imvoca-review',   // 같은 tag 는 덮어쓴다 → 알림이 쌓이지 않음
+    renotify: true,
+    data: { url: d.url || '/' },
+  };
+  event.waitUntil((async () => {
+    await self.registration.showNotification(title, opts);
+    // 숫자 배지를 지원하는 플랫폼에서는 개수까지 찍는다 (안드로이드는 무시됨)
+    try { if (self.navigator && self.navigator.setAppBadge && d.badge > 0) await self.navigator.setAppBadge(d.badge); } catch (e) {}
+  })());
+});
+
+// 알림을 누르면 이미 열린 탭이 있으면 그리로, 없으면 새로 연다
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = (event.notification.data && event.notification.data.url) || '/';
+  event.waitUntil((async () => {
+    try { if (self.navigator && self.navigator.clearAppBadge) await self.navigator.clearAppBadge(); } catch (e) {}
+    const all = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const c of all) {
+      if (c.url.indexOf(self.location.origin) === 0 && 'focus' in c) {
+        try { c.postMessage({ type: 'OPEN_REVIEW' }); } catch (e) {}
+        return c.focus();
+      }
+    }
+    if (self.clients.openWindow) return self.clients.openWindow(url);
+  })());
 });
 
 // 요청 가로채기

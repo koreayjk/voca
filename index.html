@@ -4477,6 +4477,7 @@ function showMyMenu() {
       ${row('👤', TT('개인정보 변경','My Info'), "document.getElementById('my-modal').remove();showMyInfo()")}
       ${userPlan==='premium' && userStripeId ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
+      ${pushSupported() ? row('🔔', TT('복습 알림','Review Reminders'), "document.getElementById('my-modal').remove();showPushSettings()") : ''}
       ${row('🌐', TT('언어 설정','Language'), "document.getElementById('my-modal').remove();showLangSettings()")}
       ${row('❓', TT('자주 묻는 질문','FAQ'), "document.getElementById('my-modal').remove();showFaq()")}
       ${row('✉️', TT('문의하기','Contact Us'), "document.getElementById('my-modal').remove();contactSupport()")}
@@ -10150,6 +10151,7 @@ async function checkReviews() {
 
     // 뱃지 업데이트
     window._reviewBadgeCount = due.length;
+    try { syncAppBadge(); } catch(e){}
     const dockEl = document.querySelector('.dock');
     if (dockEl) dockEl.outerHTML = buildDock();
   } catch(e) {}
@@ -10938,16 +10940,151 @@ setTimeout(applyStaticI18n, 300);
   document.addEventListener('pointercancel', cancel);
 })();
 
+// ── 복습 알림 (웹 푸시) ────────────────────────────────────────────
+// 안드로이드(Play 앱)는 navigator.setAppBadge() 를 지원하지 않는다. 대신 '읽지 않은
+// 알림'이 있으면 OS 가 런처 아이콘에 배지를 붙여준다 → 배지를 띄우려면 알림을 보내야 한다.
+// 웹에는 예약 알림이 없어서 서버(pg_cron + send-review-push)가 현지 시각에 맞춰 밀어준다.
+// iOS 16.4+ / PC 설치형은 setAppBadge 로 숫자까지 직접 찍는다.
+const VAPID_PUBLIC_KEY = '';   // ← VAPID 공개키. 비어 있으면 알림 기능이 숨겨진다(docs/push-setup.md)
+
+function pushSupported(){
+  return !!(VAPID_PUBLIC_KEY && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window);
+}
+function _b64ToU8(b64){
+  const pad = '='.repeat((4 - b64.length % 4) % 4);
+  const raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+  const out = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+  return out;
+}
+function _myTz(){ try { return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Seoul'; } catch(e){ return 'Asia/Seoul'; } }
+
+// 현재 구독 상태: 'unsupported' | 'denied' | 'off' | 'on'
+async function pushState(){
+  if (!pushSupported()) return 'unsupported';
+  if (Notification.permission === 'denied') return 'denied';
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    return (await reg.pushManager.getSubscription()) ? 'on' : 'off';
+  } catch(e){ return 'off'; }
+}
+
+async function enablePush(hour){
+  if (!pushSupported()) { toast(TT('이 브라우저는 알림을 지원하지 않아요','Notifications are not supported here')); return false; }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') {
+      toast(perm === 'denied'
+        ? TT('알림이 차단돼 있어요. 브라우저 설정에서 허용해주세요','Notifications are blocked — allow them in browser settings')
+        : TT('알림을 켜지 않았어요','Notifications not enabled'));
+      return false;
+    }
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: _b64ToU8(VAPID_PUBLIC_KEY) });
+    const j = sub.toJSON();
+    // 같은 endpoint 면 갱신(upsert) — 기기를 바꾸거나 권한을 다시 켤 때 중복 행이 쌓이지 않게.
+    // sbFetch 는 빈 본문을 null 로 돌려줘 성공/실패 구분이 안 되므로 authPost(Response)를 쓴다.
+    const res = await authPost('/rest/v1/voca_push_subs?on_conflict=endpoint', {
+      user_id: currentUser.id, endpoint: j.endpoint,
+      p256dh: j.keys.p256dh, auth: j.keys.auth,
+      tz: _myTz(), send_hour: Number(hour) || 9,
+      lang: (userNativeLang || 'ko'), enabled: true, fail_count: 0,
+    }, 'resolution=merge-duplicates,return=minimal');
+    if (!res || !res.ok) {
+      await sub.unsubscribe().catch(()=>{});   // 서버에 못 남겼으면 구독도 되돌린다(유령 구독 방지)
+      toast(TT('알림 설정 저장에 실패했어요','Could not save notification settings'));
+      return false;
+    }
+    toast(TT('🔔 복습 알림을 켰어요','🔔 Review reminders on'));
+    try { track('enable_push', { hour: Number(hour) || 9 }); } catch(e){}
+    return true;
+  } catch(e){
+    toast(TT('알림을 켜지 못했어요','Could not enable notifications'));
+    return false;
+  }
+}
+
+async function disablePush(){
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if (sub) {
+      const ep = sub.endpoint;
+      await sub.unsubscribe().catch(()=>{});
+      await sbFetch('/rest/v1/voca_push_subs?endpoint=eq.' + encodeURIComponent(ep), 'DELETE');
+    }
+    try { if (navigator.clearAppBadge) await navigator.clearAppBadge(); } catch(e){}
+    toast(TT('알림을 껐어요','Reminders off'));
+  } catch(e){}
+}
+
+// 아이콘 배지 동기화 (iOS 16.4+ / PC 설치형에서만 숫자가 보인다. 안드로이드는 알림이 배지를 만든다)
+async function syncAppBadge(){
+  try {
+    if (!navigator.setAppBadge) return;
+    const n = (window._reviewBadgeCount || 0) + (typeof unreadNoticeCount === 'function' ? unreadNoticeCount() : 0);
+    if (n > 0) await navigator.setAppBadge(n); else await navigator.clearAppBadge();
+  } catch(e){}
+}
+
+// ── 알림 설정 모달 ──────────────────────────────────────────────
+async function showPushSettings(){
+  const st = await pushState();
+  const hour = Number(localStorage.getItem('imvoca.pushHour') || 9);
+  const ov = document.createElement('div');
+  ov.id = 'push-modal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const hourOpts = Array.from({length:24}, (_,h) =>
+    `<option value="${h}" ${h===hour?'selected':''}>${String(h).padStart(2,'0')}:00</option>`).join('');
+  const body = st === 'unsupported'
+    ? `<div style="font-size:13.5px;color:var(--ink-60);line-height:1.7;">${TT('이 브라우저에서는 알림을 지원하지 않아요.<br>안드로이드는 Play 스토어 앱, 아이폰은 사파리에서 <b>홈 화면에 추가</b> 후 사용할 수 있어요.','Not supported in this browser.<br>Use the Play Store app on Android, or add to Home Screen in Safari on iPhone.')}</div>`
+    : st === 'denied'
+    ? `<div style="font-size:13.5px;color:#c0392b;line-height:1.7;">${TT('알림이 차단돼 있어요.<br>브라우저·기기 설정에서 이 사이트의 알림을 허용한 뒤 다시 시도해주세요.','Notifications are blocked. Allow them for this site in your browser or device settings, then try again.')}</div>`
+    : `
+      <div style="font-size:13.5px;color:var(--ink-60);line-height:1.7;margin-bottom:16px;">${TT('복습할 단어가 있는 날, 정해진 시각에 한 번 알려드려요. 앱 아이콘에도 표시돼요.','On days you have words to review, we send one reminder at the time you pick. It also shows on the app icon.')}</div>
+      <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:var(--ink-100);margin-bottom:14px;">
+        <span>${TT('알림 받을 시각','Reminder time')}</span>
+        <select id="push-hour" style="font-family:var(--font-body);font-size:14px;font-weight:700;color:var(--ink-100);background:var(--bg-page);border:1px solid var(--ink-12);border-radius:10px;padding:8px 12px;">${hourOpts}</select>
+      </label>
+      <button id="push-toggle" class="btn ${st==='on'?'btn-outline':'btn-solid'}" style="width:100%;padding:13px;font-size:14px;">
+        ${st==='on' ? ('🔕 ' + TT('알림 끄기','Turn off')) : ('🔔 ' + TT('알림 켜기','Turn on'))}
+      </button>`;
+  ov.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:22px;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);">
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;color:var(--ink-100);margin-bottom:12px;">🔔 ${TT('복습 알림','Review reminders')}</div>
+      ${body}
+      <button onclick="document.getElementById('push-modal').remove()" style="width:100%;padding:12px;margin-top:10px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('닫기','Close')}</button>
+    </div>`;
+  ov.onclick = (e) => { if (e.target === ov) ov.remove(); };
+  document.body.appendChild(ov);
+
+  const btn = document.getElementById('push-toggle');
+  if (btn) btn.onclick = async () => {
+    const h = Number(document.getElementById('push-hour')?.value || 9);
+    try { localStorage.setItem('imvoca.pushHour', String(h)); } catch(e){}
+    btn.disabled = true;
+    if (st === 'on') await disablePush(); else await enablePush(h);
+    ov.remove();
+  };
+}
+
 // Service Worker 등록 (오프라인 지원 + 속도 향상)
 // 업데이트는 조용히 처리한다: 새 HTML 은 SW 가 백그라운드에서 받아 캐시에 넣어두고,
 // 다음 실행 때 자동으로 새 버전이 뜬다. 예전엔 '✨ 새 버전이 있어요' 토스트를 띄웠는데
 // 배포할 때마다 떠서 성가셔 없앴다. (되살리려면 sw.js 의 HTML_UPDATED 도 함께 복원)
 if ('serviceWorker' in navigator) {
+  // 알림을 눌러 들어오면 복습 탭으로 보낸다
+  navigator.serviceWorker.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'OPEN_REVIEW') { try { goTab('review'); } catch(_){} }
+  });
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .catch((e) => console.warn('[SW] 등록 실패:', e));
   });
 }
+// 앱을 열면 배지를 정리한다 (알림으로 생긴 배지는 알림을 지우면 사라진다)
+window.addEventListener('focus', () => { try { syncAppBadge(); } catch(e){} });
 </script>
 </body>
 </html>
