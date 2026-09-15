@@ -51,15 +51,26 @@ function localParts(tz: string) {
   }
 }
 
+// due 는 '단어 수'가 아니라 voca_review 행 수 = 복습 세트(책의 Day) 개수다.
+// 앱 화면도 '복습 N개'로 부르므로 문구를 맞춘다.
+//
+// 또 하나: 이 값에는 밀린 것까지 다 들어간다. 실제 데이터에서 50~70개씩 밀린
+// 사용자가 있는데, 그들에게 "오늘 복습 70개"라고 하면 질려서 알림을 꺼버린다.
+// 많이 밀렸을 때는 숫자를 앞세우지 않고 '조금씩 따라잡자'로 톤을 바꾼다.
+const BACKLOG = 20
 const TEXT: Record<string, (n: number) => { title: string; body: string }> = {
-  ko: (n) => ({ title: `🔁 오늘 복습할 단어 ${n}개`,
-                body: '지금 하면 오래 기억에 남아요. 5분이면 끝나요.' }),
-  en: (n) => ({ title: `🔁 ${n} words to review today`,
-                body: 'Review now while it still sticks — about 5 minutes.' }),
-  zh: (n) => ({ title: `🔁 今天有 ${n} 个单词要复习`,
-                body: '趁还记得的时候复习，大约 5 分钟。' }),
-  es: (n) => ({ title: `🔁 ${n} palabras para repasar hoy`,
-                body: 'Repasa ahora que aún las recuerdas — unos 5 minutos.' }),
+  ko: (n) => n > BACKLOG
+    ? { title: `🔁 복습이 ${n}개 쌓였어요`, body: '오늘 두세 개만 해도 따라잡기 시작해요.' }
+    : { title: `🔁 오늘 복습 ${n}개`,       body: '지금 하면 오래 기억에 남아요. 5분이면 끝나요.' },
+  en: (n) => n > BACKLOG
+    ? { title: `🔁 ${n} reviews piled up`,   body: 'Even two or three today starts catching you up.' }
+    : { title: `🔁 ${n} reviews due today`,  body: 'Review now while it still sticks — about 5 minutes.' },
+  zh: (n) => n > BACKLOG
+    ? { title: `🔁 积压了 ${n} 组复习`,      body: '今天做两三组就能开始追上。' }
+    : { title: `🔁 今天有 ${n} 组复习`,      body: '趁还记得的时候复习，大约 5 分钟。' },
+  es: (n) => n > BACKLOG
+    ? { title: `🔁 Tienes ${n} repasos pendientes`, body: 'Con dos o tres hoy ya empiezas a ponerte al día.' }
+    : { title: `🔁 ${n} repasos para hoy`,          body: 'Repasa ahora que aún los recuerdas — unos 5 minutos.' },
 }
 
 Deno.serve(async (req) => {
