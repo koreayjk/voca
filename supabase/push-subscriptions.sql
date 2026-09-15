@@ -69,7 +69,10 @@ set search_path = public
 as $$
   select r.user_id, count(*)::int
   from public.voca_review r
-  join public.voca_books b on b.id = r.book_id
+  -- voca_review.book_id 와 voca_books.id 의 타입이 서로 다르다(uuid ↔ text).
+  -- 어느 쪽이 무엇이든 안전하게 비교되도록 양쪽을 text 로 맞춘다.
+  -- (book_id 에 uuid 가 아닌 값이 섞여 있어도 ::uuid 캐스팅처럼 에러가 나지 않는다)
+  join public.voca_books b on b.id::text = r.book_id::text
   where r.completed = false
     and coalesce(r.review_2d, r.review_3d, r.review_6d,
                  r.review_15d, r.review_30d, r.review_60d) <= now()
