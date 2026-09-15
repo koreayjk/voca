@@ -10974,7 +10974,36 @@ async function pushState(){
   } catch(e){ return 'off'; }
 }
 
-async function enablePush(hour){
+// 구독이 '지금 앱에 박힌 공개키'로 만들어졌는지 확인한다.
+// VAPID 키를 바꾸면 기존 구독은 옛 키에 묶인 채로 남고, 발송할 때 푸시 서버가
+// VapidPkHashMismatch(400) 로 거부한다 — 사용자는 아무 것도 모른 채 알림이 끊긴다.
+// 그래서 키가 다르면 조용히 다시 구독하고 서버 행도 갱신한다.
+function _sameKey(subKey){
+  try {
+    if (!subKey) return false;
+    const a = new Uint8Array(subKey), b = _b64ToU8(VAPID_PUBLIC_KEY);
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+    return true;
+  } catch(e){ return false; }
+}
+async function ensurePushKeyFresh(){
+  try {
+    if (!pushSupported() || !currentUser) return;
+    if (Notification.permission !== 'granted') return;
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if (!sub) return;
+    if (_sameKey(sub.options && sub.options.applicationServerKey)) return;   // 정상
+    // 옛 키로 묶인 구독 → 버리고 새로 만든다
+    const oldEp = sub.endpoint;
+    await sub.unsubscribe().catch(()=>{});
+    try { await sbFetch('/rest/v1/voca_push_subs?endpoint=eq.' + encodeURIComponent(oldEp), 'DELETE'); } catch(e){}
+    await enablePush(Number(localStorage.getItem('imvoca.pushHour') || 9), true);
+  } catch(e){}
+}
+
+async function enablePush(hour, silent){
   if (!pushSupported()) { toast(TT('이 브라우저는 알림을 지원하지 않아요','Notifications are not supported here')); return false; }
   try {
     const perm = await Notification.requestPermission();
@@ -11001,7 +11030,7 @@ async function enablePush(hour){
       toast(TT('알림 설정 저장에 실패했어요','Could not save notification settings'));
       return false;
     }
-    toast(TT('🔔 복습 알림을 켰어요','🔔 Review reminders on'));
+    if (!silent) toast(TT('🔔 복습 알림을 켰어요','🔔 Review reminders on'));
     try { track('enable_push', { hour: Number(hour) || 9 }); } catch(e){}
     return true;
   } catch(e){
@@ -11152,6 +11181,8 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .catch((e) => console.warn('[SW] 등록 실패:', e));
+    // 로그인·SW 준비가 끝날 즈음 구독 키가 최신인지 점검 (키 교체 시 자가 복구)
+    setTimeout(() => { try { ensurePushKeyFresh(); } catch(e){} }, 5000);
   });
 }
 // 앱을 열면 배지를 정리한다 (알림으로 생긴 배지는 알림을 지우면 사라진다)
