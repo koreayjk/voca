@@ -7937,6 +7937,11 @@ function render() {
 
   else if (route.name === 'study-done') {
     const book = findBook(route.bookId);
+    // 새 복습 일정이 막 생긴 경우에만 알림을 권한다 (복습 재수행은 제외).
+    // 축하 화면을 먼저 보게 두고 잠시 뒤에 띄운다.
+    if (route.scope === 'page' && !route.isReview) {
+      setTimeout(() => { try { maybeAskPush(route.total); } catch(e){} }, 1400);
+    }
     root.innerHTML = `
       <div class="scr">
         <div class="topnav"><span></span><span class="topnav__title">${book?.title||''}</span><span class="topnav__right" onclick="goTab('books')">✕</span></div>
@@ -11026,6 +11031,72 @@ async function syncAppBadge(){
     const n = (window._reviewBadgeCount || 0) + (typeof unreadNoticeCount === 'function' ? unreadNoticeCount() : 0);
     if (n > 0) await navigator.setAppBadge(n); else await navigator.clearAppBadge();
   } catch(e){}
+}
+
+// ── 알림 권한 요청 타이밍 ───────────────────────────────────────
+// 브라우저 알림 권한은 '한 번 차단하면 다시 물을 수 없다'. 게다가 크롬은 사이트의
+// 허용률이 낮으면 팝업 자체를 막아버린다(조용한 알림). 그래서 접속하자마자 묻는 건
+// 최악이다 — 대부분 거부 → 사이트가 통째로 차단돼 아무도 못 켜게 된다.
+//
+// 그래서 두 단계로 간다:
+//   1) 우리 화면으로 먼저 묻는다 (브라우저 권한을 안 태운다)
+//   2) '네'를 누른 사람에게만 진짜 브라우저 팝업을 띄운다 — 버튼 클릭 = 사용자 제스처라
+//      requestPermission() 이 정상 동작한다
+// '나중에'를 고른 사람은 권한이 'default' 로 남아 며칠 뒤 다시 물어볼 수 있다.
+const _PUSH_ASK_KEY = 'imvoca.pushAsk';   // { n: 물어본 횟수, at: 마지막 시각 }
+function _pushAskState(){ try { return JSON.parse(localStorage.getItem(_PUSH_ASK_KEY) || '{}') || {}; } catch(e){ return {}; } }
+function _pushAskSave(o){ try { localStorage.setItem(_PUSH_ASK_KEY, JSON.stringify(o)); } catch(e){} }
+
+// 암기 카드를 막 끝내 복습 일정이 생긴 직후에만 호출한다 (가치가 눈앞에 증명된 순간)
+async function maybeAskPush(wordCount){
+  try {
+    if (!pushSupported()) return;
+    if (Notification.permission !== 'default') return;      // 이미 허용/차단 → 건드리지 않음
+    const st = _pushAskState();
+    if ((st.n || 0) >= 3) return;                            // 평생 3번까지만
+    if (st.at && Date.now() - st.at < 7 * 86400000) return;  // 거절 후 7일은 쉰다
+    const reg = await navigator.serviceWorker.ready;
+    if (await reg.pushManager.getSubscription()) return;     // 이미 구독 중
+    _pushAskSave({ n: (st.n || 0) + 1, at: Date.now() });
+    _showPushPrePrompt(wordCount);
+  } catch(e){}
+}
+
+function _showPushPrePrompt(wordCount){
+  if (document.getElementById('push-pre')) return;
+  const hour = Number(localStorage.getItem('imvoca.pushHour') || 9);
+  const hourOpts = Array.from({length:24}, (_,h) =>
+    `<option value="${h}" ${h===hour?'selected':''}>${String(h).padStart(2,'0')}:00</option>`).join('');
+  const ov = document.createElement('div');
+  ov.id = 'push-pre';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:24px 22px;max-width:330px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.25);text-align:center;">
+      <div style="font-size:38px;line-height:1;margin-bottom:10px;">🔔</div>
+      <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);line-height:1.45;margin-bottom:8px;">
+        ${TX(`방금 외운 {v0}개,<br>잊어버릴 때쯤 알려드릴까요?`,`Want a nudge before you forget<br>these {v0} words?`,{v0:(wordCount||0)})}
+      </div>
+      <div style="font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:18px;">
+        ${TT('망각곡선에 맞춰 복습할 날에만 딱 한 번 알려드려요. 광고는 보내지 않아요.','One reminder on the days your review is due — nothing else, ever.')}
+      </div>
+      <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px;color:var(--ink-100);margin-bottom:16px;">
+        <span>${TT('알림 받을 시각','Reminder time')}</span>
+        <select id="push-pre-hour" style="font-family:var(--font-body);font-size:14px;font-weight:700;color:var(--ink-100);background:var(--bg-page);border:1px solid var(--ink-12);border-radius:10px;padding:8px 12px;">${hourOpts}</select>
+      </label>
+      <button id="push-pre-yes" class="btn btn-solid" style="width:100%;padding:14px;font-size:14.5px;">${TT('네, 알려주세요','Yes, remind me')}</button>
+      <button id="push-pre-no" style="width:100%;padding:12px;margin-top:6px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('나중에','Not now')}</button>
+    </div>`;
+  document.body.appendChild(ov);
+  document.getElementById('push-pre-no').onclick = () => ov.remove();
+  document.getElementById('push-pre-yes').onclick = async (e) => {
+    const h = Number(document.getElementById('push-pre-hour')?.value || 9);
+    try { localStorage.setItem('imvoca.pushHour', String(h)); } catch(_){}
+    e.currentTarget.disabled = true;
+    // 이 클릭이 사용자 제스처 → 여기서만 진짜 브라우저 권한 팝업이 뜬다
+    const ok = await enablePush(h);
+    ov.remove();
+    if (ok) _pushAskSave({ n: 99, at: Date.now() });   // 켰으면 다시 묻지 않는다
+  };
 }
 
 // ── 알림 설정 모달 ──────────────────────────────────────────────
