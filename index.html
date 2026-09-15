@@ -67,6 +67,16 @@ body.dark {
 /* 기본 */
 body.dark { background: var(--bg-page); color: #f0ece4; } /* 하드코딩 #111 → 토큰: 다크모드 표면을 따뜻한 갈색 계열로 통일 */
 body.dark #root { background: #1a1714; }
+/* 다크모드 로고: 2.png 은 배경이 투명한 네이비 로고라 어두운 바탕에 묻힌다.
+   (스토어 아이콘이 다크모드에서 안 보이던 것과 같은 원인)
+   별도 이미지를 만들지 않고, 다크모드에서만 크림 타일 위에 올려 대비를 준다.
+   이미 흰 배경이 인라인으로 지정된 곳(로그인 화면 등)은 !important 없이 두어 그대로 유지. */
+body.dark img[src*="/2.png"] {
+  background: #f3ece0;
+  padding: 3px;
+  box-sizing: border-box;
+  border-radius: 11px;
+}
 
 /* 화면 전체 */
 body.dark .scr { background: #1a1714; color: #f0ece4; }
