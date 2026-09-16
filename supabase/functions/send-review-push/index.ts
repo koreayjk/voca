@@ -8,12 +8,17 @@
 // 알림을 받을 때 setAppBadge 로 숫자까지 찍는다)
 //
 // 배포: supabase functions deploy send-review-push
+// 웹(브라우저·안드로이드 TWA)은 VAPID 웹 푸시로, 앱스토어 iOS 앱은 APNs 로 보낸다.
+// 보낼 대상을 고르는 규칙(시간대·시각·중복·밀린 개수)은 둘이 완전히 같다 — platform 으로만 갈린다.
+//
 // env:  SUPABASE_URL, SB_SERVICE_ROLE_KEY,
 //       VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT(mailto:...)
+//       APNS_KEY_ID, APNS_TEAM_ID, APNS_PRIVATE_KEY(.p8 내용), APNS_BUNDLE_ID
 // 호출: POST (본문 없음). 테스트용으로 { "force": true } 를 주면 시간 조건을 무시.
 // ============================================================
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import webpush from 'npm:web-push@3.6.7'
+import { apnsConfigured, sendApns } from './apns.ts'
 
 const svc = createClient(
   Deno.env.get('SUPABASE_URL') ?? '',
@@ -33,7 +38,8 @@ const json = (b: unknown, s = 200) =>
   new Response(JSON.stringify(b), { status: s, headers: { ...cors, 'Content-Type': 'application/json' } })
 
 type Sub = {
-  id: string; user_id: string; endpoint: string; p256dh: string; auth: string
+  id: string; user_id: string; endpoint: string; p256dh: string | null; auth: string | null
+  platform: 'web' | 'ios'
   tz: string; send_hour: number; lang: string; fail_count: number; last_sent_on: string | null
 }
 
@@ -76,7 +82,8 @@ const TEXT: Record<string, (n: number) => { title: string; body: string }> = {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
   if (req.method !== 'POST') return json({ error: 'method' }, 405)
-  if (!VAPID_PUBLIC || !VAPID_PRIVATE) return json({ error: 'vapid_not_configured' }, 500)
+  // 둘 중 하나만 설정돼 있어도 그쪽 플랫폼으로는 보낸다 (iOS 준비 중에도 웹은 계속 나가야 한다)
+  if (!VAPID_PUBLIC && !apnsConfigured()) return json({ error: 'no_push_configured' }, 500)
 
   // 호출자 검증 — 이 함수는 cron(서버)만 부르는 기계용이다.
   // 기본 verify_jwt 는 'anon 키로도 통과'라, 이게 없으면 누구나 {"force":true} 로
@@ -86,7 +93,7 @@ Deno.serve(async (req) => {
     return json({ error: 'forbidden' }, 403)
   }
 
-  webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE)
+  if (VAPID_PUBLIC && VAPID_PRIVATE) webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE)
 
   const { force } = await req.json().catch(() => ({ force: false }))
 
@@ -100,7 +107,7 @@ Deno.serve(async (req) => {
   // 2) 복습이 있는 사용자의 활성 구독만 (fail_count 누적된 건 제외)
   const { data: subs, error: sErr } = await svc
     .from('voca_push_subs')
-    .select('id,user_id,endpoint,p256dh,auth,tz,send_hour,lang,fail_count,last_sent_on')
+    .select('id,user_id,endpoint,p256dh,auth,platform,tz,send_hour,lang,fail_count,last_sent_on')
     .eq('enabled', true)
     .lt('fail_count', 5)
     .in('user_id', [...dueBy.keys()])
@@ -124,11 +131,23 @@ Deno.serve(async (req) => {
     })
 
     try {
-      await webpush.sendNotification(
-        { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
-        payload,
-        { TTL: 6 * 3600 },   // 6시간 안에 못 받으면 버린다 (다음날 또 보내므로)
-      )
+      if (s.platform === 'ios') {
+        // 앱스토어 iOS 앱 — endpoint 에 기기 토큰이 들어 있다
+        if (!apnsConfigured()) { skipped++; continue }
+        const r = await sendApns(s.endpoint, { title: t.title, body: t.body, badge: due, url: '/?tab=review' })
+        if (!r.ok) {
+          if (r.gone) { await svc.from('voca_push_subs').delete().eq('id', s.id); dropped++; continue }
+          // webpush 와 같은 모양으로 아래 catch 에 넘긴다
+          throw Object.assign(new Error(r.reason || 'apns_failed'), { statusCode: r.status, body: r.reason })
+        }
+      } else {
+        if (!VAPID_PUBLIC || !VAPID_PRIVATE) { skipped++; continue }
+        await webpush.sendNotification(
+          { endpoint: s.endpoint, keys: { p256dh: s.p256dh!, auth: s.auth! } },
+          payload,
+          { TTL: 6 * 3600 },   // 6시간 안에 못 받으면 버린다 (다음날 또 보내므로)
+        )
+      }
       sent++
       await svc.from('voca_push_subs')
         .update({ last_sent_on: lp.day, fail_count: 0 }).eq('id', s.id)
@@ -146,7 +165,8 @@ Deno.serve(async (req) => {
         const err = e as { statusCode?: number; body?: string; message?: string }
         failed.push({
           code: err.statusCode ?? null,
-          host: (() => { try { return new URL(s.endpoint).host } catch { return '?' } })(),
+          platform: s.platform,
+          host: (() => { try { return new URL(s.endpoint).host } catch { return 'apns' } })(),
           body: String(err.body ?? err.message ?? e).slice(0, 300),
         })
       }
@@ -157,5 +177,6 @@ Deno.serve(async (req) => {
     ok: true, sent, skipped, dropped, failed,
     // 진단용 — 키 값은 노출하지 않고 '앞 8자 + 길이'만. 앱의 공개키와 대조하기 위함.
     vapid: { pub: VAPID_PUBLIC.slice(0, 8) + '…(' + VAPID_PUBLIC.length + ')', subject: VAPID_SUBJECT },
+    apns: { configured: apnsConfigured(), topic: Deno.env.get('APNS_BUNDLE_ID') ?? 'app.imvoca', host: Deno.env.get('APNS_HOST') ?? 'production' },
   })
 })

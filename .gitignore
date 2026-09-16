@@ -7,3 +7,12 @@ wordbooks/toeic-corpus/
 **/.DS_Store
 __pycache__/
 *.pyc
+
+# ── iOS(Capacitor) 빌드 ──────────────────────────────────────────
+# www/ 는 scripts/build-www.mjs 가 만드는 산출물이라 커밋하지 않는다.
+# (깃허브 페이지에 중복 배포되는 것도 막는다)
+node_modules/
+www/
+# ios/ 안쪽 생성물은 Capacitor 가 만든 ios/.gitignore 가 처리한다.
+# (빌드 산출물, 동기화된 www 복사본, Xcode 사용자 설정 등)
+*.xcuserdatad/

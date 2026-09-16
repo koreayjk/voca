@@ -759,6 +759,12 @@ const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
 // 비워두면 학부모 카드는 자동으로 '복사/공유' 방식으로 동작합니다.
 const KAKAO_JS_KEY = '3dd23d57fa02271fab74897b38ecfeff';
 const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 OFF (true로 바꾸면 복구)
+// ⚠️ 애플 스토어 필수 조건(가이드라인 4.8): 구글 같은 제3자 소셜 로그인을 제공하면
+//    'Apple로 로그인'도 같은 자리에 제공해야 한다. 없으면 iOS 앱이 반려된다.
+//    켜기 전에 반드시 먼저: Apple Developer 에서 Services ID + 키 생성 →
+//    Supabase → Authentication → Providers → Apple 설정 (docs/apple-app-store.md 4단계)
+//    설정 전에 true 로 두면 버튼을 눌렀을 때 오류가 난다.
+const APPLE_LOGIN_ENABLED = false;
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
 
@@ -3289,8 +3295,45 @@ function isPageLocked(bookId, pageNum){
 // ⚠️ '아이폰'이 아니라 '앱스토어로 배포된 앱'인지를 판별해야 한다.
 //    사파리로 접속했거나 홈 화면에 추가한 PWA 는 그냥 웹사이트라 애플 규정 대상이 아니다.
 //    Capacitor 래퍼 안에서만 window.Capacitor 가 주입되므로 그걸로 구분한다.
+// ── Capacitor 네이티브 브리지 ────────────────────────────────────
+// 앱스토어용 iOS 앱은 화면(HTML/CSS/JS)을 앱 안에 담아서 배포한다(가이드라인 4.2 —
+// '웹사이트를 그대로 감싼 앱'은 반려된다). 웹과 같은 코드가 돌지만 origin 이
+// capacitor://localhost 라서 다음이 웹과 달라진다:
+//   · 서비스워커/웹푸시 ✗   → APNs(네이티브 알림)로 대체
+//   · 구글 로그인 리다이렉트 ✗ → 시스템 브라우저 + 커스텀 스킴(app.imvoca://auth)
+//   · 결제 UI ✗             → canShowBilling() 으로 숨김 (가이드라인 3.1.1)
+// 이 파일은 번들러를 거치지 않는 단일 HTML 이라 import 를 쓸 수 없다. 대신 네이티브
+// 브리지가 window 에 심어주는 registerPlugin 으로 플러그인을 직접 잡는다.
+// 소셜 로그인이 끝나고 앱을 다시 깨울 커스텀 스킴.
+// Xcode 의 Info.plist(CFBundleURLSchemes)와 Supabase Redirect URLs 양쪽에 같은 값이 있어야 한다.
+const IOS_AUTH_REDIRECT = 'app.imvoca://auth';
+const _capPlugins = {};
+function _capNative(){
+  try { const C = window.Capacitor; return !!(C && typeof C.isNativePlatform === 'function' && C.isNativePlatform()); }
+  catch(e){ return false; }
+}
+function _capPlugin(name){
+  if (!_capNative()) return null;
+  if (name in _capPlugins) return _capPlugins[name];
+  let pl = null;
+  try {
+    const C = window.Capacitor;
+    pl = (C.Plugins && C.Plugins[name]) || (typeof C.registerPlugin === 'function' ? C.registerPlugin(name) : null);
+  } catch(e){ pl = null; }
+  _capPlugins[name] = pl;
+  return pl;
+}
+// 외부 페이지(약관·가이드·요금제)를 열 때. 앱 웹뷰가 그쪽으로 넘어가버리면 돌아올
+// 방법이 없으므로 네이티브에서는 인앱 사파리로 띄운다.
+function goExternal(url){
+  const Browser = _capPlugin('Browser');
+  if (Browser) { Browser.open({ url: url }).catch(() => { location.href = url; }); return; }
+  location.href = url;
+}
+
 function _isIosApp(){
   try {
+    if (window.__IMVOCA_IOS_APP__) return true;                            // 빌드 스크립트가 심는 플래그
     if (localStorage.getItem('imvoca.forceIosApp') === '1') return true;   // 테스트용
     const C = window.Capacitor;
     if (!C) return false;
@@ -3370,7 +3413,7 @@ function showUpgradePopup() {
       </div>
       <div style="font-size:13px;color:var(--ink-60);margin-bottom:3px;"><b style="font-size:21px;color:var(--ink-100);">$3.99</b>/${TT('월','mo')} · ${TT('연간','yearly')} $39.99 (16%↓)</div>
       <div style="font-size:12px;color:var(--ok);font-weight:700;margin-bottom:16px;">${TT('커피 한 잔 값으로 한 달 — 하루 약 130원','That’s about $0.13 a day')}</div>
-      <button onclick="location.href='https://imvoca.app/pricing.html'"
+      <button onclick="goExternal('https://imvoca.app/pricing.html')"
         style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">
         ${TT('지금 이어서 학습하기 →','Continue learning →')}
       </button>
@@ -5020,25 +5063,35 @@ function signInWithProvider(provider){
     }
     const pending = { suType, code, name, source };
     try { localStorage.setItem('imvoca.oauthPending', JSON.stringify(pending)); } catch(e){}
-    const redirect = encodeURIComponent(location.origin + location.pathname);
+    // 네이티브 앱은 origin 이 capacitor://localhost 라 구글이 그리로 돌려보내주지 않는다.
+    // 대신 커스텀 스킴으로 앱을 다시 깨운다.
+    // ⚠️ Supabase → Authentication → URL Configuration → Redirect URLs 에
+    //    app.imvoca://auth 를 반드시 추가해둬야 한다.
+    const redirect = encodeURIComponent(_isIosApp() ? IOS_AUTH_REDIRECT : (location.origin + location.pathname));
     let authUrl = SB_URL + '/auth/v1/authorize?provider=' + provider + '&redirect_to=' + redirect;
     // 회원가입에서는 구글 계정 선택 화면을 강제로 띄운다.
     // (브라우저에 이미 로그인된 계정으로 자동 진행돼 원치 않는 아이디로 가입/로그인되는 문제 방지)
     if (onSignupTab) authUrl += '&prompt=select_account';
     track(onSignupTab ? 'sign_up' : 'login', { method: provider });
+    // 앱 안 웹뷰에서 구글 로그인 페이지를 열면 구글이 'disallowed_useragent' 로 막는다.
+    // 시스템 브라우저로 띄우고, 끝나면 딥링크로 앱이 다시 깨어난다.
+    const _b = _capPlugin('Browser');
+    if (_b) { _b.open({ url: authUrl, presentationStyle: 'popover' }).catch(() => { location.href = authUrl; }); return; }
     location.href = authUrl;
   }catch(e){ toast('로그인 이동 실패: ' + e.message); }
 }
 
 // 소셜 로그인 후 돌아왔을 때 (#access_token=... 처리)
-async function handleOAuthRedirect(){
-  const h = window.location.hash || '';
+// hashOverride: 네이티브 앱에서 딥링크(app.imvoca://auth#access_token=...)로 돌아왔을 때
+// 주소창이 아니라 그 URL 의 프래그먼트를 넘겨받는다.
+async function handleOAuthRedirect(hashOverride){
+  const h = hashOverride || window.location.hash || '';
   if (h.indexOf('access_token=') === -1) return false;
   const hp = new URLSearchParams(h.replace(/^#/,''));
   const access_token = hp.get('access_token');
   const refresh_token = hp.get('refresh_token');
   if (!access_token) return false;
-  history.replaceState({}, '', window.location.pathname);
+  if (!hashOverride) history.replaceState({}, '', window.location.pathname);
   try{
     const res = await fetch(SB_URL + '/auth/v1/user', { headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+access_token }});
     if(!res.ok){ renderLogin(); return true; }
@@ -5900,6 +5953,10 @@ function renderLogin(tab) {
       <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4.5 24 4.5 16.3 4.5 9.7 8.9 6.3 14.7z"/><path fill="#4CAF50" d="M24 43.5c5.4 0 10.3-2.1 14-5.4l-6.5-5.5c-2 1.5-4.6 2.4-7.5 2.4-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.6 39 16.2 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.5 5.5c-.5.4 7-5.1 7-15.1 0-1.2-.1-2.3-.4-3.5z"/></svg>
       ${TT('Google로 계속하기','Continue with Google')}
     </button>
+    ${APPLE_LOGIN_ENABLED ? `<button type="button" onclick="signInWithProvider('apple')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#000;border:none;border-radius:10px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:600;color:#fff;cursor:pointer;margin-bottom:10px;">
+      <svg width="16" height="18" viewBox="0 0 16 18" fill="#fff"><path d="M13.3 9.6c0-2 1.6-3 1.7-3.1-.9-1.4-2.4-1.5-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7C5.2 4.9 4 5.7 3.3 7c-1.4 2.4-.4 6 1 8 .7 1 1.5 2.1 2.5 2 1 0 1.4-.6 2.6-.6s1.5.6 2.6.6c1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.2-.8-2.2-3.1zM11.4 3.6c.5-.7.9-1.6.8-2.6-.8 0-1.8.5-2.4 1.2-.5.6-1 1.6-.8 2.5.9.1 1.8-.4 2.4-1.1z"/></svg>
+      ${TT('Apple로 계속하기','Continue with Apple')}
+    </button>` : ''}
     ${KAKAO_LOGIN_ENABLED ? `<button type="button" onclick="signInWithProvider('kakao')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEE500;border:none;border-radius:10px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:600;color:#191600;cursor:pointer;">
       <span style="font-size:16px;">💬</span>${TT('카카오로 계속하기','Continue with Kakao')}
     </button>` : ''}`;
@@ -7456,11 +7513,11 @@ function buildDockBottom() {
   const ko = userNativeLang==='ko';
   const isAdmin = currentUser && currentUser.email==='koreayjk@gmail.com';
   return `<div class="dock-bottom">`
-    + `<button class="dock-mini" onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()">📖 ${TT('사용법','Guide')}</button>`
+    + `<button class="dock-mini" onclick="goExternal('https://imvoca.app/guide.html?lang='+guideLang())">📖 ${TT('사용법','Guide')}</button>`
     + (userOrg ? `<button class="dock-mini" onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>` : '')
-    + (isAdmin ? `<button class="dock-mini" onclick="location.href='https://imvoca.app/admin.html'">${TT('⚙️ 관리','⚙️ Admin')}</button>` : '')
+    + (isAdmin ? `<button class="dock-mini" onclick="goExternal('https://imvoca.app/admin.html')">${TT('⚙️ 관리','⚙️ Admin')}</button>` : '')
     + (isAdmin ? `<button class="dock-mini" onclick="showHealthDashboard()">🩺 ${TT('상태','Health')}</button>` : '')
-    + ((userPlan!=='premium' && canShowBilling()) ? `<button class="dock-mini dock-mini--accent" onclick="track('view_pricing',{from:'sidebar'});location.href='https://imvoca.app/pricing.html'">✨ Premium</button>` : '')
+    + ((userPlan!=='premium' && canShowBilling()) ? `<button class="dock-mini dock-mini--accent" onclick="track('view_pricing',{from:'sidebar'});goExternal('https://imvoca.app/pricing.html')">✨ Premium</button>` : '')
     + `<button class="dock-mini" onclick="showNotices()" style="position:relative;">🔔 ${TT('알림','Notices')}<span id="notice-badge-pc" style="display:none;position:absolute;top:2px;right:8px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>`
     + `<button class="dock-mini" onclick="showMyMenu()">${TT('👤 마이페이지','👤 My')}</button>`
     + ((userOrgRole==='owner' || isPendingOwner())
@@ -7700,10 +7757,10 @@ function render() {
         </div>
         <div class="topbar-actions" style="position:absolute;top:14px;left:22px;right:22px;z-index:30;">
           <div class="topbar-scroll">
-          ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="location.href='https://imvoca.app/admin.html'" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
-          ${(userPlan!=='premium' && canShowBilling())?`<button onclick="track('view_pricing',{from:'topbar'});location.href='https://imvoca.app/pricing.html'" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
+          ${currentUser && currentUser.email==='koreayjk@gmail.com'?`<button onclick="goExternal('https://imvoca.app/admin.html')" class="topbar-btn" style="background:var(--ink-100);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">${TT('⚙️ 관리','⚙️ Admin')}</button>`:''}
+          ${(userPlan!=='premium' && canShowBilling())?`<button onclick="track('view_pricing',{from:'topbar'});goExternal('https://imvoca.app/pricing.html')" class="topbar-btn" style="background:var(--accent);border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:700;">✨ Premium</button>`:''}
           ${(userOrgRole==='owner' || isPendingOwner())?`<button onclick="goOrgAdmin()" class="topbar-btn" style="background:var(--gold-bg);border:1px solid rgba(28,53,83,0.25);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:var(--accent);font-weight:800;">${userOrgRole==='owner'?(TT('🏫 단체 관리','🏫 Org Admin')):(TT('🏫 단체 만들기','🏫 Create Org'))}</button>`:''}
-          <button onclick="location.href='https://imvoca.app/guide.html?lang='+guideLang()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
+          <button onclick="goExternal('https://imvoca.app/guide.html?lang='+guideLang())" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);">📖 ${TT('사용법','Guide')}</button>
           ${userOrg?`<button onclick="${_isTestAdmin()?'goOrgTestsTab()':'showMyTests()'}" class="topbar-btn" style="background:#1c3553;border:none;border-radius:20px;font-family:var(--font-body);cursor:pointer;color:#fff;font-weight:800;">📝 ${_isTestAdmin()?(TT('시험 출제','Tests')):(TT('시험','Tests'))}</button>`:''}
           <button onclick="showNotices()" class="topbar-btn" style="background:none;border:1px solid rgba(0,0,0,0.12);border-radius:20px;font-family:var(--font-body);cursor:pointer;color:rgba(0,0,0,0.6);position:relative;">🔔<span id="notice-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#c0392b;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box;line-height:1;"></span></button>
           </div>
@@ -10877,6 +10934,8 @@ updateTotalWords();
 function toggleDarkMode() {
   const isDark = document.body.classList.toggle('dark');
   localStorage.setItem('imvoca.dark', isDark ? '1' : '0');
+  // 네이티브 앱은 상태바 글씨 색도 같이 바꿔야 한다 (initNativeApp 이 듣는다)
+  try { window.dispatchEvent(new Event('imvoca:theme')); } catch(e){}
   render();
 }
 
@@ -10998,6 +11057,9 @@ setTimeout(applyStaticI18n, 300);
 const VAPID_PUBLIC_KEY = 'BD5eG82STmtIqMQOpMOjoZfBS1xHRpyPvSBiM9rTV1ogVDcNAHD6OTOaa8QMcEnIudUL3AcOdwH37-LTm7uJVG8';   // ← VAPID 공개키. 비어 있으면 알림 기능이 숨겨진다(docs/push-setup.md)
 
 function pushSupported(){
+  // iOS 앱 안에서는 웹 푸시가 아예 없다(WKWebView 에 PushManager/ServiceWorker 없음).
+  // 애플 서버(APNs)가 직접 기기로 보내는 네이티브 알림을 쓴다.
+  if (_isIosApp()) return !!_capPlugin('PushNotifications');
   return !!(VAPID_PUBLIC_KEY && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window);
 }
 function _b64ToU8(b64){
@@ -11012,6 +11074,7 @@ function _myTz(){ try { return Intl.DateTimeFormat().resolvedOptions().timeZone 
 // 현재 구독 상태: 'unsupported' | 'denied' | 'off' | 'on'
 async function pushState(){
   if (!pushSupported()) return 'unsupported';
+  if (_isIosApp()) return nativePushState();
   if (Notification.permission === 'denied') return 'denied';
   try {
     const reg = await navigator.serviceWorker.ready;
@@ -11034,6 +11097,7 @@ function _sameKey(subKey){
 }
 async function ensurePushKeyFresh(){
   try {
+    if (_isIosApp()) return;                 // 네이티브는 VAPID 를 안 쓴다
     if (!pushSupported() || !currentUser) return;
     if (Notification.permission !== 'granted') return;
     const reg = await navigator.serviceWorker.ready;
@@ -11048,7 +11112,85 @@ async function ensurePushKeyFresh(){
   } catch(e){}
 }
 
+// ── 네이티브 알림(APNs) ─────────────────────────────────────────
+// 웹 푸시와 서버 표(voca_push_subs)를 공유한다. platform 컬럼으로 갈라서
+// 엣지 함수가 웹은 VAPID, iOS 는 APNs 로 보낸다 — 문구·시간대 로직은 그대로 재사용.
+// endpoint 컬럼에는 웹이면 푸시 URL, iOS 면 기기 토큰이 들어간다.
+const _NATIVE_PUSH_ON = 'imvoca.nativePushOn';
+let _apnsTokenPromise = null;
+
+// register() 를 부르면 'registration' 이벤트로 토큰이 온다. 토큰이 올 때까지 기다린다.
+function _apnsToken(){
+  const PN = _capPlugin('PushNotifications');
+  if (!PN) return Promise.reject(new Error('no-plugin'));
+  if (_apnsTokenPromise) return _apnsTokenPromise;
+  _apnsTokenPromise = new Promise((resolve, reject) => {
+    const to = setTimeout(() => reject(new Error('APNs 토큰 시간 초과')), 20000);
+    PN.addListener('registration', (t) => { clearTimeout(to); resolve(t && t.value); });
+    PN.addListener('registrationError', (e) => { clearTimeout(to); reject(new Error((e && e.error) || 'registrationError')); });
+    PN.register();
+  });
+  // 실패하면 캐시를 비워서 다음에 다시 시도할 수 있게 한다
+  _apnsTokenPromise.catch(() => { _apnsTokenPromise = null; });
+  return _apnsTokenPromise;
+}
+
+async function nativePushState(){
+  const PN = _capPlugin('PushNotifications');
+  if (!PN) return 'unsupported';
+  try {
+    const p = await PN.checkPermissions();
+    if (p.receive === 'denied') return 'denied';
+    if (p.receive !== 'granted') return 'off';
+    // 권한이 있어도 사용자가 앱 안에서 끈 상태일 수 있다(서버 행을 지운 상태)
+    return localStorage.getItem(_NATIVE_PUSH_ON) === '1' ? 'on' : 'off';
+  } catch(e){ return 'off'; }
+}
+
+async function enableNativePush(hour, silent){
+  const PN = _capPlugin('PushNotifications');
+  if (!PN || !currentUser) return false;
+  try {
+    let perm = await PN.checkPermissions();
+    if (perm.receive !== 'granted') perm = await PN.requestPermissions();
+    if (perm.receive !== 'granted') {
+      toast(perm.receive === 'denied'
+        ? TT('알림이 차단돼 있어요. 설정 → IM VOCA → 알림에서 허용해주세요','Notifications are blocked — allow them in Settings → IM VOCA')
+        : TT('알림을 켜지 않았어요','Notifications not enabled'));
+      return false;
+    }
+    const token = await _apnsToken();
+    if (!token) { toast(TT('알림을 켜지 못했어요','Could not enable notifications')); return false; }
+    const res = await authPost('/rest/v1/voca_push_subs?on_conflict=endpoint', {
+      user_id: currentUser.id, endpoint: token, platform: 'ios',
+      tz: _myTz(), send_hour: Number(hour) || 9,
+      lang: (userNativeLang || 'ko'), enabled: true, fail_count: 0,
+    }, 'resolution=merge-duplicates,return=minimal');
+    if (!res || !res.ok) { toast(TT('알림 설정 저장에 실패했어요','Could not save notification settings')); return false; }
+    try { localStorage.setItem(_NATIVE_PUSH_ON, '1'); } catch(e){}
+    if (!silent) toast(TT('🔔 복습 알림을 켰어요','🔔 Review reminders on'));
+    try { track('enable_push', { hour: Number(hour) || 9, platform: 'ios' }); } catch(e){}
+    return true;
+  } catch(e){
+    toast(TT('알림을 켜지 못했어요','Could not enable notifications'));
+    return false;
+  }
+}
+
+async function disableNativePush(){
+  try {
+    // 기기 토큰은 그대로 둔 채 서버 행만 지운다 (다시 켤 때 권한을 또 묻지 않아도 된다)
+    const token = await _apnsToken().catch(() => null);
+    if (token) await sbFetch('/rest/v1/voca_push_subs?endpoint=eq.' + encodeURIComponent(token), 'DELETE');
+    try { localStorage.removeItem(_NATIVE_PUSH_ON); } catch(e){}
+    const Badge = _capPlugin('Badge');
+    if (Badge) await Badge.clear().catch(() => {});
+    toast(TT('알림을 껐어요','Reminders off'));
+  } catch(e){}
+}
+
 async function enablePush(hour, silent){
+  if (_isIosApp()) return enableNativePush(hour, silent);
   if (!pushSupported()) { toast(TT('이 브라우저는 알림을 지원하지 않아요','Notifications are not supported here')); return false; }
   try {
     const perm = await Notification.requestPermission();
@@ -11085,6 +11227,7 @@ async function enablePush(hour, silent){
 }
 
 async function disablePush(){
+  if (_isIosApp()) return disableNativePush();
   try {
     const reg = await navigator.serviceWorker.ready;
     const sub = await reg.pushManager.getSubscription();
@@ -11101,8 +11244,12 @@ async function disablePush(){
 // 아이콘 배지 동기화 (iOS 16.4+ / PC 설치형에서만 숫자가 보인다. 안드로이드는 알림이 배지를 만든다)
 async function syncAppBadge(){
   try {
-    if (!navigator.setAppBadge) return;
     const n = (window._reviewBadgeCount || 0) + (typeof unreadNoticeCount === 'function' ? unreadNoticeCount() : 0);
+    // 네이티브 앱: setAppBadge 가 없으므로 플러그인으로 직접 찍는다.
+    // (APNs 가 보낸 배지는 알림을 지워도 남기 때문에, 앱을 열 때 실제 개수로 맞춰줘야 한다)
+    const Badge = _capPlugin('Badge');
+    if (Badge) { if (n > 0) await Badge.set({ count: n }); else await Badge.clear(); return; }
+    if (!navigator.setAppBadge) return;
     if (n > 0) await navigator.setAppBadge(n); else await navigator.clearAppBadge();
   } catch(e){}
 }
@@ -11125,12 +11272,21 @@ function _pushAskSave(o){ try { localStorage.setItem(_PUSH_ASK_KEY, JSON.stringi
 async function maybeAskPush(wordCount){
   try {
     if (!pushSupported()) return;
-    if (Notification.permission !== 'default') return;      // 이미 허용/차단 → 건드리지 않음
     const st = _pushAskState();
     if ((st.n || 0) >= 3) return;                            // 평생 3번까지만
     if (st.at && Date.now() - st.at < 7 * 86400000) return;  // 거절 후 7일은 쉰다
-    const reg = await navigator.serviceWorker.ready;
-    if (await reg.pushManager.getSubscription()) return;     // 이미 구독 중
+    if (_isIosApp()) {
+      // iOS 도 권한 팝업은 '딱 한 번'만 뜬다. 아직 안 물어본 상태에서만 우리 화면을 먼저 띄운다.
+      const nst = await nativePushState();
+      if (nst !== 'off') return;                             // unsupported/denied/on → 건드리지 않음
+      const PN = _capPlugin('PushNotifications');
+      const perm = await PN.checkPermissions();
+      if (perm.receive === 'granted') return;                // 권한은 있는데 꺼둔 것 → 본인 선택 존중
+    } else {
+      if (Notification.permission !== 'default') return;     // 이미 허용/차단 → 건드리지 않음
+      const reg = await navigator.serviceWorker.ready;
+      if (await reg.pushManager.getSubscription()) return;   // 이미 구독 중
+    }
     _pushAskSave({ n: (st.n || 0) + 1, at: Date.now() });
     _showPushPrePrompt(wordCount);
   } catch(e){}
@@ -11218,7 +11374,10 @@ async function showPushSettings(){
 // 업데이트는 조용히 처리한다: 새 HTML 은 SW 가 백그라운드에서 받아 캐시에 넣어두고,
 // 다음 실행 때 자동으로 새 버전이 뜬다. 예전엔 '✨ 새 버전이 있어요' 토스트를 띄웠는데
 // 배포할 때마다 떠서 성가셔 없앴다. (되살리려면 sw.js 의 HTML_UPDATED 도 함께 복원)
-if ('serviceWorker' in navigator) {
+// 네이티브 앱은 화면이 이미 기기 안에 있어서 캐시가 필요 없다. 오히려 서비스워커
+// 캐시가 남으면 앱을 업데이트해도 옛 화면이 뜨는 사고가 난다 (빌드 스크립트도 sw.js 를
+// 일부러 번들에서 뺀다).
+if (!_isIosApp() && 'serviceWorker' in navigator) {
   // 알림을 눌러 들어오면 복습 탭으로 보낸다
   navigator.serviceWorker.addEventListener('message', (e) => {
     if (e.data && e.data.type === 'OPEN_REVIEW') { try { goTab('review'); } catch(_){} }
@@ -11232,6 +11391,66 @@ if ('serviceWorker' in navigator) {
 }
 // 앱을 열면 배지를 정리한다 (알림으로 생긴 배지는 알림을 지우면 사라진다)
 window.addEventListener('focus', () => { try { syncAppBadge(); } catch(e){} });
+
+// ── 네이티브 앱 초기화 ──────────────────────────────────────────
+(function initNativeApp(){
+  if (!_capNative()) return;
+
+  const App = _capPlugin('App');
+  const Browser = _capPlugin('Browser');
+  const PN = _capPlugin('PushNotifications');
+
+  // 1) 소셜 로그인 복귀 — app.imvoca://auth#access_token=... 로 앱이 깨어난다
+  if (App) {
+    App.addListener('appUrlOpen', async (ev) => {
+      try {
+        const url = (ev && ev.url) || '';
+        if (url.indexOf(IOS_AUTH_REDIRECT) !== 0) return;
+        if (Browser) await Browser.close().catch(() => {});
+        const hash = url.indexOf('#') >= 0 ? url.slice(url.indexOf('#')) : '';
+        if (hash.indexOf('access_token=') === -1) {
+          toast(TT('로그인이 취소됐어요','Sign-in cancelled'));
+          return;
+        }
+        await handleOAuthRedirect(hash);
+      } catch(e){ toast(TT('로그인 처리에 실패했어요','Sign-in failed')); }
+    });
+
+    // 2) 앱으로 돌아올 때 배지를 실제 개수로 맞춘다.
+    //    APNs 가 찍은 배지는 알림을 지워도 남기 때문에 우리가 직접 지워줘야 한다.
+    App.addListener('resume', () => {
+      try { syncAppBadge(); } catch(e){}
+      try { if (typeof checkReviews === 'function' && currentUser) checkReviews(); } catch(e){}
+    });
+  }
+
+  // 3) 알림을 눌러 들어오면 복습 탭으로
+  if (PN) {
+    PN.addListener('pushNotificationActionPerformed', () => {
+      try { goTab('review'); } catch(e){}
+      try { syncAppBadge(); } catch(e){}
+    });
+  }
+
+  // 4) 앱 안에서 바깥 링크(target=_blank 등)를 누르면 인앱 사파리로.
+  //    그냥 두면 웹뷰가 그 페이지로 넘어가버려 앱으로 돌아올 방법이 없다.
+  document.addEventListener('click', (e) => {
+    const a = e.target && e.target.closest && e.target.closest('a[href^="http"]');
+    if (!a) return;
+    e.preventDefault();
+    goExternal(a.href);
+  }, true);
+
+  // 5) 상태바를 앱 배경색에 맞춘다 (다크모드면 밝은 글씨)
+  const SB = _capPlugin('StatusBar');
+  if (SB) {
+    const applyBar = () => {
+      try { SB.setStyle({ style: document.body.classList.contains('dark') ? 'DARK' : 'LIGHT' }); } catch(e){}
+    };
+    applyBar();
+    window.addEventListener('imvoca:theme', applyBar);
+  }
+})();
 </script>
 </body>
 </html>

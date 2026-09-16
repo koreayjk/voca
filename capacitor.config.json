@@ -1,0 +1,26 @@
+{
+  "appId": "app.imvoca",
+  "appName": "IM VOCA",
+  "webDir": "www",
+  "ios": {
+    "limitsNavigationsToAppBoundDomains": false,
+    "backgroundColor": "#f3ece0"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 600,
+      "backgroundColor": "#f3ece0",
+      "showSpinner": false
+    },
+    "PushNotifications": {
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
+    },
+    "Keyboard": {
+      "resize": "native"
+    }
+  }
+}
