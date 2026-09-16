@@ -5385,6 +5385,7 @@ function getMyOfficialAt(){
 }
 function _setMyOfficialAt(id, iso){
   try { const m = getMyOfficialAt(); m[id] = iso; localStorage.setItem(_myOfficialAtKey(), JSON.stringify(m)); } catch(e){}
+  _pushShelfOfficial();
 }
 
 // ── 책장 정렬 / 보기 모드 ──────────────────────────────────────────
@@ -5468,10 +5469,63 @@ function dropShelfBook(dragId, targetId){
 function getMyOfficialIds(){
   try { const v = JSON.parse(localStorage.getItem(_myOfficialKey())||'[]'); return Array.isArray(v)?v:[]; } catch(e){ return []; }
 }
-function _setMyOfficialIds(arr){ try{ localStorage.setItem(_myOfficialKey(), JSON.stringify([...new Set(arr)])); }catch(e){} }
+function _setMyOfficialIds(arr){
+  try{ localStorage.setItem(_myOfficialKey(), JSON.stringify([...new Set(arr)])); }catch(e){}
+  _pushShelfOfficial();
+}
+
+// ── 책장에 담은 공식 단어장 = 서버에도 저장 ───────────────────────
+// 예전에는 이 목록이 localStorage 에만 있었다. 그래서 기기를 바꾸거나 앱을 새로
+// 깔면 목록이 비어 있고, 아래 '복습 진도가 있는 공식책을 자동으로 담는' 최초
+// 시딩이 다시 돌아서 **사용자가 일부러 뺀 책이 되살아났다.**
+// (웹으로 쓰던 사람이 스토어 앱을 설치하면 반드시 겪는다)
+// 이제 members.shelf_official 에 { ids, at } 로 함께 저장한다.
+let _shelfSynced = false;     // 서버 값을 받아오는 데 성공했는가
+let _shelfHasServer = false;  // 서버에 저장된 값이 있었는가 (없으면 최초 시딩 대상)
+let _shelfPushTimer = null;
+
+function _applyServerShelf(v){
+  if (!v || typeof v !== 'object') { _shelfHasServer = false; return; }
+  _shelfHasServer = true;
+  try {
+    if (Array.isArray(v.ids)) localStorage.setItem(_myOfficialKey(), JSON.stringify([...new Set(v.ids)]));
+    if (v.at && typeof v.at === 'object') localStorage.setItem(_myOfficialAtKey(), JSON.stringify(v.at));
+  } catch(e){}
+}
+
+// 컬럼이 아직 없으면(마이그레이션 전) authGet 이 null 을 돌려주고 _shelfSynced 는
+// false 로 남는다 → 예전과 똑같이 동작한다. 절대 기존 동작을 깨지 않게.
+async function loadShelfOfficial(){
+  if (!currentUser) return;
+  try {
+    const d = await authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=shelf_official`);
+    if (!Array.isArray(d)) return;
+    _shelfSynced = true;
+    _applyServerShelf(d[0] && d[0].shelf_official);
+  } catch(e){}
+}
+
+// 담기/빼기를 연속으로 해도 요청이 쌓이지 않게 모아서 한 번만 보낸다.
+function _pushShelfOfficial(){
+  if (!currentUser || !_shelfSynced) return;   // 서버를 못 읽은 상태에서 덮어쓰지 않는다
+  clearTimeout(_shelfPushTimer);
+  _shelfPushTimer = setTimeout(() => {
+    const body = { shelf_official: { ids: getMyOfficialIds(), at: getMyOfficialAt() } };
+    sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', body, true, { 'Prefer': 'return=minimal' })
+      .then(() => { _shelfHasServer = true; })
+      .catch(()=>{});
+  }, 600);
+}
 
 async function appendOfficialBooks() {
   try {
+    // 서버에 저장된 '내 책장 공식책' 목록을 먼저 반영 (뺀 책이 되살아나지 않게)
+    if (currentUser && !_shelfSynced) await loadShelfOfficial();
+    // 이전부터 쓰던 사용자: 서버엔 아직 없고 이 기기(브라우저)에만 목록이 있다.
+    // 그대로 두면 다른 기기·새 설치에서 시딩이 돌아 뺀 책이 되살아나므로, 지금 올려둔다.
+    if (_shelfSynced && !_shelfHasServer && localStorage.getItem(_myOfficialKey()) !== null) {
+      _pushShelfOfficial();
+    }
     // 단체 소속이면서 '승인된 관리자(owner)'가 아닌 사람 = 단체 학생/대기자.
     // → 공식 단어장 전체를 자동으로 보여주지 않는다. 배정(_assigned)받은 것만 loadAssignments 로 보임.
     const approvedOwner = (userOrgRole === 'owner' && userOrgStatus === 'approved');
@@ -5501,7 +5555,9 @@ async function appendOfficialBooks() {
     // 책장 노출: 관리자·개인 모두 본인이 '추가'한 공식책만 (관리자도 자유롭게 추가/빼기 가능).
     // 배정·시험출제는 책장이 아니라 adminBookPool()(카탈로그 유니온)을 쓰므로 빼도 기능에 지장 없음.
     // 최초 1회: 이미 복습 진도가 있는 공식책은 유지(공부 중이던 책이 사라지지 않도록 시딩).
-    if (currentUser && localStorage.getItem(_myOfficialKey()) === null) {
+    // 최초 1회 시딩: 서버에도 없고 이 기기에도 없을 때만. 서버에 빈 목록이
+    // 저장돼 있다면 '전부 뺀 것'이 사용자의 선택이므로 되살리지 않는다.
+    if (currentUser && !_shelfHasServer && localStorage.getItem(_myOfficialKey()) === null) {
       try {
         const offIds = od.map(b => b.id);
         const rv = offIds.length
@@ -5535,6 +5591,30 @@ async function appendOfficialBooks() {
   } catch(e) { console.warn('[official load]', e); }
 }
 
+// 공식책 목록은 '책 추가' 모달 안에 있어서, 다시 그리면 모달이 맨 위로 튄다.
+// renderKeepScroll 은 본문(.scr-scroll/.scr)만 챙기므로 모달은 여기서 따로 잡아준다.
+function _scrollBoxOf(el){
+  let n = el && el.parentElement;
+  while (n && n !== document.body) {
+    const oy = getComputedStyle(n).overflowY;
+    if ((oy === 'auto' || oy === 'scroll') && n.scrollHeight > n.clientHeight + 1) return n;
+    n = n.parentElement;
+  }
+  return null;
+}
+function _keepPickerScroll(fn){
+  const sc = _scrollBoxOf(document.getElementById('official-picker'));
+  const top = sc ? sc.scrollTop : 0;
+  const restore = () => {
+    if (!sc) return;
+    // 다시 그린 직후엔 높이가 아직 안 잡혀 있을 수 있어 한 프레임 뒤에 한 번 더
+    try { sc.scrollTop = top; } catch(e){}
+    requestAnimationFrame(() => { try { sc.scrollTop = top; } catch(e){} });
+  };
+  let r; try { r = fn(); } catch(e){ restore(); throw e; }
+  if (r && typeof r.then === 'function') r.then(restore, restore); else restore();
+}
+
 // 개인 사용자: 공식책을 책장에 추가/제거
 function addOfficialToShelf(id){
   const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
@@ -5544,7 +5624,7 @@ function addOfficialToShelf(id){
   if (!books.some(b => b.id === id)) books.push(_mapOfficialBook(row));
   _setMyOfficialIds([...getMyOfficialIds(), id]);
   try { loadReviewStatus(id); } catch(e){}
-  renderOfficialPicker();
+  _keepPickerScroll(() => renderOfficialPicker());
   try { renderKeepScroll(); } catch(e){}
   toast(TT('📚 단어장을 책장에 추가했어요','Added to your shelf'));
 }
@@ -5552,7 +5632,7 @@ function removeOfficialFromShelf(id){
   const i = books.findIndex(b => b.id === id && b._official);
   if (i >= 0) books.splice(i, 1);
   _setMyOfficialIds(getMyOfficialIds().filter(x => x !== id));
-  renderOfficialPicker();
+  _keepPickerScroll(() => renderOfficialPicker());
   try { renderKeepScroll(); } catch(e){}
   toast(TT('책장에서 뺐어요','Removed from shelf'));
 }
@@ -5647,7 +5727,11 @@ async function renderOfficialPicker(){
   const ko = userNativeLang==='ko';
   // 단체 '학생'에게는 선택 목록을 보이지 않음(배정받은 책만) — 관리자는 개인처럼 추가/빼기 가능.
   if (userOrgId && !_seesAllOfficialLangs()) { box.innerHTML = ''; return; }
-  box.innerHTML = `<div style="font-size:12px;color:var(--ink-40);padding:8px 2px;">${TT('불러오는 중…','Loading…')}</div>`;
+  // 목록을 이미 받아둔 상태에서 '담기/빼기' 후 다시 그리는 경우에는 비우지 않는다.
+  // 한 줄짜리 '불러오는 중…' 으로 갈아끼우면 높이가 무너져서 모달 스크롤이 맨 위로 튄다.
+  if (!Array.isArray(window._officialCatalogFull)) {
+    box.innerHTML = `<div style="font-size:12px;color:var(--ink-40);padding:8px 2px;">${TT('불러오는 중…','Loading…')}</div>`;
+  }
   const od = await ensureOfficialCatalog();
   // 전 언어 공식책 모두 노출 — 스페인어 단어장도 토익·토플처럼 누구나 추가해서 공부할 수 있게 (학습언어 필터 제거)
   const list = od;
