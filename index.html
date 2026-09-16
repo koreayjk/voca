@@ -3286,7 +3286,17 @@ function _capPlugin(name){
 // 방법이 없으므로 네이티브에서는 인앱 사파리로 띄운다.
 function goExternal(url){
   const Browser = _capPlugin('Browser');
-  if (Browser) { Browser.open({ url: url }).catch(() => { location.href = url; }); return; }
+  if (Browser) {
+    // 인앱 사파리로 열린다는 표시를 남긴다. 그 창에는 방문 기록이 없어서
+    // 페이지 자체의 '뒤로' 버튼은 갈 곳이 없고, 사이트 홈으로 보내면 앱 안에서
+    // 웹사이트가 통째로 열려버린다(결제 UI까지). 나가는 길은 창의 X 하나뿐이다.
+    try {
+      const u = new URL(url);
+      if (u.hostname === 'imvoca.app') { u.searchParams.set('inapp', '1'); url = u.toString(); }
+    } catch(e){}
+    Browser.open({ url: url }).catch(() => { location.href = url; });
+    return;
+  }
   location.href = url;
 }
 
