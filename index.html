@@ -5279,11 +5279,34 @@ function _idbOpen(){ return new Promise((res, rej) => { const r = indexedDB.open
 async function idbGet(key){ try { const db = await _idbOpen(); return await new Promise((res) => { const t = db.transaction('kv').objectStore('kv').get(key); t.onsuccess = () => res(t.result); t.onerror = () => res(null); }); } catch(e){ return null; } }
 async function idbSet(key, val){ try { const db = await _idbOpen(); return await new Promise((res) => { const t = db.transaction('kv','readwrite').objectStore('kv').put(val, key); t.onsuccess = () => res(true); t.onerror = () => res(false); }); } catch(e){ return false; } }
 function _booksCacheKey(){ return 'books:' + ((currentUser && currentUser.id) || ''); }
+// 빠른 부팅 때 책 목록만 되살리면 이름·플랜은 기본값이라 상단이
+//   "님 책장 · 📷 무료 스캔 0/10장 · ✨ Premium"
+// 으로 잠깐 떴다가 진짜 값으로 바뀐다. 보기 나쁠 뿐 아니라 프리미엄 사용자에게
+// 구매 버튼이 번쩍이는 셈이라, 화면에 바로 보이는 값들은 같이 캐시해둔다.
+// (0.5초쯤 뒤 서버 값으로 덮어써지므로 캐시가 조금 낡아도 문제되지 않는다)
+function _profileSnapshot(){
+  return { userName, userPlan, userScanCount, userDailyScanCount, userDailyScanDate,
+           userPremiumUntil, userOrgId, userOrgRole, userOrgStatus };
+}
+function _applyProfileSnapshot(p){
+  if (!p || typeof p !== 'object') return;
+  if (typeof p.userName === 'string') userName = p.userName;
+  if (typeof p.userPlan === 'string') userPlan = p.userPlan;
+  if (typeof p.userScanCount === 'number') userScanCount = p.userScanCount;
+  if (typeof p.userDailyScanCount === 'number') userDailyScanCount = p.userDailyScanCount;
+  if (p.userDailyScanDate !== undefined) userDailyScanDate = p.userDailyScanDate;
+  if (p.userPremiumUntil !== undefined) userPremiumUntil = p.userPremiumUntil;
+  if (p.userOrgId !== undefined) userOrgId = p.userOrgId;
+  if (p.userOrgRole !== undefined) userOrgRole = p.userOrgRole;
+  if (p.userOrgStatus !== undefined) userOrgStatus = p.userOrgStatus;
+}
+
 async function _bootShelfFromCache(){
   try {
     const cached = await idbGet(_booksCacheKey());
     if (!cached || !Array.isArray(cached.books) || !cached.books.length) return false;
     books = cached.books;
+    _applyProfileSnapshot(cached.profile);
     updateTotalWords();
     return true;
   } catch(e){ return false; }
@@ -5292,7 +5315,9 @@ async function _bootShelfFromCache(){
 function _saveBooksCache(){
   try { const uid = currentUser && currentUser.id; if (!uid) return;
     clearTimeout(window._bcTimer);
-    window._bcTimer = setTimeout(() => { try { idbSet('books:' + uid, { books, savedAt: Date.now() }); } catch(e){} }, 600);
+    window._bcTimer = setTimeout(() => {
+      try { idbSet('books:' + uid, { books, profile: _profileSnapshot(), savedAt: Date.now() }); } catch(e){}
+    }, 600);
   } catch(e){}
 }
 
@@ -11391,19 +11416,30 @@ window.addEventListener('focus', () => { try { syncAppBadge(); } catch(e){} });
 
   // 1) 소셜 로그인 복귀 — app.imvoca://auth#access_token=... 로 앱이 깨어난다
   if (App) {
-    App.addListener('appUrlOpen', async (ev) => {
-      try {
-        const url = (ev && ev.url) || '';
-        if (url.indexOf(IOS_AUTH_REDIRECT) !== 0) return;
-        if (Browser) await Browser.close().catch(() => {});
-        const hash = url.indexOf('#') >= 0 ? url.slice(url.indexOf('#')) : '';
-        if (hash.indexOf('access_token=') === -1) {
-          toast(TT('로그인이 취소됐어요','Sign-in cancelled'));
-          return;
-        }
-        await handleOAuthRedirect(hash);
-      } catch(e){ toast(TT('로그인 처리에 실패했어요','Sign-in failed')); }
-    });
+    // 우리 스킴으로 앱이 깨어나면 = 소셜 로그인이 끝난 것.
+    // 경로까지 일일이 맞추지 않고 스킴만 본다 — iOS 가 넘겨주는 문자열이
+    // app.imvoca://auth / app.imvoca://auth/ 처럼 조금씩 다를 수 있어서,
+    // 엄격하게 비교하면 창이 안 닫히고 사파리에 갇힌다.
+    const handleAuthUrl = async (url) => {
+      if (!url || url.indexOf('app.imvoca://') !== 0) return;
+      // 토큰 처리보다 창 닫기를 먼저 — 실패하더라도 사용자가 앱으로 돌아오게 한다
+      if (Browser) { try { await Browser.close(); } catch(e){} }
+      const hash = url.indexOf('#') >= 0 ? url.slice(url.indexOf('#')) : '';
+      if (hash.indexOf('access_token=') === -1) {
+        toast(TT('로그인이 취소됐어요','Sign-in cancelled'));
+        return;
+      }
+      try { await handleOAuthRedirect(hash); }
+      catch(e){ toast(TT('로그인 처리에 실패했어요','Sign-in failed')); }
+    };
+
+    App.addListener('appUrlOpen', (ev) => { handleAuthUrl((ev && ev.url) || ''); });
+
+    // 앱이 완전히 종료된 상태에서 딥링크로 켜지면 appUrlOpen 을 놓칠 수 있다.
+    // 그때는 실행 URL 을 직접 물어본다.
+    if (typeof App.getLaunchUrl === 'function') {
+      App.getLaunchUrl().then(r => { if (r && r.url) handleAuthUrl(r.url); }).catch(()=>{});
+    }
 
     // 2) 앱으로 돌아올 때 배지를 실제 개수로 맞춘다.
     //    APNs 가 찍은 배지는 알림을 지워도 남기 때문에 우리가 직접 지워줘야 한다.
