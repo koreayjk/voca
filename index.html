@@ -5591,25 +5591,21 @@ async function appendOfficialBooks() {
   } catch(e) { console.warn('[official load]', e); }
 }
 
-// 공식책 목록은 '책 추가' 모달 안에 있어서, 다시 그리면 모달이 맨 위로 튄다.
-// renderKeepScroll 은 본문(.scr-scroll/.scr)만 챙기므로 모달은 여기서 따로 잡아준다.
-function _scrollBoxOf(el){
-  let n = el && el.parentElement;
-  while (n && n !== document.body) {
-    const oy = getComputedStyle(n).overflowY;
-    if ((oy === 'auto' || oy === 'scroll') && n.scrollHeight > n.clientHeight + 1) return n;
-    n = n.parentElement;
-  }
-  return null;
-}
+// 공식 단어장 목록에서 담기/빼기를 하면 목록이 다시 그려지면서 맨 위로 튀었다.
+// 실제로 스크롤되는 것은 모달이 아니라 목록 안쪽의 max-height 박스
+// (#official-picker-list)인데, renderOfficialPicker 가 innerHTML 로 그 박스를
+// 통째로 새로 만들기 때문에 scrollTop 이 무조건 0 으로 돌아간다.
+// → 다시 그리기 전에 위치를 적어두고, 새로 생긴 박스에 그대로 돌려준다.
 function _keepPickerScroll(fn){
-  const sc = _scrollBoxOf(document.getElementById('official-picker'));
-  const top = sc ? sc.scrollTop : 0;
+  const prev = document.getElementById('official-picker-list');
+  const top = prev ? prev.scrollTop : 0;
   const restore = () => {
-    if (!sc) return;
-    // 다시 그린 직후엔 높이가 아직 안 잡혀 있을 수 있어 한 프레임 뒤에 한 번 더
-    try { sc.scrollTop = top; } catch(e){}
-    requestAnimationFrame(() => { try { sc.scrollTop = top; } catch(e){} });
+    if (!top) return;
+    const el = document.getElementById('official-picker-list');
+    if (!el) return;
+    try { el.scrollTop = top; } catch(e){}
+    // 방금 만들어진 직후라 레이아웃이 덜 잡혔을 수 있어 한 프레임 뒤에 한 번 더
+    requestAnimationFrame(() => { try { el.scrollTop = top; } catch(e){} });
   };
   let r; try { r = fn(); } catch(e){ restore(); throw e; }
   if (r && typeof r.then === 'function') r.then(restore, restore); else restore();
@@ -5751,7 +5747,7 @@ async function renderOfficialPicker(){
     </div>`;
   }).join('');
   box.innerHTML = `<div style="font-size:12px;color:var(--ink-60);margin:2px 0 6px;font-weight:600;">📗 ${TT('우리가 만든 단어장 — 원하는 것만 추가하세요','Our wordbooks — add the ones you want')}</div>
-    <div style="border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;max-height:230px;overflow-y:auto;">${rows}</div>`;
+    <div id="official-picker-list" style="border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;max-height:230px;overflow-y:auto;">${rows}</div>`;
 }
 
 async function saveBookToDB(title, author, color, desc, cover='', category='general') {
