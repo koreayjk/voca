@@ -36,14 +36,37 @@
 
 ## 1. 맥북 준비
 
-```bash
-# Xcode — App Store 앱에서 설치 (약 10GB, 30분~1시간)
-xcode-select --install          # 커맨드라인 도구
-sudo xcodebuild -license accept
+**① Xcode** — App Store 앱에서 설치 (약 10GB, 30분~1시간).
+설치가 끝나면 **한 번 실행**해서 추가 구성요소 설치를 마치세요.
 
-# Node.js (없으면)
-brew install node
+> `xcode-select --install` 은 **하지 마세요.** Xcode 본체에 커맨드라인 도구가 들어 있습니다.
+> 따로 깔면 `xcode-select` 가 Xcode 대신 그쪽을 보게 돼서 나중에 빌드가 실패합니다.
+
+```bash
+xcode-select -p
+# → /Applications/Xcode.app/Contents/Developer 여야 합니다.
+#   /Library/Developer/CommandLineTools 가 나오면 아래로 고치세요:
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+sudo xcodebuild -license accept   # 안 하면 빌드가 막힙니다
+xcodebuild -version
 ```
+
+**② Node.js** — 이미 깔려 있을 수 있으니 **먼저 확인**하세요.
+
+```bash
+node -v
+```
+
+- `v20` / `v22` / `v24` → 그대로 쓰면 됩니다.
+- 없거나 `v18` 이하 → `brew install node` 후, PATH 에 옛 Node 가 남아 있으면:
+  ```bash
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  source ~/.zprofile && node -v
+  ```
+
+> `brew install node` 마지막에 `shadowed by /usr/local/bin/node` 경고가 나오면
+> **옛 Node 가 PATH 상 앞에 있다**는 뜻입니다. 위 두 줄로 순서를 바꿔주세요.
 
 > CocoaPods 는 필요 없습니다. Capacitor 8 은 Swift Package Manager 를 쓰므로
 > Xcode 가 알아서 의존성을 받아옵니다.
