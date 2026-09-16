@@ -157,17 +157,7 @@ body.dark .done__grid .done__tile { background: #2e2923; }
 /* 검색 */
 body.dark #search-results > div { border-color: rgba(240,236,228,0.07); color: #f0ece4; }
 
-/* 복습 배너 */
-.install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--bg-card); border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
-.install-banner.show { display: block; }
-.install-banner__title { font-size: 14px; font-weight: 700; color: var(--ink-100); margin-bottom:6px; }
-.install-banner__desc { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
-.install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
-.install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 /* 다크모드 */
-/* 설치 배너 */
-body.dark .install-banner { background: #242019; color: #f0ece4; }
-
 /* 스크롤바 */
 body.dark .scr-scroll::-webkit-scrollbar-thumb { background: rgba(240,236,228,0.15); }
 
@@ -238,9 +228,6 @@ body.dark .login-tab-btn {
 body.dark #stats-inner > div > div {
   background: #242019 !important;
 }
-
-/* 설치 배너 제목 */
-body.dark .install-banner__title { color: #f0ece4 !important; }
 
 /* topnav 버튼 (책장 상단) */
 body.dark .topbar-btn {
@@ -643,12 +630,6 @@ body.dark .card--official .card__tap { color:#9a8f7a !important; }
 .action-sheet__handle { width: 32px; height: 3px; background: var(--ink-12); border-radius: 2px; margin: 10px auto 14px; }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(30,30,30,0.92); color: #fff; border-radius: 99px; padding: 9px 20px; font-size: 12px; line-height: 1.4; opacity: 0; transition: opacity 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1); pointer-events: none; z-index: 600; text-align: center; white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.install-banner { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--bg-card); border-radius: 16px; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); z-index: 550; display: none; }
-.install-banner.show { display: block; }
-.install-banner__title { font-size: 14px; font-weight: 700; color: var(--ink-100); margin-bottom:6px; }
-.install-banner__desc { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
-.install-banner__close { position: absolute; top: 12px; right: 14px; font-size: 18px; cursor: pointer; color: var(--ink-40); background: none; border: none; }
-.install-banner__icon { font-size: 24px; margin-bottom: 6px; }
 
 /* 모션 민감 사용자(prefers-reduced-motion): 장식용 무한 모션은 끄고,
    상태 표시(스피너·투명도)는 유지. 이동은 줄이되 0으로 만들지는 않음 */
@@ -664,14 +645,6 @@ body.dark .card--official .card__tap { color:#9a8f7a !important; }
 </head>
 <body>
 <div id="root"></div>
-
-<div class="install-banner" id="install-banner">
-  <button class="install-banner__close" onclick="dismissInstall()">×</button>
-  <div class="install-banner__icon">📲</div>
-  <div class="install-banner__title" id="install-title">홈 화면에 추가하세요</div>
-  <div class="install-banner__desc" id="install-desc">앱처럼 빠르게 열고, 더 편하게 단어를 공부할 수 있어요.</div>
-  <button id="install-action-btn" class="btn btn-solid" style="margin-top:12px;display:none;" onclick="triggerInstall()">설치하기</button>
-</div>
 
 <!-- ADD BOOK MODAL -->
 <div class="overlay" id="modal-add">
@@ -1076,8 +1049,6 @@ const UI_TEXT = {
     saveWithMeaning:'뜻 검색 후 저장',addWordsFirst:'단어를 추가해주세요',
     searchingMeaning:'뜻 검색 중...',noMeaning:'뜻을 찾지 못했어요',
     installTitle:'앱처럼 사용하기 📱',installTitleAndroid:'앱으로 설치하기 📲',
-    installDescAndroid:'홈화면에 추가하면 앱처럼 빠르게 실행할 수 있어요!',
-    installBtn:'홈화면에 추가',installDismiss:'나중에',
     myStats:'나의 학습 기록',totalWords:'총 학습 단어',avgRate:'평균 정답률',
     totalCount:'총 학습 횟수',bookCount:'등록 책 수',recentRecord:'최근 학습 기록',
     deletedBook:'삭제된 책',wordInput:'단어를 입력하세요',
@@ -1145,8 +1116,6 @@ const UI_TEXT = {
     saveWithMeaning:'Save with Meaning',addWordsFirst:'Add words first',
     searchingMeaning:'Searching...',noMeaning:'Meaning not found',
     installTitle:'Use as App 📱',installTitleAndroid:'Install as App 📲',
-    installDescAndroid:'Add to home screen for quick app-like access!',
-    installBtn:'Add to Home Screen',installDismiss:'Later',
     myStats:'My Study Records',totalWords:'Total Words',avgRate:'Avg Accuracy',
     totalCount:'Total Sessions',bookCount:'Books',recentRecord:'Recent Records',
     deletedBook:'Deleted Book',wordInput:'Enter a word',
@@ -1214,8 +1183,6 @@ const UI_TEXT = {
     saveWithMeaning:'连同释义一起保存',addWordsFirst:'请先添加单词',
     searchingMeaning:'查询中...',noMeaning:'未找到释义',
     installTitle:'像 App 一样使用 📱',installTitleAndroid:'安装为 App 📲',
-    installDescAndroid:'添加到主屏幕，像 App 一样快速打开！',
-    installBtn:'添加到主屏幕',installDismiss:'以后再说',
     myStats:'我的学习记录',totalWords:'单词总数',avgRate:'平均正确率',
     totalCount:'学习次数',bookCount:'书籍数',recentRecord:'最近记录',
     deletedBook:'已删除的书',wordInput:'请输入单词',
@@ -1283,8 +1250,6 @@ const UI_TEXT = {
     saveWithMeaning:'Guardar con significado',addWordsFirst:'Añade palabras primero',
     searchingMeaning:'Buscando...',noMeaning:'Significado no encontrado',
     installTitle:'Úsala como app 📱',installTitleAndroid:'Instalar como app 📲',
-    installDescAndroid:'¡Añádela a la pantalla de inicio para abrirla como una app!',
-    installBtn:'Añadir a inicio',installDismiss:'Más tarde',
     myStats:'Mis registros de estudio',totalWords:'Palabras totales',avgRate:'Acierto medio',
     totalCount:'Sesiones totales',bookCount:'Libros',recentRecord:'Registros recientes',
     deletedBook:'Libro eliminado',wordInput:'Escribe una palabra',
@@ -1412,7 +1377,6 @@ const UI_XL = {
     'Error':'错误','An error occurred':'发生错误','Network error':'网络错误','Please try again':'请稍后再试','Please try again later':'请稍后再试',
     'Opening...':'正在打开订阅管理页面...','No active subscription found':'未找到有效订阅',
     '🔇 Could not play speech. Please check that an English TTS voice is installed in your device settings.':'🔇 无法播放发音。请在设备设置中确认已安装英语 TTS 语音。',
-    'Use "Add to Home Screen" in your browser menu':'请在浏览器菜单中点击"添加到主屏幕"',
     'Copied — paste to Claude':'📋 已复制 — 粘贴给 Claude 请它帮你修复',
     'Failed to load<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>':'加载失败<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">重试</button>',
     // ── 단체·시험 ──
@@ -1543,8 +1507,6 @@ const UI_XL = {
     'Name':'姓名','Change Password':'修改密码','New password (6+)':'新密码（6位以上）','Confirm password':'确认密码',
     'Same name':'姓名未更改','Name updated ✓':'姓名已更新 ✓','Failed, please try again':'失败，请重试',
     'Password must be 6+ characters':'密码需6个字符以上','✅ Password changed!':'✅ 密码已修改！','Failed. Please try again':'失败。请重试',
-    '📲 Add to Home Screen':'📲 添加到主屏幕',
-    'Tap the <b>Share</b> button below,<br>then “Add to Home Screen”.':'点击下方的<b>分享</b>按钮，<br>然后选择"添加到主屏幕"。',
     '📲 Install the app':'📲 安装应用','Open it like an app from your home screen.':'从主屏幕像 App 一样打开。','Install':'安装',
     'Please enter your name first':'请先输入姓名',
     // ── 스캔·단어 상세 ──
@@ -1804,7 +1766,6 @@ const UI_XL = {
     'Error':'Error','An error occurred':'Ocurrió un error','Network error':'Error de red','Please try again':'Inténtalo de nuevo','Please try again later':'Inténtalo más tarde',
     'Opening...':'Abriendo...','No active subscription found':'No hay suscripción activa',
     '🔇 Could not play speech. Please check that an English TTS voice is installed in your device settings.':'🔇 No se pudo reproducir el audio. Comprueba que hay una voz TTS de inglés instalada en tu dispositivo.',
-    'Use "Add to Home Screen" in your browser menu':'Usa "Añadir a pantalla de inicio" en el menú del navegador',
     'Copied — paste to Claude':'📋 Copiado — pégaselo a Claude',
     'Failed to load<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Retry</button>':'No se pudo cargar<br><button onclick="render()" style="margin-top:12px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">Reintentar</button>',
     // ── 단체·시험 ──
@@ -1935,8 +1896,6 @@ const UI_XL = {
     'Name':'Nombre','Same name':'El nombre no cambió','Name updated ✓':'Nombre actualizado ✓','Failed, please try again':'Falló, inténtalo de nuevo',
     'Password must be 6+ characters':'La contraseña necesita 6+ caracteres','✅ Password changed!':'✅ ¡Contraseña cambiada!','Failed. Please try again':'Falló. Inténtalo de nuevo',
     'New password (6+)':'Nueva contraseña (6+)',
-    '📲 Add to Home Screen':'📲 Añadir a pantalla de inicio',
-    'Tap the <b>Share</b> button below,<br>then “Add to Home Screen”.':'Toca el botón <b>Compartir</b> abajo<br>y elige "Añadir a pantalla de inicio".',
     '📲 Install the app':'📲 Instalar la app','Open it like an app from your home screen.':'Ábrela como una app desde tu pantalla de inicio.','Install':'Instalar',
     'Please enter your name first':'Escribe tu nombre primero',
     // ── 스캔·단어 상세 ──
@@ -4703,72 +4662,12 @@ async function updatePassword() {
   }
 }
 
-let _deferredInstallPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  _deferredInstallPrompt = e;
-});
-
-function setupInstallBanner(isStandalone) {
-  // 이미 앱으로 설치해서 쓰는 중이면 안 띄움
-  if (isStandalone) return;
-  // 최근에 닫았으면 7일간 안 띄움
-  const dismissed = localStorage.getItem('imvoca.installDismissed');
-  if (dismissed && (Date.now() - Number(dismissed)) < 7*24*60*60*1000) return;
-
-  const ua = navigator.userAgent || '';
-  const isIOS = /iphone|ipad|ipod/i.test(ua);
-  const isAndroid = /android/i.test(ua);
-  // 모바일이 아니면(데스크톱) 안내 불필요
-  if (!isIOS && !isAndroid) return;
-
-  const banner = document.getElementById('install-banner');
-  const titleEl = document.getElementById('install-title');
-  const descEl = document.getElementById('install-desc');
-  const btnEl = document.getElementById('install-action-btn');
-  if (!banner) return;
-
-  const ko = userNativeLang === 'ko';
-  if (isIOS) {
-    // 아이폰: 자동 설치 버튼이 없어서 방법을 안내
-    titleEl.textContent = TT('📲 홈 화면에 추가하세요','📲 Add to Home Screen');
-    descEl.innerHTML = TT('사파리 아래쪽 <b>공유 버튼</b>을 누르고<br>“홈 화면에 추가”를 선택하세요.','Tap the <b>Share</b> button below,<br>then “Add to Home Screen”.');
-    btnEl.style.display = 'none';
-  } else {
-    // 안드로이드: 설치 버튼 제공
-    titleEl.textContent = TT('📲 앱으로 설치하세요','📲 Install the app');
-    descEl.textContent = TT('홈 화면에서 앱처럼 빠르게 열 수 있어요.','Open it like an app from your home screen.');
-    btnEl.textContent = TT('설치하기','Install');
-    btnEl.style.display = 'block';
-  }
-  // 3초 후 띄우기 (들어오자마자 방해되지 않게)
-  setTimeout(() => { banner.classList.add('show'); }, 3000);
-}
-
-function dismissInstall() {
-  const b = document.getElementById('install-banner');
-  if (b) b.classList.remove('show');
-  localStorage.setItem('imvoca.installDismissed', String(Date.now()));
-}
-
-async function triggerInstall() {
-  if (_deferredInstallPrompt) {
-    _deferredInstallPrompt.prompt();
-    const { outcome } = await _deferredInstallPrompt.userChoice;
-    _deferredInstallPrompt = null;
-    if (outcome === 'accepted') dismissInstall();
-  } else {
-    toast(TT('브라우저 메뉴에서 “홈 화면에 추가”를 눌러주세요','Use "Add to Home Screen" in your browser menu'));
-  }
-}
-
 async function sbInit() {
   initDarkMode();
   // 앱 모드 vs 브라우저 모드 감지
   const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
   document.documentElement.style.setProperty('--ox-bottom', isStandalone ? '16px' : '90px');
   document.documentElement.style.setProperty('--ox-hint-bottom', isStandalone ? '0px' : '70px');
-  setupInstallBanner(isStandalone);
 
   // ── 비밀번호 재설정 토큰 체크 (최우선) ──
   if (checkRecoveryToken()) return;
