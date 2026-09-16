@@ -11340,11 +11340,17 @@ window.addEventListener('focus', () => { try { syncAppBadge(); } catch(e){} });
     goExternal(a.href);
   }, true);
 
-  // 5) 상태바를 앱 배경색에 맞춘다 (다크모드면 밝은 글씨)
+  // 5) 상태바를 앱 배경색에 맞춘다.
+  //    웹뷰는 capacitor.config.json 의 overlaysWebView:false 로 이미 상태바 아래에서
+  //    시작한다(그래야 상단 버튼 줄이 노치에 가려지지 않는다). 여기서는 그 상태바
+  //    영역의 배경색과 글씨 색만 테마에 맞춰 바꾼다.
   const SB = _capPlugin('StatusBar');
   if (SB) {
     const applyBar = () => {
-      try { SB.setStyle({ style: document.body.classList.contains('dark') ? 'DARK' : 'LIGHT' }); } catch(e){}
+      const dark = document.body.classList.contains('dark');
+      // Style.Dark = 밝은 글씨(어두운 배경용), Style.Light = 어두운 글씨(밝은 배경용)
+      try { SB.setStyle({ style: dark ? 'DARK' : 'LIGHT' }); } catch(e){}
+      try { SB.setBackgroundColor({ color: dark ? '#1a1714' : '#f3ece0' }); } catch(e){}
     };
     applyBar();
     window.addEventListener('imvoca:theme', applyBar);
