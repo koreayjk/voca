@@ -5,6 +5,14 @@
 -- 적용: Supabase SQL Editor 에서 이 파일 전체 실행.
 -- 전제: 자동 기록(리포트)은 error-log.sql 의 voca_errors 테이블이 있어야 함.
 -- 타입 주의: voca_review.book_id / page_num 은 TEXT, voca_books.id 는 UUID.
+--
+-- ⚠️ 이 파일은 DB 의 함수와 반드시 같아야 한다. 예전에 SQL Editor 에서 직접
+--    항목을 추가하고 파일에 반영하지 않아, 파일 9개 / DB 11개로 어긋난 적이 있다
+--    (2026-09-16 에 맞춤). 그 상태로 이 파일을 다시 실행하면 create or replace 가
+--    함수를 덮어써서 **점검 항목이 조용히 사라진다.**
+--    항목을 늘릴 때는 여기서 고치고 파일 전체를 실행하세요.
+--    현재 항목 수와 이름 확인:
+--      select check_name, severity from public.voca_integrity_check();
 -- ============================================================
 
 -- ── 한 방 점검 함수: 모든 검사 항목의 이상 건수를 표로 반환 ──────────────
@@ -70,6 +78,27 @@ language sql stable security definer set search_path = public as $$
   select '복습 first_studied_at 없음', 'low',
     (select count(*) from voca_review where first_studied_at is null),
     '첫 학습일이 비어있는 비정상 복습 행'
+  union all
+  -- 10) 고아 복습 (책은 있는데 페이지가 없음 — 페이지 삭제/이름변경 잔재)
+  --     책 자체가 없는 경우는 5번이 세므로, 여기서는 책이 있는 것만 본다(중복 집계 방지).
+  select '고아 복습(페이지 없음)', 'high',
+    (select count(*) from voca_review vr
+       where exists (select 1 from voca_books b where b.id::text = vr.book_id)
+         and not exists (select 1 from voca_pages p
+                         where p.book_id::text = vr.book_id and p.page_num = vr.page_num)),
+    '복습이 가리키는 페이지가 없음 ("추가하지 않은 페이지" 유령 복습)'
+  union all
+  -- 11) 빈 페이지 복습 (페이지는 있는데 단어 0개)
+  --     '단어가 있는 페이지가 하나도 없을 때'만 센다. 같은 Day 에 중복 페이지가
+  --     있고 그중 하나에 단어가 있으면 학습이 가능하므로 이상이 아니다.
+  select '빈 페이지 복습(단어 0)', 'medium',
+    (select count(*) from voca_review vr
+       where exists (select 1 from voca_pages p
+                     where p.book_id::text = vr.book_id and p.page_num = vr.page_num)
+         and not exists (select 1 from voca_pages p2
+                     where p2.book_id::text = vr.book_id and p2.page_num = vr.page_num
+                       and exists (select 1 from voca_words w2 where w2.page_id = p2.id))),
+    '복습 페이지에 단어가 0개 ("0개 단어라 외울 수 없음" 원인)'
 $$;
 grant execute on function public.voca_integrity_check() to authenticated, service_role;
 
