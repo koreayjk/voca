@@ -2110,6 +2110,10 @@ async function loadUserPlan() {
 let _reviewStatus = {};
 let _reviewStatusLoaded = {}; // 책별로 이미 불러왔는지
 async function loadReviewStatus(bookId) {
+  // 로그아웃·세션만료 직후에도 화면이 남아 있어 책을 누를 수 있다.
+  // 그때 currentUser 가 null 이라 아래 URL 을 만들다 터졌다
+  // (에러 리포트: TypeError: null is not an object (evaluating 'currentUser.id'))
+  if (!currentUser) return;
   if (_reviewStatusLoaded[bookId]) return; // 이미 불러왔으면 다시 안 함
   // 먼저 로컬 백업을 덮어 그림(서버 실패해도 학습한 점이 안 사라지게)
   _overlayLocalStudied();
@@ -7660,6 +7664,12 @@ function _renderHealth(integ, errs){
 }
 
 function render() {
+  // 안전망: 로그인 정보가 없는데 앱 화면을 그리려 하면 로그인 화면으로 돌린다.
+  // 로그아웃·세션만료 뒤에도 직전 화면이 남아 클릭을 받아버리면, 그 화면에서
+  // 출발한 모든 서버 호출이 currentUser.id 를 읽다 터진다(에러 리포트 다수).
+  // 한 곳에서 막아야 74군데를 일일이 방어하지 않는다.
+  if (!currentUser && typeof renderLogin === 'function') { renderLogin(); return; }
+
   // 브라우저 뒤로가기 가둠용 '버퍼 상태' 최초 1회 삽입(로그인 후) → 좌→우 스와이프로 로그인 튕김 방지
   if (currentUser && !window._histSeeded) { window._histSeeded = true; try { history.pushState({ imv: true }, ''); } catch(e){} }
 
