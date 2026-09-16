@@ -51,7 +51,7 @@ const VAPID_PUBLIC_KEY = '';   // ← 여기에 Public Key
 ```bash
 supabase secrets set VAPID_PUBLIC_KEY="BEl62iUY..." \
                      VAPID_PRIVATE_KEY="8eDyX_uC..." \
-                     VAPID_SUBJECT="mailto:support@imvoca.app"
+                     VAPID_SUBJECT="mailto:admin@imvoca.app"
 ```
 
 **③ 함수 배포**

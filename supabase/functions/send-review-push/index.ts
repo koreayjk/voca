@@ -27,7 +27,7 @@ const svc = createClient(
 
 const VAPID_PUBLIC  = Deno.env.get('VAPID_PUBLIC_KEY') ?? ''
 const VAPID_PRIVATE = Deno.env.get('VAPID_PRIVATE_KEY') ?? ''
-const VAPID_SUBJECT = Deno.env.get('VAPID_SUBJECT') ?? 'mailto:support@imvoca.app'
+const VAPID_SUBJECT = Deno.env.get('VAPID_SUBJECT') ?? 'mailto:admin@imvoca.app'
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
