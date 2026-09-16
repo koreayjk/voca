@@ -11496,6 +11496,29 @@ window.addEventListener('focus', () => { try { syncAppBadge(); } catch(e){} });
     goExternal(a.href);
   }, true);
 
+  // 5-a) 인앱 사파리를 닫고 돌아오면 iOS 가 웹뷰를 화면 전체 높이로 되돌린다.
+  //      (innerHeight 820 → 874 로 확인) 그러면 상태바 자리가 없어져서, 화면 위쪽
+  //      top:14px 에 있는 버튼 줄(관리·사용법·🔔·My)이 노치 밑에 깔려 보이지도
+  //      눌리지도 않는다.
+  //      StatusBar 플러그인은 값이 그대로면 아무 일도 하지 않으므로(내부 상태는
+  //      여전히 false), true → false 로 한 번 흔들어서 웹뷰 크기를 다시 잡게 한다.
+  const relayoutStatusBar = () => {
+    const sb = _capPlugin('StatusBar');
+    if (!sb) return;
+    try {
+      sb.setOverlaysWebView({ overlay: true })
+        .then(() => sb.setOverlaysWebView({ overlay: false }))
+        .catch(() => {});
+    } catch(e){}
+  };
+  // 닫히는 애니메이션이 끝난 뒤에 잡아야 원래 크기로 되돌아가지 않는다
+  if (Browser && typeof Browser.addListener === 'function') {
+    Browser.addListener('browserFinished', () => setTimeout(relayoutStatusBar, 80));
+  }
+  if (App) {
+    App.addListener('appStateChange', (st) => { if (st && st.isActive) setTimeout(relayoutStatusBar, 80); });
+  }
+
   // 5) 상태바를 앱 배경색에 맞춘다.
   //    웹뷰는 capacitor.config.json 의 overlaysWebView:false 로 이미 상태바 아래에서
   //    시작한다(그래야 상단 버튼 줄이 노치에 가려지지 않는다). 여기서는 그 상태바
