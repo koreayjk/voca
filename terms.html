@@ -254,5 +254,16 @@
     window.scrollTo(0, 0);
   }
 </script>
+<script>
+// 앱의 인앱 브라우저(?inapp=1)로 열렸을 때는 'IM VOCA로 돌아가기' 링크를 숨긴다.
+// 누르면 그 창 안에서 웹사이트가 열려버려(앱이 아니라) 빠져나올 길이 더 헷갈린다.
+// 앱으로 돌아가는 길은 창 왼쪽 위의 X 다.
+(function(){
+  try {
+    if (new URLSearchParams(location.search).get('inapp') !== '1') return;
+    document.querySelectorAll('a.back').forEach(function(a){ a.style.display = 'none'; });
+  } catch(e){}
+})();
+</script>
 </body>
 </html>

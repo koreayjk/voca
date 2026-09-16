@@ -2894,6 +2894,9 @@ function openTestPaper(id, variant){
   const esc2=_paperEsc;
   const vLabel = variant?` · ${variant}형`:'';
   const {qhtml,keys}=_paperQ(qs);
+  // 앱 안에서는 window.open 이 시스템 사파리로 넘어가고 document.write 가 닿지 않는다
+  // (빈 창만 뜬다). 시험지 인쇄는 PC 작업이므로 그쪽으로 안내한다.
+  if (_isIosApp()) { toast(TT('시험지 인쇄·PDF 저장은 PC에서 이용해주세요','Printing is available on desktop')); return; }
   const w=window.open('','_blank'); if(!w){ toast('팝업이 차단됐어요 — 허용 후 다시'); return; }
   w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc2(t.title||'단어 시험')}</title>
   <style>${_PAPER_CSS}</style></head><body>
@@ -2925,6 +2928,9 @@ async function openRangePapers(id){
     sections+=`<div class="stu"><div class="paper"><div class="hd"><div class="t">${_paperEsc(t.title)} · ${_paperEsc(s.name||'학생')}</div><div class="src">${t.from_date}~${t.to_date} · ${qs.length}문항</div><div class="meta"><span>이름 ${_paperEsc(s.name||'')}</span><span>점수 ______ / ${qs.length}</span></div></div>${qhtml}</div><div class="paper answers"><div class="t">✔ 정답 · ${_paperEsc(s.name||'')}</div><div class="keys">${keys}</div></div></div>`;
   });
   if(!made){ toast('이 기간에 공부한 학생이 없어요 🙏'); return; }
+  // 앱 안에서는 window.open 이 시스템 사파리로 넘어가고 document.write 가 닿지 않는다
+  // (빈 창만 뜬다). 시험지 인쇄는 PC 작업이므로 그쪽으로 안내한다.
+  if (_isIosApp()) { toast(TT('시험지 인쇄·PDF 저장은 PC에서 이용해주세요','Printing is available on desktop')); return; }
   const w=window.open('','_blank'); if(!w){ toast('팝업이 차단됐어요 — 허용 후 다시'); return; }
   w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${_paperEsc(t.title||'시험')}</title><style>${_PAPER_CSS}</style></head><body>${sections}<div class="noprint"><button onclick="window.print()">🖨️ 인쇄 / PDF로 저장 (${made}명)</button></div></body></html>`);
   w.document.close();
@@ -3130,8 +3136,32 @@ function _renderTakeResult(g){
 }
 
 // 문의하기 — 메일 앱 열기
+const SUPPORT_EMAIL = 'imamerica2414@gmail.com';
+// mailto: 는 시스템이 처리하는데, 메일 앱이 없거나 계정이 설정돼 있지 않으면
+// (시뮬레이터·메일 안 쓰는 사용자) 아무 일도 안 일어나서 버튼이 고장난 것처럼 보인다.
+// 주소를 눈에 보이게 띄우고 '복사'도 주면 어느 경우에도 막히지 않는다.
 function contactSupport() {
-  location.href = 'mailto:imamerica2414@gmail.com';
+  if (document.getElementById('contact-modal')) return;
+  const ov = document.createElement('div');
+  ov.id = 'contact-modal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:22px;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);text-align:center;">
+      <div style="font-size:32px;line-height:1;margin-bottom:10px;">✉️</div>
+      <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${TT('문의하기','Contact Us')}</div>
+      <div style="font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:14px;">${TT('무엇이든 편하게 보내주세요.<br>보통 하루 안에 답장드려요.','Write to us anytime.<br>We usually reply within a day.')}</div>
+      <div id="contact-addr" style="font-size:14px;font-weight:700;color:var(--ink-100);background:var(--bg-page);border:1px solid var(--ink-12);border-radius:10px;padding:11px;margin-bottom:12px;word-break:break-all;">${SUPPORT_EMAIL}</div>
+      <button id="contact-mail" class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;">${TT('메일 앱으로 열기','Open Mail app')}</button>
+      <button id="contact-copy" class="btn btn-outline" style="width:100%;padding:12px;margin-top:8px;font-size:13.5px;">${TT('주소 복사','Copy address')}</button>
+      <button onclick="document.getElementById('contact-modal').remove()" style="width:100%;padding:12px;margin-top:6px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('닫기','Close')}</button>
+    </div>`;
+  ov.onclick = (e) => { if (e.target === ov) ov.remove(); };
+  document.body.appendChild(ov);
+  document.getElementById('contact-mail').onclick = () => { location.href = 'mailto:' + SUPPORT_EMAIL; };
+  document.getElementById('contact-copy').onclick = async () => {
+    try { await navigator.clipboard.writeText(SUPPORT_EMAIL); toast(TT('주소를 복사했어요','Address copied')); ov.remove(); }
+    catch(e){ toast(TT('길게 눌러 복사해주세요','Long-press the address to copy')); }
+  };
 }
 
 // 스캔 카운트 증가 — 로컬 표시용만. 실제 카운트/한도는 서버(gemini-proxy)가 권위적으로
@@ -4530,7 +4560,7 @@ function showMyMenu() {
     <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
       <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${TT('My 메뉴','My Menu')}</div>
       ${row('💬', TT('사용자 후기','User Reviews'), "document.getElementById('my-modal').remove();showEvent()")}
-      ${row('📖', TT('앱 소개','About'), "document.getElementById('my-modal').remove();window.open('https://imvoca.app/'+adPage(),'_blank')")}
+      ${row('📖', TT('앱 소개','About'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/'+adPage())")}
       ${row('👤', TT('개인정보 변경','My Info'), "document.getElementById('my-modal').remove();showMyInfo()")}
       ${userPlan==='premium' && userStripeId && canShowBilling() ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
       ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
