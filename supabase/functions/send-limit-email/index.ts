@@ -9,7 +9,8 @@
 // 한 사람에게 평생 1회만. 매시간 도는 건 '막힌 뒤 한 시간 안에' 닿기 위해서다.
 //
 // env: SUPABASE_URL, SB_SERVICE_ROLE_KEY, RESEND_API_KEY,
-//      MAIL_FROM              예: 'IM VOCA <noreply@send.imvoca.app>'
+//      MAIL_FROM              예: 'IM VOCA <noreply@imvoca.app>'
+//      MAIL_REPLY_TO          (선택) 기본 admin@imvoca.app — 아래 이유 참고
 //      MAIL_POSTAL_ADDRESS    CAN-SPAM 필수. 없으면 아예 보내지 않는다.
 //      PUBLIC_SITE_URL        (선택) 기본 https://imvoca.app
 // 배포: supabase functions deploy send-limit-email
@@ -23,6 +24,9 @@ const svc = createClient(SB_URL, SB_KEY)
 const RESEND = Deno.env.get('RESEND_API_KEY') ?? ''
 const FROM = Deno.env.get('MAIL_FROM') ?? ''
 const POSTAL = Deno.env.get('MAIL_POSTAL_ADDRESS') ?? ''
+// noreply@ 로 보내면 답장이 갈 곳이 없어 반송된다. 막혀서 답답한 사람이 그 메일에
+// 바로 답장하는 건 아주 자연스러운 행동이라, 실제로 받을 수 있는 주소로 돌려놓는다.
+const REPLY_TO = Deno.env.get('MAIL_REPLY_TO') ?? 'admin@imvoca.app'
 const SITE = Deno.env.get('PUBLIC_SITE_URL') ?? 'https://imvoca.app'
 
 const cors = {
@@ -140,7 +144,7 @@ Deno.serve(async (req) => {
         method: 'POST',
         headers: { Authorization: `Bearer ${RESEND}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          from: FROM, to: [t.email], subject: c.subject, html: html(t),
+          from: FROM, to: [t.email], reply_to: REPLY_TO, subject: c.subject, html: html(t),
           // 지메일·야후가 대량 발송자에게 요구하는 원클릭 수신거부.
           // 없으면 스팸함으로 갈 확률이 크게 올라간다.
           headers: {

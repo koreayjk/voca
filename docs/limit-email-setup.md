@@ -8,15 +8,26 @@
 
 ---
 
-## 1. Resend — 보내는 도메인 등록
+## 1. Resend — 보내는 도메인  ✅ 이미 완료
 
-> 💡 **서브도메인(`send.imvoca.app`)으로 하세요.** 그러면 지금 쓰시는
-> **Namecheap 메일 포워딩(받기)을 건드리지 않고** 보내기만 추가됩니다.
-> 루트 도메인으로 잡으면 MX 가 충돌해 `admin@imvoca.app` 수신이 끊길 수 있습니다.
+`imvoca.app` 이 Resend 에 **Verified** 로 등록돼 있습니다(2026-05 경 설정, Supabase
+인증 메일이 이미 이 경로로 나가는 중). **DNS 를 새로 넣을 필요가 없습니다.**
 
-1. https://resend.com/domains → **Add Domain** → `send.imvoca.app`
-2. 화면에 뜨는 DNS 레코드(보통 3줄: MX 1, TXT 2)를 **Namecheap → Advanced DNS** 에 추가
-3. Resend 에서 **Verified** 로 바뀔 때까지 대기 (보통 몇 분~1시간)
+확인된 상태:
+
+| 용도 | 레코드 | 값 |
+|---|---|---|
+| 받기 | `imvoca.app` MX | `eforward1~5.registrar-servers.com` (Namecheap 포워딩) |
+| 보내기 SPF | `send.imvoca.app` TXT | `v=spf1 include:amazonses.com ~all` |
+| 보내기 DKIM | `resend._domainkey.imvoca.app` TXT | 설정됨 |
+| 정책 | `_dmarc.imvoca.app` TXT | `v=DMARC1; p=none;` |
+
+받기(루트 MX)와 보내기(`send` 서브도메인 + DKIM)가 서로 다른 이름에 있어 **충돌하지
+않습니다.** `admin@imvoca.app` 수신은 그대로 유지됩니다.
+
+> 선택: `send.imvoca.app` 의 MX(반송 처리용)가 비어 있습니다. 없어도 발송은 되지만,
+> 넣어두면 반송·스팸신고 처리가 정확해집니다. Resend 도메인 화면의 **Records** 탭에
+> 있는 MX 한 줄을 Namecheap 에 `Host = send` 로 추가하면 됩니다.
 
 ---
 
@@ -36,7 +47,8 @@ Supabase → **Edge Functions → Secrets**
 | 이름 | 값 |
 |---|---|
 | `RESEND_API_KEY` | Resend API 키 (`re_...`) |
-| `MAIL_FROM` | `IM VOCA <noreply@send.imvoca.app>` — **2번에서 인증한 도메인이어야 합니다** |
+| `MAIL_FROM` | `IM VOCA <noreply@imvoca.app>` |
+| `MAIL_REPLY_TO` | `admin@imvoca.app` (선택 — 기본값 동일) |
 | `MAIL_POSTAL_ADDRESS` | 공개해도 되는 우편 주소 (아래 ⚠️) |
 | `PUBLIC_SITE_URL` | `https://imvoca.app` (선택, 기본값 동일) |
 
