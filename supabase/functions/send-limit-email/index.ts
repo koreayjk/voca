@@ -8,6 +8,9 @@
 //
 // 한 사람에게 평생 1회만. 매시간 도는 건 '막힌 뒤 한 시간 안에' 닿기 위해서다.
 //
+// 테스트 발송: { "test_to": "me@example.com", "lang": "ko" } 를 본문에 주면
+//   회원 데이터를 건드리지 않고 그 주소로 한 통만 보낸다(문구·디자인 확인용).
+//
 // env: SUPABASE_URL, SB_SERVICE_ROLE_KEY, RESEND_API_KEY,
 //      MAIL_FROM              예: 'IM VOCA <noreply@imvoca.app>'
 //      MAIL_REPLY_TO          (선택) 기본 admin@imvoca.app — 아래 이유 참고
@@ -94,6 +97,9 @@ Con Premium se quita el límite de escaneos y puedes continuar donde lo dejaste.
 function html(t: Target): string {
   const c = COPY[t.lang] ?? COPY.ko
   const name = esc((t.name || '').trim()) || (t.lang === 'ko' ? '회원' : 'there')
+  // 테스트 발송은 우편 주소가 아직 없어도 보이게 한다(본인에게 보내는 확인용).
+  // 실제 발송은 아래 Deno.serve 에서 주소 없이는 아예 거부한다.
+  const postal = POSTAL || '(MAIL_POSTAL_ADDRESS 미설정 — 실제 발송 전 반드시 채우세요)'
   const unsubUrl = `${SB_URL}/functions/v1/email-optout?t=${t.token}&lang=${t.lang}`
   return `<!doctype html><html><body style="margin:0;padding:0;background:#f3ece0;">
 <div style="max-width:520px;margin:0 auto;padding:28px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#1e1b16;">
@@ -107,7 +113,7 @@ function html(t: Target): string {
   </div>
   <div style="margin-top:22px;font-size:11.5px;line-height:1.7;color:#8a8275;">
     ${esc(c.foot)}<br>
-    IM AMERICA GROUP CORP · ${esc(POSTAL)}<br>
+    IM AMERICA GROUP CORP · ${esc(postal)}<br>
     <a href="${unsubUrl}" style="color:#8a8275;">${esc(c.unsub)}</a>
   </div>
 </div></body></html>`
@@ -125,8 +131,33 @@ Deno.serve(async (req) => {
   // 키가 없으면 조용히 아무것도 안 한다 (설정 전에 cron 이 돌아도 에러가 쌓이지 않게)
   if (!RESEND || !FROM) return json({ ok: true, sent: 0, note: 'mail_not_configured' })
 
+  const body = await req.json().catch(() => ({} as Record<string, unknown>))
+
+  // ── 테스트 발송: { "test_to": "me@example.com", "lang": "ko" } ──────────
+  // 회원 데이터를 건드리지 않고(발송 표시도 남기지 않고) 지정한 주소로 한 통만 보낸다.
+  // 문구·디자인·도달률을 확인할 때 쓴다.
+  const testTo = typeof body.test_to === 'string' ? body.test_to.trim() : ''
+  if (testTo) {
+    const lang = (typeof body.lang === 'string' && COPY[body.lang]) ? body.lang : 'ko'
+    const c = COPY[lang]
+    // 수신거부 토큰은 일부러 가짜를 쓴다. 진짜 토큰을 넣으면 링크를 눌러보는 순간
+    // 그 회원이 실제로 수신거부 처리되어 이후 안내를 못 받는다.
+    const fake = '00000000-0000-0000-0000-000000000000'
+    const t: Target = { id: 'test', email: testTo, name: '테스트', lang, token: fake }
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${RESEND}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: FROM, to: [testTo], reply_to: REPLY_TO,
+                             subject: '[테스트] ' + c.subject, html: html(t) }),
+    })
+    const detail = res.ok ? null : (await res.text()).slice(0, 300)
+    return json({ ok: res.ok, test_to: testTo, lang,
+                  postal_set: !!POSTAL, from: FROM, detail },
+                res.ok ? 200 : 502)
+  }
+
   // ⚠️ CAN-SPAM: 상업성 메일에는 실제 우편 주소가 반드시 들어가야 한다.
-  //    주소 없이 보내면 위반이므로, 설정 전에는 보내지 않는다.
+  //    주소 없이 보내면 위반이므로, 실제 발송은 설정 전까지 거부한다.
   if (!POSTAL) return json({ error: 'MAIL_POSTAL_ADDRESS_not_set' }, 500)
 
   const { data: targets, error } = await svc.rpc('limit_email_targets', { p_limit: 25 })
