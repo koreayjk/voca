@@ -10791,6 +10791,16 @@ function renderManualAdd(root, route) {
         </div>
         <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">${t('dictHint')}</div>
       </div>
+      <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
+        <div class="label-xs" style="margin-bottom:8px;">${TT('엑셀·CSV로 한 번에 올리기','Import from Excel / CSV')}</div>
+        <input type="file" id="manual-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleWordFile(event)">
+        <button onclick="document.getElementById('manual-file').click()" class="btn btn-outline" style="width:100%;padding:11px;font-size:13.5px;">
+          📄 ${TT('파일 선택','Choose file')}
+        </button>
+        <div style="font-size:10.5px;color:var(--ink-40);margin-top:7px;line-height:1.6;">
+          ${TT('첫 번째 열에 <b>영어 단어</b>만 있으면 됩니다. 뜻은 자동으로 채워져요.<br>2번째 열에 뜻, 3번째 열에 예문을 넣으면 그대로 사용합니다.','Put <b>English words</b> in the first column — meanings fill in automatically.<br>Column 2 = meaning, column 3 = example (optional).')}
+        </div>
+      </div>
       <div id="manual-word-list">${renderManualWordList()}</div>
       <div class="btn-fixed">
         <button id="manual-save-btn" class="btn btn-solid" onclick="saveManualWords('${route.bookId}')" style="opacity:${window._manualWords.length>0?1:0.4};">
@@ -10829,6 +10839,146 @@ async function lookupWordInCorpus(en){
   _corpusCache.set(q, best);
   return best;
 }
+// ── 엑셀·CSV 로 단어 한 번에 올리기 ──────────────────────────────
+// 학원에서는 단어 목록을 이미 엑셀로 갖고 있다. 50개를 한 줄씩 치게 하는 대신
+// 파일을 받아 '직접 입력' 목록을 채운다 — 그 뒤 흐름(사전 조회·카드·저장)은
+// 손으로 넣었을 때와 똑같다.
+const MANUAL_MAX = 200;   // 한 Day 에 이보다 많으면 저장도 학습도 버겁다
+
+// xlsx 파서는 400KB 가 넘는다. 파일을 고른 사람에게만 내려받는다.
+//
+// ⚠️ 공식 CDN(cdn.sheetjs.com)에서 받는다. cdnjs 에 올라와 있는 0.18.5 는
+//    프로토타입 오염 취약점(CVE-2023-30533)이 남아 있는 버전이라 쓰면 안 된다 —
+//    남이 보낸 엑셀을 열었을 때 우리 앱에서 스크립트가 실행될 수 있다.
+//    SheetJS 가 npm/cdnjs 배포를 중단해서 그쪽 최신이 0.18.5 에 멈춰 있다.
+let _xlsxLoading = null;
+function loadXlsx(){
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  if (_xlsxLoading) return _xlsxLoading;
+  _xlsxLoading = new Promise((resolve, reject) => {
+    const el = document.createElement('script');
+    el.src = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+    el.onload = () => resolve(window.XLSX);
+    el.onerror = () => { _xlsxLoading = null; reject(new Error('xlsx load failed')); };
+    document.head.appendChild(el);
+  });
+  return _xlsxLoading;
+}
+
+// 첫 줄이 제목줄이면 건너뛴다 ('단어 / 뜻 / 예문' 같은 머리글)
+const _HEADERish = /^(영어|단어|영단어|word|words|en|english|뜻|의미|해석|meaning|korean|ko|예문|example|sentence)$/i;
+function _looksLikeHeader(row){
+  const cells = row.filter(c => String(c||'').trim());
+  if (!cells.length) return false;
+  return cells.every(c => _HEADERish.test(String(c).trim()));
+}
+
+// 영어 단어처럼 생겼는가 (숫자만, 한글, 기호 덩어리 배제)
+function _looksLikeWord(v){
+  const t = String(v||'').trim();
+  if (!t || t.length > 40) return false;
+  return /^[A-Za-z][A-Za-z\-' .]*$/.test(t);
+}
+
+async function handleWordFile(ev){
+  const file = ev.target.files && ev.target.files[0];
+  ev.target.value = '';                   // 같은 파일을 다시 골라도 동작하게
+  if (!file) return;
+
+  let rows;
+  try {
+    toast(TT('파일을 읽는 중이에요…','Reading file…'));
+    const XLSX = await loadXlsx();
+    const buf = await file.arrayBuffer();
+    // CSV 도 xlsx 파서가 읽는다 — 한국 엑셀이 만드는 CP949 인코딩까지 알아서 처리해
+    // 따로 CSV 경로를 두지 않는다(그쪽이 한글 깨짐의 단골 원인이다).
+    const wb = XLSX.read(buf, { type: 'array' });
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false, defval: '' });
+  } catch(e){
+    toast(TT('파일을 읽지 못했어요. 엑셀(.xlsx)이나 CSV 인지 확인해주세요','Could not read the file — please use .xlsx or .csv'));
+    return;
+  }
+  if (!Array.isArray(rows) || !rows.length) { toast(TT('파일이 비어 있어요','The file is empty')); return; }
+  if (_looksLikeHeader(rows[0])) rows = rows.slice(1);
+
+  const have = new Set((window._manualWords||[]).map(w => w.en.toLowerCase()));
+  const items = [];
+  let skipped = 0;
+  for (const r of rows) {
+    const en = String((r && r[0]) || '').trim();
+    if (!_looksLikeWord(en)) { if (en) skipped++; continue; }
+    const k = en.toLowerCase();
+    if (have.has(k)) continue;            // 파일 안·목록과의 중복 모두 제거
+    have.add(k);
+    items.push({
+      en,
+      base: String((r && r[1]) || '').trim(),      // 뜻이 있으면 그대로 쓴다
+      sentence: String((r && r[2]) || '').trim(),  // 예문(선택)
+      ctx: '', level: 'B1', ipa: '',
+    });
+    if ((window._manualWords.length + items.length) >= MANUAL_MAX) break;
+  }
+  if (!items.length) {
+    toast(TT('가져올 영어 단어를 찾지 못했어요. 첫 번째 열에 단어를 넣어주세요','No English words found — put them in the first column'));
+    return;
+  }
+
+  // 뜻이 비어 있는 것만 사전에서 찾는다 (파일에 뜻이 있으면 그 사람 뜻을 존중)
+  const marked = items.filter(w => !w.base);   // 뜻이 빈 것만 사전 조회 대상
+  const need = marked.map(w => w.en);
+  marked.forEach(w => { w._looking = true; });
+  window._manualWords.push(...items);
+  _refreshManualList();
+
+  const found = await lookupWordsInCorpus(need);
+  let hit = 0;
+  for (const w of marked) {
+    w._looking = false;
+    const r = found.get(w.en.toLowerCase());
+    if (r) {
+      hit++;
+      w.base = r.base || '';
+      w.ipa = r.ipa || '';
+      if (!w.sentence) w.sentence = r.sentence || '';
+      if (r.level) w.level = r.level;
+      if (r.analysis) w.analysis = r.analysis;
+    }
+  }
+  _refreshManualList();
+
+  toast(TX(`${items.length}개를 가져왔어요 · 사전에서 ${hit}개 바로 채움` + (skipped?` · ${skipped}개는 건너뜀`:''),
+           '{v0} imported · {v1} filled from dictionary' + (skipped?' · {v2} skipped':''),
+           {v0:(items.length), v1:(hit), v2:(skipped)}), 4000);
+}
+
+// 여러 단어를 한 번에 조회한다. 엑셀로 100개를 올릴 때 100번 요청하면 느리고
+// 서버에도 부담이라, in.(...) 으로 한 번에 받는다. URL 길이 때문에 100개씩 끊는다.
+async function lookupWordsInCorpus(list){
+  const found = new Map();
+  if (userNativeLang !== 'ko') return found;
+  const words = [...new Set(list.map(w => String(w||'').trim().toLowerCase()).filter(Boolean))];
+  const score = (r) => (r.base?2:0) + (r.sentence?2:0) + (r.analysis?1:0) + (r.ipa?1:0);
+  for (let i = 0; i < words.length; i += 100) {
+    const chunk = words.slice(i, i + 100);
+    try {
+      // in.() 안의 값은 쉼표·따옴표가 구분자라서 각 단어를 큰따옴표로 감싼다
+      const inList = chunk.map(w => '"' + w.replace(/"/g, '') + '"').join(',');
+      const rows = await sbFetch(`/rest/v1/voca_words?en=in.(${encodeURIComponent(inList)})&select=en,base,ipa,sentence,level,analysis`);
+      if (!Array.isArray(rows)) continue;
+      for (const r of rows) {
+        if (!r.base) continue;
+        const k = String(r.en || '').toLowerCase();
+        const prev = found.get(k);
+        if (!prev || score(r) > score(prev)) found.set(k, r);
+      }
+    } catch(e){}
+  }
+  // 낱개 조회 캐시와 공유해서, 같은 단어를 또 찾지 않게 한다
+  for (const [k, v] of found) _corpusCache.set(k, v);
+  return found;
+}
+
 function _posLabel(a){
   const POS = { n:'명사', v:'동사', adj:'형용사', adv:'부사', prep:'전치사',
                 conj:'접속사', pron:'대명사', int:'감탄사', phr:'숙어' };
