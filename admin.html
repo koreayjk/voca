@@ -277,6 +277,15 @@ function countryName(cc){
   try { _regionNames = _regionNames || new Intl.DisplayNames(['ko'],{type:'region'}); return _regionNames.of(cc) || cc; }
   catch(e){ return cc; }
 }
+// 회원 옆에 붙이는 국가 표시 — 마우스를 올리면 실제 표준시간대가 보인다
+function geoTag(m, full){
+  const cc = memberCC(m,'now');
+  if(!cc) return '';
+  const sc = memberCC(m,'signup');
+  const moved = sc && sc !== cc ? ` · 가입 ${countryName(sc)}` : '';
+  const tip = esc([m.tz||'', m.locale||'', sc&&sc!==cc?('가입 당시 '+(m.signup_tz||'')):''].filter(Boolean).join(' · '));
+  return `<span title="${tip}" style="white-space:nowrap;">${flagOf(cc)} ${full?esc(countryName(cc)):cc}${moved?`<span style="color:var(--ink-45);"> ✈️</span>`:''}</span>`;
+}
 const PRICE_MONTHLY = 3.99;   // 월 구독 단가 (USD)
 
 let _authToken = null;
@@ -595,10 +604,11 @@ function renderRecent(){
   const recent = _allMembers.slice(0,8);
   if(recent.length===0){ document.getElementById('recent-members').innerHTML='<div class="empty">아직 회원이 없어요</div>'; return; }
   document.getElementById('recent-members').innerHTML = `
-    <table><thead><tr><th>이름</th><th>이메일</th><th>플랜</th><th>가입일</th></tr></thead><tbody>
+    <table><thead><tr><th>이름</th><th>이메일</th><th>국가</th><th>플랜</th><th>가입일</th></tr></thead><tbody>
     ${recent.map(m=>`<tr>
       <td class="row-name">${esc(m.name)||'-'}</td>
       <td class="row-email">${esc(m.email)}</td>
+      <td style="font-size:12px;color:var(--ink-70);">${geoTag(m,true)||'<span style="color:var(--ink-45);">-</span>'}</td>
       <td>${planPill(m)}</td>
       <td style="color:var(--ink-45);">${fmtDate(m.created_at)}</td>
     </tr>`).join('')}
@@ -618,11 +628,11 @@ function renderMembers(){
     ${list.map(m=>{
       const isAdmin = m.email===ADMIN_EMAIL;
       return `<tr>
-        <td><div class="row-name">${esc(m.name)||'이름없음'}</div><div class="row-email">${esc(m.email)}</div></td>
+        <td><div class="row-name">${esc(m.name)||'이름없음'} <span style="font-weight:400;font-size:12px;color:var(--ink-70);">${geoTag(m,false)}</span></div><div class="row-email">${esc(m.email)}</div></td>
         <td>${planPill(m)}</td>
         <td style="color:var(--ink-45);">${m.scan_count||0}</td>
         <td style="color:var(--ink-45);" title="CEFR 가중 점수 (A2=1 … C2=5)">${(m.total_words||0).toLocaleString()}</td>
-        <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}${(()=>{const cc=memberCC(m,'now');return cc?`<br><span title="${esc(m.tz||m.locale||'')}">${flagOf(cc)} ${cc}</span>`:'';})()}</td>
+        <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}</td>
         <td style="text-align:right;">
           ${isAdmin ? '<span class="pill admin">관리자</span>' : `
             ${m.plan==='premium' ?
@@ -949,7 +959,7 @@ function renderOrgAdmins(){
       <div style="display:flex;align-items:center;gap:10px;min-width:0;">
         <span style="font-size:11px;font-weight:700;color:${label==='주'?'var(--accent)':'var(--ink-45)'};background:${label==='주'?'rgba(28,53,83,0.1)':'var(--bg-input)'};border-radius:99px;padding:3px 9px;flex-shrink:0;">${label==='주'?'👑 주':'🤝 공동'}</span>
         <div style="min-width:0;">
-          <div class="row-name">${esc(m.name)||'이름없음'}</div>
+          <div class="row-name">${esc(m.name)||'이름없음'} <span style="font-weight:400;font-size:12px;color:var(--ink-70);">${geoTag(m,false)}</span></div>
           <div class="row-email">${esc(m.email)}</div>
         </div>
       </div>
@@ -1023,7 +1033,7 @@ function renderOrgAdmins(){
       else stBtn = `<button class="act-btn up" onclick="setOwnerStatus('${m.id}','approved')">승인</button> <button class="act-btn down" onclick="setOwnerStatus('${m.id}','rejected')">거절</button>`;
       html += `<div style="background:var(--bg-card);border:1px dashed var(--ink-12);border-radius:10px;padding:12px 14px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
         <div style="min-width:0;">
-          <div class="row-name">${esc(m.name)||'이름없음'}</div>
+          <div class="row-name">${esc(m.name)||'이름없음'} <span style="font-weight:400;font-size:12px;color:var(--ink-70);">${geoTag(m,false)}</span></div>
           <div class="row-email">${esc(m.email)} · <span style="color:var(--ink-45);">아직 단체 미생성</span></div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">${stBadge} ${stBtn}</div>
