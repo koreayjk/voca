@@ -1278,6 +1278,11 @@ function TX(ko,en,vars){ let s; if(userNativeLang==='ko'){ s=ko; } else { const 
 // 사전에 없는 문장은 영어로 폴백되므로, 언어별로 부분 번역 상태여도 안전하게 동작한다.
 const UI_XL = {
   zh: {
+    // ── 학습 카드·상태 표시 (2026-09 누락분) ──
+    '🔊 Auto ON':'🔊 朗读 开','🔇 Auto':'🔇 朗读',
+    'Round {v0} · {v1} ✕ so far':'第 {v0} 轮 · 已错 {v1} 次',
+    'Show guide':'查看使用方法',
+    'Review done':'复习完成','Not reviewed':'未复习',
     // ── 로그인·가입 ──
     'Just snap your book.<br><b style="color:#f0a830;">AI</b> builds your vocab list.':'拍下课本即可。<br>单词本由 <b style="color:#f0a830;">AI</b> 为你生成。',
     'Patent Pending · KR 10-2026-0127089':'专利申请中 · KR 10-2026-0127089',
@@ -1661,6 +1666,11 @@ const UI_XL = {
     'Day 2+ unlocks with Premium or an academy plan. Day 1 is free!':'{v0} 起需要高级版或机构套餐解锁。<br>Day 1 可以免费体验！'
   },
   es: {
+    // ── 학습 카드·상태 표시 (2026-09 누락분) ──
+    '🔊 Auto ON':'🔊 Auto ON','🔇 Auto':'🔇 Auto',
+    'Round {v0} · {v1} ✕ so far':'Ronda {v0} · {v1} ✕ hasta ahora',
+    'Show guide':'Ver la guía',
+    'Review done':'Repaso hecho','Not reviewed':'Sin repasar',
     // ── 로그인·가입 ──
     'Just snap your book.<br><b style="color:#f0a830;">AI</b> builds your vocab list.':'Fotografía tu libro y listo.<br>La <b style="color:#f0a830;">IA</b> crea tu lista de vocabulario.',
     'Patent Pending · KR 10-2026-0127089':'Patente en trámite · KR 10-2026-0127089',
@@ -2718,7 +2728,7 @@ function _tcDays(){
   const box=document.getElementById('tc-days'); if(!box) return;
   const b=_tcSelectedBook(); if(!b){ box.innerHTML=''; return; }
   const pgs=[...b.pages].filter(p=>p.words&&p.words.length).sort((a,b2)=>pageSort(a,b2));
-  box.innerHTML=`<label style="font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;padding:5px 10px;border:1px solid var(--accent);border-radius:8px;"><input type="checkbox" id="tc-all" onchange="_tcToggleAll(this.checked)" style="vertical-align:-1px;"> 전체</label>`
+  box.innerHTML=`<label style="font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;padding:5px 10px;border:1px solid var(--accent);border-radius:8px;"><input type="checkbox" id="tc-all" onchange="_tcToggleAll(this.checked)" style="vertical-align:-1px;"> ${TT('전체','All')}</label>`
     + pgs.map(p=>`<label style="font-size:12.5px;color:var(--ink-100);cursor:pointer;padding:5px 10px;border:1px solid var(--ink-12);border-radius:8px;"><input type="checkbox" class="tc-day" value="${esc(String(p.num))}" onchange="_tcPool()" style="vertical-align:-1px;"> ${esc(_pageLabel(b,p))}</label>`).join('');
   _tcPool();
 }
@@ -2735,7 +2745,7 @@ function _tcTargetToggle(){
   if(sel && !box.dataset.filled){
     const studs=(window._orgStudentsList||[]).filter(m=>(m.org_status||'')==='approved' && m.org_role==='student');
     box.innerHTML = studs.length
-      ? studs.map(s=>`<label style="font-size:12.5px;color:var(--ink-100);cursor:pointer;padding:5px 10px;border:1px solid var(--ink-12);border-radius:8px;"><input type="checkbox" class="tc-stu" value="${s.id}" style="vertical-align:-1px;"> ${esc(s.name||s.email||'학생')}</label>`).join('')
+      ? studs.map(s=>`<label style="font-size:12.5px;color:var(--ink-100);cursor:pointer;padding:5px 10px;border:1px solid var(--ink-12);border-radius:8px;"><input type="checkbox" class="tc-stu" value="${s.id}" style="vertical-align:-1px;"> ${esc(s.name||s.email||TT('학생','Student'))}</label>`).join('')
       : `<div class="muted" style="font-size:12px;padding:6px;">승인된 학생이 없어요. (학생·관리자 탭에서 승인 후 다시)</div>`;
     box.dataset.filled='1';
   }
@@ -2814,7 +2824,7 @@ async function showReissueModal(id){
       </div>
       <div style="max-height:44vh;overflow:auto;border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;">
         ${rows.map(r=>{ const pct=r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#1c7c3c':pct>=50?'#b35900':'#c0392b';
-          return `<label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><input type="checkbox" class="ri-stu" value="${r.user_id}" data-pct="${pct}" onchange="_riCount()" style="width:17px;height:17px;"><span style="flex:1;font-size:14px;color:var(--ink-100);">${esc(r.user_name||'학생')}</span><span style="font-size:12px;color:var(--ink-60);">${r.score}/${r.total}</span><span style="font-weight:800;color:${c};font-size:13px;min-width:40px;text-align:right;">${pct}%</span></label>`; }).join('')}
+          return `<label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><input type="checkbox" class="ri-stu" value="${r.user_id}" data-pct="${pct}" onchange="_riCount()" style="width:17px;height:17px;"><span style="flex:1;font-size:14px;color:var(--ink-100);">${esc(r.user_name||TT('학생','Student'))}</span><span style="font-size:12px;color:var(--ink-60);">${r.score}/${r.total}</span><span style="font-weight:800;color:${c};font-size:13px;min-width:40px;text-align:right;">${pct}%</span></label>`; }).join('')}
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;">
         <button onclick="_riAll(true)" style="flex:1;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-100);border-radius:9px;padding:8px;font-size:12.5px;font-weight:700;cursor:pointer;">전체 선택</button>
@@ -2954,7 +2964,7 @@ async function showTestResults(id){
     const pct = r.total?Math.round(r.score/r.total*100):0; const c=pct>=80?'#1c7c3c':pct>=50?'#b35900':'#c0392b';
     return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ink-07);">
       <span style="width:22px;color:var(--ink-40);font-size:12px;">${i+1}</span>
-      <span style="flex:1;font-size:14px;font-weight:600;color:var(--ink-100);">${esc(r.user_name||'학생')}</span>
+      <span style="flex:1;font-size:14px;font-weight:600;color:var(--ink-100);">${esc(r.user_name||TT('학생','Student'))}</span>
       <span style="font-size:13px;color:var(--ink-60);">${r.score}/${r.total}</span>
       <span style="font-weight:800;color:${c};font-size:14px;min-width:44px;text-align:right;">${pct}%</span>
       <button onclick="shareTestResultCard('${r.user_id}')" title="학부모에게 시험 결과 보내기" style="flex-shrink:0;background:none;border:1px solid var(--ink-12);border-radius:8px;padding:4px 8px;font-size:13px;cursor:pointer;color:var(--ink-60);">📤</button></div>`;
@@ -3733,7 +3743,7 @@ function renderDailyLiveHTML(students, byUser, dateStr){
     const u=byUser[s.id];
     const right = u ? `<span style="font-size:11px;color:#1c3553;font-weight:600;">📘 ${u.study} · 🔁 ${u.review}</span>`
                     : `<span style="font-size:11px;color:#c0392b;">${TT('오늘 안 함','idle')}</span>`;
-    return `<div onclick="openStudentDetail('${jsq(s.id)}')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name||s.email||'학생')}</div>${right}</div>`;
+    return `<div onclick="openStudentDetail('${jsq(s.id)}')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--ink-07);cursor:pointer;"><div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.name||s.email||TT('학생','Student'))}</div>${right}</div>`;
   }).join('') : `<div class="muted" style="font-size:12px;padding:8px 0;">${TT('승인된 학생이 없어요','No students')}</div>`;
   return `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;">
     <div style="font-size:15px;font-weight:700;color:var(--ink-100);">📊 ${TT('오늘의 리포트','Today')} <span class="muted" style="font-weight:400;font-size:12px;">· ${dLabel} ${TT('· 실시간','· live')}</span></div>
@@ -4304,7 +4314,7 @@ const HELP = {
       '공식책도 개인책과 똑같이 암기·복습·시험이 돼요'],
     tip:'토플은 기본→핵심→고난도 순으로 난이도가 올라가요. 수준에 맞춰 고르세요.' },
 };
-function _helpBtn(key){ return `<button onclick="event.stopPropagation();showHelp('${key}')" title="사용법 보기" style="display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-60);font-size:11px;font-weight:800;cursor:pointer;line-height:1;margin-left:7px;">?</button>`; }
+function _helpBtn(key){ return `<button onclick="event.stopPropagation();showHelp('${key}')" title="${TT('사용법 보기','Show guide')}" style="display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink-12);background:var(--bg-card);color:var(--ink-60);font-size:11px;font-weight:800;cursor:pointer;line-height:1;margin-left:7px;">?</button>`; }
 function showHelp(key){
   const h=HELP[key]; if(!h) return;
   let el=document.getElementById('help-overlay'); if(!el){ el=document.createElement('div'); el.id='help-overlay'; document.body.appendChild(el); }
@@ -7888,7 +7898,7 @@ function render() {
             const go = locked ? 'showOfficialPaywall()' : `push({name:'page-words',bookId:'${book.id}',pageNum:'${p.num}'})`;
             return `
             <div class="page-row" style="${locked?'opacity:0.55;':''}">
-              ${locked ? `<span style="margin-right:10px;flex-shrink:0;">🔒</span>` : (()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#c0392b':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?'복습 완료':st==='doing'?'복습 중':'복습 안 함'}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
+              ${locked ? `<span style="margin-right:10px;flex-shrink:0;">🔒</span>` : (()=>{ const st=_reviewStatus[book.id+'|'+p.num]; const c= st==='done'?'#1c3553': st==='doing'?'#c0392b':'#ffffff'; const br= st?'none':'1.5px solid rgba(44,33,24,0.25)'; return `<span title="${st==='done'?TT('복습 완료','Review done'):st==='doing'?TT('복습 중','Reviewing'):TT('복습 안 함','Not reviewed')}" style="width:10px;height:10px;border-radius:50%;background:${c};border:${br};flex-shrink:0;margin-right:10px;display:inline-block;box-sizing:border-box;"></span>`; })()}
               <span class="page-row__num" onclick="${go}" style="flex:1;cursor:pointer;">${label}${(!locked && _testScore[book.id+'|'+p.num]!=null)?` <span style="font-size:10px;font-weight:700;color:#fff;background:${_testScore[book.id+'|'+p.num]>=80?'#1c7c3c':_testScore[book.id+'|'+p.num]>=50?'#b35900':'#c0392b'};border-radius:99px;padding:1px 7px;margin-left:6px;">🎯 ${_testScore[book.id+'|'+p.num]}%</span>`:''}</span>
               <span class="page-row__right">
                 ${p.words.length} words
@@ -8303,7 +8313,7 @@ function renderStudyCard() {
   // 예문 발음 시리즈 폴더 결정용(현재 학습 중인 책 기준). 즐겨찾기 등 섞인 경우엔 '' → 예문은 TTS.
   window._audioSeries = (s.scope==='favorite') ? '' : _audioSeriesFromTitle(findBook(s.bookId)?.title||'');
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(TT('즐겨찾기','Favorites')):(findBook(s.bookId)?.title||'')}</span><span onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?'🔊 자동 ON':'🔇 자동'}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">Round ${s.round} · ${s.xList.length} ✕ so far</div><div class="card-wrap" onclick="cardClick(event)"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint"><div class="ox-hint__nav">${TT('👈 이전　·　🔄 가운데 탭 뜻보기　·　외움 👉','👈 Prev　·　🔄 Tap center to flip　·　Got it 👉')}</div><div class="ox-hint__sub">${TT('아래 <b class="hx">✕</b> 모름　<b class="ho">○</b> 외움','<b class="hx">✕</b> Again　<b class="ho">○</b> Got it')}<span class="kbd-only">　·　<kbd>←</kbd> ${TT('이전','Prev')} <kbd>↑</kbd> ${TT('모름','Again')} <kbd>→</kbd> ${TT('외움','Got it')} <kbd>Space</kbd> ${TT('뒤집기','Flip')}</span></div></div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(TT('즐겨찾기','Favorites')):(findBook(s.bookId)?.title||'')}</span><span onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?TT('🔊 자동 ON','🔊 Auto ON'):TT('🔇 자동','🔇 Auto')}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">${TX(`${s.round}라운드 · ${s.xList.length}번 틀림`,'Round {v0} · {v1} ✕ so far',{v0:(s.round),v1:(s.xList.length)})}</div><div class="card-wrap" onclick="cardClick(event)"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint"><div class="ox-hint__nav">${TT('👈 이전　·　🔄 가운데 탭 뜻보기　·　외움 👉','👈 Prev　·　🔄 Tap center to flip　·　Got it 👉')}</div><div class="ox-hint__sub">${TT('아래 <b class="hx">✕</b> 모름　<b class="ho">○</b> 외움','<b class="hx">✕</b> Again　<b class="ho">○</b> Got it')}<span class="kbd-only">　·　<kbd>←</kbd> ${TT('이전','Prev')} <kbd>↑</kbd> ${TT('모름','Again')} <kbd>→</kbd> ${TT('외움','Got it')} <kbd>Space</kbd> ${TT('뒤집기','Flip')}</span></div></div></div>`;
   _autoAfterRender(w, s.flipped);
 }
 
@@ -8589,7 +8599,7 @@ async function assignBook(bookId, pageNum){
       ${hasAllAssign?`<div style="font-size:12px;color:var(--accent);background:var(--gold-bg);border-radius:8px;padding:8px 11px;margin:2px 0 4px;">✓ ${TT('이미 학원 전체에게 배정된 책이에요.','Already assigned to all students.')}</div>`:''}
       <div id="assign-students" style="display:${preSel?'block':'none'};max-height:200px;overflow:auto;border:1px solid var(--ink-07);border-radius:10px;padding:6px 10px;margin:6px 0;">
         ${students.length ? students.map(s=>{ const done = hasAllAssign || assignedIds.has(s.id);
-          return `<label style="display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:var(--ink-100);cursor:${done?'default':'pointer'};"><input type="checkbox" class="assign-stu" value="${esc(s.id)}" ${done?'checked disabled':''}> <span style="flex:1;${done?'color:var(--ink-40);':''}">${esc(s.name||s.email||'학생')}</span>${done?`<span style="font-size:11px;font-weight:700;color:var(--accent);">✓ ${TT('배정됨','Assigned')}</span>`:''}</label>`;
+          return `<label style="display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:var(--ink-100);cursor:${done?'default':'pointer'};"><input type="checkbox" class="assign-stu" value="${esc(s.id)}" ${done?'checked disabled':''}> <span style="flex:1;${done?'color:var(--ink-40);':''}">${esc(s.name||s.email||TT('학생','Student'))}</span>${done?`<span style="font-size:11px;font-weight:700;color:var(--accent);">✓ ${TT('배정됨','Assigned')}</span>`:''}</label>`;
         }).join('') : `<div class="muted" style="font-size:12px;padding:8px 0;">${TT('승인된 학생이 없어요','No approved students')}</div>`}
       </div>
       <div style="font-size:12px;font-weight:700;color:var(--ink-60);margin:14px 0 6px;">${TT('마감일 (선택)','Due date (optional)')}</div>
