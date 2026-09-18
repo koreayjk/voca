@@ -246,6 +246,37 @@
 const SB_URL = 'https://ziatqkjlafucqtwshhla.supabase.co';
 const SB_KEY = 'sb_publishable_anybo402FSdDKMNiWcQzSA_oc7LIzZC';
 const ADMIN_EMAIL = 'koreayjk@gmail.com';
+
+// ── 국가·지역 판별 ──────────────────────────────────────────────
+// IP 를 저장하지 않는다. 브라우저가 알려주는 표준시간대(Asia/Seoul)와
+// 언어(ko-KR)만 회원 행에 남기고, 그걸 나라로 바꿔 센다.
+// 표준시간대 → 국가 대조표는 IANA zone.tab 그대로 (444개 지역 · 247개국).
+// VPN 을 쓰면 틀릴 수 있지만, IP 를 모으지 않고도 분포를 보기엔 이 쪽이 낫다.
+const TZ_BLOB = 'AD Europe/Andorra|AE Asia/Dubai|AF Asia/Kabul|AG America/Antigua|AI America/Anguilla|AL Europe/Tirane|AM Asia/Yerevan|AO Africa/Luanda|AQ Antarctica/McMurdo Antarctica/Casey Antarctica/Davis Antarctica/DumontDUrville Antarctica/Mawson Antarctica/Palmer Antarctica/Rothera Antarctica/Syowa Antarctica/Troll Antarctica/Vostok|AR America/Argentina/Buenos_Aires America/Argentina/Cordoba America/Argentina/Salta America/Argentina/Jujuy America/Argentina/Tucuman America/Argentina/Catamarca America/Argentina/La_Rioja America/Argentina/San_Juan America/Argentina/Mendoza America/Argentina/San_Luis America/Argentina/Rio_Gallegos America/Argentina/Ushuaia America/Buenos_Aires|AS Pacific/Pago_Pago|AT Europe/Vienna|AU Australia/Lord_Howe Antarctica/Macquarie Australia/Hobart Australia/Melbourne Australia/Sydney Australia/Broken_Hill Australia/Brisbane Australia/Lindeman Australia/Adelaide Australia/Darwin Australia/Perth Australia/Eucla Australia/Canberra|AW America/Aruba|AX Europe/Mariehamn|AZ Asia/Baku|BA Europe/Sarajevo|BB America/Barbados|BD Asia/Dhaka Asia/Dacca|BE Europe/Brussels|BF Africa/Ouagadougou|BG Europe/Sofia|BH Asia/Bahrain|BI Africa/Bujumbura|BJ Africa/Porto-Novo|BL America/St_Barthelemy|BM Atlantic/Bermuda|BN Asia/Brunei|BO America/La_Paz|BQ America/Kralendijk|BR America/Noronha America/Belem America/Fortaleza America/Recife America/Araguaina America/Maceio America/Bahia America/Sao_Paulo America/Campo_Grande America/Cuiaba America/Santarem America/Porto_Velho America/Boa_Vista America/Manaus America/Eirunepe America/Rio_Branco|BS America/Nassau|BT Asia/Thimphu|BW Africa/Gaborone|BY Europe/Minsk|BZ America/Belize|CA America/St_Johns America/Halifax America/Glace_Bay America/Moncton America/Goose_Bay America/Blanc-Sablon America/Toronto America/Iqaluit America/Atikokan America/Winnipeg America/Resolute America/Rankin_Inlet America/Regina America/Swift_Current America/Edmonton America/Cambridge_Bay America/Inuvik America/Creston America/Dawson_Creek America/Fort_Nelson America/Whitehorse America/Dawson America/Vancouver|CC Indian/Cocos|CD Africa/Kinshasa Africa/Lubumbashi|CF Africa/Bangui|CG Africa/Brazzaville|CH Europe/Zurich|CI Africa/Abidjan|CK Pacific/Rarotonga|CL America/Santiago America/Coyhaique America/Punta_Arenas Pacific/Easter|CM Africa/Douala|CN Asia/Shanghai Asia/Urumqi Asia/Chongqing Asia/Harbin|CO America/Bogota|CR America/Costa_Rica|CU America/Havana|CV Atlantic/Cape_Verde|CW America/Curacao|CX Indian/Christmas|CY Asia/Nicosia Asia/Famagusta Europe/Nicosia|CZ Europe/Prague|DE Europe/Berlin Europe/Busingen|DJ Africa/Djibouti|DK Europe/Copenhagen|DM America/Dominica|DO America/Santo_Domingo|DZ Africa/Algiers|EC America/Guayaquil Pacific/Galapagos|EE Europe/Tallinn|EG Africa/Cairo|EH Africa/El_Aaiun|ER Africa/Asmara|ES Europe/Madrid Africa/Ceuta Atlantic/Canary|ET Africa/Addis_Ababa|FI Europe/Helsinki|FJ Pacific/Fiji|FK Atlantic/Stanley|FM Pacific/Chuuk Pacific/Pohnpei Pacific/Kosrae Pacific/Ponape Pacific/Truk|FO Atlantic/Faroe Atlantic/Faeroe|FR Europe/Paris|GA Africa/Libreville|GB Europe/London|GD America/Grenada|GE Asia/Tbilisi|GF America/Cayenne|GG Europe/Guernsey|GH Africa/Accra|GI Europe/Gibraltar|GL America/Nuuk America/Danmarkshavn America/Scoresbysund America/Thule America/Godthab|GM Africa/Banjul|GN Africa/Conakry|GP America/Guadeloupe|GQ Africa/Malabo|GR Europe/Athens|GS Atlantic/South_Georgia|GT America/Guatemala|GU Pacific/Guam|GW Africa/Bissau|GY America/Guyana|HK Asia/Hong_Kong|HN America/Tegucigalpa|HR Europe/Zagreb|HT America/Port-au-Prince|HU Europe/Budapest|ID Asia/Jakarta Asia/Pontianak Asia/Makassar Asia/Jayapura|IE Europe/Dublin|IL Asia/Jerusalem|IM Europe/Isle_of_Man|IN Asia/Kolkata Asia/Calcutta|IO Indian/Chagos|IQ Asia/Baghdad|IR Asia/Tehran|IS Atlantic/Reykjavik|IT Europe/Rome|JE Europe/Jersey|JM America/Jamaica|JO Asia/Amman|JP Asia/Tokyo Japan|KE Africa/Nairobi|KG Asia/Bishkek|KH Asia/Phnom_Penh|KI Pacific/Tarawa Pacific/Kanton Pacific/Kiritimati|KM Indian/Comoro|KN America/St_Kitts|KP Asia/Pyongyang|KR Asia/Seoul ROK|KW Asia/Kuwait|KY America/Cayman|KZ Asia/Almaty Asia/Qyzylorda Asia/Qostanay Asia/Aqtobe Asia/Aqtau Asia/Atyrau Asia/Oral|LA Asia/Vientiane|LB Asia/Beirut|LC America/St_Lucia|LI Europe/Vaduz|LK Asia/Colombo|LR Africa/Monrovia|LS Africa/Maseru|LT Europe/Vilnius|LU Europe/Luxembourg|LV Europe/Riga|LY Africa/Tripoli|MA Africa/Casablanca|MC Europe/Monaco|MD Europe/Chisinau|ME Europe/Podgorica|MF America/Marigot|MG Indian/Antananarivo|MH Pacific/Majuro Pacific/Kwajalein|MK Europe/Skopje|ML Africa/Bamako|MM Asia/Yangon Asia/Rangoon|MN Asia/Ulaanbaatar Asia/Hovd Asia/Ulan_Bator|MO Asia/Macau|MP Pacific/Saipan|MQ America/Martinique|MR Africa/Nouakchott|MS America/Montserrat|MT Europe/Malta|MU Indian/Mauritius|MV Indian/Maldives|MW Africa/Blantyre|MX America/Mexico_City America/Cancun America/Merida America/Monterrey America/Matamoros America/Chihuahua America/Ciudad_Juarez America/Ojinaga America/Mazatlan America/Bahia_Banderas America/Hermosillo America/Tijuana|MY Asia/Kuala_Lumpur Asia/Kuching|MZ Africa/Maputo|NA Africa/Windhoek|NC Pacific/Noumea|NE Africa/Niamey|NF Pacific/Norfolk|NG Africa/Lagos|NI America/Managua|NL Europe/Amsterdam|NO Europe/Oslo|NP Asia/Kathmandu Asia/Katmandu|NR Pacific/Nauru|NU Pacific/Niue|NZ Pacific/Auckland Pacific/Chatham|OM Asia/Muscat|PA America/Panama|PE America/Lima|PF Pacific/Tahiti Pacific/Marquesas Pacific/Gambier|PG Pacific/Port_Moresby Pacific/Bougainville|PH Asia/Manila|PK Asia/Karachi|PL Europe/Warsaw|PM America/Miquelon|PN Pacific/Pitcairn|PR America/Puerto_Rico|PS Asia/Gaza Asia/Hebron|PT Europe/Lisbon Atlantic/Madeira Atlantic/Azores|PW Pacific/Palau|PY America/Asuncion|QA Asia/Qatar|RE Indian/Reunion|RO Europe/Bucharest|RS Europe/Belgrade|RU Europe/Kaliningrad Europe/Moscow Europe/Kirov Europe/Volgograd Europe/Astrakhan Europe/Saratov Europe/Ulyanovsk Europe/Samara Asia/Yekaterinburg Asia/Omsk Asia/Novosibirsk Asia/Barnaul Asia/Tomsk Asia/Novokuznetsk Asia/Krasnoyarsk Asia/Irkutsk Asia/Chita Asia/Yakutsk Asia/Khandyga Asia/Vladivostok Asia/Ust-Nera Asia/Magadan Asia/Sakhalin Asia/Srednekolymsk Asia/Kamchatka Asia/Anadyr|UA Europe/Simferopol Europe/Kyiv Europe/Kiev Europe/Uzhgorod Europe/Zaporozhye|RW Africa/Kigali|SA Asia/Riyadh|SB Pacific/Guadalcanal|SC Indian/Mahe|SD Africa/Khartoum|SE Europe/Stockholm|SG Asia/Singapore|SH Atlantic/St_Helena|SI Europe/Ljubljana|SJ Arctic/Longyearbyen|SK Europe/Bratislava|SL Africa/Freetown|SM Europe/San_Marino|SN Africa/Dakar|SO Africa/Mogadishu|SR America/Paramaribo|SS Africa/Juba|ST Africa/Sao_Tome|SV America/El_Salvador|SX America/Lower_Princes|SY Asia/Damascus|SZ Africa/Mbabane|TC America/Grand_Turk|TD Africa/Ndjamena|TF Indian/Kerguelen|TG Africa/Lome|TH Asia/Bangkok|TJ Asia/Dushanbe|TK Pacific/Fakaofo|TL Asia/Dili|TM Asia/Ashgabat|TN Africa/Tunis|TO Pacific/Tongatapu|TR Europe/Istanbul Asia/Istanbul|TT America/Port_of_Spain|TV Pacific/Funafuti|TW Asia/Taipei|TZ Africa/Dar_es_Salaam|UG Africa/Kampala|UM Pacific/Midway Pacific/Wake|US America/New_York America/Detroit America/Kentucky/Louisville America/Kentucky/Monticello America/Indiana/Indianapolis America/Indiana/Vincennes America/Indiana/Winamac America/Indiana/Marengo America/Indiana/Petersburg America/Indiana/Vevay America/Chicago America/Indiana/Tell_City America/Indiana/Knox America/Menominee America/North_Dakota/Center America/North_Dakota/New_Salem America/North_Dakota/Beulah America/Denver America/Boise America/Phoenix America/Los_Angeles America/Anchorage America/Juneau America/Sitka America/Metlakatla America/Yakutat America/Nome America/Adak Pacific/Honolulu America/Indianapolis US/Pacific US/Eastern US/Central US/Mountain|UY America/Montevideo|UZ Asia/Samarkand Asia/Tashkent|VA Europe/Vatican|VC America/St_Vincent|VE America/Caracas|VG America/Tortola|VI America/St_Thomas|VN Asia/Ho_Chi_Minh Asia/Saigon|VU Pacific/Efate|WF Pacific/Wallis|WS Pacific/Apia|YE Asia/Aden|YT Indian/Mayotte|ZA Africa/Johannesburg|ZM Africa/Lusaka|ZW Africa/Harare';
+const TZ_CC = (()=>{ const m={}; for(const part of TZ_BLOB.split('|')){ const t=part.split(' '); for(let i=1;i<t.length;i++) m[t[i]]=t[0]; } return m; })();
+function ccFromTz(tz){
+  const z = String(tz||'').trim();
+  if(!z) return '';
+  return TZ_CC[z] || '';
+}
+function ccFromLocale(loc){
+  const m = /^[A-Za-z]{2,3}[-_]([A-Za-z]{2})\b/.exec(String(loc||''));
+  return m ? m[1].toUpperCase() : '';
+}
+// which: 'now'(지금 쓰는 곳) | 'signup'(가입할 때 있던 곳)
+function memberCC(m, which){
+  const tz = which==='signup' ? (m.signup_tz || m.tz) : (m.tz || m.signup_tz);
+  return ccFromTz(tz) || ccFromLocale(m.locale) || '';
+}
+function flagOf(cc){
+  if(!/^[A-Z]{2}$/.test(cc||'')) return '🏳️';
+  return String.fromCodePoint(...[...cc].map(c=>0x1F1E6 + c.charCodeAt(0) - 65));
+}
+let _regionNames = null;
+function countryName(cc){
+  try { _regionNames = _regionNames || new Intl.DisplayNames(['ko'],{type:'region'}); return _regionNames.of(cc) || cc; }
+  catch(e){ return cc; }
+}
 const PRICE_MONTHLY = 3.99;   // 월 구독 단가 (USD)
 
 let _authToken = null;
@@ -358,7 +389,7 @@ async function loadAll(){
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source,native_lang,tz,locale,signup_tz&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     // 탭을 오래 열어둔 사이 토큰 만료(401) → 갱신 후 한 번 재시도
@@ -382,13 +413,16 @@ async function loadMembers(retry){
 
 // ── 현황 ──
 function renderOverview(){
-  const total = _allMembers.length;
+  // 통계에서는 내 관리자 계정을 뺀다 — 테스트용 Premium 이 '유료 회원 1명' 으로
+  // 잡혀 실제 지표를 가렸다. (회원 목록에는 그대로 보인다)
+  const _statMembers = _allMembers.filter(m => m.email !== ADMIN_EMAIL);
+  const total = _statMembers.length;
 
   // 분류 (org_id=단체 소속 여부 기준, 상호 배타)
   // ⚠️ org_id 없으면 개인으로 취급 — org_role='student'인데 단체 미연결된 '고아' 회원도 개인회원에 노출(안 그러면 어느 탭에도 안 뜸)
-  const individuals = _allMembers.filter(m=>!m.org_id && m.org_role!=='owner'); // 개인 (단체 미소속)
-  const students    = _allMembers.filter(m=>m.org_id && m.org_role==='student'); // 단체 학생(실제 소속)
-  const owners      = _allMembers.filter(m=>m.org_role==='owner');   // 단체 관리자(주+공동, 단체 미생성 포함)
+  const individuals = _statMembers.filter(m=>!m.org_id && m.org_role!=='owner'); // 개인 (단체 미소속)
+  const students    = _statMembers.filter(m=>m.org_id && m.org_role==='student'); // 단체 학생(실제 소속)
+  const owners      = _statMembers.filter(m=>m.org_role==='owner');   // 단체 관리자(주+공동, 단체 미생성 포함)
 
   const ind = individuals.length;
   const stu = students.length;
@@ -411,7 +445,7 @@ function renderOverview(){
   // 단체: 결제중 / 무료 / 비활성
   let orgPaying=0, orgFree=0, orgMrr=0;
   _allOrgs.forEach(o=>{
-    const appr = _allMembers.filter(x=>x.org_id===o.id && (x.org_status||'')==='approved' && x.id!==o.owner_id).length;
+    const appr = _statMembers.filter(x=>x.org_id===o.id && (x.org_status||'')==='approved' && x.id!==o.owner_id).length;
     if(o.stripe_subscription_id){ orgPaying++; orgMrr += appr*2.99; }
     else if(o.billing_active){ orgFree++; }
   });
@@ -421,7 +455,7 @@ function renderOverview(){
   const indMrr = payingInd * PRICE_MONTHLY;
   const totalMrr = (indMrr + orgMrr).toFixed(2);
 
-  const totalWords = _allMembers.reduce((n,m)=>n+(m.total_words||0),0);
+  const totalWords = _statMembers.reduce((n,m)=>n+(m.total_words||0),0);
 
   // 구성 막대 비율
   const denom = total || 1;
@@ -432,7 +466,7 @@ function renderOverview(){
 
   document.getElementById('stat-grid').innerHTML = `
     <div class="stat" style="grid-column:1/-1;">
-      <div class="label">전체 인원 구성 · 총 ${total}명</div>
+      <div class="label">전체 인원 구성 · 총 ${total}명 <span style="color:var(--ink-45);font-weight:400;">(내 관리자 계정 제외)</span></div>
       <div style="display:flex;height:22px;border-radius:6px;overflow:hidden;margin:10px 0 8px;background:var(--ink-07);">
         <div style="width:${pInd}%;background:#6b7cff;"></div>
         <div style="width:${pStu}%;background:#37b24d;"></div>
@@ -474,7 +508,7 @@ function renderOverview(){
       const counts = {ad:0,search:0,referral:0,community:0,other:0};
       let known = 0;
       const referralNames = [];
-      _allMembers.forEach(m=>{
+      _statMembers.forEach(m=>{
         const c = classify(m.signup_source);
         if(c){ counts[c]++; known++; if(c==='referral'){ const nm=String(m.signup_source).split(':')[1]; if(nm) referralNames.push(nm.trim()); } }
       });
@@ -501,6 +535,57 @@ function renderOverview(){
         <div class="label">가입 경로 · 응답 ${known}명${unknown>0?` (미응답 ${unknown})`:''}</div>
         <div style="margin-top:12px;">${bars}</div>
         ${refNote}
+      </div>`;
+    })()}
+
+    ${(()=>{
+      // ── 국가·지역 ──
+      const cnt = {}; let known = 0, moved = 0;
+      _statMembers.forEach(m=>{
+        const cc = memberCC(m,'now');
+        if(!cc) return;
+        cnt[cc] = (cnt[cc]||0) + 1; known++;
+        const sc = memberCC(m,'signup');
+        if(sc && sc !== cc) moved++;
+      });
+      const COLORS = ['#1c7ed6','#37b24d','#e8590c','#9c36b5','#f59f00','#0ca678','#d6336c','#4c6ef5','#74b816','#ae3ec9','#f76707','#495057'];
+      // 언어는 지역과 따로 본다 (미국에 살아도 한국어로 쓰는 회원이 많다)
+      const LANGS = [['ko','한국어'],['en','English'],['zh','中文'],['es','Español']];
+      const lang = {}; let langKnown = 0;
+      _statMembers.forEach(m=>{ const l = (m.native_lang||'').slice(0,2); if(!l) return; lang[l]=(lang[l]||0)+1; langKnown++; });
+      const langLine = langKnown ? `<div style="font-size:11.5px;color:var(--ink-45);margin-top:10px;border-top:1px solid var(--ink-07);padding-top:9px;">앱 언어 · ${LANGS.filter(([k])=>lang[k]).map(([k,label])=>`${label} <b>${lang[k]}</b>`).join(' · ')}${Object.keys(lang).filter(k=>!LANGS.some(([x])=>x===k)).map(k=>` · ${k} <b>${lang[k]}</b>`).join('')}</div>` : '';
+
+      if(!known){
+        return `<div class="stat" style="grid-column:1/-1;">
+          <div class="label">국가·지역</div>
+          <div class="sub" style="margin-top:8px;">아직 지역 데이터가 없어요. (이 기능 적용 후 접속한 회원부터 집계됩니다)</div>
+          ${langLine}
+        </div>`;
+      }
+      const rows = Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
+      const maxc = rows[0][1];
+      const top = rows.slice(0,12);
+      const restCount = rows.slice(12).reduce((n,[,c])=>n+c,0);
+      const bars2 = top.map(([cc,c],i)=>{
+        const pct = (c/known*100);
+        return `<div style="margin-bottom:9px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-70);margin-bottom:3px;">
+            <span>${flagOf(cc)} ${esc(countryName(cc))} <span style="color:var(--ink-45);">${cc}</span></span>
+            <span><b>${c}</b>명 · ${pct.toFixed(0)}%</span>
+          </div>
+          <div style="height:12px;background:var(--ink-07);border-radius:5px;overflow:hidden;">
+            <div style="width:${(c/maxc*100)}%;height:100%;background:${COLORS[i%COLORS.length]};border-radius:5px;transition:width .3s;"></div>
+          </div>
+        </div>`;
+      }).join('');
+      const unknownGeo = total - known;
+      return `<div class="stat" style="grid-column:1/-1;">
+        <div class="label">국가·지역 · 확인 ${known}명${unknownGeo>0?` (미확인 ${unknownGeo})`:''} · ${rows.length}개국</div>
+        <div style="margin-top:12px;">${bars2}</div>
+        ${restCount?`<div style="font-size:11px;color:var(--ink-45);margin-top:2px;">그 외 ${rows.length-12}개국 ${restCount}명</div>`:''}
+        ${moved?`<div style="font-size:11px;color:var(--ink-45);margin-top:6px;">✈️ 가입 때와 지금 나라가 다른 회원 ${moved}명</div>`:''}
+        ${langLine}
+        <div style="font-size:10.5px;color:var(--ink-45);margin-top:8px;">기기의 표준시간대·언어로 판별 (IP 는 수집하지 않음) · VPN 사용 시 실제와 다를 수 있음</div>
       </div>`;
     })()}
   `;
@@ -537,7 +622,7 @@ function renderMembers(){
         <td>${planPill(m)}</td>
         <td style="color:var(--ink-45);">${m.scan_count||0}</td>
         <td style="color:var(--ink-45);" title="CEFR 가중 점수 (A2=1 … C2=5)">${(m.total_words||0).toLocaleString()}</td>
-        <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}</td>
+        <td style="color:var(--ink-45);font-size:12px;line-height:1.5;">${m.last_seen_at?'📅 '+fmtSeen(m.last_seen_at):'-'}${m.visit_count?'<br>🔁 '+m.visit_count+'회':''}${(()=>{const cc=memberCC(m,'now');return cc?`<br><span title="${esc(m.tz||m.locale||'')}">${flagOf(cc)} ${cc}</span>`:'';})()}</td>
         <td style="text-align:right;">
           ${isAdmin ? '<span class="pill admin">관리자</span>' : `
             ${m.plan==='premium' ?
