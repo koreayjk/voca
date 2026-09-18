@@ -175,8 +175,14 @@ Deno.serve(async (req) => {
     })
     if (res.ok) {
       ok = chunk
+    } else if (res.status === 429) {
+      // Resend 하루/초당 한도. 한 통씩 다시 시도해도 똑같이 막히니 여기서 멈춘다.
+      // 보낸 사람은 로그에 남아 있으니, 내일 다시 누르면 못 받은 사람부터 이어간다.
+      failed.push({ rate_limited: (await res.text()).slice(0, 200) })
+      return json({ ok: true, sent, remaining: true, rate_limited: true,
+                    note: 'resend_rate_limit — 남은 회원은 한도가 풀린 뒤 다시 보내면 이어집니다', failed })
     } else {
-      // 일괄 발송이 거부되면(형식·한도) 한 통씩 보내 최대한 건진다
+      // 일괄 발송이 거부되면(형식 문제 등) 한 통씩 보내 최대한 건진다
       const why = `${res.status} ${(await res.text()).slice(0, 200)}`
       failed.push({ batch: why })
       for (let k = 0; k < chunk.length; k++) {

@@ -27,7 +27,9 @@ alter table public.notice_email_log enable row level security;
 -- 정책을 두지 않는다 = service_role(엣지 함수)만 읽고 쓴다
 
 -- 이번 회차에 보낼 사람 목록
---   p_audience: all | ko | en | zh | es | premium | free
+--   p_audience: all | active30 | ko | en | zh | es | premium | free
+--   active30 = 최근 30일 안에 접속한 회원. 오래 묵은 주소가 많을 때 첫 발송은
+--              이쪽으로 하는 게 안전하다 (반송률이 높으면 도메인 평판이 깎인다)
 create or replace function public.notice_email_targets(
   p_campaign uuid,
   p_audience text default 'all',
@@ -54,6 +56,7 @@ begin
     and m.email_optout_at is null                     -- 수신거부자 제외
     and (
       p_audience = 'all'
+      or (p_audience = 'active30' and m.last_seen_at > now() - interval '30 days')
       or (p_audience in ('ko','en','zh','es') and coalesce(nullif(m.native_lang,''),'ko') = p_audience)
       or (p_audience = 'premium' and m.plan = 'premium')
       or (p_audience = 'free' and coalesce(m.plan,'free') <> 'premium')
