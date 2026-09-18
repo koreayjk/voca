@@ -10801,19 +10801,70 @@ function renderManualAdd(root, route) {
   setTimeout(() => document.getElementById('manual-en')?.focus(), 100);
 }
 
+// ── 직접 입력한 단어를 '이미 가진 사전'에서 즉시 찾기 ─────────────
+// 공식 단어장에 1만 5천여 단어가 뜻·발음기호·품사·예문·CEFR 까지 갖춘 채로 들어
+// 있다. 사용자가 타이핑한 단어가 거기 있으면 Gemini 를 부를 이유가 없다 —
+// 즉시 채워지고, API 비용도 0이고, 공식 단어장과 뜻·예문이 일치한다.
+//
+// RLS 가 공식책만 노출하므로 이 조회로 남의 개인 단어가 나올 일은 없다.
+//
+// ⚠️ base(뜻)가 한국어라서 한국어 사용자에게만 쓴다. 다른 언어 사용자는 지금처럼
+//    저장할 때 Gemini 가 그 사람 언어로 만들어준다.
+const _corpusCache = new Map();   // 같은 단어를 두 번 조회하지 않게
+async function lookupWordInCorpus(en){
+  const q = String(en || '').trim().toLowerCase();
+  if (!q || userNativeLang !== 'ko') return null;
+  if (_corpusCache.has(q)) return _corpusCache.get(q);
+  let best = null;
+  try {
+    // ilike + 와일드카드 없음 = 대소문자 무시 정확 일치 (Neat 로 쳐도 neat 을 찾는다)
+    const rows = await sbFetch(`/rest/v1/voca_words?en=ilike.${encodeURIComponent(q)}&select=en,base,ipa,sentence,level,analysis&limit=5`);
+    if (Array.isArray(rows) && rows.length) {
+      // 같은 단어가 여러 공식책에 있을 수 있다 → 예문·심화분석이 있는 쪽을 고른다
+      const score = (r) => (r.base?2:0) + (r.sentence?2:0) + (r.analysis?1:0) + (r.ipa?1:0);
+      best = rows.slice().sort((a,b)=>score(b)-score(a))[0];
+      if (!best.base) best = null;
+    }
+  } catch(e){ best = null; }
+  _corpusCache.set(q, best);
+  return best;
+}
+function _posLabel(a){
+  const POS = { n:'명사', v:'동사', adj:'형용사', adv:'부사', prep:'전치사',
+                conj:'접속사', pron:'대명사', int:'감탄사', phr:'숙어' };
+  const p = a && a.pos ? String(a.pos).toLowerCase() : '';
+  return p ? (POS[p] || p) : '';
+}
+
 function renderManualWordList() {
   if (!window._manualWords?.length) {
     return `<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">${t('noManualWords')}<br>${TT('영어 단어를 입력하고 추가 버튼을 눌러주세요','Enter a word and click Add')}</div>`;
   }
-  return window._manualWords.map((w, i) => `
-    <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-card);border-radius:10px;margin-bottom:6px;">
-      <div style="font-size:16px;">📝</div>
-      <div style="flex:1;">
+  return window._manualWords.map((w, i) => {
+    // 상태 3가지: 찾는 중 / 사전에서 찾음 / 저장할 때 검색 예정
+    const icon = w._looking ? '🔎' : (w.base ? '✅' : '📝');
+    const pos = _posLabel(w.analysis);
+    const sub = w._looking
+      ? `<div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${TT('사전에서 찾는 중…','Looking up…')}</div>`
+      : w.base
+      ? `<div style="font-size:12.5px;color:var(--ink-100);margin-top:3px;">${esc(w.base)}</div>
+         <div style="font-size:11px;color:var(--ink-40);margin-top:3px;display:flex;flex-wrap:wrap;gap:8px;">
+           ${pos?`<span>${esc(pos)}</span>`:''}
+           ${w.ipa?`<span>${esc(w.ipa)}</span>`:''}
+           ${w.level?`<span>CEFR ${esc(w.level)}</span>`:''}
+         </div>
+         ${w.sentence?`<div style="font-size:11.5px;color:var(--ink-60);margin-top:4px;line-height:1.5;">📝 ${esc(w.sentence)}</div>`:''}`
+      : `<div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${t('pendingMeaning')}</div>`;
+    return `
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg-card);border-radius:10px;margin-bottom:6px;">
+      <div style="font-size:16px;line-height:1.4;">${icon}</div>
+      <div style="flex:1;min-width:0;">
         <div style="font-size:14px;font-weight:700;color:var(--ink-100);">${esc(w.en)}</div>
-        <div style="font-size:11px;color:var(--ink-40);margin-top:2px;">${t('pendingMeaning')}</div>
+        ${sub}
       </div>
       <button onclick="removeManualWord(${i})" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-40);padding:4px;">✕</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function addManualWord() {
@@ -10821,21 +10872,50 @@ function addManualWord() {
   const en = enInput?.value.trim();
   if (!en) { toast('영어 단어를 입력해주세요'); return; }
   if (window._manualWords.find(w => w.en.toLowerCase() === en.toLowerCase())) { toast('이미 추가된 단어예요'); enInput.value=''; enInput.focus(); return; }
-  window._manualWords.push({ en, base: '', ctx: '', level: 'B1', ipa: '' });
+  const item = { en, base: '', ctx: '', level: 'B1', ipa: '', _looking: true };
+  window._manualWords.push(item);
   enInput.value = ''; enInput.focus();
-  document.getElementById('manual-word-list').innerHTML = renderManualWordList();
+  _refreshManualList();
+
+  // 입력을 막지 않고 뒤에서 찾는다 — 사용자는 계속 다음 단어를 칠 수 있다
+  lookupWordInCorpus(en).then((hit) => {
+    item._looking = false;
+    if (hit) {
+      item.base = hit.base || '';
+      item.ipa = hit.ipa || '';
+      item.sentence = hit.sentence || '';
+      if (hit.level) item.level = hit.level;
+      if (hit.analysis) item.analysis = hit.analysis;
+    }
+    // 그 사이 사용자가 지웠을 수 있으니 목록에 아직 있을 때만 다시 그린다
+    if (window._manualWords.includes(item)) _refreshManualList();
+  }).catch(() => { item._looking = false; _refreshManualList(); });
+}
+
+// 목록 + 저장 버튼 라벨을 함께 갱신 (여러 곳에서 같은 일을 하던 것을 모음)
+function _refreshManualList(){
+  const list = document.getElementById('manual-word-list');
+  if (list) list.innerHTML = renderManualWordList();
   const saveBtn = document.getElementById('manual-save-btn');
-  if (saveBtn) { saveBtn.textContent = `${t('saveWithMeaning')} (${window._manualWords.length}${TT('개','')})`; saveBtn.style.opacity = '1'; }
+  if (!saveBtn) return;
+  const n = window._manualWords.length;
+  if (n > 0) {
+    // 사전에서 이미 찾은 단어는 저장할 때 Gemini 를 부르지 않는다.
+    // 몇 개가 남았는지 버튼에 알려줘 기다릴 시간을 가늠하게 한다.
+    const need = window._manualWords.filter(w => !w.base).length;
+    saveBtn.textContent = need > 0
+      ? `${t('saveWithMeaning')} (${n}${TT('개','')})`
+      : `${TT('저장하기','Save')} (${n}${TT('개','')})`;
+    saveBtn.style.opacity = '1';
+  } else {
+    saveBtn.textContent = t('addWordsFirst');
+    saveBtn.style.opacity = '0.4';
+  }
 }
 
 function removeManualWord(i) {
   window._manualWords.splice(i, 1);
-  document.getElementById('manual-word-list').innerHTML = renderManualWordList();
-  const saveBtn = document.getElementById('manual-save-btn');
-  if (saveBtn) {
-    if (window._manualWords.length > 0) { saveBtn.textContent = `${t('saveWithMeaning')} (${window._manualWords.length}${TT('개','')})`; saveBtn.style.opacity = '1'; }
-    else { saveBtn.textContent = t('addWordsFirst'); saveBtn.style.opacity = '0.4'; }
-  }
+  _refreshManualList();
 }
 
 async function fetchWordMeaning(word, categoryContext='', isExam=false) {
