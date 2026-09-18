@@ -1278,8 +1278,24 @@ function TX(ko,en,vars){ let s; if(userNativeLang==='ko'){ s=ko; } else { const 
 // 사전에 없는 문장은 영어로 폴백되므로, 언어별로 부분 번역 상태여도 안전하게 동작한다.
 const UI_XL = {
   zh: {
-    // ── 단어 직접 입력: 추천 (2026-09) ──
+    // ── 단어 직접 입력: 추천·엑셀 탭 (2026-09) ──
     'In the dictionary · tap to add':'词典里有的单词 · 点击直接添加',
+    'Found {v0} sheets':'找到 {v0} 个工作表',
+    'Each sheet can become its own page.<br>You can change the page numbers.':'每个工作表可以保存为单独的页。<br>页码可以修改。',
+    'Save as separate pages':'按工作表分页保存',
+    'Merge into one page':'合并为一页',
+    'adds to existing page':'添加到已有的页',
+    'Fill in every page number':'请填写所有页码',
+    'Saved {v1} words across {v0} pages':'已保存 {v0} 页 · 共 {v1} 个单词',
+    'Typed by hand':'手动输入的单词',
+    'Nothing new to import':'没有可新增的单词',
+    'Something went wrong — the pages saved so far are kept':'保存时出错 — 已保存的页会保留',
+    'Enter a page number':'请输入页码',
+    'No words added yet':'还没有添加单词',
+    'Looking up meanings...':'正在查找释义...',
+    ' words':'个单词',
+    'Sheet':'工作表',
+    'Page':'页',
     'Type an English word first':'请先输入英语单词',
     'Already on the list':'已经添加过了',
     // ── 학습 카드·상태 표시 (2026-09 누락분) ──
@@ -1670,8 +1686,24 @@ const UI_XL = {
     'Day 2+ unlocks with Premium or an academy plan. Day 1 is free!':'{v0} 起需要高级版或机构套餐解锁。<br>Day 1 可以免费体验！'
   },
   es: {
-    // ── 단어 직접 입력: 추천 (2026-09) ──
+    // ── 단어 직접 입력: 추천·엑셀 탭 (2026-09) ──
     'In the dictionary · tap to add':'Palabras del diccionario · toca para añadir',
+    'Found {v0} sheets':'Se encontraron {v0} hojas',
+    'Each sheet can become its own page.<br>You can change the page numbers.':'Cada hoja puede guardarse como una página.<br>Puedes cambiar los números de página.',
+    'Save as separate pages':'Guardar como páginas separadas',
+    'Merge into one page':'Unir en una sola página',
+    'adds to existing page':'se añade a una página existente',
+    'Fill in every page number':'Completa todos los números de página',
+    'Saved {v1} words across {v0} pages':'{v1} palabras guardadas en {v0} páginas',
+    'Typed by hand':'Escritas a mano',
+    'Nothing new to import':'No hay nada nuevo que importar',
+    'Something went wrong — the pages saved so far are kept':'Algo salió mal — las páginas ya guardadas se conservan',
+    'Enter a page number':'Escribe un número de página',
+    'No words added yet':'Aún no has añadido palabras',
+    'Looking up meanings...':'Buscando significados...',
+    ' words':' palabras',
+    'Sheet':'Hoja',
+    'Page':'Página',
     'Type an English word first':'Escribe primero una palabra en inglés',
     'Already on the list':'Ya está en la lista',
     // ── 학습 카드·상태 표시 (2026-09 누락분) ──
@@ -10832,7 +10864,7 @@ function renderManualAdd(root, route) {
         </div>
 
         <div style="font-size:11px;color:var(--ink-45);line-height:1.75;margin-bottom:12px;">
-          ${TT('· <b>열 순서는 몰라도 됩니다.</b> 번호·품사 같은 열이 섞여 있어도 알아서 찾아요.<br>· 뜻을 적어두면 그대로 쓰고, 비워두면 채워드려요.<br>· 첫 줄 제목(단어/뜻/예문)은 있어도 되고 없어도 됩니다.<br>· 한 번에 200개까지 · .xlsx · .xls · .csv','· <b>Column order does not matter.</b> Extra columns like No. or part of speech are fine.<br>· If you write a meaning we keep it; leave it blank and we fill it in.<br>· A header row is optional.<br>· Up to 200 words at once · .xlsx · .xls · .csv')}
+          ${TT('· <b>열 순서는 몰라도 됩니다.</b> 번호·품사 같은 열이 섞여 있어도 알아서 찾아요.<br>· 뜻을 적어두면 그대로 쓰고, 비워두면 채워드려요.<br>· 첫 줄 제목(단어/뜻/예문)은 있어도 되고 없어도 됩니다.<br>· <b>탭이 여러 개면</b> 탭마다 페이지로 나눠 저장할 수 있어요 (Day 1 · Day 2 …).<br>· 한 탭에 200개까지 · .xlsx · .xls · .csv','· <b>Column order does not matter.</b> Extra columns like No. or part of speech are fine.<br>· If you write a meaning we keep it; leave it blank and we fill it in.<br>· A header row is optional.<br>· <b>Multiple sheets?</b> Each sheet can become its own page (Day 1 · Day 2 …).<br>· Up to 200 words per sheet · .xlsx · .xls · .csv')}
         </div>
 
         <input type="file" id="manual-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleWordFile(event)">
@@ -11151,62 +11183,52 @@ function detectColumns(rows){
   return { map, headerRow: false };
 }
 
-async function handleWordFile(ev){
-  const file = ev.target.files && ev.target.files[0];
-  ev.target.value = '';                   // 같은 파일을 다시 골라도 동작하게
-  if (!file) return;
-
-  let rows;
-  try {
-    toast(TT('파일을 읽는 중이에요…','Reading file…'));
-    const XLSX = await loadXlsx();
-    const buf = await file.arrayBuffer();
-    // CSV 도 xlsx 파서가 읽는다 — 한국 엑셀이 만드는 CP949 인코딩까지 알아서 처리해
-    // 따로 CSV 경로를 두지 않는다(그쪽이 한글 깨짐의 단골 원인이다).
-    const wb = XLSX.read(buf, { type: 'array' });
-    const sheet = wb.Sheets[wb.SheetNames[0]];
-    rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false, defval: '' });
-  } catch(e){
-    toast(TT('파일을 읽지 못했어요. 엑셀(.xlsx)이나 CSV 인지 확인해주세요','Could not read the file — please use .xlsx or .csv'));
-    return;
-  }
-  if (!Array.isArray(rows) || !rows.length) { toast(TT('파일이 비어 있어요','The file is empty')); return; }
-
-  const det = detectColumns(rows);
-  if (det.headerRow) rows = rows.slice(1);
+// 시트(탭) 하나에서 단어를 뽑는다.
+// 열 인식은 탭마다 따로 한다 — 'Day 1' 은 번호|단어|뜻, 'Day 2' 는 단어|뜻 처럼
+// 탭마다 양식이 다른 파일이 실제로 흔하다.
+function _extractSheetItems(rows, limit, skipSet){
+  let data = Array.isArray(rows) ? rows.slice() : [];
+  if (!data.length) return { items: [], skipped: 0, picked: '' };
+  const det = detectColumns(data);
+  if (det.headerRow) data = data.slice(1);
   const M = det.map;
-
-  const have = new Set((window._manualWords||[]).map(w => w.en.toLowerCase()));
+  const cell = (r, i) => (i === undefined ? '' : String((r && r[i]) ?? '').trim());
+  const have = new Set(skipSet || []);
   const items = [];
   let skipped = 0;
-  const cell = (r, i) => (i === undefined ? '' : String((r && r[i]) ?? '').trim());
-  for (const r of rows) {
+  for (const r of data) {
     const en = cell(r, M.en);
     if (!_looksLikeWord(en)) { if (en) skipped++; continue; }
     const k = en.toLowerCase();
-    if (have.has(k)) continue;            // 파일 안·목록과의 중복 모두 제거
+    if (have.has(k)) continue;            // 같은 탭 안의 중복만 정리
     have.add(k);
-    items.push({
-      en,
-      base: cell(r, M.ko),          // 뜻이 있으면 그대로 쓴다
-      sentence: cell(r, M.ex),      // 예문(선택)
-      ctx: '', level: 'B1', ipa: '',
-    });
-    if ((window._manualWords.length + items.length) >= MANUAL_MAX) break;
+    items.push({ en, base: cell(r, M.ko), sentence: cell(r, M.ex), ctx: '', level: 'B1', ipa: '' });
+    if (items.length >= limit) break;
   }
-  if (!items.length) {
-    toast(TT('가져올 영어 단어를 찾지 못했어요. 첫 번째 열에 단어를 넣어주세요','No English words found — put them in the first column'));
-    return;
-  }
+  // 자동으로 고른 열을 알려준다 — 잘못 골랐을 때 사용자가 바로 알아챌 수 있게
+  const col = (i) => i === undefined ? '' : String.fromCharCode(65 + i);
+  const picked = [
+    `${TT('단어','Word')} ${col(M.en)}`,
+    M.ko !== undefined ? `${TT('뜻','Meaning')} ${col(M.ko)}` : '',
+    M.ex !== undefined ? `${TT('예문','Example')} ${col(M.ex)}` : '',
+  ].filter(Boolean).join(' · ');
+  return { items, skipped, picked };
+}
+
+// 뽑은 단어를 '직접 입력' 목록에 붙이고 뜻을 사전에서 채운다
+async function _appendToManualList(items, picked, skipped){
+  const have = new Set((window._manualWords||[]).map(w => String(w.en).toLowerCase()));
+  const room = MANUAL_MAX - (window._manualWords||[]).length;
+  const add = items.filter(w => !have.has(String(w.en).toLowerCase())).slice(0, Math.max(0, room));
+  if (!add.length) { toast(TT('새로 가져올 단어가 없어요','Nothing new to import')); return; }
 
   // 뜻이 비어 있는 것만 사전에서 찾는다 (파일에 뜻이 있으면 그 사람 뜻을 존중)
-  const marked = items.filter(w => !w.base);   // 뜻이 빈 것만 사전 조회 대상
-  const need = marked.map(w => w.en);
+  const marked = add.filter(w => !w.base);
   marked.forEach(w => { w._looking = true; });
-  window._manualWords.push(...items);
+  window._manualWords.push(...add);
   _refreshManualList();
 
-  const found = await lookupWordsInCorpus(need);
+  const found = await lookupWordsInCorpus(marked.map(w => w.en));
   let hit = 0;
   for (const w of marked) {
     w._looking = false;
@@ -11221,17 +11243,217 @@ async function handleWordFile(ev){
     }
   }
   _refreshManualList();
-
-  // 자동으로 고른 열을 알려준다 — 잘못 골랐을 때 사용자가 바로 알아챌 수 있게.
-  const col = (i) => i === undefined ? '' : String.fromCharCode(65 + i);
-  const picked = [
-    `${TT('단어','Word')} ${col(M.en)}`,
-    M.ko !== undefined ? `${TT('뜻','Meaning')} ${col(M.ko)}` : '',
-    M.ex !== undefined ? `${TT('예문','Example')} ${col(M.ex)}` : '',
-  ].filter(Boolean).join(' · ');
-  toast(TX(`${items.length}개를 가져왔어요 (${picked}열) · 사전에서 ${hit}개 바로 채움` + (skipped?` · ${skipped}개 건너뜀`:''),
+  toast(TX(`${add.length}개를 가져왔어요 (${picked}열) · 사전에서 ${hit}개 바로 채움` + (skipped?` · ${skipped}개 건너뜀`:''),
            '{v0} imported ({v3}) · {v1} filled from dictionary' + (skipped?' · {v2} skipped':''),
-           {v0:(items.length), v1:(hit), v2:(skipped), v3:(picked)}), 5000);
+           {v0:(add.length), v1:(hit), v2:(skipped), v3:(picked)}), 5000);
+}
+
+// ── 탭(시트) = 페이지 ───────────────────────────────────────────
+// 학원 단어장은 'Day 1', 'Day 2' 처럼 탭을 나눠 쓰는 경우가 많다. 탭이 두 개
+// 이상이면 탭마다 페이지로 나눠 저장할지 물어본다(합치는 쪽도 남겨둔다).
+const SHEET_PAGE_MAX = 30;      // 한 파일에서 만들 페이지 수 상한
+const SHEET_TOTAL_MAX = 1000;   // 한 파일에서 가져올 총 단어 수 상한
+
+// 탭 이름에서 페이지 번호를 뽑는다: 'Day 1'·'1과'·'Unit 07' → 1, 1, 7
+// 숫자가 없거나 이미 쓴 번호면 비어 있는 다음 번호를 준다.
+function _sheetPageNum(name, used){
+  const m = String(name||'').match(/\d+/);
+  if (m) {
+    const n = String(parseInt(m[0], 10));
+    if (n !== 'NaN' && !used.has(n)) { used.add(n); return n; }
+  }
+  let k = 1;
+  while (used.has(String(k))) k++;
+  used.add(String(k));
+  return String(k);
+}
+
+async function handleWordFile(ev){
+  const file = ev.target.files && ev.target.files[0];
+  ev.target.value = '';                   // 같은 파일을 다시 골라도 동작하게
+  if (!file) return;
+
+  let sheets;
+  try {
+    toast(TT('파일을 읽는 중이에요…','Reading file…'));
+    const XLSX = await loadXlsx();
+    const buf = await file.arrayBuffer();
+    // CSV 도 xlsx 파서가 읽는다 — 한국 엑셀이 만드는 CP949 인코딩까지 알아서 처리해
+    // 따로 CSV 경로를 두지 않는다(그쪽이 한글 깨짐의 단골 원인이다).
+    const wb = XLSX.read(buf, { type: 'array' });
+    sheets = wb.SheetNames.map(nm => ({
+      name: String(nm || '').trim(),
+      rows: XLSX.utils.sheet_to_json(wb.Sheets[nm], { header: 1, blankrows: false, defval: '' })
+    })).filter(sh => Array.isArray(sh.rows) && sh.rows.length);
+  } catch(e){
+    toast(TT('파일을 읽지 못했어요. 엑셀(.xlsx)이나 CSV 인지 확인해주세요','Could not read the file — please use .xlsx or .csv'));
+    return;
+  }
+  if (!sheets.length) { toast(TT('파일이 비어 있어요','The file is empty')); return; }
+
+  // 탭마다 단어를 뽑는다
+  const parsed = [];
+  let total = 0;
+  for (const sh of sheets) {
+    if (parsed.length >= SHEET_PAGE_MAX || total >= SHEET_TOTAL_MAX) break;
+    const room = Math.min(MANUAL_MAX, SHEET_TOTAL_MAX - total);
+    if (room <= 0) break;
+    const got = _extractSheetItems(sh.rows, room, null);
+    if (!got.items.length) continue;      // 설명·표지 같은 빈 탭은 건너뛴다
+    total += got.items.length;
+    parsed.push({ name: sh.name || `${TT('탭','Sheet')} ${parsed.length + 1}`, ...got });
+  }
+  if (!parsed.length) {
+    toast(TT('가져올 영어 단어를 찾지 못했어요. 첫 번째 열에 단어를 넣어주세요','No English words found — put them in the first column'));
+    return;
+  }
+
+  // 쓸 만한 탭이 하나뿐이면 지금까지와 똑같이 목록에 붙인다
+  if (parsed.length === 1) {
+    await _appendToManualList(parsed[0].items, parsed[0].picked, parsed[0].skipped);
+    return;
+  }
+  openSheetSplitModal(parsed);
+}
+
+// 탭이 여러 개일 때 물어보는 창 — 어느 탭이 몇 페이지가 되는지 보여주고 고치게 한다
+function openSheetSplitModal(parsed){
+  if (document.getElementById('sheet-split-modal')) return;
+  const bookId = window._manualBookId;
+  const book = findBook(bookId);
+  const used = new Set();
+  const groups = [];
+
+  // 이미 손으로 넣어둔 단어가 있으면 같이 저장할 수 있게 맨 위에 한 줄 둔다
+  const typed = (window._manualWords || []).slice();
+  if (typed.length) {
+    const pg = (document.getElementById('manual-pg')?.value || '').trim();
+    if (pg) used.add(pg);
+    groups.push({ name: TT('직접 입력한 단어','Typed by hand'), items: typed, num: pg });
+  }
+  for (const sh of parsed) groups.push({ name: sh.name, items: sh.items, num: _sheetPageNum(sh.name, used) });
+  window._sheetGroups = groups;
+
+  const totalWords = groups.reduce((n,g) => n + g.items.length, 0);
+  const rows = groups.map((g, i) => `
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--ink-07);">
+      <div style="flex:1;min-width:0;text-align:left;">
+        <div style="font-size:13px;font-weight:700;color:var(--ink-100);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(g.name)}</div>
+        <div id="ssp-note-${i}" style="font-size:11px;color:var(--ink-45);margin-top:2px;">${g.items.length}${TT('단어',' words')}</div>
+      </div>
+      <span style="font-size:11px;color:var(--ink-45);white-space:nowrap;">${TT('페이지','Page')}</span>
+      <input class="ssp-num" data-i="${i}" value="${esc(g.num)}" oninput="_sspNotes()" inputmode="numeric"
+        style="width:60px;text-align:center;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:8px 6px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
+    </div>`).join('');
+
+  const ov = document.createElement('div');
+  ov.id = 'sheet-split-modal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:20px;max-width:360px;width:100%;max-height:82vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.2);text-align:center;">
+      <div style="font-size:30px;line-height:1;margin-bottom:8px;">🗂️</div>
+      <div style="font-family:var(--font-serif-ko);font-size:17px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">${TX('탭이 {v0}개 있어요','Found {v0} sheets',{v0:(parsed.length)})}</div>
+      <div style="font-size:12.5px;color:var(--ink-60);line-height:1.6;margin-bottom:6px;">${TT('탭마다 다른 페이지로 나눠 저장할 수 있어요.<br>페이지 번호는 고쳐도 됩니다.','Each sheet can become its own page.<br>You can change the page numbers.')}</div>
+      <div style="margin-bottom:10px;">${rows}</div>
+      <div style="font-size:11px;color:var(--ink-45);border-top:1px solid var(--ink-07);padding-top:10px;margin-bottom:12px;">${TX('모두 {v0}단어','{v0} words in total',{v0:(totalWords)})}</div>
+      <button id="ssp-go" class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;">${TT('탭별로 나눠 저장','Save as separate pages')}</button>
+      <button id="ssp-merge" class="btn btn-outline" style="width:100%;padding:12px;margin-top:8px;font-size:13.5px;">${TT('한 페이지로 합치기','Merge into one page')}</button>
+      <button id="ssp-cancel" style="width:100%;padding:12px;margin-top:6px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('취소','Cancel')}</button>
+    </div>`;
+  ov.onclick = (e) => { if (e.target === ov) closeSheetSplit(); };
+  document.body.appendChild(ov);
+  document.getElementById('ssp-go').onclick = () => importSheetsAsPages();
+  document.getElementById('ssp-merge').onclick = async () => {
+    closeSheetSplit();
+    const merged = [];
+    const seen = new Set((window._manualWords||[]).map(w => String(w.en).toLowerCase()));
+    for (const sh of parsed) for (const w of sh.items) {
+      const k = w.en.toLowerCase();
+      if (seen.has(k)) continue;          // 합칠 때는 탭을 넘나드는 중복도 정리한다
+      seen.add(k); merged.push(w);
+    }
+    await _appendToManualList(merged, parsed[0].picked, 0);
+  };
+  document.getElementById('ssp-cancel').onclick = () => closeSheetSplit();
+  _sspNotes();
+}
+
+function closeSheetSplit(){
+  window._sheetGroups = null;
+  document.getElementById('sheet-split-modal')?.remove();
+}
+
+// 입력한 번호가 이미 있는 페이지면 '기존 페이지에 추가' 라고 알려준다
+function _sspNotes(){
+  const groups = window._sheetGroups || [];
+  const book = findBook(window._manualBookId);
+  document.querySelectorAll('#sheet-split-modal .ssp-num').forEach(el => {
+    const i = +el.dataset.i;
+    const g = groups[i]; if (!g) return;
+    const note = document.getElementById('ssp-note-' + i);
+    if (!note) return;
+    const v = String(el.value || '').trim();
+    const dup = v && book && findPage(book, v);
+    note.innerHTML = `${g.items.length}${TT('단어',' words')}`
+      + (dup ? ` · <span style="color:#b06b00;font-weight:600;">${TT('기존 페이지에 추가','adds to existing page')}</span>` : '');
+  });
+}
+
+// 탭별로 페이지를 만들어 저장한다
+async function importSheetsAsPages(){
+  const groups = window._sheetGroups || [];
+  const bookId = window._manualBookId;
+  if (!groups.length || !bookId) { closeSheetSplit(); return; }
+
+  const nums = [];
+  for (const el of document.querySelectorAll('#sheet-split-modal .ssp-num')) {
+    const v = String(el.value || '').trim();
+    if (!v) { toast(TT('페이지 번호를 모두 채워주세요','Fill in every page number')); el.focus(); return; }
+    nums[+el.dataset.i] = v;
+  }
+  const btn = document.getElementById('ssp-go');
+  const stop = document.getElementById('ssp-merge');
+  const cancel = document.getElementById('ssp-cancel');
+  [btn, stop, cancel].forEach(b => { if (b) { b.disabled = true; b.style.opacity = '0.6'; b.style.pointerEvents = 'none'; } });
+
+  // 1) 뜻은 먼저 우리 사전에서 한 번에 찾는다 (탭 전체를 통틀어 한 번)
+  if (btn) btn.textContent = TT('사전에서 찾는 중…','Looking up…');
+  const blanks = groups.flatMap(g => g.items).filter(w => !w.base);
+  try {
+    const found = await lookupWordsInCorpus(blanks.map(w => w.en));
+    for (const w of blanks) {
+      const r = found.get(w.en.toLowerCase());
+      if (!r) continue;
+      w.base = r.base || '';
+      w.ipa = r.ipa || '';
+      if (!w.sentence) w.sentence = r.sentence || '';
+      if (r.level) w.level = r.level;
+      if (r.analysis) w.analysis = r.analysis;
+    }
+  } catch(e){}
+
+  // 2) 사전에 없던 단어만 AI 로 채우고, 페이지별로 저장한다
+  let savedPages = 0, savedWords = 0;
+  try {
+    for (let i = 0; i < groups.length; i++) {
+      const g = groups[i], pg = nums[i];
+      await _fillMeanings(g.items, bookId, (done, need) => {
+        if (btn) btn.textContent = `${TT('저장 중','Saving')} ${i+1}/${groups.length} · ${done}/${need}`;
+      });
+      if (btn) btn.textContent = `${TT('저장 중','Saving')} ${i+1}/${groups.length}`;
+      const n = await _savePageAndMerge(bookId, pg, g.items);
+      if (n) { savedPages++; savedWords += n; }
+    }
+  } catch(e){
+    console.error('[importSheetsAsPages]', e);
+    toast(TT('저장 중 문제가 생겼어요. 저장된 페이지까지는 남아 있어요','Something went wrong — the pages saved so far are kept'));
+  }
+
+  window._manualWords = [];
+  closeSheetSplit();
+  updateTotalWords();
+  toast(TX(`${savedPages}개 페이지에 ${savedWords}단어를 저장했어요`,'Saved {v1} words across {v0} pages',{v0:(savedPages), v1:(savedWords)}), 4000);
+  replace({ name: 'book', bookId });
 }
 
 // 여러 단어를 한 번에 조회한다. 엑셀로 100개를 올릴 때 100번 요청하면 느리고
@@ -11457,57 +11679,72 @@ Format example — the "base" value MUST be in {v0}:
   }
 }
 
-async function saveManualWords(bookId) {
-  if (isAssignedReadonly(bookId)) { toast(TT('과제 책은 편집할 수 없어요','Assigned books are read-only')); return; }
-  const pg = document.getElementById('manual-pg')?.value.trim();
-  if (!pg) { toast('페이지 번호를 입력해주세요'); return; }
-  if (!window._manualWords?.length) { toast('추가된 단어가 없어요'); return; }
-  const btn = document.getElementById('manual-save-btn');
-  if (btn) { btn.disabled = true; btn.textContent = t('searchingMeaning'); btn.style.opacity = '0.6'; }
-  toast('단어 뜻을 검색하는 중이에요...');
-  // 책의 카테고리에서 문맥 추출 (직접 입력 책에만 의미 있음)
+// 뜻이 비어 있는 단어만 AI 로 채운다 (사전에서 이미 찾은 단어는 건너뛴다 → 호출 0회)
+async function _fillMeanings(words, bookId, onProgress){
   const bookForCtx = findBook(bookId);
   const bookCat = bookForCtx?.category || 'general';
   let categoryContext = '';
   if (bookCat && bookCat !== 'general') {
-    if (bookCat.startsWith('custom:')) {
-      categoryContext = categoryToContext('custom', bookCat.slice(7));
-    } else {
-      categoryContext = categoryToContext(bookCat, '');
-    }
+    categoryContext = bookCat.startsWith('custom:')
+      ? categoryToContext('custom', bookCat.slice(7))
+      : categoryToContext(bookCat, '');
   }
   // 심화 분석은 모든 추가 단어에 생성(학생이 직접 추가한 단어도 심화 분석 보기 제공).
   // fetchWordMeaning 은 어차피 단어당 1회 호출이라 호출 수 증가 없음(프롬프트만 풍부해짐).
-  const examMode = true;
-  for (let i = 0; i < window._manualWords.length; i++) {
-    const w = window._manualWords[i];
-    if (!w.base) {
-      if (btn) btn.textContent = `${t('searchingMeaning')} (${i+1}/${window._manualWords.length})`;
-      const result = await fetchWordMeaning(w.en, categoryContext, examMode);
-      w.base = result.base; w.ipa = result.ipa; w.ctx = '';
-      if (result.level) w.level = result.level;
-      if (result.analysis) w.analysis = result.analysis;
-    }
+  const need = (words || []).filter(w => !w.base);
+  for (let i = 0; i < need.length; i++) {
+    const w = need[i];
+    if (onProgress) onProgress(i + 1, need.length);
+    const result = await fetchWordMeaning(w.en, categoryContext, true);
+    w.base = result.base; w.ipa = result.ipa; w.ctx = '';
+    if (result.level) w.level = result.level;
+    if (result.analysis) w.analysis = result.analysis;
   }
-  const book = findBook(bookId); if (!book) return;
-  const saveRes = await savePageWordsToDB(bookId, pg, window._manualWords);
+  return need.length;
+}
+
+// 한 페이지를 DB 에 저장하고 화면의 책 데이터에도 반영한다. 이번에 저장한 단어 수를 돌려준다.
+async function _savePageAndMerge(bookId, pg, wordList){
+  const book = findBook(bookId);
+  if (!book) return 0;
+  const saveRes = await savePageWordsToDB(bookId, pg, wordList);
   const pid = saveRes?.pageId || null;
-  let words = (saveRes?.savedRows||[]).map(_dbRowToWord);
+  const savedCount = (saveRes?.savedRows || []).length;
+  let words = (saveRes?.savedRows || []).map(_dbRowToWord);
   // 안전장치: 저장 후 DB에서 단어 다시 가져와 동기화
+  let synced = false;
   if (pid) {
     try {
       const fresh = await sbFetch(`/rest/v1/voca_words?page_id=eq.${pid}&order=created_at`);
       if (Array.isArray(fresh) && fresh.length >= words.length) {
         words = fresh.map(_dbRowToWord);
-        console.log('[saveManualWords] DB 동기화: ' + words.length + '개');
+        synced = true;
+        console.log('[savePage] DB 동기화: ' + words.length + '개');
       }
-    } catch(e) { console.warn('[saveManualWords] DB 동기화 실패', e); }
+    } catch(e) { console.warn('[savePage] DB 동기화 실패', e); }
   }
   const ex = findPage(book, pg);
-  if (ex) ex.words = [...ex.words, ...words];
+  // 동기화된 목록은 '그 페이지의 전부' 다 — 기존 단어에 덧붙이면 화면에서 두 번 보인다
+  if (ex) ex.words = synced ? words : [...ex.words, ...words];
   else { book.pages.push({ num: pg, _pid: pid, words }); book.pages.sort((a,b)=>pageSort(a,b)); }
-  toast(TX(`Page {v0} 저장 완료 ({v1}개)`,`Page {v0} saved ({v1} words)`,{v0:(pg),v1:(words.length)}));
-updateTotalWords();
+  return savedCount;
+}
+
+async function saveManualWords(bookId) {
+  if (isAssignedReadonly(bookId)) { toast(TT('과제 책은 편집할 수 없어요','Assigned books are read-only')); return; }
+  const pg = document.getElementById('manual-pg')?.value.trim();
+  if (!pg) { toast(TT('페이지 번호를 입력해주세요','Enter a page number')); return; }
+  if (!window._manualWords?.length) { toast(TT('추가된 단어가 없어요','No words added yet')); return; }
+  const btn = document.getElementById('manual-save-btn');
+  if (btn) { btn.disabled = true; btn.textContent = t('searchingMeaning'); btn.style.opacity = '0.6'; }
+  toast(TT('단어 뜻을 검색하는 중이에요...','Looking up meanings...'));
+
+  await _fillMeanings(window._manualWords, bookId, (done, need) => {
+    if (btn) btn.textContent = `${t('searchingMeaning')} (${done}/${need})`;
+  });
+  const n = await _savePageAndMerge(bookId, pg, window._manualWords);
+  toast(TX(`Page {v0} 저장 완료 ({v1}개)`,`Page {v0} saved ({v1} words)`,{v0:(pg),v1:(n)}));
+  updateTotalWords();
   window._manualWords = [];
   replace({ name: 'page-words', bookId, pageNum: pg });
 }
