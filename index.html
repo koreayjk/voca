@@ -10771,12 +10771,13 @@ function renderManualAdd(root, route) {
   window._manualWords = window._manualWords || [];
   window._manualBookId = route.bookId;
   root.innerHTML = `
-    <div class="scr" style="padding-bottom:120px;">
+    <div class="scr">
       <div class="topnav">
         <span class="topnav__back" onclick="window._manualWords=[];back()">←</span>
         <span class="topnav__title">${book?.title||''}</span>
         <span></span>
       </div>
+      <div class="scr-scroll" style="padding-bottom:120px;">
       <div class="h-display h-xl" style="margin-top:14px;">${t('manualTitle')}</div>
       <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:16px;">${t('manualDesc')}</div>
       <div class="label-xs">${t('manualPageLabel')}</div>
@@ -10791,6 +10792,7 @@ function renderManualAdd(root, route) {
         </div>
         <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">${t('dictHint')}</div>
       </div>
+      <div id="manual-word-list" style="margin-bottom:14px;">${renderManualWordList()}</div>
       <div style="background:var(--bg-card);border-radius:14px;padding:16px 14px;margin-bottom:12px;">
         <div class="label-xs" style="margin-bottom:6px;">📄 ${TT('엑셀·CSV로 한 번에 올리기','Import from Excel / CSV')}</div>
         <div style="font-size:12.5px;color:var(--ink-60);line-height:1.65;margin-bottom:12px;">
@@ -10829,7 +10831,7 @@ function renderManualAdd(root, route) {
           ${TT('예시 파일 내려받기','Download a sample file')}
         </button>
       </div>
-      <div id="manual-word-list">${renderManualWordList()}</div>
+      </div>
       <div class="btn-fixed">
         <button id="manual-save-btn" class="btn btn-solid" onclick="saveManualWords('${route.bookId}')" style="opacity:${window._manualWords.length>0?1:0.4};">
           ${window._manualWords.length>0?`${t('saveWithMeaning')} (${window._manualWords.length}${TT('개','')})`:t('addWordsFirst')}
@@ -11120,7 +11122,9 @@ function renderManualWordList() {
   if (!window._manualWords?.length) {
     return `<div style="text-align:center;padding:20px;font-size:12px;color:var(--ink-40);">${t('noManualWords')}<br>${TT('영어 단어를 입력하고 추가 버튼을 눌러주세요','Enter a word and click Add')}</div>`;
   }
-  return window._manualWords.map((w, i) => {
+  // 방금 추가한 단어가 입력칸 바로 밑에 보이도록 최신순으로 그린다.
+  // (저장 순서는 _manualWords 원본 그대로이고, 지우기 버튼도 원래 index 를 쓴다)
+  return window._manualWords.map((w, i) => ({ w, i })).reverse().map(({ w, i }) => {
     // 상태 3가지: 찾는 중 / 사전에서 찾음 / 저장할 때 검색 예정
     const icon = w._looking ? '🔎' : (w.base ? '✅' : '📝');
     const pos = _posLabel(w.analysis);
