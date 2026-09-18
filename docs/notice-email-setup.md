@@ -1,0 +1,52 @@
+# 공지 이메일 발송 설정
+
+관리자 페이지 → **공지 발송** 탭에서 앱 공지를 회원 메일함으로도 보내는 기능.
+
+## 1) SQL 실행 (Supabase → SQL Editor)
+
+```
+supabase/notice-email.sql
+```
+
+- `voca_notices` 에 `email_sent_at`, `email_sent_count` 추가
+- `notice_email_log` 생성 — 누구에게 보냈는지 기록해 **같은 공지가 두 번 가지 않게** 한다
+- `notice_email_targets()` — 수신거부자·이메일 없는 회원을 뺀 대상 목록
+
+## 2) 엣지 함수 배포
+
+```bash
+supabase functions deploy send-notice-email
+```
+
+## 3) 필요한 시크릿
+
+`send-limit-email` 과 같은 값을 쓴다. 이미 설정돼 있으면 추가 작업 없음.
+
+| 이름 | 설명 |
+|---|---|
+| `RESEND_API_KEY` | Resend API 키 |
+| `MAIL_FROM` | 예: `IM VOCA <noreply@imvoca.app>` |
+| `MAIL_POSTAL_ADDRESS` | **필수.** 없으면 발송을 거부한다 (미국 CAN-SPAM) |
+| `MAIL_REPLY_TO` | (선택) 기본 `admin@imvoca.app` |
+| `ADMIN_EMAIL` | (선택) 기본 `koreayjk@gmail.com` — 이 계정만 발송할 수 있다 |
+
+## 쓰는 법
+
+1. 공지를 **앱 공지함에 먼저 올린다** (그래야 공지 id 로 중복 발송이 막힌다)
+2. 공지 목록에서 **[메일 보내기]** → 제목·내용이 아래 메일 칸에 채워진다
+3. **받는 사람** 을 고른다 (전체 / 언어별 / Premium / 무료) — 인원이 바로 표시된다
+4. **[나에게 테스트 발송]** 으로 실물을 확인한다
+5. **[회원에게 실제 발송]** — 확인창 두 번을 지나면 200명씩 나눠 보낸다
+
+## 안전장치
+
+- 수신거부(`email_optout_at`)한 회원은 SQL 단계에서 빠진다
+- 같은 공지를 두 번 눌러도 이미 받은 사람에게는 가지 않는다
+- 모든 메일에 1클릭 수신거부 링크 + `List-Unsubscribe` 헤더 (지메일·야후 요구사항)
+- 우편 주소가 설정돼 있지 않으면 **아무것도 보내지 않는다**
+- 관리자 계정 외에는 함수를 호출할 수 없다 (토큰의 이메일을 확인)
+
+## 한도
+
+Resend 무료 요금제는 하루 100통 · 월 3,000통이다. 회원이 그보다 많아지면
+유료 요금제($20/월, 월 5만 통)로 올려야 중간에 끊기지 않는다.

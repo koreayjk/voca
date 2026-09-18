@@ -209,16 +209,36 @@
 
     <div class="form-card">
       <h3>📧 이메일로도 보내기 (선택)</h3>
-      <p class="desc">앱 공지함과 별개로, 이메일로도 알리고 싶을 때만 쓰세요. "회원 이메일 복사" 후 Gmail에서 숨은참조(BCC)로 붙여넣어 발송하세요.</p>
+      <p class="desc">회원 메일함으로 바로 보냅니다. 수신거부한 회원은 자동으로 빠지고, 메일 아래에 수신거부 링크와 회사 주소가 들어가요(미국 CAN-SPAM 필수). 같은 공지는 한 사람에게 두 번 가지 않아요.</p>
       <label>제목</label>
       <input type="text" id="notice-subject" placeholder="예: IM VOCA 새 기능 안내">
       <label>내용</label>
       <textarea id="notice-body" placeholder="공지 내용을 입력하세요..."></textarea>
+      <label>받는 사람</label>
+      <select id="notice-audience" onchange="updateAudienceCount()" style="width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:10px;font-size:14px;margin-bottom:6px;">
+        <option value="all">전체 회원</option>
+        <option value="ko">한국어 사용자</option>
+        <option value="en">English</option>
+        <option value="zh">中文</option>
+        <option value="es">Español</option>
+        <option value="premium">Premium 회원</option>
+        <option value="free">무료 회원</option>
+      </select>
+      <div class="hint" id="notice-audience-count" style="margin-bottom:10px;"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button onclick="copyEmails()">📋 회원 이메일 전체 복사</button>
-        <button class="sec" onclick="copyNotice()">📄 제목+내용 복사</button>
+        <button class="sec" onclick="fillNoticeFromForm()">↑ 위 공지 내용 가져오기</button>
+        <button class="sec" onclick="sendNoticeEmail(true)">✉️ 나에게 테스트 발송</button>
+        <button onclick="sendNoticeEmail(false)">📧 회원에게 실제 발송</button>
       </div>
       <div class="ok-msg" id="notice-msg"></div>
+      <div id="notice-progress" style="margin-top:10px;"></div>
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid #eee;">
+        <div class="hint" style="margin-bottom:8px;">직접 보내고 싶을 때 (Gmail 숨은참조 등)</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="sec" onclick="copyEmails()">📋 회원 이메일 전체 복사</button>
+          <button class="sec" onclick="copyNotice()">📄 제목+내용 복사</button>
+        </div>
+      </div>
       <div id="email-preview" style="margin-top:16px;"></div>
     </div>
   </div>
@@ -398,7 +418,7 @@ async function loadAll(){
 
 async function loadMembers(retry){
   try{
-    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source,native_lang,tz,locale,signup_tz&order=created_at.desc',{
+    const res = await fetch(SB_URL+'/rest/v1/members?select=id,name,email,role,plan,scan_count,total_words,stripe_customer_id,premium_until,billing_interval,created_at,last_seen_at,visit_count,org_id,org_role,org_status,signup_source,native_lang,tz,locale,signup_tz,email_optout_at&order=created_at.desc',{
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
     });
     // 탭을 오래 열어둔 사이 토큰 만료(401) → 갱신 후 한 번 재시도
@@ -414,6 +434,7 @@ async function loadMembers(retry){
     renderMembers();
     renderRecent();
     if(typeof renderOrgAdmins==='function') renderOrgAdmins();
+    if(typeof updateAudienceCount==='function') updateAudienceCount();
   }catch(e){
     if(!retry){ await new Promise(r=>setTimeout(r,600)); return loadMembers(true); }
     document.getElementById('member-table').innerHTML='<div class="empty">불러오기 실패</div>';
@@ -1128,6 +1149,8 @@ async function loadNoticeList(){
         <span style="color:#888;">${cat[n.category]||n.category}</span>
         <span style="flex:1;font-weight:600;">${n.title}</span>
         <span style="color:#aaa;font-size:11px;">${d}</span>
+        ${n.email_sent_at?`<span style="color:#27ae60;font-size:11px;white-space:nowrap;" title="${new Date(n.email_sent_at).toLocaleString('ko-KR')}">📧 ${n.email_sent_count||0}명</span>`:''}
+        <button class="sec" style="padding:4px 10px;font-size:12px;white-space:nowrap;" onclick="pickNoticeForEmail('${n.id}')">메일 보내기</button>
         <button class="sec" style="padding:4px 10px;font-size:12px;" onclick="deleteNotice('${n.id}')">삭제</button>
       </div>`;
     }).join('');
@@ -1143,6 +1166,127 @@ async function deleteNotice(id){
     });
     loadNoticeList();
   }catch(e){ alert('삭제 실패: '+e.message); }
+}
+
+// ── 공지 메일 발송 ─────────────────────────────────────────────
+// 실제 발송은 엣지 함수 send-notice-email 이 한다(Resend). 여기서는 대상 인원을
+// 보여주고, 200명씩 끊어 보내는 걸 끝까지 이어서 부른다.
+let _noticeCampaign = null;   // 이번에 보내는 공지 id (같은 공지 두 번 안 가게)
+let _noticeSending = false;
+
+// 지금 고른 조건으로 메일을 받을 수 있는 회원 (수신거부·이메일 없음 제외, 관리자 제외)
+function audienceMembers(){
+  const a = document.getElementById('notice-audience')?.value || 'all';
+  return _allMembers.filter(m=>{
+    if(!m.email || m.email_optout_at) return false;
+    if(m.email === ADMIN_EMAIL) return false;
+    const lang = (m.native_lang||'ko').slice(0,2);
+    if(a==='all') return true;
+    if(['ko','en','zh','es'].includes(a)) return lang===a;
+    if(a==='premium') return m.plan==='premium';
+    if(a==='free') return (m.plan||'free')!=='premium';
+    return true;
+  });
+}
+function updateAudienceCount(){
+  const el = document.getElementById('notice-audience-count');
+  if(!el) return;
+  const n = audienceMembers().length;
+  const optout = _allMembers.filter(m=>m.email_optout_at).length;
+  const noMail = _allMembers.filter(m=>!m.email).length;
+  el.innerHTML = `이 조건으로 <b>${n}명</b>에게 갑니다.`
+    + (optout?` <span style="color:#aaa;">· 수신거부 ${optout}명 제외</span>`:'')
+    + (noMail?` <span style="color:#aaa;">· 이메일 없음 ${noMail}명 제외</span>`:'');
+}
+
+// 위 '앱 공지함' 입력칸의 내용을 그대로 가져온다 (아직 안 올린 글도 가능)
+function fillNoticeFromForm(){
+  const t = document.getElementById('nx-title').value.trim();
+  const b = document.getElementById('nx-body').value.trim();
+  if(!t && !b){ toast('위 공지 입력칸이 비어 있어요'); return; }
+  document.getElementById('notice-subject').value = t;
+  document.getElementById('notice-body').value = b;
+  _noticeCampaign = null;   // 올린 공지가 아니므로 새 캠페인으로 취급
+  toast('가져왔어요');
+  updateAudienceCount();
+}
+
+// 이미 올린 공지를 골라 메일로 보낸다 (공지 id = 캠페인 id → 중복 발송 방지)
+async function pickNoticeForEmail(id){
+  try{
+    const res = await fetch(SB_URL+`/rest/v1/voca_notices?id=eq.${id}&select=id,title,body,email_sent_at,email_sent_count`,{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken}
+    });
+    const [n] = await res.json();
+    if(!n){ toast('공지를 찾지 못했어요'); return; }
+    document.getElementById('notice-subject').value = n.title||'';
+    document.getElementById('notice-body').value = n.body||'';
+    _noticeCampaign = n.id;
+    const msg = document.getElementById('notice-msg');
+    msg.style.color = '#555';
+    msg.textContent = n.email_sent_at
+      ? `이 공지는 ${new Date(n.email_sent_at).toLocaleString('ko-KR')}에 ${n.email_sent_count||0}명에게 보냈어요. 다시 눌러도 이미 받은 사람에겐 가지 않아요.`
+      : '이 공지를 메일로 보낼 준비가 됐어요. 먼저 테스트 발송을 해보세요.';
+    updateAudienceCount();
+    document.getElementById('notice-subject').scrollIntoView({behavior:'smooth', block:'center'});
+  }catch(e){ toast('불러오기 실패'); }
+}
+
+function _uuid(){
+  try{ return crypto.randomUUID(); }
+  catch(e){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);}); }
+}
+
+async function sendNoticeEmail(isTest){
+  if(_noticeSending) return;
+  const subject = document.getElementById('notice-subject').value.trim();
+  const body = document.getElementById('notice-body').value.trim();
+  const msg = document.getElementById('notice-msg');
+  const prog = document.getElementById('notice-progress');
+  if(!subject || !body){ msg.style.color='#c0392b'; msg.textContent='제목과 내용을 모두 입력해주세요.'; return; }
+
+  await refreshToken();
+  const call = (payload)=> fetch(SB_URL+'/functions/v1/send-notice-email',{
+    method:'POST',
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authToken,'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(async r=>({ok:r.ok, data:await r.json().catch(()=>({}))}));
+
+  if(isTest){
+    msg.style.color='#555'; msg.textContent='테스트 발송 중…';
+    const {ok,data} = await call({ test_to: ADMIN_EMAIL, subject, body, lang:'ko' });
+    if(ok){ msg.style.color='#27ae60'; msg.textContent=`✅ ${ADMIN_EMAIL} 로 테스트 메일을 보냈어요. 실제 회원에게는 가지 않았어요.`; }
+    else { msg.style.color='#c0392b'; msg.textContent='실패: '+(data.error||data.detail||'알 수 없는 오류'); }
+    return;
+  }
+
+  const n = audienceMembers().length;
+  if(n===0){ msg.style.color='#c0392b'; msg.textContent='보낼 대상이 없어요.'; return; }
+  const aud = document.getElementById('notice-audience').selectedOptions[0].textContent;
+  if(!confirm(`${aud} ${n}명에게 실제로 메일을 보냅니다.\n\n제목: ${subject}\n\n보낸 메일은 되돌릴 수 없어요. 계속할까요?`)) return;
+  if(!confirm('마지막 확인이에요. 테스트 발송으로 내용을 확인하셨나요?')) return;
+
+  const campaign = _noticeCampaign || _uuid();
+  const noticeId = _noticeCampaign || '';
+  _noticeSending = true;
+  let total = 0, guard = 0;
+  msg.style.color='#555'; msg.textContent='발송 중…';
+  try{
+    // 한 번에 200명씩. 남아 있으면 0이 될 때까지 이어서 부른다.
+    while(guard++ < 60){
+      const {ok,data} = await call({ campaign, notice_id: noticeId, subject, body,
+                                     audience: document.getElementById('notice-audience').value });
+      if(!ok){ msg.style.color='#c0392b'; msg.textContent='실패: '+(data.error||'알 수 없는 오류')+(data.detail?' — '+data.detail:''); break; }
+      total += (data.sent||0);
+      prog.innerHTML = `<div style="font-size:13px;color:#555;">📨 ${total}명 발송 완료${data.remaining?' · 계속 보내는 중…':''}</div>`;
+      if((data.failed||[]).length) console.warn('[공지 메일 실패]', data.failed);
+      if(!data.remaining || !data.sent) break;
+      await refreshToken();
+    }
+    if(total){ msg.style.color='#27ae60'; msg.textContent=`✅ ${total}명에게 보냈어요.`; }
+    else if(msg.style.color!=='rgb(192, 57, 43)'){ msg.style.color='#555'; msg.textContent='보낼 대상이 없었어요 (이미 받았거나 수신거부).'; }
+    loadNoticeList();
+  } finally { _noticeSending = false; }
 }
 
 function copyEmails(){
