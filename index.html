@@ -1278,6 +1278,10 @@ function TX(ko,en,vars){ let s; if(userNativeLang==='ko'){ s=ko; } else { const 
 // 사전에 없는 문장은 영어로 폴백되므로, 언어별로 부분 번역 상태여도 안전하게 동작한다.
 const UI_XL = {
   zh: {
+    // ── 단어 직접 입력: 추천 (2026-09) ──
+    'In the dictionary · tap to add':'词典里有的单词 · 点击直接添加',
+    'Type an English word first':'请先输入英语单词',
+    'Already on the list':'已经添加过了',
     // ── 학습 카드·상태 표시 (2026-09 누락분) ──
     '🔊 Auto ON':'🔊 朗读 开','🔇 Auto':'🔇 朗读',
     'Round {v0} · {v1} ✕ so far':'第 {v0} 轮 · 已错 {v1} 次',
@@ -1666,6 +1670,10 @@ const UI_XL = {
     'Day 2+ unlocks with Premium or an academy plan. Day 1 is free!':'{v0} 起需要高级版或机构套餐解锁。<br>Day 1 可以免费体验！'
   },
   es: {
+    // ── 단어 직접 입력: 추천 (2026-09) ──
+    'In the dictionary · tap to add':'Palabras del diccionario · toca para añadir',
+    'Type an English word first':'Escribe primero una palabra en inglés',
+    'Already on the list':'Ya está en la lista',
     // ── 학습 카드·상태 표시 (2026-09 누락분) ──
     '🔊 Auto ON':'🔊 Auto ON','🔇 Auto':'🔇 Auto',
     'Round {v0} · {v1} ✕ so far':'Ronda {v0} · {v1} ✕ hasta ahora',
@@ -10785,11 +10793,15 @@ function renderManualAdd(root, route) {
       <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
         <div class="label-xs" style="margin-bottom:8px;">${t('wordInputLabel')} <span style="color:var(--ink-40);font-weight:400;">${TT('Enter로 계속 추가','Press Enter to keep adding')}</span></div>
         <div style="display:flex;gap:8px;">
-          <input type="text" id="manual-en" placeholder="${t('wordPh')}"
-            style="flex:1;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();addManualWord();}">
+          <div style="position:relative;flex:1;min-width:0;">
+            <input type="text" id="manual-en" placeholder="${t('wordPh')}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+              style="width:100%;box-sizing:border-box;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--ink-100);outline:none;"
+              oninput="manualSuggestInput()" onblur="setTimeout(()=>_setManualGhost(''),150)" onkeydown="manualKeydown(event)">
+            <div id="manual-ghost" aria-hidden="true" style="position:absolute;left:0;top:0;right:0;bottom:0;padding:11px 15px;font-family:var(--font-body);font-size:13px;line-height:1.4;white-space:pre;overflow:hidden;pointer-events:none;"></div>
+          </div>
           <button onclick="addManualWord()" style="padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;">${TT('추가','Add')}</button>
         </div>
+        <div id="manual-sugg" style="display:none;"></div>
         <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">${t('dictHint')}</div>
       </div>
       <div id="manual-word-list" style="margin-bottom:14px;">${renderManualWordList()}</div>
@@ -10869,6 +10881,144 @@ async function lookupWordInCorpus(en){
   _corpusCache.set(q, best);
   return best;
 }
+// ── 타이핑 중 단어 추천 ─────────────────────────────────────────
+// 공식 단어장 1만 5천여 단어가 이미 서버에 있다. 두 글자만 쳐도
+//   ① 이어질 단어를 입력칸 안에 옅은 색으로 미리 보여주고 (→ 또는 Tab 으로 완성)
+//   ② 아래에 뜻까지 붙은 후보를 띄운다 (누르면 바로 추가 — 폰에서는 이게 더 빠르다)
+// 철자가 헷갈려도 고를 수 있고, 고른 단어는 이미 사전에 있으니 저장도 즉시 끝난다.
+const _prefixCache = new Map();   // 접두사 → 후보 배열 (같은 접두사를 두 번 묻지 않게)
+let _manualSuggTimer = null;
+let _manualSuggSeq = 0;           // 늦게 도착한 응답이 최신 결과를 덮어쓰지 않게
+let _manualGhost = '';            // 지금 떠 있는 완성 후보 (단어 전체)
+const _SUGG_MIN = 2;              // 두 글자부터
+const _SUGG_SHOW = 6;             // 후보는 최대 6개
+// 추천에는 단어와 뜻만 받는다. 발음기호·예문·심화분석까지 받으면 한 번에 50KB가
+// 넘는데, 그건 실제로 '추가' 를 누른 단어 하나만 뒤에서 가져오면 되는 정보다.
+// 가볍게 받는 대신 한 번에 많이 받아둔다 → 뒷글자를 더 쳐도 대개 서버에 다시 묻지 않는다.
+const _SUGG_FETCH = 300;
+
+function _suggScore(r){ return (r.base?1:0); }
+
+async function fetchPrefixWords(q){
+  if (_prefixCache.has(q)) return _prefixCache.get(q);
+  // 더 짧은 접두사의 결과가 '잘리지 않은 전부' 였다면 거기서 걸러 쓰면 된다 → 네트워크 0회
+  for (let n = q.length - 1; n >= _SUGG_MIN; n--) {
+    const shorter = _prefixCache.get(q.slice(0, n));
+    if (shorter && shorter._complete) {
+      const sub = shorter.filter(r => String(r.en||'').toLowerCase().startsWith(q));
+      sub._complete = true;
+      _prefixCache.set(q, sub);
+      return sub;
+    }
+  }
+  let out = [];
+  try {
+    const rows = await sbFetch(`/rest/v1/voca_words?en=ilike.${encodeURIComponent(q)}*&select=en,base&limit=${_SUGG_FETCH}`);
+    // 같은 단어가 여러 공식책에 있다 → 뜻·예문이 가장 잘 갖춰진 행 하나만 남긴다
+    const byWord = new Map();
+    for (const r of (Array.isArray(rows) ? rows : [])) {
+      const k = String(r.en||'').trim().toLowerCase();
+      if (!k) continue;
+      const prev = byWord.get(k);
+      if (!prev || _suggScore(r) > _suggScore(prev)) byWord.set(k, r);
+    }
+    out = [...byWord.values()].sort((a,b) => a.en.length - b.en.length || a.en.localeCompare(b.en));
+    out._complete = (Array.isArray(rows) ? rows.length : 0) < _SUGG_FETCH;
+  } catch(e) { out = []; out._complete = false; }
+  _prefixCache.set(q, out);
+  return out;
+}
+
+// 입력칸 안쪽에 겹쳐 그리는 '옅은 글씨' — 친 글자는 투명하게 두고 뒷부분만 보여준다
+function _setManualGhost(word){
+  _manualGhost = word || '';
+  const el = document.getElementById('manual-ghost');
+  const inp = document.getElementById('manual-en');
+  if (!el) return;
+  const typed = inp ? inp.value : '';
+  const ok = _manualGhost && typed && typed === typed.trim()
+             && _manualGhost.toLowerCase().startsWith(typed.toLowerCase())
+             && _manualGhost.length > typed.length;
+  if (!ok) { el.innerHTML = ''; _manualGhost = ''; return; }
+  el.innerHTML = `<span style="visibility:hidden;">${esc(typed)}</span><span style="color:var(--ink-40);">${esc(_manualGhost.slice(typed.length))}</span>`;
+}
+
+function _renderManualSugg(rows){
+  const box = document.getElementById('manual-sugg');
+  if (!box) return;
+  if (!rows || !rows.length) { box.innerHTML = ''; box.style.display = 'none'; return; }
+  const ko = (typeof userNativeLang !== 'undefined' && userNativeLang === 'ko');
+  box.style.display = 'block';
+  box.innerHTML =
+    `<div style="font-size:10px;color:var(--ink-40);margin:8px 0 6px;">${TT('사전에 있는 단어 · 누르면 바로 추가','In the dictionary · tap to add')}</div>` +
+    rows.map(r => {
+      const mean = (ko && r.base) ? String(r.base).split(/[,;·]/)[0].trim().slice(0, 12) : '';
+      return `<button onclick="pickManualSugg('${jsq(r.en)}')" style="display:inline-flex;align-items:baseline;gap:5px;max-width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:99px;padding:6px 11px;margin:0 6px 6px 0;font-family:var(--font-body);font-size:12.5px;color:var(--ink-100);cursor:pointer;">`
+        + `<span style="font-weight:700;">${esc(r.en)}</span>`
+        + (mean ? `<span style="font-size:11px;color:var(--ink-45);">${esc(mean)}</span>` : '')
+        + `</button>`;
+    }).join('');
+}
+
+function manualSuggestInput(){
+  const inp = document.getElementById('manual-en');
+  if (!inp) return;
+  _setManualGhost('');
+  if (_manualSuggTimer) clearTimeout(_manualSuggTimer);
+  const q = inp.value.trim().toLowerCase();
+  if (q.length < _SUGG_MIN || !/^[a-z][a-z'-]*$/.test(q)) { _manualSuggSeq++; _renderManualSugg([]); return; }
+  const seq = ++_manualSuggSeq;
+  _manualSuggTimer = setTimeout(async () => {
+    let rows = [];
+    try { rows = await fetchPrefixWords(q); } catch(e) { rows = []; }
+    if (seq !== _manualSuggSeq) return;                       // 그 사이 더 쳤다
+    const cur = document.getElementById('manual-en');
+    if (!cur || cur.value.trim().toLowerCase() !== q) return; // 화면이 바뀌었거나 글자가 달라졌다
+    // 이미 목록에 넣은 단어는 다시 권하지 않는다
+    const fresh = rows.filter(r => !(window._manualWords||[]).some(w => String(w.en).toLowerCase() === String(r.en).toLowerCase()));
+    _renderManualSugg(fresh.slice(0, _SUGG_SHOW));
+    // 친 글자 그대로가 사전에 있으면 완성 힌트를 띄우지 않는다 (goo → good 으로 끌려가지 않게)
+    const exact = fresh.some(r => String(r.en).trim().toLowerCase() === q);
+    const ghost = exact ? null : fresh.find(r => String(r.en).toLowerCase().startsWith(q) && r.en.length > q.length);
+    _setManualGhost(ghost ? ghost.en : '');
+  }, 180);
+}
+
+// 옅게 떠 있는 단어를 입력칸에 확정 (→ / Tab)
+function acceptManualGhost(){
+  const inp = document.getElementById('manual-en');
+  if (!inp || !_manualGhost) return false;
+  inp.value = _manualGhost;
+  _setManualGhost('');
+  _renderManualSugg([]);
+  _manualSuggSeq++;
+  inp.focus();
+  return true;
+}
+
+function manualKeydown(ev){
+  const k = ev.key;
+  if (k === 'Enter') { ev.preventDefault(); _setManualGhost(''); _renderManualSugg([]); addManualWord(); return; }
+  if (k === 'Tab' && _manualGhost) { ev.preventDefault(); acceptManualGhost(); return; }
+  if (k === 'ArrowRight' && _manualGhost) {
+    const end = ev.target.selectionStart === ev.target.value.length && ev.target.selectionStart === ev.target.selectionEnd;
+    if (end) { ev.preventDefault(); acceptManualGhost(); }
+    return;
+  }
+  if (k === 'Escape') { _setManualGhost(''); _renderManualSugg([]); _manualSuggSeq++; }
+}
+
+// 후보를 누르면 고민 없이 바로 목록에 넣는다 (뜻까지 보고 누르는 것이라 확인 단계가 필요 없다)
+function pickManualSugg(en){
+  const inp = document.getElementById('manual-en');
+  if (!inp) return;
+  inp.value = en;
+  _setManualGhost('');
+  _renderManualSugg([]);
+  _manualSuggSeq++;
+  addManualWord();
+}
+
 // 예시 파일 내려받기 — '어떻게 만들면 되는지' 를 말로 설명하는 것보다 빠르다.
 // 받아서 단어만 바꿔 다시 올리면 된다.
 function downloadWordTemplate(){
@@ -11154,11 +11304,13 @@ function renderManualWordList() {
 function addManualWord() {
   const enInput = document.getElementById('manual-en');
   const en = enInput?.value.trim();
-  if (!en) { toast('영어 단어를 입력해주세요'); return; }
-  if (window._manualWords.find(w => w.en.toLowerCase() === en.toLowerCase())) { toast('이미 추가된 단어예요'); enInput.value=''; enInput.focus(); return; }
+  if (!en) { toast(TT('영어 단어를 입력해주세요','Type an English word first')); return; }
+  if (window._manualWords.find(w => w.en.toLowerCase() === en.toLowerCase())) { toast(TT('이미 추가된 단어예요','Already on the list')); enInput.value=''; enInput.focus(); return; }
   const item = { en, base: '', ctx: '', level: 'B1', ipa: '', _looking: true };
   window._manualWords.push(item);
   enInput.value = ''; enInput.focus();
+  _manualSuggSeq++;                       // 날아오던 추천 응답 무효화
+  if (typeof _setManualGhost === 'function') { _setManualGhost(''); _renderManualSugg([]); }
   _refreshManualList();
 
   // 입력을 막지 않고 뒤에서 찾는다 — 사용자는 계속 다음 단어를 칠 수 있다
