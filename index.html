@@ -1044,7 +1044,7 @@ const UI_TEXT = {
     tapToStart:'탭해서 바로 시작',
     manualTitle:'단어 직접 입력',manualDesc:'단어만 입력하면 뜻을 자동으로 찾아드려요',
     manualPageLabel:'페이지 번호',wordInputLabel:'단어 입력',wordInputOpt:'(영어/스페인어 등)',
-    wordPh:'영어 단어',dictHint:'뜻은 인터넷 사전에서 자동으로 찾아드려요',
+    wordPh:'영어 단어',dictHint:'뜻·발음·품사·예문을 자동으로 채워드려요',
     pendingMeaning:'뜻 자동 검색 예정',noManualWords:'아직 추가된 단어가 없어요',
     saveWithMeaning:'뜻 검색 후 저장',addWordsFirst:'단어를 추가해주세요',
     searchingMeaning:'뜻 검색 중...',noMeaning:'뜻을 찾지 못했어요',
@@ -1111,7 +1111,7 @@ const UI_TEXT = {
     tapToStart:'Tap to start',
     manualTitle:'Add Words Manually',manualDesc:"Enter a word and we'll find the meaning automatically",
     manualPageLabel:'Page Number',wordInputLabel:'Word Input',wordInputOpt:'(English/Spanish etc.)',
-    wordPh:'English word',dictHint:'Meaning found automatically from online dictionary',
+    wordPh:'English word',dictHint:'Meaning, pronunciation and examples fill in automatically',
     pendingMeaning:'Meaning will be searched',noManualWords:'No words added yet',
     saveWithMeaning:'Save with Meaning',addWordsFirst:'Add words first',
     searchingMeaning:'Searching...',noMeaning:'Meaning not found',
@@ -1178,7 +1178,7 @@ const UI_TEXT = {
     tapToStart:'点击开始',
     manualTitle:'手动添加单词',manualDesc:'输入单词，会自动查找释义',
     manualPageLabel:'页码',wordInputLabel:'输入单词',wordInputOpt:'（英语/西班牙语等）',
-    wordPh:'英语单词',dictHint:'释义会自动从在线词典查找',
+    wordPh:'英语单词',dictHint:'释义·发音·例句会自动填入',
     pendingMeaning:'释义待查询',noManualWords:'还没有添加单词',
     saveWithMeaning:'连同释义一起保存',addWordsFirst:'请先添加单词',
     searchingMeaning:'查询中...',noMeaning:'未找到释义',
@@ -1245,7 +1245,7 @@ const UI_TEXT = {
     tapToStart:'Toca para empezar',
     manualTitle:'Añadir palabras a mano',manualDesc:'Escribe la palabra y buscamos el significado',
     manualPageLabel:'Número de página',wordInputLabel:'Palabra',wordInputOpt:'(inglés, español, etc.)',
-    wordPh:'Palabra en inglés',dictHint:'El significado se busca automáticamente en el diccionario',
+    wordPh:'Palabra en inglés',dictHint:'El significado, la pronunciación y los ejemplos se completan solos',
     pendingMeaning:'Significado pendiente',noManualWords:'Aún no hay palabras añadidas',
     saveWithMeaning:'Guardar con significado',addWordsFirst:'Añade palabras primero',
     searchingMeaning:'Buscando...',noMeaning:'Significado no encontrado',
@@ -10782,7 +10782,7 @@ function renderManualAdd(root, route) {
       <div class="label-xs">${t('manualPageLabel')}</div>
       <input type="text" id="manual-pg" placeholder="${t('pageNumPh')}" value="${route.pageNum||''}" style="width:100%;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:11px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;margin-top:6px;margin-bottom:16px;">
       <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:8px;">${t('wordInputLabel')} <span style="color:var(--ink-40);font-weight:400;">(Enter로 계속 추가)</span></div>
+        <div class="label-xs" style="margin-bottom:8px;">${t('wordInputLabel')} <span style="color:var(--ink-40);font-weight:400;">${TT('Enter로 계속 추가','Press Enter to keep adding')}</span></div>
         <div style="display:flex;gap:8px;">
           <input type="text" id="manual-en" placeholder="${t('wordPh')}"
             style="flex:1;background:var(--bg-input);border:1px solid rgba(0,0,0,0.07);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;"
@@ -10791,15 +10791,43 @@ function renderManualAdd(root, route) {
         </div>
         <div style="font-size:10px;color:var(--ink-40);margin-top:6px;">${t('dictHint')}</div>
       </div>
-      <div style="background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:12px;">
-        <div class="label-xs" style="margin-bottom:8px;">${TT('엑셀·CSV로 한 번에 올리기','Import from Excel / CSV')}</div>
-        <input type="file" id="manual-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleWordFile(event)">
-        <button onclick="document.getElementById('manual-file').click()" class="btn btn-outline" style="width:100%;padding:11px;font-size:13.5px;">
-          📄 ${TT('파일 선택','Choose file')}
-        </button>
-        <div style="font-size:10.5px;color:var(--ink-40);margin-top:7px;line-height:1.6;">
-          ${TT('첫 번째 열에 <b>영어 단어</b>만 있으면 됩니다. 뜻은 자동으로 채워져요.<br>2번째 열에 뜻, 3번째 열에 예문을 넣으면 그대로 사용합니다.','Put <b>English words</b> in the first column — meanings fill in automatically.<br>Column 2 = meaning, column 3 = example (optional).')}
+      <div style="background:var(--bg-card);border-radius:14px;padding:16px 14px;margin-bottom:12px;">
+        <div class="label-xs" style="margin-bottom:6px;">📄 ${TT('엑셀·CSV로 한 번에 올리기','Import from Excel / CSV')}</div>
+        <div style="font-size:12.5px;color:var(--ink-60);line-height:1.65;margin-bottom:12px;">
+          ${TT('<b style="color:var(--ink-100);">영어 단어만</b> 적혀 있으면 충분해요. 뜻·발음·품사·예문은 자동으로 채워드립니다.','<b style="color:var(--ink-100);">Just the English words</b> is enough — meaning, pronunciation, part of speech and examples fill in automatically.')}
         </div>
+
+        <div style="border:1px solid var(--ink-07);border-radius:10px;overflow:hidden;margin-bottom:10px;">
+          <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+            <tr style="background:var(--bg-input);color:var(--ink-60);">
+              <td style="padding:6px 9px;border-right:1px solid var(--ink-07);font-weight:700;">${TT('단어','Word')}</td>
+              <td style="padding:6px 9px;border-right:1px solid var(--ink-07);">${TT('뜻 (선택)','Meaning (optional)')}</td>
+              <td style="padding:6px 9px;">${TT('예문 (선택)','Example (optional)')}</td>
+            </tr>
+            <tr style="color:var(--ink-100);">
+              <td style="padding:6px 9px;border-top:1px solid var(--ink-07);border-right:1px solid var(--ink-07);">neat</td>
+              <td style="padding:6px 9px;border-top:1px solid var(--ink-07);border-right:1px solid var(--ink-07);color:var(--ink-40);">${TT('비워두면 자동','auto')}</td>
+              <td style="padding:6px 9px;border-top:1px solid var(--ink-07);color:var(--ink-40);">${TT('비워두면 자동','auto')}</td>
+            </tr>
+            <tr style="color:var(--ink-100);">
+              <td style="padding:6px 9px;border-top:1px solid var(--ink-07);border-right:1px solid var(--ink-07);">beneath</td>
+              <td style="padding:6px 9px;border-top:1px solid var(--ink-07);border-right:1px solid var(--ink-07);">~${TT('의 아래에','below')}</td>
+              <td style="padding:6px 9px;border-top:1px solid var(--ink-07);"></td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="font-size:11px;color:var(--ink-45);line-height:1.75;margin-bottom:12px;">
+          ${TT('· <b>열 순서는 몰라도 됩니다.</b> 번호·품사 같은 열이 섞여 있어도 알아서 찾아요.<br>· 뜻을 적어두면 그대로 쓰고, 비워두면 채워드려요.<br>· 첫 줄 제목(단어/뜻/예문)은 있어도 되고 없어도 됩니다.<br>· 한 번에 200개까지 · .xlsx · .xls · .csv','· <b>Column order does not matter.</b> Extra columns like No. or part of speech are fine.<br>· If you write a meaning we keep it; leave it blank and we fill it in.<br>· A header row is optional.<br>· Up to 200 words at once · .xlsx · .xls · .csv')}
+        </div>
+
+        <input type="file" id="manual-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleWordFile(event)">
+        <button onclick="document.getElementById('manual-file').click()" class="btn btn-solid" style="width:100%;padding:12px;font-size:13.5px;">
+          ${TT('파일 선택','Choose file')}
+        </button>
+        <button onclick="downloadWordTemplate()" style="width:100%;padding:9px;margin-top:6px;background:none;border:none;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);text-decoration:underline;">
+          ${TT('예시 파일 내려받기','Download a sample file')}
+        </button>
       </div>
       <div id="manual-word-list">${renderManualWordList()}</div>
       <div class="btn-fixed">
@@ -10839,6 +10867,26 @@ async function lookupWordInCorpus(en){
   _corpusCache.set(q, best);
   return best;
 }
+// 예시 파일 내려받기 — '어떻게 만들면 되는지' 를 말로 설명하는 것보다 빠르다.
+// 받아서 단어만 바꿔 다시 올리면 된다.
+function downloadWordTemplate(){
+  const rows = [
+    [TT('단어','Word'), TT('뜻 (선택)','Meaning (optional)'), TT('예문 (선택)','Example (optional)')],
+    ['neat', '', ''],
+    ['beneath', '', ''],
+    ['fragile', '', ''],
+  ];
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  // ⚠️ BOM 이 없으면 한국 엑셀이 CP949 로 읽어 한글이 깨진다. 가장 흔한 사고라 꼭 붙인다.
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'imvoca-words-sample.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  toast(TT('예시 파일을 받았어요. 단어만 바꿔서 올려보세요','Sample downloaded — swap in your own words'));
+}
+
 // ── 엑셀·CSV 로 단어 한 번에 올리기 ──────────────────────────────
 // 학원에서는 단어 목록을 이미 엑셀로 갖고 있다. 50개를 한 줄씩 치게 하는 대신
 // 파일을 받아 '직접 입력' 목록을 채운다 — 그 뒤 흐름(사전 조회·카드·저장)은
