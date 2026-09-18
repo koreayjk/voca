@@ -10865,19 +10865,90 @@ function loadXlsx(){
   return _xlsxLoading;
 }
 
-// 첫 줄이 제목줄이면 건너뛴다 ('단어 / 뜻 / 예문' 같은 머리글)
-const _HEADERish = /^(영어|단어|영단어|word|words|en|english|뜻|의미|해석|meaning|korean|ko|예문|example|sentence)$/i;
-function _looksLikeHeader(row){
-  const cells = row.filter(c => String(c||'').trim());
-  if (!cells.length) return false;
-  return cells.every(c => _HEADERish.test(String(c).trim()));
+// ── 열 자동 인식 ────────────────────────────────────────────────
+// 사람마다 엑셀 양식이 다르다. '번호|단어|뜻', '뜻|단어', '단어|품사|뜻|예문' …
+// 위치를 고정하면 대부분 깨지므로 두 단계로 알아낸다:
+//   1) 머리글 이름으로 (순서 무관)
+//   2) 머리글이 없으면 내용을 보고 (영어 단어 열 / 한글 뜻 열 / 영어 문장 열)
+const _HDR = {
+  en:  /^(영어|영어단어|단어|영단어|word|words|en|english|vocab\w*|어휘|스펠링|spelling)$/i,
+  ko:  /^(뜻|의미|해석|뜻풀이|한글|meaning|korean|ko|translation|definition|정의)$/i,
+  ex:  /^(예문|예시|문장|용례|example|examples|sentence|usage)$/i,
+};
+function _headerMap(row){
+  const map = {};
+  row.forEach((c, i) => {
+    const t = String(c||'').trim();
+    if (!t) return;
+    for (const k of ['en','ko','ex']) if (map[k] === undefined && _HDR[k].test(t)) map[k] = i;
+  });
+  // '단어' 열을 못 찾으면 머리글로 보지 않는다 (그냥 첫 데이터 줄일 수 있다)
+  return map.en !== undefined ? map : null;
 }
 
-// 영어 단어처럼 생겼는가 (숫자만, 한글, 기호 덩어리 배제)
+const _HAN = /[가-힣]/;
+// 어휘 항목처럼 생겼는가 — 영어이고 짧다(한 낱말~숙어)
 function _looksLikeWord(v){
   const t = String(v||'').trim();
   if (!t || t.length > 40) return false;
-  return /^[A-Za-z][A-Za-z\-' .]*$/.test(t);
+  if (!/^[A-Za-z][A-Za-z\-' .]*$/.test(t)) return false;
+  return t.split(/\s+/).length <= 3;
+}
+// 예문처럼 생겼는가 — 영어인데 길다
+function _looksLikeSentence(v){
+  const t = String(v||'').trim();
+  if (t.length < 12 || !/[A-Za-z]/.test(t)) return false;
+  return t.split(/\s+/).length >= 4;
+}
+function _looksLikeKo(v){ return _HAN.test(String(v||'')); }
+
+// 표본 줄들을 보고 어느 열이 무엇인지 고른다
+function detectColumns(rows){
+  if (!rows.length) return { map:{en:0}, headerRow:false };
+  const hm = _headerMap(rows[0]);
+  if (hm) return { map: hm, headerRow: true };
+
+  const sample = rows.slice(0, 30);
+  const width = Math.max(...sample.map(r => (r||[]).length), 1);
+  // 품사 열('adj','v','명사'…)도 짧은 낱말이라 단어 열로 오해하기 쉽다.
+  // 값의 가짓수로 가른다 — 단어 열은 거의 전부 다르고, 품사 열은 몇 개가 반복된다.
+  const POSish = /^(n|v|adj|adv|prep|conj|pron|int|phr|명사|동사|형용사|부사|전치사|접속사|대명사|감탄사|숙어)\.?$/i;
+  const stat = [];
+  for (let c = 0; c < width; c++) {
+    let word = 0, sent = 0, ko = 0, filled = 0, pos = 0;
+    const seen = new Set();
+    for (const r of sample) {
+      const v = String((r||[])[c] ?? '').trim();
+      if (!v) continue;
+      filled++; seen.add(v.toLowerCase());
+      if (POSish.test(v)) pos++;
+      if (_looksLikeSentence(v)) sent++;
+      else if (_looksLikeWord(v)) word++;
+      if (_looksLikeKo(v)) ko++;
+    }
+    // 가짓수 비율: 1에 가까울수록 '항목 열', 낮을수록 '분류 열'
+    const uniq = filled ? seen.size / filled : 0;
+    stat.push({ c, word, sent, ko, filled, pos, uniq });
+  }
+  const pick = (key, used) => {
+    const cand = stat.filter(s => !used.includes(s.c) && s[key] > 0);
+    if (!cand.length) return undefined;
+    if (key === 'word') {
+      // 절반 이상이 품사 값인 열은 단어 열이 아니다
+      const ok = cand.filter(s => s.pos < s.filled / 2);
+      const use = ok.length ? ok : cand;
+      // 같은 개수면 가짓수가 많은 쪽(=진짜 단어 목록)을 고른다
+      return use.sort((a,b) => (b.word*b.uniq) - (a.word*a.uniq) || b.word - a.word || a.c - b.c)[0].c;
+    }
+    return cand.sort((a,b) => b[key] - a[key] || a.c - b.c)[0].c;
+  };
+  const used = [];
+  const map = {};
+  map.en = pick('word', used); if (map.en !== undefined) used.push(map.en);
+  map.ko = pick('ko',   used); if (map.ko !== undefined) used.push(map.ko);
+  map.ex = pick('sent', used);
+  if (map.en === undefined) map.en = 0;   // 못 고르면 첫 열로 폴백
+  return { map, headerRow: false };
 }
 
 async function handleWordFile(ev){
@@ -10900,21 +10971,25 @@ async function handleWordFile(ev){
     return;
   }
   if (!Array.isArray(rows) || !rows.length) { toast(TT('파일이 비어 있어요','The file is empty')); return; }
-  if (_looksLikeHeader(rows[0])) rows = rows.slice(1);
+
+  const det = detectColumns(rows);
+  if (det.headerRow) rows = rows.slice(1);
+  const M = det.map;
 
   const have = new Set((window._manualWords||[]).map(w => w.en.toLowerCase()));
   const items = [];
   let skipped = 0;
+  const cell = (r, i) => (i === undefined ? '' : String((r && r[i]) ?? '').trim());
   for (const r of rows) {
-    const en = String((r && r[0]) || '').trim();
+    const en = cell(r, M.en);
     if (!_looksLikeWord(en)) { if (en) skipped++; continue; }
     const k = en.toLowerCase();
     if (have.has(k)) continue;            // 파일 안·목록과의 중복 모두 제거
     have.add(k);
     items.push({
       en,
-      base: String((r && r[1]) || '').trim(),      // 뜻이 있으면 그대로 쓴다
-      sentence: String((r && r[2]) || '').trim(),  // 예문(선택)
+      base: cell(r, M.ko),          // 뜻이 있으면 그대로 쓴다
+      sentence: cell(r, M.ex),      // 예문(선택)
       ctx: '', level: 'B1', ipa: '',
     });
     if ((window._manualWords.length + items.length) >= MANUAL_MAX) break;
@@ -10947,9 +11022,16 @@ async function handleWordFile(ev){
   }
   _refreshManualList();
 
-  toast(TX(`${items.length}개를 가져왔어요 · 사전에서 ${hit}개 바로 채움` + (skipped?` · ${skipped}개는 건너뜀`:''),
-           '{v0} imported · {v1} filled from dictionary' + (skipped?' · {v2} skipped':''),
-           {v0:(items.length), v1:(hit), v2:(skipped)}), 4000);
+  // 자동으로 고른 열을 알려준다 — 잘못 골랐을 때 사용자가 바로 알아챌 수 있게.
+  const col = (i) => i === undefined ? '' : String.fromCharCode(65 + i);
+  const picked = [
+    `${TT('단어','Word')} ${col(M.en)}`,
+    M.ko !== undefined ? `${TT('뜻','Meaning')} ${col(M.ko)}` : '',
+    M.ex !== undefined ? `${TT('예문','Example')} ${col(M.ex)}` : '',
+  ].filter(Boolean).join(' · ');
+  toast(TX(`${items.length}개를 가져왔어요 (${picked}열) · 사전에서 ${hit}개 바로 채움` + (skipped?` · ${skipped}개 건너뜀`:''),
+           '{v0} imported ({v3}) · {v1} filled from dictionary' + (skipped?' · {v2} skipped':''),
+           {v0:(items.length), v1:(hit), v2:(skipped), v3:(picked)}), 5000);
 }
 
 // 여러 단어를 한 번에 조회한다. 엑셀로 100개를 올릴 때 100번 요청하면 느리고
