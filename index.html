@@ -10931,7 +10931,11 @@ async function lookupWordInCorpus(en){
       best = rows.slice().sort((a,b)=>score(b)-score(a))[0];
       if (!best.base) best = null;
     }
-  } catch(e){ best = null; }
+  } catch(e){
+    // ⚠️ 네트워크 실패를 '사전에 없음' 으로 캐시하면, 그 단어는 이 세션 내내
+    //    다시 찾지 않는다. 잠깐 끊겼다가 돌아온 사람에게 기능이 죽은 것처럼 보였다.
+    return null;
+  }
   _corpusCache.set(q, best);
   return best;
 }

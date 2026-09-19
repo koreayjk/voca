@@ -1,7 +1,7 @@
 // IM VOCA Service Worker
 // 전략: HTML은 항상 네트워크 우선 (최신 유지), 정적 자원은 캐시 우선 (속도)
 
-const CACHE_VERSION = 'imvoca-v9';
+const CACHE_VERSION = 'imvoca-v10';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -115,10 +115,29 @@ self.addEventListener('fetch', (event) => {
       //    보였다 — 그 사이 아래 network 가 진짜 페이지를 캐시에 넣어줬기 때문).
       const runtime = await caches.open(RUNTIME_CACHE);
       const cached = (await runtime.match(request)) || (await caches.match(request));
-      const network = fetch(request).then(async (response) => {
-        if (response.ok) await runtime.put(request, response.clone());
-        return response;
-      }).catch(() => null);
+      // ⚠️ cache:'no-cache' 가 핵심이다. GitHub Pages 가 HTML 에
+      //    'cache-control: max-age=600' 을 붙여 보내기 때문에, 그냥 fetch 하면
+      //    브라우저가 최대 10분 묵은 사본을 서버에 묻지도 않고 돌려준다.
+      //    이걸 붙이면 항상 서버에 '바뀌었나' 물어본다(안 바뀌었으면 304 라 가볍다).
+      // ⚠️ request 객체를 그대로 넘기면서 옵션을 주면 안 된다 — 탐색(navigate) 요청은
+      //    옵션과 함께 재구성할 수 없어 TypeError 가 난다. 주소만 넘겨 새로 만든다.
+      const network = fetch(request.url, { cache: 'no-cache', credentials: 'same-origin' })
+        .then(async (response) => {
+          if (response.ok) await runtime.put(request, response.clone());
+          return response;
+        })
+        .catch(() => fetch(request).catch(() => null));
+
+      // 사본을 먼저 보여주면 빠르지만, 새로 고친 내용이 '다음 실행'에나 보인다.
+      // 실제로 "새 기능이 아직 안 보인다"는 제보가 이것 때문이었다.
+      // → 네트워크를 잠깐(1.2초)만 기다려 보고, 그 안에 오면 최신을 쓴다.
+      //   느리거나 끊겨 있으면 사본을 보여주고 새 버전은 뒤에서 받아둔다.
+      const TIMEOUT = 1200;
+      const raced = await Promise.race([
+        network,
+        new Promise((r) => setTimeout(() => r('timeout'), TIMEOUT)),
+      ]);
+      if (raced && raced !== 'timeout') return raced;
       if (cached) { event.waitUntil(network); return cached; }
       const fresh = await network;
       if (fresh) return fresh;
