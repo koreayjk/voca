@@ -218,6 +218,8 @@
       <select id="notice-audience" onchange="updateAudienceCount()" style="width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:10px;font-size:14px;margin-bottom:6px;">
         <option value="all">전체 회원</option>
         <option value="active30">최근 30일 접속 회원 (첫 발송 권장)</option>
+        <option value="dormant">한 번 와보고 안 온 회원 (다시 부르기)</option>
+        <option value="never_scanned">스캔을 한 번도 안 해본 회원</option>
         <option value="ko">한국어 사용자</option>
         <option value="en">English</option>
         <option value="zh">中文</option>
@@ -1189,6 +1191,8 @@ function audienceMembers(){
     const lang = (m.native_lang||'ko').slice(0,2);
     if(a==='all') return true;
     if(a==='active30') return m.last_seen_at && (Date.now() - new Date(m.last_seen_at).getTime()) < 30*24*3600*1000;
+    if(a==='dormant') return (m.visit_count||0) <= 1;
+    if(a==='never_scanned') return (m.scan_count||0) === 0;
     if(['ko','en','zh','es'].includes(a)) return lang===a;
     if(a==='premium') return m.plan==='premium';
     if(a==='free') return (m.plan||'free')!=='premium';
@@ -1276,7 +1280,15 @@ async function sendNoticeEmail(isTest){
   if(!confirm(`${aud} ${n}명에게 실제로 메일을 보냅니다.\n\n제목: ${subject}\n\n보낸 메일은 되돌릴 수 없어요. 계속할까요?`)) return;
   if(!confirm('마지막 확인이에요. 테스트 발송으로 내용을 확인하셨나요?')) return;
 
-  const campaign = _noticeCampaign || _uuid();
+  // 공지 글에 붙지 않은 '메일만 보내기' 는 캠페인 id 를 제목별로 저장해 둔다.
+  // 하루 한도(100통)에 걸려 내일 이어 보낼 때 새 id 를 쓰면, 어제 받은 사람이
+  // 또 받게 된다. 같은 제목이면 같은 캠페인으로 이어붙인다.
+  let campaign = _noticeCampaign;
+  if (!campaign) {
+    const key = 'imvoca.campaign.' + subject.replace(/\s+/g,' ').trim().slice(0,80);
+    campaign = localStorage.getItem(key);
+    if (!campaign) { campaign = _uuid(); try { localStorage.setItem(key, campaign); } catch(e){} }
+  }
   const noticeId = _noticeCampaign || '';
   _noticeSending = true;
   let total = 0, guard = 0;

@@ -27,9 +27,11 @@ alter table public.notice_email_log enable row level security;
 -- 정책을 두지 않는다 = service_role(엣지 함수)만 읽고 쓴다
 
 -- 이번 회차에 보낼 사람 목록
---   p_audience: all | active30 | ko | en | zh | es | premium | free
---   active30 = 최근 30일 안에 접속한 회원. 오래 묵은 주소가 많을 때 첫 발송은
---              이쪽으로 하는 게 안전하다 (반송률이 높으면 도메인 평판이 깎인다)
+--   p_audience: all | active30 | dormant | never_scanned | ko | en | zh | es | premium | free
+--   active30      = 최근 30일 안에 접속한 회원. 오래 묵은 주소가 많을 때 첫 발송은
+--                   이쪽으로 하는 게 안전하다 (반송률이 높으면 도메인 평판이 깎인다)
+--   dormant       = 가입 후 한 번 들어와 보고 다시 오지 않은 회원 (visit_count <= 1)
+--   never_scanned = 사진 스캔을 한 번도 안 해본 회원 — 핵심 기능을 경험하지 못한 사람들
 create or replace function public.notice_email_targets(
   p_campaign uuid,
   p_audience text default 'all',
@@ -57,6 +59,8 @@ begin
     and (
       p_audience = 'all'
       or (p_audience = 'active30' and m.last_seen_at > now() - interval '30 days')
+      or (p_audience = 'dormant' and coalesce(m.visit_count, 0) <= 1)
+      or (p_audience = 'never_scanned' and coalesce(m.scan_count, 0) = 0)
       or (p_audience in ('ko','en','zh','es') and coalesce(nullif(m.native_lang,''),'ko') = p_audience)
       or (p_audience = 'premium' and m.plan = 'premium')
       or (p_audience = 'free' and coalesce(m.plan,'free') <> 'premium')
