@@ -43,6 +43,14 @@ security definer
 set search_path = public
 as $$
 begin
+  -- 모르는 조건이 들어오면 조용히 0명이 아니라 에러를 낸다.
+  -- (이 파일을 다시 실행하지 않은 채 관리자 화면에만 새 대상을 추가하면,
+  --  '보낼 대상이 없었어요' 만 뜨고 왜 그런지 알 수가 없다)
+  if p_audience not in ('all','active30','dormant','never_scanned',
+                        'ko','en','zh','es','premium','free') then
+    raise exception 'notice_email_targets: 모르는 대상 조건 "%" — notice-email.sql 을 다시 실행하세요', p_audience;
+  end if;
+
   -- 수신거부 토큰이 없으면 수신거부 링크를 만들 수 없다 → 없는 사람만 지금 채운다
   update public.members set email_token = gen_random_uuid() where email_token is null;
 
@@ -78,8 +86,17 @@ revoke all on function public.notice_email_targets(uuid, text, int) from public;
 revoke all on function public.notice_email_targets(uuid, text, int) from anon;
 revoke all on function public.notice_email_targets(uuid, text, int) from authenticated;
 
--- 확인용: 지금 보낼 수 있는 사람 수
+-- 확인용 ① 지금 보낼 수 있는 사람 수
 select count(*) filter (where email is not null and email <> '' and email_optout_at is null) as 받을수있는회원,
        count(*) filter (where email_optout_at is not null) as 수신거부,
        count(*) as 전체
 from public.members;
+
+-- 확인용 ② 대상별 인원 (관리자 화면에 뜨는 숫자와 맞는지 비교)
+select 'dormant' as 대상, count(*) from notice_email_targets('00000000-0000-0000-0000-000000000000'::uuid,'dormant',500)
+union all
+select 'never_scanned', count(*) from notice_email_targets('00000000-0000-0000-0000-000000000000'::uuid,'never_scanned',500)
+union all
+select 'active30', count(*) from notice_email_targets('00000000-0000-0000-0000-000000000000'::uuid,'active30',500)
+union all
+select 'all', count(*) from notice_email_targets('00000000-0000-0000-0000-000000000000'::uuid,'all',500);

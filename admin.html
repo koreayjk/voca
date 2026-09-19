@@ -1311,7 +1311,15 @@ async function sendNoticeEmail(isTest){
       await refreshToken();
     }
     if(total){ msg.style.color='#27ae60'; msg.textContent=`✅ ${total}명에게 보냈어요.`; }
-    else if(msg.style.color!=='rgb(192, 57, 43)'){ msg.style.color='#555'; msg.textContent='보낼 대상이 없었어요 (이미 받았거나 수신거부).'; }
+    else if(msg.style.color!=='rgb(192, 57, 43)'){
+      // 화면에는 130명이라고 떠 있는데 서버가 0명을 돌려주는 경우가 있다 —
+      // notice-email.sql 을 다시 실행하지 않아 DB 가 새 대상 조건을 모를 때다.
+      const expected = audienceMembers().length;
+      msg.style.color = expected > 0 ? '#c0872b' : '#555';
+      msg.textContent = expected > 0
+        ? `보낸 사람이 0명이에요. 화면에는 ${expected}명으로 보이는데 서버가 대상을 못 찾았습니다 — supabase/notice-email.sql 을 SQL Editor 에서 다시 실행해 주세요. (이미 다 받았거나 수신거부한 경우일 수도 있어요)`
+        : '보낼 대상이 없었어요 (이미 받았거나 수신거부).';
+    }
     loadNoticeList();
   } finally { _noticeSending = false; }
 }
