@@ -6427,7 +6427,11 @@ function toast(m, dur) {
 function closeModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('open'); }
 
 let stack = [{ name:'library' }];
-function push(r) { stack.push(r); render(); }
+// 화면을 열 때마다 히스토리에도 한 칸 쌓는다.
+// 이게 없으면 좌→우 스와이프(브라우저 뒤로가기)가 앱의 화면 단계가 아니라
+// '앱에 들어오기 전 페이지'로 나가버려서, 로그인 화면이 번쩍 보였다가 돌아온다.
+function _histPush(){ try { history.pushState({ imv: true }, ''); } catch(e){} }
+function push(r) { stack.push(r); _histPush(); render(); }
 function back() { if (stack.length > 1) { stack.pop(); render(); } }
 function goTab(t) {
   if (t==='study') stack = [{name:'study-setup'}];
@@ -7736,7 +7740,12 @@ function render() {
   if (!currentUser && typeof renderLogin === 'function') { renderLogin(); return; }
 
   // 브라우저 뒤로가기 가둠용 '버퍼 상태' 최초 1회 삽입(로그인 후) → 좌→우 스와이프로 로그인 튕김 방지
-  if (currentUser && !window._histSeeded) { window._histSeeded = true; try { history.pushState({ imv: true }, ''); } catch(e){} }
+  // 버퍼가 한 칸뿐이면 스와이프 한 번에 '맨 처음 기록'(=로그인 화면이 그려져 있던
+  // 시점)으로 돌아가 그 화면이 번쩍 보인다. 여유 있게 깔아 그 지점에 닿지 않게 한다.
+  if (currentUser && !window._histSeeded) {
+    window._histSeeded = true;
+    for (let i = 0; i < 3; i++) { try { history.pushState({ imv: true }, ''); } catch(e){} }
+  }
 
   const root = document.getElementById('root');
   const route = stack[stack.length-1];
@@ -11802,8 +11811,15 @@ let _isStandaloneApp = false;
 try { _isStandaloneApp = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches; } catch(e){}
 window.addEventListener('popstate', () => {
   if (typeof currentUser === 'undefined' || !currentUser) return; // 로그인 전엔 관여 안 함
-  try { if (typeof stack !== 'undefined' && stack.length > 1) { stack.pop(); render(); } } catch(e){}
-  // 어떤 경우든 버퍼 상태를 다시 쌓아 다음 뒤로가기도 앱 안에서 처리(로그인 튕김 방지)
+  try {
+    if (typeof stack !== 'undefined' && stack.length > 1) {
+      stack.pop();   // 한 단계만 뒤로 (홈까지 튕기지 않는다)
+      render();
+    }
+    // 홈(stack 1칸)에서는 아무것도 하지 않는다 — 쓸어도 제자리
+  } catch(e){}
+  // 방금 소비한 만큼 다시 채운다 → 기록 깊이가 그대로라 계속 쓸어도 앱 밖으로 안 나간다
+  // (두 칸씩 채우면 쓸 때마다 기록이 늘어나 브라우저 한도를 갉아먹는다)
   try { history.pushState({ imv: true }, ''); } catch(e){}
 });
 
