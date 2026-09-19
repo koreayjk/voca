@@ -1,7 +1,7 @@
 // IM VOCA Service Worker
 // 전략: HTML은 항상 네트워크 우선 (최신 유지), 정적 자원은 캐시 우선 (속도)
 
-const CACHE_VERSION = 'imvoca-v8';
+const CACHE_VERSION = 'imvoca-v9';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -10,7 +10,12 @@ const PRECACHE_URLS = [
   '/',
   '/manifest.json',
   '/2.png',
-  '/og-image.png'
+  '/og-image.png',
+  // 메일·광고·앱 안에서 링크로 자주 들어오는 페이지들.
+  // 미리 받아두면 첫 클릭부터 네트워크를 기다리지 않는다.
+  '/pricing.html',
+  '/guide.html',
+  '/terms.html'
 ];
 
 // 설치 — 정적 자원 미리 캐시 후 바로 활성화.
@@ -103,16 +108,22 @@ self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
       // ⚠️ 반드시 RUNTIME 캐시를 먼저 본다. caches.match() 는 생성 순서대로 찾기 때문에
       //    설치 때 넣어둔 STATIC 의 '/' 를 항상 먼저 돌려줘 갱신된 사본이 무시된다.
+      //
+      // ⚠️ 그리고 '이 주소의 사본' 만 쓴다. 예전에는 사본이 없으면 '/'(앱 첫 화면)를
+      //    대신 돌려줬는데, 그 바람에 메일·광고 링크로 pricing.html 에 처음 들어온
+      //    사람에게 결제 안내 대신 앱 로그인 화면이 떴다 (두 번째로 눌러야 제대로
+      //    보였다 — 그 사이 아래 network 가 진짜 페이지를 캐시에 넣어줬기 때문).
       const runtime = await caches.open(RUNTIME_CACHE);
-      const cached = (await runtime.match(request)) || (await runtime.match('/'))
-                  || (await caches.match(request)) || (await caches.match('/'));
+      const cached = (await runtime.match(request)) || (await caches.match(request));
       const network = fetch(request).then(async (response) => {
         if (response.ok) await runtime.put(request, response.clone());
         return response;
       }).catch(() => null);
       if (cached) { event.waitUntil(network); return cached; }
       const fresh = await network;
-      return fresh || caches.match('/');
+      if (fresh) return fresh;
+      // 네트워크도 사본도 없을 때(오프라인)만 앱 껍데기라도 보여준다
+      return (await runtime.match('/')) || (await caches.match('/'));
     })());
     return;
   }

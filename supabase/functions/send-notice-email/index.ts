@@ -51,6 +51,12 @@ type Target = { id: string; email: string; name: string | null; lang: string; to
 const esc = (s: string) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
+// 주소 시크릿에 회사명이 이미 들어 있으면 또 붙이지 않는다
+// (전에 'IM AMERICA GROUP CORP · IM AMERICA GROUP CORP, 1608 …' 로 두 번 나왔다)
+const BRAND = 'IM AMERICA GROUP CORP'
+const brandLine = (postal: string) =>
+  postal.toUpperCase().includes(BRAND) ? postal : `${BRAND} · ${postal}`
+
 // 껍데기(인사·꼬리말·수신거부)만 회원 언어로 바꾼다.
 // 공지 본문 자체는 관리자가 쓴 그대로 보낸다 — 기계번역해서 뜻이 틀어지는 것보다 낫다.
 // (언어별로 다르게 쓰고 싶으면 '받는 사람' 에서 언어를 골라 따로 보내면 된다)
@@ -85,7 +91,7 @@ function html(t: Target, subject: string, body: string, unsubUrl: string, postal
   </div>
   <div style="margin-top:22px;font-size:11.5px;line-height:1.7;color:#8a8275;">
     ${esc(w.foot)}<br>
-    IM AMERICA GROUP CORP · ${esc(postal)}<br>
+    ${esc(brandLine(postal))}<br>
     <a href="${unsubUrl}" style="color:#8a8275;">${esc(w.unsub)}</a>
   </div>
 </div></body></html>`

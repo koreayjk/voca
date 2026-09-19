@@ -44,6 +44,12 @@ type Target = { id: string; email: string; name: string | null; lang: string; to
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
+// 주소 시크릿에 회사명이 이미 들어 있으면 또 붙이지 않는다
+// (전에 'IM AMERICA GROUP CORP · IM AMERICA GROUP CORP, 1608 …' 로 두 번 나왔다)
+const BRAND = 'IM AMERICA GROUP CORP'
+const brandLine = (postal: string) =>
+  postal.toUpperCase().includes(BRAND) ? postal : `${BRAND} · ${postal}`
+
 // 문구는 '사실만' 적는다. 제목과 내용이 어긋나면 CAN-SPAM 위반이기도 하고,
 // 무엇보다 막혀서 답답한 사람에게 광고처럼 들리면 역효과다.
 const COPY: Record<string, {
@@ -113,7 +119,7 @@ function html(t: Target): string {
   </div>
   <div style="margin-top:22px;font-size:11.5px;line-height:1.7;color:#8a8275;">
     ${esc(c.foot)}<br>
-    IM AMERICA GROUP CORP · ${esc(postal)}<br>
+    ${esc(brandLine(postal))}<br>
     <a href="${unsubUrl}" style="color:#8a8275;">${esc(c.unsub)}</a>
   </div>
 </div></body></html>`
