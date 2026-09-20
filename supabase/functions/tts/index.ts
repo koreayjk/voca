@@ -47,6 +47,17 @@ const json = (b: unknown, s = 200) =>
 const safeName = (en: string) =>
   en.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim().replace(/\s+/g, '-')
 
+// 앱의 _sentHash() 와 동일 (djb2-xor). 예문 파일명은 '단어_해시.mp3' 라서,
+// 예문 글자가 하나라도 바뀌면 해시가 달라져 옛 파일을 찾지 않는다 = 불일치 원천 차단.
+function sentHash(str: string) {
+  const t = String(str || '').trim()
+  let h = 5381
+  for (let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0
+  return h.toString(36)
+}
+// 예문은 단어보다 10배 길다. 지나치게 긴 것은 비용·품질 모두 손해라 자른다.
+const SENT_MAX = 220
+
 async function alreadyThere(path: string) {
   try {
     const r = await fetch(`${PUBLIC}/${path}`, { method: 'HEAD' })
@@ -54,12 +65,12 @@ async function alreadyThere(path: string) {
   } catch { return false }
 }
 
-async function makeAudio(word: string, path: string) {
+async function makeAudio(text: string, path: string) {
   const r = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${GKEY}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      input: { text: word },
+      input: { text },
       voice: { languageCode: VOICE.slice(0, 5), name: VOICE },
       // 학습자가 따라 하기 좋게 아주 살짝 느리게. 0.85 아래로 내리면 어색해진다.
       audioConfig: { audioEncoding: 'MP3', speakingRate: 0.92, pitch: 0 },
@@ -106,16 +117,17 @@ Deno.serve(async (req) => {
 
     // ⚠️ 단어마다 파일 존재를 HTTP 로 확인하면(HEAD) 3만 개를 훑는 데 몇 시간이 걸린다.
     //    저장소 목록을 한 번에 받아 집합으로 만들어 두고 비교한다 (1,000개씩 ~17번).
+    const kind = String(body.kind ?? 'w') === 's' ? 's' : 'w'   // 'w' 단어 · 's' 예문
     const have = new Set<string>()
-    for (let off = 0; off < 100000; off += 1000) {
-      const { data, error } = await svc.storage.from(BUCKET).list('w', { limit: 1000, offset: off })
+    for (let off = 0; off < 200000; off += 1000) {
+      const { data, error } = await svc.storage.from(BUCKET).list(kind, { limit: 1000, offset: off })
       if (error) return json({ error: 'list_failed', detail: error.message }, 500)
       for (const f of data ?? []) have.add(String(f.name || '').replace(/\.mp3$/i, ''))
       if (!data || data.length < 1000) break
     }
 
     const { data: rows, error } = await svc
-      .from('voca_words').select('en').not('en', 'is', null)
+      .from('voca_words').select(kind === 's' ? 'en,sentence' : 'en').not('en', 'is', null)
       .order('en').range(offset, offset + limit - 1)
     if (error) return json({ error: 'query_failed', detail: error.message }, 500)
 
@@ -127,11 +139,17 @@ Deno.serve(async (req) => {
       // 영어만. 스페인어 단어장('¿cómo está?' 등)에 영어 음성을 입히면 안 되고,
       // 악센트를 떼면 파일명도 엉뚱해진다. (스페인어 음성은 /es/w/ 로 따로 있다)
       if (!/^[a-z][a-z' -]{0,30}$/.test(w)) { skipped++; continue }
-      const key = safeName(w)
-      if (!key || seen.has(key) || have.has(key)) { skipped++; continue }
+      const base = safeName(w)
+      if (!base) { skipped++; continue }
+
+      const sent = kind === 's' ? String((row as { sentence?: string }).sentence || '').trim() : ''
+      if (kind === 's' && (!sent || sent.length > SENT_MAX)) { skipped++; continue }
+      const key = kind === 's' ? `${base}_${sentHash(sent)}` : base
+
+      if (seen.has(key) || have.has(key)) { skipped++; continue }
       seen.add(key)
       if (made >= genCap) { pending++; continue }     // 시간 제한에 걸리지 않게 나눠 만든다
-      const res = await makeAudio(w, `w/${key}.mp3`)
+      const res = await makeAudio(kind === 's' ? sent : w, `${kind}/${key}.mp3`)
       if (res.ok) { made++; have.add(key) } else failed.push({ word: w, detail: res.detail })
     }
     const scanned = rows?.length ?? 0
@@ -146,6 +164,30 @@ Deno.serve(async (req) => {
       done: pending === 0 && scanned === 0,
       failed,
     })
+  }
+
+  // ── 예문 하나 ────────────────────────────────────────────────
+  // { "word": "candle", "sentence": "She lit a candle." }
+  const sentence = String(body.sentence ?? '').trim()
+  if (sentence) {
+    const w0 = String(body.word ?? '').trim().toLowerCase()
+    const k0 = safeName(w0)
+    if (!k0 || sentence.length > SENT_MAX) return json({ ok: false, reason: 'bad_sentence' })
+    const path = `s/${k0}_${sentHash(sentence)}.mp3`
+    const url = `${PUBLIC}/${path}`
+    if (await alreadyThere(path)) return json({ ok: true, cached: true, url })
+
+    const isAdmin0 = (bearer === SB_KEY) || (who === ADMIN_EMAIL)
+    if (!isAdmin0) {
+      // 저장된 예문만 만든다 — 아무 문장이나 보내 저장소를 불리지 못하게
+      const { data: hit, error } = await svc
+        .from('voca_words').select('id').eq('sentence', sentence).limit(1)
+      if (error) return json({ ok: false, reason: 'lookup_failed' })
+      if (!hit || !hit.length) return json({ ok: false, reason: 'not_in_dictionary' })
+    }
+    const r0 = await makeAudio(sentence, path)
+    if (!r0.ok) return json({ ok: false, reason: 'tts_failed', detail: r0.detail }, 502)
+    return json({ ok: true, url })
   }
 
   // ── 단어 하나 ────────────────────────────────────────────────

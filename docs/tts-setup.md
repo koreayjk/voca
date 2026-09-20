@@ -12,7 +12,17 @@
   사전 크기(약 1만 5천 단어)로 묶인다. OCR 오인식도, 악용도 그 위를 못 넘는다.
 - Google Cloud TTS Neural2 는 **매달 100만 자 무료**. 사전 전체가 약 10만 자라
   무료 한도의 1/10이다.
-- 예문은 만들지 않는다(글자 수가 10배라 비용이 커진다). 필요해지면 그때 넓힌다.
+- 예문도 만들 수 있다(`kind:"s"`). 글자 수가 10배라 비용이 크므로 단어를 먼저
+  끝내고, 실제 글자 수를 세어 무료 한도 안인지 확인한 뒤에 돌린다:
+
+```sql
+select count(*) as 만들_예문수, sum(length(sentence)) as 총_글자수,
+       round(sum(length(sentence)) / 1000000.0, 2) as 백만자_대비
+from (select distinct lower(en) as w, sentence from voca_words
+      where sentence is not null and sentence <> ''
+        and coalesce(analysis->>'_official','') <> 'true'
+        and en ~ '^[A-Za-z][A-Za-z '' -]*$') t;
+```
 
 ## 1) Google Cloud 키 발급
 
@@ -52,12 +62,24 @@ supabase functions deploy tts --project-ref ziatqkjlafucqtwshhla
 한 번에 최대 300개씩. `next_offset` 을 넘겨가며 `done: true` 가 나올 때까지 반복:
 
 ```bash
-curl -s -X POST "https://ziatqkjlafucqtwshhla.supabase.co/functions/v1/tts" \
-  -H "Authorization: Bearer $SR" -H "Content-Type: application/json" \
-  -d '{"bulk":true,"limit":300,"offset":0}'
+OFF=0; N=0
+while :; do
+  R=$(curl -s -X POST "https://ziatqkjlafucqtwshhla.supabase.co/functions/v1/tts" \
+      -H "Authorization: Bearer $SR" -H "Content-Type: application/json" \
+      -d "{\"bulk\":true,\"kind\":\"w\",\"limit\":1000,\"max_new\":80,\"offset\":$OFF}")
+  echo "$R" | head -c 160; echo
+  M=$(echo "$R" | sed -n 's/.*"made":\([0-9]*\).*/\1/p'); N=$((N+${M:-0}))
+  echo "$R" | grep -q '"done":true' && { echo "✅ 완료 — 만든 음성 $N 개"; break; }
+  OFF=$(echo "$R" | sed -n 's/.*"next_offset":\([0-9]*\).*/\1/p')
+  [ -z "$OFF" ] && break
+done
 ```
 
-응답: `{"ok":true,"made":300,"skipped":0,"next_offset":300,"done":false}`
+예문은 `"kind":"w"` 를 `"kind":"s"` 로 바꾸면 된다.
+
+응답: `{"ok":true,"made":80,"skipped":896,"next_offset":1000,"still_todo_here":24,"done":false}`
+- `next_offset` 이 그대로면 그 구간에 만들 게 남은 것(`still_todo_here`) — 같은 구간을 한 번 더 돈다
+- `done:true` 는 빈 구간이 나왔을 때만 (표 끝)
 
 ## 확인
 

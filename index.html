@@ -8383,15 +8383,19 @@ function _targetIsEnglish(){
 // 서버에 음성이 없으면 만들어 달라고 한 번 부탁한다.
 // 지금 듣는 사람은 기기 음성으로 듣고, 다음부터는(그리고 다른 모든 사용자도) 서버 음성을 듣는다.
 const _ttsAsked = new Set();
-function _requestServerAudio(word){
+function _requestServerAudio(word, sentence){
   const w = String(word||'').trim().toLowerCase();
   if (!w || !currentUser || !_targetIsEnglish()) return;
   if (!/^[a-z][a-z' -]{0,30}$/.test(w)) return;     // OCR 쓰레기는 애초에 보내지 않는다
-  if (_ttsAsked.has(w)) return;
-  _ttsAsked.add(w);
-  sbFetch('/functions/v1/tts', 'POST', { word: w }).then(r => {
+  const sent = String(sentence||'').trim();
+  if (sent && sent.length > 220) return;
+  const tag = sent ? (w + '|' + sent) : w;
+  if (_ttsAsked.has(tag)) return;
+  _ttsAsked.add(tag);
+  const body = sent ? { word: w, sentence: sent } : { word: w };
+  sbFetch('/functions/v1/tts', 'POST', body).then(r => {
     // 만들어졌으면 '없음' 표시를 지워서 다음 재생부터 서버 음성을 쓰게 한다
-    if (r && r.ok) _noServerAudio.delete(_safeAudio(w));
+    if (r && r.ok) _noServerAudio.delete(sent ? (_safeAudio(w) + '_' + _sentHash(sent)) : _safeAudio(w));
   }).catch(()=>{});
 }
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
@@ -8412,9 +8416,14 @@ function _audioUrl(w, kind){
     // 공식 단어장이 아니어도 '단어' 발음은 서버 파일이 있으면 그걸 쓴다.
     // 아이폰은 기기 음성을 바꿀 방법이 없어서(애플 제한), 서버 파일이 유일한 개선책이다.
     // 파일이 없으면 _playSmart 가 기기 음성으로 넘어가고, 그 사이 만들어 둔다.
-    if (kind === 'w' && _targetIsEnglish()) {
+    if (_targetIsEnglish()) {
       const k = _safeAudio(w && w.en);
-      if (k && !_noServerAudio.has(k)) return _AUDIO_BASE + '/w/' + k + '.mp3';
+      if (k && kind === 'w' && !_noServerAudio.has(k)) return _AUDIO_BASE + '/w/' + k + '.mp3';
+      if (k && kind === 's') {
+        const ex = _exOf(w);
+        // 예문 파일명은 '단어_해시' — 예문 글자가 바뀌면 해시도 바뀌어 옛 파일을 찾지 않는다
+        if (ex) { const n = k + '_' + _sentHash(ex); if (!_noServerAudio.has(n)) return _AUDIO_BASE + '/s/' + n + '.mp3'; }
+      }
     }
     return '';
   }
@@ -8445,8 +8454,14 @@ function _playSmart(text, url, onDone){
       let fb=false; const fall=()=>{ if(fb)return; fb=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} try{ a.pause(); a.onended=null; a.onerror=null; }catch(e){} if(_curAudio===a)_curAudio=null;
         // 단어 발음 파일이 아직 없는 경우 → 이번엔 기기 음성으로 읽고, 서버에 만들어 달라고 한다
         try {
-          const m = /\/w\/([^\/?#]+)\.mp3(\?|$)/.exec(url||'');
-          if (m) { _noServerAudio.add(m[1]); _requestServerAudio(text); }
+          const m = /\/(w|s)\/([^\/?#]+)\.mp3(\?|$)/.exec(url||'');
+          if (m) {
+            const name = m[2];
+            _noServerAudio.add(name);
+            if (m[1] === 'w') _requestServerAudio(text);
+            // 예문: 파일명 앞부분이 단어, 재생하려던 text 가 예문이다
+            else { const i = name.lastIndexOf('_'); if (i > 0) _requestServerAudio(name.slice(0, i), text); }
+          }
         } catch(e){}
         speak(text, fin); };
       a.onended=fin; a.onerror=fall;
