@@ -136,13 +136,20 @@ Deno.serve(async (req) => {
 
   if (await alreadyThere(path)) return json({ ok: true, cached: true, url })
 
-  // ⭐ 우리 사전에 있는 단어만 만든다.
-  //    OCR 오인식('rnodern' 같은 것)에 음성을 만들어 영구 저장하지 않기 위해서이고,
-  //    동시에 '평생 만들 수 있는 최대 개수 = 사전 크기' 라는 상한이 된다.
-  const { count, error } = await svc
-    .from('voca_words').select('id', { count: 'exact', head: true }).ilike('en', word)
-  if (error) return json({ ok: false, reason: 'lookup_failed' })
-  if (!count) return json({ ok: false, reason: 'not_in_dictionary' })
+  // ⭐ 누군가의 단어장에 실제로 저장된 단어만 만든다.
+  //    (voca_words 에는 공식 단어장 + 모든 사용자가 저장한 단어가 들어 있다)
+  //    사람이 스캔해서 '저장' 까지 한 단어만 통과하므로, 엔드포인트를 두드려
+  //    아무 문자열이나 음성으로 만들어 저장소를 불리는 일을 막는다.
+  //    관리자·서버(service_role)는 이 검사를 건너뛴다 — 테스트와 일괄 생성용.
+  const isAdmin = (bearer === SB_KEY) || (who === ADMIN_EMAIL)
+  if (!isAdmin) {
+    // ⚠️ count:'exact' 는 전체를 세느라 표를 끝까지 훑는다. 존재 여부만 알면 되므로
+    //    첫 한 줄만 찾고 멈춘다 (표가 커져도 느려지지 않게).
+    const { data: hit, error } = await svc
+      .from('voca_words').select('id').ilike('en', word).limit(1)
+    if (error) return json({ ok: false, reason: 'lookup_failed' })
+    if (!hit || !hit.length) return json({ ok: false, reason: 'not_in_dictionary' })
+  }
 
   const res = await makeAudio(word, path)
   if (!res.ok) return json({ ok: false, reason: 'tts_failed', detail: res.detail }, 502)
