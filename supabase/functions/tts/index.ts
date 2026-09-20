@@ -140,7 +140,10 @@ Deno.serve(async (req) => {
       // 이번 회차에 다 못 만든 게 있으면 같은 구간을 한 번 더 돌려야 한다
       next_offset: pending > 0 ? offset : offset + scanned,
       still_todo_here: pending,
-      done: pending === 0 && scanned < limit,
+      // ⚠️ Supabase 는 한 번에 최대 1,000행만 돌려준다. limit 을 2,000 으로 줘도
+      //    scanned 는 1,000 에서 멈추므로 'scanned < limit' 를 끝으로 보면 안 된다
+      //    (3만 행이 남았는데도 끝났다고 답하게 된다). 빈 구간이 나와야 진짜 끝이다.
+      done: pending === 0 && scanned === 0,
       failed,
     })
   }
