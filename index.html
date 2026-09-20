@@ -4634,8 +4634,11 @@ function showVoiceQuality(){
   const nm = v ? (v.name || v.voiceURI || '') : '';
   const good = /(enhanced|premium|neural|siri|natural|google)/i.test(nm);
 
+  // ⚠️ iOS 는 웹에서 쓸 수 있는 음성이 시스템 기본 몇 가지로 막혀 있다.
+  //    설정에서 고품질 음성을 받아도 speechSynthesis 목록에 나타나지 않는다(애플 제한).
+  //    맥은 받은 음성이 웹에도 적용된다. 잘못 안내하면 사용자가 헛수고를 한다.
   const steps = isIOS
-    ? TT('설정 → 손쉬운 사용 → <b>Read &amp; Speak</b>(이전 이름: 콘텐츠 말하기) → Voices → English 에서<br><b>이름 옆에 ⤓ 표시가 있는 음성</b>(Ava·Evan·Zoe 등)을 받아주세요.','Settings → Accessibility → <b>Read &amp; Speak</b> (formerly Spoken Content) → Voices → English, then download a voice marked with ⤓ (Ava, Evan, Zoe).')
+    ? TT('아이폰·아이패드는 <b>웹에서 쓸 수 있는 음성이 기본 몇 가지로 제한</b>돼 있어요(애플 정책). 설정에서 고품질 음성을 받아도 이 앱에는 적용되지 않습니다.<br><br>대신 <b>공식 단어장</b>은 미리 만들어 둔 음성 파일을 쓰기 때문에 또렷하고 자연스럽게 들려요.','On iPhone and iPad, web apps can only use a few built-in voices (Apple restriction) — downloading a higher-quality voice in Settings will not change this app.<br><br>Official wordbooks use prerecorded audio, so they sound natural regardless.')
     : isAndroid
     ? TT('설정 → 일반 관리 → 언어 및 입력 → 텍스트 음성 변환 에서<br><b>Google 음성 인식 및 합성</b>을 고르고, 영어 음성 데이터를 받아주세요.','Settings → General → Text-to-speech → choose Google Speech Services and install the English voice data.')
     : isMac
@@ -4653,14 +4656,14 @@ function showVoiceQuality(){
       <div style="background:var(--bg-page);border:1px solid var(--ink-12);border-radius:12px;padding:13px 14px;margin-bottom:14px;">
         <div style="font-size:11px;color:var(--ink-45);margin-bottom:4px;">${TT('지금 쓰는 음성','Current voice')}</div>
         <div style="font-size:14px;font-weight:700;color:var(--ink-100);word-break:break-all;">${esc(nm || TT('(기기 기본 음성)','(device default)'))}</div>
-        <div style="font-size:11.5px;color:${good?'#1c7c3c':'#b35900'};margin-top:5px;">${good?TT('✅ 고품질 음성을 쓰고 있어요','✅ Using a high-quality voice'):TT('⚠️ 기본(압축) 음성이라 기계음처럼 들릴 수 있어요','⚠️ Using a compact voice — may sound robotic')}</div>
+        <div style="font-size:11.5px;color:${good?'#1c7c3c':'#b35900'};margin-top:5px;">${good?TT('✅ 고품질 음성을 쓰고 있어요','✅ Using a high-quality voice'):(isIOS?TT('이 기기에서 웹이 쓸 수 있는 음성이에요','The voice available to web apps on this device'):TT('⚠️ 기본(압축) 음성이라 기계음처럼 들릴 수 있어요','⚠️ Using a compact voice — may sound robotic'))}</div>
       </div>
 
       <button onclick="speak('This is how the voice sounds.')" class="btn btn-outline" style="width:100%;padding:12px;font-size:13.5px;margin-bottom:14px;">${TT('지금 음성 들어보기','Hear the current voice')}</button>
 
-      <div style="font-size:12px;font-weight:800;color:var(--accent);letter-spacing:0.5px;margin-bottom:6px;">${TT('더 자연스럽게 듣는 법 (무료)','Get a better voice (free)')}</div>
+      <div style="font-size:12px;font-weight:800;color:var(--accent);letter-spacing:0.5px;margin-bottom:6px;">${isIOS?TT('아이폰에서의 발음','Voices on iPhone'):TT('더 자연스럽게 듣는 법 (무료)','Get a better voice (free)')}</div>
       <div style="font-size:12.5px;color:var(--ink-70);line-height:1.8;margin-bottom:12px;">${steps}</div>
-      <div style="font-size:11.5px;color:var(--ink-45);line-height:1.7;margin-bottom:14px;">${TT('메뉴가 안 보이면 설정 앱에서 아래로 당겨 <b>Voices</b> 로 검색하세요.<br>받은 뒤 이 앱을 완전히 껐다 켜면 새 음성으로 읽어줘요. 공식 단어장은 이미 사람이 녹음한 수준의 음성 파일을 쓰기 때문에 이 설정과 무관하게 자연스럽게 들립니다.','Can\'t find it? Search <b>Voices</b> in Settings.<br>After downloading, fully close and reopen the app. Official wordbooks already use prerecorded audio, so they sound natural either way.')}</div>
+      <div style="font-size:11.5px;color:var(--ink-45);line-height:1.7;margin-bottom:14px;">${(isIOS ? '' : TT('메뉴가 안 보이면 설정 앱에서 <b>Voices</b> 로 검색하세요. 받은 뒤 이 앱을 완전히 껐다 켜면 새 음성으로 읽어줘요.','Can\'t find it? Search <b>Voices</b> in Settings. After downloading, fully close and reopen the app.'))}</div>
 
       <button onclick="document.getElementById('voice-modal').remove()" class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;">${TT('닫기','Close')}</button>
     </div>`;
