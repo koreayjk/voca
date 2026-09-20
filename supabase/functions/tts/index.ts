@@ -112,6 +112,9 @@ Deno.serve(async (req) => {
     const seen = new Set<string>()
     for (const row of rows ?? []) {
       const w = String(row.en || '').trim().toLowerCase()
+      // 영어만. 스페인어 단어장('¿cómo está?' 등)에 영어 음성을 입히면 안 되고,
+      // 악센트를 떼면 파일명도 엉뚱해진다. (스페인어 음성은 /es/w/ 로 따로 있다)
+      if (!/^[a-z][a-z' -]{0,30}$/.test(w)) { skipped++; continue }
       const key = safeName(w)
       if (!key || seen.has(key)) { skipped++; continue }
       seen.add(key)
