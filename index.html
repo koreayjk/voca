@@ -6712,26 +6712,51 @@ async function addBook() {
   closeModal('modal-add'); render(); toast('책이 추가됐어요');
 }
 
+// 미리보기를 '실제로 들어오는 화면' 비율에 맞춘다.
+// 카메라가 무엇을 주든 그대로 보여주므로, 미리보기에 보이는 것 = 찍히는 것이 된다.
+// 가능하면 확대(zoom)도 최소로 내린다 — 일부 기기는 기본이 1배가 아니다.
+function _fitCameraPreview(video, stream){
+  const apply = () => {
+    const w = video.videoWidth, h = video.videoHeight;
+    if (w && h) video.style.aspectRatio = w + '/' + h;
+  };
+  video.onloadedmetadata = apply;
+  setTimeout(apply, 400);
+  try {
+    const track = stream.getVideoTracks()[0];
+    const caps = track.getCapabilities ? track.getCapabilities() : null;
+    if (caps && caps.zoom && typeof caps.zoom.min === 'number') {
+      track.applyConstraints({ advanced: [{ zoom: caps.zoom.min }] }).catch(()=>{});
+    }
+  } catch(e){}
+}
+
 async function openCamera() {
   if (!window._cameraShots) window._cameraShots = [];
   const area = document.getElementById('camera-area');
   const video = document.getElementById('camera-video');
   const isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
-  if (isMobile) {
-    video.style.width = '100%'; video.style.aspectRatio = '3/4'; video.style.maxHeight = ''; video.style.objectFit = 'cover';
-  } else {
-    video.style.width = '100%'; video.style.aspectRatio = '16/9'; video.style.maxHeight = ''; video.style.objectFit = 'cover';
-  }
+  // ⚠️ 세로 비율(3/4)을 요구하면 안 된다. 아이폰 카메라는 원래 가로 4:3 으로 찍는데
+  //    세로를 요구하면 사파리가 양옆을 '잘라내서' 맞춘다 → 기본 카메라보다 확대되어
+  //    보이고, 책 한 쪽을 담으려면 더 뒤로 물러나야 했다.
+  //    센서 그대로 받고, 미리보기는 잘린 데 없이(contain) 전체를 보여준다.
+  video.style.width = '100%'; video.style.maxHeight = '';
+  video.style.objectFit = 'contain';      // 찍히는 그대로 보여준다 (미리보기 ≠ 결과 방지)
+  video.style.background = '#000';
+  video.style.aspectRatio = isMobile ? '3/4' : '16/9';   // 스트림을 받으면 실제 비율로 다시 잡는다
   try {
+    // 해상도만 넉넉히 요청하고 비율은 건드리지 않는다 (OCR 정확도를 위해 화소는 필요하다)
     const constraints = isMobile
-      ? { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1080 }, height: { ideal: 1440 } } }
+      ? { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1440 } } }
       : { video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } };
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
+    _fitCameraPreview(video, stream);
   } catch(e) {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       video.srcObject = stream; area.style.display = 'block'; window._cameraStream = stream;
+      _fitCameraPreview(video, stream);
     } catch(e2) {
       // 라이브 카메라 실패(안드로이드 인앱브라우저 등) → OS 기본 카메라(1장)로 폴백
       area.style.display = 'none';
