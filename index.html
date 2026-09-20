@@ -8376,6 +8376,24 @@ function _cardBackBody(w){
 // ===== 저장 음원(Gemini TTS) 우선 재생, 없으면 기기 TTS 폴백 =====
 let _curAudio = null;
 function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'); }
+function _targetIsEnglish(){
+  try { const t = (typeof getTargetLang === 'function') && getTargetLang(); return !t || t.code === 'en'; }
+  catch(e){ return true; }
+}
+// 서버에 음성이 없으면 만들어 달라고 한 번 부탁한다.
+// 지금 듣는 사람은 기기 음성으로 듣고, 다음부터는(그리고 다른 모든 사용자도) 서버 음성을 듣는다.
+const _ttsAsked = new Set();
+function _requestServerAudio(word){
+  const w = String(word||'').trim().toLowerCase();
+  if (!w || !currentUser || !_targetIsEnglish()) return;
+  if (!/^[a-z][a-z' -]{0,30}$/.test(w)) return;     // OCR 쓰레기는 애초에 보내지 않는다
+  if (_ttsAsked.has(w)) return;
+  _ttsAsked.add(w);
+  sbFetch('/functions/v1/tts', 'POST', { word: w }).then(r => {
+    // 만들어졌으면 '없음' 표시를 지워서 다음 재생부터 서버 음성을 쓰게 한다
+    if (r && r.ok) _noServerAudio.delete(_safeAudio(w));
+  }).catch(()=>{});
+}
 const _AUDIO_BASE = 'https://ziatqkjlafucqtwshhla.supabase.co/storage/v1/object/public/audio';
 // 시리즈별 예문이 갈리는 '중복 단어' 목록. 이 단어만 시리즈별 예문 오디오가 필요하고,
 // 나머지(유니크)는 기존 원어민 s/{단어}.mp3 를 그대로 쓴다. (실패 시 null → 전부 시리즈경로/TTS)
@@ -8387,8 +8405,19 @@ function _audioSeriesFromTitle(t){ t=String(t||''); if(t.indexOf('중등')>=0)re
 function _exOf(w){ const a=(w&&w.analysis)||{}; return String(a.example || (w&&w.sentence) || '').trim(); }
 // 문장 내용 해시(앱·생성스크립트 동일 알고리즘). djb2 xor, unsigned, base36.
 function _sentHash(str){ str=String(str||'').trim(); let h=5381; for(let i=0;i<str.length;i++){ h=((h*33) ^ str.charCodeAt(i))>>>0; } return h.toString(36); }
+// 이번 세션에서 '서버에 파일이 없다'고 확인된 단어 — 같은 주소를 반복해 두드리지 않게
+const _noServerAudio = new Set();
 function _audioUrl(w, kind){
-  if(!(w&&w.analysis&&w.analysis._official)) return '';
+  if(!(w&&w.analysis&&w.analysis._official)){
+    // 공식 단어장이 아니어도 '단어' 발음은 서버 파일이 있으면 그걸 쓴다.
+    // 아이폰은 기기 음성을 바꿀 방법이 없어서(애플 제한), 서버 파일이 유일한 개선책이다.
+    // 파일이 없으면 _playSmart 가 기기 음성으로 넘어가고, 그 사이 만들어 둔다.
+    if (kind === 'w' && _targetIsEnglish()) {
+      const k = _safeAudio(w && w.en);
+      if (k && !_noServerAudio.has(k)) return _AUDIO_BASE + '/w/' + k + '.mp3';
+    }
+    return '';
+  }
   const s=_safeAudio(w.en); if(!s) return '';
   if(kind==='s'){
     // ⭐ 예문 오디오: '문장 내용' 해시로 파일명을 잡는다 → 시리즈·책·문장이 뭐가 됐든 항상 맞는 파일.
@@ -8413,7 +8442,13 @@ function _playSmart(text, url, onDone){
       // ⚠️ new Audio()를 매번 만들면 iOS 자동재생 잠금이 매번 풀려, 첫 재생(제스처)만 되고
       //    반복(setTimeout)은 차단돼 TTS로 빠짐. → 잠금해제된 단일 엘리먼트를 재사용한다.
       const a=_getAudioEl(); _curAudio=a;
-      let fb=false; const fall=()=>{ if(fb)return; fb=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} try{ a.pause(); a.onended=null; a.onerror=null; }catch(e){} if(_curAudio===a)_curAudio=null; speak(text, fin); };
+      let fb=false; const fall=()=>{ if(fb)return; fb=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} try{ a.pause(); a.onended=null; a.onerror=null; }catch(e){} if(_curAudio===a)_curAudio=null;
+        // 단어 발음 파일이 아직 없는 경우 → 이번엔 기기 음성으로 읽고, 서버에 만들어 달라고 한다
+        try {
+          const m = /\/w\/([^\/?#]+)\.mp3(\?|$)/.exec(url||'');
+          if (m) { _noServerAudio.add(m[1]); _requestServerAudio(text); }
+        } catch(e){}
+        speak(text, fin); };
       a.onended=fin; a.onerror=fall;
       if(a.src!==url){ a.src=url; }
       try{ a.currentTime=0; }catch(e){}
