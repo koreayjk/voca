@@ -8407,11 +8407,33 @@ function _autoAfterRender(w, flipped){
   };
   loop();   // 첫 재생은 즉시(탭 제스처 컨텍스트 유지 → iOS autoplay 통과)
 }
+// 테스트 화면의 자동 읽기 — 문제가 뜨면 그 단어를 한 번 읽어준다.
+// 암기카드처럼 반복해서 읽으면 답을 고르는 동안 계속 소리가 나 방해가 된다.
+function _autoQuizAfterRender(w){
+  _autoTok++;                     // 문제가 바뀌면 이전 재생 취소
+  if(!_autoRead || !w || !w.en) return;
+  _playSmart(w.en, _audioUrl(w,'w'));
+}
+// 버튼 모양만 바꾼다. 테스트 중에 화면을 다시 그리면 보기 순서가 섞여버린다.
+function _syncAutoChip(){
+  document.querySelectorAll('.auto-chip').forEach(el=>{
+    el.style.color = _autoRead ? 'var(--accent)' : 'var(--ink-60)';
+    el.style.background = _autoRead ? 'var(--gold-bg)' : 'transparent';
+    el.textContent = _autoRead ? TT('🔊 자동 ON','🔊 Auto ON') : TT('🔇 자동','🔇 Auto');
+  });
+}
 function toggleAutoRead(){
   _autoRead=!_autoRead; try{localStorage.setItem('imvoca.autoRead', _autoRead?'1':'0');}catch(e){}
   _autoTok++; if(!_autoRead && window.speechSynthesis) window.speechSynthesis.cancel();
   if(studyState) renderStudyCard();
-  toast(_autoRead?TT('🔊 자동 읽기 켜짐 — 단어·예문을 반복해 읽어줘요','🔊 Auto-read on'):TT('🔇 자동 읽기 꺼짐','🔇 Auto-read off'));
+  else {
+    _syncAutoChip();
+    // 켠 직후 바로 한 번 읽어준다. 켜는 '탭' 자체가 사용자 제스처라,
+    // 이 순간에 재생해야 iOS 자동재생 차단에 걸리지 않는다.
+    const q = window._quiz;
+    if (_autoRead && q && q.words && q.idx < q.words.length) _playSmart(q.words[q.idx].en, _audioUrl(q.words[q.idx],'w'));
+  }
+  toast(_autoRead?TT('🔊 자동 읽기 켜짐 — 단어를 소리로 읽어줘요','🔊 Auto-read on'):TT('🔇 자동 읽기 꺼짐','🔇 Auto-read off'));
 }
 function renderStudyCard() {
   const root=document.getElementById('root'), s=studyState, route=stack[stack.length-1];
@@ -8419,7 +8441,7 @@ function renderStudyCard() {
   // 예문 발음 시리즈 폴더 결정용(현재 학습 중인 책 기준). 즐겨찾기 등 섞인 경우엔 '' → 예문은 TTS.
   window._audioSeries = (s.scope==='favorite') ? '' : _audioSeriesFromTitle(findBook(s.bookId)?.title||'');
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
-  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(TT('즐겨찾기','Favorites')):(findBook(s.bookId)?.title||'')}</span><span onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?TT('🔊 자동 ON','🔊 Auto ON'):TT('🔇 자동','🔇 Auto')}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">${TX(`${s.round}라운드 · ${s.xList.length}번 틀림`,'Round {v0} · {v1} ✕ so far',{v0:(s.round),v1:(s.xList.length)})}</div><div class="card-wrap" onclick="cardClick(event)"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint"><div class="ox-hint__nav">${TT('👈 이전　·　🔄 가운데 탭 뜻보기　·　외움 👉','👈 Prev　·　🔄 Tap center to flip　·　Got it 👉')}</div><div class="ox-hint__sub">${TT('아래 <b class="hx">✕</b> 모름　<b class="ho">○</b> 외움','<b class="hx">✕</b> Again　<b class="ho">○</b> Got it')}<span class="kbd-only">　·　<kbd>←</kbd> ${TT('이전','Prev')} <kbd>↑</kbd> ${TT('모름','Again')} <kbd>→</kbd> ${TT('외움','Got it')} <kbd>Space</kbd> ${TT('뒤집기','Flip')}</span></div></div></div>`;
+  root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(TT('즐겨찾기','Favorites')):(findBook(s.bookId)?.title||'')}</span><span class="auto-chip" onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?TT('🔊 자동 ON','🔊 Auto ON'):TT('🔇 자동','🔇 Auto')}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">${TX(`${s.round}라운드 · ${s.xList.length}번 틀림`,'Round {v0} · {v1} ✕ so far',{v0:(s.round),v1:(s.xList.length)})}</div><div class="card-wrap" onclick="cardClick(event)"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint"><div class="ox-hint__nav">${TT('👈 이전　·　🔄 가운데 탭 뜻보기　·　외움 👉','👈 Prev　·　🔄 Tap center to flip　·　Got it 👉')}</div><div class="ox-hint__sub">${TT('아래 <b class="hx">✕</b> 모름　<b class="ho">○</b> 외움','<b class="hx">✕</b> Again　<b class="ho">○</b> Got it')}<span class="kbd-only">　·　<kbd>←</kbd> ${TT('이전','Prev')} <kbd>↑</kbd> ${TT('모름','Again')} <kbd>→</kbd> ${TT('외움','Got it')} <kbd>Space</kbd> ${TT('뒤집기','Flip')}</span></div></div></div>`;
   _autoAfterRender(w, s.flipped);
 }
 
@@ -10266,6 +10288,7 @@ function renderQuiz() {
   const q = window._quiz;
   if (!q) { goTab('books'); return; }
   if (q.idx >= q.words.length) {
+    _autoStop();      // 결과 화면에서는 읽지 않는다
     clearQuizState(); // 결과 화면 도달 → 진행 저장 삭제(중복 채점·재개 방지)
     const rate = Math.round(q.correct / q.words.length * 100);
     saveStats(q.bookId, q.words.length, q.correct, q.scope === 'page' ? q.pageNum : null);
@@ -10362,7 +10385,7 @@ function renderQuiz() {
   }
   const choices = shuffle([w, ...others]);
   root.innerHTML = `<div class="scr" style="padding-bottom:20px;">
-    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="study__info">${t('quizResult')}</span><span class="study__close" onclick="clearQuizState();goTab('books')">✕</span></div>
+    <div class="study__top" style="margin-top:8px;"><span class="study__info">${q.idx+1} / ${q.words.length}</span><span class="auto-chip" onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?TT('🔊 자동 ON','🔊 Auto ON'):TT('🔇 자동','🔇 Auto')}</span><span class="study__close" onclick="clearQuizState();_autoStop();goTab('books')">✕</span></div>
     <div class="study__bar"><div class="study__fill" style="width:${prog}%"></div></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0;">
       <div style="text-align:center;margin-bottom:30px;">
@@ -10375,6 +10398,7 @@ function renderQuiz() {
       </div>
     </div>
   </div>`;
+  _autoQuizAfterRender(w);
 }
 
 function answerQuiz(chosen, correct) {
