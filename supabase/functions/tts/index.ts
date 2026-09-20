@@ -100,14 +100,26 @@ Deno.serve(async (req) => {
   // 한 번에 다 하면 함수 시간 제한에 걸린다. limit 만큼 하고 남은 수를 알려준다.
   if (body.bulk === true) {
     if (bearer !== SB_KEY && who !== ADMIN_EMAIL) return json({ error: 'forbidden' }, 403)
-    const limit = Math.min(Math.max(Number(body.limit) || 100, 1), 300)
+    const limit = Math.min(Math.max(Number(body.limit) || 1000, 1), 3000)
     const offset = Math.max(Number(body.offset) || 0, 0)
+    const genCap = Math.min(Math.max(Number(body.max_new) || 80, 1), 150)  // 이번 호출에서 새로 만들 최대 개수
+
+    // ⚠️ 단어마다 파일 존재를 HTTP 로 확인하면(HEAD) 3만 개를 훑는 데 몇 시간이 걸린다.
+    //    저장소 목록을 한 번에 받아 집합으로 만들어 두고 비교한다 (1,000개씩 ~17번).
+    const have = new Set<string>()
+    for (let off = 0; off < 100000; off += 1000) {
+      const { data, error } = await svc.storage.from(BUCKET).list('w', { limit: 1000, offset: off })
+      if (error) return json({ error: 'list_failed', detail: error.message }, 500)
+      for (const f of data ?? []) have.add(String(f.name || '').replace(/\.mp3$/i, ''))
+      if (!data || data.length < 1000) break
+    }
+
     const { data: rows, error } = await svc
       .from('voca_words').select('en').not('en', 'is', null)
       .order('en').range(offset, offset + limit - 1)
     if (error) return json({ error: 'query_failed', detail: error.message }, 500)
 
-    let made = 0, skipped = 0
+    let made = 0, skipped = 0, pending = 0
     const failed: unknown[] = []
     const seen = new Set<string>()
     for (const row of rows ?? []) {
@@ -116,16 +128,21 @@ Deno.serve(async (req) => {
       // 악센트를 떼면 파일명도 엉뚱해진다. (스페인어 음성은 /es/w/ 로 따로 있다)
       if (!/^[a-z][a-z' -]{0,30}$/.test(w)) { skipped++; continue }
       const key = safeName(w)
-      if (!key || seen.has(key)) { skipped++; continue }
+      if (!key || seen.has(key) || have.has(key)) { skipped++; continue }
       seen.add(key)
-      const path = `w/${key}.mp3`
-      if (await alreadyThere(path)) { skipped++; continue }
-      const res = await makeAudio(w, path)
-      if (res.ok) made++; else failed.push({ word: w, detail: res.detail })
+      if (made >= genCap) { pending++; continue }     // 시간 제한에 걸리지 않게 나눠 만든다
+      const res = await makeAudio(w, `w/${key}.mp3`)
+      if (res.ok) { made++; have.add(key) } else failed.push({ word: w, detail: res.detail })
     }
-    return json({ ok: true, made, skipped, scanned: rows?.length ?? 0,
-                  next_offset: offset + (rows?.length ?? 0),
-                  done: (rows?.length ?? 0) < limit, failed })
+    const scanned = rows?.length ?? 0
+    return json({
+      ok: true, made, skipped, scanned,
+      // 이번 회차에 다 못 만든 게 있으면 같은 구간을 한 번 더 돌려야 한다
+      next_offset: pending > 0 ? offset : offset + scanned,
+      still_todo_here: pending,
+      done: pending === 0 && scanned < limit,
+      failed,
+    })
   }
 
   // ── 단어 하나 ────────────────────────────────────────────────
