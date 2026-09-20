@@ -67,15 +67,40 @@ stable
 security definer
 set search_path = public
 as $$
+  -- ⚠️ 앱 화면(checkReviews)과 '똑같은 기준'으로 세야 한다.
+  --    앱은 내 책장에 없는 책의 복습을 숨기는데(findBook 이 없으면 skip), 여기서 그걸
+  --    빼먹어서 "오늘 복습 13개" 알림을 받고 들어가면 2개만 있는 일이 있었다.
+  --    공식 단어장을 책장에서 뺀 사람(11개)이 전부 여기 잡히고 있었다.
   select r.user_id, count(*)::int
   from public.voca_review r
   -- voca_review.book_id 와 voca_books.id 의 타입이 서로 다르다(uuid ↔ text).
   -- 어느 쪽이 무엇이든 안전하게 비교되도록 양쪽을 text 로 맞춘다.
   -- (book_id 에 uuid 가 아닌 값이 섞여 있어도 ::uuid 캐스팅처럼 에러가 나지 않는다)
   join public.voca_books b on b.id::text = r.book_id::text
+  join public.members   m on m.id = r.user_id
   where r.completed = false
     and coalesce(r.review_2d, r.review_3d, r.review_6d,
                  r.review_15d, r.review_30d, r.review_60d) <= now()
+    and (
+      -- 내가 만든 책: 그대로 센다
+      coalesce(b.is_official, false) = false
+      or (
+        -- 공식 단어장: ① 지금 내 책장에 담겨 있고
+        exists (
+          select 1
+          from jsonb_array_elements_text(coalesce(m.shelf_official->'ids', '[]'::jsonb)) x
+          where x = b.id::text
+        )
+        -- ② 볼 수 있는 자격이 있을 때만 (앱의 hasOfficialAccess 와 같은 기준).
+        --    무료 사용자는 Day 1 체험만 열려 있으므로 그 페이지만 센다.
+        and (
+          m.plan = 'premium'
+          or (m.org_role = 'owner' and m.org_status = 'approved')
+          or (m.org_role = 'student' and m.org_status = 'approved')
+          or r.page_num = 'Day 1'
+        )
+      )
+    )
   group by r.user_id
 $$;
 
