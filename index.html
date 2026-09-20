@@ -4635,7 +4635,7 @@ function showVoiceQuality(){
   const good = /(enhanced|premium|neural|siri|natural|google)/i.test(nm);
 
   const steps = isIOS
-    ? TT('설정 → 손쉬운 사용 → 콘텐츠 말하기 → 음성 → 영어 에서<br><b>이름 옆에 ⤓ 표시가 있는 음성</b>(Ava·Evan·Zoe 등)을 받아주세요.','Settings → Accessibility → Spoken Content → Voices → English, then download a voice marked with ⤓ (Ava, Evan, Zoe).')
+    ? TT('설정 → 손쉬운 사용 → <b>Read &amp; Speak</b>(이전 이름: 콘텐츠 말하기) → Voices → English 에서<br><b>이름 옆에 ⤓ 표시가 있는 음성</b>(Ava·Evan·Zoe 등)을 받아주세요.','Settings → Accessibility → <b>Read &amp; Speak</b> (formerly Spoken Content) → Voices → English, then download a voice marked with ⤓ (Ava, Evan, Zoe).')
     : isAndroid
     ? TT('설정 → 일반 관리 → 언어 및 입력 → 텍스트 음성 변환 에서<br><b>Google 음성 인식 및 합성</b>을 고르고, 영어 음성 데이터를 받아주세요.','Settings → General → Text-to-speech → choose Google Speech Services and install the English voice data.')
     : isMac
@@ -4660,7 +4660,7 @@ function showVoiceQuality(){
 
       <div style="font-size:12px;font-weight:800;color:var(--accent);letter-spacing:0.5px;margin-bottom:6px;">${TT('더 자연스럽게 듣는 법 (무료)','Get a better voice (free)')}</div>
       <div style="font-size:12.5px;color:var(--ink-70);line-height:1.8;margin-bottom:12px;">${steps}</div>
-      <div style="font-size:11.5px;color:var(--ink-45);line-height:1.7;margin-bottom:14px;">${TT('받은 뒤 이 앱을 완전히 껐다 켜면 새 음성으로 읽어줘요. 공식 단어장은 이미 사람이 녹음한 수준의 음성 파일을 쓰기 때문에 이 설정과 무관하게 자연스럽게 들립니다.','After downloading, fully close and reopen the app. Official wordbooks already use prerecorded audio, so they sound natural either way.')}</div>
+      <div style="font-size:11.5px;color:var(--ink-45);line-height:1.7;margin-bottom:14px;">${TT('메뉴가 안 보이면 설정 앱에서 아래로 당겨 <b>Voices</b> 로 검색하세요.<br>받은 뒤 이 앱을 완전히 껐다 켜면 새 음성으로 읽어줘요. 공식 단어장은 이미 사람이 녹음한 수준의 음성 파일을 쓰기 때문에 이 설정과 무관하게 자연스럽게 들립니다.','Can\'t find it? Search <b>Voices</b> in Settings.<br>After downloading, fully close and reopen the app. Official wordbooks already use prerecorded audio, so they sound natural either way.')}</div>
 
       <button onclick="document.getElementById('voice-modal').remove()" class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;">${TT('닫기','Close')}</button>
     </div>`;
