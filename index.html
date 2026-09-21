@@ -9579,7 +9579,7 @@ async function shareParentCard(studentId, studentName){
 
   // 활동 이력 로드(연속·누적·주간 계산용) — 단체 원장은 voca_activity 읽기 정책 있음(검증됨)
   let acts = [];
-  try { acts = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${sid}&select=day,kind,book_id,page_num&order=day.desc&limit=2000`) || []; } catch(e){}
+  try { acts = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${sid}&select=day,kind,book_id,page_num,step&order=day.desc&limit=2000`) || []; } catch(e){}
   if (!Array.isArray(acts)) acts = [];
 
   // 책 제목·단어 수 도우미
@@ -9597,7 +9597,11 @@ async function shareParentCard(studentId, studentName){
   let streak=0; { const base = daySet.has(kstToday)?0:1; while(daySet.has(kstStr(base+streak))) streak++; }
 
   // 이번 주(월~일) 달력
-  const dow = (new Date().getDay()+6)%7;   // 월=0 … 일=6 (로컬 기준)
+  // ⚠️ 기준 날짜(_off)를 과거로 옮겼으면 요일도 그날 기준으로 잡아야 한다.
+  //    '진짜 오늘' 의 요일을 쓰면 9/12(토) 리포트인데 월요일 기준으로 한 주를 잘라
+  //    달력 칸과 실제 요일이 어긋나고, 요일별 내용도 월요일 한 줄만 나온다.
+  const _refDate = new Date(); _refDate.setDate(_refDate.getDate() - _off);
+  const dow = (_refDate.getDay()+6)%7;   // 월=0 … 일=6 (기준 날짜의 요일)
   const wLabels = userNativeLang==='ko'?['월','화','수','목','금','토','일']:(userNativeLang==='zh'?['一','二','三','四','五','六','日']:(userNativeLang==='es'?['L','M','X','J','V','S','D']:['M','T','W','T','F','S','S']));
   const weekCal=[]; for(let i=0;i<7;i++) weekCal.push({label:wLabels[i], on:daySet.has(kstStr(dow-i)), isToday:i===dow, future:i>dow});
 
@@ -9613,8 +9617,9 @@ async function shareParentCard(studentId, studentName){
     if (x.kind === 'review') {
       // 같은 날 같은 페이지가 여러 번 찍혀도 회차는 한 번만 올린다
       if (bucket.review.some(r => r.bid===bid && r.page===page)) return;
+      // 회차는 DB 에 step(1~6) 으로 이미 기록돼 있다. 없는 예전 기록만 세어서 맞춘다.
       _stepNo[key] = (_stepNo[key] || 0) + 1;
-      bucket.review.push({ bid, page, n: _stepNo[key] });
+      bucket.review.push({ bid, page, n: Number(x.step) || _stepNo[key] });
     } else if (x.kind === 'study') {
       if (bucket.study.some(r => r.bid===bid && r.page===page)) return;
       bucket.study.push({ bid, page });
@@ -9622,7 +9627,9 @@ async function shareParentCard(studentId, studentName){
   });
   const _pageLabel = (bid, page) => {
     const t = btitle(bid);
-    return page ? (t + ' ' + page) : t;
+    const pn = String(page == null ? '' : page);
+    const lbl = /^\d+$/.test(pn) ? ('Day ' + pn) : pn;   // 학생 상세 화면과 같은 표기
+    return lbl ? (t + ' ' + lbl) : t;
   };
   const weekDetail = [];
   for (let i = 0; i <= dow; i++) {
