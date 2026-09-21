@@ -3899,6 +3899,414 @@ async function loadOrgStudents(){
   } catch(e){ if (box) box.innerHTML = `<div class="muted" style="font-size:13px;text-align:center;padding:16px;">${TT('학생 정보를 불러오지 못했어요','Failed to load')}</div>`; }
 }
 
+
+// ═══════════════════════════════════════════════════════════════
+// 학원 운영 화면 — 학생 중심으로 다시 짠 집계
+//
+// 예전 구조는 '과제 중심' 이었다. 서버(org-report)가 과제별로 데이터를 주고
+// 그걸 학생별·진도표·과제별 탭으로 돌려 보여줬는데, 원장이 실제로 궁금한 건
+// 과제가 아니라 '오늘 누가 안 했나 · 누가 밀렸나 · 누가 잘하나' 다.
+// 그래서 활동 기록(voca_activity)을 학생 단위로 모아 쓰기로 했다.
+// ═══════════════════════════════════════════════════════════════
+let _orgStatsCache = null, _orgStatsAt = 0;
+
+async function orgStats(force){
+  if (!force && _orgStatsCache && (Date.now() - _orgStatsAt) < 60000) return _orgStatsCache;
+  const today = _todayStr();
+  const from = _daysAgoStr(34);              // 5주치 — 이번 달·지난주 비교까지 가능
+  const myId = currentUser && currentUser.id;
+  const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id === myId);
+
+  const [acts, studs] = await Promise.all([
+    sbFetch(`/rest/v1/voca_activity?org_id=eq.${userOrg.id}&day=gte.${from}&select=user_id,day,kind,book_id,page_num,words,step&limit=20000`),
+    sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email,teacher_id,created_at&order=name`)
+  ]);
+  let students = Array.isArray(studs) ? studs : [];
+  // 공동 관리자는 자기 담당 학생만 본다 (주 관리자는 전체)
+  if (!isPrimary) students = students.filter(s => s.teacher_id === myId);
+
+  const byUser = {};
+  (Array.isArray(acts) ? acts : []).forEach(a => {
+    const u = (byUser[a.user_id] = byUser[a.user_id] || { days:new Set(), rows:[] });
+    const d = String(a.day || '').slice(0,10);
+    if (d) u.days.add(d);
+    u.rows.push({ day:d, kind:a.kind, bid:a.book_id, page:String(a.page_num||''), words:Number(a.words)||0, step:Number(a.step)||0 });
+  });
+
+  // 이번 주(월요일 시작)
+  const dow = (new Date().getDay() + 6) % 7;
+  const weekStart = _daysAgoStr(dow);
+  const lastWeekStart = _daysAgoStr(dow + 7), lastWeekEnd = _daysAgoStr(dow + 1);
+  const monthStart = _daysAgoStr(29);
+
+  const list = students.map(s => {
+    const u = byUser[s.id] || { days:new Set(), rows:[] };
+    const inRange = (r, a, b) => r.day >= a && r.day <= b;
+    const cnt = (a, b, kind) => {
+      const seen = new Set();
+      u.rows.forEach(r => { if (r.kind === kind && inRange(r, a, b)) seen.add(r.bid + '|' + r.page); });
+      return seen.size;
+    };
+    const newWords = (a, b) => {
+      const seen = new Set(); let n = 0;
+      u.rows.forEach(r => { if (r.kind === 'study' && inRange(r, a, b)) { const k = r.bid+'|'+r.page; if (!seen.has(k)) { seen.add(k); n += r.words; } } });
+      return n;
+    };
+    // 연속 학습일 — 오늘 안 했으면 어제부터 이어진 연속
+    let streak = 0; { const base = u.days.has(today) ? 0 : 1; while (u.days.has(_daysAgoStr(base + streak))) streak++; }
+    const todayRows = u.rows.filter(r => r.day === today);
+    const lastDay = [...u.days].sort().pop() || '';
+    // 진도 — 가장 최근에 새로 외운 페이지
+    let prog = null;
+    u.rows.filter(r => r.kind === 'study').sort((a,b)=>a.day.localeCompare(b.day)).forEach(r => { prog = r; });
+
+    return {
+      id: s.id, name: s.name || s.email || TT('학생','Student'), email: s.email || '',
+      joinedAt: s.created_at || '',
+      today: { study: todayRows.filter(r=>r.kind==='study').length, review: todayRows.filter(r=>r.kind==='review').length },
+      streak,
+      weekDays: [...u.days].filter(d => d >= weekStart && d <= today).length,
+      lastWeekDays: [...u.days].filter(d => d >= lastWeekStart && d <= lastWeekEnd).length,
+      monthDays: [...u.days].filter(d => d >= monthStart && d <= today).length,
+      weekNew: newWords(weekStart, today), weekReview: cnt(weekStart, today, 'review'),
+      monthNew: newWords(monthStart, today), monthReview: cnt(monthStart, today, 'review'),
+      lastDay, everStudied: u.days.size > 0,
+      progress: prog ? { bid: prog.bid, page: prog.page } : null,
+      overdue: 0,     // org-report 가 성공하면 아래에서 채운다
+    };
+  });
+
+  // 밀린 복습은 서버(org-report)가 권위 — 실패해도 나머지는 그대로 보여준다
+  try {
+    const res = await authPost('/functions/v1/org-report', { org_id: userOrg.id });
+    if (res && res.ok) {
+      const data = await res.json().catch(()=>({}));
+      const rep = Array.isArray(data.report) ? data.report : [];
+      const od = {};
+      rep.forEach(a => (a.students||[]).forEach(st => {
+        od[st.student_id] = (od[st.student_id] || 0) + (Number(st.reviewsOverdue) || 0);
+      }));
+      list.forEach(x => { x.overdue = od[x.id] || 0; });
+      window._lastReport = rep;
+    }
+  } catch(e){}
+
+  _orgStatsCache = { today, weekStart, monthStart, list };
+  _orgStatsAt = Date.now();
+  return _orgStatsCache;
+}
+
+// 학생 한 명의 '지금 상태' → 챙겨야 할 이유 (없으면 null)
+function _orgNeedsAttention(x){
+  if (!x.everStudied) return { rank: 0, why: TT('아직 시작 안 함','Never started'), tone: '#c0392b' };
+  if (x.overdue > 0)  return { rank: 1, why: TX(`밀린 복습 {v0}개`,`{v0} overdue`,{v0:(x.overdue)}), tone: '#c0392b' };
+  const gap = x.lastDay ? Math.round((new Date(_todayStr()) - new Date(x.lastDay)) / 86400000) : 99;
+  if (gap >= 3) return { rank: 2, why: TX(`{v0}일째 학습 없음`,`{v0} days inactive`,{v0:(gap)}), tone: '#b35900' };
+  if (!x.today.study && !x.today.review) return { rank: 3, why: TT('오늘 아직 안 함','Not yet today'), tone: '#b35900' };
+  return null;
+}
+
+function _orgDate(d){ if(!d) return '—'; const p=String(d).slice(0,10).split('-'); return p.length===3?`${+p[1]}/${+p[2]}`:d; }
+
+
+
+// ── 월간 리포트 (인쇄 → PDF) ────────────────────────────────────
+// 학원이 수강료를 받는 시점에 "이번 달 이렇게 공부했습니다" 를 내밀 수 있게.
+// PDF 라이브러리를 쓰지 않고 인쇄용 창을 띄운다 — 글자가 선택·검색되는 진짜
+// PDF 가 나오고, 여러 장으로 자동으로 나뉘고, 400KB 짜리 라이브러리도 필요 없다.
+async function openMonthlyReport(studentId, studentName){
+  if (!userOrg) return;
+  toast(TT('월간 리포트를 만드는 중…','Building report…'));
+  const today = _todayStr();
+  const from = _daysAgoStr(29);
+  let acts = [];
+  try {
+    acts = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${studentId}&day=gte.${from}&select=day,kind,book_id,page_num,words,step&order=day`) || [];
+  } catch(e){ acts = []; }
+  if (!Array.isArray(acts)) acts = [];
+
+  const btitle = bid => (findBook(bid) && findBook(bid).title) || TT('단어장','Wordbook');
+  const pgLabel = pn => { pn = String(pn==null?'':pn); return /^\d+$/.test(pn) ? ('Day '+pn) : (pn||'—'); };
+
+  // 날짜별로 묶기 (같은 날 같은 페이지 중복 제거)
+  const byDay = {};
+  acts.forEach(r => {
+    const d = String(r.day||'').slice(0,10); if (!d) return;
+    const b = (byDay[d] = byDay[d] || { study:[], review:[] });
+    const arr = r.kind === 'review' ? b.review : b.study;
+    if (arr.some(x => x.bid===r.book_id && x.page===String(r.page_num||''))) return;
+    arr.push({ bid:r.book_id, page:String(r.page_num||''), words:Number(r.words)||0, step:Number(r.step)||0 });
+  });
+  const days = Object.keys(byDay).sort();
+
+  // 요약
+  const studiedDays = days.length;
+  const newWords = days.reduce((n,d)=> n + byDay[d].study.reduce((m,x)=>m+x.words,0), 0);
+  const reviewSets = days.reduce((n,d)=> n + byDay[d].review.length, 0);
+  const newPages = days.reduce((n,d)=> n + byDay[d].study.length, 0);
+  let best = 0, cur = 0;
+  for (let i = 29; i >= 0; i--) { const d = _daysAgoStr(i); if (byDay[d]) { cur++; best = Math.max(best,cur); } else cur = 0; }
+
+  // 30일 달력 (6주 x 7일 격자로 그리면 복잡해져서, 한 줄에 10칸씩 3줄)
+  const cal = [];
+  for (let i = 29; i >= 0; i--) { const d = _daysAgoStr(i); const b = byDay[d];
+    cal.push({ d, on: !!b, n: b ? (b.study.length + b.review.length) : 0 }); }
+
+  // 단어장별 진도
+  const prog = {};
+  acts.forEach(r => { if (r.kind !== 'study') return; const t = btitle(r.book_id);
+    (prog[t] = prog[t] || new Set()).add(pgLabel(r.page_num)); });
+
+  const esc2 = t => esc(String(t==null?'':t));
+  const dLabel = d => { const p = String(d).split('-'); return `${+p[1]}/${+p[2]}`; };
+  const wdays = ['일','월','화','수','목','금','토'];
+  const wd = d => wdays[new Date(d).getDay()];
+
+  const rows = days.slice().reverse().map(d => {
+    const b = byDay[d];
+    const st = b.study.map(x => `${esc2(btitle(x.bid))} ${esc2(pgLabel(x.page))}${x.words?` (${x.words})`:''}`).join(', ');
+    const rv = b.review.map(x => `${esc2(btitle(x.bid))} ${esc2(pgLabel(x.page))}${x.step?` · ${x.step}회차`:''}`).join(', ');
+    return `<tr><td class="d">${dLabel(d)} <span class="w">${wd(d)}</span></td><td>${st||'<span class="m">—</span>'}</td><td>${rv||'<span class="m">—</span>'}</td></tr>`;
+  }).join('');
+
+  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<title>${esc2(studentName)} ${TT('월간 학습 리포트','Monthly report')}</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif; color:#222; margin:0; font-size:12px; }
+  .hd { display:flex; align-items:center; justify-content:space-between; border-bottom:2.5px solid #1c3553; padding-bottom:10px; margin-bottom:16px; }
+  .hd h1 { font-size:20px; margin:0; color:#1c3553; }
+  .hd .sub { font-size:11px; color:#777; margin-top:3px; }
+  .hd .who { text-align:right; font-size:17px; font-weight:800; }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px; }
+  .t { border:1px solid #e3e3e3; border-radius:9px; padding:10px 11px; }
+  .t .l { font-size:10px; color:#888; }
+  .t .v { font-size:19px; font-weight:800; color:#1c3553; margin-top:3px; }
+  .t .s { font-size:10px; color:#999; margin-top:2px; }
+  h2 { font-size:12.5px; color:#1c3553; margin:18px 0 8px; padding-bottom:5px; border-bottom:1px solid #e3e3e3; }
+  .cal { display:grid; grid-template-columns:repeat(10,1fr); gap:4px; }
+  .cal div { height:26px; border-radius:5px; border:1px solid #e8e8e8; font-size:9px; color:#aaa; display:flex; align-items:center; justify-content:center; }
+  .cal div.on { background:#1c7c3c; border-color:#1c7c3c; color:#fff; font-weight:700; }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:10px; color:#888; border-bottom:1.5px solid #ddd; padding:6px 5px; font-weight:700; }
+  td { border-bottom:1px solid #f0f0f0; padding:6px 5px; font-size:11px; vertical-align:top; line-height:1.5; }
+  td.d { white-space:nowrap; font-weight:700; color:#1c3553; width:62px; }
+  td .w, .m { color:#aaa; font-weight:400; }
+  .note { background:#f4f7fb; border-left:3px solid #1c3553; padding:10px 12px; font-size:11px; line-height:1.7; color:#33475e; border-radius:0 7px 7px 0; margin-top:14px; }
+  .ft { margin-top:18px; padding-top:9px; border-top:1px solid #e3e3e3; font-size:9.5px; color:#aaa; display:flex; justify-content:space-between; }
+  @media print { .noprint { display:none !important; } }
+  .noprint { position:fixed; top:12px; right:12px; }
+  .noprint button { background:#1c3553; color:#fff; border:none; border-radius:9px; padding:11px 20px; font-size:14px; font-weight:700; cursor:pointer; }
+</style></head><body>
+<div class="noprint"><button onclick="window.print()">🖨️ ${TT('인쇄 · PDF로 저장','Print / Save as PDF')}</button></div>
+<div class="hd">
+  <div><h1>${esc2(userOrg.name||'IM VOCA')}</h1>
+    <div class="sub">${TT('영어 단어 학습 월간 리포트','Monthly vocabulary report')} · ${dLabel(from)} ~ ${dLabel(today)}</div></div>
+  <div class="who">${esc2(studentName)}</div>
+</div>
+<div class="tiles">
+  <div class="t"><div class="l">${TT('학습한 날','Days studied')}</div><div class="v">${studiedDays}<span style="font-size:11px;color:#999;"> / 30</span></div><div class="s">${Math.round(studiedDays/30*100)}%</div></div>
+  <div class="t"><div class="l">${TT('최장 연속','Best streak')}</div><div class="v">${best}<span style="font-size:11px;color:#999;">${TT('일','d')}</span></div></div>
+  <div class="t"><div class="l">${TT('새로 외운 단어','New words')}</div><div class="v">${newWords.toLocaleString()}</div><div class="s">${newPages} ${TT('페이지','pages')}</div></div>
+  <div class="t"><div class="l">${TT('복습 완료','Reviews done')}</div><div class="v">${reviewSets}</div><div class="s">${TT('세트','sets')}</div></div>
+</div>
+<h2>${TT('30일 학습 달력','30-day calendar')}</h2>
+<div class="cal">${cal.map(c=>`<div class="${c.on?'on':''}">${dLabel(c.d)}</div>`).join('')}</div>
+<h2>${TT('단어장별 진도','Progress by wordbook')}</h2>
+<table><tbody>${Object.keys(prog).length ? Object.entries(prog).map(([t,set])=>{
+    const arr=[...set].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}));
+    return `<tr><td class="d" style="width:auto;">${esc2(t)}</td><td>${arr.length}${TT('개 페이지','pages')} · ${esc2(arr.join(', '))}</td></tr>`;
+  }).join('') : `<tr><td class="m">${TT('이번 달 새로 시작한 페이지가 없어요','No new pages this month')}</td></tr>`}</tbody></table>
+<h2>${TT('날짜별 학습 내용','Day by day')}</h2>
+<table><thead><tr><th>${TT('날짜','Date')}</th><th>${TT('새로 외운 단어장','New')}</th><th>${TT('복습','Review')}</th></tr></thead>
+<tbody>${rows || `<tr><td colspan="3" class="m" style="text-align:center;padding:20px;">${TT('이번 달 학습 기록이 없어요','No activity this month')}</td></tr>`}</tbody></table>
+<div class="note"><b>${TT('에빙하우스 망각곡선 복습','Spaced repetition')}</b><br>
+${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로 6번 다시 만나게 합니다. 잊어버릴 때쯤 다시 보는 것이 장기기억으로 넘기는 가장 확실한 방법이기 때문입니다. 위 \'복습\' 항목의 회차가 그 단계입니다.','IM VOCA brings each word back 6 times over 60 days — right when it is about to be forgotten.')}</div>
+<div class="ft"><span>${esc2(userOrg.name||'')}</span><span>by IM VOCA · ${today}</span></div>
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  if (!w) { toast(TT('팝업이 차단됐어요. 브라우저에서 허용해주세요','Popup blocked — please allow popups')); return; }
+  w.document.write(html); w.document.close();
+}
+
+// ── 학생 표 (리포트 탭) ─────────────────────────────────────────
+// 학생별·진도표·과제별 세 탭을 없앴다. 원장이 보는 건 결국 하나다 —
+// "학생 한 명 한 명이 이번 주(달)에 얼마나 했나". 정렬해서 보면 끝난다.
+window._orgSort = window._orgSort || { key:'need', desc:true };
+window._orgPeriod = window._orgPeriod || 'week';
+
+function setOrgPeriod(p){ window._orgPeriod = p; loadOrgTable(); }
+function setOrgSort(k){
+  const s = window._orgSort;
+  if (s.key === k) s.desc = !s.desc; else { s.key = k; s.desc = true; }
+  loadOrgTable();
+}
+
+async function loadOrgTable(){
+  const box = document.getElementById('org-table');
+  if (!box || !userOrg) return;
+  try {
+    const st = await orgStats();
+    box.innerHTML = renderOrgTable(st);
+  } catch(e){
+    console.error('[orgTable]', e);
+    box.innerHTML = `<div class="muted" style="text-align:center;padding:30px;font-size:13px;">${TT('불러오지 못했어요','Could not load')}
+      <br><button onclick="loadOrgTable()" style="margin-top:10px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;">${TT('다시 시도','Retry')}</button></div>`;
+  }
+}
+
+function renderOrgTable(st){
+  const wk = window._orgPeriod === 'week';
+  const rows = st.list.slice();
+  const key = window._orgSort.key, desc = window._orgSort.desc;
+  const val = x => ({
+    name: x.name,
+    need: (_orgNeedsAttention(x) ? (9 - _orgNeedsAttention(x).rank) : 0),
+    today: (x.today.study + x.today.review),
+    streak: x.streak,
+    days: wk ? x.weekDays : x.monthDays,
+    nw: wk ? x.weekNew : x.monthNew,
+    rv: wk ? x.weekReview : x.monthReview,
+    overdue: x.overdue,
+    last: x.lastDay || '',
+  }[key]);
+  rows.sort((a,b)=>{
+    const va = val(a), vb = val(b);
+    const c = (typeof va === 'string') ? String(va).localeCompare(String(vb), 'ko') : (Number(va) - Number(vb));
+    return desc ? -c : c;
+  });
+
+  const arrow = k => window._orgSort.key === k ? (window._orgSort.desc ? ' ▾' : ' ▴') : '';
+  const th = (k, label, align) => `<th onclick="setOrgSort('${k}')" style="text-align:${align||'center'};padding:9px 6px;font-size:11px;font-weight:700;color:${window._orgSort.key===k?'var(--accent)':'var(--ink-45)'};cursor:pointer;white-space:nowrap;border-bottom:1.5px solid var(--ink-07);user-select:none;">${label}${arrow(k)}</th>`;
+  const num = (v, color) => `<td style="text-align:center;padding:9px 6px;font-size:12.5px;color:${color||'var(--ink-100)'};font-weight:${color?'700':'500'};">${v}</td>`;
+
+  const body = rows.map(x => {
+    const a = _orgNeedsAttention(x);
+    const days = wk ? x.weekDays : x.monthDays;
+    const target = wk ? 7 : 30;
+    const pct = Math.round(days / target * 100);
+    const prog = x.progress ? `${esc((findBook(x.progress.bid)||{}).title || TT('단어장','Book'))} ${esc(x.progress.page)}` : '—';
+    return `<tr style="border-bottom:1px solid var(--ink-07);">
+      <td style="padding:9px 6px;">
+        <div onclick="openStudentDetail('${jsq(x.id)}')" style="cursor:pointer;">
+          <div style="font-size:13px;font-weight:700;color:var(--ink-100);white-space:nowrap;">${esc(x.name)}${a?` <span style="font-size:10px;font-weight:700;color:${a.tone};">●</span>`:''}</div>
+          <div class="muted" style="font-size:10.5px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;">${prog}</div>
+        </div>
+      </td>
+      ${num(x.today.study + x.today.review ? `📘${x.today.study} 🔁${x.today.review}` : '—', (x.today.study+x.today.review)?'#1c7c3c':'var(--ink-40)')}
+      ${num(x.streak > 1 ? `🔥${x.streak}` : (x.streak || '—'), x.streak>2?'#b35900':null)}
+      ${num(`${days}<span style="color:var(--ink-40);font-size:10.5px;">/${target}</span>`, pct>=70?'#1c7c3c':(pct<30?'#c0392b':null))}
+      ${num(x[wk?'weekNew':'monthNew'] || '—')}
+      ${num(x[wk?'weekReview':'monthReview'] || '—')}
+      ${num(x.overdue || '—', x.overdue?'#c0392b':'var(--ink-40)')}
+      ${num(_orgDate(x.lastDay), 'var(--ink-45)')}
+      <td style="text-align:right;padding:9px 4px;white-space:nowrap;">
+        <button onclick="shareParentCard('${jsq(x.id)}','${jsq(x.name)}')" title="${TT('학부모 카드','Parent card')}" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--ink-60);">📤</button>
+        <button onclick="openMonthlyReport('${jsq(x.id)}','${jsq(x.name)}')" title="${TT('월간 리포트 (인쇄·PDF)','Monthly report')}" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--ink-60);margin-left:4px;">📄</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const pbtn = (k, label) => `<button onclick="setOrgPeriod('${k}')" style="flex:1;padding:9px;border-radius:10px;border:1.5px solid ${window._orgPeriod===k?'var(--accent)':'var(--ink-12)'};background:${window._orgPeriod===k?'var(--gold-bg)':'transparent'};color:${window._orgPeriod===k?'var(--accent)':'var(--ink-60)'};font-size:13px;font-weight:700;font-family:var(--font-body);cursor:pointer;">${label}</button>`;
+
+  return `
+    <div style="display:flex;gap:8px;margin-bottom:12px;max-width:320px;">
+      ${pbtn('week', TT('이번 주','This week'))}${pbtn('month', TT('최근 30일','Last 30 days'))}
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:6px 14px 10px;box-shadow:var(--shadow-sm);overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;min-width:640px;">
+        <thead><tr>
+          ${th('name', TT('학생','Student'), 'left')}
+          ${th('today', TT('오늘','Today'))}
+          ${th('streak', TT('연속','Streak'))}
+          ${th('days', TT('학습일','Days'))}
+          ${th('nw', TT('새 단어','New'))}
+          ${th('rv', TT('복습','Review'))}
+          ${th('overdue', TT('밀림','Overdue'))}
+          ${th('last', TT('마지막','Last'))}
+          <th style="border-bottom:1.5px solid var(--ink-07);"></th>
+        </tr></thead>
+        <tbody>${body || `<tr><td colspan="9" class="muted" style="text-align:center;padding:26px;font-size:13px;">${TT('승인된 학생이 없어요','No students')}</td></tr>`}</tbody>
+      </table>
+    </div>
+    <div class="muted" style="font-size:11px;margin:10px 2px 0;line-height:1.6;">
+      ${TT('· 제목을 누르면 그 기준으로 정렬돼요 · 이름을 누르면 학생 상세로 갑니다','· Tap a header to sort · Tap a name for details')}<br>
+      ${TT('· 📤 학부모 카드 (카톡용 이미지) · 📄 월간 리포트 (인쇄·PDF)','· 📤 parent card · 📄 monthly report')}
+    </div>`;
+}
+
+// ── 대시보드 ────────────────────────────────────────────────────
+async function loadOrgOverview(){
+  const box = document.getElementById('org-overview');
+  if (!box || !userOrg) return;
+  try {
+    const st = await orgStats();
+    box.innerHTML = renderOrgOverview(st);
+  } catch(e){
+    console.error('[orgStats]', e);
+    box.innerHTML = `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:20px;text-align:center;">
+      <div class="muted" style="font-size:13px;">${TT('학생 현황을 불러오지 못했어요','Could not load')}</div>
+      <button onclick="loadOrgOverview()" style="margin-top:10px;padding:8px 18px;border:1.5px solid var(--accent);background:var(--gold-bg);border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-100);cursor:pointer;">${TT('다시 시도','Retry')}</button></div>`;
+  }
+}
+
+function renderOrgOverview(st){
+  const N = st.list.length;
+  const did = st.list.filter(x => x.today.study || x.today.review);
+  const overdueStudents = st.list.filter(x => x.overdue > 0);
+  const overdueTotal = overdueStudents.reduce((n,x)=>n+x.overdue, 0);
+  const never = st.list.filter(x => !x.everStudied);
+  const avgWeek = N ? (st.list.reduce((n,x)=>n+x.weekDays,0) / N) : 0;
+  const p = st.today.split('-');
+  const wdays = userNativeLang==='ko'?['일','월','화','수','목','금','토']:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dLabel = `${+p[1]}/${+p[2]} (${wdays[new Date(st.today).getDay()]})`;
+
+  const tile = (v, sub, label, color) => `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:15px 14px;box-shadow:var(--shadow-sm);">
+      <div class="muted" style="font-size:11px;margin-bottom:6px;">${label}</div>
+      <div style="font-family:var(--font-display);font-size:26px;font-weight:600;color:${color||'var(--ink-100)'};line-height:1;">${v}</div>
+      <div class="muted" style="font-size:11px;margin-top:5px;">${sub}</div>
+    </div>`;
+
+  const need = st.list.map(x => ({ x, a: _orgNeedsAttention(x) })).filter(r => r.a)
+    .sort((r1,r2) => r1.a.rank - r2.a.rank || r2.x.overdue - r1.x.overdue || String(r1.x.lastDay).localeCompare(String(r2.x.lastDay)));
+  const good = st.list.filter(x => !_orgNeedsAttention(x))
+    .sort((a,b) => b.streak - a.streak || b.weekDays - a.weekDays);
+
+  const row = (x, right, tone) => `<div style="display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--ink-07);">
+      <div onclick="openStudentDetail('${jsq(x.id)}')" style="flex:1;min-width:0;cursor:pointer;">
+        <div style="font-size:13.5px;font-weight:700;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(x.name)}</div>
+        <div style="font-size:11px;color:${tone||'var(--ink-45)'};margin-top:2px;">${right}</div>
+      </div>
+      <button onclick="event.stopPropagation();shareParentCard('${jsq(x.id)}','${jsq(x.name)}')" title="${TT('학부모에게 보내기','Send to parent')}"
+        style="flex-shrink:0;background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 9px;font-size:12px;cursor:pointer;color:var(--ink-60);">📤</button>
+    </div>`;
+
+  return `
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+      ${tile(`${did.length}<span style="font-size:15px;color:var(--ink-45);">/${N}</span>`, TT('명이 학습','studied'), `☀️ ${TT('오늘','Today')} ${dLabel}`, did.length ? '#1c7c3c' : '#c0392b')}
+      ${tile(overdueTotal, TX(`{v0}명`,`{v0} students`,{v0:(overdueStudents.length)}), `⏰ ${TT('밀린 복습','Overdue')}`, overdueTotal ? '#c0392b' : '#1c7c3c')}
+      ${tile(avgWeek.toFixed(1), TT('일 / 주 7일','days of 7'), `📅 ${TT('이번 주 평균','Weekly avg')}`)}
+      ${tile(never.length, TT('명 미시작','never started'), `🆕 ${TT('시작 안 함','Not started')}`, never.length ? '#b35900' : '#1c7c3c')}
+    </div>
+
+    <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-sm);margin-bottom:14px;">
+      <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">⚠️ ${TT('오늘 챙길 학생','Needs attention')} <span class="muted" style="font-weight:400;">(${need.length})</span></div>
+      <div class="muted" style="font-size:11.5px;margin-bottom:8px;">${TT('시작 안 함 → 밀린 복습 → 오래 안 함 순서예요','Sorted by urgency')}</div>
+      ${need.length ? need.map(r => row(r.x, r.a.why + (r.x.lastDay ? ` · ${TT('마지막','last')} ${_orgDate(r.x.lastDay)}` : ''), r.a.tone)).join('')
+                    : `<div style="font-size:13px;color:#1c7c3c;padding:10px 0;">${TT('모두 오늘 학습했어요 👏','Everyone studied today 👏')}</div>`}
+    </div>
+
+    <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-sm);">
+      <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">✅ ${TT('잘하고 있는 학생','Doing well')} <span class="muted" style="font-weight:400;">(${good.length})</span></div>
+      ${good.length ? good.map(x => row(x,
+          (x.streak > 1 ? TX(`🔥 {v0}일 연속`,`🔥 {v0}-day streak`,{v0:(x.streak)}) + ' · ' : '') +
+          TX(`오늘 새 단어 {v0} · 복습 {v1}`,`Today: {v0} new · {v1} review`,{v0:(x.today.study),v1:(x.today.review)}), '#1c7c3c')).join('')
+        : `<div class="muted" style="font-size:12.5px;padding:8px 0;">${TT('아직 없어요','None yet')}</div>`}
+    </div>`;
+}
+
 // ===== 오늘의 리포트 (실시간 — voca_activity 오늘치로 즉시 계산. cron·9시 안 기다림) =====
 async function loadDailyReport(){
   const box = document.getElementById('org-daily-report');
@@ -4419,9 +4827,9 @@ const HELP = {
     tip:'매일 밤 9시 자동 집계도 있지만, 이 화면은 지금 이 순간 기준 실시간이에요.' },
   members: { icon:'👥', title:'학생·관리자', purpose:'학생 가입 승인, 담임 선생님 지정, 학생 정보를 관리해요.',
     steps:['“승인 대기”에 뜬 가입 신청 학생을 승인','학생을 눌러 담임(선생님) 지정','담임을 지정하면 그 선생님 화면엔 담당 학생만 보여요'] },
-  report: { icon:'📈', title:'학습 리포트', purpose:'학생별 진도·밀린 복습을 보고, 학부모에게 “오늘 학습 리포트”를 보내요.',
-    steps:['학생별 / 진도표 / 과제별 탭으로 진행 상황 확인','🚨 “챙겨야 할 학생”(미시작·밀림·오늘 안 함)이 맨 위에','학생 옆 📤 → 오늘 외운 단어·복습·목표가 담긴 카드를 카톡·문자로 전송'],
-    tip:'시험 성적은 여기가 아니라 “시험 출제 → 📊 결과”에서 따로 보내요.' },
+  report: { icon:'📈', title:'학습 리포트', purpose:'학생 한 명 한 명이 이번 주(달)에 얼마나 했는지 한 표로 봅니다.',
+    steps:['제목을 누르면 그 기준으로 정렬됩니다 (밀림 많은 순, 학습일 적은 순 …)','이름 옆 ● 은 챙겨야 할 학생 표시','이름을 누르면 그 학생 상세로','📤 학부모 카드(카톡용 이미지) · 📄 월간 리포트(인쇄·PDF)'],
+    tip:'수강료 받는 날 📄 월간 리포트를 뽑아 드리면 재등록에 큰 도움이 됩니다.' },
   tests: { icon:'📝', title:'시험 출제', purpose:'단어 시험을 온라인(자동채점) 또는 종이(PDF)로 내고 성적을 관리해요.',
     steps:['“새 시험 만들기” → 단어장·범위·유형·문항 수 선택','학생 앱 홈에 자동 배정 → 학생이 응시하면 자동 채점','🖨️ A형/B형: 종이 시험지(정답지 포함) · 순서 셔플로 부정 방지','📊 결과: 학생별 점수·반평균 · 옆 📤로 시험 성적표를 학부모에게','🔁 재시험: 같은 진도 다른 문제 · 기준 점수 미만 학생만 자동 선택'],
     img:_PROMO+'student-screens.png', imgcap:'학생 화면(배정 알림 → 응시 → 자동채점)' },
@@ -4585,22 +4993,17 @@ function renderOrgAdminPage(root) {
   const card = (body,pad='18px 20px')=>`<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:${pad};box-shadow:var(--shadow-sm);margin-bottom:14px;">${body}</div>`;
 
   // ── 탭별 콘텐츠 ──
+  // 오늘 움직여야 할 것(학생 현황)을 위에, 바뀌지 않는 단체 정보는 아래에.
   const secDashboard = `
     <div class="org-main__title">📊 ${TT('대시보드','Dashboard')}${_helpBtn('dashboard')}</div>
+    <div id="org-overview"><div class="muted" style="text-align:center;padding:36px;font-size:13px;">${TT('불러오는 중…','Loading…')}</div></div>
+    <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:22px 2px 12px;">${TT('단체 현황','Organization')}</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
       ${stat('org-stat-students', TT('학생','Students'))}
       ${stat('org-stat-pending', TT('승인 대기','Pending'), '#b5720a')}
       ${stat('org-stat-admins', TT('관리자','Admins'))}
       ${stat('org-stat-bill', TT('월 예상','Monthly'), 'var(--accent)')}
-    </div>
-    <div id="org-daily-report"></div>
-    ${card(`<div style="display:flex;align-items:center;gap:14px;">
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:14.5px;font-weight:700;color:var(--ink-100);margin-bottom:3px;">📈 ${TT('과제별 상세 리포트','Assignment report')}</div>
-          <div class="muted" style="font-size:12px;line-height:1.55;">${TT('배정한 과제별 복습 진행(며칠차)과 학부모 공유 카드.','Per-assignment review progress and parent cards.')}</div>
-        </div>
-        <button onclick="setOrgTab('report')" style="background:var(--accent);border:none;border-radius:10px;padding:10px 16px;font-size:13px;cursor:pointer;color:#fff;font-weight:700;font-family:var(--font-body);flex-shrink:0;white-space:nowrap;">${TT('열기 →','Open →')}</button>
-      </div>`)}`;
+    </div>`;
 
   const secMembers = `
     <div class="org-main__title">👥 ${TT('학생·관리자','Members')}${_helpBtn('members')}</div>
@@ -4608,9 +5011,8 @@ function renderOrgAdminPage(root) {
 
   const secReport = `
     <div class="org-main__title">📈 ${TT('학습 리포트','Reports')}${_helpBtn('report')}</div>
-    <div id="org-daily-report"></div>
-    <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-40);margin:22px 2px 12px;">${TT('과제별 진행 · 학부모 카드','By assignment')}</div>
-    <div id="report-body"><div class="muted" style="text-align:center;padding:36px;font-size:13px;">${TT('불러오는 중…','Loading…')}</div></div>`;
+    <div class="muted" style="font-size:12.5px;margin:0 2px 14px;line-height:1.6;">${TT('학생 한 명 한 명이 얼마나 했는지 한 표로 봅니다. 제목을 눌러 정렬하세요.','One row per student. Tap a header to sort.')}</div>
+    <div id="org-table"><div class="muted" style="text-align:center;padding:36px;font-size:13px;">${TT('불러오는 중…','Loading…')}</div></div>`;
 
   const secInvite = `
     <div class="org-main__title">🎫 ${TT('학생 초대','Invite')}${_helpBtn('invite')}</div>
@@ -4701,8 +5103,9 @@ function renderOrgAdminPage(root) {
       </nav>
       <div class="org-content"><div class="org-content__inner">${SEC[tab] || secDashboard}</div></div>
     </div>`;
-  setTimeout(loadOrgStudents, 0); setTimeout(loadDailyReport, 0);
-  if (tab==='report') setTimeout(()=>loadOrgReport('report-body'), 0);
+  setTimeout(loadOrgStudents, 0);
+  if (tab==='dashboard') setTimeout(loadOrgOverview, 0);
+  if (tab==='report') setTimeout(loadOrgTable, 0);
   if (tab==='tests') setTimeout(()=>{ loadTests().then(_renderTestList).catch(()=>_renderTestList()); }, 0);
   if (tab==='billing') setTimeout(loadOrgInvoices, 0);
 }
