@@ -3328,6 +3328,11 @@ function hasOfficialAccess(){
 }
 // 공식 단어장을 학습언어 필터 없이(전체 언어) 볼 수 있는 사용자 = 단체 관리자(배정용)
 function _seesAllOfficialLangs(){ return userOrgRole==='owner' && userOrgStatus==='approved'; }
+// 공식 단어장(수능·중등·토익·토플·스페인어)은 '한국인을 위한' 교재다.
+// 뜻·어원·기출 출처가 전부 한국어라, 다른 언어 사용자가 담으면 읽을 수 없는 책이 된다.
+// → 추가 목록에서 아예 보여주지 않는다. (이미 책장에 담아둔 책은 건드리지 않는다 —
+//    남의 책장에서 책을 말없이 빼앗는 일은 하지 않는다)
+function _officialBooksForMe(){ return userNativeLang === 'ko'; }
 const OFFICIAL_FREE_PAGE = 'Day 1';
 // 무료 체험 페이지 판정: page_num 형식('Day 1'/'1'/'Day1'/'1일' 등)에 상관없이 "첫 날(숫자 1)"이면 무료
 function _isOfficialFreePage(pageNum){
@@ -5910,6 +5915,8 @@ async function renderOfficialPicker(){
   const box = document.getElementById('official-picker');
   if (!box) return;
   const ko = userNativeLang==='ko';
+  // 한국어 사용자가 아니면 공식 단어장 목록 자체를 숨긴다 (뜻이 전부 한국어라 쓸 수 없다)
+  if (!_officialBooksForMe()) { box.innerHTML = ''; return; }
   // 단체 '학생'에게는 선택 목록을 보이지 않음(배정받은 책만) — 관리자는 개인처럼 추가/빼기 가능.
   if (userOrgId && !_seesAllOfficialLangs()) { box.innerHTML = ''; return; }
   // 목록을 이미 받아둔 상태에서 '담기/빼기' 후 다시 그리는 경우에는 비우지 않는다.
@@ -11112,13 +11119,16 @@ function renderManualAdd(root, route) {
 //
 // RLS 가 공식책만 노출하므로 이 조회로 남의 개인 단어가 나올 일은 없다.
 //
-// ⚠️ base(뜻)가 한국어라서 한국어 사용자에게만 쓴다. 다른 언어 사용자는 지금처럼
-//    저장할 때 Gemini 가 그 사람 언어로 만들어준다.
+// ⚠️ base(뜻)는 한국어다. 그래서 한국어 사용자에게만 뜻을 준다.
+//    하지만 발음기호·예문·품사·CEFR 등급은 어느 나라 사람이 봐도 같은 값이다.
+//    → 다른 언어 사용자에게도 그 항목들은 즉시 채워주고, 뜻만 저장할 때 AI 가 만든다.
+//    (예전에는 통째로 막혀 있어서 한국어 사용자만 빠르게 쓸 수 있었다)
 const _corpusCache = new Map();   // 같은 단어를 두 번 조회하지 않게
 async function lookupWordInCorpus(en){
   const q = String(en || '').trim().toLowerCase();
-  if (!q || userNativeLang !== 'ko') return null;
+  if (!q) return null;
   if (_corpusCache.has(q)) return _corpusCache.get(q);
+  const ko = (userNativeLang === 'ko');
   let best = null;
   try {
     // ilike + 와일드카드 없음 = 대소문자 무시 정확 일치 (Neat 로 쳐도 neat 을 찾는다)
@@ -11128,6 +11138,12 @@ async function lookupWordInCorpus(en){
       const score = (r) => (r.base?2:0) + (r.sentence?2:0) + (r.analysis?1:0) + (r.ipa?1:0);
       best = rows.slice().sort((a,b)=>score(b)-score(a))[0];
       if (!best.base) best = null;
+      // 한국어 사용자가 아니면 한국어 뜻·해설은 빼고 언어 무관 항목만 넘긴다
+      if (best && !ko) {
+        const a0 = best.analysis || {};
+        best = { en: best.en, base: '', ipa: best.ipa || '', sentence: best.sentence || '',
+                 level: best.level || '', analysis: a0.pos ? { pos: a0.pos } : null };
+      }
     }
   } catch(e){
     // ⚠️ 네트워크 실패를 '사전에 없음' 으로 캐시하면, 그 단어는 이 세션 내내
@@ -11684,7 +11700,7 @@ async function importSheetsAsPages(){
 // 서버에도 부담이라, in.(...) 으로 한 번에 받는다. URL 길이 때문에 100개씩 끊는다.
 async function lookupWordsInCorpus(list){
   const found = new Map();
-  if (userNativeLang !== 'ko') return found;
+  const ko = (userNativeLang === 'ko');
   const words = [...new Set(list.map(w => String(w||'').trim().toLowerCase()).filter(Boolean))];
   const score = (r) => (r.base?2:0) + (r.sentence?2:0) + (r.analysis?1:0) + (r.ipa?1:0);
   for (let i = 0; i < words.length; i += 100) {
@@ -11698,7 +11714,11 @@ async function lookupWordsInCorpus(list){
         if (!r.base) continue;
         const k = String(r.en || '').toLowerCase();
         const prev = found.get(k);
-        if (!prev || score(r) > score(prev)) found.set(k, r);
+        if (!prev || score(r) > score(prev)) {
+          // 한국어 사용자가 아니면 한국어 뜻·해설은 빼고 언어 무관 항목만 (발음·예문·등급·품사)
+          found.set(k, ko ? r : { en: r.en, base: '', ipa: r.ipa || '', sentence: r.sentence || '',
+                                  level: r.level || '', analysis: (r.analysis && r.analysis.pos) ? { pos: r.analysis.pos } : null });
+        }
       }
     } catch(e){}
   }
