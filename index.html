@@ -9195,6 +9195,26 @@ function _pcPaint(ctx, W, d){
     ctx.fillText(c.label, cx, y+76); ctx.textAlign='left'; });
   y+=wh+12;
 
+  // 요일별로 무엇을 했는지 (학부모가 가장 궁금해하는 부분)
+  const wd = (d.weekDetail||[]).slice(0, 7);
+  if (wd.length) {
+    const rows = wd.map(r => ({ label: r.label, lines: wrap(r.text, '500 11.5px '+F, CW-58) }));
+    const dh = 26 + rows.reduce((n,r)=>n + Math.max(1, r.lines.length)*16, 0) + 12;
+    ctx.fillStyle='#fff'; rr(P,y,CW,dh,14); ctx.fill();
+    ctx.strokeStyle='#ececec'; ctx.lineWidth=1; rr(P+0.5,y+0.5,CW-1,dh-1,14); ctx.stroke();
+    ctx.fillStyle='#9a7b3a'; ctx.font='700 10.5px '+F;
+    ctx.fillText(TT('요일별 학습 내용','DAY BY DAY'), P+14, y+20);
+    let ry = y+38;
+    rows.forEach(r=>{
+      ctx.fillStyle='#1c3553'; ctx.font='800 11.5px '+F;
+      ctx.fillText(r.label, P+14, ry);
+      ctx.fillStyle='#3a3a3a'; ctx.font='500 11.5px '+F;
+      r.lines.forEach((ln,j)=> ctx.fillText(ln, P+38, ry + j*16));
+      ry += Math.max(1, r.lines.length)*16;
+    });
+    y += dh + 12;
+  }
+
   // 이번 주 요약
   const B='#2b2b2b', GN='#1c7c3c', OR='#b35900', AC='#1c3553';
   const f13='500 13px '+F, f13b='800 13px '+F, f12='500 12px '+F;
@@ -9345,6 +9365,7 @@ function _parentCardText(d){
   if(d.streak>0) L.push(TX(`🔥 연속 학습 {v0}일째`,`🔥 {v0}-day streak`,{v0:(d.streak)}));
   L.push(`📚 ${TT('누적 암기','Total memorized')}: ${d.totalWordsLabel}`);
   L.push(`🗓 ${TT('이번 주','This week')}: `+(d.weekCal||[]).map(c=>c.on?'✅':(c.future?'　':'·')).join(' '));
+  (d.weekDetail||[]).forEach(r => L.push(`   ${r.label}  ${r.text}`));
   L.push(`✏️ ${TT('이번 주 새 단어','New this week')}: ${d.weekNewLabel}${d.diffLabel?` (${d.diffLabel})`:''}`);
   L.push(`🔁 ${d.reviewLabel}`);
   if(d.todayLabel) L.push(`☀️ ${TT('오늘','Today')}: ${d.todayLabel}`);
@@ -9580,6 +9601,47 @@ async function shareParentCard(studentId, studentName){
   const wLabels = userNativeLang==='ko'?['월','화','수','목','금','토','일']:(userNativeLang==='zh'?['一','二','三','四','五','六','日']:(userNativeLang==='es'?['L','M','X','J','V','S','D']:['M','T','W','T','F','S','S']));
   const weekCal=[]; for(let i=0;i<7;i++) weekCal.push({label:wLabels[i], on:daySet.has(kstStr(dow-i)), isToday:i===dow, future:i>dow});
 
+  // ── 요일별로 '무엇을' 했는지 ───────────────────────────────────
+  // ✅ 체크만으로는 "매일 했구나" 까지만 보인다. 학부모가 확 와닿는 건
+  //    '월요일 수능 기본 Day 15 · 3번째 복습' 처럼 구체적인 기록이다.
+  // 복습 회차(몇 번째)는 그 페이지의 복습 기록을 날짜 오름차순으로 세어 구한다.
+  const _stepNo = {}, _perDay = {};
+  acts.slice().sort((x,z)=>String(x.day||'').localeCompare(String(z.day||''))).forEach(x=>{
+    const dd = String(x.day||'').slice(0,10); if (!dd) return;
+    const bid = x.book_id, page = String(x.page_num||''), key = bid+'|'+page;
+    const bucket = (_perDay[dd] = _perDay[dd] || { study: [], review: [] });
+    if (x.kind === 'review') {
+      // 같은 날 같은 페이지가 여러 번 찍혀도 회차는 한 번만 올린다
+      if (bucket.review.some(r => r.bid===bid && r.page===page)) return;
+      _stepNo[key] = (_stepNo[key] || 0) + 1;
+      bucket.review.push({ bid, page, n: _stepNo[key] });
+    } else if (x.kind === 'study') {
+      if (bucket.study.some(r => r.bid===bid && r.page===page)) return;
+      bucket.study.push({ bid, page });
+    }
+  });
+  const _pageLabel = (bid, page) => {
+    const t = btitle(bid);
+    return page ? (t + ' ' + page) : t;
+  };
+  const weekDetail = [];
+  for (let i = 0; i <= dow; i++) {
+    const ds = kstStr(dow - i), bu = _perDay[ds];
+    if (!bu || (!bu.study.length && !bu.review.length)) continue;
+    const parts = [];
+    bu.study.forEach(p => {
+      const n = wc(p.bid, p.page);
+      parts.push(_pageLabel(p.bid, p.page) + (n ? ' ' + TX(`새 단어 {v0}개`,`{v0} new`,{v0:(n)}) : ' ' + TT('새로 외움','new')));
+    });
+    bu.review.forEach(p => {
+      const step = Math.min(p.n, 6);
+      parts.push(_pageLabel(p.bid, p.page) + ' · ' +
+        (step >= 6 ? TT('60일 복습 완주 🎉','final review 🎉')
+                   : TX(`{v0}번째 복습`,`review #{v0}`,{v0:(step)})));
+    });
+    weekDetail.push({ label: wLabels[i], text: parts.join(' / ') });
+  }
+
   // 이번 주 · 지난주 · 누적 · 오늘
   const weekStart=kstStr(dow), lwStart=kstStr(dow+7), lwEnd=kstStr(dow+1);
   const wkStudy=pairsIn('study',weekStart,kstToday), wkReview=pairsIn('review',weekStart,kstToday);
@@ -9645,7 +9707,7 @@ async function shareParentCard(studentId, studentName){
     studentId: sid, name: sName,        // 기준 날짜를 바꿔 다시 뽑을 때 쓴다
     studentName: sName||(TT('학생','Student')), dateLabel,
     streak, totalDaysStudied, totalWordsLabel: cnt(allStudy, totalWords),
-    hero1, hero2, weekCal, weekNewLabel, diffLabel, reviewLabel, overdue,
+    hero1, hero2, weekCal, weekDetail, weekNewLabel, diffLabel, reviewLabel, overdue,
     todayLabel, ebbLine, comment
   });
 }
