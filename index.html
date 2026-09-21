@@ -3916,7 +3916,10 @@ async function loadDailyReport(){
     if (!isPrimary) students = students.filter(s=>s.teacher_id===myId);
     const byUser = {};
     (Array.isArray(acts)?acts:[]).forEach(a=>{ const u=(byUser[a.user_id]=byUser[a.user_id]||{study:0,review:0}); if(a.kind==='review')u.review++; else u.study++; });
-    box.innerHTML = renderDailyLiveHTML(students, byUser, kstToday);
+    // ⚠️ kstToday 는 이 함수에 없는 이름이었다(다른 함수의 지역 변수).
+    //    ReferenceError → catch 로 빠져서 대시보드의 '오늘의 리포트' 가 통째로
+    //    '리포트를 불러오지 못했어요' 로만 보였다. 대시보드가 휑했던 진짜 이유.
+    box.innerHTML = renderDailyLiveHTML(students, byUser, todayLocal);
   } catch(e){
     box.innerHTML = `<div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:14px;padding:16px;margin-bottom:16px;"><div class="muted" style="font-size:12px;">${TT('리포트를 불러오지 못했어요','Failed to load report')}</div></div>`;
   }
