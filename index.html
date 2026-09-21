@@ -2391,11 +2391,17 @@ function unreadNoticeCount() {
   return _notices.filter(n => new Date(n.created_at).getTime() > last).length;
 }
 function updateNoticeBadge() {
-  const el = document.getElementById('notice-badge');
-  if (!el) return;
   const cnt = unreadNoticeCount();
-  if (cnt > 0) { el.textContent = cnt > 9 ? '9+' : cnt; el.style.display = 'flex'; }
-  else { el.style.display = 'none'; }
+  // ⚠️ 배지 자리가 두 군데다 — 모바일 상단바(notice-badge)와 PC 사이드바(notice-badge-pc).
+  //    예전엔 모바일 것만 갱신하고 PC 것은 만들어만 두고 아무도 채우지 않았다.
+  //    그래서 맥에서는 안 읽은 공지가 있어도 화면에 표시가 없는데 독 아이콘 숫자에는
+  //    포함돼(복습 2 + 공지 1 = 3), 숫자가 틀린 것처럼 보였다.
+  ['notice-badge', 'notice-badge-pc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (cnt > 0) { el.textContent = cnt > 9 ? '9+' : cnt; el.style.display = 'flex'; }
+    else { el.style.display = 'none'; }
+  });
 }
 function toggleNotice(idx) {
   const item = document.querySelector(`.notice-item[data-idx="${idx}"]`);
