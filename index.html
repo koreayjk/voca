@@ -4010,23 +4010,72 @@ function _orgDate(d){ if(!d) return '—'; const p=String(d).slice(0,10).split('
 
 
 
-// ── 월간 리포트 (인쇄 → PDF) ────────────────────────────────────
-// 학원이 수강료를 받는 시점에 "이번 달 이렇게 공부했습니다" 를 내밀 수 있게.
+// ── 기간 리포트 (인쇄 → PDF) ───────────────────────────────────
+// 학원이 수강료를 받는 시점에 "이 기간 이렇게 공부했습니다" 를 내밀 수 있게.
 // PDF 라이브러리를 쓰지 않고 인쇄용 창을 띄운다 — 글자가 선택·검색되는 진짜
 // PDF 가 나오고, 여러 장으로 자동으로 나뉘고, 400KB 짜리 라이브러리도 필요 없다.
-async function openMonthlyReport(studentId, studentName){
-  if (!userOrg) return;
-  toast(TT('월간 리포트를 만드는 중…','Building report…'));
+const _ymd = dt => { const z = n => String(n).padStart(2,'0');
+  return dt.getFullYear() + '-' + z(dt.getMonth()+1) + '-' + z(dt.getDate()); };
+const _addDays = (str, n) => { const d = new Date(str + 'T00:00:00'); d.setDate(d.getDate()+n); return _ymd(d); };
+const _diffDays = (a, b) => Math.round((new Date(b+'T00:00:00') - new Date(a+'T00:00:00')) / 86400000);
+
+// 기간을 고르는 창
+function openMonthlyReport(studentId, studentName){
+  if (document.getElementById('mr-overlay')) return;
   const today = _todayStr();
-  const from = _daysAgoStr(29);
+  const first = today.slice(0,8) + '01';                 // 이번 달 1일
+  const ov = document.createElement('div');
+  ov.id = 'mr-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const preset = (label, f, t) => `<button onclick="_mrSet('${f}','${t}')" style="flex:1;padding:8px 6px;border-radius:9px;border:1px solid var(--ink-12);background:var(--bg-input);color:var(--ink-60);font-size:12px;font-weight:600;font-family:var(--font-body);cursor:pointer;white-space:nowrap;">${label}</button>`;
+  const lastMonthEnd = _addDays(first, -1);
+  const lastMonthFirst = lastMonthEnd.slice(0,8) + '01';
+  ov.innerHTML = `
+    <div style="background:var(--bg-card);border-radius:18px;padding:22px;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);">
+      <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:4px;">📄 ${TT('학습 리포트 만들기','Build report')}</div>
+      <div class="muted" style="font-size:12.5px;margin-bottom:16px;">${esc(studentName)} · ${TT('기간을 고르면 인쇄용 화면이 열려요','Pick a period')}</div>
+      <div style="display:flex;gap:6px;margin-bottom:12px;">
+        ${preset(TT('이번 달','This month'), first, today)}
+        ${preset(TT('지난달','Last month'), lastMonthFirst, lastMonthEnd)}
+        ${preset(TT('최근 30일','Last 30 days'), _daysAgoStr(29), today)}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
+        <input type="date" id="mr-from" value="${first}" max="${today}" style="flex:1;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:9px;padding:9px 10px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);">
+        <span class="muted" style="font-size:12px;">~</span>
+        <input type="date" id="mr-to" value="${today}" max="${today}" style="flex:1;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:9px;padding:9px 10px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);">
+      </div>
+      <button class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;"
+        onclick="_mrGo('${jsq(studentId)}','${jsq(studentName)}')">${TT('리포트 만들기','Build')}</button>
+      <button onclick="document.getElementById('mr-overlay').remove()" style="width:100%;padding:11px;margin-top:6px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('취소','Cancel')}</button>
+    </div>`;
+  ov.onclick = e => { if (e.target === ov) ov.remove(); };
+  document.body.appendChild(ov);
+}
+function _mrSet(f, t){
+  const a = document.getElementById('mr-from'), b = document.getElementById('mr-to');
+  if (a) a.value = f; if (b) b.value = t;
+}
+function _mrGo(studentId, studentName){
+  const f = document.getElementById('mr-from')?.value, t = document.getElementById('mr-to')?.value;
+  if (!f || !t) { toast(TT('기간을 골라주세요','Pick a period')); return; }
+  if (f > t) { toast(TT('시작일이 종료일보다 늦어요','Start date is after end date')); return; }
+  if (_diffDays(f, t) > 400) { toast(TT('기간이 너무 길어요 (최대 400일)','Range too long (max 400 days)')); return; }
+  document.getElementById('mr-overlay')?.remove();
+  buildPeriodReport(studentId, studentName, f, t);
+}
+
+async function buildPeriodReport(studentId, studentName, from, to){
+  if (!userOrg) return;
+  toast(TT('리포트를 만드는 중…','Building…'));
   let acts = [];
   try {
-    acts = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${studentId}&day=gte.${from}&select=day,kind,book_id,page_num,words,step&order=day`) || [];
+    acts = await sbFetch(`/rest/v1/voca_activity?user_id=eq.${studentId}&day=gte.${from}&day=lte.${to}&select=day,kind,book_id,page_num,words,step&order=day&limit=5000`) || [];
   } catch(e){ acts = []; }
   if (!Array.isArray(acts)) acts = [];
 
   const btitle = bid => (findBook(bid) && findBook(bid).title) || TT('단어장','Wordbook');
   const pgLabel = pn => { pn = String(pn==null?'':pn); return /^\d+$/.test(pn) ? ('Day '+pn) : (pn||'—'); };
+  const esc2 = t => esc(String(t==null?'':t));
 
   // 날짜별로 묶기 (같은 날 같은 페이지 중복 제거)
   const byDay = {};
@@ -4038,92 +4087,180 @@ async function openMonthlyReport(studentId, studentName){
     arr.push({ bid:r.book_id, page:String(r.page_num||''), words:Number(r.words)||0, step:Number(r.step)||0 });
   });
   const days = Object.keys(byDay).sort();
+  const span = _diffDays(from, to) + 1;
 
-  // 요약
   const studiedDays = days.length;
   const newWords = days.reduce((n,d)=> n + byDay[d].study.reduce((m,x)=>m+x.words,0), 0);
-  const reviewSets = days.reduce((n,d)=> n + byDay[d].review.length, 0);
   const newPages = days.reduce((n,d)=> n + byDay[d].study.length, 0);
+  const reviewSets = days.reduce((n,d)=> n + byDay[d].review.length, 0);
   let best = 0, cur = 0;
-  for (let i = 29; i >= 0; i--) { const d = _daysAgoStr(i); if (byDay[d]) { cur++; best = Math.max(best,cur); } else cur = 0; }
+  for (let i = 0; i < span; i++) { const d = _addDays(from, i); if (byDay[d]) { cur++; best = Math.max(best, cur); } else cur = 0; }
+  const pct = span ? Math.round(studiedDays / span * 100) : 0;
 
-  // 30일 달력 (6주 x 7일 격자로 그리면 복잡해져서, 한 줄에 10칸씩 3줄)
-  const cal = [];
-  for (let i = 29; i >= 0; i--) { const d = _daysAgoStr(i); const b = byDay[d];
-    cal.push({ d, on: !!b, n: b ? (b.study.length + b.review.length) : 0 }); }
+  // 달력 — 월요일 시작 주 단위 격자
+  const gridStart = _addDays(from, -(( new Date(from+'T00:00:00').getDay() + 6) % 7));
+  const gridEnd = _addDays(to, (7 - ((new Date(to+'T00:00:00').getDay() + 6) % 7) - 1));
+  const cells = [];
+  for (let d = gridStart; d <= gridEnd; d = _addDays(d, 1)) {
+    const b = byDay[d], n = b ? (b.study.length + b.review.length) : 0;
+    cells.push({ d, n, out: d < from || d > to, day: +d.slice(8,10) });
+  }
 
   // 단어장별 진도
   const prog = {};
   acts.forEach(r => { if (r.kind !== 'study') return; const t = btitle(r.book_id);
     (prog[t] = prog[t] || new Set()).add(pgLabel(r.page_num)); });
 
-  const esc2 = t => esc(String(t==null?'':t));
-  const dLabel = d => { const p = String(d).split('-'); return `${+p[1]}/${+p[2]}`; };
-  const wdays = ['일','월','화','수','목','금','토'];
-  const wd = d => wdays[new Date(d).getDay()];
+  const wdays = userNativeLang==='ko' ? ['월','화','수','목','금','토','일'] : ['M','T','W','T','F','S','S'];
+  const wd = d => wdays[(new Date(d+'T00:00:00').getDay() + 6) % 7];
+  const nice = d => { const p = String(d).split('-'); return `${+p[1]}. ${+p[2]}`; };
+  const longDate = d => { const p = String(d).split('-'); return userNativeLang==='ko' ? `${p[0]}년 ${+p[1]}월 ${+p[2]}일` : `${+p[1]}/${+p[2]}/${p[0]}`; };
 
   const rows = days.slice().reverse().map(d => {
     const b = byDay[d];
-    const st = b.study.map(x => `${esc2(btitle(x.bid))} ${esc2(pgLabel(x.page))}${x.words?` (${x.words})`:''}`).join(', ');
-    const rv = b.review.map(x => `${esc2(btitle(x.bid))} ${esc2(pgLabel(x.page))}${x.step?` · ${x.step}회차`:''}`).join(', ');
-    return `<tr><td class="d">${dLabel(d)} <span class="w">${wd(d)}</span></td><td>${st||'<span class="m">—</span>'}</td><td>${rv||'<span class="m">—</span>'}</td></tr>`;
+    const line = (items, kind) => items.map(x =>
+      `<span class="it"><b>${esc2(btitle(x.bid))}</b> ${esc2(pgLabel(x.page))}${
+        kind==='s' ? (x.words ? `<i>${x.words}${TT('단어','w')}</i>` : '')
+                   : (x.step ? `<i>${TX(`{v0}회차`,`#{v0}`,{v0:(x.step)})}</i>` : '')}</span>`).join('');
+    return `<tr>
+      <td class="dt"><b>${nice(d)}</b><span>${wd(d)}</span></td>
+      <td>${b.study.length ? line(b.study,'s') : '<span class="dash">·</span>'}</td>
+      <td>${b.review.length ? line(b.review,'r') : '<span class="dash">·</span>'}</td>
+    </tr>`;
   }).join('');
 
-  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8">
-<title>${esc2(studentName)} ${TT('월간 학습 리포트','Monthly report')}</title>
+  const logo = (userOrg && userOrg.logo_url) ? `<img class="logo" src="${esc2(userOrg.logo_url)}" alt="">` : '';
+
+  const html = `<!doctype html><html lang="${userNativeLang==='ko'?'ko':'en'}"><head><meta charset="utf-8">
+<title>${esc2(studentName)} · ${esc2(userOrg.name||'IM VOCA')}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-  @page { size: A4; margin: 14mm 12mm; }
-  * { box-sizing: border-box; }
-  body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif; color:#222; margin:0; font-size:12px; }
-  .hd { display:flex; align-items:center; justify-content:space-between; border-bottom:2.5px solid #1c3553; padding-bottom:10px; margin-bottom:16px; }
-  .hd h1 { font-size:20px; margin:0; color:#1c3553; }
-  .hd .sub { font-size:11px; color:#777; margin-top:3px; }
-  .hd .who { text-align:right; font-size:17px; font-weight:800; }
-  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px; }
-  .t { border:1px solid #e3e3e3; border-radius:9px; padding:10px 11px; }
-  .t .l { font-size:10px; color:#888; }
-  .t .v { font-size:19px; font-weight:800; color:#1c3553; margin-top:3px; }
-  .t .s { font-size:10px; color:#999; margin-top:2px; }
-  h2 { font-size:12.5px; color:#1c3553; margin:18px 0 8px; padding-bottom:5px; border-bottom:1px solid #e3e3e3; }
-  .cal { display:grid; grid-template-columns:repeat(10,1fr); gap:4px; }
-  .cal div { height:26px; border-radius:5px; border:1px solid #e8e8e8; font-size:9px; color:#aaa; display:flex; align-items:center; justify-content:center; }
-  .cal div.on { background:#1c7c3c; border-color:#1c7c3c; color:#fff; font-weight:700; }
-  table { width:100%; border-collapse:collapse; }
-  th { text-align:left; font-size:10px; color:#888; border-bottom:1.5px solid #ddd; padding:6px 5px; font-weight:700; }
-  td { border-bottom:1px solid #f0f0f0; padding:6px 5px; font-size:11px; vertical-align:top; line-height:1.5; }
-  td.d { white-space:nowrap; font-weight:700; color:#1c3553; width:62px; }
-  td .w, .m { color:#aaa; font-weight:400; }
-  .note { background:#f4f7fb; border-left:3px solid #1c3553; padding:10px 12px; font-size:11px; line-height:1.7; color:#33475e; border-radius:0 7px 7px 0; margin-top:14px; }
-  .ft { margin-top:18px; padding-top:9px; border-top:1px solid #e3e3e3; font-size:9.5px; color:#aaa; display:flex; justify-content:space-between; }
+  @page { size:A4; margin:16mm 15mm 14mm; }
+  :root { --navy:#1c3553; --gold:#9a7b3a; --ink:#22262b; --mute:#9aa0a6; --line:#e7e4dd; --cream:#fbf9f5; }
+  * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { margin:0; font-family:'Noto Sans KR',-apple-system,"Apple SD Gothic Neo",sans-serif;
+         color:var(--ink); font-size:11.5px; line-height:1.6; font-weight:300; }
+  @media screen {
+    html { background:#eeece7; }
+    body { width:min(820px,100%); margin:26px auto 70px; padding:40px 46px 46px;
+           background:#fff; box-shadow:0 2px 24px rgba(0,0,0,.09); border-radius:2px; }
+  }
+
+  /* 표지 머리 */
+  .top { display:flex; align-items:flex-end; justify-content:space-between; gap:20px;
+         padding-bottom:14px; border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:center; gap:11px; }
+  .logo { width:38px; height:38px; object-fit:contain; border-radius:9px; border:1px solid var(--line); background:#fff; }
+  .org { font-family:'Playfair Display',serif; font-size:19px; font-weight:600; color:var(--navy); letter-spacing:-.01em; line-height:1.15; }
+  .kind { font-size:10px; color:var(--mute); letter-spacing:.13em; text-transform:uppercase; margin-top:3px; }
+  .who { text-align:right; }
+  .who .nm { font-size:23px; font-weight:700; color:var(--ink); letter-spacing:-.02em; line-height:1.1; }
+  .who .pd { font-size:10.5px; color:var(--mute); margin-top:4px; letter-spacing:.01em; }
+
+  /* 요약 */
+  .sum { display:grid; grid-template-columns:repeat(4,1fr); margin:22px 0 4px; }
+  .sum > div { padding:0 14px; border-left:1px solid var(--line); }
+  .sum > div:first-child { border-left:0; padding-left:0; }
+  .sum .v { font-family:'Playfair Display',serif; font-size:30px; font-weight:600; color:var(--navy); line-height:1; letter-spacing:-.02em; }
+  .sum .v small { font-size:12px; color:var(--mute); font-family:'Noto Sans KR',sans-serif; font-weight:400; margin-left:1px; }
+  .sum .l { font-size:10px; color:var(--mute); margin-top:7px; letter-spacing:.02em; }
+
+  h2 { font-size:10.5px; font-weight:700; color:var(--gold); letter-spacing:.15em; text-transform:uppercase;
+       margin:26px 0 11px; padding-bottom:0; }
+
+  /* 달력 */
+  .cal { border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .cal .hd, .cal .wk { display:grid; grid-template-columns:repeat(7,1fr); }
+  .cal .hd div { font-size:9px; color:var(--mute); text-align:center; padding:6px 0; background:var(--cream);
+                 letter-spacing:.06em; border-bottom:1px solid var(--line); }
+  .cal .wk div { height:30px; display:flex; align-items:center; justify-content:center; font-size:9.5px;
+                 color:#b8bcc0; border-top:1px solid #f2f0ec; border-left:1px solid #f2f0ec; }
+  .cal .wk div:first-child { border-left:0; }
+  .cal .hd + .wk div { border-top:0; }
+  .l1 { background:#dcebe1; color:#2f6b45 !important; }
+  .l2 { background:#9fc9ae; color:#1b4b2c !important; font-weight:500; }
+  .l3 { background:#2f7d4f; color:#fff !important; font-weight:500; }
+  .cal .out { color:#e2e0dc !important; }
+  .legend { display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-top:7px; font-size:9px; color:var(--mute); }
+  .legend i { width:13px; height:9px; border-radius:2px; display:inline-block; border:1px solid var(--line); }
+
+  /* 진도 */
+  .pg { width:100%; border-collapse:collapse; }
+  .pg td { padding:9px 0; border-bottom:1px solid #f2f0ec; vertical-align:top; }
+  .pg td:first-child { width:130px; font-weight:500; color:var(--navy); }
+  .pg .cnt { color:var(--mute); font-size:10px; white-space:nowrap; text-align:right; width:64px; }
+
+  /* 날짜별 */
+  table.log { width:100%; border-collapse:collapse; }
+  table.log th { font-size:9px; font-weight:700; color:var(--mute); letter-spacing:.1em; text-transform:uppercase;
+                 text-align:left; padding:0 0 7px; border-bottom:1px solid var(--line); }
+  table.log td { padding:8px 10px 8px 0; border-bottom:1px solid #f4f2ee; vertical-align:top; }
+  td.dt { width:74px; white-space:nowrap; }
+  td.dt b { font-weight:500; color:var(--navy); }
+  td.dt span { color:var(--mute); font-size:9.5px; margin-left:4px; }
+  .it { display:inline-block; margin:0 9px 2px 0; }
+  .it b { font-weight:400; color:var(--ink); }
+  .it i { font-style:normal; color:var(--mute); font-size:9.5px; margin-left:3px; }
+  .dash { color:#dcdad6; }
+
+  .note { margin-top:24px; background:var(--cream); border-left:2px solid var(--gold);
+          padding:13px 16px; font-size:10.5px; line-height:1.85; color:#5d5a53; border-radius:0 5px 5px 0; }
+  .note b { color:var(--navy); font-weight:500; }
+  .ft { margin-top:20px; padding-top:10px; border-top:1px solid var(--line);
+        display:flex; justify-content:space-between; font-size:9px; color:#c0bdb7; letter-spacing:.02em; }
+  tr, .cal { break-inside:avoid; }
   @media print { .noprint { display:none !important; } }
-  .noprint { position:fixed; top:12px; right:12px; }
-  .noprint button { background:#1c3553; color:#fff; border:none; border-radius:9px; padding:11px 20px; font-size:14px; font-weight:700; cursor:pointer; }
+  .noprint { position:fixed; bottom:18px; right:18px; z-index:9; }
+  .noprint button { background:var(--navy); color:#fff; border:none; border-radius:9px; padding:11px 20px;
+                    font-size:13.5px; font-weight:500; cursor:pointer; font-family:'Noto Sans KR',sans-serif;
+                    box-shadow:0 4px 16px rgba(28,53,83,.25); }
 </style></head><body>
 <div class="noprint"><button onclick="window.print()">🖨️ ${TT('인쇄 · PDF로 저장','Print / Save as PDF')}</button></div>
-<div class="hd">
-  <div><h1>${esc2(userOrg.name||'IM VOCA')}</h1>
-    <div class="sub">${TT('영어 단어 학습 월간 리포트','Monthly vocabulary report')} · ${dLabel(from)} ~ ${dLabel(today)}</div></div>
-  <div class="who">${esc2(studentName)}</div>
+
+<div class="top">
+  <div class="brand">${logo}<div>
+    <div class="org">${esc2(userOrg.name||'IM VOCA')}</div>
+    <div class="kind">${TT('영어 단어 학습 리포트','Vocabulary Report')}</div>
+  </div></div>
+  <div class="who"><div class="nm">${esc2(studentName)}</div>
+    <div class="pd">${longDate(from)} — ${longDate(to)} · ${TX(`{v0}일간`,`{v0} days`,{v0:(span)})}</div></div>
 </div>
-<div class="tiles">
-  <div class="t"><div class="l">${TT('학습한 날','Days studied')}</div><div class="v">${studiedDays}<span style="font-size:11px;color:#999;"> / 30</span></div><div class="s">${Math.round(studiedDays/30*100)}%</div></div>
-  <div class="t"><div class="l">${TT('최장 연속','Best streak')}</div><div class="v">${best}<span style="font-size:11px;color:#999;">${TT('일','d')}</span></div></div>
-  <div class="t"><div class="l">${TT('새로 외운 단어','New words')}</div><div class="v">${newWords.toLocaleString()}</div><div class="s">${newPages} ${TT('페이지','pages')}</div></div>
-  <div class="t"><div class="l">${TT('복습 완료','Reviews done')}</div><div class="v">${reviewSets}</div><div class="s">${TT('세트','sets')}</div></div>
+
+<div class="sum">
+  <div><div class="v">${studiedDays}<small>/${span}</small></div><div class="l">${TT('학습한 날','Days studied')} · ${pct}%</div></div>
+  <div><div class="v">${best}<small>${TT('일','d')}</small></div><div class="l">${TT('최장 연속 학습','Longest streak')}</div></div>
+  <div><div class="v">${newWords.toLocaleString()}</div><div class="l">${TT('새로 외운 단어','New words')} · ${newPages}${TT('페이지','p')}</div></div>
+  <div><div class="v">${reviewSets}</div><div class="l">${TT('복습 완료','Reviews done')}</div></div>
 </div>
-<h2>${TT('30일 학습 달력','30-day calendar')}</h2>
-<div class="cal">${cal.map(c=>`<div class="${c.on?'on':''}">${dLabel(c.d)}</div>`).join('')}</div>
+
+<h2>${TT('학습 달력','Calendar')}</h2>
+<div class="cal">
+  <div class="hd">${wdays.map(w=>`<div>${w}</div>`).join('')}</div>
+  ${(()=>{ let out=''; for(let i=0;i<cells.length;i+=7){
+      out += '<div class="wk">' + cells.slice(i,i+7).map(c=>{
+        const lv = c.out ? 'out' : (c.n>=3 ? 'l3' : c.n===2 ? 'l2' : c.n===1 ? 'l1' : '');
+        return `<div class="${lv}">${c.day}</div>`; }).join('') + '</div>'; }
+    return out; })()}
+</div>
+<div class="legend">${TT('적음','less')} <i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i> ${TT('많음','more')}</div>
+
 <h2>${TT('단어장별 진도','Progress by wordbook')}</h2>
-<table><tbody>${Object.keys(prog).length ? Object.entries(prog).map(([t,set])=>{
+<table class="pg"><tbody>${Object.keys(prog).length ? Object.entries(prog).map(([t,set])=>{
     const arr=[...set].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}));
-    return `<tr><td class="d" style="width:auto;">${esc2(t)}</td><td>${arr.length}${TT('개 페이지','pages')} · ${esc2(arr.join(', '))}</td></tr>`;
-  }).join('') : `<tr><td class="m">${TT('이번 달 새로 시작한 페이지가 없어요','No new pages this month')}</td></tr>`}</tbody></table>
+    return `<tr><td>${esc2(t)}</td><td>${esc2(arr.join(' · '))}</td><td class="cnt">${arr.length}${TT('페이지','p')}</td></tr>`;
+  }).join('') : `<tr><td colspan="3" class="dash">${TT('이 기간에 새로 시작한 페이지가 없어요','No new pages in this period')}</td></tr>`}</tbody></table>
+
 <h2>${TT('날짜별 학습 내용','Day by day')}</h2>
-<table><thead><tr><th>${TT('날짜','Date')}</th><th>${TT('새로 외운 단어장','New')}</th><th>${TT('복습','Review')}</th></tr></thead>
-<tbody>${rows || `<tr><td colspan="3" class="m" style="text-align:center;padding:20px;">${TT('이번 달 학습 기록이 없어요','No activity this month')}</td></tr>`}</tbody></table>
-<div class="note"><b>${TT('에빙하우스 망각곡선 복습','Spaced repetition')}</b><br>
-${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로 6번 다시 만나게 합니다. 잊어버릴 때쯤 다시 보는 것이 장기기억으로 넘기는 가장 확실한 방법이기 때문입니다. 위 \'복습\' 항목의 회차가 그 단계입니다.','IM VOCA brings each word back 6 times over 60 days — right when it is about to be forgotten.')}</div>
-<div class="ft"><span>${esc2(userOrg.name||'')}</span><span>by IM VOCA · ${today}</span></div>
+<table class="log">
+<thead><tr><th>${TT('날짜','Date')}</th><th>${TT('새로 외움','New')}</th><th>${TT('복습','Review')}</th></tr></thead>
+<tbody>${rows || `<tr><td colspan="3" class="dash" style="text-align:center;padding:24px;">${TT('이 기간에 학습 기록이 없어요','No activity in this period')}</td></tr>`}</tbody></table>
+
+<div class="note"><b>${TT('에빙하우스 망각곡선에 따른 복습','Spaced repetition')}</b><br>
+${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로 여섯 번 다시 만나게 합니다. 잊어버릴 때쯤 다시 보는 것이 장기기억으로 넘기는 가장 확실한 방법이기 때문입니다. 위 <b>복습</b> 칸의 회차가 그 단계입니다.','IM VOCA brings each word back six times over 60 days — right when it is about to be forgotten. The numbers in the Review column are those stages.')}</div>
+
+<div class="ft"><span>${esc2(userOrg.name||'')}</span><span>IM VOCA · ${_todayStr()}</span></div>
 </body></html>`;
 
   const w = window.open('', '_blank');
@@ -4204,7 +4341,7 @@ function renderOrgTable(st){
       ${num(_orgDate(x.lastDay), 'var(--ink-45)')}
       <td style="text-align:right;padding:9px 4px;white-space:nowrap;">
         <button onclick="shareParentCard('${jsq(x.id)}','${jsq(x.name)}')" title="${TT('학부모 카드','Parent card')}" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--ink-60);">📤</button>
-        <button onclick="openMonthlyReport('${jsq(x.id)}','${jsq(x.name)}')" title="${TT('월간 리포트 (인쇄·PDF)','Monthly report')}" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--ink-60);margin-left:4px;">📄</button>
+        <button onclick="openMonthlyReport('${jsq(x.id)}','${jsq(x.name)}')" title="${TT('학습 리포트 (기간 선택 · 인쇄·PDF)','Study report (pick a period)')}" style="background:none;border:1px solid var(--ink-12);border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--ink-60);margin-left:4px;">📄</button>
       </td>
     </tr>`;
   }).join('');
@@ -4233,7 +4370,7 @@ function renderOrgTable(st){
     </div>
     <div class="muted" style="font-size:11px;margin:10px 2px 0;line-height:1.6;">
       ${TT('· 제목을 누르면 그 기준으로 정렬돼요 · 이름을 누르면 학생 상세로 갑니다','· Tap a header to sort · Tap a name for details')}<br>
-      ${TT('· 📤 학부모 카드 (카톡용 이미지) · 📄 월간 리포트 (인쇄·PDF)','· 📤 parent card · 📄 monthly report')}
+      ${TT('· 📤 학부모 카드 (카톡용 이미지) · 📄 학습 리포트 (기간 선택 · 인쇄·PDF)','· 📤 parent card · 📄 study report')}
     </div>`;
 }
 
@@ -4828,8 +4965,8 @@ const HELP = {
   members: { icon:'👥', title:'학생·관리자', purpose:'학생 가입 승인, 담임 선생님 지정, 학생 정보를 관리해요.',
     steps:['“승인 대기”에 뜬 가입 신청 학생을 승인','학생을 눌러 담임(선생님) 지정','담임을 지정하면 그 선생님 화면엔 담당 학생만 보여요'] },
   report: { icon:'📈', title:'학습 리포트', purpose:'학생 한 명 한 명이 이번 주(달)에 얼마나 했는지 한 표로 봅니다.',
-    steps:['제목을 누르면 그 기준으로 정렬됩니다 (밀림 많은 순, 학습일 적은 순 …)','이름 옆 ● 은 챙겨야 할 학생 표시','이름을 누르면 그 학생 상세로','📤 학부모 카드(카톡용 이미지) · 📄 월간 리포트(인쇄·PDF)'],
-    tip:'수강료 받는 날 📄 월간 리포트를 뽑아 드리면 재등록에 큰 도움이 됩니다.' },
+    steps:['제목을 누르면 그 기준으로 정렬됩니다 (밀림 많은 순, 학습일 적은 순 …)','이름 옆 ● 은 챙겨야 할 학생 표시','이름을 누르면 그 학생 상세로','📤 학부모 카드(카톡용 이미지) · 📄 학습 리포트 — 기간을 골라 인쇄·PDF'],
+    tip:'수강료 받는 날 📄 학습 리포트를 한 달치 뽑아 드리면 재등록에 큰 도움이 됩니다.' },
   tests: { icon:'📝', title:'시험 출제', purpose:'단어 시험을 온라인(자동채점) 또는 종이(PDF)로 내고 성적을 관리해요.',
     steps:['“새 시험 만들기” → 단어장·범위·유형·문항 수 선택','학생 앱 홈에 자동 배정 → 학생이 응시하면 자동 채점','🖨️ A형/B형: 종이 시험지(정답지 포함) · 순서 셔플로 부정 방지','📊 결과: 학생별 점수·반평균 · 옆 📤로 시험 성적표를 학부모에게','🔁 재시험: 같은 진도 다른 문제 · 기준 점수 미만 학생만 자동 선택'],
     img:_PROMO+'student-screens.png', imgcap:'학생 화면(배정 알림 → 응시 → 자동채점)' },
