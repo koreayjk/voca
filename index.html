@@ -3699,6 +3699,10 @@ function showNewPasswordForm() {
 }
 
 let userOrgId = null, userOrgRole = null, userOrgStatus = null, userOrg = null;
+// loadMyOrg 가 한 번이라도 끝났는지. 끝나기 전의 userOrg=null 은 '단체가 없다' 가
+// 아니라 '아직 모른다' 이므로, 이걸 구분하지 않으면 새로고침할 때마다 이미 단체가
+// 있는 원장에게 '단체 만들기' 화면이 번쩍인다.
+window._orgLoaded = false;
 
 // ── 단체(조직) ──
 async function loadMyOrg() {
@@ -3728,6 +3732,7 @@ async function loadMyOrg() {
       } catch(e) {}
     }
   } catch(e) { userOrg = null; }
+  finally { window._orgLoaded = true; }
 }
 
 // 단체장으로 가입했지만 아직 '단체 만들기'를 안 한 사람.
@@ -5152,6 +5157,16 @@ function renderOrgAdminPage(root) {
       </div></div></div>`;
     return;
   }
+  // 아직 단체 정보를 못 받아온 상태(null = '없다' 가 아니라 '모른다')에서는
+  // '단체 만들기' 를 띄우면 안 된다. 이미 단체가 있는 원장에게 새로고침할 때마다
+  // 단체를 만들라는 화면이 번쩍이고 지나간다.
+  if (!userOrg && !window._orgLoaded && (userOrgId || userOrgRole === 'owner')) {
+    root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">${headerBar}<div class="scr-scroll">
+      <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;padding:46px 24px;text-align:center;margin-top:8px;box-shadow:var(--shadow-sm);">
+        <div class="muted" style="font-size:13.5px;">${TT('단체 정보를 불러오는 중…','Loading…')}</div>
+      </div></div></div>`;
+    return;
+  }
   if (!userOrg) {
     root.innerHTML = `<div class="scr scr-wide" style="padding-bottom:90px;padding-top:50px;">${headerBar}<div class="scr-scroll">
       <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:18px;overflow:hidden;margin-top:8px;box-shadow:var(--shadow-sm);">
@@ -6127,7 +6142,7 @@ function _booksCacheKey(){ return 'books:' + ((currentUser && currentUser.id) ||
 // (0.5초쯤 뒤 서버 값으로 덮어써지므로 캐시가 조금 낡아도 문제되지 않는다)
 function _profileSnapshot(){
   return { userName, userPlan, userScanCount, userDailyScanCount, userDailyScanDate,
-           userPremiumUntil, userOrgId, userOrgRole, userOrgStatus };
+           userPremiumUntil, userOrgId, userOrgRole, userOrgStatus, userOrg };
 }
 function _applyProfileSnapshot(p){
   if (!p || typeof p !== 'object') return;
@@ -6140,6 +6155,9 @@ function _applyProfileSnapshot(p){
   if (p.userOrgId !== undefined) userOrgId = p.userOrgId;
   if (p.userOrgRole !== undefined) userOrgRole = p.userOrgRole;
   if (p.userOrgStatus !== undefined) userOrgStatus = p.userOrgStatus;
+  // 단체 정보까지 되살려야 새로고침 직후 바로 콘솔이 그려진다.
+  // (0.5초 뒤 loadMyOrg 가 최신 값으로 덮어쓴다)
+  if (p.userOrg) userOrg = p.userOrg;
 }
 
 async function _bootShelfFromCache(){
