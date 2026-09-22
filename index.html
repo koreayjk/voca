@@ -4028,6 +4028,7 @@ function openMonthlyReport(studentId, studentName){
   ov.id = 'mr-overlay';
   ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;';
   const preset = (label, f, t) => `<button onclick="_mrSet('${f}','${t}')" style="flex:1;padding:8px 6px;border-radius:9px;border:1px solid var(--ink-12);background:var(--bg-input);color:var(--ink-60);font-size:12px;font-weight:600;font-family:var(--font-body);cursor:pointer;white-space:nowrap;">${label}</button>`;
+  const ordBtn = (v, label) => `<button id="mr-ord-${v}" onclick="_mrSetOrder('${v}')" style="flex:1;padding:9px 6px;border-radius:9px;border:1px solid var(--ink-12);background:var(--bg-input);color:var(--ink-60);font-size:12px;font-weight:600;font-family:var(--font-body);cursor:pointer;white-space:nowrap;">${label}</button>`;
   const lastMonthEnd = _addDays(first, -1);
   const lastMonthFirst = lastMonthEnd.slice(0,8) + '01';
   ov.innerHTML = `
@@ -4039,10 +4040,14 @@ function openMonthlyReport(studentId, studentName){
         ${preset(TT('지난달','Last month'), lastMonthFirst, lastMonthEnd)}
         ${preset(TT('최근 30일','Last 30 days'), _daysAgoStr(29), today)}
       </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
         <input type="date" id="mr-from" value="${first}" max="${today}" style="flex:1;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:9px;padding:9px 10px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);">
         <span class="muted" style="font-size:12px;">~</span>
         <input type="date" id="mr-to" value="${today}" max="${today}" style="flex:1;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:9px;padding:9px 10px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);">
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:18px;">
+        ${ordBtn('asc',  TT('오래된 날짜부터','Oldest first'))}
+        ${ordBtn('desc', TT('최근 날짜부터','Newest first'))}
       </div>
       <button class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;"
         onclick="_mrGo('${jsq(studentId)}','${jsq(studentName)}')">${TT('리포트 만들기','Build')}</button>
@@ -4050,6 +4055,19 @@ function openMonthlyReport(studentId, studentName){
     </div>`;
   ov.onclick = e => { if (e.target === ov) ov.remove(); };
   document.body.appendChild(ov);
+  _mrSetOrder(_mrOrder);              // 지난번에 고른 정렬을 그대로 보여준다
+}
+// 날짜별 학습 내용의 정렬 — 기본은 오래된 날짜부터 (일기처럼 위에서 아래로 읽힌다)
+let _mrOrder = 'asc';
+function _mrSetOrder(v){
+  _mrOrder = (v === 'desc') ? 'desc' : 'asc';
+  ['asc','desc'].forEach(k => {
+    const el = document.getElementById('mr-ord-' + k); if (!el) return;
+    const on = (k === _mrOrder);
+    el.style.background  = on ? 'var(--accent)' : 'var(--bg-input)';
+    el.style.color       = on ? '#fff' : 'var(--ink-60)';
+    el.style.borderColor = on ? 'var(--accent)' : 'var(--ink-12)';
+  });
 }
 function _mrSet(f, t){
   const a = document.getElementById('mr-from'), b = document.getElementById('mr-to');
@@ -4061,10 +4079,10 @@ function _mrGo(studentId, studentName){
   if (f > t) { toast(TT('시작일이 종료일보다 늦어요','Start date is after end date')); return; }
   if (_diffDays(f, t) > 400) { toast(TT('기간이 너무 길어요 (최대 400일)','Range too long (max 400 days)')); return; }
   document.getElementById('mr-overlay')?.remove();
-  buildPeriodReport(studentId, studentName, f, t);
+  buildPeriodReport(studentId, studentName, f, t, _mrOrder);
 }
 
-async function buildPeriodReport(studentId, studentName, from, to){
+async function buildPeriodReport(studentId, studentName, from, to, order){
   if (!userOrg) return;
   toast(TT('리포트를 만드는 중…','Building…'));
   let acts = [];
@@ -4122,7 +4140,7 @@ async function buildPeriodReport(studentId, studentName, from, to){
   const nice = d => { const p = String(d).split('-'); return `${+p[1]}. ${+p[2]}`; };
   const longDate = d => { const p = String(d).split('-'); return userNativeLang==='ko' ? `${p[0]}년 ${+p[1]}월 ${+p[2]}일` : `${+p[1]}/${+p[2]}/${p[0]}`; };
 
-  const rows = days.slice().reverse().map(d => {
+  const rows = (order === 'desc' ? days.slice().reverse() : days.slice()).map(d => {
     const b = byDay[d];
     const line = (items, kind) => items.map(x =>
       `<span class="it"><b>${esc2(btitle(x.bid))}</b> ${esc2(pgLabel(x.page))}${
