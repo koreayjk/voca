@@ -4087,6 +4087,12 @@ async function buildPeriodReport(studentId, studentName, from, to){
     arr.push({ bid:r.book_id, page:String(r.page_num||''), words:Number(r.words)||0, step:Number(r.step)||0 });
   });
   const days = Object.keys(byDay).sort();
+  // 하루 안에서의 순서: DB 가 돌려주는 순서는 뒤죽박죽이라 (Day 5 · Day 6 · Day 28 · Day 7)
+  // 학부모가 읽기 좋게 단어장 → 페이지 번호 순으로 세운다. localeCompare 의 numeric 이
+  // 'Day 7' 을 'Day 28' 보다 앞에 놓아준다 (문자열 비교였으면 '28' < '7' 이 된다).
+  const _pgSort = (a, z) => String(btitle(a.bid)).localeCompare(String(btitle(z.bid)), undefined, { numeric:true })
+                         || String(a.page).localeCompare(String(z.page), undefined, { numeric:true });
+  days.forEach(d => { byDay[d].study.sort(_pgSort); byDay[d].review.sort(_pgSort); });
   const span = _diffDays(from, to) + 1;
 
   const studiedDays = days.length;
@@ -10168,6 +10174,10 @@ async function shareParentCard(studentId, studentName){
       bucket.study.push({ bid, page });
     }
   });
+  // 같은 날 안에서는 단어장 → 페이지 번호 순 (기간 리포트와 같은 규칙)
+  const _pdSort = (a, z) => String(btitle(a.bid)).localeCompare(String(btitle(z.bid)), undefined, { numeric:true })
+                         || String(a.page).localeCompare(String(z.page), undefined, { numeric:true });
+  Object.keys(_perDay).forEach(d => { _perDay[d].study.sort(_pdSort); _perDay[d].review.sort(_pdSort); });
   const _pageLabel = (bid, page) => {
     const t = btitle(bid);
     const pn = String(page == null ? '' : page);
