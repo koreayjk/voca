@@ -746,6 +746,9 @@ const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 O
 const APPLE_LOGIN_ENABLED = false;
 let currentUser = null, _authToken = null;
 window._reviewBadgeCount = 0;
+// 공식 단어장(큰 payload)이 책장에 붙는 중인지. 이때 센 복습 개수는 '덜 센' 값이라
+// 뱃지를 낮추는 데 쓰면 안 된다 (켜자마자 뱃지가 사라졌다 몇 초 뒤 다시 뜬다).
+window._officialPending = false;
 
 // ════════════════════════════════════════════════════════════════
 // 에러/실패 로깅 — 조용한 실패를 눈에 보이게 (voca_errors 테이블로 전송)
@@ -5585,7 +5588,12 @@ async function sbInit() {
       currentUser = userData;
       // ⏱️ 부팅 가속: 직전 세션의 책 캐시로 즉시 첫 화면을 그린다 (뒤에서 최신 데이터로 교체)
       let _fastBoot = false;
-      try { _fastBoot = await _bootShelfFromCache(); if (_fastBoot) { applyEntryStack(); render(); } } catch(e){}
+      try { _fastBoot = await _bootShelfFromCache();
+        if (_fastBoot) { applyEntryStack(); render();
+          // 캐시된 책장에는 공식 단어장까지 들어 있다 → 여기서 바로 세면
+          // 공식 카탈로그(수 초 걸림)를 기다리지 않고 복습 뱃지가 즉시 뜬다.
+          checkReviews().catch(()=>{});
+        } } catch(e){}
       // ⚠️ loadUserPlan(→loadMyOrg) 이 org 역할/승인을 세팅해야 loadBooksFromDB 안의
       // appendOfficialBooks 가 _seesAllOfficialLangs()=true 로 공식책 전체를 로드함(경합 방지).
       await loadUserPlan();
@@ -6191,14 +6199,16 @@ async function loadBooksFromDB() {
     await _hiddenP; _stripHiddenWords();
     // 공식 단어장(~6천 단어, 큰 payload)은 비동기로 붙임 → 소유 책 먼저 그려 첫 화면
     // 블로킹을 없애고, 로드 완료 후 현재 화면을 다시 렌더한다.
+    window._officialPending = true;
     appendOfficialBooks().then(() => {
+      window._officialPending = false;
       updateTotalWords();
       _saveBooksCache();
       if (currentUser && typeof render === 'function') { try { render(); } catch(e){} }
       // 공식 단어장이 이제서야 책장에 붙었다 → 그 책들의 복습을 다시 센다.
       // (이걸 안 하면 공식 단어장 복습이 있는 사람은 탭 뱃지가 안 뜬다)
       try { if (currentUser && typeof checkReviews === 'function') checkReviews().catch(()=>{}); } catch(e){}
-    }).catch(e => console.warn('[official load]', e));
+    }).catch(e => { window._officialPending = false; console.warn('[official load]', e); });
   } catch(e) { console.error('DB load error:', e); }
 }
 
@@ -11379,10 +11389,15 @@ async function checkReviews() {
     // ── 뱃지 갱신 ────────────────────────────────────────────────
     // ⚠️ due 가 0 이어도 반드시 지나가야 한다. 예전엔 바로 아래에서 return 해버려서
     //    복습을 다 끝내도 탭 뱃지와 앱 아이콘 숫자가 그대로 남았다.
-    window._reviewBadgeCount = due.length;
-    try { syncAppBadge(); } catch(e){}
-    const dockEl = document.querySelector('.dock');
-    if (dockEl) dockEl.outerHTML = buildDock();
+    // 공식 단어장이 아직 붙는 중이면 그 책들의 복습이 통째로 빠진 채 세어진다.
+    // 그 값으로 뱃지를 '낮추면' 켜자마자 뱃지가 사라졌다가 몇 초 뒤 다시 뜬다.
+    // 올리는 것은 언제나 허용하고, 낮추는 것만 로드가 끝난 뒤로 미룬다.
+    if (!(window._officialPending && due.length < (window._reviewBadgeCount || 0))) {
+      window._reviewBadgeCount = due.length;
+      try { syncAppBadge(); } catch(e){}
+      const dockEl = document.querySelector('.dock');
+      if (dockEl) dockEl.outerHTML = buildDock();
+    }
 
     if (!due.length) return;
     let totalWords = 0;
