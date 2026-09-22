@@ -148,8 +148,8 @@ body.dark .dock__btn { color: rgba(240,236,228,0.4); }
 body.dark .dock__btn--active { color: var(--accent); }
 
 /* 단어 선택 화면 */
-body.dark #word-sel-list > div { background: #242019 !important; }
-body.dark #word-sel-list > div div { color: #f0ece4; }
+body.dark .word-sel-card { background: #242019 !important; }
+body.dark .word-sel-card div { color: #f0ece4; }
 
 /* 통계 */
 body.dark .done__grid .done__tile { background: #2e2923; }
@@ -340,7 +340,8 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
   /* 상단 우측 버튼이 제목과 안 겹치게: 제목 영역에 오른쪽 여백 */
   .scr-wide .lib-header { padding-right: 0; }
 }
-.scr-scroll { flex: 1; overflow-y: auto; padding-bottom: 24px; }
+.scr-scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+              overscroll-behavior: contain; padding-bottom: 24px; }
 
 /* 로그인 화면 (IM메신저 스타일 좌우 2단) */
 .auth-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--bg-page); padding: 20px; overflow-y: auto; }
@@ -7842,15 +7843,15 @@ function renderCombinedWordSelection() {
     <div class="scr" style="padding-bottom:150px;">
       <div class="topnav">
         <span class="topnav__back" onclick="if(confirm('${TT('스캔한 단어를 버리고 나갈까요?','Discard scanned words?')}')){window._multiScannedWords=null;window._multiQueue=null;render();}">✕</span>
-        <span class="topnav__title">${TT('단어 선택','Select Words')}</span>
+        <span class="topnav__title">${TT('단어 선택','Select Words')} · ${TX(`{v0}개`,`{v0}`,{v0:(words.length)})}</span>
         <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">${t('allSelect')}</span>
       </div>
+      <div class="scr-scroll" id="word-sel-list">
       <div style="background:var(--gold-bg);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
         <div class="label-xs" style="margin-bottom:6px;">📚 ${TX(`{v1}장에서 {v0}개 단어를 뽑았어요 · 한 페이지로 저장돼요`,`{v0} words from {v1} photos · saved as one page`,{v0:(words.length),v1:(total)})}</div>
         <input type="text" id="multi-pg-inp" value="${esc(defTitle)}" placeholder="${TT('페이지 번호(선택) 예: 34-39','Page (optional) e.g. 34-39')}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink-100);outline:none;">
       </div>
-      <div class="muted" style="font-size:12px;margin-bottom:10px;">${TT('아는 단어는 눌러서 빼고, 모르는 단어만 남기세요','Tap to remove words you know — keep the ones you want to learn')}</div>
-      <div class="scr-scroll" id="word-sel-list">
+      <div class="muted" style="font-size:12px;margin-bottom:10px;">${TT('아는 단어는 눌러서 빼고, 모르는 단어만 남기세요','Tap to remove words you know — keep the ones you want to learn')} <span style="color:var(--accent);font-weight:700;">${TX(`· 아래로 넘기면 {v0}개 모두 있어요`,`· scroll for all {v0}`,{v0:(words.length)})}</span></div>
         ${words.map((w, i) => `
           <div id="wsel-${i}" onclick="toggleWord(${i})" class="word-sel-card" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:var(--bg-card);cursor:pointer;border:2px solid ${levelColor[w.level]||'#ddd'};">
             <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
@@ -8095,10 +8096,11 @@ function renderWordSelection(words) {
     <div class="scr" style="padding-bottom:100px;">
       <div class="topnav">
         <span class="topnav__back" onclick="render()">←</span>
-        <span class="topnav__title">${t('wordSelect')}</span>
+        <span class="topnav__title">${t('wordSelect')} · ${TX(`{v0}개`,`{v0}`,{v0:(words.length)})}</span>
         <span style="font-size:12px;color:var(--accent);cursor:pointer;padding:4px;" onclick="toggleAllWords()">${t('allSelect')}</span>
       </div>
-      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">${t('selectWords')}</div>
+      <div class="scr-scroll" id="word-sel-list">
+      <div class="muted" style="font-size:12px;margin-top:4px;margin-bottom:12px;">${t('selectWords')} <span style="color:var(--accent);font-weight:700;">${TX(`· 아래로 넘기면 {v0}개 모두 있어요`,`· scroll for all {v0}`,{v0:(words.length)})}</span></div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
         <div style="display:flex;align-items:center;gap:5px;background:rgba(123,45,139,0.1);border-radius:99px;padding:4px 10px;">
           <span style="width:10px;height:10px;border-radius:50%;background:#7b2d8b;display:inline-block;"></span>
@@ -8122,7 +8124,6 @@ function renderWordSelection(words) {
         </div>
         <div style="margin-left:auto;font-size:10px;color:var(--ink-40);align-self:center;">${TT('CEFR 기준','CEFR Level')}</div>
       </div>
-      <div class="scr-scroll" id="word-sel-list">
         ${words.map((w, i) => `
           <div id="wsel-${i}" onclick="toggleWord(${i})" class="word-sel-card" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:var(--bg-card);cursor:pointer;border:2px solid ${levelColor[w.level]||'#ddd'};">
             <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
