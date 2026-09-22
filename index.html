@@ -4162,7 +4162,8 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   @page { size:A4; margin:16mm 15mm 14mm; }
-  :root { --navy:#1c3553; --gold:#9a7b3a; --ink:#22262b; --mute:#9aa0a6; --line:#e7e4dd; --cream:#fbf9f5; }
+  :root { --navy:#1c3553; --navy-2:#3a5a86; --gold:#9a7b3a; --ink:#22262b;
+          --mute:#9aa0a6; --line:#e7e4dd; --hair:#f1efea; --cream:#fbf9f5; }
   * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   body { margin:0; font-family:'Noto Sans KR',-apple-system,"Apple SD Gothic Neo",sans-serif;
          color:var(--ink); font-size:11.5px; line-height:1.6; font-weight:300; }
@@ -4173,8 +4174,12 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
   }
 
   /* 표지 머리 */
+  .strip { display:flex; justify-content:space-between; align-items:baseline;
+           font-size:8.5px; letter-spacing:.24em; text-transform:uppercase;
+           color:var(--gold); margin-bottom:13px; }
   .top { display:flex; align-items:flex-end; justify-content:space-between; gap:20px;
-         padding-bottom:14px; border-bottom:1px solid var(--line); }
+         padding-bottom:13px; border-bottom:1.5px solid var(--navy); }
+  .top2 { height:1px; background:var(--line); margin-top:2.5px; }
   .brand { display:flex; align-items:center; gap:11px; }
   .logo { width:38px; height:38px; object-fit:contain; border-radius:9px; border:1px solid var(--line); background:#fff; }
   .org { font-family:'Playfair Display',serif; font-size:19px; font-weight:600; color:var(--navy); letter-spacing:-.01em; line-height:1.15; }
@@ -4184,7 +4189,9 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
   .who .pd { font-size:10.5px; color:var(--mute); margin-top:4px; letter-spacing:.01em; }
 
   /* 요약 */
-  .sum { display:grid; grid-template-columns:repeat(4,1fr); margin:22px 0 4px; }
+  .sumbox { background:var(--cream); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+            margin:22px 0 4px; padding:17px 18px; }
+  .sum { display:grid; grid-template-columns:repeat(4,1fr); }
   .sum > div { padding:0 14px; border-left:1px solid var(--line); }
   .sum > div:first-child { border-left:0; padding-left:0; }
   .sum .v { font-family:'Playfair Display',serif; font-size:30px; font-weight:600; color:var(--navy); line-height:1; letter-spacing:-.02em; }
@@ -4192,7 +4199,8 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
   .sum .l { font-size:10px; color:var(--mute); margin-top:7px; letter-spacing:.02em; }
 
   h2 { font-size:10.5px; font-weight:700; color:var(--gold); letter-spacing:.15em; text-transform:uppercase;
-       margin:26px 0 11px; padding-bottom:0; }
+       margin:26px 0 11px; display:flex; align-items:center; gap:11px; }
+  h2::after { content:''; flex:1; height:1px; background:var(--line); }
 
   /* 달력 */
   .cal { border:1px solid var(--line); border-radius:6px; overflow:hidden; }
@@ -4203,26 +4211,34 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
                  color:#b8bcc0; border-top:1px solid #f2f0ec; border-left:1px solid #f2f0ec; }
   .cal .wk div:first-child { border-left:0; }
   .cal .hd + .wk div { border-top:0; }
-  .l1 { background:#dcebe1; color:#2f6b45 !important; }
-  .l2 { background:#9fc9ae; color:#1b4b2c !important; font-weight:500; }
-  .l3 { background:#2f7d4f; color:#fff !important; font-weight:500; }
+  .l1 { background:#e8eef6; color:#63809f !important; }
+  .l2 { background:#a5bad4; color:#16283f !important; font-weight:500; }
+  .l3 { background:#1c3553; color:#fff !important; font-weight:500; }
+  /* 달이 바뀌는 칸에만 작게 월 표시 — 기간이 두 달 넘게 걸쳐도 헷갈리지 않게 */
+  .cal .mo { font-style:normal; font-size:7.5px; color:var(--gold); margin-right:3px; letter-spacing:.02em; }
+  .cal .l2 .mo { color:#42618a; }
+  .cal .l3 .mo { color:rgba(255,255,255,.72); }
+  .cal .out .mo { color:#e6e4e0; }
   .cal .out { color:#e2e0dc !important; }
   .legend { display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-top:7px; font-size:9px; color:var(--mute); }
   .legend i { width:13px; height:9px; border-radius:2px; display:inline-block; border:1px solid var(--line); }
 
   /* 진도 */
   .pg { width:100%; border-collapse:collapse; }
-  .pg td { padding:9px 0; border-bottom:1px solid #f2f0ec; vertical-align:top; }
-  .pg td:first-child { width:130px; font-weight:500; color:var(--navy); }
-  .pg .cnt { color:var(--mute); font-size:10px; white-space:nowrap; text-align:right; width:64px; }
+  .pg td { padding:10px 0; border-bottom:1px solid var(--hair); vertical-align:top; }
+  .pg tr:last-child td { border-bottom:0; }
+  .pg td:first-child { width:132px; font-weight:500; color:var(--navy); }
+  .pg .cnt { color:var(--mute); font-size:10px; white-space:nowrap; text-align:right; width:66px; }
+  .pg .cnt b { font-family:'Playfair Display',serif; font-size:13px; font-weight:600; color:var(--navy); margin-right:1px; }
 
   /* 날짜별 */
   table.log { width:100%; border-collapse:collapse; }
   table.log th { font-size:9px; font-weight:700; color:var(--mute); letter-spacing:.1em; text-transform:uppercase;
                  text-align:left; padding:0 0 7px; border-bottom:1px solid var(--line); }
-  table.log td { padding:8px 10px 8px 0; border-bottom:1px solid #f4f2ee; vertical-align:top; }
-  td.dt { width:74px; white-space:nowrap; }
-  td.dt b { font-weight:500; color:var(--navy); }
+  table.log td { padding:8px 10px 8px 0; border-bottom:1px solid var(--hair); vertical-align:top; }
+  table.log tr:last-child td { border-bottom:0; }
+  td.dt { width:78px; white-space:nowrap; }
+  td.dt b { font-family:'Playfair Display',serif; font-size:13px; font-weight:600; color:var(--navy); letter-spacing:-.01em; }
   td.dt span { color:var(--mute); font-size:9.5px; margin-left:4px; }
   .it { display:inline-block; margin:0 9px 2px 0; }
   .it b { font-weight:400; color:var(--ink); }
@@ -4232,8 +4248,14 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
   .note { margin-top:24px; background:var(--cream); border-left:2px solid var(--gold);
           padding:13px 16px; font-size:10.5px; line-height:1.85; color:#5d5a53; border-radius:0 5px 5px 0; }
   .note b { color:var(--navy); font-weight:500; }
-  .ft { margin-top:20px; padding-top:10px; border-top:1px solid var(--line);
-        display:flex; justify-content:space-between; font-size:9px; color:#c0bdb7; letter-spacing:.02em; }
+  /* 선생님이 손으로 한마디 적어 보낼 수 있게 — 학원이 내미는 문서다운 마무리 */
+  .sign { margin-top:22px; border:1px solid var(--line); border-radius:5px; padding:14px 17px 15px; }
+  .sign .sl { font-size:9.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+              color:var(--gold); margin-bottom:13px; }
+  .sign .ln { height:1px; background:var(--hair); margin-bottom:18px; }
+  .sign .sg { text-align:right; font-size:9.5px; color:var(--mute); letter-spacing:.02em; }
+  .ft { margin-top:22px; padding-top:10px; border-top:1px solid var(--navy);
+        display:flex; justify-content:space-between; font-size:9px; color:#b4b1ab; letter-spacing:.06em; }
   tr, .cal { break-inside:avoid; }
   @media print { .noprint { display:none !important; } }
   .noprint { position:fixed; bottom:18px; right:18px; z-index:9; }
@@ -4243,6 +4265,8 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
 </style></head><body>
 <div class="noprint"><button onclick="window.print()">🖨️ ${TT('인쇄 · PDF로 저장','Print / Save as PDF')}</button></div>
 
+<div class="strip"><span>IM VOCA</span><span>${TT('학습 리포트','Study Report')}</span></div>
+
 <div class="top">
   <div class="brand">${logo}<div>
     <div class="org">${esc2(userOrg.name||'IM VOCA')}</div>
@@ -4251,21 +4275,25 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
   <div class="who"><div class="nm">${esc2(studentName)}</div>
     <div class="pd">${longDate(from)} — ${longDate(to)} · ${TX(`{v0}일간`,`{v0} days`,{v0:(span)})}</div></div>
 </div>
+<div class="top2"></div>
 
-<div class="sum">
+<div class="sumbox"><div class="sum">
   <div><div class="v">${studiedDays}<small>/${span}</small></div><div class="l">${TT('학습한 날','Days studied')} · ${pct}%</div></div>
   <div><div class="v">${best}<small>${TT('일','d')}</small></div><div class="l">${TT('최장 연속 학습','Longest streak')}</div></div>
   <div><div class="v">${newWords.toLocaleString()}</div><div class="l">${TT('새로 외운 단어','New words')} · ${newPages}${TT('페이지','p')}</div></div>
   <div><div class="v">${reviewSets}</div><div class="l">${TT('복습 완료','Reviews done')}</div></div>
-</div>
+</div></div>
 
 <h2>${TT('학습 달력','Calendar')}</h2>
 <div class="cal">
   <div class="hd">${wdays.map(w=>`<div>${w}</div>`).join('')}</div>
   ${(()=>{ let out=''; for(let i=0;i<cells.length;i+=7){
-      out += '<div class="wk">' + cells.slice(i,i+7).map(c=>{
+      out += '<div class="wk">' + cells.slice(i,i+7).map((c,j)=>{
         const lv = c.out ? 'out' : (c.n>=3 ? 'l3' : c.n===2 ? 'l2' : c.n===1 ? 'l1' : '');
-        return `<div class="${lv}">${c.day}</div>`; }).join('') + '</div>'; }
+        // 첫 칸과 매달 1일에만 월을 작게 붙인다 (두세 달 걸친 기간도 한눈에)
+        const mo = (i===0 && j===0) || c.day===1
+          ? `<i class="mo">${(+c.d.slice(5,7))}${userNativeLang==='ko'?'월':'/'}</i>` : '';
+        return `<div class="${lv}">${mo}${c.day}</div>`; }).join('') + '</div>'; }
     return out; })()}
 </div>
 <div class="legend">${TT('적음','less')} <i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i> ${TT('많음','more')}</div>
@@ -4273,7 +4301,7 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
 <h2>${TT('단어장별 진도','Progress by wordbook')}</h2>
 <table class="pg"><tbody>${Object.keys(prog).length ? Object.entries(prog).map(([t,set])=>{
     const arr=[...set].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}));
-    return `<tr><td>${esc2(t)}</td><td>${esc2(arr.join(' · '))}</td><td class="cnt">${arr.length}${TT('페이지','p')}</td></tr>`;
+    return `<tr><td>${esc2(t)}</td><td>${esc2(arr.join(' · '))}</td><td class="cnt"><b>${arr.length}</b>${TT('페이지','p')}</td></tr>`;
   }).join('') : `<tr><td colspan="3" class="dash">${TT('이 기간에 새로 시작한 페이지가 없어요','No new pages in this period')}</td></tr>`}</tbody></table>
 
 <h2>${TT('날짜별 학습 내용','Day by day')}</h2>
@@ -4283,6 +4311,12 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
 
 <div class="note"><b>${TT('에빙하우스 망각곡선에 따른 복습','Spaced repetition')}</b><br>
 ${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로 여섯 번 다시 만나게 합니다. 잊어버릴 때쯤 다시 보는 것이 장기기억으로 넘기는 가장 확실한 방법이기 때문입니다. 위 <b>복습</b> 칸의 회차가 그 단계입니다.','IM VOCA brings each word back six times over 60 days — right when it is about to be forgotten. The numbers in the Review column are those stages.')}</div>
+
+<div class="sign">
+  <div class="sl">${TT('선생님 한마디','Teacher\u2019s note')}</div>
+  <div class="ln"></div><div class="ln"></div><div class="ln"></div>
+  <div class="sg">${TT('담당 선생님','Teacher')} ______________________</div>
+</div>
 
 <div class="ft"><span>${esc2(userOrg.name||'')}</span><span>IM VOCA · ${_todayStr()}</span></div>
 </body></html>`;
