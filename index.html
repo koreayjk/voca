@@ -3931,10 +3931,13 @@ async function orgStats(force){
   const myId = currentUser && currentUser.id;
   const isPrimary = !!(userOrg && userOrg.owner_id && myId && userOrg.owner_id === myId);
 
-  const [acts, studs] = await Promise.all([
+  const [acts, studs, owns] = await Promise.all([
     sbFetch(`/rest/v1/voca_activity?org_id=eq.${userOrg.id}&day=gte.${from}&select=user_id,day,kind,book_id,page_num,words,step&limit=20000`),
-    sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email,teacher_id,created_at&order=name`)
+    sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.student&org_status=eq.approved&select=id,name,email,teacher_id,created_at&order=name`),
+    // 담당 선생님(공동 관리자) 목록 — 주 관리자가 '이 선생님 반만' 골라 볼 수 있게
+    sbFetch(`/rest/v1/members?org_id=eq.${userOrg.id}&org_role=eq.owner&org_status=eq.approved&select=id,name,email&order=name`)
   ]);
+  const teachers = (Array.isArray(owns) ? owns : []).map(o => ({ id:o.id, name:o.name || o.email || TT('선생님','Teacher') }));
   let students = Array.isArray(studs) ? studs : [];
   // 공동 관리자는 자기 담당 학생만 본다 (주 관리자는 전체)
   if (!isPrimary) students = students.filter(s => s.teacher_id === myId);
@@ -3976,6 +3979,7 @@ async function orgStats(force){
 
     return {
       id: s.id, name: s.name || s.email || TT('학생','Student'), email: s.email || '',
+      teacherId: s.teacher_id || '',
       joinedAt: s.created_at || '',
       today: { study: todayRows.filter(r=>r.kind==='study').length, review: todayRows.filter(r=>r.kind==='review').length },
       streak,
@@ -4005,7 +4009,7 @@ async function orgStats(force){
     }
   } catch(e){}
 
-  _orgStatsCache = { today, weekStart, monthStart, list };
+  _orgStatsCache = { today, weekStart, monthStart, list, teachers };
   _orgStatsAt = Date.now();
   return _orgStatsCache;
 }
@@ -4333,6 +4337,31 @@ ${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로
 // "학생 한 명 한 명이 이번 주(달)에 얼마나 했나". 정렬해서 보면 끝난다.
 window._orgSort = window._orgSort || { key:'need', desc:true };
 window._orgPeriod = window._orgPeriod || 'week';
+// 담당 선생님 필터. 주 관리자 전용 — 공동 관리자는 애초에 자기 담당 학생만 보인다.
+window._orgTeacher = window._orgTeacher || 'all';
+
+function setOrgTeacher(v){ window._orgTeacher = v; loadOrgTable(); loadOrgOverview(); }
+function _orgByTeacher(list){
+  const v = window._orgTeacher || 'all';
+  if (v === 'all')  return list;
+  if (v === 'none') return list.filter(x => !x.teacherId);
+  return list.filter(x => x.teacherId === v);
+}
+// 선생님을 한 명이라도 세워둔 학원에서만 보여준다 (혼자 하는 학원엔 군더더기)
+function _orgTeacherBar(st){
+  const teachers = st.teachers || [];
+  if (!orgIsPrimary()) return '';
+  if (teachers.length < 2 && !st.list.some(x => x.teacherId)) return '';
+  const myId = currentUser && currentUser.id;
+  const cnt = v => v==='all' ? st.list.length
+              : v==='none' ? st.list.filter(x=>!x.teacherId).length
+              : st.list.filter(x=>x.teacherId===v).length;
+  const opt = (v, label) => `<option value="${v}"${window._orgTeacher===v?' selected':''}>${label} (${cnt(v)})</option>`;
+  const opts = [opt('all', TT('👥 전체 학생','👥 All students'))]
+    .concat(teachers.map(t => opt(t.id, (t.id===myId ? ('👩‍🏫 '+TT('내 담당','My students')) : ('👩‍🏫 '+esc(t.name))))))
+    .concat([opt('none', TT('· 담당 미지정','· No teacher'))]);
+  return `<select onchange="setOrgTeacher(this.value)" style="padding:9px 30px 9px 12px;border-radius:10px;border:1.5px solid ${window._orgTeacher==='all'?'var(--ink-12)':'var(--accent)'};background:${window._orgTeacher==='all'?'transparent':'var(--gold-bg)'};color:${window._orgTeacher==='all'?'var(--ink-60)':'var(--accent)'};font-size:13px;font-weight:700;font-family:var(--font-body);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'><path fill=\'%23999\' d=\'M6 8L2 4h8z\'/></svg>');background-repeat:no-repeat;background-position:right 11px center;">${opts.join('')}</select>`;
+}
 
 function setOrgPeriod(p){ window._orgPeriod = p; loadOrgTable(); }
 function setOrgSort(k){
@@ -4356,7 +4385,7 @@ async function loadOrgTable(){
 
 function renderOrgTable(st){
   const wk = window._orgPeriod === 'week';
-  const rows = st.list.slice();
+  const rows = _orgByTeacher(st.list).slice();
   const key = window._orgSort.key, desc = window._orgSort.desc;
   const val = x => ({
     name: x.name,
@@ -4409,8 +4438,9 @@ function renderOrgTable(st){
   const pbtn = (k, label) => `<button onclick="setOrgPeriod('${k}')" style="flex:1;padding:9px;border-radius:10px;border:1.5px solid ${window._orgPeriod===k?'var(--accent)':'var(--ink-12)'};background:${window._orgPeriod===k?'var(--gold-bg)':'transparent'};color:${window._orgPeriod===k?'var(--accent)':'var(--ink-60)'};font-size:13px;font-weight:700;font-family:var(--font-body);cursor:pointer;">${label}</button>`;
 
   return `
-    <div style="display:flex;gap:8px;margin-bottom:12px;max-width:320px;">
-      ${pbtn('week', TT('이번 주','This week'))}${pbtn('month', TT('최근 30일','Last 30 days'))}
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+      <div style="display:flex;gap:8px;width:260px;">${pbtn('week', TT('이번 주','This week'))}${pbtn('month', TT('최근 30일','Last 30 days'))}</div>
+      ${_orgTeacherBar(st)}
     </div>
     <div style="background:var(--bg-card);border:1px solid var(--ink-07);border-radius:16px;padding:6px 14px 10px;box-shadow:var(--shadow-sm);overflow-x:auto;">
       <table style="width:100%;border-collapse:collapse;min-width:640px;">
@@ -4450,6 +4480,8 @@ async function loadOrgOverview(){
 }
 
 function renderOrgOverview(st){
+  const _bar = _orgTeacherBar(st);
+  st = { ...st, list: _orgByTeacher(st.list) };   // 고른 선생님 반만 놓고 전부 다시 센다
   const N = st.list.length;
   const did = st.list.filter(x => x.today.study || x.today.review);
   const overdueStudents = st.list.filter(x => x.overdue > 0);
@@ -4481,6 +4513,7 @@ function renderOrgOverview(st){
     </div>`;
 
   return `
+    ${_bar ? `<div style="margin-bottom:14px;">${_bar}</div>` : ''}
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
       ${tile(`${did.length}<span style="font-size:15px;color:var(--ink-45);">/${N}</span>`, TT('명이 학습','studied'), `☀️ ${TT('오늘','Today')} ${dLabel}`, did.length ? '#1c7c3c' : '#c0392b')}
       ${tile(overdueTotal, TX(`{v0}명`,`{v0} students`,{v0:(overdueStudents.length)}), `⏰ ${TT('밀린 복습','Overdue')}`, overdueTotal ? '#c0392b' : '#1c7c3c')}
@@ -5020,12 +5053,12 @@ async function doAssignToStudent(studentId){
 const _PROMO='https://imvoca.app/wordbooks/promo/';
 const HELP = {
   dashboard: { icon:'📊', title:'대시보드', purpose:'우리 학생들이 오늘 공부했는지 실시간으로 한눈에 봐요.',
-    steps:['상단 숫자: 전체 / 오늘 공부 / 새 단어 / 복습 / 안 함','학생 이름을 누르면 그 학생이 오늘 무슨 Day를 했는지 상세','아래 “과제별 상세 리포트”로 진도표까지 확인'],
+    steps:['상단 숫자: 전체 / 오늘 공부 / 새 단어 / 복습 / 안 함','선생님을 여러 명 두셨다면 맨 위에서 그 선생님 반만 골라 볼 수 있어요 (숫자도 그 반 기준으로 다시 계산돼요)','학생 이름을 누르면 그 학생이 오늘 무슨 Day를 했는지 상세','아래 “과제별 상세 리포트”로 진도표까지 확인'],
     tip:'매일 밤 9시 자동 집계도 있지만, 이 화면은 지금 이 순간 기준 실시간이에요.' },
   members: { icon:'👥', title:'학생·관리자', purpose:'학생 가입 승인, 담임 선생님 지정, 학생 정보를 관리해요.',
-    steps:['“승인 대기”에 뜬 가입 신청 학생을 승인','학생을 눌러 담임(선생님) 지정','담임을 지정하면 그 선생님 화면엔 담당 학생만 보여요'] },
+    steps:['“승인 대기”에 뜬 가입 신청 학생을 승인','학생을 눌러 담임(선생님) 지정','담임을 지정하면 그 선생님 화면엔 담당 학생만 보여요','원장님은 대시보드·리포트에서 “선생님별로 골라 보기”가 됩니다'] },
   report: { icon:'📈', title:'학습 리포트', purpose:'학생 한 명 한 명이 이번 주(달)에 얼마나 했는지 한 표로 봅니다.',
-    steps:['제목을 누르면 그 기준으로 정렬됩니다 (밀림 많은 순, 학습일 적은 순 …)','이름 옆 ● 은 챙겨야 할 학생 표시','이름을 누르면 그 학생 상세로','📤 학부모 카드(카톡용 이미지) · 📄 학습 리포트 — 기간을 골라 인쇄·PDF'],
+    steps:['제목을 누르면 그 기준으로 정렬됩니다 (밀림 많은 순, 학습일 적은 순 …)','선생님을 여러 명 두셨다면 “👥 전체 학생” 을 눌러 그 선생님 반만 골라 볼 수 있어요','이름 옆 ● 은 챙겨야 할 학생 표시','이름을 누르면 그 학생 상세로','📤 학부모 카드(카톡용 이미지) · 📄 학습 리포트 — 기간을 골라 인쇄·PDF'],
     tip:'수강료 받는 날 📄 학습 리포트를 한 달치 뽑아 드리면 재등록에 큰 도움이 됩니다.' },
   tests: { icon:'📝', title:'시험 출제', purpose:'단어 시험을 온라인(자동채점) 또는 종이(PDF)로 내고 성적을 관리해요.',
     steps:['“새 시험 만들기” → 단어장·범위·유형·문항 수 선택','학생 앱 홈에 자동 배정 → 학생이 응시하면 자동 채점','🖨️ A형/B형: 종이 시험지(정답지 포함) · 순서 셔플로 부정 방지','📊 결과: 학생별 점수·반평균 · 옆 📤로 시험 성적표를 학부모에게','🔁 재시험: 같은 진도 다른 문제 · 기준 점수 미만 학생만 자동 선택'],
