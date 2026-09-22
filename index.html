@@ -4248,12 +4248,6 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
   .note { margin-top:24px; background:var(--cream); border-left:2px solid var(--gold);
           padding:13px 16px; font-size:10.5px; line-height:1.85; color:#5d5a53; border-radius:0 5px 5px 0; }
   .note b { color:var(--navy); font-weight:500; }
-  /* 선생님이 손으로 한마디 적어 보낼 수 있게 — 학원이 내미는 문서다운 마무리 */
-  .sign { margin-top:22px; border:1px solid var(--line); border-radius:5px; padding:14px 17px 15px; }
-  .sign .sl { font-size:9.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-              color:var(--gold); margin-bottom:13px; }
-  .sign .ln { height:1px; background:var(--hair); margin-bottom:18px; }
-  .sign .sg { text-align:right; font-size:9.5px; color:var(--mute); letter-spacing:.02em; }
   .ft { margin-top:22px; padding-top:10px; border-top:1px solid var(--navy);
         display:flex; justify-content:space-between; font-size:9px; color:#b4b1ab; letter-spacing:.06em; }
   tr, .cal { break-inside:avoid; }
@@ -4311,12 +4305,6 @@ async function buildPeriodReport(studentId, studentName, from, to, order){
 
 <div class="note"><b>${TT('에빙하우스 망각곡선에 따른 복습','Spaced repetition')}</b><br>
 ${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로 여섯 번 다시 만나게 합니다. 잊어버릴 때쯤 다시 보는 것이 장기기억으로 넘기는 가장 확실한 방법이기 때문입니다. 위 <b>복습</b> 칸의 회차가 그 단계입니다.','IM VOCA brings each word back six times over 60 days — right when it is about to be forgotten. The numbers in the Review column are those stages.')}</div>
-
-<div class="sign">
-  <div class="sl">${TT('선생님 한마디','Teacher\u2019s note')}</div>
-  <div class="ln"></div><div class="ln"></div><div class="ln"></div>
-  <div class="sg">${TT('담당 선생님','Teacher')} ______________________</div>
-</div>
 
 <div class="ft"><span>${esc2(userOrg.name||'')}</span><span>IM VOCA · ${_todayStr()}</span></div>
 </body></html>`;
