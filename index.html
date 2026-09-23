@@ -2695,7 +2695,7 @@ async function _translateReviews(){
       + 'Return ONLY a JSON object mapping each id to its translation. No code fences, no commentary.\n\n'
       + JSON.stringify(need.map(r=>({ id:String(r.id), text:r.body })));
     const model = GEMINI_MODELS[_geminiModelIdx] || GEMINI_MODELS[0];
-    const res = await fetch(SB_URL + '/functions/v1/gemini-proxy', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(_authToken||SB_KEY)}, body:JSON.stringify({ model, body:{ contents:[{ parts:[{ text: prompt }] }], generationConfig:{ temperature:0.2 } } }) });
+    const res = await fetch(SB_URL + '/functions/v1/gemini-proxy', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(_authToken||SB_KEY)}, body:JSON.stringify({ model, tz:_myTz(), body:{ contents:[{ parts:[{ text: prompt }] }], generationConfig:{ temperature:0.2 } } }) });
     const data = await res.json();
     let txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     txt = txt.trim().replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,'');
@@ -6974,6 +6974,9 @@ function renderLogin(tab) {
 <script>
 // ── Gemini API 모델 폴백 + 재시도 ──
 const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+// 서버(gemini-proxy)가 일일 스캔 한도의 '오늘' 을 사용자 현지 날짜로 계산하도록
+// 시간대 이름을 같이 보낸다. (날짜를 보내면 아무 날짜나 보내 한도를 리셋할 수 있다)
+function _myTz(){ try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch(e){ return ''; } }
 let _geminiModelIdx = 0;
 
 // Gemini 응답에서 단어 목록을 최대한 견고하게 추출 (JSON이 잘려도 완성된 단어는 모두 살림)
@@ -7047,7 +7050,7 @@ async function geminiWithRetry(body, maxRetry=7) {
     const model = GEMINI_MODELS[modelIdx];
     try {
       // Gemini 키는 서버(Edge Function 'gemini-proxy')에서만 사용 — 클라이언트에 노출 안 됨
-      const res = await fetch(SB_URL + '/functions/v1/gemini-proxy', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(_authToken||SB_KEY)}, body:JSON.stringify({ model, body }) });
+      const res = await fetch(SB_URL + '/functions/v1/gemini-proxy', { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(_authToken||SB_KEY)}, body:JSON.stringify({ model, body, tz:_myTz() }) });
       const data = await res.json();
       if (data.error) {
         const code = data.error.code, msg = data.error.message||'';
