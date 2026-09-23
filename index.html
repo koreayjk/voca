@@ -7767,50 +7767,78 @@ async function doMultiScan() {
   await extractAllMultiScan();
 }
 
-// 여러 장을 한 번에(순서대로) 추출 — 중간에 멈추지 않고 모아서 마지막에 한 화면으로 보여줌
+// 여러 장을 한 번에 추출 — 모아서 마지막에 한 화면으로 보여줌.
+// ⚠️ 예전엔 사진을 한 장씩 순서대로 기다렸다. 한 장에 10~25초가 걸리니 10장이면
+//    2~4분이다. 사진끼리는 서로 의존하지 않으므로 동시에 여러 장을 보낸다.
+//    결과는 사진 순서대로 다시 맞춰서 합친다 (본문 읽는 순서가 유지돼야 한다).
+const SCAN_CONCURRENCY = 3;   // 너무 올리면 Gemini 가 429(혼잡)를 돌려준다
+
 async function extractAllMultiScan() {
   const total = window._multiTotal || 0;
-  const seen = new Set();       // en(소문자) 기준 중복 제거 (여러 장에 겹치는 단어 방지)
   const existing = _bookWordSet(window._multiBookId);   // 이 책에 이미 있는 단어 → 하드 필터
-  const allWords = [];
-  const pageNums = [];
-  let failCount = 0, doneCount = 0, dupSkipped = 0;
-  for (let idx = 0; idx < total; idx++) {
-    // 무료 스캔 한도: 장마다 확인 (멀티에서 우회 방지). 한도 도달 시 모은 것까지만.
-    if (!canScan()) {
-      toast(TX(`스캔 한도에 도달해 {v0}장까지만 추출했어요`,`Scan limit reached — extracted {v0} photo(s)`,{v0:(doneCount)}));
-      break;
-    }
-    renderScanLoading(idx+1, total);
+  const results = new Array(total).fill(null);          // [{words, pageNum}] — 사진 순서 보존
+  let failCount = 0, limitHit = false, fatal = false;
+  let next = 0, finished = 0;
+
+  renderScanLoading(0, total);
+
+  const runOne = async (idx) => {
     const currentImg = window._multiQueue[idx];
-    window._multiQueue[idx] = null; // 처리한 이미지 메모리 회수
-    let words = null, pageNum = '';
+    window._multiQueue[idx] = null;   // 처리한 이미지 메모리 회수
     try {
       const b64 = currentImg.split(',')[1], mt = currentImg.split(';')[0].split(':')[1];
       const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(false)}]}], generationConfig:{temperature:0.1,maxOutputTokens:16384} });
       if (data.error) {
-        if (data.error.code==='scan_limit') { toast(TT('스캔 한도에 도달했어요','Scan limit reached')); break; }
-        if (data.error.code===403) { toast('API 키를 확인해주세요'); render(); return; }
-        failCount++; continue;
+        if (data.error.code === 'scan_limit') { limitHit = true; return; }
+        if (data.error.code === 403) { fatal = true; return; }
+        failCount++; return;
       }
-      if (!data.candidates?.[0]) { failCount++; continue; }
+      if (!data.candidates?.[0]) { failCount++; return; }
       const txt = data.candidates[0].content.parts[0].text;
-      words = _absorbUsage(parseWordsRobust(txt));
-      pageNum = parsePageNum(txt) || '';
-      if (!words?.length) { failCount++; continue; }
-    } catch(e) { failCount++; continue; }
-    await incrementScanCount();
+      const words = _absorbUsage(parseWordsRobust(txt));
+      if (!words?.length) { failCount++; return; }
+      results[idx] = { words, pageNum: parsePageNum(txt) || '' };
+    } catch(e) { failCount++; }
+    finally { finished++; renderScanLoading(finished, total); }
+  };
+
+  // 일꾼 여러 명이 큐에서 하나씩 집어간다
+  const worker = async () => {
+    while (!limitHit && !fatal) {
+      // 무료 스캔 한도: 보내기 직전에 확인하고 그 자리에서 카운트를 올린다.
+      // (성공 후에 올리면 동시에 뜬 요청들이 같은 잔여분을 보고 다 통과해버린다.
+      //  서버도 Gemini 호출 전에 올리므로 이쪽이 서버 계산과도 맞는다)
+      if (!canScan()) { limitHit = true; return; }
+      const idx = next++;
+      if (idx >= total) return;
+      incrementScanCount();
+      await runOne(idx);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(SCAN_CONCURRENCY, total) }, worker));
+
+  if (fatal) { toast('API 키를 확인해주세요'); render(); return; }
+
+  // ── 사진 순서대로 합치기 ──────────────────────────────────────
+  const seen = new Set();       // en(소문자) 기준 중복 제거 (여러 장에 겹치는 단어 방지)
+  const allWords = [], pageNums = [];
+  let doneCount = 0, dupSkipped = 0;
+  results.forEach(r => {
+    if (!r) return;
     doneCount++;
-    if (pageNum) pageNums.push(pageNum);
-    for (const w of words) {
+    if (r.pageNum) pageNums.push(r.pageNum);
+    for (const w of r.words) {
       const key = (w.en||'').toLowerCase().trim();
       if (!key || seen.has(key)) continue;
       if (existing.has(key)) { dupSkipped++; continue; }
       seen.add(key);
-      w._page = pageNum || '';
+      w._page = r.pageNum || '';
       allWords.push(w);
     }
-  }
+  });
+
+  if (limitHit) toast(TX(`스캔 한도에 도달해 {v0}장까지만 추출했어요`,`Scan limit reached — extracted {v0} photo(s)`,{v0:(doneCount)}));
+
   if (!allWords.length) {
     toast(dupSkipped>0
       ? (TT('전부 이미 단어장에 있는 단어예요','All words are already in this book'))
@@ -8479,9 +8507,10 @@ function initStudy(bookId, scope, pageNum) {
   studyState = { bookId, scope, pageNum, round:1, queue:shuffle([...ws]), idx:0, flipped:false, xList:[], stats:{total:ws.length,seen:0,oCount:0} };
 }
 
-function renderScanLoading(current=1, total=1) {
-  const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<current-1?'#1c7c3c':i===current-1?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
-  const subtitle = total > 1 ? `${current} / ${total}장 분석 중...` : t('analyzing');
+function renderScanLoading(done=0, total=1) {
+  // done = 지금까지 끝난 장 수. 여러 장을 동시에 보내므로 '3번째 장' 같은 순번은 의미가 없다.
+  const dots = total > 1 ? `<div style="display:flex;gap:6px;justify-content:center;margin-top:16px;">${Array.from({length:total},(_,i)=>`<div style="width:10px;height:10px;border-radius:50%;background:${i<done?'#1c7c3c':i<done+SCAN_CONCURRENCY?'var(--accent)':'var(--ink-12)'}"></div>`).join('')}</div>` : '';
+  const subtitle = total > 1 ? TX(`{v1}장 중 {v0}장 완료`,`{v0} of {v1} done`,{v0:(done),v1:(total)}) : t('analyzing');
   document.getElementById('root').innerHTML = `<div class="scr"><div class="scanning"><div class="ring"></div><div style="text-align:center"><div class="h-display h-l">${t('scanning')}</div><div class="muted" style="font-size:12px;margin-top:6px">${subtitle}</div>${dots}<div style="display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;background:var(--bg-card);border-radius:12px;padding:12px 16px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#7b2d8b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#7b2d8b;">C2</strong> — ${TT('원어민 수준','Native level')}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#c0392b;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#c0392b;">C1</strong> — ${TT('대학/원서 수준','Academic level')}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#e67e22;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#e67e22;">B2</strong> — ${TT('고급 중급','Upper intermediate')}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#2980b9;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#2980b9;">B1</strong> — ${TT('중급','Intermediate')}</span></div><div style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:50%;background:#27ae60;flex-shrink:0;display:inline-block;"></span><span style="font-size:12px;color:var(--ink-100);"><strong style="color:#27ae60;">A2</strong> — ${TT('초급','Beginner')}</span></div></div></div></div></div>`;
 }
 
