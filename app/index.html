@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IM VOCA 앱 받기</title>
+
+<!-- ─────────────────────────────────────────────────────────────
+  카톡·문자·페북에 링크를 붙였을 때 뜨는 미리보기.
+  play.google.com 주소를 그대로 공유하면 우리가 손댈 수 없는 구글 페이지라
+  "미리보기가 없습니다"만 뜬다. 그래서 우리 도메인에 이 페이지를 두고
+  이걸 공유한다 — 미리보기는 아래 og 태그로, 실제 이동은 스크립트로.
+  ⚠️ 서버 리다이렉트(301)를 쓰면 안 된다. 크롤러가 구글 페이지로 끌려가
+     og 태그를 못 읽는다. 크롤러는 자바스크립트를 실행하지 않으므로
+     '화면에 그린 뒤 스크립트로 이동' 이 미리보기와 이동을 둘 다 살린다.
+────────────────────────────────────────────────────────────── -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IM VOCA">
+<meta property="og:title" content="IM VOCA — 사진 한 장으로 영단어 정리 끝">
+<meta property="og:description" content="교재를 찍으면 AI가 어려운 단어를 골라 문맥에 맞는 뜻으로 정리하고, 망각곡선 복습까지. 특허출원 기술(제10-2026-0127089호).">
+<meta property="og:image" content="https://imvoca.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://imvoca.app/app">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IM VOCA — 사진 한 장으로 영단어 정리 끝">
+<meta name="twitter:description" content="교재를 찍으면 AI가 어려운 단어를 골라 문맥에 맞는 뜻으로. 망각곡선 복습까지.">
+<meta name="twitter:image" content="https://imvoca.app/og-image.png">
+<meta name="description" content="IM VOCA 앱 받기 — 안드로이드는 Play 스토어, 그 외에는 웹앱으로.">
+<link rel="canonical" href="https://imvoca.app/app">
+<link rel="icon" href="https://imvoca.app/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#1c3553; --gold:#9a7b3a; --ink:#22262b; --mute:#8b8f94;
+          --line:#e7e4dd; --card:#fffdf8; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { min-height:100dvh; display:flex; align-items:center; justify-content:center;
+         padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px));
+         font-family:'Noto Sans KR',-apple-system,"Apple SD Gothic Neo",sans-serif;
+         color:var(--ink); font-weight:300; line-height:1.65;
+         background:radial-gradient(130% 85% at 50% -10%, #f8f2e8 0%, #f3efe6 55%); }
+  .card { width:100%; max-width:380px; background:var(--card); border:1px solid var(--line);
+          border-radius:20px; padding:32px 26px 26px; text-align:center;
+          box-shadow:0 2px 6px rgba(40,25,10,.05), 0 18px 44px rgba(40,25,10,.10); }
+  .logo { width:62px; height:62px; border-radius:15px; margin:0 auto 16px; display:block; }
+  h1 { font-family:'Playfair Display',serif; font-size:27px; font-weight:600;
+       color:var(--navy); letter-spacing:-.01em; line-height:1.15; }
+  .tag { font-size:13.5px; color:var(--mute); margin-top:7px; }
+  ul { list-style:none; text-align:left; margin:22px 0 24px; }
+  li { font-size:13.5px; padding:7px 0; border-bottom:1px solid #f4f1ea; display:flex; gap:9px; }
+  li:last-child { border-bottom:0; }
+  li b { font-weight:500; color:var(--navy); }
+  .btn { display:block; width:100%; padding:15px; border-radius:13px; text-decoration:none;
+         font-size:15px; font-weight:700; margin-bottom:9px; }
+  .btn-1 { background:var(--navy); color:#fff; box-shadow:0 4px 14px rgba(28,53,83,.22); }
+  .btn-2 { background:transparent; color:var(--navy); border:1.5px solid var(--line); font-weight:500; }
+  .pat { display:inline-block; margin-top:14px; font-size:11px; color:var(--gold);
+         background:#f7f2e6; border-radius:99px; padding:5px 12px; }
+  .wait { display:none; font-size:12.5px; color:var(--mute); margin-bottom:10px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="https://imvoca.app/icon-192.png" alt="IM VOCA">
+    <h1>IM VOCA</h1>
+    <div class="tag">교재를 찍으면 끝.<br>단어장은 <b style="color:var(--gold);font-weight:700;">AI</b>가 만들어 드려요.</div>
+
+    <ul>
+      <li>📸 <span><b>사진 한 장</b>으로 단어 추출</span></li>
+      <li>🎯 <span>사전 뜻이 아니라 <b>그 문장에서의 뜻</b></span></li>
+      <li>🔁 <span><b>망각곡선 복습</b>으로 오래 기억</span></li>
+      <li>📊 <span>CEFR <b>난이도 자동 분류</b></span></li>
+    </ul>
+
+    <div class="wait" id="wait">Play 스토어로 이동 중…</div>
+    <a class="btn btn-1" id="store" href="https://play.google.com/store/apps/details?id=app.imvoca.twa">▶ Play 스토어에서 받기</a>
+    <a class="btn btn-2" href="https://imvoca.app/">웹에서 바로 쓰기</a>
+
+    <div class="pat">🏅 특허출원 기술 · 제10-2026-0127089호</div>
+  </div>
+
+<script>
+  // 안드로이드에서 온 사람은 원래 스토어 링크를 누른 것과 같은 경험이 되게 바로 넘긴다.
+  // 아이폰은 앱 심사 전이라 웹앱(홈 화면 추가)이 최선이고, PC 는 그냥 이 화면을 둔다.
+  (function () {
+    var ua = navigator.userAgent || '';
+    if (/Android/i.test(ua) && !/(kakaotalk-scrap|facebookexternalhit|Twitterbot|Slackbot|bot|crawler|spider)/i.test(ua)) {
+      document.getElementById('wait').style.display = 'block';
+      setTimeout(function () { location.replace(document.getElementById('store').href); }, 700);
+    }
+  })();
+</script>
+</body>
+</html>
