@@ -4,1737 +4,588 @@
  "day": 10,
  "words": [
   {
-   "en": "immediate",
-   "ipa": "/ɪˈmiːdiət/",
-   "pos": "adj.",
+   "en": "system",
+   "ipa": "/ˈsɪstəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "즉각적인, 즉시의",
-     "ex": "He needs immediate feedback to complete the rest of the task successfully.",
-     "tr": "그는 나머지 과제를 성공적으로 완료하기 위해 즉각적인 피드백이 필요하다.",
-     "src": "2016 9월모평 34번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "바로 인접한, 직접적인"
+     "pos": "n",
+     "ko": "시스템, 체계",
+     "ex": "The school uses an online system for checking attendance.",
+     "tr": "학교는 출석 확인을 위해 온라인 시스템을 사용한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "instant",
-    "prompt",
-    "direct"
-   ],
-   "deriv": [
-    "immediately (adv.)",
-    "immediacy (n.)"
-   ],
-   "roots": [
-    {
-     "part": "im",
-     "mean": "아닌"
-    },
-    {
-     "part": "medius",
-     "mean": "중간"
-    }
-   ],
-   "etymHint": "im(아닌)+medius(중간) → 중간이 없이 곧바로 → 즉각적인",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 69,
-    "exams": 26,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "effort",
-   "ipa": "/ˈɛfərt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "노력, 수고",
-     "ex": "Effective communication always requires a joint effort from both the speaker and the listener.",
-     "tr": "효과적인 의사소통은 항상 화자와 청자 모두의 공동 노력을 필요로 한다.",
-     "src": "2017 수능 22번"
-    }
-   ],
-   "syn": [
-    "attempt",
-    "endeavor",
-    "exertion"
-   ],
-   "deriv": [
-    "effortless (adj.)",
-    "effortlessly (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "fortis",
-     "mean": "강한"
-    }
-   ],
-   "etymHint": "ex(밖으로)+fortis(강한) → 강한 힘을 밖으로 내보냄 → 노력",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 68,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "contest",
-   "ipa": "/ˈkɒntɛst/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "대회, 경연",
-     "ex": "She was searching for a suitable venue to hold this year's art contest exhibition.",
-     "tr": "그녀는 올해 미술 대회 전시회를 개최할 적합한 장소를 찾고 있었다.",
-     "src": "2021 9월모평 18번"
-    },
-    {
-     "pos": "v.",
-     "ko": "겨루다, 이의를 제기하다"
-    }
-   ],
-   "syn": [
-    "competition",
-    "tournament",
-    "challenge"
-   ],
-   "deriv": [
-    "contestant (n.)",
-    "contested (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "con",
-     "mean": "함께"
-    },
-    {
-     "part": "testis",
-     "mean": "증인"
-    }
-   ],
-   "etymHint": "con(함께)+testis(증인) → 증인들 앞에서 함께 겨룸 → 대회, 경쟁",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 67,
-    "exams": 26,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "explain",
-   "ipa": "/ɪkˈspleɪn/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "설명하다, 해명하다",
-     "ex": "Different social identities help explain why people hold various political preferences on each issue.",
-     "tr": "서로 다른 사회적 정체성은 사람들이 각각의 문제에 대해 다양한 정치적 선호를 갖는 이유를 설명하는 데 도움이 된다.",
-     "src": "2019 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "clarify",
-    "describe",
-    "illustrate"
-   ],
-   "deriv": [
-    "explanation (n.)",
-    "explanatory (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "planus",
-     "mean": "평평한, 분명한"
-    }
-   ],
-   "etymHint": "ex(밖으로)+planus(평평한) → 펼쳐서 분명히 드러냄 → 설명하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 67,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "recent",
-   "ipa": "/ˈriːsənt/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "최근의, 근래의",
-     "ex": "Recent behavioral studies have raised serious doubts about this widely held assumption.",
-     "tr": "최근의 행동 연구들은 이 널리 받아들여진 가정에 심각한 의문을 제기했다.",
-     "src": "2019 수능 24번"
-    }
-   ],
-   "syn": [
-    "latest",
-    "current",
-    "new"
-   ],
-   "deriv": [
-    "recently (adv.)",
-    "recency (n.)"
-   ],
-   "roots": [
-    {
-     "part": "recens",
-     "mean": "새로운, 신선한(라틴어)"
-    }
-   ],
-   "etymHint": "recens(새로운) → 새롭게 일어난 → 최근의",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 58,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "data",
-   "ipa": "/ˈdeɪtə/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "자료, 데이터",
-     "ex": "Organizations must rely on the data they store to build knowledge and make informed decisions.",
-     "tr": "조직은 지식을 구축하고 정보에 기반한 결정을 내리기 위해 저장된 자료에 의존해야 한다.",
-     "src": "2020 6월모평 22번"
-    }
-   ],
-   "syn": [
-    "information",
-    "facts",
-    "statistics"
-   ],
-   "deriv": [
-    "database (n.)",
-    "dataset (n.)"
-   ],
-   "roots": [
-    {
-     "part": "datum",
-     "mean": "주어진 것(라틴어)"
-    },
-    {
-     "part": "dare",
-     "mean": "주다"
-    }
-   ],
-   "etymHint": "dare(주다)+tum → 주어진 것들 → 자료, 데이터",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 56,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "risk",
-   "ipa": "/rɪsk/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "위험, 위험 요소",
-     "ex": "When facing a risk situation, people often focus too much on the final outcome rather than the process.",
-     "tr": "위험한 상황에 직면했을 때, 사람들은 종종 과정보다 최종 결과에 지나치게 집중한다.",
-     "src": "2015 수능 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "위험을 무릅쓰다"
-    }
-   ],
-   "syn": [
-    "danger",
-    "hazard",
-    "threat"
-   ],
-   "deriv": [
-    "risky (adj.)",
-    "riskiness (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 53,
-    "exams": 26,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "lack",
-   "ipa": "/læk/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "부족, 결핍",
-     "ex": "The lack of enthusiasm in his voice suggested that he was not truly excited about the plan.",
-     "tr": "그의 목소리에 담긴 열정의 부족은 그가 그 계획에 진심으로 기대하지 않음을 나타냈다.",
-     "src": "2015 6월모평 33번"
-    },
-    {
-     "pos": "v.",
-     "ko": "부족하다, 결여되어 있다"
-    }
-   ],
-   "syn": [
-    "shortage",
-    "absence",
-    "deficiency"
-   ],
-   "deriv": [
-    "lacking (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 46,
-    "exams": 26,
-    "recentYear": "2024",
-    "stars": 3
-   }
-  },
-  {
-   "en": "respond",
-   "ipa": "/rɪˈspɒnd/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "반응하다, 응답하다",
-     "ex": "Research shows that humans are naturally inclined to respond differently to social signals than to other stimuli.",
-     "tr": "연구에 따르면 인간은 다른 자극보다 사회적 신호에 다르게 반응하는 본능적 성향이 있다.",
-     "src": "2024 수능 29번"
-    }
-   ],
-   "syn": [
-    "react",
-    "reply",
-    "answer"
-   ],
-   "deriv": [
-    "response (n.)",
-    "responsive (adj.)",
-    "responsibility (n.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시, 뒤로"
-    },
-    {
-     "part": "spondere",
-     "mean": "약속하다"
-    }
-   ],
-   "etymHint": "re(다시)+spondere(약속하다) → 상대의 말에 대한 약속으로 돌아옴 → 반응하다, 응답하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 44,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "faster",
-   "ipa": "/ˈfæstər/",
-   "pos": "adj./adv.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "더 빠른",
-     "ex": "The new vehicle was much faster, making supply trips far more efficient.",
-     "tr": "새 차량은 훨씬 더 빨라서 물자 수송을 훨씬 더 효율적으로 만들었다.",
-     "src": "2011 6월모평 32번"
-    },
-    {
-     "pos": "adv.",
-     "ko": "더 빠르게"
-    }
-   ],
-   "syn": [
-    "quicker",
-    "speedier",
-    "swifter"
-   ],
-   "deriv": [
-    "fast (adj./adv.)",
-    "fastest (adj.)",
-    "fasten (v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 35,
-    "exams": 26,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "piece",
-   "ipa": "/piːs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "조각, 부분",
-     "ex": "She handed him a piece of paper with a short note written from the heart.",
-     "tr": "그녀는 마음을 담아 짧은 쪽지가 적힌 종이 한 장을 그에게 건넸다.",
-     "src": "2017 9월모평 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "작품, 글"
-    }
-   ],
-   "syn": [
-    "part",
-    "fragment",
-    "bit"
-   ],
-   "deriv": [
-    "piecemeal (adj./adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 72,
-    "exams": 25,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "spend",
-   "ipa": "/spɛnd/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "(시간·돈을) 쓰다, 보내다",
-     "ex": "We may spend the coming decades constantly questioning what roles humans can uniquely fill.",
-     "tr": "우리는 앞으로 수십 년을 인간이 고유하게 채울 수 있는 역할이 무엇인지 끊임없이 의문을 품으며 보낼 수도 있다.",
-     "src": "2018 수능 34번"
-    }
-   ],
-   "syn": [
-    "use",
-    "devote",
-    "pass"
-   ],
-   "deriv": [
-    "spending (n.)",
-    "expenditure (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "pendere",
-     "mean": "무게를 달다, 지불하다"
-    }
-   ],
-   "etymHint": "ex(밖으로)+pendere(지불하다) → 돈이나 시간을 밖으로 내보냄 → 쓰다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 67,
-    "exams": 25,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "communication",
-   "ipa": "/kəˌmjuːnɪˈkeɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "의사소통, 전달",
-     "ex": "Clothing and textiles are widely used as a form of nonverbal communication.",
-     "tr": "의복과 직물은 비언어적 의사소통의 한 형태로 널리 사용된다.",
-     "src": "2015 9월모평 22번"
-    },
-    {
-     "pos": "n.",
-     "ko": "통신, 연락"
-    }
-   ],
-   "syn": [
-    "interaction",
-    "exchange",
-    "correspondence"
-   ],
-   "deriv": [
-    "communicate (v.)",
-    "communicative (adj.)",
-    "communicator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "commun",
-     "mean": "공통의, 함께"
-    },
-    {
-     "part": "ation",
-     "mean": "명사 접미사"
-    }
-   ],
-   "etymHint": "commun(공통의)+ic+ation → 공통된 것을 나눔 → 의사소통",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 58,
-    "exams": 25,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "musical",
-   "ipa": "/ˈmjuːzɪkəl/",
-   "pos": "adj./n.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "음악적인, 음악의",
-     "ex": "Beethoven carried scraps of paper on his walks to note down his musical ideas as they came to him.",
-     "tr": "베토벤은 산책할 때 떠오르는 음악적 아이디어를 적어두기 위해 종이 조각을 들고 다녔다.",
-     "src": "2011 6월모평 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "뮤지컬(공연)"
-    }
-   ],
-   "syn": [
-    "melodic",
-    "harmonic",
-    "tuneful"
-   ],
-   "deriv": [
-    "music (n.)",
-    "musician (n.)",
-    "musically (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "muse",
-     "mean": "뮤즈(예술의 신)"
-    }
-   ],
-   "etymHint": "muse(예술의 신)+ic+al → 뮤즈와 관련된 → 음악적인",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 56,
-    "exams": 25,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "current",
-   "ipa": "/ˈkɜːrənt/",
-   "pos": "adj./n.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "현재의, 지금의",
-     "ex": "Understanding past climate changes is necessary to properly assess current global warming trends.",
-     "tr": "과거의 기후 변화를 이해하는 것은 현재의 지구 온난화 추세를 올바르게 평가하는 데 필요하다.",
-     "src": "2017 6월모평 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "흐름, 해류, 기류"
-    },
-    {
-     "pos": "n.",
-     "ko": "전류"
-    }
-   ],
-   "syn": [
-    "present",
-    "existing",
-    "contemporary"
-   ],
-   "deriv": [
-    "currently (adv.)",
-    "currency (n.)"
-   ],
-   "roots": [
-    {
-     "part": "curr",
-     "mean": "흐르다"
-    }
-   ],
-   "etymHint": "curr(흐르다)+ent → 지금 흘러가고 있는 → 현재의·흐름",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 50,
-    "exams": 25,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "expression",
-   "ipa": "/ɪkˈspreʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "표현, 표정",
-     "ex": "It is the vivid expressions of the chef that turn the food into a more exciting experience.",
-     "tr": "음식을 더욱 흥미로운 경험으로 바꾸는 것은 바로 셰프의 생생한 표현이다.",
-     "src": "2009 6월모평 26번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(언어·수학의) 식, 표현식"
-    }
-   ],
-   "syn": [
-    "statement",
-    "display",
-    "manifestation"
-   ],
-   "deriv": [
-    "express (v.)",
-    "expressive (adj.)",
-    "expressly (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "press",
-     "mean": "누르다"
-    }
-   ],
-   "etymHint": "ex(밖으로)+press(누르다)+ion → 안에 있는 것을 밖으로 눌러 냄 → 표현",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 49,
-    "exams": 25,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "balance",
-   "ipa": "/ˈbæləns/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "균형, 평형",
-     "ex": "When our body is disturbed by outside forces, our inner system works to restore a balanced state.",
-     "tr": "외부 힘에 의해 몸이 흔들릴 때, 우리의 내부 시스템은 균형 상태를 회복하기 위해 작동한다.",
-     "src": "2012 수능 34번"
-    },
-    {
-     "pos": "v.",
-     "ko": "균형을 유지하다"
-    },
-    {
-     "pos": "n.",
-     "ko": "잔액, 나머지"
-    }
-   ],
-   "syn": [
-    "equilibrium",
-    "stability",
-    "harmony"
-   ],
-   "deriv": [
-    "balanced (adj.)",
-    "imbalance (n.)"
-   ],
-   "roots": [
-    {
-     "part": "bi",
-     "mean": "둘"
-    },
-    {
-     "part": "lanx",
-     "mean": "저울 접시"
-    }
-   ],
-   "etymHint": "bi(둘)+lanx(저울 접시) → 저울 두 접시 → 균형",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 48,
-    "exams": 25,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "fail",
-   "ipa": "/feɪl/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "실패하다, ~하지 못하다",
-     "ex": "To her disappointment, she had failed to beat her personal best time once again.",
-     "tr": "그녀는 실망스럽게도 다시 한번 자신의 최고 기록을 깨지 못했다.",
-     "src": "2023 수능 19번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(시험에) 떨어지다, 낙제하다"
-    }
-   ],
-   "syn": [
-    "fall short",
-    "miss",
-    "flunk"
-   ],
-   "deriv": [
-    "failure (n.)",
-    "failing (n./adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 43,
-    "exams": 25,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "survival",
-   "ipa": "/sərˈvaɪvəl/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "생존, 살아남음",
-     "ex": "Sharing food greatly improves each bat's chances of survival during difficult times.",
-     "tr": "음식을 나누는 것은 어려운 시기에 각 박쥐의 생존 가능성을 크게 높인다.",
-     "src": "2011 수능 24번"
-    },
-    {
-     "pos": "n.",
-     "ko": "잔존, 유물"
-    }
-   ],
-   "syn": [
-    "existence",
-    "endurance",
-    "persistence"
-   ],
-   "deriv": [
-    "survive (v.)",
-    "survivor (n.)",
-    "survivable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "sur",
-     "mean": "위에, 넘어서"
-    },
-    {
-     "part": "viv",
-     "mean": "살다"
-    }
-   ],
-   "etymHint": "sur(넘어서)+viv(살다)+al → 위험을 넘어서 살아남음 → 생존",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 40,
-    "exams": 25,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "force",
-   "ipa": "/fɔːrs/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "강요하다, ~하게 만들다",
-     "ex": "Careful planning forces you to think in detail about every step of the project.",
-     "tr": "신중한 계획은 프로젝트의 모든 단계에 대해 세부적으로 생각하게 만든다.",
-     "src": "2022 6월모평 22번"
-    },
-    {
-     "pos": "n.",
-     "ko": "힘, 세력"
-    },
-    {
-     "pos": "n.",
-     "ko": "(물리) 힘, 외력"
-    }
-   ],
-   "syn": [
-    "compel",
-    "power",
-    "pressure"
-   ],
-   "deriv": [
-    "forceful (adj.)",
-    "enforce (v.)",
-    "forcefully (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "fort",
-     "mean": "강한"
-    }
-   ],
-   "etymHint": "fort(강한)+ce → 강한 것 → 힘, 강요하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 90,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "involve",
-   "ipa": "/ɪnˈvɒlv/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "포함하다, 수반하다",
-     "ex": "One interesting case involves endangered peregrine falcons that prey on another threatened species.",
-     "tr": "흥미로운 한 사례는 또 다른 위협받는 종을 먹이로 삼는 멸종 위기의 매와 관련이 있다.",
-     "src": "2020 6월모평 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "참여시키다, 개입시키다"
-    }
-   ],
-   "syn": [
-    "include",
-    "entail",
-    "encompass"
-   ],
-   "deriv": [
-    "involvement (n.)",
-    "involved (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안으로"
-    },
-    {
-     "part": "volv",
-     "mean": "구르다, 감다"
-    }
-   ],
-   "etymHint": "in(안으로)+volv(감다)+e → 안으로 감아 넣다 → 포함하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 87,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "suggest",
-   "ipa": "/səˈdʒest/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "제안하다, 제시하다",
-     "ex": "Some researchers suggest that immigrants should be allowed to keep parts of their own culture and language.",
-     "tr": "일부 연구자들은 이민자들이 자신의 문화와 언어의 일부를 유지하도록 허용해야 한다고 제안한다.",
-     "src": "2024 9월모평 22번"
-    },
-    {
-     "pos": "v.",
-     "ko": "시사하다, 암시하다"
-    }
-   ],
-   "syn": [
-    "propose",
-    "recommend",
-    "imply"
-   ],
-   "deriv": [
-    "suggestion (n.)",
-    "suggestive (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "sub",
-     "mean": "아래에"
-    },
-    {
-     "part": "gest",
-     "mean": "운반하다, 가져오다"
-    }
-   ],
-   "etymHint": "sub(아래에)+gest(가져오다) → 아래에서 가져와 내놓다 → 제안하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 85,
-    "exams": 24,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "consumer",
-   "ipa": "/kənˈsuːmər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "소비자",
-     "ex": "The graph shows the percentage of advertising spending by media and consumer time spent on each type of media.",
-     "tr": "그래프는 매체별 광고 지출 비율과 각 매체 유형에 소비자가 사용한 시간을 나타낸다.",
-     "src": "2015 6월모평 25번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(생태) 소비자"
-    }
-   ],
-   "syn": [
-    "buyer",
-    "customer",
-    "purchaser"
-   ],
-   "deriv": [
-    "consume (v.)",
-    "consumption (n.)",
-    "consumerism (n.)"
-   ],
-   "roots": [
-    {
-     "part": "con",
-     "mean": "완전히"
-    },
-    {
-     "part": "sum",
-     "mean": "가져가다, 쓰다"
-    }
-   ],
-   "etymHint": "con(완전히)+sum(쓰다)+er → 완전히 써버리는 사람 → 소비자",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 76,
-    "exams": 24,
-    "recentYear": "2025",
-    "stars": 3
-   }
-  },
-  {
-   "en": "rate",
-   "ipa": "/reɪt/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "비율, 속도",
-     "ex": "The graph shows the volunteer rates and average annual hours of seven different age groups in 2007.",
-     "tr": "그래프는 2007년 일곱 개 연령 집단의 자원봉사 참여율과 연평균 시간을 나타낸다.",
-     "src": "2014 수능 32번"
-    },
-    {
-     "pos": "v.",
-     "ko": "평가하다, 매기다"
-    },
-    {
-     "pos": "n.",
-     "ko": "(이자·요금) 요율"
-    }
-   ],
-   "syn": [
-    "proportion",
-    "percentage",
-    "speed"
-   ],
-   "deriv": [
-    "rating (n.)",
-    "rated (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "rat",
-     "mean": "계산하다, 정하다"
-    }
-   ],
-   "etymHint": "rat(계산하다)+e → 계산하여 정한 수치 → 비율",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 73,
-    "exams": 24,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "serve",
-   "ipa": "/sɜːrv/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "~의 역할을 하다, 기능하다",
-     "ex": "This behavior serves to help the animal avoid both overheating and getting too cold.",
-     "tr": "이러한 행동은 동물이 과열과 과냉각을 동시에 피하는 데 도움이 되는 역할을 한다.",
-     "src": "2019 9월모평 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "제공하다, 서비스하다"
-    },
-    {
-     "pos": "v.",
-     "ko": "섬기다, 복무하다"
-    }
-   ],
-   "syn": [
-    "function",
-    "operate",
-    "supply"
-   ],
-   "deriv": [
-    "service (n.)",
-    "servant (n.)",
-    "server (n.)"
-   ],
-   "roots": [
-    {
-     "part": "serv",
-     "mean": "섬기다, 보존하다"
-    }
-   ],
-   "etymHint": "serv(섬기다)+e → 섬겨 돕다 → 역할을 하다·서비스하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 72,
-    "exams": 24,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "audience",
-   "ipa": "/ˈɔːdiəns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "청중, 관객",
-     "ex": "When her name was called, Gabby became increasingly nervous about speaking before a large audience.",
-     "tr": "이름이 불렸을 때, 개비는 많은 청중 앞에서 발언하는 것에 점점 더 긴장했다.",
-     "src": "2016 6월모평 19번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(특정 방송·매체의) 시청자·독자층"
-    }
-   ],
-   "syn": [
-    "spectators",
-    "viewers",
-    "crowd"
-   ],
-   "deriv": [
-    "auditory (adj.)",
-    "audio (n./adj.)",
-    "auditorium (n.)"
-   ],
-   "roots": [
-    {
-     "part": "audi",
-     "mean": "듣다"
-    }
-   ],
-   "etymHint": "audi(듣다)+ence → 듣는 사람들 → 청중",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 65,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "college",
-   "ipa": "/ˈkɒlɪdʒ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "대학, 학교",
-     "ex": "His talent was recognized early and he was sent to Eton College by wealthy sponsors when he was fifteen.",
-     "tr": "그의 재능은 일찍부터 인정받았으며, 15살에 부유한 후원자들에 의해 이튼 칼리지에 보내졌다.",
-     "src": "2016 9월모평 25번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(대학 내) 단과대학"
-    }
-   ],
-   "syn": [
-    "university",
-    "institution",
-    "academy"
-   ],
-   "deriv": [
-    "collegiate (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "col",
-     "mean": "함께"
-    },
-    {
-     "part": "leg",
-     "mean": "선택하다, 모으다"
-    }
-   ],
-   "etymHint": "col(함께)+leg(모으다)+e → 함께 모인 사람들 → 학교 공동체",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 50,
-    "exams": 24,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "continue",
-   "ipa": "/kənˈtɪnjuː/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "계속하다, 지속되다",
-     "ex": "This self-inventory process continues to be the starting point for any job search, regardless of the technology used.",
-     "tr": "이 자기 목록 작업은 사용되는 기술에 관계없이 여전히 모든 구직 활동의 출발점이다.",
-     "src": "2019 6월모평 21번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(중단 후) 계속하다, 재개하다"
-    }
-   ],
-   "syn": [
-    "persist",
-    "proceed",
-    "carry on"
-   ],
-   "deriv": [
-    "continuous (adj.)",
-    "continuation (n.)",
-    "continual (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "con",
-     "mean": "함께, 계속"
-    },
-    {
-     "part": "tinu",
-     "mean": "잡다, 유지하다"
-    }
-   ],
-   "etymHint": "con(계속)+tinu(유지하다)+e → 계속 유지하다 → 계속하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 50,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "gain",
-   "ipa": "/ɡeɪn/",
-   "pos": "v./n.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "얻다, 획득하다",
-     "ex": "The film directed by Coppola gained widespread popularity among audiences around the world.",
-     "tr": "코폴라가 감독한 그 영화는 전 세계 관객들 사이에서 큰 인기를 얻었다.",
-     "src": "2018 수능 31번"
-    },
-    {
-     "pos": "n.",
-     "ko": "이익, 증가"
-    },
-    {
-     "pos": "v.",
-     "ko": "(무게·속도 등이) 늘다, 증가하다"
-    }
-   ],
-   "syn": [
-    "obtain",
-    "acquire",
-    "achieve"
-   ],
-   "deriv": [
-    "gainful (adj.)",
-    "gains (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 47,
-    "exams": 24,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "account",
-   "ipa": "/əˈkaʊnt/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "고려하다 (take into account)",
-     "ex": "When we reach out with a tool in hand, we automatically take the length of the tool into account.",
-     "tr": "손에 도구를 들고 뻗을 때, 우리는 자동으로 도구의 길이를 고려한다.",
-     "src": "2021 6월모평 33번"
-    },
-    {
-     "pos": "n.",
-     "ko": "설명, 서술"
-    },
-    {
-     "pos": "n.",
-     "ko": "계좌, 계정"
-    }
-   ],
-   "syn": [
-    "consider",
-    "report",
-    "explanation"
-   ],
-   "deriv": [
-    "accountable (adj.)",
-    "accounting (n.)",
-    "accountant (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ac",
-     "mean": "~에 대해"
-    },
-    {
-     "part": "count",
-     "mean": "계산하다"
-    }
-   ],
-   "etymHint": "ac(~에 대해)+count(계산하다) → 무언가에 대해 계산하다 → 설명하다·계좌",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 41,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "practical",
-   "ipa": "/ˈpræktɪkəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "실용적인, 실제적인",
-     "ex": "Presenting your idea to others is part of the practical side of creative thinking.",
-     "tr": "아이디어를 다른 사람에게 제시하는 것은 창의적 사고의 실용적인 측면 중 하나이다.",
-     "src": "2014 6월모평 24번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "현실적인, 실현 가능한"
-    }
-   ],
-   "syn": [
-    "realistic",
-    "applicable",
-    "functional"
-   ],
-   "deriv": [
-    "practice (n.)",
-    "practically (adv.)",
-    "practicality (n.)"
-   ],
-   "roots": [
-    {
-     "part": "pract",
-     "mean": "행하다 (그리스어 prassein)"
-    }
-   ],
-   "etymHint": "pract(행하다) → 실제로 행할 수 있는 → 실용적인",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 37,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "valuable",
-   "ipa": "/ˈvæljuəbl/",
-   "pos": "adj./n.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "귀중한, 소중한",
-     "ex": "Language provides something far more valuable than simply sharing information between people.",
-     "tr": "언어는 사람들 사이에 단순히 정보를 나누는 것보다 훨씬 더 귀중한 무언가를 제공한다.",
-     "src": "2017 수능 22번"
-    },
-    {
-     "pos": "n.",
-     "ko": "귀중품"
-    }
-   ],
-   "syn": [
-    "precious",
-    "worthwhile",
-    "useful"
-   ],
-   "deriv": [
-    "value (n./v.)",
-    "valueless (adj.)",
-    "invaluable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "valu",
-     "mean": "가치 (라틴어 valere)"
-    }
-   ],
-   "etymHint": "valu(가치) + -able(할 수 있는) → 가치 있는 → 귀중한",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 34,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "image",
-   "ipa": "/ˈɪmɪdʒ/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "이미지, 인상, 상",
-     "ex": "Improving the public image of scientists could help make science more popular among ordinary people.",
-     "tr": "과학자들의 대중적 이미지를 개선하면 일반인들 사이에서 과학을 더 대중화하는 데 도움이 될 수 있다.",
-     "src": "2022 6월모평 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "영상, 그림"
-    },
-    {
-     "pos": "v.",
-     "ko": "상상하다, 묘사하다"
-    }
-   ],
-   "syn": [
-    "picture",
-    "impression",
-    "representation"
-   ],
-   "deriv": [
-    "imagery (n.)",
-    "imagine (v.)",
-    "imaginary (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "imag",
-     "mean": "모방하다, 닮다 (라틴어 imago)"
-    }
-   ],
-   "etymHint": "imag(모방하다) → 대상을 닮게 만든 것 → 이미지",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 87,
-    "exams": 23,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "concern",
-   "ipa": "/kənˈsɜːrn/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "관심사, 우려",
-     "ex": "Democracy requires that citizens be able to discuss matters of common interest and shared concern with each other.",
-     "tr": "민주주의는 시민들이 서로 공동의 관심사와 우려 사항을 논의할 수 있어야 함을 요구한다.",
-     "src": "2017 9월모평 29번"
-    },
-    {
-     "pos": "v.",
-     "ko": "관련되다, 걱정하게 하다"
-    }
-   ],
-   "syn": [
-    "worry",
-    "issue",
-    "matter"
-   ],
-   "deriv": [
-    "concerned (adj.)",
-    "concerning (prep.)",
-    "unconcerned (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "con",
-     "mean": "함께"
-    },
-    {
-     "part": "cern",
-     "mean": "구별하다, 체로 치다 (라틴어 cernere)"
-    }
-   ],
-   "etymHint": "con(함께) + cern(구별하다) → 함께 살펴봐야 할 것 → 관심사, 우려",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 77,
-    "exams": 23,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "top",
-   "ipa": "/tɒp/",
-   "pos": "n./adj./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "최상위, 꼭대기",
-     "ex": "The chart shows the top ten countries that sent the most international students to U.S. universities in two different years.",
-     "tr": "이 도표는 두 개의 서로 다른 연도에 미국 대학에 가장 많은 유학생을 보낸 상위 10개국을 보여준다.",
-     "src": "2019 수능 25번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "최고의, 선두의"
-    },
-    {
-     "pos": "v.",
-     "ko": "~을 능가하다"
-    }
-   ],
-   "syn": [
-    "peak",
-    "summit",
-    "leading"
-   ],
-   "deriv": [
-    "topper (n.)",
-    "topmost (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 60,
-    "exams": 23,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "figure",
-   "ipa": "/ˈfɪɡjər/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "형상, 인물, 수치",
-     "ex": "A crack in the wall suddenly looked like a dancing figure moving gracefully across the surface.",
-     "tr": "벽의 균열이 갑자기 표면을 우아하게 가로질러 움직이는 춤추는 형상처럼 보였다.",
-     "src": "2021 6월모평 34번"
-    },
-    {
-     "pos": "v.",
-     "ko": "생각하다, 파악하다"
-    },
-    {
-     "pos": "n.",
-     "ko": "숫자, 수치"
-    }
-   ],
-   "syn": [
-    "shape",
-    "form",
-    "person"
-   ],
-   "deriv": [
-    "figurative (adj.)",
-    "figuratively (adv.)",
-    "configuration (n.)"
-   ],
-   "roots": [
-    {
-     "part": "figur",
-     "mean": "형태, 모양 (라틴어 figura)"
-    }
-   ],
-   "etymHint": "figur(형태) → 눈에 보이는 형상 → 형상, 인물",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 60,
-    "exams": 23,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "voice",
-   "ipa": "/vɔɪs/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "목소리, 음성",
-     "ex": "The tone and rhythm in a person's voice can reveal a great deal about their feelings and attitude toward life.",
-     "tr": "사람의 목소리에 담긴 어조와 리듬은 그 사람의 감정과 삶에 대한 태도를 많이 드러낼 수 있다.",
-     "src": "2015 수능 30번"
-    },
-    {
-     "pos": "v.",
-     "ko": "표현하다, 말하다"
-    }
-   ],
-   "syn": [
-    "speech",
-    "tone",
-    "sound"
-   ],
-   "deriv": [
-    "vocal (adj.)",
-    "vocalist (n.)",
-    "unvoiced (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "voc",
-     "mean": "목소리 (라틴어 vox)"
-    }
-   ],
-   "etymHint": "voc(목소리) → 소리 내어 말하는 것 → 목소리",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 42,
-    "exams": 23,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "whatever",
-   "ipa": "/wɒtˈɛvər/",
-   "pos": "pron./det./conj.",
-   "meanings": [
-    {
-     "pos": "pron.",
-     "ko": "무엇이든, 어떤 것이든",
-     "ex": "Equal rights do not mean identical rights, since individuals may need different things depending on their background and whatever their specific situation requires.",
-     "tr": "평등한 권리가 동일한 권리를 의미하지는 않는데, 개인은 자신의 배경과 특정 상황이 요구하는 것이 무엇이든 간에 서로 다른 것이 필요할 수 있기 때문이다.",
-     "src": "2021 9월모평 33번"
-    },
-    {
-     "pos": "det.",
-     "ko": "어떤 ~이라도"
-    }
-   ],
-   "syn": [
-    "anything",
-    "no matter what",
-    "whichever"
+    "network",
+    "structure"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "B1",
    "exam": {
-    "tested": true,
-    "count": 36,
-    "exams": 23,
-    "recentYear": "2027",
-    "stars": 3
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "safety",
-   "ipa": "/ˈseɪfti/",
-   "pos": "n.",
+   "en": "access",
+   "ipa": "/ˈækses/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "안전, 안전성",
-     "ex": "After a period of relative safety, the Great Auk faced a new and more devastating threat to its survival.",
-     "tr": "비교적 안전한 시기를 보낸 후, 큰바다쇠오리는 생존에 더 치명적인 새로운 위협에 직면했다.",
-     "src": "2017 6월모평 32번"
+     "pos": "v",
+     "ko": "접속하다, 이용하다",
+     "ex": "You can access the school library website from home.",
+     "tr": "집에서도 학교 도서관 웹사이트에 접속할 수 있다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "접근, 이용 권한"
     }
    ],
    "syn": [
-    "security",
-    "protection",
-    "wellbeing"
+    "enter",
+    "reach"
    ],
-   "deriv": [
-    "safe (adj.)",
-    "safely (adv.)",
-    "unsafe (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "saf",
-     "mean": "안전한 (라틴어 salvus)"
-    }
-   ],
-   "etymHint": "saf(안전한) + -ty(명사 어미) → 안전한 상태 → 안전",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "B1",
    "exam": {
-    "tested": true,
-    "count": 33,
-    "exams": 23,
-    "recentYear": "2026",
-    "stars": 3
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "frequently",
-   "ipa": "/ˈfriːkwəntli/",
-   "pos": "adv.",
+   "en": "log in",
+   "ipa": "/lɔɡ ɪn/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "adv.",
-     "ko": "자주, 빈번하게",
-     "ex": "Most animals gradually stop responding to safe stimuli that appear frequently in their environment.",
-     "tr": "대부분의 동물들은 자신의 환경에 자주 나타나는 안전한 자극에 점차 반응을 멈춘다.",
-     "src": "2022 9월모평 34번"
+     "pos": "v",
+     "ko": "로그인하다",
+     "ex": "You need to log in with your student ID to see the grades.",
+     "tr": "성적을 보려면 학생 ID로 로그인해야 한다.",
+     "src": ""
     }
    ],
    "syn": [
-    "often",
-    "regularly",
-    "repeatedly"
+    "sign in"
    ],
-   "deriv": [
-    "frequent (adj.)",
-    "frequency (n.)",
-    "infrequent (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "frequen",
-     "mean": "자주 찾다, 빽빽하다 (라틴어 frequens)"
-    }
-   ],
-   "etymHint": "frequen(자주 찾다) + -tly(부사 어미) → 자주 반복하여 → 빈번하게",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "B1",
    "exam": {
-    "tested": true,
-    "count": 33,
-    "exams": 23,
-    "recentYear": "2026",
-    "stars": 3
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "log out",
+   "ipa": "/lɔɡ aʊt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "로그아웃하다",
+     "ex": "Always log out of your account when using a shared computer.",
+     "tr": "공용 컴퓨터를 사용할 때는 항상 계정에서 로그아웃해라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sign out"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "sign up",
+   "ipa": "/saɪn ʌp/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "회원 가입하다",
+     "ex": "I signed up for the cooking class at the community center.",
+     "tr": "나는 주민 센터 요리 수업에 회원 가입했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "register",
+    "join"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "register",
+   "ipa": "/ˈrɛdʒɪstər/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "등록하다",
+     "ex": "Students must register for their classes before the deadline.",
+     "tr": "학생들은 마감일 전에 수업을 등록해야 한다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "명부, 등록부"
+    }
+   ],
+   "syn": [
+    "sign up",
+    "enroll"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "privacy",
+   "ipa": "/ˈpraɪvəsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "개인 정보 보호, 사생활",
+     "ex": "You should protect your privacy by using a strong password.",
+     "tr": "강력한 비밀번호를 사용하여 개인 정보를 보호해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "secrecy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "security",
+   "ipa": "/sɪˈkjʊərɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "보안, 안전",
+     "ex": "The school improved security by adding cameras at the gates.",
+     "tr": "학교는 교문에 카메라를 추가하여 보안을 강화했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "safety",
+    "protection"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "virus",
+   "ipa": "/ˈvaɪrəs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "(컴퓨터) 바이러스",
+     "ex": "The computer slowed down because it had a virus on it.",
+     "tr": "컴퓨터에 바이러스가 있어서 속도가 느려졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "malware"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "hack",
+   "ipa": "/hæk/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "해킹하다",
+     "ex": "Someone tried to hack into the school website last week.",
+     "tr": "지난주에 누군가 학교 웹사이트를 해킹하려 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "break in",
+    "crack"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "browser",
+   "ipa": "/ˈbraʊzər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "브라우저, 인터넷 검색 프로그램",
+     "ex": "Open your browser and search for the answer online.",
+     "tr": "브라우저를 열고 온라인에서 답을 검색해 봐.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "web browser"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "attach",
+   "ipa": "/əˈtætʃ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "첨부하다, 붙이다",
+     "ex": "Please attach your photo to the application form.",
+     "tr": "지원서에 사진을 첨부해 주세요.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "add",
+    "include"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "attachment",
+   "ipa": "/əˈtætʃmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "첨부 파일",
+     "ex": "I could not open the attachment in the email on my phone.",
+     "tr": "나는 휴대폰에서 이메일의 첨부 파일을 열 수 없었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "file",
+    "enclosure"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "automatic",
+   "ipa": "/ˌɔːtəˈmætɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "자동의",
+     "ex": "The door at the supermarket is automatic, so it opens by itself.",
+     "tr": "슈퍼마켓의 문은 자동이라서 저절로 열린다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "self-operating",
+    "mechanical"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "virtual",
+   "ipa": "/ˈvɜːrtʃuəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "가상의",
+     "ex": "The students attended a virtual class from their homes.",
+     "tr": "학생들은 집에서 가상 수업에 참석했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "digital",
+    "online"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "screen time",
+   "ipa": "/skriːn taɪm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "스크린 타임(화면 이용 시간)",
+     "ex": "My parents limit my screen time to two hours a day.",
+     "tr": "부모님은 나의 스크린 타임을 하루 두 시간으로 제한하신다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "caption",
+   "ipa": "/ˈkæpʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자막, 설명글",
+     "ex": "She turned on the captions to understand the foreign film.",
+     "tr": "그녀는 외국 영화를 이해하기 위해 자막을 켰다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "(사진 아래의) 설명"
+    }
+   ],
+   "syn": [
+    "subtitle"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "rating",
+   "ipa": "/ˈreɪtɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "평점, 등급",
+     "ex": "This app has a high rating in the app store.",
+     "tr": "이 앱은 앱 스토어에서 높은 평점을 받고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "score",
+    "grade"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "source",
+   "ipa": "/sɔːrs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "출처, 정보원",
+     "ex": "You should check the source before sharing the news.",
+     "tr": "뉴스를 공유하기 전에 출처를 확인해야 한다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "근원, 원천"
+    }
+   ],
+   "syn": [
+    "origin"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "keyword",
+   "ipa": "/ˈkiːwɜːrd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "키워드, 검색어",
+     "ex": "Type a keyword to find what you are looking for.",
+     "tr": "찾고 있는 것을 찾으려면 키워드를 입력해라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "search term"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   }
  ],
