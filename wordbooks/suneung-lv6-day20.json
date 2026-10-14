@@ -4,401 +4,97 @@
  "day": 20,
  "words": [
   {
-   "en": "steady",
-   "ipa": "/ˈstedi/",
-   "pos": "adj./adv.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "꾸준한, 안정적인; 흔들리지 않는",
-     "ex": "Although wine consumption per person has declined, the intake of beer and spirits has remained relatively steady over the same period.",
-     "tr": "1인당 와인 소비량은 줄었지만, 맥주와 증류주 섭취량은 같은 기간 동안 비교적 꾸준히 유지되었다.",
-     "src": "2013 9월모평 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "안정시키다, 진정시키다"
-    }
-   ],
-   "syn": [
-    "stable",
-    "consistent",
-    "constant"
-   ],
-   "deriv": [
-    "steadily (adv.)",
-    "steadiness (n.)",
-    "unsteady (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 7,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "injury",
-   "ipa": "/ˈɪndʒəri/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "부상, 상해",
-     "ex": "The athlete was uncertain whether he could perform at his former level after recovering from such a serious injury.",
-     "tr": "그 운동선수는 그토록 심각한 부상에서 회복한 뒤 이전 수준으로 경기를 펼칠 수 있을지 확신하지 못했다.",
-     "src": "2022 9월모평 19번"
-    }
-   ],
-   "syn": [
-    "wound",
-    "harm",
-    "damage"
-   ],
-   "deriv": [
-    "injure (v.)",
-    "injurious (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "아닌"
-    },
-    {
-     "part": "jus",
-     "mean": "권리, 법"
-    }
-   ],
-   "etymHint": "in(아닌)+jus(권리) → 권리를 침해함 → 부상, 피해",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 7,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "silence",
-   "ipa": "/ˈsaɪləns/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "침묵, 고요함",
-     "ex": "Great works of literature speak with such force that even the most biased critics cannot silence their lasting impact.",
-     "tr": "위대한 문학 작품들은 너무나 강렬하게 말을 걸어와, 가장 편견이 심한 비평가들조차 그 지속적인 영향력을 침묵시킬 수 없다.",
-     "src": "2019 6월모평 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "침묵시키다, 억압하다"
-    }
-   ],
-   "syn": [
-    "quiet",
-    "stillness",
-    "hush"
-   ],
-   "deriv": [
-    "silent (adj.)",
-    "silently (adv.)",
-    "silencer (n.)"
-   ],
-   "roots": [
-    {
-     "part": "silere",
-     "mean": "조용히 있다"
-    }
-   ],
-   "etymHint": "silere(조용히 있다) → 소리가 없는 상태 → 침묵",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 7,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "clever",
-   "ipa": "/ˈklevər/",
+   "en": "electrical",
+   "ipa": "/ɪˈlɛktrɪkəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "영리한, 재치 있는; 교묘한",
-     "ex": "The phrase was a clever piece of wordplay, yet ultimately misleading, since even modern computers execute only one instruction at a time.",
-     "tr": "그 표현은 재치 있는 언어유희였지만 결국 오해를 불러일으켰는데, 현대 컴퓨터조차 한 번에 하나의 명령어만 실행하기 때문이다.",
-     "src": "2015 수능 31번"
+     "ko": "전기의, 전기와 관련된",
+     "ex": "Electrically assisted delivery vehicles have been adopted across European cities for various commercial services.",
+     "tr": "전기 보조 배달 차량이 다양한 상업 서비스를 위해 유럽 전역의 도시에 도입되었다.",
+     "src": "2023 수능 22번"
     }
    ],
    "syn": [
-    "intelligent",
-    "smart",
-    "ingenious"
+    "electric",
+    "electronic"
    ],
    "deriv": [
-    "cleverly (adv.)",
-    "cleverness (n.)"
+    "electricity (n.)",
+    "electrically (adv.)",
+    "electrify (v.)"
    ],
-   "roots": [],
-   "etymHint": "",
+   "roots": [
+    {
+     "part": "elektron",
+     "mean": "호박(琥珀)"
+    }
+   ],
+   "etymHint": "elektron(호박) → 마찰 시 정전기 발생 → 전기",
    "level": "B1",
    "exam": {
     "tested": true,
     "count": 8,
-    "exams": 7,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "staff",
-   "ipa": "/stæf/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "직원, 스태프",
-     "ex": "After the campus tour, prospective students had the opportunity to ask questions of the student tour staff during a Q&A session.",
-     "tr": "캠퍼스 투어가 끝난 후, 예비 학생들은 질의응답 시간에 학생 투어 스태프에게 질문할 기회를 가졌다.",
-     "src": "2025 9월모평 27번"
-    },
-    {
-     "pos": "v.",
-     "ko": "직원을 두다, 충원하다"
-    }
-   ],
-   "syn": [
-    "employees",
-    "personnel",
-    "workforce"
-   ],
-   "deriv": [
-    "staffing (n.)",
-    "understaffed (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 7,
+    "exams": 6,
     "recentYear": "2026",
     "stars": 1
    }
   },
   {
-   "en": "regional",
-   "ipa": "/ˈriːdʒənəl/",
-   "pos": "adj.",
+   "en": "gray",
+   "ipa": "/ɡreɪ/",
+   "pos": "adj./n.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "지역의, 지방의",
-     "ex": "Regional telecommunications companies will relay internet signals to stratospheric balloons, which then broadcast coverage across a wide ground area.",
-     "tr": "지역 통신 회사들은 인터넷 신호를 성층권 기구로 중계하며, 기구는 넓은 지상 지역에 걸쳐 커버리지를 방송한다.",
-     "src": "2016 6월모평 21번"
-    }
-   ],
-   "syn": [
-    "local",
-    "provincial",
-    "territorial"
-   ],
-   "deriv": [
-    "region (n.)",
-    "regionally (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "regio",
-     "mean": "지역, 방향"
-    }
-   ],
-   "etymHint": "regio(지역) → 특정 지역에 관한 → 지역의",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 7,
-    "exams": 7,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "gather",
-   "ipa": "/ˈɡæðər/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "수집하다, 모으다; 모이다",
-     "ex": "Scientists have begun to value indigenous knowledge by incorporating observations gathered from native Arctic communities into climate assessments.",
-     "tr": "과학자들은 북극 원주민 공동체에서 수집한 관찰 내용을 기후 평가에 통합함으로써 토착 지식의 가치를 인정하기 시작했다.",
-     "src": "2022 수능 21번"
+     "ko": "회색의; 흰머리의",
+     "ex": "Hair dye products designed to eliminate gray may not appeal in cultures where aging is seen as a mark of status.",
+     "tr": "흰머리를 없애기 위한 염색 제품들은 노화를 지위의 표시로 보는 문화권에서는 인기를 끌지 못할 수 있다.",
+     "src": "2016 수능 31번"
     },
     {
-     "pos": "v.",
-     "ko": "(사람들이) 모이다, 집합하다"
+     "pos": "n.",
+     "ko": "회색"
     }
    ],
    "syn": [
-    "collect",
-    "compile",
-    "accumulate"
+    "ash",
+    "silver",
+    "slate"
    ],
    "deriv": [
-    "gathering (n.)"
+    "grayish (adj.)",
+    "grayness (n.)"
    ],
    "roots": [],
    "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 7,
-    "exams": 7,
-    "recentYear": "2027",
+    "count": 8,
+    "exams": 6,
+    "recentYear": "2018",
     "stars": 1
    }
   },
   {
-   "en": "contribution",
-   "ipa": "/ˌkɒntrɪˈbjuːʃən/",
+   "en": "backyard",
+   "ipa": "/ˈbækjɑːrd/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "공헌, 기여, 기부금",
-     "ex": "His contribution to modern communication technology was immeasurable, as digital networks would scarcely exist without his foundational work.",
-     "tr": "현대 통신 기술에 대한 그의 공헌은 헤아릴 수 없을 만큼 컸는데, 그의 기초적인 연구 없이는 디지털 네트워크가 거의 존재하지 않았을 것이기 때문이다.",
-     "src": "2024 수능 26번"
+     "ko": "뒷마당, 뒷뜰",
+     "ex": "He walked toward the woman with the firm intention of asking her to leave his backyard immediately.",
+     "tr": "그는 그 여성에게 즉시 자신의 뒷마당을 떠나 달라고 요청할 확고한 의도를 가지고 다가갔다.",
+     "src": "2009 6월모평 30번"
     }
    ],
    "syn": [
-    "donation",
-    "input",
-    "offering"
-   ],
-   "deriv": [
-    "contribute (v.)",
-    "contributor (n.)",
-    "contributory (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "tribut",
-     "mean": "주다, 할당하다"
-    }
-   ],
-   "etymHint": "con(함께)+tribut(주다)+ion(명사) → 함께 주다 → 공헌",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 7,
-    "exams": 7,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "determination",
-   "ipa": "/dɪˌtɜːrmɪˈneɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "결단력, 결의; 결정",
-     "ex": "It is in human determination that we often discover the strength to overcome seemingly insurmountable challenges.",
-     "tr": "인간의 결단력 안에서 우리는 극복할 수 없어 보이는 도전을 이겨낼 힘을 자주 발견한다.",
-     "src": "2025 6월모평 20번"
-    }
-   ],
-   "syn": [
-    "resolve",
-    "tenacity",
-    "willpower"
-   ],
-   "deriv": [
-    "determine (v.)",
-    "determined (adj.)",
-    "determinant (n.)"
-   ],
-   "roots": [
-    {
-     "part": "termin",
-     "mean": "경계, 끝"
-    }
-   ],
-   "etymHint": "de(완전히)+termin(경계)+ation(명사) → 경계를 완전히 정함 → 결정, 결단",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 7,
-    "exams": 7,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "leadership",
-   "ipa": "/ˈliːdərʃɪp/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "리더십, 지도력, 지도부",
-     "ex": "At the height of their influence, monasteries exercised remarkable intellectual leadership over both the Church and civil institutions.",
-     "tr": "전성기에 수도원들은 교회와 세속 기관 모두에 걸쳐 놀라운 지적 리더십을 발휘했다.",
-     "src": "2026 9월모평 24번"
-    }
-   ],
-   "syn": [
-    "guidance",
-    "direction",
-    "management"
-   ],
-   "deriv": [
-    "lead (v.)",
-    "leader (n.)",
-    "leading (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 7,
-    "exams": 7,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "beneath",
-   "ipa": "/bɪˈniːθ/",
-   "pos": "prep./adv.",
-   "meanings": [
-    {
-     "pos": "prep.",
-     "ko": "~의 아래에, ~보다 낮은",
-     "ex": "Rising volcanic activity caused the island to sink gradually beneath the ocean surface, forcing its inhabitants to relocate.",
-     "tr": "증가하는 화산 활동으로 인해 섬이 해수면 아래로 서서히 가라앉으면서 주민들은 이주를 강요받았다.",
-     "src": "2017 6월모평 32번"
-    }
-   ],
-   "syn": [
-    "under",
-    "below",
-    "underneath"
+    "garden",
+    "yard",
+    "rear garden"
    ],
    "deriv": [],
    "roots": [],
@@ -407,32 +103,107 @@
    "exam": {
     "tested": true,
     "count": 7,
-    "exams": 7,
-    "recentYear": "2020",
+    "exams": 6,
+    "recentYear": "2021",
     "stars": 1
    }
   },
   {
-   "en": "harsh",
-   "ipa": "/hɑːrʃ/",
+   "en": "magical",
+   "ipa": "/ˈmædʒɪkəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "가혹한, 혹독한; 거친",
-     "ex": "Widespread deforestation left the exposed soil vulnerable to harsh climatic conditions, leading to rapid erosion.",
-     "tr": "광범위한 삼림 벌채로 인해 드러난 토양은 혹독한 기후 조건에 취약해졌고, 이는 급격한 침식으로 이어졌다.",
-     "src": "2012 수능 28번"
+     "ko": "마법 같은, 신비로운",
+     "ex": "The instruments produced a magical harmony that seemed to float through the air of the concert hall.",
+     "tr": "악기들은 연주회장의 공중을 떠다니는 듯한 마법 같은 화음을 만들어냈다.",
+     "src": "2021 6월모평 19번"
     }
    ],
    "syn": [
-    "severe",
-    "brutal",
-    "unforgiving"
+    "enchanting",
+    "mystical",
+    "wondrous"
    ],
    "deriv": [
-    "harshly (adv.)",
-    "harshness (n.)"
+    "magic (n./adj.)",
+    "magically (adv.)",
+    "magician (n.)"
+   ],
+   "roots": [
+    {
+     "part": "magos",
+     "mean": "마법사"
+    }
+   ],
+   "etymHint": "magos(마법사) → 마법사에 관련된 → 마법 같은",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "continent",
+   "ipa": "/ˈkɒntɪnənt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "대륙",
+     "ex": "The installation of high-speed fibre-optic cable across the African continent transformed regional communication.",
+     "tr": "아프리카 대륙 전역에 걸친 고속 광섬유 케이블 설치는 지역 통신을 변화시켰다.",
+     "src": "2025 9월모평 32번"
+    }
+   ],
+   "syn": [
+    "landmass",
+    "mainland"
+   ],
+   "deriv": [
+    "continental (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "contin",
+     "mean": "연속으로 이어지다(continere)"
+    }
+   ],
+   "etymHint": "continere(함께 붙잡다) → 이어진 육지 → 대륙",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "wealthy",
+   "ipa": "/ˈwelθi/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "부유한, 재산이 많은",
+     "ex": "His reputation for scientific precision brought him commissions from wealthy patrons across Europe.",
+     "tr": "과학적 정밀함에 대한 그의 명성은 유럽 전역의 부유한 후원자들로부터 의뢰를 가져다주었다.",
+     "src": "2015 수능 24번"
+    }
+   ],
+   "syn": [
+    "affluent",
+    "prosperous",
+    "rich"
+   ],
+   "deriv": [
+    "wealth (n.)",
+    "wealthily (adv.)"
    ],
    "roots": [],
    "etymHint": "",
@@ -440,132 +211,546 @@
    "exam": {
     "tested": true,
     "count": 7,
-    "exams": 7,
-    "recentYear": "2021",
+    "exams": 6,
+    "recentYear": "2016",
     "stars": 1
    }
   },
   {
-   "en": "elementary",
-   "ipa": "/ˌelɪˈmentri/",
-   "pos": "adj.",
+   "en": "popularity",
+   "ipa": "/ˌpɒpjuˈlærɪti/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "초등의; 기초적인",
-     "ex": "A study found that elementary school pupils who received piano and music-reading lessons showed measurable gains in mathematical ability.",
-     "tr": "한 연구에 따르면 피아노와 악보 읽기 수업을 받은 초등학생들이 수학 능력에서 측정 가능한 향상을 보였다.",
-     "src": "2016 9월모평 21번"
+     "pos": "n.",
+     "ko": "인기, 대중적 인지도",
+     "ex": "The film gained widespread popularity among critics and general audiences alike, and for very good reason.",
+     "tr": "그 영화는 비평가들과 일반 관객 모두에게 폭넓은 인기를 얻었으며, 그럴 만한 충분한 이유가 있었다.",
+     "src": "2018 수능 31번"
     }
    ],
    "syn": [
-    "basic",
-    "primary",
-    "fundamental"
+    "fame",
+    "acclaim",
+    "favor"
    ],
    "deriv": [
-    "element (n.)",
-    "elemental (adj.)"
+    "popular (adj.)",
+    "popularly (adv.)",
+    "popularize (v.)"
    ],
    "roots": [
     {
-     "part": "element",
-     "mean": "기본 요소"
+     "part": "popul",
+     "mean": "사람들(populus)"
     }
    ],
-   "etymHint": "element(기본 요소)+ary(형용사) → 기본 요소의 → 기초적인",
+   "etymHint": "populus(사람들)+ar+ity → 사람들이 좋아하는 상태 → 인기",
    "level": "B1",
    "exam": {
     "tested": true,
     "count": 7,
-    "exams": 7,
+    "exams": 6,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "cash",
+   "ipa": "/kæʃ/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "현금",
+     "ex": "Many small vendors in the market still prefer cash over digital payment methods.",
+     "tr": "시장의 많은 소규모 상인들은 여전히 디지털 결제 수단보다 현금을 선호한다.",
+     "src": ""
+    },
+    {
+     "pos": "v.",
+     "ko": "현금으로 바꾸다"
+    }
+   ],
+   "syn": [
+    "currency",
+    "money",
+    "funds"
+   ],
+   "deriv": [
+    "cashless (adj.)",
+    "cashier (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "somewhere",
+   "ipa": "/ˈsʌmwer/",
+   "pos": "adv.",
+   "meanings": [
+    {
+     "pos": "adv.",
+     "ko": "어딘가에, 어딘가로",
+     "ex": "Over the course of Earth's history, millions of species have vanished, meaning that somewhere between three and a hundred more will disappear this year alone.",
+     "tr": "지구 역사 전반에 걸쳐 수백만 종이 사라졌으며, 이는 올해에만 어딘가에서 3종에서 100종 사이가 소멸할 것임을 의미한다.",
+     "src": "2011 9월모평 25번"
+    }
+   ],
+   "syn": [
+    "in some place",
+    "at some location"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "plenty",
+   "ipa": "/ˈplenti/",
+   "pos": "n./adv.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "풍부함, 많음",
+     "ex": "There are plenty of effective leaders who are not necessarily the foremost technical experts in their organizations.",
+     "tr": "자신의 조직에서 반드시 최고의 기술 전문가가 아닌 유능한 리더들이 많이 있다.",
+     "src": "2012 9월모평 23번"
+    },
+    {
+     "pos": "adv.",
+     "ko": "충분히, 많이"
+    }
+   ],
+   "syn": [
+    "abundance",
+    "sufficiency",
+    "wealth"
+   ],
+   "deriv": [
+    "plentiful (adj.)",
+    "plentifully (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "plen",
+     "mean": "가득 찬(plenus)"
+    }
+   ],
+   "etymHint": "plenus(가득 찬) → 가득 찬 상태 → 풍부함",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
     "recentYear": "2019",
     "stars": 1
    }
   },
   {
-   "en": "minimum",
-   "ipa": "/ˈmɪnɪməm/",
-   "pos": "n./adj.",
+   "en": "delight",
+   "ipa": "/dɪˈlaɪt/",
+   "pos": "n./v.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "최솟값, 최소한",
-     "ex": "French labour law obliges employers to grant workers a minimum of five weeks of paid vacation annually.",
-     "tr": "프랑스 노동법은 고용주가 근로자에게 연간 최소 5주의 유급 휴가를 부여하도록 의무화하고 있다.",
-     "src": "2014 6월모평 26번"
+     "ko": "기쁨, 즐거움",
+     "ex": "Delighted by the unexpected proposal, the Canadian representative agreed to reconvene with all parties the following morning.",
+     "tr": "예상치 못한 제안에 기뻐하며, 캐나다 대표는 다음 날 아침 모든 당사자와 다시 만나기로 동의했다.",
+     "src": "2016 9월모평 29번"
     },
     {
-     "pos": "adj.",
-     "ko": "최소의"
+     "pos": "v.",
+     "ko": "기쁘게 하다, 크게 기뻐하다"
     }
    ],
    "syn": [
-    "least",
-    "lowest",
-    "floor"
+    "joy",
+    "pleasure",
+    "gratification"
    ],
    "deriv": [
-    "minimal (adj.)",
-    "minimise (v.)",
-    "minimally (adv.)"
+    "delightful (adj.)",
+    "delightfully (adv.)"
    ],
    "roots": [
     {
-     "part": "minim",
-     "mean": "가장 작은"
+     "part": "de-",
+     "mean": "강조"
+    },
+    {
+     "part": "lect",
+     "mean": "끌어당기다(lacere)"
     }
    ],
-   "etymHint": "minim(가장 작은)+um(명사 어미) → 가장 작은 것 → 최솟값",
+   "etymHint": "de(강조)+lacere(끌어당기다) → 매혹적으로 끌어당김 → 기쁨",
    "level": "B1",
    "exam": {
     "tested": true,
     "count": 7,
-    "exams": 7,
-    "recentYear": "2015",
+    "exams": 6,
+    "recentYear": "2024",
     "stars": 1
    }
   },
   {
-   "en": "geography",
-   "ipa": "/dʒiˈɒɡrəfi/",
+   "en": "convenience",
+   "ipa": "/kənˈviːniəns/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "지리학, 지형, 지리적 특성",
-     "ex": "Most practical applications in geography and environmental science do not require extremely high temporal resolution in their data.",
-     "tr": "지리학과 환경 과학의 대부분의 실용적 응용은 데이터에서 극도로 높은 시간 해상도를 필요로 하지 않는다.",
-     "src": "2017 수능 32번"
+     "ko": "편의, 편리함",
+     "ex": "When plants were originally grouped into categories, the classification was based on convenience rather than strict scientific criteria.",
+     "tr": "식물이 처음 범주로 분류되었을 때, 그 분류는 엄격한 과학적 기준보다는 편의를 바탕으로 이루어졌다.",
+     "src": "2014 6월모평 37번"
     }
    ],
    "syn": [
-    "topography",
-    "landscape",
-    "terrain"
+    "ease",
+    "practicality",
+    "comfort"
    ],
    "deriv": [
-    "geographical (adj.)",
-    "geographer (n.)",
-    "geographic (adj.)"
+    "convenient (adj.)",
+    "conveniently (adv.)",
+    "inconvenience (n.)"
    ],
    "roots": [
     {
-     "part": "geo",
-     "mean": "땅, 지구"
+     "part": "con-",
+     "mean": "함께"
     },
     {
-     "part": "graph",
-     "mean": "쓰다, 묘사하다"
+     "part": "ven",
+     "mean": "오다(venire)"
     }
    ],
-   "etymHint": "geo(땅)+graphy(묘사하다) → 땅을 묘사함 → 지리학",
+   "etymHint": "con(함께)+venire(오다) → 잘 들어맞다 → 편의",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 16,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "elsewhere",
+   "ipa": "/ˌelsˈwer/",
+   "pos": "adv.",
+   "meanings": [
+    {
+     "pos": "adv.",
+     "ko": "다른 곳에서, 다른 곳으로",
+     "ex": "Some bird species are highly migratory in certain regions yet remain entirely sedentary elsewhere.",
+     "tr": "일부 조류 종은 특정 지역에서는 매우 이동성이 높지만 다른 곳에서는 완전히 정착해 있다.",
+     "src": "2012 6월모평 26번"
+    }
+   ],
+   "syn": [
+    "somewhere else",
+    "in another place"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
     "exams": 6,
     "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "invent",
+   "ipa": "/ɪnˈvent/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "발명하다, 고안하다",
+     "ex": "No matter what new technology is invented, a thorough self-inventory remains the essential starting point for any job search.",
+     "tr": "어떤 새로운 기술이 발명되더라도, 철저한 자기 점검은 구직 활동의 필수적인 출발점으로 남아 있다.",
+     "src": "2019 6월모평 21번"
+    }
+   ],
+   "syn": [
+    "devise",
+    "create",
+    "innovate"
+   ],
+   "deriv": [
+    "invention (n.)",
+    "inventor (n.)",
+    "inventive (adj.)",
+    "reinvent (v.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "위에"
+    },
+    {
+     "part": "vent",
+     "mean": "오다(venire)"
+    }
+   ],
+   "etymHint": "in(위에)+venire(오다) → 새로운 것이 마음에 떠오르다 → 발명하다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "pleasant",
+   "ipa": "/ˈplezənt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "즐거운, 기분 좋은",
+     "ex": "Her mind drifted from the view of the quiet river to the many unexpected yet pleasant conversations she had with fellow travellers.",
+     "tr": "그녀의 마음은 조용한 강의 풍경에서 여행 동료들과 나눈 뜻밖이지만 즐거운 대화들로 흘러갔다.",
+     "src": "2018 6월모평 19번"
+    }
+   ],
+   "syn": [
+    "enjoyable",
+    "agreeable",
+    "delightful"
+   ],
+   "deriv": [
+    "pleasure (n.)",
+    "pleasantly (adv.)",
+    "pleasantness (n.)"
+   ],
+   "roots": [
+    {
+     "part": "plac/pleas",
+     "mean": "기쁘게 하다(placere)"
+    }
+   ],
+   "etymHint": "placere(기쁘게 하다) → 기쁨을 주는 → 즐거운",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "organize",
+   "ipa": "/ˈɔːrɡənaɪz/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "체계화하다, 조직하다",
+     "ex": "When you reach for a glass of water, you do not consciously organize the numerous physical steps the action requires.",
+     "tr": "물 한 잔을 집으려 할 때, 당신은 그 행동에 필요한 수많은 신체적 단계들을 의식적으로 조직하지 않는다.",
+     "src": "2025 수능 29번"
+    },
+    {
+     "pos": "v.",
+     "ko": "준비하다, 마련하다"
+    }
+   ],
+   "syn": [
+    "arrange",
+    "coordinate",
+    "structure"
+   ],
+   "deriv": [
+    "organization (n.)",
+    "organizer (n.)",
+    "organized (adj.)",
+    "reorganize (v.)"
+   ],
+   "roots": [
+    {
+     "part": "organ",
+     "mean": "도구, 기관(organon)"
+    }
+   ],
+   "etymHint": "organon(도구) → 도구처럼 기능하게 배열하다 → 조직하다",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "vote",
+   "ipa": "/voʊt/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "투표, 표결",
+     "ex": "Three school bell sounds will be chosen by student vote, based on how creative and appropriate each submission is judged to be.",
+     "tr": "세 가지 학교 종소리는 각 제출물의 창의성과 적절성을 기준으로 학생 투표를 통해 선정된다.",
+     "src": "2026 수능 27번"
+    },
+    {
+     "pos": "v.",
+     "ko": "투표하다"
+    }
+   ],
+   "syn": [
+    "ballot",
+    "elect",
+    "poll"
+   ],
+   "deriv": [
+    "voter (n.)",
+    "voting (n./adj.)"
+   ],
+   "roots": [
+    {
+     "part": "vot",
+     "mean": "맹세, 서약(votum, vovere)"
+    }
+   ],
+   "etymHint": "votum(서약) → 공식적으로 의견을 표명하다 → 투표",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "harvest",
+   "ipa": "/ˈhɑːrvɪst/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "수확, 수확량",
+     "ex": "Conservationists are sometimes criticized for prioritizing harvest and yield over minimising interference with natural systems.",
+     "tr": "보전론자들은 자연 시스템에 대한 간섭을 최소화하기보다 수확량과 생산량을 우선시한다는 비판을 받기도 한다.",
+     "src": "2027 6월모평 31번"
+    },
+    {
+     "pos": "v.",
+     "ko": "수확하다, 거두다"
+    }
+   ],
+   "syn": [
+    "yield",
+    "crop",
+    "reap"
+   ],
+   "deriv": [
+    "harvester (n.)",
+    "post-harvest (adj.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "random",
+   "ipa": "/ˈrændəm/",
+   "pos": "adj./adv.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "무작위의, 임의의",
+     "ex": "The host randomly drew a name from a container, selecting a well-known dancer called Linx to participate in the show.",
+     "tr": "진행자는 상자에서 무작위로 이름을 뽑아, 링스라는 유명한 댄서를 쇼에 참가할 사람으로 선정했다.",
+     "src": "2016 수능 30번"
+    },
+    {
+     "pos": "adv.",
+     "ko": "무작위로 (at random)"
+    }
+   ],
+   "syn": [
+    "arbitrary",
+    "chance",
+    "haphazard"
+   ],
+   "deriv": [
+    "randomly (adv.)",
+    "randomness (n.)",
+    "randomize (v.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 6,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "dozen",
+   "ipa": "/ˈdʌzən/",
+   "pos": "n./adj.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "12개, 한 다스; 다수",
+     "ex": "The expedition encountered half a dozen species of monkeys and hundreds of dazzling butterflies along the river.",
+     "tr": "탐험대는 강을 따라 여섯 종의 원숭이와 수백 마리의 화려한 나비를 만났다.",
+     "src": "2016 수능 19번"
+    }
+   ],
+   "syn": [
+    "twelve",
+    "a group of twelve"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 6,
+    "exams": 6,
+    "recentYear": "2016",
     "stars": 1
    }
   }

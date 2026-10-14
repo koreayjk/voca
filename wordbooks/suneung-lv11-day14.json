@@ -4,22 +4,66 @@
  "day": 14,
  "words": [
   {
-   "en": "override",
-   "ipa": "/ˌoʊvərˈraɪd/",
-   "pos": "v",
+   "en": "receptive",
+   "ipa": "/rɪˈseptɪv/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "무효화하다, 우선하다",
-     "ex": "Congress voted to override the president's veto, passing the landmark healthcare bill into law.",
-     "tr": "의회는 대통령의 거부권을 무효화하는 투표를 통해 획기적인 의료 법안을 법으로 통과시켰다.",
+     "pos": "adj.",
+     "ko": "수용적인, 받아들이는",
+     "ex": "Contrary to popular belief, our most rewarding experiences are rarely the passive, receptive moments of effortless relaxation.",
+     "tr": "일반적인 믿음과 달리, 우리의 가장 보람 있는 경험들은 노력 없는 이완의 수동적이고 수용적인 순간들이 아닌 경우가 많다.",
+     "src": "2011 수능 31번"
+    }
+   ],
+   "syn": [
+    "open-minded",
+    "responsive",
+    "amenable",
+    "approachable"
+   ],
+   "deriv": [
+    "receive (v.)",
+    "reception (n.)",
+    "receptivity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re",
+     "mean": "다시, 뒤로"
+    },
+    {
+     "part": "cept",
+     "mean": "받다, 잡다"
+    }
+   ],
+   "etymHint": "re(뒤로)+cept(받다)+-ive → 받아들이는 성질의 → 수용적인",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2018",
+    "stars": 1
+   }
+  },
+  {
+   "en": "dissonant",
+   "ipa": "/ˈdɪsənənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "불협화음의, 상충하는",
+     "ex": "The dissonant ideologies within the coalition eventually caused its collapse.",
+     "tr": "연립 내부의 상충하는 이념들이 결국 그것의 붕괴를 초래했다.",
      "src": ""
     }
    ],
    "syn": [
-    "overrule",
-    "supersede",
-    "countermand"
+    "discordant",
+    "incongruous",
+    "incompatible"
    ],
    "deriv": [],
    "roots": [],
@@ -34,43 +78,222 @@
    }
   },
   {
-   "en": "decisive",
-   "ipa": "/dɪˈsaɪsɪv/",
-   "pos": "adj.",
+   "en": "stall",
+   "ipa": "/stɔːl/",
+   "pos": "v.",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "결정적인, 중대한",
-     "ex": "Imaginative engagement with literature plays a decisive role in shaping an individual's moral and creative sensibility.",
-     "tr": "문학에 대한 상상력 있는 참여는 개인의 도덕적·창의적 감수성을 형성하는 데 결정적인 역할을 한다.",
-     "src": "2011 6월모평 38번"
+     "pos": "v.",
+     "ko": "멈추다; 지연시키다; (엔진이) 멎다",
+     "ex": "When writers misdirect their energy and stall on trivial revisions, they seldom manage to complete their intended work.",
+     "tr": "작가들이 에너지를 잘못 쏟고 사소한 수정에서 멈추면, 그들은 의도한 작품을 완성하는 데 거의 실패한다.",
+     "src": "2013 6월모평 22번"
     },
     {
-     "pos": "adj.",
-     "ko": "결단력 있는, 과감한"
+     "pos": "n.",
+     "ko": "노점, 칸막이 공간; (가축용) 우리"
     }
    ],
    "syn": [
-    "crucial",
-    "pivotal",
-    "resolute"
+    "delay",
+    "hesitate",
+    "falter",
+    "halt"
    ],
    "deriv": [
-    "decisively (adv.)",
-    "decisiveness (n.)",
-    "decide (v.)"
+    "stalling (n./adj.)",
+    "stallholder (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "obsequious",
+   "ipa": "/əbˈsiːkwiəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "아첨하는, 굽실거리는",
+     "ex": "His obsequious manner toward superiors contrasted sharply with his dismissiveness toward subordinates.",
+     "tr": "윗사람에 대한 그의 아첨하는 태도는 부하 직원들에 대한 무시하는 태도와 극명히 대비되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sycophantic",
+    "servile",
+    "fawning"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "exaggeration",
+   "ipa": "/ɪɡˌzædʒəˈreɪʃn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "과장, 과장된 표현",
+     "ex": "It would be no exaggeration to say that the invention of the printing press fundamentally transformed the spread of human knowledge.",
+     "tr": "인쇄기의 발명이 인류 지식의 전파를 근본적으로 변화시켰다고 말하는 것은 결코 과장이 아닐 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "overstatement",
+    "hyperbole",
+    "embellishment"
+   ],
+   "deriv": [
+    "exaggerate (v.)",
+    "exaggerated (adj.)",
+    "exaggeratedly (adv.)"
    ],
    "roots": [
     {
-     "part": "de",
-     "mean": "완전히"
+     "part": "ex",
+     "mean": "밖으로"
     },
     {
-     "part": "cis",
-     "mean": "자르다"
+     "part": "agger",
+     "mean": "쌓다"
     }
    ],
-   "etymHint": "de(완전히) + cis(자르다) → 완전히 잘라내다 → 결정짓다 → 결정적인",
+   "etymHint": "ex(밖으로)+agger(쌓다) → 실제 밖으로 쌓아 올리다 → 과장하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "stoicism",
+   "ipa": "/ˈstoʊɪsɪzəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "금욕주의, 감정을 억제하는 태도",
+     "ex": "Her stoicism in the face of repeated loss was admired by colleagues but quietly alarmed her therapist.",
+     "tr": "반복되는 상실 앞에서 그녀의 금욕주의적 태도는 동료들에게 존경받았지만, 치료사에게는 조용한 우려를 자아냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "fortitude",
+    "resignation",
+    "impassivity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "advent",
+   "ipa": "/ˈædvent/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "도래, 출현; 강림절",
+     "ex": "With the advent of the railway network, the once-thriving canal system became commercially unviable almost overnight.",
+     "tr": "철도망의 도래와 함께, 한때 번성했던 운하 시스템은 거의 하룻밤 사이에 상업적으로 존립이 불가능해졌다.",
+     "src": "2009 6월모평 20번"
+    }
+   ],
+   "syn": [
+    "arrival",
+    "emergence",
+    "appearance",
+    "coming"
+   ],
+   "deriv": [
+    "Advent (n., 종교)",
+    "adventitious (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ad",
+     "mean": "~으로"
+    },
+    {
+     "part": "vent",
+     "mean": "오다"
+    }
+   ],
+   "etymHint": "ad(~으로)+vent(오다) → 다가옴 → 도래, 출현",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "downfall",
+   "ipa": "/ˈdaʊnˌfɔːl/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "몰락, 붕괴; 소나기",
+     "ex": "The advent of the railway network sealed the canal's downfall, rendering the entire infrastructure obsolete within a generation.",
+     "tr": "철도망의 등장은 운하의 몰락을 확정지어, 불과 한 세대 만에 전체 인프라를 쓸모없게 만들었다.",
+     "src": "2011 수능 33번"
+    }
+   ],
+   "syn": [
+    "ruin",
+    "collapse",
+    "demise",
+    "undoing"
+   ],
+   "deriv": [
+    "downfallen (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "down",
+     "mean": "아래로"
+    },
+    {
+     "part": "fall",
+     "mean": "떨어지다"
+    }
+   ],
+   "etymHint": "down(아래로)+fall(떨어지다) → 아래로 떨어짐 → 몰락",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -81,22 +304,63 @@
    }
   },
   {
-   "en": "symbiosis",
-   "ipa": "/ˌsɪmbaɪˈoʊsɪs/",
-   "pos": "n",
+   "en": "longevity",
+   "ipa": "/lɒnˈdʒevɪti/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "공생 (서로 다른 생물이 밀접하게 공존하는 관계)",
-     "ex": "The symbiosis between nitrogen-fixing bacteria and leguminous plants enriches soil fertility without chemical fertilizers.",
-     "tr": "질소 고정 박테리아와 콩과 식물 사이의 공생은 화학 비료 없이 토양 비옥도를 높인다.",
+     "pos": "n.",
+     "ko": "장수, 오래 지속됨",
+     "ex": "Paradoxically, environmental adversity appears to contribute to the longevity of certain organisms rather than diminishing it.",
+     "tr": "역설적으로, 환경적 역경은 어떤 생물들의 장수를 감소시키기보다 오히려 기여하는 것으로 보인다.",
+     "src": "2011 수능 37번"
+    }
+   ],
+   "syn": [
+    "lifespan",
+    "durability",
+    "long life"
+   ],
+   "deriv": [
+    "longevous (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "long",
+     "mean": "길다"
+    },
+    {
+     "part": "aev",
+     "mean": "나이, 시간"
+    }
+   ],
+   "etymHint": "라틴어 longus(길다)+aevum(나이, 시간) → 긴 삶 → 장수",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2011",
+    "stars": 1
+   }
+  },
+  {
+   "en": "totalitarian",
+   "ipa": "/toʊˌtæləˈtɛriən/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "전체주의적인",
+     "ex": "The philosopher argued that surveillance technology enables new forms of totalitarian control.",
+     "tr": "그 철학자는 감시 기술이 새로운 형태의 전체주의적 통제를 가능하게 한다고 주장했다.",
      "src": ""
     }
    ],
    "syn": [
-    "mutualism",
-    "commensalism",
-    "coevolution"
+    "authoritarian",
+    "dictatorial",
+    "oppressive"
    ],
    "deriv": [],
    "roots": [],
@@ -111,26 +375,302 @@
    }
   },
   {
-   "en": "compositional",
-   "ipa": "/ˌkɒmpəˈzɪʃənl/",
-   "pos": "adj.",
+   "en": "molecule",
+   "ipa": "/ˈmɒlɪkjuːl/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "구성상의, 작곡[작문]과 관련된",
-     "ex": "The director's compositional choices — framing, rhythm, and lighting — collectively determine the emotional register of each scene.",
-     "tr": "감독의 구성상 선택들 — 프레이밍, 리듬, 조명 — 은 집합적으로 각 장면의 감정적 조율을 결정한다.",
+     "pos": "n.",
+     "ko": "분자",
+     "ex": "Grasping the concept of a molecule requires repeated exposure and concrete visual models, not merely a single brief definition.",
+     "tr": "분자의 개념을 파악하려면 단 한 번의 간략한 정의가 아니라 반복적인 노출과 구체적인 시각적 모델이 필요하다.",
+     "src": "2020 6월모평 20번"
+    }
+   ],
+   "syn": [
+    "particle",
+    "compound",
+    "atom cluster"
+   ],
+   "deriv": [
+    "molecular (adj.)",
+    "molecularly (adv.)",
+    "macromolecule (n.)"
+   ],
+   "roots": [
+    {
+     "part": "mol",
+     "mean": "덩어리"
+    },
+    {
+     "part": "-cule",
+     "mean": "작음을 나타내는 접미사"
+    }
+   ],
+   "etymHint": "라틴어 moles(덩어리)+-cule(작은) → 작은 덩어리 → 분자",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "fragment",
+   "ipa": "/ˈfræɡmənt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "분열시키다, 산산조각 내다",
+     "ex": "The collapse of the ruling coalition fragmented the political landscape and triggered early elections.",
+     "tr": "연립 정권의 붕괴는 정치 지형을 분열시키고 조기 선거를 촉발했다.",
      "src": ""
     }
    ],
    "syn": [
-    "structural",
-    "organizational"
+    "disintegrate",
+    "splinter",
+    "break apart"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "transmit",
+   "ipa": "/trænsˈmɪt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "전송하다, 전달하다",
+     "ex": "Satellites transmit data signals across vast distances to ground stations worldwide.",
+     "tr": "위성은 전 세계 지상국에 광대한 거리를 가로질러 데이터 신호를 전송한다.",
+     "src": "2016 6월모평 21번"
+    },
+    {
+     "pos": "v.",
+     "ko": "(질병을) 전파하다"
+    }
+   ],
+   "syn": [
+    "convey",
+    "relay",
+    "broadcast"
    ],
    "deriv": [
-    "composition (n.)",
-    "compose (v.)",
-    "composer (n.)"
+    "transmission (n.)",
+    "transmitter (n.)",
+    "transmittable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "trans",
+     "mean": "넘어서, 가로질러"
+    },
+    {
+     "part": "mit",
+     "mean": "보내다"
+    }
+   ],
+   "etymHint": "trans(가로질러)+mit(보내다) → 가로질러 보내다 → 전송하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2021",
+    "stars": 1
+   }
+  },
+  {
+   "en": "jurisdiction",
+   "ipa": "/ˌdʒʊərɪsˈdɪkʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "사법권, 관할권",
+     "ex": "The case raised difficult questions about which court had jurisdiction over cross-border fraud.",
+     "tr": "그 사건은 국경을 초월한 사기에 대해 어느 법원이 관할권을 가지는지에 대한 어려운 문제를 제기했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "authority",
+    "mandate",
+    "domain"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "cultivation",
+   "ipa": "/ˌkʌltɪˈveɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "경작, 재배",
+     "ex": "The cultivation of rice in flooded paddies has sustained Asian civilizations for millennia.",
+     "tr": "침수된 논에서의 벼 경작은 수천 년 동안 아시아 문명을 지탱해 왔다.",
+     "src": "2011 수능 45번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(능력·관계의) 계발, 육성"
+    }
+   ],
+   "syn": [
+    "farming",
+    "tillage",
+    "development",
+    "nurturing"
+   ],
+   "deriv": [
+    "cultivate (v.)",
+    "cultivated (adj.)",
+    "cultivator (n.)"
+   ],
+   "roots": [
+    {
+     "part": "cult",
+     "mean": "경작하다, 돌보다"
+    },
+    {
+     "part": "-ation",
+     "mean": "행위·과정"
+    }
+   ],
+   "etymHint": "cult(경작하다)+ation(행위) → 경작하는 행위 → 재배, 계발",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2011",
+    "stars": 1
+   }
+  },
+  {
+   "en": "preferable",
+   "ipa": "/ˈprefərəbl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "더 바람직한, 더 나은",
+     "ex": "When one's cherished assumptions are challenged by uncomfortable evidence, it may seem preferable to dismiss the facts entirely.",
+     "tr": "소중히 여기는 가정이 불편한 증거에 의해 도전받을 때, 사실을 완전히 무시하는 것이 더 바람직해 보일 수 있다.",
+     "src": "2020 9월모평 33번"
+    }
+   ],
+   "syn": [
+    "more desirable",
+    "better",
+    "superior"
+   ],
+   "deriv": [
+    "prefer (v.)",
+    "preferably (adv.)",
+    "preference (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pre",
+     "mean": "앞에, 먼저"
+    },
+    {
+     "part": "fer",
+     "mean": "운반하다, 두다"
+    }
+   ],
+   "etymHint": "pre(앞에)+fer(두다) → 앞에 두다 → 선호하다 → 더 바람직한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "entitlement",
+   "ipa": "/ɪnˈtaɪtəlmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수급 자격, 사회 보장 혜택",
+     "ex": "Pension reform required the government to curtail entitlement spending without alienating retirees.",
+     "tr": "연금 개혁으로 정부는 은퇴자들을 소외시키지 않으면서 수급 혜택 지출을 축소해야 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "benefit",
+    "welfare",
+    "allowance"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "commonality",
+   "ipa": "/ˌkɒməˈnælɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "공통점, 공유된 특성",
+     "ex": "Despite vast cultural differences, researchers found a strong commonality of values across the surveyed populations.",
+     "tr": "광범위한 문화적 차이에도 불구하고, 연구자들은 조사된 인구 집단 전반에 걸쳐 강한 가치관의 공통점을 발견했다.",
+     "src": "2022 9월모평 29번"
+    },
+    {
+     "pos": "n.",
+     "ko": "공동체 의식"
+    }
+   ],
+   "syn": [
+    "common ground",
+    "shared characteristic",
+    "similarity"
+   ],
+   "deriv": [
+    "common (adj.)",
+    "communal (adj.)",
+    "commonplace (adj.)"
    ],
    "roots": [
     {
@@ -138,120 +678,11 @@
      "mean": "함께"
     },
     {
-     "part": "pos",
-     "mean": "놓다"
+     "part": "mun",
+     "mean": "공유하다, 나누다"
     }
    ],
-   "etymHint": "com(함께) + pos(놓다) → 함께 놓다 → 구성하다 → 구성상의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "strive",
-   "ipa": "/straɪv/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "노력하다, 분투하다",
-     "ex": "Since the late twentieth century, zoological institutions have striven to replicate natural ecosystems rather than displaying animals in bare enclosures.",
-     "tr": "20세기 후반부터 동물원들은 동물들을 단조로운 우리에 전시하기보다 자연 생태계를 재현하려고 분투해 왔다.",
-     "src": "2012 6월모평 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(목표를 위해) 힘쓰다"
-    }
-   ],
-   "syn": [
-    "endeavour",
-    "struggle",
-    "aspire"
-   ],
-   "deriv": [
-    "striving (n./adj.)",
-    "striven (past participle)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "universality",
-   "ipa": "/ˌjuːnɪvɜːrˈsæləti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보편성",
-     "ex": "Kant grounded moral duty in the universality of reason, arguing that ethics must apply to all rational beings.",
-     "tr": "칸트는 윤리가 모든 이성적 존재에 적용되어야 한다고 주장하며 도덕적 의무를 이성의 보편성에 기반시켰다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "generality",
-    "comprehensiveness",
-    "ubiquity"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "instantaneous",
-   "ipa": "/ˌɪnstənˈteɪniəs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "즉각적인, 순간적인",
-     "ex": "The neural feedback loop that governs skilled driving is so well-practised it becomes instantaneous and entirely automatic.",
-     "tr": "숙련된 운전을 지배하는 신경 피드백 루프는 워낙 잘 연습되어 즉각적이고 완전히 자동적이 된다.",
-     "src": "2021 6월모평 33번"
-    }
-   ],
-   "syn": [
-    "immediate",
-    "instantaneous",
-    "split-second"
-   ],
-   "deriv": [
-    "instantaneously (adv.)",
-    "instant (n./adj.)"
-   ],
-   "roots": [
-    {
-     "part": "instant",
-     "mean": "순간"
-    },
-    {
-     "part": "aneous",
-     "mean": "~의 성질"
-    }
-   ],
-   "etymHint": "instant(순간) + aneous(~의 성질) → 순간의 성질을 지닌 → 즉각적인",
+   "etymHint": "com(함께)+mun(나누다) → 함께 나누는 것 → 공통점",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -262,22 +693,22 @@
    }
   },
   {
-   "en": "satire",
-   "ipa": "/ˈsætaɪər/",
-   "pos": "n",
+   "en": "substantially",
+   "ipa": "/səbˈstænʃəli/",
+   "pos": "adv",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "풍자",
-     "ex": "Swiftian satire operates through radical exaggeration: the more monstrous the proposal, the more devastatingly it exposes the real monstrosity.",
-     "tr": "스위프트적 풍자는 급진적 과장을 통해 작동한다. 제안이 더 괴물 같을수록 실제 괴물성을 더 파괴적으로 폭로한다.",
+     "pos": "adv",
+     "ko": "상당히, 실질적으로",
+     "ex": "The revised draft differs substantially from the original proposal submitted last quarter.",
+     "tr": "수정 초안은 지난 분기에 제출된 원래 제안서와 상당히 다르다.",
      "src": ""
     }
    ],
    "syn": [
-    "parody",
-    "lampoon",
-    "caricature"
+    "considerably",
+    "materially",
+    "significantly"
    ],
    "deriv": [],
    "roots": [],
@@ -292,450 +723,46 @@
    }
   },
   {
-   "en": "impulse",
-   "ipa": "/ˈɪmpʌls/",
+   "en": "wit",
+   "ipa": "/wɪt/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "충동, 욕구",
-     "ex": "Craftsmanship embodies a deep human impulse to invest care and skill in whatever one undertakes.",
-     "tr": "장인 정신은 자신이 맡는 일에 정성과 기술을 쏟으려는 인간의 깊은 충동을 구현한다.",
-     "src": "2023 수능 40번"
+     "ko": "재치, 위트",
+     "ex": "His columns were celebrated for their sharp wit, blending dry humour with incisive social commentary.",
+     "tr": "그의 칼럼은 날카로운 재치로 유명했으며, 건조한 유머와 예리한 사회 비평을 결합했다.",
+     "src": "2025 6월모평 26번"
     },
     {
      "pos": "n.",
-     "ko": "자극, 추진력 (물리)"
+     "ko": "지적 능력, 분별력"
     }
    ],
    "syn": [
-    "urge",
-    "drive",
-    "compulsion"
+    "cleverness",
+    "humor",
+    "acuity",
+    "intellect"
    ],
    "deriv": [
-    "impulsive (adj.)",
-    "impulsively (adv.)"
+    "witty (adj.)",
+    "wittily (adv.)",
+    "witticism (n.)"
    ],
    "roots": [
     {
-     "part": "im",
-     "mean": "안으로"
-    },
-    {
-     "part": "puls",
-     "mean": "밀다"
+     "part": "wit",
+     "mean": "알다, 지각하다 (고대영어 witan)"
     }
    ],
-   "etymHint": "im(안으로) + puls(밀다) → 안으로 밀어 넣다 → 충동",
+   "etymHint": "wit(알다, 고대영어) → 아는 것, 분별력 → 재치",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "arduous",
-   "ipa": "/ˈɑːrdʒuəs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "힘든, 고된",
-     "ex": "The arduous ascent tested every member of the expedition both physically and psychologically.",
-     "tr": "고된 등반은 탐험대원 모두를 육체적, 심리적으로 시험했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "strenuous",
-    "grueling",
-    "laborious"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "metaphorical",
-   "ipa": "/ˌmetəˈfɒrɪkl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "은유적인, 비유적인",
-     "ex": "Engaging in metaphorical transformations of the self through literature allows readers to inhabit perspectives otherwise inaccessible to them.",
-     "tr": "문학을 통해 자아의 은유적 변형에 참여함으로써 독자들은 그렇지 않으면 접근할 수 없는 관점들을 경험할 수 있다.",
-     "src": "2022 6월모평 23번"
-    }
-   ],
-   "syn": [
-    "figurative",
-    "symbolic",
-    "allegorical"
-   ],
-   "deriv": [
-    "metaphor (n.)",
-    "metaphorically (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "meta",
-     "mean": "넘어서"
-    },
-    {
-     "part": "phor",
-     "mean": "나르다"
-    }
-   ],
-   "etymHint": "meta(넘어서) + phor(나르다) → 뜻을 넘어 옮기다 → 은유",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "metamorphosis",
-   "ipa": "/ˌmɛtəˈmɔːrfəsɪs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "변태, 근본적 변형",
-     "ex": "The city underwent a striking metamorphosis from an industrial wasteland to a vibrant cultural hub.",
-     "tr": "그 도시는 산업 황무지에서 활기찬 문화 중심지로 놀라운 변형을 겪었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "transformation",
-    "transmutation",
-    "transfiguration"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "transatlantic",
-   "ipa": "/ˌtrænzətˈlæntɪk/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "대서양 횡단의, 대서양 너머의",
-     "ex": "She boarded one of the grandest transatlantic ocean liners of the era, bound for Southampton from New York.",
-     "tr": "그녀는 뉴욕에서 사우샘프턴으로 향하는 당대 가장 웅장한 대서양 횡단 정기선 중 하나에 탑승했다.",
-     "src": "2011 9월모평 21번"
-    }
-   ],
-   "syn": [
-    "cross-Atlantic",
-    "intercontinental"
-   ],
-   "deriv": [
-    "trans- (prefix)",
-    "Atlantic (n.)"
-   ],
-   "roots": [
-    {
-     "part": "trans",
-     "mean": "건너서"
-    },
-    {
-     "part": "atlantic",
-     "mean": "대서양"
-    }
-   ],
-   "etymHint": "trans(건너서) + atlantic(대서양) → 대서양을 건너는 → 대서양 횡단의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2011",
-    "stars": 1
-   }
-  },
-  {
-   "en": "futile",
-   "ipa": "/ˈfjuːtaɪl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "헛된, 소용없는",
-     "ex": "His futile struggles to disengage the jammed lock only compounded his sense of rising panic.",
-     "tr": "걸린 자물쇠를 풀려는 그의 헛된 노력은 고조되는 공황감만 더욱 키웠다.",
-     "src": "2011 9월모평 24번"
-    }
-   ],
-   "syn": [
-    "useless",
-    "fruitless",
-    "vain"
-   ],
-   "deriv": [
-    "futility (n.)",
-    "futilely (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "fut",
-     "mean": "흐르다, 쏟아지다"
-    }
-   ],
-   "etymHint": "라틴어 futilis(쉽게 쏟아지는) → 담을 수 없는 → 헛된",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2011",
-    "stars": 1
-   }
-  },
-  {
-   "en": "polarity",
-   "ipa": "/poʊˈlærɪti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "양극성; 대립",
-     "ex": "The polarity between tradition and innovation defines much of the tension in contemporary cultural discourse.",
-     "tr": "전통과 혁신 사이의 양극성은 현대 문화 담론의 긴장을 크게 규정한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "opposition",
-    "duality",
-    "antithesis"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "weary",
-   "ipa": "/ˈwɪəri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "지친, 피곤한",
-     "ex": "After weary months of tilling unyielding soil, the farmers welcomed the first signs of an abundant harvest.",
-     "tr": "완고한 땅을 갈며 지친 몇 달을 보낸 끝에, 농부들은 풍성한 수확의 첫 징후를 반겼다.",
-     "src": "2011 수능 26번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "싫증 난, 지겨운"
-    },
-    {
-     "pos": "v.",
-     "ko": "지치게 하다; 싫증나다"
-    }
-   ],
-   "syn": [
-    "exhausted",
-    "fatigued",
-    "worn out"
-   ],
-   "deriv": [
-    "weariness (n.)",
-    "wearily (adv.)",
-    "wearying (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2011",
-    "stars": 1
-   }
-  },
-  {
-   "en": "narcissism",
-   "ipa": "/ˈnɑːrsɪsɪzəm/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "자기애, 병적 자기중심성",
-     "ex": "The clinical literature distinguishes between healthy self-esteem and the grandiosity characteristic of narcissism.",
-     "tr": "임상 문헌은 건강한 자존감과 자기애의 특징인 과대망상을 구별한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "egomania",
-    "self-absorption",
-    "vanity"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "corrupt",
-   "ipa": "/kəˈrʌpt/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "부패한, 타락한",
-     "ex": "Critiques of mass culture frequently invoke the image of a corrupt popular taste to diagnose deeper social decay.",
-     "tr": "대중문화에 대한 비평은 더 깊은 사회적 쇠락을 진단하기 위해 부패한 대중의 취향이라는 이미지를 자주 끌어들인다.",
-     "src": "2019 9월모평 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "부패시키다, 타락시키다"
-    },
-    {
-     "pos": "v.",
-     "ko": "(파일을) 손상시키다"
-    }
-   ],
-   "syn": [
-    "depraved",
-    "dishonest",
-    "venal"
-   ],
-   "deriv": [
-    "corruption (n.)",
-    "corruptly (adv.)",
-    "incorrupt (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "cor",
-     "mean": "완전히"
-    },
-    {
-     "part": "rupt",
-     "mean": "부수다"
-    }
-   ],
-   "etymHint": "cor(완전히) + rupt(부수다) → 완전히 부수다 → 부패하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "protectionism",
-   "ipa": "/prəˈtɛkʃənɪzəm/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보호 무역주의",
-     "ex": "A wave of protectionism swept through advanced economies as trade deficits ballooned.",
-     "tr": "무역 적자가 급증하면서 선진 경제에 보호 무역주의의 물결이 밀려들었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "tariffism",
-    "economic nationalism",
-    "mercantilism"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "vanish",
-   "ipa": "/ˈvænɪʃ/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "사라지다, 자취를 감추다",
-     "ex": "Even established market stalls with loyal customers can vanish overnight when the vendor relocates to a more profitable location.",
-     "tr": "단골 고객이 있는 확고한 노점상조차 더 수익성 있는 장소로 이전하면 하룻밤 사이에 사라질 수 있다.",
-     "src": "2013 6월모평 39번"
-    }
-   ],
-   "syn": [
-    "disappear",
-    "evaporate",
-    "fade"
-   ],
-   "deriv": [
-    "vanishing (adj.)",
-    "evanescent (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "van",
-     "mean": "비다 (라틴어 vanus)"
-    }
-   ],
-   "etymHint": "라틴어 vanus(빈) → 텅 비어 없어지다 → 사라지다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2013",
+    "recentYear": "2027",
     "stars": 1
    }
   }

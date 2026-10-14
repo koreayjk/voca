@@ -4,69 +4,69 @@
  "day": 8,
  "words": [
   {
-   "en": "placement",
-   "ipa": "/ˈpleɪsmənt/",
-   "pos": "n.",
+   "en": "insecure",
+   "ipa": "/ˌɪnsɪˈkjʊər/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "배치, 위치 선정",
-     "ex": "The strategic placement of products within a store can significantly influence consumer purchasing decisions.",
-     "tr": "매장 내 제품의 전략적 배치는 소비자의 구매 결정에 상당한 영향을 미칠 수 있다.",
-     "src": ""
+     "pos": "adj.",
+     "ko": "불안정한, 안전하지 않은",
+     "ex": "Food-insecure communities urgently need policies that double agricultural output while keeping produce affordable and accessible.",
+     "tr": "식량 불안정 공동체는 농업 생산량을 두 배로 늘리면서도 농산물을 저렴하고 접근 가능하게 유지하는 정책이 시급하게 필요하다.",
+     "src": "2020 9월모평 32번"
     },
     {
-     "pos": "n.",
-     "ko": "(직업·학교) 배정, 취업 알선"
+     "pos": "adj.",
+     "ko": "자신감이 없는, 불안해하는"
     }
    ],
    "syn": [
-    "positioning",
-    "arrangement",
-    "deployment"
+    "unstable",
+    "vulnerable",
+    "uncertain"
    ],
    "deriv": [
-    "place (v./n.)",
-    "displace (v.)",
-    "misplace (v.)"
+    "insecurity (n.)",
+    "secure (ant.)",
+    "insecurely (adv.)"
    ],
    "roots": [
     {
-     "part": "place",
-     "mean": "장소에 두다"
+     "part": "in",
+     "mean": "부정"
     },
     {
-     "part": "-ment",
-     "mean": "행위·결과 명사"
+     "part": "secur",
+     "mean": "안전한"
     }
    ],
-   "etymHint": "place(장소에 두다)+-ment(행위) → 어딘가에 두는 행위 → 배치",
+   "etymHint": "in(부정)+secur(안전한) → 안전하지 않은 → 불안정한",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "",
+    "recentYear": "2020",
     "stars": 1
    }
   },
   {
-   "en": "stasis",
-   "ipa": "/ˈsteɪsɪs/",
-   "pos": "n",
+   "en": "ascertain",
+   "ipa": "/ˌæsərˈteɪn/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "정체 상태, 정지",
-     "ex": "After years of rapid reform, the country entered a period of political stasis under a cautious administration.",
-     "tr": "수년간의 급격한 개혁 이후, 그 나라는 신중한 행정부 아래 정치적 정체 상태의 시기에 들어섰다.",
+     "pos": "v",
+     "ko": "확인하다, 규명하다",
+     "ex": "Investigators struggled to ascertain whether the anomalous data reflected genuine phenomena or measurement error.",
+     "tr": "수사관들은 이상한 데이터가 실제 현상을 반영하는지 측정 오류를 반영하는지 규명하는 데 어려움을 겪었다.",
      "src": ""
     }
    ],
    "syn": [
-    "inertia",
-    "standstill",
-    "equilibrium"
+    "determine",
+    "establish",
+    "verify"
    ],
    "deriv": [],
    "roots": [],
@@ -81,46 +81,187 @@
    }
   },
   {
-   "en": "formulate",
-   "ipa": "/ˈfɔːrmjuleɪt/",
-   "pos": "v.",
+   "en": "procedure",
+   "ipa": "/prəˈsiːdʒər/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "(계획·생각 등을) 공식화하다, 정립하다",
-     "ex": "When engaged in active discussion, it is genuinely difficult to listen carefully and simultaneously formulate a coherent response.",
-     "tr": "적극적인 토론에 참여할 때, 주의 깊게 듣는 동시에 일관된 응답을 정립하기란 실제로 어렵다.",
-     "src": "2026 6월모평 23번"
+     "pos": "n.",
+     "ko": "절차, 방법, 과정",
+     "ex": "Developing medical procedures that perform consistently well across diverse patient populations remains a persistent challenge.",
+     "tr": "다양한 환자 집단에서 일관되게 잘 수행되는 의료 절차를 개발하는 것은 지속적인 과제로 남아 있다.",
+     "src": "2010 수능 25번"
     },
     {
-     "pos": "v.",
-     "ko": "(제품 등을) 조제하다, 배합하다"
+     "pos": "n.",
+     "ko": "(의학) 시술, 수술"
     }
    ],
    "syn": [
-    "devise",
-    "articulate",
-    "frame"
+    "process",
+    "protocol",
+    "methodology"
    ],
    "deriv": [
-    "formulation (n.)",
-    "reformulate (v.)"
+    "procedural (adj.)",
+    "proceed (v.)"
    ],
    "roots": [
     {
-     "part": "form",
-     "mean": "형태"
+     "part": "pro",
+     "mean": "앞으로"
     },
     {
-     "part": "-ula",
-     "mean": "소형"
-    },
-    {
-     "part": "-ate",
-     "mean": "동사형 접미사"
+     "part": "ced",
+     "mean": "가다"
     }
    ],
-   "etymHint": "form(형태)+ula(소형)+-ate(동사) → 작은 틀을 만들다 → 공식화하다",
+   "etymHint": "pro(앞으로)+ced(가다) → 앞으로 나아가는 방식 → 절차",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "rebut",
+   "ipa": "/rɪˈbʌt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "반박하다, 논박하다",
+     "ex": "The opposing counsel rebutted each forensic finding with counter-evidence drawn from independent expert testimony.",
+     "tr": "상대방 변호인은 독립적인 전문가 증언에서 도출한 반증으로 각 법의학적 결과를 반박했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "refute",
+    "counter",
+    "disprove"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vertebrate",
+   "ipa": "/ˈvɜːrtɪbrət/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "척추동물",
+     "ex": "The evolutionary history of vertebrates demonstrates how a spinal column both enables and constrains biological development.",
+     "tr": "척추동물의 진화 역사는 척주가 생물학적 발달을 어떻게 가능하게 하는 동시에 제약하는지를 보여준다.",
+     "src": "2024 6월모평 40번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "척추동물의"
+    }
+   ],
+   "syn": [
+    "spined animal"
+   ],
+   "deriv": [
+    "vertebra (n.)",
+    "invertebrate (ant.)"
+   ],
+   "roots": [
+    {
+     "part": "vertebr",
+     "mean": "척추"
+    },
+    {
+     "part": "ate",
+     "mean": "명사/형용사 어미"
+    }
+   ],
+   "etymHint": "vertebr(척추)+ate → 척추를 가진 동물 → 척추동물",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "deregulation",
+   "ipa": "/ˌdiːrɛɡjʊˈleɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "규제 완화",
+     "ex": "Financial deregulation in the 1980s is widely cited as a contributing factor to later banking crises.",
+     "tr": "1980년대의 금융 규제 완화는 이후 은행 위기의 원인 중 하나로 널리 인용된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "liberalization",
+    "loosening",
+    "privatization"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "zoology",
+   "ipa": "/zuːˈɒlədʒi/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "동물학",
+     "ex": "She earned her master's degree in zoology, specialising in the migratory behaviour of marine mammals.",
+     "tr": "그녀는 해양 포유류의 이동 행동을 전공하며 동물학 석사 학위를 취득했다.",
+     "src": "2026 6월모평 26번"
+    }
+   ],
+   "syn": [
+    "animal biology",
+    "animal science"
+   ],
+   "deriv": [
+    "zoologist (n.)",
+    "zoological (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "zoo",
+     "mean": "동물"
+    },
+    {
+     "part": "logy",
+     "mean": "학문"
+    }
+   ],
+   "etymHint": "zoo(동물)+logy(학문) → 동물을 연구하는 학문 → 동물학",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -131,514 +272,73 @@
    }
   },
   {
-   "en": "disingenuous",
-   "ipa": "/ˌdɪsɪnˈdʒenjuəs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "불성실한, 겉으로만 꾸민",
-     "ex": "Critics called the company's apology disingenuous, noting that it came only after regulatory pressure.",
-     "tr": "비평가들은 규제 압력이 있고 나서야 나온 것이라며 그 회사의 사과를 불성실하다고 불렀다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "insincere",
-    "calculating",
-    "duplicitous"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tackle",
-   "ipa": "/ˈtækəl/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "(문제·과제 등에) 맞서다, 해결하다",
-     "ex": "Policymakers must tackle complex socioeconomic inequalities before they can hope to achieve lasting social cohesion.",
-     "tr": "정책 입안자들은 지속적인 사회적 결속을 이루려면 복잡한 사회경제적 불평등에 먼저 맞서야 한다.",
-     "src": "2015 수능 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(스포츠에서) 태클하다"
-    }
-   ],
-   "syn": [
-    "address",
-    "confront",
-    "grapple with"
-   ],
-   "deriv": [
-    "tackler (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "malign",
-   "ipa": "/məˈlaɪn/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "중상하다, 나쁘게 말하다",
-     "ex": "It is unjust to malign someone based solely on hearsay and unverified allegations.",
-     "tr": "단지 소문과 검증되지 않은 혐의를 근거로 누군가를 중상하는 것은 부당하다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "slander",
-    "vilify",
-    "defame"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "polish",
-   "ipa": "/ˈpɒlɪʃ/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "갈고 닦다, 연마하다; 광을 내다",
-     "ex": "Athletes who relentlessly polish their technical skills through deliberate practice gain a decisive competitive edge.",
-     "tr": "의도적인 연습을 통해 기술을 끊임없이 연마하는 운동선수는 결정적인 경쟁 우위를 확보한다.",
-     "src": "2023 6월모평 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "광택제; 세련됨"
-    }
-   ],
-   "syn": [
-    "refine",
-    "hone",
-    "burnish"
-   ],
-   "deriv": [
-    "polished (adj.)",
-    "polisher (n.)"
-   ],
-   "roots": [
-    {
-     "part": "pol",
-     "mean": "매끄럽게 하다"
-    }
-   ],
-   "etymHint": "pol(매끄럽게 하다) → 표면을 매끄럽게 닦다 → 광을 내다, 연마하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "elusive",
-   "ipa": "/ɪˈluːsɪv/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "포착하기 어려운, 파악하기 힘든",
-     "ex": "A unified theory of consciousness remains elusive despite decades of neuroscientific research.",
-     "tr": "수십 년간의 신경과학 연구에도 불구하고 의식에 관한 통합 이론은 여전히 포착하기 어렵다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "evasive",
-    "intangible",
-    "fugitive"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "onlooker",
-   "ipa": "/ˈɒnlʊkər/",
+   "en": "devotion",
+   "ipa": "/dɪˈvoʊʃən/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "구경꾼, 방관자",
-     "ex": "The uniform immediately conveys the wearer's social role, giving onlookers rapid and reliable nonverbal cues.",
-     "tr": "제복은 착용자의 사회적 역할을 즉시 전달하여 구경꾼들에게 빠르고 믿을 만한 비언어적 단서를 제공한다.",
-     "src": "2015 9월모평 22번"
-    }
-   ],
-   "syn": [
-    "bystander",
-    "spectator",
-    "observer"
-   ],
-   "deriv": [
-    "look on (v. phr.)"
-   ],
-   "roots": [
-    {
-     "part": "on",
-     "mean": "~에"
-    },
-    {
-     "part": "look",
-     "mean": "보다"
-    },
-    {
-     "part": "-er",
-     "mean": "행위자"
-    }
-   ],
-   "etymHint": "on(~에)+look(보다)+-er(사람) → 그 자리에서 바라보는 사람 → 구경꾼",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "estate",
-   "ipa": "/ɪˈsteɪt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "부동산; 사유지; 재산",
-     "ex": "The real estate market is notably susceptible to prolonged downturns that outlast those seen in manufacturing sectors.",
-     "tr": "부동산 시장은 제조업 부문에서 나타나는 것보다 더 오래 지속되는 장기 침체에 특히 취약하다.",
-     "src": "2015 9월모평 29번"
+     "ko": "헌신, 전념",
+     "ex": "His devotion to the craft of painting was evident in the meticulous detail of every brushstroke.",
+     "tr": "회화 기예에 대한 그의 헌신은 모든 붓질의 세심한 디테일에서 분명히 드러났다.",
+     "src": "2016 수능 25번"
     },
     {
      "pos": "n.",
-     "ko": "사망자의 유산·재산"
-    }
-   ],
-   "syn": [
-    "property",
-    "domain",
-    "holdings"
-   ],
-   "deriv": [
-    "real estate (n. phr.)"
-   ],
-   "roots": [
-    {
-     "part": "estat",
-     "mean": "상태, 신분 (status)"
-    }
-   ],
-   "etymHint": "estat(상태·신분) → 누군가의 신분을 나타내는 재산·토지 → 부동산, 사유지",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "aloof",
-   "ipa": "/əˈluːf/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "냉담한, 거리를 두는",
-     "ex": "Despite his aloof demeanor in public, he was known to be deeply compassionate in private.",
-     "tr": "공개적으로는 냉담한 태도에도 불구하고, 그는 사적으로는 매우 동정심이 깊은 것으로 알려져 있었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "detached",
-    "standoffish",
-    "reserved"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sufferer",
-   "ipa": "/ˈsʌfərər/",
-   "pos": "n.",
-   "meanings": [
+     "ko": "애정, 충성"
+    },
     {
      "pos": "n.",
-     "ko": "고통받는 사람, 환자",
-     "ex": "Most amnesia sufferers retain their long-term memories intact while losing the capacity to form new ones.",
-     "tr": "대부분의 기억상실 환자는 장기 기억을 온전히 유지하면서도 새로운 기억을 형성하는 능력을 잃는다.",
-     "src": "2013 9월모평 45번"
+     "ko": "종교적 헌신, 신앙심"
     }
    ],
    "syn": [
-    "patient",
-    "victim",
-    "afflicted person"
+    "dedication",
+    "commitment",
+    "loyalty"
    ],
    "deriv": [
-    "suffer (v.)",
-    "suffering (n.)"
+    "devote (v.)",
+    "devoted (adj.)",
+    "devout (adj.)"
    ],
    "roots": [
     {
-     "part": "suf-",
-     "mean": "아래에"
+     "part": "de",
+     "mean": "완전히"
     },
     {
-     "part": "fer",
-     "mean": "나르다, 견디다"
+     "part": "vot",
+     "mean": "맹세하다"
     }
    ],
-   "etymHint": "suf(아래)+fer(나르다) → 아래에서 짐을 지고 나르다 → 고통을 견디다 → 고통받는 사람",
+   "etymHint": "de(완전히)+vot(맹세하다) → 완전히 맹세하다 → 헌신",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2015",
+    "recentYear": "2016",
     "stars": 1
    }
   },
   {
-   "en": "inaction",
-   "ipa": "/ɪnˈækʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "무위, 행동하지 않음, 비활동",
-     "ex": "Excessive emotional involvement with a patient's suffering can paralyze a physician into a dangerous state of inaction.",
-     "tr": "환자의 고통에 과도하게 감정적으로 개입하면 의사를 위험한 무위 상태로 마비시킬 수 있다.",
-     "src": "2015 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "passivity",
-    "inertia",
-    "paralysis"
-   ],
-   "deriv": [
-    "act (v.)",
-    "action (n.)",
-    "inactive (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "in-",
-     "mean": "부정"
-    },
-    {
-     "part": "act",
-     "mean": "행동하다"
-    },
-    {
-     "part": "-ion",
-     "mean": "명사 접미사"
-    }
-   ],
-   "etymHint": "in-(부정)+act(행동)+ion(명사) → 행동하지 않음 → 무위",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "distort",
-   "ipa": "/dɪˈstɔːrt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "왜곡하다, 변형하다",
-     "ex": "Confirmation bias can distort one's interpretation of evidence in ways that reinforce preexisting beliefs.",
-     "tr": "확증 편향은 기존 신념을 강화하는 방식으로 증거에 대한 해석을 왜곡할 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "warp",
-    "skew",
-    "misrepresent"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "impede",
-   "ipa": "/ɪmˈpiːd/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "방해하다, 지연시키다",
-     "ex": "Over-identification with a patient's distress can impede clinical judgment and obstruct timely decision-making.",
-     "tr": "환자의 고통에 과도하게 동일시하면 임상적 판단을 방해하고 시의적절한 의사결정을 저해할 수 있다.",
-     "src": "2015 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "hinder",
-    "obstruct",
-    "hamper"
-   ],
-   "deriv": [
-    "impediment (n.)",
-    "impedance (n.)"
-   ],
-   "roots": [
-    {
-     "part": "im-",
-     "mean": "안에"
-    },
-    {
-     "part": "ped",
-     "mean": "발"
-    }
-   ],
-   "etymHint": "im(안에)+ped(발) → 발을 안으로 묶다 → 방해하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "unrealistic",
-   "ipa": "/ˌʌnrɪəˈlɪstɪk/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "비현실적인, 현실성이 없는",
-     "ex": "Classical theatrical conventions often employ unrealistic techniques to portray characters' inner thoughts on stage.",
-     "tr": "고전적 연극 관습은 무대 위에서 인물의 내면 생각을 표현하기 위해 비현실적인 기법을 자주 사용한다.",
-     "src": "2027 6월모평 30번"
-    }
-   ],
-   "syn": [
-    "impractical",
-    "fanciful",
-    "far-fetched"
-   ],
-   "deriv": [
-    "realistic (adj.)",
-    "realism (n.)",
-    "unrealistically (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "un-",
-     "mean": "부정"
-    },
-    {
-     "part": "real",
-     "mean": "실재"
-    },
-    {
-     "part": "-istic",
-     "mean": "~의 성격을 띤"
-    }
-   ],
-   "etymHint": "un-(부정)+real(실재)+-istic(~의 성격) → 실재의 성격을 갖지 않는 → 비현실적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "inference",
-   "ipa": "/ˈɪnfərəns/",
+   "en": "precarity",
+   "ipa": "/prɪˈkærɪti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "추론; 추론 결과",
-     "ex": "Valid inference requires that the conclusion follow necessarily from the premises without logical gaps.",
-     "tr": "타당한 추론은 결론이 논리적 공백 없이 전제에서 필연적으로 도출될 것을 요구한다.",
+     "ko": "불안정한 상태, 취약성",
+     "ex": "The precarity of gig-economy employment leaves workers without the protections once provided by stable contracts.",
+     "tr": "긱 이코노미 고용의 불안정한 상태는 안정적인 계약이 한때 제공했던 보호 없이 노동자들을 남겨둔다.",
      "src": ""
     }
    ],
    "syn": [
-    "deduction",
-    "conclusion",
-    "reasoning"
+    "instability",
+    "vulnerability",
+    "insecurity"
    ],
    "deriv": [],
    "roots": [],
@@ -653,34 +353,77 @@
    }
   },
   {
-   "en": "candidate",
-   "ipa": "/ˈkændɪdeɪt/",
-   "pos": "n.",
+   "en": "mitigating",
+   "ipa": "/ˈmɪtɪɡeɪtɪŋ/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "후보자; 지원자",
-     "ex": "Each candidate for the research fellowship was evaluated on the originality and feasibility of their proposed project.",
-     "tr": "연구 펠로십의 각 지원자는 제안한 프로젝트의 독창성과 타당성을 기준으로 평가받았다.",
+     "pos": "adj",
+     "ko": "완화하는, 정상을 참작하는",
+     "ex": "The judge acknowledged several mitigating factors before pronouncing a reduced sentence.",
+     "tr": "판사는 감경된 형량을 선고하기 전에 몇 가지 정상 참작 요소를 인정했다.",
      "src": ""
     }
    ],
    "syn": [
-    "applicant",
-    "contender",
-    "nominee"
+    "extenuating",
+    "palliative",
+    "alleviating"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "categorization",
+   "ipa": "/ˌkætəɡərəˈzeɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "범주화, 분류",
+     "ex": "The categorization of mental disorders has been revised multiple times as psychological research has progressed.",
+     "tr": "정신 장애의 범주화는 심리학 연구가 진전됨에 따라 여러 차례 개정되어 왔다.",
+     "src": ""
+    },
+    {
+     "pos": "n.",
+     "ko": "유형화, 구분"
+    }
+   ],
+   "syn": [
+    "classification",
+    "grouping",
+    "taxonomy"
    ],
    "deriv": [
-    "candidacy (n.)",
-    "candidature (n.)"
+    "categorize (v.)",
+    "category (n.)",
+    "categorical (adj.)"
    ],
    "roots": [
     {
-     "part": "candid",
-     "mean": "흰, 빛나는 (candidus)"
+     "part": "categ",
+     "mean": "부류"
+    },
+    {
+     "part": "ize",
+     "mean": "~화하다"
+    },
+    {
+     "part": "ation",
+     "mean": "행위·결과"
     }
    ],
-   "etymHint": "candid(흰·빛나는) → 로마에서 흰 옷을 입고 선거 유세하던 사람 → 후보자",
+   "etymHint": "category(부류)+ize(~화하다)+ation(행위) → 부류로 나누는 행위 → 범주화",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -691,22 +434,22 @@
    }
   },
   {
-   "en": "credulous",
-   "ipa": "/ˈkredʒ.ʊ.ləs/",
+   "en": "anachronistic",
+   "ipa": "/əˌnækrəˈnɪstɪk/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "잘 믿는, 쉽게 속는",
-     "ex": "The credulous investor lost his savings to a scheme that any skeptical analysis would have immediately exposed as fraudulent.",
-     "tr": "쉽게 믿는 투자자는 어떠한 회의적 분석도 즉시 사기로 폭로했을 계획에 저축금을 잃었다.",
+     "ko": "시대착오적인",
+     "ex": "The novel's anachronistic references to modern technology undermined its nineteenth-century setting.",
+     "tr": "소설에서 현대 기술에 대한 시대착오적 언급은 19세기 배경을 훼손했다.",
      "src": ""
     }
    ],
    "syn": [
-    "gullible",
-    "naive",
-    "unsuspecting"
+    "outdated",
+    "archaic",
+    "obsolete"
    ],
    "deriv": [],
    "roots": [],
@@ -721,40 +464,324 @@
    }
   },
   {
-   "en": "volcanic",
-   "ipa": "/vɒlˈkænɪk/",
+   "en": "inclination",
+   "ipa": "/ˌɪnklɪˈneɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "성향, 경향",
+     "ex": "Her natural inclination toward analytical thinking made her exceptionally adept at identifying logical inconsistencies.",
+     "tr": "분석적 사고에 대한 그녀의 타고난 성향 덕분에 그녀는 논리적 모순을 찾아내는 데 매우 능숙했다.",
+     "src": ""
+    },
+    {
+     "pos": "n.",
+     "ko": "기울기, 경사"
+    },
+    {
+     "pos": "n.",
+     "ko": "의향, 뜻"
+    }
+   ],
+   "syn": [
+    "tendency",
+    "propensity",
+    "predisposition"
+   ],
+   "deriv": [
+    "incline (v.)",
+    "inclined (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "in",
+     "mean": "~쪽으로"
+    },
+    {
+     "part": "clin",
+     "mean": "기울다"
+    }
+   ],
+   "etymHint": "in(~쪽으로)+clin(기울다) → ~쪽으로 기울다 → 성향",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "capricious",
+   "ipa": "/kəˈprɪʃəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "변덕스러운, 예측 불가능한",
+     "ex": "The capricious nature of financial markets makes long-term forecasting inherently unreliable.",
+     "tr": "금융 시장의 변덕스러운 특성은 장기 예측을 본질적으로 신뢰하기 어렵게 만든다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mercurial",
+    "fickle",
+    "whimsical"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vicious",
+   "ipa": "/ˈvɪʃəs/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "화산의, 화산 활동에 의한",
-     "ex": "Intense volcanic activity reshaped the island's terrain, compelling its animal inhabitants to seek new refuges.",
-     "tr": "강렬한 화산 활동이 섬의 지형을 변화시켜 섬에 사는 동물들이 새로운 피난처를 찾도록 강요했다.",
+     "ko": "사나운, 잔인한",
+     "ex": "The coastline was notorious for its vicious currents that could capsize even experienced sailors' vessels.",
+     "tr": "그 해안선은 노련한 선원의 배조차 전복시킬 수 있는 사나운 해류로 악명이 높았다.",
      "src": "2017 6월모평 32번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "(비판 등이) 맹렬한, 신랄한"
+    },
+    {
+     "pos": "adj.",
+     "ko": "악의적인"
     }
    ],
    "syn": [
-    "igneous",
-    "eruptive"
+    "fierce",
+    "brutal",
+    "ferocious"
    ],
    "deriv": [
-    "volcano (n.)",
-    "volcanically (adv.)",
-    "volcanology (n.)"
+    "viciously (adv.)",
+    "viciousness (n.)"
    ],
    "roots": [
     {
-     "part": "Vulcan",
-     "mean": "로마의 불·용광로 신"
+     "part": "viti",
+     "mean": "결함, 악"
     }
    ],
-   "etymHint": "Vulcan(불의 신)+ic(형용사) → 불의 신처럼 분출하는 → 화산의",
+   "etymHint": "라틴어 vitium(결함, 악) → vicious → 악한, 사나운",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
     "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "silhouette",
+   "ipa": "/ˌsɪluˈet/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "실루엣, 윤곽",
+     "ex": "Ancient Egyptian art depicted human figures as flat silhouettes viewed in strict profile against a neutral background.",
+     "tr": "고대 이집트 미술은 인물을 중립적인 배경 앞에서 엄격한 측면 윤곽으로 납작하게 묘사했다.",
+     "src": "2025 6월모평 24번"
+    },
+    {
+     "pos": "n.",
+     "ko": "어두운 형상, 그림자 모양"
+    },
+    {
+     "pos": "v.",
+     "ko": "실루엣으로 나타나다"
+    }
+   ],
+   "syn": [
+    "outline",
+    "profile",
+    "shadow"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "construe",
+   "ipa": "/kənˈstruː/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "해석하다, 이해하다",
+     "ex": "The passage can be construed either as a rebuke of orthodoxy or as a defense of tradition.",
+     "tr": "그 구절은 정통 교리에 대한 비난으로도, 전통의 옹호로도 해석될 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "interpret",
+    "read",
+    "parse"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "downturn",
+   "ipa": "/ˈdaʊntɜːrn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "하락, 침체",
+     "ex": "Even a slight downturn in agricultural yields can prove catastrophic for communities already living near subsistence level.",
+     "tr": "농업 수확량의 약간의 하락조차도 이미 최저 생계 수준에 근접하여 생활하는 공동체에는 치명적일 수 있다.",
+     "src": "2018 6월모평 40번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(경기) 불황"
+    }
+   ],
+   "syn": [
+    "decline",
+    "slump",
+    "recession"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "down",
+     "mean": "아래로"
+    },
+    {
+     "part": "turn",
+     "mean": "방향이 바뀌다"
+    }
+   ],
+   "etymHint": "down(아래로)+turn(방향이 바뀌다) → 아래로 방향이 바뀌다 → 하락",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2018",
+    "stars": 1
+   }
+  },
+  {
+   "en": "motif",
+   "ipa": "/moʊˈtiːf/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "모티프, 반복 주제",
+     "ex": "The director used a recurring musical motif to signal moments when the protagonist unconsciously returns to her childhood trauma.",
+     "tr": "감독은 반복되는 음악적 모티프를 사용하여 주인공이 무의식적으로 어린 시절 트라우마로 돌아가는 순간을 알렸다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "theme",
+    "leitmotif",
+    "pattern"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "sensational",
+   "ipa": "/senˈseɪʃənl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "선정적인, 자극적인",
+     "ex": "Critics argued that the documentary relied on sensational imagery rather than substantive analysis of the social issue.",
+     "tr": "비평가들은 그 다큐멘터리가 사회 문제에 대한 실질적인 분석보다는 선정적인 이미지에 의존했다고 주장했다.",
+     "src": ""
+    },
+    {
+     "pos": "adj.",
+     "ko": "놀라운, 굉장한"
+    },
+    {
+     "pos": "adj.",
+     "ko": "감각과 관련된"
+    }
+   ],
+   "syn": [
+    "sensationalist",
+    "shocking",
+    "spectacular"
+   ],
+   "deriv": [
+    "sensation (n.)",
+    "sensationalism (n.)",
+    "sensationally (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "sens",
+     "mean": "느끼다"
+    },
+    {
+     "part": "ation",
+     "mean": "행위·상태"
+    },
+    {
+     "part": "al",
+     "mean": "~의"
+    }
+   ],
+   "etymHint": "sens(느끼다)+ation(상태)+al(~의) → 강한 감각을 자극하는 → 선정적인",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
     "stars": 1
    }
   }

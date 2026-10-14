@@ -4,21 +4,21 @@
  "day": 7,
  "words": [
   {
-   "en": "moody",
-   "ipa": "/ˈmuːdi/",
-   "pos": "adj",
+   "en": "grief",
+   "ipa": "/ɡriːf/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "변덕스러운",
-     "ex": "He gets moody when he does not get enough sleep.",
-     "tr": "그는 충분한 잠을 자지 못하면 변덕스러워진다.",
+     "pos": "n",
+     "ko": "깊은 슬픔",
+     "ex": "The family shared their grief after losing their dog.",
+     "tr": "가족은 개를 잃은 후 깊은 슬픔을 함께 나눴다.",
      "src": ""
     }
    ],
    "syn": [
-    "temperamental",
-    "grumpy"
+    "sorrow",
+    "sadness"
    ],
    "deriv": [],
    "roots": [],
@@ -33,21 +33,21 @@
    }
   },
   {
-   "en": "emotional",
-   "ipa": "/ɪˈmoʊʃənəl/",
-   "pos": "adj",
+   "en": "relief",
+   "ipa": "/rɪˈliːf/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "감정적인",
-     "ex": "She became very emotional during the farewell speech.",
-     "tr": "그녀는 작별 연설 중에 매우 감정적이 되었다.",
+     "pos": "n",
+     "ko": "안도",
+     "ex": "He felt great relief when he passed the final exam.",
+     "tr": "그는 기말시험에 합격했을 때 큰 안도감을 느꼈다.",
      "src": ""
     }
    ],
    "syn": [
-    "sensitive",
-    "passionate"
+    "comfort",
+    "ease"
    ],
    "deriv": [],
    "roots": [],
@@ -62,21 +62,21 @@
    }
   },
   {
-   "en": "independent",
-   "ipa": "/ˌɪndɪˈpɛndənt/",
-   "pos": "adj",
+   "en": "trait",
+   "ipa": "/treɪt/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "독립적인",
-     "ex": "She is very independent and likes to solve problems on her own.",
-     "tr": "그녀는 매우 독립적이어서 스스로 문제를 해결하기를 좋아한다.",
+     "pos": "n",
+     "ko": "특성, 특질",
+     "ex": "Kindness is an important personality trait to have.",
+     "tr": "친절함은 갖추어야 할 중요한 성격 특질이다.",
      "src": ""
     }
    ],
    "syn": [
-    "self-reliant",
-    "free"
+    "quality",
+    "feature"
    ],
    "deriv": [],
    "roots": [],
@@ -91,21 +91,25 @@
    }
   },
   {
-   "en": "responsible",
-   "ipa": "/rɪˈspɒnsɪbəl/",
-   "pos": "adj",
+   "en": "temper",
+   "ipa": "/ˈtɛmpər/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "책임감 있는",
-     "ex": "A responsible student always finishes homework on time.",
-     "tr": "책임감 있는 학생은 항상 숙제를 제때 끝낸다.",
+     "pos": "n",
+     "ko": "성질, 기질",
+     "ex": "He has a quick temper and gets angry easily.",
+     "tr": "그는 성질이 급해서 쉽게 화를 낸다.",
      "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "조절하다"
     }
    ],
    "syn": [
-    "reliable",
-    "dependable"
+    "mood",
+    "nature"
    ],
    "deriv": [],
    "roots": [],
@@ -120,21 +124,21 @@
    }
   },
   {
-   "en": "reliable",
-   "ipa": "/rɪˈlaɪəbəl/",
-   "pos": "adj",
+   "en": "sympathy",
+   "ipa": "/ˈsɪmpəθi/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "믿음직한",
-     "ex": "My best friend is reliable and always keeps her promises.",
-     "tr": "내 절친한 친구는 믿음직하고 항상 약속을 지킨다.",
+     "pos": "n",
+     "ko": "공감, 동정",
+     "ex": "She showed sympathy for her classmate who was feeling sad.",
+     "tr": "그녀는 슬퍼하는 반 친구에게 동정을 표했다.",
      "src": ""
     }
    ],
    "syn": [
-    "trustworthy",
-    "dependable"
+    "compassion",
+    "pity"
    ],
    "deriv": [],
    "roots": [],
@@ -149,21 +153,21 @@
    }
   },
   {
-   "en": "optimistic",
-   "ipa": "/ˌɒptɪˈmɪstɪk/",
-   "pos": "adj",
+   "en": "empathy",
+   "ipa": "/ˈɛmpəθi/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "낙관적인",
-     "ex": "Try to stay optimistic even when things are not going well.",
-     "tr": "일이 잘 안 풀릴 때도 낙관적인 태도를 유지하려고 노력해라.",
+     "pos": "n",
+     "ko": "감정이입, 공감",
+     "ex": "Good friends show empathy when you are going through hard times.",
+     "tr": "좋은 친구는 네가 힘든 시간을 보낼 때 공감을 보여 준다.",
      "src": ""
     }
    ],
    "syn": [
-    "positive",
-    "hopeful"
+    "understanding",
+    "compassion"
    ],
    "deriv": [],
    "roots": [],
@@ -178,20 +182,231 @@
    }
   },
   {
-   "en": "pessimistic",
-   "ipa": "/ˌpɛsɪˈmɪstɪk/",
-   "pos": "adj",
+   "en": "satisfy",
+   "ipa": "/ˈsætɪsfaɪ/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "비관적인",
-     "ex": "He was pessimistic about his chances of winning the contest.",
-     "tr": "그는 대회에서 이길 가능성에 대해 비관적이었다.",
+     "pos": "v",
+     "ko": "만족시키다",
+     "ex": "A warm meal can satisfy your hunger after a long day.",
+     "tr": "따뜻한 식사는 긴 하루 후 배고픔을 달래 줄 수 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "negative",
+    "please",
+    "fulfill"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "comfort",
+   "ipa": "/ˈkʌmfərt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "위로하다",
+     "ex": "She tried to comfort her friend who was crying.",
+     "tr": "그녀는 울고 있는 친구를 위로하려 했다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "위안, 편안함"
+    }
+   ],
+   "syn": [
+    "console",
+    "soothe"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "regret",
+   "ipa": "/rɪˈɡrɛt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "후회하다",
+     "ex": "He began to regret not studying harder for the test.",
+     "tr": "그는 시험을 위해 더 열심히 공부하지 않은 것을 후회하기 시작했다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "후회"
+    }
+   ],
+   "syn": [
+    "feel sorry",
+    "rue"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "encourage",
+   "ipa": "/ɪnˈkɜːrɪdʒ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "격려하다",
+     "ex": "His teacher encouraged him to keep trying after he failed.",
+     "tr": "그의 선생님은 그가 실패한 후에도 계속 노력하도록 격려했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "support",
+    "motivate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "bother",
+   "ipa": "/ˈbɑːðər/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "귀찮게 하다, 신경 쓰이다",
+     "ex": "The loud noise outside began to bother everyone in class.",
+     "tr": "밖의 시끄러운 소리가 수업 중 모두를 귀찮게 하기 시작했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "annoy",
+    "disturb"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "depress",
+   "ipa": "/dɪˈprɛs/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "우울하게 하다",
+     "ex": "Rainy days can sometimes depress people who love sunny weather.",
+     "tr": "비 오는 날은 맑은 날씨를 좋아하는 사람들을 우울하게 만들 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sadden",
+    "discourage"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "delighted",
+   "ipa": "/dɪˈlaɪtɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "매우 기쁜",
+     "ex": "She was delighted to receive a surprise gift from her parents.",
+     "tr": "그녀는 부모님께 깜짝 선물을 받고 매우 기뻐했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "thrilled",
+    "pleased"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "depressed",
+   "ipa": "/dɪˈprɛst/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "우울한",
+     "ex": "He felt depressed after he lost his favorite book.",
+     "tr": "그는 좋아하는 책을 잃어버린 후 우울함을 느꼈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sad",
     "gloomy"
    ],
    "deriv": [],
@@ -207,21 +422,21 @@
    }
   },
   {
-   "en": "fearful",
-   "ipa": "/ˈfɪərfəl/",
+   "en": "miserable",
+   "ipa": "/ˈmɪzərəbəl/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "두려워하는",
-     "ex": "The young dog was fearful of loud noises during the storm.",
-     "tr": "어린 개는 폭풍 동안 큰 소리를 두려워했다.",
+     "ko": "비참한",
+     "ex": "The cold and rainy camping trip made everyone feel miserable.",
+     "tr": "춥고 비 오는 캠핑 여행은 모두를 비참하게 만들었다.",
      "src": ""
     }
    ],
    "syn": [
-    "scared",
-    "afraid"
+    "unhappy",
+    "wretched"
    ],
    "deriv": [],
    "roots": [],
@@ -236,21 +451,21 @@
    }
   },
   {
-   "en": "aggressive",
-   "ipa": "/əˈɡrɛsɪv/",
-   "pos": "adj",
+   "en": "decide",
+   "ipa": "/dɪˈsaɪd/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "공격적인",
-     "ex": "The dog became aggressive when a stranger entered the yard.",
-     "tr": "낯선 사람이 마당에 들어오자 그 개는 공격적으로 변했다.",
+     "pos": "v",
+     "ko": "결정하다",
+     "ex": "They decided to meet at the library after school.",
+     "tr": "그들은 방과 후 도서관에서 만나기로 결정했다.",
      "src": ""
     }
    ],
    "syn": [
-    "hostile",
-    "forceful"
+    "choose",
+    "determine"
    ],
    "deriv": [],
    "roots": [],
@@ -265,21 +480,20 @@
    }
   },
   {
-   "en": "ambitious",
-   "ipa": "/æmˈbɪʃəs/",
-   "pos": "adj",
+   "en": "apologize",
+   "ipa": "/əˈpɑːlədʒaɪz/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "야망 있는, 의욕적인",
-     "ex": "She is an ambitious student who wants to become a doctor.",
-     "tr": "그녀는 의사가 되고 싶어 하는 야망 있는 학생이다.",
+     "pos": "v",
+     "ko": "사과하다",
+     "ex": "He apologized to his friend for breaking the promise.",
+     "tr": "그는 약속을 어긴 것에 대해 친구에게 사과했다.",
      "src": ""
     }
    ],
    "syn": [
-    "driven",
-    "motivated"
+    "say sorry"
    ],
    "deriv": [],
    "roots": [],
@@ -294,21 +508,21 @@
    }
   },
   {
-   "en": "easygoing",
-   "ipa": "/ˌiːziˈɡoʊɪŋ/",
-   "pos": "adj",
+   "en": "complain",
+   "ipa": "/kəmˈpleɪn/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "느긋한, 태평한",
-     "ex": "My uncle is very easygoing and never gets stressed about things.",
-     "tr": "우리 삼촌은 매우 느긋해서 어떤 일에도 스트레스를 받지 않는다.",
+     "pos": "v",
+     "ko": "불평하다",
+     "ex": "She likes to complain about having too much homework.",
+     "tr": "그녀는 숙제가 너무 많다고 불평하기를 좋아한다.",
      "src": ""
     }
    ],
    "syn": [
-    "relaxed",
-    "calm"
+    "grumble",
+    "protest"
    ],
    "deriv": [],
    "roots": [],
@@ -323,21 +537,21 @@
    }
   },
   {
-   "en": "pride",
-   "ipa": "/praɪd/",
-   "pos": "n",
+   "en": "discover",
+   "ipa": "/dɪˈskʌvər/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "자부심",
-     "ex": "She felt a great sense of pride after winning the speech contest.",
-     "tr": "그녀는 말하기 대회에서 우승한 후 큰 자부심을 느꼈다.",
+     "pos": "v",
+     "ko": "발견하다",
+     "ex": "The children discovered a small pond behind the school.",
+     "tr": "아이들은 학교 뒤에서 작은 연못을 발견했다.",
      "src": ""
     }
    ],
    "syn": [
-    "honor",
-    "satisfaction"
+    "find",
+    "uncover"
    ],
    "deriv": [],
    "roots": [],
@@ -352,222 +566,25 @@
    }
   },
   {
-   "en": "shame",
-   "ipa": "/ʃeɪm/",
-   "pos": "n",
+   "en": "increase",
+   "ipa": "/ɪnˈkriːs/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "수치심",
-     "ex": "He felt deep shame after lying to his parents.",
-     "tr": "그는 부모님에게 거짓말을 한 후 깊은 수치심을 느꼈다.",
+     "pos": "v",
+     "ko": "증가하다",
+     "ex": "The number of students in our class increased this year.",
+     "tr": "올해 우리 반 학생 수가 증가했다.",
      "src": ""
-    }
-   ],
-   "syn": [
-    "guilt",
-    "embarrassment"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "guilt",
-   "ipa": "/ɡɪlt/",
-   "pos": "n",
-   "meanings": [
+    },
     {
      "pos": "n",
-     "ko": "죄책감",
-     "ex": "She could not sleep because of the guilt she felt inside.",
-     "tr": "그녀는 마음속에서 느끼는 죄책감 때문에 잠을 이루지 못했다.",
-     "src": ""
+     "ko": "증가"
     }
    ],
    "syn": [
-    "remorse",
-    "shame"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "envy",
-   "ipa": "/ˈɛnvi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "부러움, 질투",
-     "ex": "She felt envy when she saw her friend's new bicycle.",
-     "tr": "그녀는 친구의 새 자전거를 보고 부러움을 느꼈다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "jealousy"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "patience",
-   "ipa": "/ˈpeɪʃəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "인내",
-     "ex": "Learning a new skill requires a lot of patience.",
-     "tr": "새로운 기술을 배우는 데는 많은 인내가 필요하다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "endurance",
-    "tolerance"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "confidence",
-   "ipa": "/ˈkɑːnfɪdəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "자신감",
-     "ex": "Speaking in front of the class built his confidence.",
-     "tr": "수업 앞에서 발표하는 것이 그의 자신감을 키워 주었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "self-assurance",
-    "belief"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "loneliness",
-   "ipa": "/ˈloʊnlinəs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "외로움",
-     "ex": "Moving to a new school can cause feelings of loneliness.",
-     "tr": "새 학교로 전학 가는 것은 외로움을 느끼게 할 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "isolation",
-    "solitude"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "satisfaction",
-   "ipa": "/ˌsætɪsˈfækʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "만족",
-     "ex": "She felt great satisfaction after finishing the project.",
-     "tr": "그녀는 프로젝트를 마친 후 큰 만족감을 느꼈다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "contentment",
-    "fulfillment"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "jealousy",
-   "ipa": "/ˈdʒɛləsi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "질투심",
-     "ex": "His jealousy made it hard to be happy for his friend.",
-     "tr": "그의 질투심은 친구를 위해 기뻐하기 어렵게 만들었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "envy"
+    "grow",
+    "rise"
    ],
    "deriv": [],
    "roots": [],

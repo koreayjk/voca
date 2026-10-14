@@ -4,66 +4,73 @@
  "day": 14,
  "words": [
   {
-   "en": "heavy",
-   "ipa": "/ˈhevi/",
-   "pos": "adj.",
+   "en": "secure",
+   "ipa": "/sɪˈkjʊər/",
+   "pos": "adj./v.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "무거운; (양이) 많은",
-     "ex": "The day trip was canceled because heavy snow had completely blocked the road leading to the destination.",
-     "tr": "폭설이 목적지로 향하는 도로를 완전히 막아 버렸기 때문에 당일치기 여행은 취소되었다.",
-     "src": "2024 9월모평 19번"
+     "ko": "안전한; 단단히 고정된",
+     "ex": "A secure hold means the object will not slip even when pushed by an outside force.",
+     "tr": "단단한 파지란 외부 힘에 의해 밀려도 물체가 미끄러지지 않는다는 것을 의미한다.",
+     "src": "2017 6월모평 31번"
     },
     {
-     "pos": "adj.",
-     "ko": "심한, 격렬한"
+     "pos": "v.",
+     "ko": "확보하다, 단단히 고정하다"
     }
    ],
    "syn": [
-    "weighty",
-    "massive",
-    "severe"
+    "safe",
+    "stable",
+    "fastened"
    ],
    "deriv": [
-    "heavily (adv.)",
-    "heaviness (n.)"
+    "security (n.)",
+    "securely (adv.)",
+    "insecure (adj.)"
    ],
-   "roots": [],
-   "etymHint": "",
+   "roots": [
+    {
+     "part": "se-",
+     "mean": "떨어져, 없이"
+    },
+    {
+     "part": "cura",
+     "mean": "걱정"
+    }
+   ],
+   "etymHint": "se(없이)+cura(걱정) → 걱정이 없는 상태 → 안전한",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 14,
-    "exams": 12,
-    "recentYear": "2027",
+    "count": 15,
+    "exams": 11,
+    "recentYear": "2026",
     "stars": 2
    }
   },
   {
-   "en": "bottom",
-   "ipa": "/ˈbɒtəm/",
-   "pos": "n./adj.",
+   "en": "proud",
+   "ipa": "/praʊd/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "바닥, 맨 아래",
-     "ex": "Those at the bottom of the social hierarchy are often the first victims of inequality and exclusion.",
-     "tr": "사회 계층 구조의 맨 아래에 있는 사람들은 종종 불평등과 배제의 첫 번째 희생자가 된다.",
-     "src": "2023 6월모평 40번"
-    },
-    {
      "pos": "adj.",
-     "ko": "가장 낮은, 맨 밑의"
+     "ko": "자랑스러운; 자존심이 강한",
+     "ex": "We are quite proud of our ability to handle difficult situations when they actually occur.",
+     "tr": "우리는 어려운 상황이 실제로 발생했을 때 그것을 처리하는 능력을 꽤 자랑스러워한다.",
+     "src": "2019 6월모평 20번"
     }
    ],
    "syn": [
-    "base",
-    "floor",
-    "lowest point"
+    "pleased",
+    "satisfied",
+    "arrogant"
    ],
    "deriv": [
-    "bottomless (adj.)"
+    "proudly (adv.)",
+    "pride (n.)"
    ],
    "roots": [],
    "etymHint": "",
@@ -71,728 +78,729 @@
    "exam": {
     "tested": true,
     "count": 14,
-    "exams": 12,
+    "exams": 11,
+    "recentYear": "2019",
+    "stars": 2
+   }
+  },
+  {
+   "en": "reasonable",
+   "ipa": "/ˈriːzənəbəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "합리적인, 타당한",
+     "ex": "It is not always reasonable to expect people to change their habits quickly.",
+     "tr": "사람들이 습관을 빨리 바꾸기를 기대하는 것이 항상 합리적인 것은 아니다.",
+     "src": "2021 6월모평 33번"
+    }
+   ],
+   "syn": [
+    "sensible",
+    "fair",
+    "logical"
+   ],
+   "deriv": [
+    "reason (n.)",
+    "reasonably (adv.)",
+    "unreasonable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ratio",
+     "mean": "이성, 계산"
+    }
+   ],
+   "etymHint": "ratio(이성)+able → 이성적으로 처리할 수 있는 → 합리적인",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 14,
+    "exams": 11,
     "recentYear": "2024",
     "stars": 2
    }
   },
   {
-   "en": "twentieth",
-   "ipa": "/ˈtwɛntiəθ/",
-   "pos": "adj./n.",
+   "en": "reaction",
+   "ipa": "/riˈækʃən/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "20번째의",
-     "ex": "Continuous evaporation reduced the lake to one-twentieth of its original size over many decades.",
-     "tr": "지속적인 증발로 인해 그 호수는 수십 년에 걸쳐 원래 크기의 20분의 1로 줄어들었다.",
-     "src": "2013 수능 34번"
-    },
-    {
      "pos": "n.",
-     "ko": "20번째; 20분의 1"
+     "ko": "반응; (화학) 반응",
+     "ex": "Some people lose their lives because of severe allergic reactions to ordinary bee stings.",
+     "tr": "일부 사람들은 일반적인 벌침에 대한 심각한 알레르기 반응으로 목숨을 잃는다.",
+     "src": "2014 수능 26번"
     }
    ],
-   "syn": [],
-   "deriv": [
-    "twenty (n.)",
-    "twentieth (n.)"
+   "syn": [
+    "response",
+    "reply",
+    "effect"
    ],
-   "roots": [],
-   "etymHint": "",
+   "deriv": [
+    "react (v.)",
+    "reactive (adj.)",
+    "overreaction (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "다시, 반대로"
+    },
+    {
+     "part": "act",
+     "mean": "행동하다"
+    }
+   ],
+   "etymHint": "re(반대로)+act(행동하다) → 반대로 행동함 → 반응",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
+    "count": 14,
+    "exams": 11,
     "recentYear": "2025",
     "stars": 2
    }
   },
   {
-   "en": "coast",
-   "ipa": "/koʊst/",
-   "pos": "n./v.",
+   "en": "possibly",
+   "ipa": "/ˈpɒsɪbli/",
+   "pos": "adv.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "해안, 연안",
-     "ex": "Coastal wetlands along the eastern seaboard have been shrinking due to human activity.",
-     "tr": "동부 해안을 따라 있는 연안 습지들이 인간 활동으로 인해 점점 줄어들고 있다.",
-     "src": "2011 수능 35번"
-    },
-    {
-     "pos": "v.",
-     "ko": "미끄러지듯 나아가다, 힘 안 들이고 가다"
+     "pos": "adv.",
+     "ko": "아마도, 어쩌면; 가능하게",
+     "ex": "Ice-age hunters carved lines and holes in bones over 20,000 years ago, possibly to track the phases of the moon.",
+     "tr": "2만 년 이상 전의 빙하기 사냥꾼들은 아마도 달의 위상을 추적하기 위해 뼈에 선과 구멍을 새겼을 것이다.",
+     "src": "2012 9월모평 35번"
     }
    ],
    "syn": [
-    "shore",
-    "shoreline",
-    "seaboard"
+    "perhaps",
+    "maybe",
+    "conceivably"
    ],
    "deriv": [
-    "coastal (adj.)",
-    "coastline (n.)"
+    "possible (adj.)",
+    "possibility (n.)",
+    "impossible (adj.)"
    ],
    "roots": [
     {
-     "part": "costa",
-     "mean": "옆구리, 해안"
+     "part": "poss",
+     "mean": "할 수 있다"
+    },
+    {
+     "part": "-ible",
+     "mean": "가능한"
     }
    ],
-   "etymHint": "costa(옆구리·해안) → 육지의 옆면 → 해안",
+   "etymHint": "poss(할 수 있다)+ible+y → 가능한 방식으로 → 아마도",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
+    "count": 14,
+    "exams": 11,
     "recentYear": "2020",
     "stars": 2
    }
   },
   {
-   "en": "improvement",
-   "ipa": "/ɪmˈpruːvmənt/",
-   "pos": "n.",
+   "en": "incredible",
+   "ipa": "/ɪnˈkrɛdɪbəl/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "향상, 개선",
-     "ex": "After six weeks of regular exercise, you can see a significant improvement in your muscle strength.",
-     "tr": "6주간의 규칙적인 운동 후에 근력의 눈에 띄는 향상을 볼 수 있다.",
-     "src": "2012 수능 39번"
+     "pos": "adj.",
+     "ko": "믿을 수 없을 만큼 대단한; 믿기 어려운",
+     "ex": "The incredible level of interdependence in nature means that everything is constantly influencing everything else.",
+     "tr": "자연 속의 믿을 수 없을 만큼 큰 상호의존성은 모든 것이 끊임없이 다른 모든 것에 영향을 미친다는 것을 의미한다.",
+     "src": "2010 수능 34번"
     }
    ],
    "syn": [
-    "progress",
-    "enhancement",
-    "advance"
+    "unbelievable",
+    "astonishing",
+    "remarkable"
    ],
    "deriv": [
-    "improve (v.)",
-    "improved (adj.)"
+    "incredibly (adv.)",
+    "incredibility (n.)"
    ],
    "roots": [
     {
-     "part": "im-",
-     "mean": "안으로"
+     "part": "in-",
+     "mean": "아닌"
     },
     {
-     "part": "prove",
-     "mean": "유익함을 보이다"
+     "part": "cred",
+     "mean": "믿다"
     }
    ],
-   "etymHint": "im(안으로) + prove(유익함을 보이다) → 내적으로 더 나아짐 → 향상",
+   "etymHint": "in(아닌)+cred(믿다)+ible → 믿을 수 없는 → 믿기 어려운, 대단한",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
-    "recentYear": "2022",
+    "count": 14,
+    "exams": 11,
+    "recentYear": "2026",
     "stars": 2
    }
   },
   {
-   "en": "attend",
-   "ipa": "/əˈtɛnd/",
-   "pos": "v.",
+   "en": "chain",
+   "ipa": "/tʃeɪn/",
+   "pos": "n./v.",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "참석하다, 다니다",
-     "ex": "A mother who attended the parenting seminar shared her experience with other parents.",
-     "tr": "부모 교육 세미나에 참석한 한 어머니가 자신의 경험을 다른 부모들과 나눴다.",
-     "src": "2018 9월모평 30번"
+     "pos": "n.",
+     "ko": "사슬, 연쇄; 체인점",
+     "ex": "Each individual is just one link in a chain of people who came before and will come after.",
+     "tr": "각 개인은 이전에 왔고 이후에 올 사람들의 연쇄 속에서 단지 하나의 고리에 불과하다.",
+     "src": "2019 9월모평 21번"
     },
     {
      "pos": "v.",
-     "ko": "돌보다, 주의를 기울이다"
+     "ko": "사슬로 묶다, 연결하다"
     }
    ],
    "syn": [
-    "join",
-    "participate in",
-    "be present at"
+    "series",
+    "sequence",
+    "link"
    ],
    "deriv": [
-    "attendance (n.)",
-    "attendant (n.)",
-    "attention (n.)"
+    "chained (adj.)",
+    "chain-reaction (n.)"
    ],
-   "roots": [
-    {
-     "part": "at-",
-     "mean": "~쪽으로"
-    },
-    {
-     "part": "tend",
-     "mean": "뻗다, 향하다"
-    }
-   ],
-   "etymHint": "at(~쪽으로) + tend(뻗다) → ~쪽으로 향하다 → 참석하다",
+   "roots": [],
+   "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 13,
-    "exams": 12,
+    "count": 14,
+    "exams": 11,
     "recentYear": "2025",
     "stars": 2
    }
   },
   {
-   "en": "globe",
-   "ipa": "/ɡloʊb/",
+   "en": "extra",
+   "ipa": "/ˈɛkstrə/",
+   "pos": "adj./adv./n.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "추가의, 여분의",
+     "ex": "Cutting down trees for short-term profit is economically inefficient because it ignores the extra value forests provide.",
+     "tr": "단기 이익을 위해 나무를 벌목하는 것은 숲이 제공하는 추가적인 가치를 무시하기 때문에 경제적으로 비효율적이다.",
+     "src": "2024 수능 23번"
+    },
+    {
+     "pos": "adv.",
+     "ko": "특별히, 더욱"
+    }
+   ],
+   "syn": [
+    "additional",
+    "supplementary",
+    "bonus"
+   ],
+   "deriv": [
+    "extraordinary (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "extra",
+     "mean": "밖에, 넘어서"
+    }
+   ],
+   "etymHint": "extra(밖에, 넘어서) → 기본 범위를 넘어서는 것 → 추가의, 여분의",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 13,
+    "exams": 11,
+    "recentYear": "2025",
+    "stars": 2
+   }
+  },
+  {
+   "en": "breath",
+   "ipa": "/brɛθ/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "지구, 세계; 구(球)",
-     "ex": "People around the globe could benefit greatly from the biodiversity found in tropical regions.",
-     "tr": "전 세계의 사람들이 열대 지역에서 발견되는 생물 다양성으로부터 크게 혜택을 받을 수 있다.",
-     "src": "2013 9월모평 30번"
+     "ko": "숨, 호흡; 한 모금의 공기",
+     "ex": "The audience held their breath as the breathtaking drone show lit up the summer night sky.",
+     "tr": "숨막히게 아름다운 드론 쇼가 여름밤 하늘을 밝히자 관중들은 숨을 죽였다.",
+     "src": "2027 6월모평 28번"
     }
    ],
    "syn": [
-    "world",
-    "earth",
-    "sphere"
+    "respiration",
+    "air",
+    "gasp"
    ],
    "deriv": [
-    "global (adj.)",
-    "globally (adv.)",
-    "globalize (v.)"
+    "breathe (v.)",
+    "breathtaking (adj.)",
+    "breathless (adj.)"
    ],
-   "roots": [
-    {
-     "part": "globus",
-     "mean": "공, 구"
-    }
-   ],
-   "etymHint": "globus(공·구) → 둥근 지구 → 세계",
+   "roots": [],
+   "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 12,
-    "exams": 12,
+    "count": 13,
+    "exams": 11,
+    "recentYear": "2027",
+    "stars": 2
+   }
+  },
+  {
+   "en": "battle",
+   "ipa": "/ˈbætəl/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "전투, 싸움",
+     "ex": "Standing upright in the water, he battled against the powerful wave until he finally reached the shore.",
+     "tr": "물속에서 똑바로 서서 그는 마침내 해안에 도달할 때까지 강한 파도와 싸웠다.",
+     "src": "2019 수능 19번"
+    },
+    {
+     "pos": "v.",
+     "ko": "싸우다, 맞서다"
+    }
+   ],
+   "syn": [
+    "fight",
+    "combat",
+    "struggle"
+   ],
+   "deriv": [
+    "battlefield (n.)",
+    "battleground (n.)"
+   ],
+   "roots": [
+    {
+     "part": "batt",
+     "mean": "치다, 두드리다"
+    }
+   ],
+   "etymHint": "batt(치다)+le → 서로 치고받음 → 전투, 싸움",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 13,
+    "exams": 11,
     "recentYear": "2024",
     "stars": 2
    }
   },
   {
-   "en": "harder",
-   "ipa": "/ˈhɑːrdər/",
-   "pos": "adj./adv.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "더 어려운, 더 힘든",
-     "ex": "Knitting gives learners the chance to take on harder challenges as their skills improve.",
-     "tr": "뜨개질은 학습자들이 기술이 향상됨에 따라 더 어려운 도전에 임할 기회를 준다.",
-     "src": "2009 6월모평 33번"
-    },
-    {
-     "pos": "adv.",
-     "ko": "더 열심히, 더 세게"
-    }
-   ],
-   "syn": [
-    "more difficult",
-    "tougher",
-    "more demanding"
-   ],
-   "deriv": [
-    "hard (adj.)",
-    "hardest (adj.)",
-    "hardship (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 12,
-    "recentYear": "2023",
-    "stars": 2
-   }
-  },
-  {
-   "en": "stronger",
-   "ipa": "/ˈstrɒŋɡər/",
+   "en": "latest",
+   "ipa": "/ˈleɪtɪst/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "더 강한, 더 강력한",
-     "ex": "Some athletes use drugs to become bigger and stronger, but this behavior is considered deviant.",
-     "tr": "일부 운동선수들은 더 크고 강해지기 위해 약물을 사용하지만, 이런 행동은 일탈로 여겨진다.",
-     "src": "2011 9월모평 26번"
+     "ko": "최신의, 가장 최근의",
+     "ex": "The book featured images captured by the latest scientific instruments, which had not been available before.",
+     "tr": "그 책은 이전에는 구할 수 없었던 최신 과학 장비로 촬영된 이미지들을 담고 있었다.",
+     "src": "2025 9월모평 26번"
     }
    ],
    "syn": [
-    "more powerful",
-    "tougher",
-    "more forceful"
+    "newest",
+    "most recent",
+    "current"
    ],
    "deriv": [
-    "strong (adj.)",
-    "strength (n.)",
-    "strengthen (v.)"
+    "late (adj.)",
+    "lately (adv.)"
    ],
    "roots": [],
    "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 12,
-    "exams": 12,
-    "recentYear": "2014",
-    "stars": 2
-   }
-  },
-  {
-   "en": "property",
-   "ipa": "/ˈprɒpərti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "재산, 소유물",
-     "ex": "Patent laws were extended to cover seed varieties as a form of intellectual property in the 1990s.",
-     "tr": "1990년대에 특허법이 지식재산의 한 형태로 종자 품종을 포함하도록 확대되었다.",
-     "src": "2016 수능 33번"
-    },
-    {
-     "pos": "n.",
-     "ko": "부동산, 건물"
-    },
-    {
-     "pos": "n.",
-     "ko": "(물질의) 특성, 성질"
-    }
-   ],
-   "syn": [
-    "asset",
-    "possession",
-    "estate"
-   ],
-   "deriv": [
-    "proper (adj.)",
-    "proprietor (n.)"
-   ],
-   "roots": [
-    {
-     "part": "proprius",
-     "mean": "자신의"
-    }
-   ],
-   "etymHint": "proprius(자신의) → 자신의 것 → 재산",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 32,
+    "count": 13,
     "exams": 11,
     "recentYear": "2025",
     "stars": 2
    }
   },
   {
-   "en": "volunteer",
-   "ipa": "/ˌvɒlənˈtɪər/",
-   "pos": "n./v.",
+   "en": "narrow",
+   "ipa": "/ˈnæroʊ/",
+   "pos": "adj./v.",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "자원봉사를 하다; 자발적으로 나서다",
-     "ex": "She had volunteered to help at the charity event and made sure to arrive on time.",
-     "tr": "그녀는 자선 행사 돕기를 자원했고 제시간에 도착하도록 신경 썼다.",
-     "src": "2014 수능 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "자원봉사자"
-    }
-   ],
-   "syn": [
-    "offer",
-    "give one's time"
-   ],
-   "deriv": [
-    "voluntary (adj.)",
-    "voluntarily (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "volunt",
-     "mean": "의지, 원하다"
-    }
-   ],
-   "etymHint": "volunt(의지·원하다) → 스스로 원해서 하다 → 자원봉사하다",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 30,
-    "exams": 11,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "signal",
-   "ipa": "/ˈsɪɡnəl/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "신호, 신호음",
-     "ex": "A new amplifying system was invented to help radio receivers pick up distant signals more clearly.",
-     "tr": "라디오 수신기가 먼 거리의 신호를 더 명확하게 잡을 수 있도록 새로운 증폭 시스템이 발명되었다.",
-     "src": "2012 9월모평 38번"
+     "pos": "adj.",
+     "ko": "좁은; 한정된",
+     "ex": "The bottle has a round head connected to a narrow neck, making it easy to hold.",
+     "tr": "그 병은 둥근 윗부분과 좁은 목 부분으로 연결되어 있어 쥐기 편하다.",
+     "src": "2018 9월모평 25번"
     },
     {
      "pos": "v.",
-     "ko": "신호를 보내다; 나타내다"
+     "ko": "(폭을) 좁히다, 줄이다"
     }
    ],
    "syn": [
-    "sign",
-    "indicator",
-    "cue"
+    "slim",
+    "thin",
+    "tight"
    ],
    "deriv": [
-    "signaling (n.)",
-    "signify (v.)"
-   ],
-   "roots": [
-    {
-     "part": "signum",
-     "mean": "표시, 신호"
-    }
-   ],
-   "etymHint": "signum(표시·신호) → 무언가를 알리는 표시 → 신호",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 30,
-    "exams": 11,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "mathematics",
-   "ipa": "/ˌmæθəˈmætɪks/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "수학",
-     "ex": "Research shows that children perform better in mathematics when music is included in lessons.",
-     "tr": "연구에 따르면 수업에 음악이 포함될 때 아이들이 수학에서 더 좋은 성과를 보인다고 한다.",
-     "src": "2016 9월모평 21번"
-    }
-   ],
-   "syn": [
-    "math",
-    "arithmetic"
-   ],
-   "deriv": [
-    "mathematical (adj.)",
-    "mathematician (n.)",
-    "mathematically (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "mathema",
-     "mean": "배움, 지식"
-    }
-   ],
-   "etymHint": "mathema(배움·지식) → 체계적인 학문 → 수학",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 29,
-    "exams": 11,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "speech",
-   "ipa": "/spiːtʃ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "말, 발화; 연설",
-     "ex": "The auditory system filled in the missing parts of speech so that the sentence sounded complete.",
-     "tr": "청각 체계가 말의 빠진 부분을 채워 넣어 문장이 끊기지 않은 것처럼 들렸다.",
-     "src": "2010 수능 27번"
-    },
-    {
-     "pos": "n.",
-     "ko": "연설, 스피치"
-    }
-   ],
-   "syn": [
-    "talk",
-    "address",
-    "language"
-   ],
-   "deriv": [
-    "speechless (adj.)",
-    "spokesperson (n.)"
+    "narrowly (adv.)",
+    "narrowness (n.)"
    ],
    "roots": [],
    "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 25,
-    "exams": 11,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "topic",
-   "ipa": "/ˈtɒpɪk/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "주제, 화제",
-     "ex": "Some people avoid difficult conversations by quickly switching topics when a sensitive subject comes up.",
-     "tr": "어떤 사람들은 민감한 주제가 나오면 재빨리 화제를 바꿔 어려운 대화를 피한다.",
-     "src": "2021 6월모평 20번"
-    }
-   ],
-   "syn": [
-    "subject",
-    "theme",
-    "issue"
-   ],
-   "deriv": [
-    "topical (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "topos",
-     "mean": "장소"
-    }
-   ],
-   "etymHint": "topos(장소) → 논의가 모이는 장소 → 주제",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 25,
+    "count": 11,
     "exams": 11,
     "recentYear": "2026",
     "stars": 2
    }
   },
   {
-   "en": "disappear",
-   "ipa": "/ˌdɪsəˈpɪər/",
+   "en": "favor",
+   "ipa": "/ˈfeɪvər/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "호의; 친절한 행동",
+     "ex": "Wild fruits and nuts are a particular favor among the Nuer people as everyday snacks.",
+     "tr": "야생 과일과 견과류는 누에르 사람들에게 일상적인 간식으로 특별히 좋아하는 것이다.",
+     "src": "2020 수능 26번"
+    },
+    {
+     "pos": "v.",
+     "ko": "좋아하다, 선호하다; 유리하게 하다"
+    }
+   ],
+   "syn": [
+    "preference",
+    "kindness",
+    "approval"
+   ],
+   "deriv": [
+    "favorable (adj.)",
+    "favorite (adj./n.)"
+   ],
+   "roots": [
+    {
+     "part": "favor",
+     "mean": "호의(라틴어 favor)"
+    }
+   ],
+   "etymHint": "favor(호의·은혜) → 호의를 보임 → 친절한 행동",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 11,
+    "exams": 11,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "joyful",
+   "ipa": "/ˈdʒɔɪfəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "기쁜, 즐거운",
+     "ex": "The two dolphins became inseparable and swam joyfully together, clearly showing signs of affection.",
+     "tr": "두 돌고래는 떨어질 수 없는 사이가 되어 기쁘게 함께 헤엄치며 애정의 표시를 분명히 나타냈다.",
+     "src": "2013 6월모평 38번"
+    }
+   ],
+   "syn": [
+    "cheerful",
+    "happy",
+    "delighted"
+   ],
+   "deriv": [
+    "joy (n.)",
+    "joyfully (adv.)",
+    "joyfulness (n.)"
+   ],
+   "roots": [
+    {
+     "part": "joy",
+     "mean": "기쁨"
+    },
+    {
+     "part": "-ful",
+     "mean": "가득 찬"
+    }
+   ],
+   "etymHint": "joy(기쁨) + -ful(가득 찬) → 기쁨으로 가득 찬 → 기쁜",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 11,
+    "exams": 11,
+    "recentYear": "2019",
+    "stars": 2
+   }
+  },
+  {
+   "en": "hurry",
+   "ipa": "/ˈhʌri/",
+   "pos": "v./n.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "서두르다, 급히 가다",
+     "ex": "A man in a black jacket hurried into the bank, which made people nearby suspicious.",
+     "tr": "검은 재킷을 입은 남자가 은행 안으로 급히 들어갔고, 이를 본 주변 사람들은 의심을 품었다.",
+     "src": "2011 9월모평 43번"
+    },
+    {
+     "pos": "n.",
+     "ko": "서두름, 급함"
+    }
+   ],
+   "syn": [
+    "rush",
+    "dash",
+    "hasten"
+   ],
+   "deriv": [
+    "hurried (adj.)",
+    "hurriedly (adv.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 11,
+    "exams": 11,
+    "recentYear": "2024",
+    "stars": 2
+   }
+  },
+  {
+   "en": "represent",
+   "ipa": "/ˌrɛprɪˈzɛnt/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "사라지다, 없어지다",
-     "ex": "Knowledge gained early in a career does not disappear but becomes simplified over time.",
-     "tr": "경력 초반에 얻은 지식은 사라지지 않고 시간이 지남에 따라 단순화된다.",
-     "src": "2024 수능 40번"
+     "ko": "나타내다, 대표하다; 상징하다",
+     "ex": "New social trends often represent opportunities for people to redefine themselves and embrace change.",
+     "tr": "새로운 사회적 트렌드는 종종 사람들이 자신을 재정의하고 변화를 받아들일 기회를 나타낸다.",
+     "src": "2023 수능 29번"
     }
    ],
    "syn": [
-    "vanish",
-    "fade",
-    "evaporate"
+    "stand for",
+    "symbolize",
+    "depict"
    ],
    "deriv": [
-    "disappearance (n.)"
+    "representative (n./adj.)",
+    "representation (n.)"
    ],
    "roots": [
     {
-     "part": "dis-",
-     "mean": "반대, 없애다"
+     "part": "re-",
+     "mean": "다시"
     },
     {
-     "part": "apparere",
-     "mean": "나타나다"
+     "part": "praesentare",
+     "mean": "앞에 내놓다(라틴어)"
     }
    ],
-   "etymHint": "dis(없애다) + apparere(나타나다) → 나타난 것을 없애다 → 사라지다",
+   "etymHint": "re(다시) + praesentare(앞에 내놓다) → 다시 앞에 내보임 → 나타내다",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 24,
-    "exams": 11,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "transport",
-   "ipa": "/ˈtrænsˌpɔːrt/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "교통, 운송",
-     "ex": "Urban transport professionals now argue that automobile demand in cities should be managed, not just met.",
-     "tr": "도시 교통 전문가들은 이제 도시의 자동차 수요를 단순히 수용할 것이 아니라 관리해야 한다고 주장한다.",
-     "src": "2023 6월모평 30번"
-    },
-    {
-     "pos": "v.",
-     "ko": "수송하다, 운반하다"
-    }
-   ],
-   "syn": [
-    "transportation",
-    "transit",
-    "conveyance"
-   ],
-   "deriv": [
-    "transportation (n.)",
-    "transporter (n.)"
-   ],
-   "roots": [
-    {
-     "part": "trans-",
-     "mean": "건너서"
-    },
-    {
-     "part": "portare",
-     "mean": "운반하다"
-    }
-   ],
-   "etymHint": "trans(건너서) + portare(운반하다) → 건너편으로 운반하다 → 운송",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 22,
-    "exams": 11,
+    "count": 36,
+    "exams": 10,
     "recentYear": "2027",
     "stars": 2
    }
   },
   {
-   "en": "rapid",
-   "ipa": "/ˈræpɪd/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "빠른, 신속한",
-     "ex": "Social media allows misinformation to spread rapidly because it has no regulation.",
-     "tr": "소셜 미디어는 규제가 없기 때문에 잘못된 정보가 빠르게 퍼질 수 있다.",
-     "src": "2025 9월모평 20번"
-    }
-   ],
-   "syn": [
-    "fast",
-    "quick",
-    "swift"
-   ],
-   "deriv": [
-    "rapidly (adv.)",
-    "rapidity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "rapere",
-     "mean": "잡아채다, 빠르게 움직이다"
-    }
-   ],
-   "etymHint": "rapere(빠르게 움직이다) → 빠른",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 21,
-    "exams": 11,
-    "recentYear": "2027",
-    "stars": 2
-   }
-  },
-  {
-   "en": "circle",
-   "ipa": "/ˈsɜːrkəl/",
+   "en": "review",
+   "ipa": "/rɪˈvjuː/",
    "pos": "n./v.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "원, 원형; 집단",
-     "ex": "One teamwork activity at the company retreat was to arrange the group in a circle and pass ideas around.",
-     "tr": "회사 워크숍에서의 한 팀워크 활동은 집단을 원형으로 배치하고 아이디어를 돌아가며 나누는 것이었다.",
-     "src": "2018 수능 21번"
+     "ko": "평론, 후기; 검토",
+     "ex": "While browsing the Internet, she came across a positive review for the upcoming concert and decided to go.",
+     "tr": "인터넷을 검색하던 중 그녀는 예정된 콘서트에 대한 긍정적인 평론을 발견하고 가기로 결심했다.",
+     "src": "2021 6월모평 19번"
     },
     {
      "pos": "v.",
-     "ko": "빙 돌다, 원을 그리다"
+     "ko": "검토하다; 비평하다"
     }
    ],
    "syn": [
-    "ring",
-    "loop",
-    "cycle"
+    "critique",
+    "assessment",
+    "evaluation"
    ],
    "deriv": [
-    "circular (adj.)",
-    "circulate (v.)",
-    "circulation (n.)"
+    "reviewer (n.)",
+    "reviewed (adj.)"
    ],
    "roots": [
     {
-     "part": "circ",
-     "mean": "둥글다, 원"
+     "part": "re-",
+     "mean": "다시"
+    },
+    {
+     "part": "view",
+     "mean": "보다"
     }
    ],
-   "etymHint": "circ(원) → 원 모양 → 원, 원형",
+   "etymHint": "re(다시) + view(보다) → 다시 들여다봄 → 검토·평론",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 19,
-    "exams": 11,
-    "recentYear": "2025",
+    "count": 27,
+    "exams": 10,
+    "recentYear": "2026",
     "stars": 2
    }
   },
   {
-   "en": "anger",
-   "ipa": "/ˈæŋɡər/",
+   "en": "award",
+   "ipa": "/əˈwɔːrd/",
    "pos": "n./v.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "분노, 화",
-     "ex": "You should not behave like a selfish person or let your anger go out of control.",
-     "tr": "이기적인 사람처럼 행동하거나 분노가 통제를 벗어나게 해서는 안 된다.",
-     "src": "2012 6월모평 29번"
+     "ko": "상, 수상",
+     "ex": "Although he won several Academy Awards, the filmmaker was not born in the United States.",
+     "tr": "그 영화감독은 아카데미 상을 여러 차례 수상했지만 미국 태생이 아니었다.",
+     "src": "2017 수능 25번"
     },
     {
      "pos": "v.",
-     "ko": "화나게 하다"
+     "ko": "(상을) 수여하다, 주다"
     }
    ],
    "syn": [
-    "rage",
-    "fury",
-    "irritation"
+    "prize",
+    "honor",
+    "grant"
    ],
    "deriv": [
-    "angry (adj.)",
-    "angrily (adv.)"
+    "awardee (n.)"
    ],
    "roots": [],
    "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 19,
-    "exams": 11,
+    "count": 25,
+    "exams": 10,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "code",
+   "ipa": "/koʊd/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "코드, 부호; 규약",
+     "ex": "Even a computer can process only one piece of code at a time, despite what many people believe.",
+     "tr": "많은 사람들이 믿는 것과는 달리, 컴퓨터조차 한 번에 하나의 코드만 처리할 수 있다.",
+     "src": "2015 수능 31번"
+    },
+    {
+     "pos": "v.",
+     "ko": "코드를 짜다, 암호화하다"
+    }
+   ],
+   "syn": [
+    "cipher",
+    "program",
+    "rule"
+   ],
+   "deriv": [
+    "coding (n.)",
+    "coder (n.)",
+    "decode (v.)"
+   ],
+   "roots": [
+    {
+     "part": "codex",
+     "mean": "책·법전(라틴어)"
+    }
+   ],
+   "etymHint": "codex(책·법전) → 규칙의 집합 → 코드·규약",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 24,
+    "exams": 10,
+    "recentYear": "2025",
+    "stars": 2
+   }
+  },
+  {
+   "en": "statement",
+   "ipa": "/ˈsteɪtmənt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "진술, 발언; 성명서",
+     "ex": "Scientific statements, even when they are accurate and thorough, do not automatically qualify as literature.",
+     "tr": "과학적 진술은 정확하고 철저하더라도 자동적으로 문학으로 인정받는 것은 아니다.",
+     "src": "2011 6월모평 38번"
+    }
+   ],
+   "syn": [
+    "assertion",
+    "declaration",
+    "remark"
+   ],
+   "deriv": [
+    "state (v.)",
+    "restatement (n.)"
+   ],
+   "roots": [
+    {
+     "part": "state",
+     "mean": "밝히다·상태"
+    },
+    {
+     "part": "-ment",
+     "mean": "명사 접미사"
+    }
+   ],
+   "etymHint": "state(밝히다) + -ment(명사화) → 밝히는 행위의 결과 → 진술",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 23,
+    "exams": 10,
     "recentYear": "2026",
     "stars": 2
    }

@@ -4,65 +4,64 @@
  "day": 17,
  "words": [
   {
-   "en": "molecule",
-   "ipa": "/ˈmɒlɪkjuːl/",
+   "en": "elegance",
+   "ipa": "/ˈelɪɡəns/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "분자",
-     "ex": "Grasping the concept of a molecule requires repeated exposure and concrete visual models, not merely a single brief definition.",
-     "tr": "분자의 개념을 파악하려면 단 한 번의 간략한 정의가 아니라 반복적인 노출과 구체적인 시각적 모델이 필요하다.",
-     "src": "2020 6월모평 20번"
+     "ko": "우아함, 고상함",
+     "ex": "The designer's work is celebrated for its understated elegance rather than ostentatious decoration.",
+     "tr": "그 디자이너의 작품은 과시적인 장식보다는 절제된 우아함으로 찬사를 받는다.",
+     "src": "2012 수능 33번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(수학·논리의) 간결하고 명료한 아름다움"
     }
    ],
    "syn": [
-    "particle",
-    "compound",
-    "atom cluster"
+    "grace",
+    "refinement",
+    "sophistication"
    ],
    "deriv": [
-    "molecular (adj.)",
-    "molecularly (adv.)",
-    "macromolecule (n.)"
+    "elegant (adj.)",
+    "elegantly (adv.)"
    ],
    "roots": [
     {
-     "part": "mol",
-     "mean": "덩어리"
-    },
-    {
-     "part": "-cule",
-     "mean": "작음을 나타내는 접미사"
+     "part": "eleg",
+     "mean": "선택하다, 고르다"
     }
    ],
-   "etymHint": "라틴어 moles(덩어리)+-cule(작은) → 작은 덩어리 → 분자",
+   "etymHint": "eleg(선택하다)+ance → 세심하게 고른 듯한 세련됨 → 우아함",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2020",
+    "recentYear": "2012",
     "stars": 1
    }
   },
   {
-   "en": "fragment",
-   "ipa": "/ˈfræɡmənt/",
-   "pos": "v",
+   "en": "resilience",
+   "ipa": "/rɪˈzɪliəns/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "분열시키다, 산산조각 내다",
-     "ex": "The collapse of the ruling coalition fragmented the political landscape and triggered early elections.",
-     "tr": "연립 정권의 붕괴는 정치 지형을 분열시키고 조기 선거를 촉발했다.",
+     "pos": "n",
+     "ko": "회복탄력성, 역경에서 회복하는 능력",
+     "ex": "Psychologists now recognize resilience not as a fixed trait but as a dynamic capacity cultivated through experience.",
+     "tr": "심리학자들은 이제 회복탄력성을 고정된 특성이 아니라 경험을 통해 개발되는 역동적 능력으로 인식한다.",
      "src": ""
     }
    ],
    "syn": [
-    "disintegrate",
-    "splinter",
-    "break apart"
+    "fortitude",
+    "buoyancy",
+    "adaptability"
    ],
    "deriv": [],
    "roots": [],
@@ -77,315 +76,38 @@
    }
   },
   {
-   "en": "transmit",
-   "ipa": "/trænsˈmɪt/",
+   "en": "broaden",
+   "ipa": "/ˈbrɔːdən/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "전송하다, 전달하다",
-     "ex": "Satellites transmit data signals across vast distances to ground stations worldwide.",
-     "tr": "위성은 전 세계 지상국에 광대한 거리를 가로질러 데이터 신호를 전송한다.",
-     "src": "2016 6월모평 21번"
+     "ko": "넓히다, 확장하다",
+     "ex": "Exposure to diverse cultures and perspectives can significantly broaden one's understanding of the human condition.",
+     "tr": "다양한 문화와 관점에 노출되는 것은 인간 조건에 대한 이해를 크게 넓힐 수 있다.",
+     "src": "2027 6월모평 40번"
     },
     {
      "pos": "v.",
-     "ko": "(질병을) 전파하다"
+     "ko": "넓어지다"
     }
    ],
    "syn": [
-    "convey",
-    "relay",
-    "broadcast"
+    "expand",
+    "widen",
+    "extend"
    ],
    "deriv": [
-    "transmission (n.)",
-    "transmitter (n.)",
-    "transmittable (adj.)"
+    "broad (adj.)",
+    "breadth (n.)"
    ],
    "roots": [
     {
-     "part": "trans",
-     "mean": "넘어서, 가로질러"
-    },
-    {
-     "part": "mit",
-     "mean": "보내다"
+     "part": "broad",
+     "mean": "넓은"
     }
    ],
-   "etymHint": "trans(가로질러)+mit(보내다) → 가로질러 보내다 → 전송하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "jurisdiction",
-   "ipa": "/ˌdʒʊərɪsˈdɪkʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "사법권, 관할권",
-     "ex": "The case raised difficult questions about which court had jurisdiction over cross-border fraud.",
-     "tr": "그 사건은 국경을 초월한 사기에 대해 어느 법원이 관할권을 가지는지에 대한 어려운 문제를 제기했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "authority",
-    "mandate",
-    "domain"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "cultivation",
-   "ipa": "/ˌkʌltɪˈveɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "경작, 재배",
-     "ex": "The cultivation of rice in flooded paddies has sustained Asian civilizations for millennia.",
-     "tr": "침수된 논에서의 벼 경작은 수천 년 동안 아시아 문명을 지탱해 왔다.",
-     "src": "2011 수능 45번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(능력·관계의) 계발, 육성"
-    }
-   ],
-   "syn": [
-    "farming",
-    "tillage",
-    "development",
-    "nurturing"
-   ],
-   "deriv": [
-    "cultivate (v.)",
-    "cultivated (adj.)",
-    "cultivator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "cult",
-     "mean": "경작하다, 돌보다"
-    },
-    {
-     "part": "-ation",
-     "mean": "행위·과정"
-    }
-   ],
-   "etymHint": "cult(경작하다)+ation(행위) → 경작하는 행위 → 재배, 계발",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2011",
-    "stars": 1
-   }
-  },
-  {
-   "en": "preferable",
-   "ipa": "/ˈprefərəbl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "더 바람직한, 더 나은",
-     "ex": "When one's cherished assumptions are challenged by uncomfortable evidence, it may seem preferable to dismiss the facts entirely.",
-     "tr": "소중히 여기는 가정이 불편한 증거에 의해 도전받을 때, 사실을 완전히 무시하는 것이 더 바람직해 보일 수 있다.",
-     "src": "2020 9월모평 33번"
-    }
-   ],
-   "syn": [
-    "more desirable",
-    "better",
-    "superior"
-   ],
-   "deriv": [
-    "prefer (v.)",
-    "preferably (adv.)",
-    "preference (n.)"
-   ],
-   "roots": [
-    {
-     "part": "pre",
-     "mean": "앞에, 먼저"
-    },
-    {
-     "part": "fer",
-     "mean": "운반하다, 두다"
-    }
-   ],
-   "etymHint": "pre(앞에)+fer(두다) → 앞에 두다 → 선호하다 → 더 바람직한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "entitlement",
-   "ipa": "/ɪnˈtaɪtəlmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "수급 자격, 사회 보장 혜택",
-     "ex": "Pension reform required the government to curtail entitlement spending without alienating retirees.",
-     "tr": "연금 개혁으로 정부는 은퇴자들을 소외시키지 않으면서 수급 혜택 지출을 축소해야 했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "benefit",
-    "welfare",
-    "allowance"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "commonality",
-   "ipa": "/ˌkɒməˈnælɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "공통점, 공유된 특성",
-     "ex": "Despite vast cultural differences, researchers found a strong commonality of values across the surveyed populations.",
-     "tr": "광범위한 문화적 차이에도 불구하고, 연구자들은 조사된 인구 집단 전반에 걸쳐 강한 가치관의 공통점을 발견했다.",
-     "src": "2022 9월모평 29번"
-    },
-    {
-     "pos": "n.",
-     "ko": "공동체 의식"
-    }
-   ],
-   "syn": [
-    "common ground",
-    "shared characteristic",
-    "similarity"
-   ],
-   "deriv": [
-    "common (adj.)",
-    "communal (adj.)",
-    "commonplace (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "com",
-     "mean": "함께"
-    },
-    {
-     "part": "mun",
-     "mean": "공유하다, 나누다"
-    }
-   ],
-   "etymHint": "com(함께)+mun(나누다) → 함께 나누는 것 → 공통점",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "substantially",
-   "ipa": "/səbˈstænʃəli/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "상당히, 실질적으로",
-     "ex": "The revised draft differs substantially from the original proposal submitted last quarter.",
-     "tr": "수정 초안은 지난 분기에 제출된 원래 제안서와 상당히 다르다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "considerably",
-    "materially",
-    "significantly"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "wit",
-   "ipa": "/wɪt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "재치, 위트",
-     "ex": "His columns were celebrated for their sharp wit, blending dry humour with incisive social commentary.",
-     "tr": "그의 칼럼은 날카로운 재치로 유명했으며, 건조한 유머와 예리한 사회 비평을 결합했다.",
-     "src": "2025 6월모평 26번"
-    },
-    {
-     "pos": "n.",
-     "ko": "지적 능력, 분별력"
-    }
-   ],
-   "syn": [
-    "cleverness",
-    "humor",
-    "acuity",
-    "intellect"
-   ],
-   "deriv": [
-    "witty (adj.)",
-    "wittily (adv.)",
-    "witticism (n.)"
-   ],
-   "roots": [
-    {
-     "part": "wit",
-     "mean": "알다, 지각하다 (고대영어 witan)"
-    }
-   ],
-   "etymHint": "wit(알다, 고대영어) → 아는 것, 분별력 → 재치",
+   "etymHint": "broad(넓은)+-en(동사화) → 넓게 하다 → 확장하다",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -396,22 +118,22 @@
    }
   },
   {
-   "en": "perpetrate",
-   "ipa": "/ˈpɜːrpɪtreɪt/",
-   "pos": "v",
+   "en": "culpable",
+   "ipa": "/ˈkʌlpəbəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "저지르다, 범하다",
-     "ex": "Those who perpetrate hate crimes must be held accountable to the full extent of the law.",
-     "tr": "증오 범죄를 저지르는 사람들은 법의 최대 범위에서 책임을 져야 한다.",
+     "pos": "adj",
+     "ko": "유죄의, 과실이 있는",
+     "ex": "The investigation found the corporation culpable for the environmental damage caused by its subsidiary.",
+     "tr": "조사 결과 해당 기업이 자회사가 야기한 환경 피해에 대해 책임이 있는 것으로 밝혀졌다.",
      "src": ""
     }
    ],
    "syn": [
-    "commit",
-    "carry out",
-    "execute"
+    "blameworthy",
+    "liable",
+    "negligent"
    ],
    "deriv": [],
    "roots": [],
@@ -426,42 +148,111 @@
    }
   },
   {
-   "en": "witness",
-   "ipa": "/ˈwɪtnɪs/",
+   "en": "continuity",
+   "ipa": "/ˌkɒntɪˈnjuːɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "연속성, 지속성",
+     "ex": "Successful institutions maintain a careful balance between continuity of core values and adaptation to changing circumstances.",
+     "tr": "성공적인 기관들은 핵심 가치의 연속성과 변화하는 환경에의 적응 사이의 균형을 신중하게 유지한다.",
+     "src": "2012 9월모평 29번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(영화·방송의) 연속성"
+    }
+   ],
+   "syn": [
+    "persistence",
+    "consistency",
+    "unbrokenness"
+   ],
+   "deriv": [
+    "continuous (adj.)",
+    "continual (adj.)",
+    "continue (v.)"
+   ],
+   "roots": [
+    {
+     "part": "con",
+     "mean": "함께"
+    },
+    {
+     "part": "tinu",
+     "mean": "잡다, 유지하다"
+    }
+   ],
+   "etymHint": "con(함께)+tinu(유지하다)+ity → 계속 이어 유지함 → 연속성",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2012",
+    "stars": 1
+   }
+  },
+  {
+   "en": "plausible",
+   "ipa": "/ˈplɔːzɪbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "그럴듯한, 타당해 보이는",
+     "ex": "The hypothesis, while plausible on its face, collapsed under rigorous empirical scrutiny.",
+     "tr": "가설은 표면상 그럴듯해 보였지만 엄격한 경험적 검토 아래 붕괴되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "credible",
+    "conceivable",
+    "tenable"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "liken",
+   "ipa": "/ˈlaɪkən/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "목격하다, (변화를) 겪다",
-     "ex": "Contemporary society is witnessing a profound transformation in how individuals define personal identity.",
-     "tr": "현대 사회는 개인이 개인 정체성을 정의하는 방식에서 심오한 변화를 겪고 있다.",
-     "src": "2020 수능 33번"
-    },
-    {
-     "pos": "n.",
-     "ko": "목격자"
+     "ko": "비유하다, ~에 빗대다",
+     "ex": "Critics often liken the experience of reading dense philosophical prose to navigating an uncharted labyrinth.",
+     "tr": "비평가들은 흔히 난해한 철학적 산문을 읽는 경험을 미지의 미로를 헤쳐나가는 것에 비유한다.",
+     "src": "2013 6월모평 45번"
     }
    ],
    "syn": [
-    "observe",
-    "behold",
-    "testify"
+    "compare",
+    "equate",
+    "analogize"
    ],
    "deriv": [
-    "eyewitness (n.)",
-    "unwitnessed (adj.)"
+    "likeness (n.)",
+    "alike (adj.)"
    ],
    "roots": [
     {
-     "part": "wit",
-     "mean": "알다"
-    },
-    {
-     "part": "-ness",
-     "mean": "상태"
+     "part": "like",
+     "mean": "유사한"
     }
    ],
-   "etymHint": "wit(알다)+ness(상태) → 알고 있는 상태 → 목격하다",
+   "etymHint": "like(유사한)+-en → 유사하다고 말하다 → 비유하다",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -472,22 +263,22 @@
    }
   },
   {
-   "en": "ruminate",
-   "ipa": "/ˈruːmɪˌneɪt/",
-   "pos": "v",
+   "en": "grotesque",
+   "ipa": "/ɡroʊˈtɛsk/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "깊이 생각하다, 숙고하다",
-     "ex": "The author ruminates at length on the ethical contradictions inherent in contemporary liberal democracies.",
-     "tr": "저자는 현대 자유 민주주의에 내재된 윤리적 모순에 대해 오랫동안 깊이 생각한다.",
+     "pos": "adj",
+     "ko": "그로테스크한, 기이하고 섬뜩한",
+     "ex": "Flannery O'Connor's grotesque characters inhabit a Southern Gothic world where spiritual violence erupts beneath polite social surfaces.",
+     "tr": "플래너리 오코너의 그로테스크한 인물들은 예의 바른 사회적 표면 아래 정신적 폭력이 터져 나오는 남부 고딕 세계에 살고 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "ponder",
-    "deliberate",
-    "contemplate"
+    "bizarre",
+    "macabre",
+    "distorted"
    ],
    "deriv": [],
    "roots": [],
@@ -502,118 +293,104 @@
    }
   },
   {
-   "en": "deceit",
-   "ipa": "/dɪˈsiːt/",
+   "en": "glimpse",
+   "ipa": "/ɡlɪmps/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "기만, 속임수",
-     "ex": "Individuals who are pressured into endorsing views they privately reject often experience profound discomfort about their deceit.",
-     "tr": "자신이 개인적으로 거부하는 견해를 지지하도록 압력을 받은 개인들은 종종 자신의 기만에 대해 깊은 불편함을 경험한다.",
-     "src": "2012 6월모평 20번"
+     "ko": "잠깐 봄, 일별(一瞥)",
+     "ex": "The documentary offers a rare glimpse into the private lives of scientists working at the cutting edge of research.",
+     "tr": "그 다큐멘터리는 최첨단 연구를 수행하는 과학자들의 사생활을 드물게 엿볼 기회를 제공한다.",
+     "src": ""
     },
+    {
+     "pos": "v.",
+     "ko": "잠깐 보다"
+    }
+   ],
+   "syn": [
+    "glance",
+    "peek",
+    "sight"
+   ],
+   "deriv": [
+    "glimmer (v.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "compromise",
+   "ipa": "/ˈkɒmprəmaɪz/",
+   "pos": "n.",
+   "meanings": [
     {
      "pos": "n.",
-     "ko": "거짓말하는 성향"
+     "ko": "타협, 절충",
+     "ex": "Reaching a durable compromise requires each party to genuinely acknowledge the legitimacy of the other's concerns.",
+     "tr": "지속 가능한 타협에 도달하려면 각 당사자가 상대방의 우려의 정당성을 진심으로 인정해야 한다.",
+     "src": "2020 6월모평 24번"
+    },
+    {
+     "pos": "v.",
+     "ko": "타협하다; 위태롭게 하다"
     }
    ],
    "syn": [
-    "deception",
-    "duplicity",
-    "dishonesty",
-    "fraud"
+    "concession",
+    "settlement",
+    "middle ground"
    ],
    "deriv": [
-    "deceive (v.)",
-    "deceitful (adj.)",
-    "deceitfully (adv.)"
+    "compromising (adj.)",
+    "uncompromising (adj.)"
    ],
    "roots": [
     {
-     "part": "de",
-     "mean": "아래로, 반대로"
+     "part": "com",
+     "mean": "함께"
     },
     {
-     "part": "ceit (capere)",
-     "mean": "잡다, 취하다"
+     "part": "promise",
+     "mean": "약속하다"
     }
    ],
-   "etymHint": "de(반대로)+ceit(잡다) → 반대로 잡다(덫에 걸리게 하다) → 기만",
+   "etymHint": "com(함께)+promise(약속) → 서로 함께 약속하다 → 타협",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2012",
+    "recentYear": "2020",
     "stars": 1
    }
   },
   {
-   "en": "simulate",
-   "ipa": "/ˈsɪmjʊleɪt/",
-   "pos": "v.",
+   "en": "populism",
+   "ipa": "/ˈpɒpjʊlɪzəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "모의 실험하다, 시뮬레이션하다",
-     "ex": "Advanced software can now simulate complex atmospheric conditions to predict long-range weather patterns.",
-     "tr": "고급 소프트웨어는 이제 장거리 기상 패턴을 예측하기 위해 복잡한 대기 조건을 모의 실험할 수 있다.",
-     "src": "2015 6월모평 21번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(감정·상태를) 가장하다"
-    }
-   ],
-   "syn": [
-    "replicate",
-    "model",
-    "imitate",
-    "feign"
-   ],
-   "deriv": [
-    "simulation (n.)",
-    "simulator (n.)",
-    "simulated (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "simul",
-     "mean": "같은, 비슷한"
-    },
-    {
-     "part": "-ate",
-     "mean": "~하게 하다"
-    }
-   ],
-   "etymHint": "simul(같은)+ate(~하게 하다) → 같게 만들다 → 모의 실험하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "erode",
-   "ipa": "/ɪˈroʊd/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "잠식하다, 침식하다",
-     "ex": "Populist rhetoric can gradually erode public trust in democratic institutions and independent media.",
-     "tr": "포퓰리즘 수사는 민주주의 기관과 독립 미디어에 대한 공공의 신뢰를 서서히 잠식할 수 있다.",
+     "pos": "n",
+     "ko": "포퓰리즘, 대중주의",
+     "ex": "Analysts warned that unchecked populism threatens the institutional checks of liberal democracy.",
+     "tr": "분석가들은 견제받지 않는 포퓰리즘이 자유 민주주의의 제도적 견제를 위협한다고 경고했다.",
      "src": ""
     }
    ],
    "syn": [
-    "undermine",
-    "corrode",
-    "wear away"
+    "demagoguery",
+    "nativism",
+    "anti-elitism"
    ],
    "deriv": [],
    "roots": [],
@@ -628,43 +405,42 @@
    }
   },
   {
-   "en": "recipient",
-   "ipa": "/rɪˈsɪpɪənt/",
+   "en": "circuit",
+   "ipa": "/ˈsɜːrkɪt/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "수령자, 수혜자",
-     "ex": "The largest recipients of government agricultural subsidies are often not small family farms but large agribusiness corporations.",
-     "tr": "정부 농업 보조금의 가장 큰 수혜자들은 종종 소규모 가족 농장이 아니라 대형 농업 기업들이다.",
-     "src": "2019 수능 23번"
+     "ko": "회로; 순환 경로",
+     "ex": "The neural circuitry underlying empathy can be weakened by prolonged social isolation during critical developmental periods.",
+     "tr": "공감의 기저를 이루는 신경 회로는 중요한 발달 시기 동안 장기간의 사회적 고립에 의해 약해질 수 있다.",
+     "src": "2017 6월모평 21번"
     },
     {
      "pos": "n.",
-     "ko": "(장기 이식 등의) 수용자"
+     "ko": "(경주용) 서킷; 순회 구역"
     }
    ],
    "syn": [
-    "receiver",
-    "beneficiary",
-    "donee"
+    "loop",
+    "cycle",
+    "network"
    ],
    "deriv": [
-    "receive (v.)",
-    "reception (n.)",
-    "receptive (adj.)"
+    "circuitry (n.)",
+    "circular (adj.)"
    ],
    "roots": [
     {
-     "part": "re",
-     "mean": "다시, 뒤로"
+     "part": "circum",
+     "mean": "둘레"
     },
     {
-     "part": "cip (capere)",
-     "mean": "잡다, 받다"
+     "part": "it",
+     "mean": "가다"
     }
    ],
-   "etymHint": "re(뒤로)+cip(받다) → 되받다 → 수령자",
+   "etymHint": "circum(둘레)+it(가다) → 둘레를 돌아가다 → 회로·순환",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -675,22 +451,22 @@
    }
   },
   {
-   "en": "postulate",
-   "ipa": "/ˈpɑstʃəlɪt/",
-   "pos": "n",
+   "en": "acrimonious",
+   "ipa": "/ˌækrɪˈmoʊniəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "공준; 가정",
-     "ex": "Euclid's fifth postulate, regarding parallel lines, remained unquestioned for over two thousand years.",
-     "tr": "평행선에 관한 유클리드의 다섯 번째 공준은 2천 년 이상 의심 없이 받아들여졌다.",
+     "pos": "adj",
+     "ko": "신랄한, 격렬히 대립하는",
+     "ex": "The acrimonious dispute over the estate dragged on for nearly a decade.",
+     "tr": "유산을 둘러싼 격렬한 분쟁은 거의 10년 동안 계속되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "axiom",
-    "premise",
-    "assumption"
+    "bitter",
+    "vitriolic",
+    "contentious"
    ],
    "deriv": [],
    "roots": [],
@@ -705,45 +481,38 @@
    }
   },
   {
-   "en": "acute",
-   "ipa": "/əˈkjuːt/",
+   "en": "humanoid",
+   "ipa": "/ˈhjuːmənɔɪd/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "날카로운, 예리한",
-     "ex": "The historian's acute observation exposed the underlying economic motives behind the so-called cultural reform.",
-     "tr": "그 역사학자의 예리한 관찰은 이른바 문화 개혁 뒤에 숨겨진 경제적 동기를 드러냈다.",
-     "src": "2012 6월모평 24번"
+     "ko": "인간형의, 인간과 유사한",
+     "ex": "Early humanoid ancestors traversed vast distances across the African savannah in search of food and water.",
+     "tr": "초기 인간형 조상들은 음식과 물을 찾아 아프리카 사바나를 가로질러 광대한 거리를 이동했다.",
+     "src": "2012 9월모평 44번"
     },
     {
-     "pos": "adj.",
-     "ko": "(병·상황이) 급성의, 심각한"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(각도가) 예각의"
+     "pos": "n.",
+     "ko": "인간형 존재"
     }
    ],
    "syn": [
-    "keen",
-    "sharp",
-    "perceptive",
-    "severe",
-    "critical"
+    "anthropoid",
+    "manlike"
    ],
-   "deriv": [
-    "acutely (adv.)",
-    "acuteness (n.)",
-    "acuity (n.)"
-   ],
+   "deriv": [],
    "roots": [
     {
-     "part": "acu",
-     "mean": "날카로운, 뾰족한"
+     "part": "human",
+     "mean": "인간"
+    },
+    {
+     "part": "-oid",
+     "mean": "~과 같은 형태"
     }
    ],
-   "etymHint": "acu(날카로운) → 날카롭게 찌르는 → 예리한, 급성의",
+   "etymHint": "human(인간)+-oid(~형태) → 인간과 같은 형태 → 인간형의",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -754,22 +523,213 @@
    }
   },
   {
-   "en": "remuneration",
-   "ipa": "/rɪˌmjuːnəˈreɪʃən/",
-   "pos": "n",
+   "en": "predispose",
+   "ipa": "/ˌpriːdɪˈspoʊz/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "보수, 급여, 보상",
-     "ex": "The board approved a substantial increase in executive remuneration despite declining profits.",
-     "tr": "이사회는 수익 감소에도 불구하고 임원 보수의 상당한 인상을 승인했다.",
+     "pos": "v",
+     "ko": "성향을 갖게 하다, 취약하게 만들다",
+     "ex": "Certain genetic factors predispose individuals to developing cardiovascular disease later in life.",
+     "tr": "특정 유전적 요인은 개인을 노년기에 심혈관 질환을 발병하게 하는 성향을 갖게 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "compensation",
-    "salary",
-    "emolument"
+    "incline",
+    "dispose",
+    "make susceptible"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ironic",
+   "ipa": "/aɪˈrɒnɪk/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "아이러니한, 역설적인",
+     "ex": "It is ironic that the very technology designed to connect people has in many cases intensified their sense of isolation.",
+     "tr": "사람들을 연결하기 위해 설계된 바로 그 기술이 많은 경우에 오히려 고립감을 심화시켰다는 것은 아이러니하다.",
+     "src": "2021 9월모평 21번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "풍자적인"
+    }
+   ],
+   "syn": [
+    "paradoxical",
+    "sardonic",
+    "wry"
+   ],
+   "deriv": [
+    "ironically (adv.)",
+    "irony (n.)",
+    "ironize (v.)"
+   ],
+   "roots": [
+    {
+     "part": "eironeia",
+     "mean": "(고대 그리스어) 시치미 떼기"
+    }
+   ],
+   "etymHint": "eiron(시치미 떼는 사람)+ic → 겉과 속이 다른 → 아이러니한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2021",
+    "stars": 1
+   }
+  },
+  {
+   "en": "repay",
+   "ipa": "/rɪˈpeɪ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "갚다, 상환하다",
+     "ex": "Future generations will bear the burden of repaying the environmental debt accumulated through decades of unsustainable practices.",
+     "tr": "미래 세대들은 수십 년간의 지속 불가능한 관행을 통해 축적된 환경적 부채를 갚는 부담을 짊어져야 할 것이다.",
+     "src": "2017 수능 20번"
+    },
+    {
+     "pos": "v.",
+     "ko": "보답하다"
+    }
+   ],
+   "syn": [
+    "reimburse",
+    "refund",
+    "pay back"
+   ],
+   "deriv": [
+    "repayment (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re",
+     "mean": "다시"
+    },
+    {
+     "part": "pay",
+     "mean": "지불하다"
+    }
+   ],
+   "etymHint": "re(다시)+pay(지불하다) → 다시 지불하다 → 갚다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "rectify",
+   "ipa": "/ˈrɛktɪfaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "바로잡다, 시정하다",
+     "ex": "The legislature moved quickly to rectify the constitutional ambiguity that had paralyzed the courts.",
+     "tr": "의회는 법원을 마비시켰던 헌법적 모호성을 신속히 시정하기 위해 움직였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "correct",
+    "remedy",
+    "redress"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "commonplace",
+   "ipa": "/ˈkɒmənpleɪs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "평범한, 흔한",
+     "ex": "What was once a revolutionary idea can become so commonplace that its origins and significance are entirely forgotten.",
+     "tr": "한때 혁명적이었던 생각이 너무 평범해져서 그 기원과 중요성이 완전히 잊혀질 수 있다.",
+     "src": "2016 6월모평 34번"
+    },
+    {
+     "pos": "n.",
+     "ko": "흔한 것, 진부한 말"
+    }
+   ],
+   "syn": [
+    "ordinary",
+    "mundane",
+    "unremarkable"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "common",
+     "mean": "공통의, 보편적"
+    },
+    {
+     "part": "place",
+     "mean": "장소"
+    }
+   ],
+   "etymHint": "common(공통의)+place(장소) → 누구나 가는 곳 → 평범한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2016",
+    "stars": 1
+   }
+  },
+  {
+   "en": "convoluted",
+   "ipa": "/ˈkɒnvəluːtɪd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "뒤얽힌, 복잡한",
+     "ex": "The convoluted syntax of the statute made it nearly impossible to interpret without legal counsel.",
+     "tr": "법령의 복잡한 구문은 법률 자문 없이는 해석이 거의 불가능했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "tortuous",
+    "labyrinthine",
+    "Byzantine"
    ],
    "deriv": [],
    "roots": [],

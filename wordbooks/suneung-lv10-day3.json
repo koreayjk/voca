@@ -4,451 +4,209 @@
  "day": 3,
  "words": [
   {
-   "en": "customary",
-   "ipa": "/ˈkʌstəmeri/",
+   "en": "faith",
+   "ipa": "/feɪθ/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "신뢰, 믿음; 신앙",
+     "ex": "She expressed sincere gratitude for her mentor's continued financial support and unwavering faith in her abilities.",
+     "tr": "그녀는 멘토의 지속적인 재정 지원과 자신의 능력에 대한 흔들리지 않는 신뢰에 진심으로 감사를 표했다.",
+     "src": "2016 6월모평 18번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(종교적) 신앙, 믿음"
+    }
+   ],
+   "syn": [
+    "trust",
+    "confidence",
+    "belief"
+   ],
+   "deriv": [
+    "faithful (adj.)",
+    "faithfully (adv.)",
+    "faithfulness (n.)"
+   ],
+   "roots": [
+    {
+     "part": "fid",
+     "mean": "믿다 (< L. fides)"
+    }
+   ],
+   "etymHint": "fid(믿다) → 신뢰, 믿음 → faith",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "boom",
+   "ipa": "/buːm/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "급격한 성장, 호황",
+     "ex": "During the construction boom of the late 1990s, labor unions began actively recruiting workers from previously underrepresented groups.",
+     "tr": "1990년대 후반의 건설 호황기에, 노동조합은 이전에 대표성이 낮았던 집단의 노동자들을 적극적으로 모집하기 시작했다.",
+     "src": "2017 6월모평 33번"
+    },
+    {
+     "pos": "v.",
+     "ko": "급성장하다, 번창하다"
+    },
+    {
+     "pos": "n.",
+     "ko": "굉음, 폭발음"
+    }
+   ],
+   "syn": [
+    "surge",
+    "expansion"
+   ],
+   "deriv": [
+    "booming (adj.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "inactivity",
+   "ipa": "/ˌɪnækˈtɪvɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "비활동, 활동하지 않음; 비활성 상태",
+     "ex": "Unlike animals that rely on camouflage and inactivity for protection, migratory locusts survive by forming enormous swarms.",
+     "tr": "위장과 비활동에 의존하여 보호를 받는 동물들과 달리, 철새 메뚜기는 거대한 군집을 이루어 살아남는다.",
+     "src": "2016 6월모평 29번"
+    }
+   ],
+   "syn": [
+    "idleness",
+    "dormancy",
+    "passivity"
+   ],
+   "deriv": [
+    "inactive (adj.)",
+    "inactively (adv.)",
+    "activity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "부정"
+    },
+    {
+     "part": "activ",
+     "mean": "활동하는 (< L. activus)"
+    }
+   ],
+   "etymHint": "in(부정) + activ(활동하는) + -ity(명사 접사) → 활동하지 않음 → 비활동",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2016",
+    "stars": 1
+   }
+  },
+  {
+   "en": "unacceptable",
+   "ipa": "/ˌʌnəkˈseptəbəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "관습적인, 전례적인",
-     "ex": "Industrial food processing made it difficult to maintain the customary standards and expectations that consumers had associated with traditional products.",
-     "tr": "산업적 식품 가공은 소비자들이 전통 제품과 연관지어 온 관습적 기준과 기대를 유지하기 어렵게 만들었다.",
-     "src": "2025 6월모평 23번"
+     "ko": "받아들일 수 없는, 용납할 수 없는",
+     "ex": "Such discriminatory behavior is widely regarded as publicly unacceptable in any modern democratic society.",
+     "tr": "그러한 차별적 행동은 현대 민주주의 사회에서 공적으로 용납할 수 없는 것으로 널리 여겨진다.",
+     "src": "2019 9월모평 24번"
     }
    ],
    "syn": [
-    "traditional",
-    "conventional",
-    "habitual"
+    "intolerable",
+    "inadmissible"
    ],
    "deriv": [
-    "custom (n.)",
-    "customarily (adv.)"
+    "acceptable (adj.)",
+    "acceptance (n.)",
+    "unacceptably (adv.)"
    ],
    "roots": [
     {
-     "part": "custom",
-     "mean": "관습 (라틴어 consuetudo)"
-    }
-   ],
-   "etymHint": "custom(관습) → 관습에 따른 → 관습적인",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "outweigh",
-   "ipa": "/ˌaʊtˈweɪ/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "~보다 더 중요하다, ~를 능가하다",
-     "ex": "The long-term benefits of storing food for winter clearly outweigh the short-term effort required to gather and preserve it.",
-     "tr": "겨울을 위해 식량을 저장하는 장기적인 이점은 그것을 수집하고 보존하는 데 필요한 단기적 노력보다 분명히 더 중요하다.",
-     "src": "2012 6월모평 26번"
-    }
-   ],
-   "syn": [
-    "exceed",
-    "surpass",
-    "override"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "out",
-     "mean": "능가하다"
+     "part": "un-",
+     "mean": "부정"
     },
     {
-     "part": "weigh",
-     "mean": "무게를 달다"
+     "part": "accept",
+     "mean": "받아들이다 (< L. accipere)"
     }
    ],
-   "etymHint": "out(능가하다) + weigh(무게) → 무게에서 앞서다 → 더 중요하다",
+   "etymHint": "un(부정) + accept(받아들이다) + -able → 받아들일 수 없는",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 3,
-    "recentYear": "2012",
+    "recentYear": "2019",
     "stars": 1
    }
   },
   {
-   "en": "semi",
-   "ipa": "/ˈsemi/",
-   "pos": "prefix/n.",
-   "meanings": [
-    {
-     "pos": "prefix",
-     "ko": "반(半), 절반의",
-     "ex": "A semi-structured interview allows researchers to follow a general framework while still adapting questions to individual responses.",
-     "tr": "반구조화 인터뷰는 연구자들이 전체적인 틀을 따르면서도 개인적인 응답에 맞게 질문을 조정할 수 있게 한다.",
-     "src": "2018 9월모평 30번"
-    },
-    {
-     "pos": "n.",
-     "ko": "반결승; 세미나 (구어체 준말)"
-    }
-   ],
-   "syn": [],
-   "deriv": [
-    "seminar (n.)",
-    "semifinal (n.)",
-    "semiconductor (n.)"
-   ],
-   "roots": [
-    {
-     "part": "semi",
-     "mean": "절반 (라틴어)"
-    }
-   ],
-   "etymHint": "semi(절반) → 어떤 것의 절반 혹은 부분적인 상태를 나타내는 접두사",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "accordance",
-   "ipa": "/əˈkɔːrdəns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "일치, 합치; 부합 (in accordance with: ~에 따라)",
-     "ex": "Classical garments were draped around the body in accordance with strictly defined cultural rules and conventions.",
-     "tr": "고전적인 의복은 엄격하게 정해진 문화적 규칙과 관습에 따라 몸에 걸쳐졌다.",
-     "src": "2013 6월모평 34번"
-    }
-   ],
-   "syn": [
-    "conformity",
-    "compliance",
-    "agreement"
-   ],
-   "deriv": [
-    "accord (n./v.)",
-    "according (prep.)",
-    "accordingly (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "ac",
-     "mean": "~에게"
-    },
-    {
-     "part": "cord",
-     "mean": "심장, 마음 (라틴어)"
-    }
-   ],
-   "etymHint": "ac(~에게) + cord(마음) → 마음을 맞추다 → 일치, 합치",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "notable",
-   "ipa": "/ˈnoʊtəbəl/",
-   "pos": "adj./n.",
+   "en": "inconsistent",
+   "ipa": "/ˌɪnkənˈsɪstənt/",
+   "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "주목할 만한, 저명한",
-     "ex": "Richard Porson was one of Britain's most notable classical scholars, renowned for his exceptional linguistic expertise.",
-     "tr": "리처드 포르손은 영국에서 가장 주목할 만한 고전 학자 중 한 명으로, 뛰어난 언어학적 전문성으로 유명했다.",
-     "src": "2016 9월모평 25번"
-    },
-    {
-     "pos": "n.",
-     "ko": "저명인사"
-    }
-   ],
-   "syn": [
-    "remarkable",
-    "distinguished",
-    "prominent"
-   ],
-   "deriv": [
-    "notably (adv.)",
-    "note (n./v.)",
-    "notation (n.)"
-   ],
-   "roots": [
-    {
-     "part": "not",
-     "mean": "표시하다, 알다 (라틴어 nota)"
-    }
-   ],
-   "etymHint": "nota(표시) → 표시할 만한 → 주목할 만한",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "illustration",
-   "ipa": "/ˌɪləˈstreɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "실례, 예시; 삽화",
-     "ex": "As an illustration of how framing shapes problem-solving, researchers asked participants to devise strategies for reducing crime in their city.",
-     "tr": "문제 틀 설정이 문제 해결에 어떻게 영향을 미치는지 보여주는 실례로, 연구자들은 참가자들에게 도시의 범죄를 줄이기 위한 전략을 구상하도록 요청했다.",
-     "src": "2021 6월모평 23번"
-    },
-    {
-     "pos": "n.",
-     "ko": "삽화, 도해"
-    }
-   ],
-   "syn": [
-    "example",
-    "instance",
-    "depiction"
-   ],
-   "deriv": [
-    "illustrate (v.)",
-    "illustrative (adj.)",
-    "illustrator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "illustr",
-     "mean": "밝히다, 비추다 (라틴어 lustrare)"
-    }
-   ],
-   "etymHint": "illustr(밝히다) → 개념을 밝게 비추는 것 → 실례, 삽화",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "alter",
-   "ipa": "/ˈɔːltər/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "바꾸다, 변경하다",
-     "ex": "Philosophical theories of explanation offer two distinct alternatives for how we understand causal relationships.",
-     "tr": "설명에 관한 철학적 이론들은 우리가 인과 관계를 이해하는 방식에 대해 두 가지 서로 다른 대안을 제시한다.",
-     "src": "2022 수능 40번"
-    }
-   ],
-   "syn": [
-    "change",
-    "modify",
-    "adjust"
-   ],
-   "deriv": [
-    "alteration (n.)",
-    "alternative (n./adj.)",
-    "alternate (v./adj.)"
-   ],
-   "roots": [
-    {
-     "part": "alter",
-     "mean": "다른 (라틴어)"
-    }
-   ],
-   "etymHint": "alter(다른) → 다른 것으로 만들다 → 바꾸다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "obstacle",
-   "ipa": "/ˈɒbstəkəl/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "장애물, 방해",
-     "ex": "With a resilient mindset and steady determination, you can work through any obstacle that stands in your path.",
-     "tr": "회복력 있는 사고방식과 꾸준한 결단력으로 당신은 앞길에 서 있는 어떤 장애물도 헤쳐나갈 수 있다.",
-     "src": "2015 6월모평 20번"
-    }
-   ],
-   "syn": [
-    "barrier",
-    "hurdle",
-    "impediment"
-   ],
-   "deriv": [],
-   "roots": [
-    {
-     "part": "ob",
-     "mean": "앞에, 반대로"
-    },
-    {
-     "part": "stac",
-     "mean": "서다 (라틴어 stare)"
-    }
-   ],
-   "etymHint": "ob(앞에) + stac(서다) → 앞에 서서 막는 것 → 장애물",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "inspection",
-   "ipa": "/ɪnˈspekʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "검사, 점검; 면밀한 조사",
-     "ex": "When an unfamiliar object presents no immediate danger, a closer inspection may reveal whether it can be of any use.",
-     "tr": "낯선 물체가 즉각적인 위험을 초래하지 않을 때, 더 면밀한 검사를 통해 그것이 유용한지 밝혀낼 수 있다.",
-     "src": "2022 9월모평 34번"
-    }
-   ],
-   "syn": [
-    "examination",
-    "scrutiny",
-    "review"
-   ],
-   "deriv": [
-    "inspect (v.)",
-    "inspector (n.)",
-    "inspectorate (n.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안을, 위에"
-    },
-    {
-     "part": "spec",
-     "mean": "보다 (라틴어 specere)"
-    }
-   ],
-   "etymHint": "in(안을) + spec(보다) → 안을 들여다보다 → 검사",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "signature",
-   "ipa": "/ˈsɪɡnətʃər/",
-   "pos": "n./adj.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "서명; 특징적 표시",
-     "ex": "The selfie has emerged as the defining visual signature of the digital age, reshaping how individuals present themselves publicly.",
-     "tr": "셀피는 디지털 시대의 결정적인 시각적 특징으로 부상하여, 개인이 공개적으로 자신을 표현하는 방식을 재편하고 있다.",
-     "src": "2025 수능 24번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "특유의, 대표적인"
-    }
-   ],
-   "syn": [
-    "autograph",
-    "mark",
-    "hallmark"
-   ],
-   "deriv": [
-    "sign (n./v.)",
-    "signatory (n.)",
-    "signal (n./v.)"
-   ],
-   "roots": [
-    {
-     "part": "sign",
-     "mean": "표시, 기호 (라틴어 signum)"
-    }
-   ],
-   "etymHint": "signum(표시) → 자신을 나타내는 표시 → 서명",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "subscribe",
-   "ipa": "/səbˈskraɪb/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "구독하다, 동의하다; 서명하다",
-     "ex": "Many readers chose to subscribe to the journal in order to receive each new issue as soon as it was published.",
-     "tr": "많은 독자들은 새 호가 출판되는 즉시 받아보기 위해 그 저널을 구독하기로 했다.",
+     "ko": "일관성 없는, 모순된",
+     "ex": "His argument was inconsistent with the empirical evidence presented in earlier sections of the study.",
+     "tr": "그의 주장은 연구의 앞부분에서 제시된 경험적 증거와 모순되었다.",
      "src": ""
     },
     {
-     "pos": "v.",
-     "ko": "(의견·학설에) 동의하다, 지지하다 (subscribe to)"
+     "pos": "adj.",
+     "ko": "(행동 등이) 불규칙한, 변덕스러운"
     }
    ],
    "syn": [
-    "enroll",
-    "sign up",
-    "support"
+    "contradictory",
+    "incoherent"
    ],
    "deriv": [
-    "subscription (n.)",
-    "subscriber (n.)"
+    "consistent (adj.)",
+    "inconsistency (n.)",
+    "inconsistently (adv.)"
    ],
    "roots": [
     {
-     "part": "sub",
-     "mean": "아래에"
+     "part": "in-",
+     "mean": "부정"
     },
     {
-     "part": "scrib",
-     "mean": "쓰다 (라틴어 scribere)"
+     "part": "consist",
+     "mean": "구성되다 (< L. consistere)"
     }
    ],
-   "etymHint": "sub(아래에) + scrib(쓰다) → 문서 아래에 서명하다 → 구독하다",
+   "etymHint": "in(부정) + consist(서다, 구성되다) + -ent → 일관되게 서 있지 않는 → 일관성 없는",
    "level": "B2",
    "exam": {
     "tested": true,
@@ -459,39 +217,164 @@
    }
   },
   {
-   "en": "quest",
-   "ipa": "/kwest/",
-   "pos": "n./v.",
+   "en": "realization",
+   "ipa": "/ˌriːələˈzeɪʃən/",
+   "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "탐구, 추구; 탐색",
-     "ex": "The quest for financial gain in archaeology often conflicts with the pursuit of genuine historical knowledge.",
-     "tr": "고고학에서 금전적 이익을 향한 탐구는 진정한 역사적 지식의 추구와 자주 충돌한다.",
-     "src": "2018 수능 29번"
+     "ko": "깨달음, 인식; 실현",
+     "ex": "The growing realization that tropical forests may contain tomorrow's cures for diseases has intensified conservation efforts.",
+     "tr": "열대 우림이 질병의 미래 치료제를 포함할 수 있다는 점에 대한 인식이 높아지면서 보전 노력이 강화되었다.",
+     "src": "2021 9월모평 32번"
     },
     {
-     "pos": "v.",
-     "ko": "탐색하다, 추구하다"
+     "pos": "n.",
+     "ko": "(목표·계획의) 실현, 달성"
     }
    ],
    "syn": [
-    "search",
-    "pursuit",
-    "mission"
+    "awareness",
+    "recognition"
    ],
    "deriv": [
-    "question (n./v.)",
-    "inquest (n.)",
-    "request (n./v.)"
+    "realize (v.)",
+    "realizable (adj.)"
    ],
    "roots": [
     {
-     "part": "quaes",
-     "mean": "찾다, 구하다 (라틴어 quaerere)"
+     "part": "real",
+     "mean": "실재하는 (< L. realis)"
+    },
+    {
+     "part": "-ize/-ation",
+     "mean": "동사·명사 형성"
     }
    ],
-   "etymHint": "quaerere(찾다) → 무언가를 찾는 행위 → 탐구",
+   "etymHint": "real(실재하는) + -ize(되다) + -ation(명사) → 실재하게 됨 → 깨달음·실현",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "bare",
+   "ipa": "/beər/",
+   "pos": "adj./v.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "벌거벗은, 드러난; 최소한의",
+     "ex": "The bare facts of the policy shift were difficult to dispute, even among those who opposed the new regulations.",
+     "tr": "정책 전환의 적나라한 사실들은 새 규정을 반대하는 사람들 사이에서도 반박하기 어려웠다.",
+     "src": "2013 수능 40번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "아무것도 없는, 텅 빈"
+    },
+    {
+     "pos": "v.",
+     "ko": "드러내다, 벗기다"
+    }
+   ],
+   "syn": [
+    "naked",
+    "exposed",
+    "mere"
+   ],
+   "deriv": [
+    "barely (adv.)",
+    "bareness (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "temptation",
+   "ipa": "/tempˈteɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "유혹, 충동",
+     "ex": "Urban environments are filled with so many temptations to linger that it becomes genuinely difficult to keep moving.",
+     "tr": "도시 환경은 머물게 만드는 유혹으로 가득 차 있어서 계속 움직이는 것이 진정으로 어렵게 된다.",
+     "src": "2025 9월모평 33번"
+    }
+   ],
+   "syn": [
+    "lure",
+    "enticement",
+    "allure"
+   ],
+   "deriv": [
+    "tempt (v.)",
+    "tempting (adj.)",
+    "temptingly (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "tempt",
+     "mean": "시험하다, 유혹하다 (< L. temptare)"
+    }
+   ],
+   "etymHint": "tempt(유혹하다) + -ation(명사 접사) → 유혹하는 행위 → 유혹",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "unconventional",
+   "ipa": "/ˌʌnkənˈvenʃənəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "관습에 얽매이지 않는, 비전통적인",
+     "ex": "A highly unconventional invention may initially fail because the surrounding technological ecosystem is not yet ready to support it.",
+     "tr": "매우 비전통적인 발명은 그것을 지원할 주변의 기술적 생태계가 아직 준비되지 않았기 때문에 처음에는 실패할 수 있다.",
+     "src": "2024 9월모평 33번"
+    }
+   ],
+   "syn": [
+    "unorthodox",
+    "nonconformist",
+    "atypical"
+   ],
+   "deriv": [
+    "conventional (adj.)",
+    "unconventionally (adv.)",
+    "convention (n.)"
+   ],
+   "roots": [
+    {
+     "part": "un-",
+     "mean": "부정"
+    },
+    {
+     "part": "convene",
+     "mean": "모이다 (< L. convenire)"
+    }
+   ],
+   "etymHint": "un(부정) + con(함께) + ven(오다) + -tional → 함께 모인 관습에 반하는 → 비전통적인",
    "level": "B2",
    "exam": {
     "tested": true,
@@ -502,301 +385,82 @@
    }
   },
   {
-   "en": "coordination",
-   "ipa": "/koʊˌɔːrdɪˈneɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "조정, 협력; 조화",
-     "ex": "Effective coordination among different departments is essential for any large-scale project to run smoothly.",
-     "tr": "서로 다른 부서 간의 효과적인 조정은 대규모 프로젝트가 원활하게 진행되기 위해 필수적이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "organisation",
-    "collaboration",
-    "integration"
-   ],
-   "deriv": [
-    "coordinate (v./adj.)",
-    "coordinator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "co",
-     "mean": "함께"
-    },
-    {
-     "part": "ordin",
-     "mean": "순서, 정렬 (라틴어 ordinare)"
-    }
-   ],
-   "etymHint": "co(함께) + ordin(정렬) → 함께 정렬하다 → 조정",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "recreate",
-   "ipa": "/ˌriːkriˈeɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "재현하다, 다시 만들다",
-     "ex": "Works of historical fiction skillfully recreate the social atmosphere and daily circumstances of a particular period.",
-     "tr": "역사 소설 작품들은 특정 시기의 사회적 분위기와 일상적 환경을 능숙하게 재현한다.",
-     "src": "2024 9월모평 40번"
-    },
-    {
-     "pos": "v.",
-     "ko": "기분 전환하다, 오락을 즐기다 (강세 차이: /ˈrekrieɪt/)"
-    }
-   ],
-   "syn": [
-    "reconstruct",
-    "reproduce",
-    "restore"
-   ],
-   "deriv": [
-    "recreation (n.)",
-    "re-creation (n.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시"
-    },
-    {
-     "part": "creat",
-     "mean": "만들다 (라틴어 creare)"
-    }
-   ],
-   "etymHint": "re(다시) + creat(만들다) → 다시 만들다 → 재현하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "tolerance",
-   "ipa": "/ˈtɒlərəns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "관용, 포용력; 내성, 견디는 힘",
-     "ex": "Adams proposed that humans possess an inborn tolerance for risk, which causes them to adjust their behaviour when safety measures are introduced.",
-     "tr": "애덤스는 인간이 위험에 대한 타고난 내성을 가지고 있어, 안전 조치가 도입될 때 행동을 조정한다고 주장했다.",
-     "src": "2013 수능 45번"
-    },
-    {
-     "pos": "n.",
-     "ko": "관용, 관대함 (사람·의견에 대해)"
-    }
-   ],
-   "syn": [
-    "endurance",
-    "patience",
-    "forbearance"
-   ],
-   "deriv": [
-    "tolerate (v.)",
-    "tolerant (adj.)",
-    "intolerance (n.)"
-   ],
-   "roots": [
-    {
-     "part": "toler",
-     "mean": "견디다, 참다 (라틴어 tolerare)"
-    }
-   ],
-   "etymHint": "tolerare(견디다) → 견디는 능력 → 내성, 관용",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "awake",
-   "ipa": "/əˈweɪk/",
-   "pos": "v./adj.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "잠에서 깨다, 깨어나다",
-     "ex": "She tends to awake at the slightest noise during the night.",
-     "tr": "그녀는 밤에 아주 작은 소리에도 잠에서 깨는 경향이 있다.",
-     "src": "2017 9월모평 31번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "깨어 있는, 자지 않는"
-    }
-   ],
-   "syn": [
-    "waken",
-    "arouse",
-    "rouse"
-   ],
-   "deriv": [
-    "awaken (v.)",
-    "awakening (n.)"
-   ],
-   "roots": [
-    {
-     "part": "a-",
-     "mean": "on, in 상태"
-    },
-    {
-     "part": "wake",
-     "mean": "깨어 있다"
-    }
-   ],
-   "etymHint": "a-(상태) + wake(깨어 있다) → 깨어 있는 상태 → 잠에서 깨다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "respectable",
-   "ipa": "/rɪˈspɛktəbl/",
+   "en": "ineffective",
+   "ipa": "/ˌɪnɪˈfektɪv/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "존경할 만한, 상당한 수준의",
-     "ex": "She has always been concerned with appearing respectable and competent in front of her colleagues.",
-     "tr": "그녀는 항상 동료들 앞에서 존경할 만하고 유능해 보이는 것에 신경을 써왔다.",
-     "src": "2020 수능 20번"
+     "ko": "효과 없는, 비효율적인",
+     "ex": "Coaches who fail to prioritize the most important tasks tend to be ineffective in developing their athletes' full potential.",
+     "tr": "가장 중요한 과제를 먼저 처리하지 못하는 코치들은 선수들의 잠재력을 충분히 개발하는 데 효과적이지 못한 경향이 있다.",
+     "src": "2016 9월모평 23번"
     }
    ],
    "syn": [
-    "honorable",
-    "reputable",
-    "decent"
+    "ineffectual",
+    "futile",
+    "inadequate"
    ],
    "deriv": [
-    "respect (n./v.)",
-    "respectably (adv.)",
-    "respectability (n.)"
-   ],
-   "roots": [
-    {
-     "part": "respect",
-     "mean": "존중하다"
-    },
-    {
-     "part": "-able",
-     "mean": "~할 수 있는"
-    }
-   ],
-   "etymHint": "respect(존중하다) + -able(~할 수 있는) → 존중받을 수 있는 → 존경할 만한",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "invitation",
-   "ipa": "/ˌɪnvɪˈteɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "초대, 초청",
-     "ex": "The warm smile on his face made it almost impossible to decline the invitation.",
-     "tr": "그의 얼굴에 띤 따뜻한 미소는 그 초대를 거절하는 것을 거의 불가능하게 만들었다.",
-     "src": "2013 수능 22번"
-    }
-   ],
-   "syn": [
-    "summons",
-    "call",
-    "bid"
-   ],
-   "deriv": [
-    "invite (v.)",
-    "inviting (adj.)",
-    "invitingly (adv.)"
+    "effective (adj.)",
+    "ineffectively (adv.)",
+    "ineffectiveness (n.)"
    ],
    "roots": [
     {
      "part": "in-",
-     "mean": "안으로"
+     "mean": "부정"
     },
     {
-     "part": "vit",
-     "mean": "부르다(call)"
+     "part": "effect",
+     "mean": "결과, 효과 (< L. effectus)"
     }
    ],
-   "etymHint": "in-(안으로) + vit(부르다) → 안으로 불러들임 → 초대",
+   "etymHint": "in(부정) + effect(결과·효과) + -ive → 효과를 내지 못하는 → 효과 없는",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 3,
-    "recentYear": "2013",
+    "recentYear": "2016",
     "stars": 1
    }
   },
   {
-   "en": "superficial",
-   "ipa": "/ˌsuːpərˈfɪʃəl/",
+   "en": "unforgettable",
+   "ipa": "/ˌʌnfərˈɡetəbəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "피상적인, 표면적인",
-     "ex": "The learning process often remains fairly superficial unless students engage critically with the material.",
-     "tr": "학생들이 자료를 비판적으로 다루지 않으면 학습 과정은 대개 꽤 피상적인 수준에 머물러 있다.",
-     "src": "2025 수능 31번"
+     "ko": "잊을 수 없는, 인상적인",
+     "ex": "Freed from her daily worries, she let her mind drift across the unforgettable views of the still river and the unexpected encounters along the way.",
+     "tr": "일상의 걱정에서 해방된 그녀는 고요한 강의 잊을 수 없는 풍경과 그 길에서의 예상치 못한 만남들을 자유롭게 떠올렸다.",
+     "src": "2018 6월모평 19번"
     }
    ],
    "syn": [
-    "shallow",
-    "cursory",
-    "skin-deep"
+    "memorable",
+    "indelible",
+    "remarkable"
    ],
    "deriv": [
-    "superficially (adv.)",
-    "superficiality (n.)"
+    "forget (v.)",
+    "forgettable (adj.)",
+    "unforgettably (adv.)"
    ],
    "roots": [
     {
-     "part": "super-",
-     "mean": "위에"
+     "part": "un-",
+     "mean": "부정"
     },
     {
-     "part": "facies",
-     "mean": "표면, 얼굴"
+     "part": "forget",
+     "mean": "잊다"
     }
    ],
-   "etymHint": "super-(위에) + facies(표면) → 표면 위의 → 피상적인",
+   "etymHint": "un(부정) + forget(잊다) + -able → 잊을 수 없는",
    "level": "B2",
    "exam": {
     "tested": true,
@@ -807,44 +471,392 @@
    }
   },
   {
-   "en": "ancestor",
-   "ipa": "/ˈænsɛstər/",
-   "pos": "n.",
+   "en": "executive",
+   "ipa": "/ɪɡˈzekjʊtɪv/",
+   "pos": "n./adj.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "조상, 선조",
-     "ex": "Our earliest ancestors developed cooperative strategies to share resources within their communities.",
-     "tr": "우리의 초기 조상들은 공동체 내에서 자원을 나누기 위해 협동 전략을 발전시켰다.",
-     "src": "2012 9월모평 44번"
+     "ko": "임원, 경영진; 행정부",
+     "ex": "A senior executive who had been hosting a foreign business guest then proposed a joint venture between the two companies.",
+     "tr": "외국인 비즈니스 손님을 접대하고 있던 고위 임원은 두 회사 간의 합작 투자를 제안했다.",
+     "src": "2016 9월모평 29번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "행정의, 임원의; 실행의"
     }
    ],
    "syn": [
-    "forebear",
-    "forefather",
-    "progenitor"
+    "director",
+    "administrator",
+    "manager"
    ],
    "deriv": [
-    "ancestral (adj.)",
-    "ancestry (n.)"
+    "execute (v.)",
+    "execution (n.)",
+    "executively (adv.)"
    ],
    "roots": [
     {
-     "part": "ante-",
-     "mean": "앞에"
+     "part": "ex-",
+     "mean": "밖으로"
     },
     {
-     "part": "cedere",
-     "mean": "가다"
+     "part": "secut",
+     "mean": "따르다 (< L. sequi)"
     }
    ],
-   "etymHint": "ante-(앞에) + cedere(가다) → 앞서 간 사람 → 조상",
+   "etymHint": "ex(밖으로) + secut(따르다) → 결정을 따라 수행하는 사람 → 임원",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 3,
-    "recentYear": "2024",
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "counter",
+   "ipa": "/ˈkaʊntər/",
+   "pos": "n./v./adv.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "반대되는 것; 계산대, 카운터",
+     "ex": "Mobile flowers attract more pollinators than their static counterparts, suggesting movement provides a significant adaptive advantage.",
+     "tr": "움직이는 꽃들은 정적인 대응물보다 더 많은 수분 매개자를 끌어들이는데, 이는 움직임이 상당한 적응 이점을 제공함을 시사한다.",
+     "src": "2011 6월모평 24번"
+    },
+    {
+     "pos": "v.",
+     "ko": "반박하다, 대응하다"
+    },
+    {
+     "pos": "adv.",
+     "ko": "반대 방향으로, 거슬러"
+    }
+   ],
+   "syn": [
+    "opposite",
+    "contrary"
+   ],
+   "deriv": [
+    "counterpart (n.)",
+    "counteract (v.)",
+    "counterargument (n.)"
+   ],
+   "roots": [
+    {
+     "part": "contra-",
+     "mean": "반대로 (< L. contra)"
+    }
+   ],
+   "etymHint": "contra(반대로) → 반대쪽에 있는 것 → 카운터, 반박",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "reschedule",
+   "ipa": "/ˌriːˈskedʒuːl/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "일정을 변경하다, 재조정하다",
+     "ex": "Due to the unexpected storm, the organizers had to reschedule the outdoor ceremony to the following weekend.",
+     "tr": "예상치 못한 폭풍으로 인해, 주최측은 야외 행사의 일정을 다음 주말로 변경해야 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "rearrange",
+    "postpone"
+   ],
+   "deriv": [
+    "schedule (n./v.)",
+    "scheduled (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "다시"
+    },
+    {
+     "part": "schedule",
+     "mean": "일정표"
+    }
+   ],
+   "etymHint": "re(다시) + schedule(일정을 잡다) → 일정을 다시 잡다 → 일정 변경",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "depiction",
+   "ipa": "/dɪˈpɪkʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "묘사, 서술; 그림으로 나타낸 것",
+     "ex": "The artist spent nearly seven years completing his detailed depiction of the legendary local hero on a vast canvas.",
+     "tr": "화가는 광대한 캔버스에 전설적인 지역 영웅을 상세히 묘사하는 데 거의 7년을 보냈다.",
+     "src": "2016 수능 25번"
+    }
+   ],
+   "syn": [
+    "portrayal",
+    "representation",
+    "rendering"
+   ],
+   "deriv": [
+    "depict (v.)",
+    "depictive (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "de-",
+     "mean": "완전히"
+    },
+    {
+     "part": "pict",
+     "mean": "그리다 (< L. pingere)"
+    }
+   ],
+   "etymHint": "de(완전히) + pict(그리다) + -ion → 완전히 그려낸 것 → 묘사",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2016",
+    "stars": 1
+   }
+  },
+  {
+   "en": "fabulous",
+   "ipa": "/ˈfæbjʊləs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "훌륭한, 멋진; 전설적인",
+     "ex": "The exhibition showcased a fabulous collection of Renaissance paintings that drew visitors from across the continent.",
+     "tr": "그 전시회는 대륙 전역에서 방문객들을 끌어들인 훌륭한 르네상스 회화 컬렉션을 선보였다.",
+     "src": ""
+    },
+    {
+     "pos": "adj.",
+     "ko": "믿기 어려운, 전설 같은"
+    }
+   ],
+   "syn": [
+    "magnificent",
+    "extraordinary",
+    "marvelous"
+   ],
+   "deriv": [
+    "fabulously (adv.)",
+    "fable (n.)"
+   ],
+   "roots": [
+    {
+     "part": "fabul",
+     "mean": "이야기, 우화 (< L. fabula)"
+    }
+   ],
+   "etymHint": "fabul(이야기·우화) + -ous → 전설처럼 놀라운 → 훌륭한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "investigation",
+   "ipa": "/ɪnˌvestɪˈɡeɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "조사, 연구, 수사",
+     "ex": "Investigations into the economics of information reveal how access to quality data directly affects organizational productivity.",
+     "tr": "정보 경제학에 대한 조사는 양질의 데이터에 대한 접근이 조직의 생산성에 직접적으로 어떻게 영향을 미치는지를 보여준다.",
+     "src": "2019 수능 22번"
+    }
+   ],
+   "syn": [
+    "inquiry",
+    "examination",
+    "research"
+   ],
+   "deriv": [
+    "investigate (v.)",
+    "investigator (n.)",
+    "investigative (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "안으로"
+    },
+    {
+     "part": "vestig",
+     "mean": "발자국, 흔적 (< L. vestigium)"
+    }
+   ],
+   "etymHint": "in(안으로) + vestig(발자국) → 흔적을 따라가다 → 조사하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2019",
+    "stars": 1
+   }
+  },
+  {
+   "en": "celebrity",
+   "ipa": "/səˈlɛbrɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "유명인, 명성",
+     "ex": "In an unstable society, fame often depends on celebrity rather than lasting achievement.",
+     "tr": "불안정한 사회에서 명성은 종종 지속적인 업적보다 유명세에 의존한다.",
+     "src": "2016 수능 34번"
+    },
+    {
+     "pos": "n.",
+     "ko": "유명함, 명성 자체"
+    }
+   ],
+   "syn": [
+    "fame",
+    "renown",
+    "stardom"
+   ],
+   "deriv": [
+    "celebrate (v.)",
+    "celebrated (adj.)",
+    "celebratory (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "celebr",
+     "mean": "유명한, 존경받는"
+    }
+   ],
+   "etymHint": "celebr(유명한) → 유명함 → 유명인",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "applicable",
+   "ipa": "/ˈæplɪkəbəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "적용 가능한, 해당되는",
+     "ex": "This regulation is applicable to all businesses operating within the region.",
+     "tr": "이 규정은 해당 지역 내에서 운영되는 모든 사업체에 적용된다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "relevant",
+    "pertinent",
+    "appropriate"
+   ],
+   "deriv": [
+    "apply (v.)",
+    "application (n.)",
+    "applicability (n.)"
+   ],
+   "roots": [
+    {
+     "part": "applic",
+     "mean": "적용하다"
+    },
+    {
+     "part": "-able",
+     "mean": "할 수 있는"
+    }
+   ],
+   "etymHint": "applic(적용하다) + -able(할 수 있는) → 적용할 수 있는",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "inhabit",
+   "ipa": "/ɪnˈhæbɪt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "(장소에) 살다, 서식하다",
+     "ex": "Traces of oxygen in the atmosphere might mislead observers into believing the planet is still inhabited.",
+     "tr": "대기 중 산소의 흔적은 관찰자들이 그 행성에 아직 생명체가 살고 있다고 오해하게 만들 수 있다.",
+     "src": "2013 6월모평 24번"
+    }
+   ],
+   "syn": [
+    "reside in",
+    "dwell in",
+    "populate"
+   ],
+   "deriv": [
+    "inhabitant (n.)",
+    "inhabited (adj.)",
+    "habitation (n.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "안에"
+    },
+    {
+     "part": "habit",
+     "mean": "살다, 거주하다"
+    }
+   ],
+   "etymHint": "in-(안에) + habit(살다) → 안에서 살다 → 거주하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 3,
+    "recentYear": "2025",
     "stars": 1
    }
   }

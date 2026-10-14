@@ -4,41 +4,43 @@
  "day": 1,
  "words": [
   {
-   "en": "catalog",
-   "ipa": "/ˈkætəlɒɡ/",
+   "en": "obligation",
+   "ipa": "/ˌɒblɪˈɡeɪʃən/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "목록, 카탈로그",
-     "ex": "The museum published a comprehensive catalog documenting every artifact in its permanent collection.",
-     "tr": "그 박물관은 영구 소장품의 모든 유물을 기록한 포괄적인 목록을 발간했다.",
+     "ko": "의무, 책임",
+     "ex": "Citizens have a moral obligation to engage with the democratic process and vote in elections.",
+     "tr": "시민들은 민주적 과정에 참여하고 선거에서 투표해야 할 도덕적 의무가 있다.",
      "src": ""
     },
     {
-     "pos": "v.",
-     "ko": "목록을 만들다, 분류하다"
+     "pos": "n.",
+     "ko": "채무, 구속"
     }
    ],
    "syn": [
-    "inventory",
-    "register",
-    "list"
+    "duty",
+    "responsibility",
+    "commitment"
    ],
    "deriv": [
-    "cataloguing (n.)"
+    "obligate (v.)",
+    "obligatory (adj.)",
+    "oblige (v.)"
    ],
    "roots": [
     {
-     "part": "kata",
-     "mean": "아래로, 따라서"
+     "part": "ob-",
+     "mean": "향하여"
     },
     {
-     "part": "log",
-     "mean": "말, 목록"
+     "part": "lig",
+     "mean": "묶다"
     }
    ],
-   "etymHint": "kata(따라서)+log(목록) → 순서대로 나열한 목록 → 카탈로그",
+   "etymHint": "ob(향하여)+lig(묶다) → 무언가에 묶이다 → 의무",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -49,22 +51,22 @@
    }
   },
   {
-   "en": "immutable",
-   "ipa": "/ɪˈmjuːtəbəl/",
-   "pos": "adj",
+   "en": "pragmatism",
+   "ipa": "/ˈpræɡmətɪzəm/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "불변의, 변경 불가능한",
-     "ex": "Legal systems rest on the assumption that certain core principles are immutable across jurisdictions.",
-     "tr": "법체계는 특정 핵심 원칙이 관할권 전반에서 불변한다는 가정에 근거한다.",
+     "pos": "n",
+     "ko": "실용주의",
+     "ex": "American pragmatism evaluates the truth of ideas by their practical consequences and utility.",
+     "tr": "미국 실용주의는 아이디어의 진리를 그 실천적 결과와 효용에 의해 평가한다.",
      "src": ""
     }
    ],
    "syn": [
-    "invariable",
-    "fixed",
-    "inalterable"
+    "functionalism",
+    "instrumentalism",
+    "practicalism"
    ],
    "deriv": [],
    "roots": [],
@@ -79,435 +81,43 @@
    }
   },
   {
-   "en": "deepen",
-   "ipa": "/ˈdiːpən/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "깊어지다; 깊게 하다",
-     "ex": "Each shared experience deepens the bond between individuals until it becomes a foundation of mutual trust.",
-     "tr": "각각의 공유된 경험은 개인 간의 유대를 깊게 하여 마침내 상호 신뢰의 토대가 된다.",
-     "src": "2012 6월모평 28번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(목소리·색깔·위기 등이) 심화되다"
-    }
-   ],
-   "syn": [
-    "intensify",
-    "strengthen",
-    "enhance"
-   ],
-   "deriv": [
-    "deep (adj.)",
-    "depth (n.)"
-   ],
-   "roots": [
-    {
-     "part": "deep",
-     "mean": "깊은"
-    }
-   ],
-   "etymHint": "deep(깊은)+-en(동사화) → 깊게 만들다 → 심화하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sardonic",
-   "ipa": "/sɑːrˈdɒnɪk/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "냉소적인, 비웃는",
-     "ex": "He offered a sardonic smile whenever colleagues cited consensus as evidence of truth.",
-     "tr": "그는 동료들이 합의를 진실의 증거로 인용할 때마다 냉소적인 미소를 지었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cynical",
-    "derisive",
-    "scornful"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "societal",
-   "ipa": "/səˈsaɪɪtəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "사회적인, 사회의",
-     "ex": "Addressing systemic health disparities requires coordinated societal action that goes beyond individual behavioural change.",
-     "tr": "체계적인 건강 불평등을 해결하려면 개인의 행동 변화를 넘어선 조율된 사회적 행동이 필요하다.",
-     "src": "2022 수능 22번"
-    }
-   ],
-   "syn": [
-    "social",
-    "communal",
-    "collective"
-   ],
-   "deriv": [
-    "society (n.)",
-    "social (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "socius",
-     "mean": "동반자, 동료"
-    }
-   ],
-   "etymHint": "socius(동반자)+ety+al → 동반자들이 이루는 것에 관한 → 사회적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "spontaneous",
-   "ipa": "/spɒnˈteɪniəs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "자발적인, 즉흥적인",
-     "ex": "The most memorable conversations often arise from spontaneous exchanges rather than carefully planned agendas.",
-     "tr": "가장 기억에 남는 대화는 종종 신중하게 계획된 안건보다는 즉흥적인 대화에서 생겨난다.",
-     "src": ""
-    },
-    {
-     "pos": "adj.",
-     "ko": "(물리·화학) 자연발생적인"
-    }
-   ],
-   "syn": [
-    "impulsive",
-    "unplanned",
-    "instinctive"
-   ],
-   "deriv": [
-    "spontaneously (adv.)",
-    "spontaneity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "sponte",
-     "mean": "(라틴어) 자신의 의지로"
-    }
-   ],
-   "etymHint": "sponte(자신의 의지로)+aneous → 자신의 의지에서 비롯된 → 자발적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "insightful",
-   "ipa": "/ˈɪnsaɪtfəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "통찰력 있는, 예리한",
-     "ex": "The panel delivered insightful feedback that helped contestants identify weaknesses they had previously overlooked.",
-     "tr": "패널은 참가자들이 이전에 간과했던 약점을 파악하는 데 도움이 되는 통찰력 있는 피드백을 제공했다.",
-     "src": "2012 수능 18번"
-    }
-   ],
-   "syn": [
-    "perceptive",
-    "astute",
-    "penetrating"
-   ],
-   "deriv": [
-    "insight (n.)",
-    "insightfully (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안으로"
-    },
-    {
-     "part": "sight",
-     "mean": "봄"
-    }
-   ],
-   "etymHint": "in(안으로)+sight(봄)+ful → 속을 꿰뚫어 보는 → 통찰력 있는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "ancillary",
-   "ipa": "/ˈænsɪleri/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "보조적인, 부수적인",
-     "ex": "The ancillary findings, though not central to the thesis, opened avenues for future inquiry.",
-     "tr": "논문의 핵심은 아니지만 보조적 발견들은 향후 연구의 길을 열었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "subsidiary",
-    "supplementary",
-    "auxiliary"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "cleverness",
-   "ipa": "/ˈklevənəs/",
+   "en": "likeness",
+   "ipa": "/ˈlaɪknəs/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "영리함, 재치",
-     "ex": "Relying solely on cleverness to compensate for disorganisation often undermines the quality of one's long-term output.",
-     "tr": "무질서함을 보완하기 위해 영리함에만 의존하는 것은 종종 장기적인 성과의 질을 훼손한다.",
-     "src": "2012 수능 24번"
-    }
-   ],
-   "syn": [
-    "ingenuity",
-    "wit",
-    "acuteness"
-   ],
-   "deriv": [
-    "clever (adj.)",
-    "cleverly (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "deleterious",
-   "ipa": "/ˌdelɪˈtɪəriəs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "유해한, 해로운",
-     "ex": "Prolonged exposure to particulate matter has deleterious effects on pulmonary function.",
-     "tr": "미세 입자에 장기간 노출되면 폐 기능에 유해한 영향을 미친다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "detrimental",
-    "pernicious",
-    "injurious"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "florid",
-   "ipa": "/ˈflɔːrɪd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "화려한, 과장된 (문체·장식)",
-     "ex": "Victorian prose is often florid by modern standards, laden with ornamental clauses.",
-     "tr": "빅토리아 시대 산문은 장식적인 절로 가득 차 현대 기준으로 종종 화려하다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "ornate",
-    "flamboyant",
-    "rococo"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "allocate",
-   "ipa": "/ˈæləkeɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "배분하다, 할당하다",
-     "ex": "The committee allocated a larger portion of the budget to environmental research this year.",
-     "tr": "위원회는 올해 환경 연구에 예산의 더 많은 부분을 배분했다.",
-     "src": "2014 6월모평 32번"
+     "ko": "유사성, 닮음",
+     "ex": "Even the most painstaking portrait can only approximate a likeness, never capturing the full complexity of a person.",
+     "tr": "가장 공들인 초상화조차도 유사성에 근접할 수 있을 뿐, 한 사람의 완전한 복잡성을 담아낼 수는 없다.",
+     "src": "2013 6월모평 45번"
     },
     {
-     "pos": "v.",
-     "ko": "(자원을) 분배하다"
+     "pos": "n.",
+     "ko": "초상, 화상"
     }
    ],
    "syn": [
-    "assign",
-    "apportion",
-    "distribute"
+    "resemblance",
+    "similarity",
+    "semblance"
    ],
    "deriv": [
-    "allocation (n.)",
-    "allocable (adj.)"
+    "like (adj.)",
+    "alike (adj.)",
+    "likewise (adv.)"
    ],
    "roots": [
     {
-     "part": "al-",
-     "mean": "~에게"
+     "part": "like",
+     "mean": "비슷한"
     },
     {
-     "part": "loc",
-     "mean": "장소"
+     "part": "-ness",
+     "mean": "상태·성질"
     }
    ],
-   "etymHint": "al(~에게)+loc(장소) → 특정 장소에 두다 → 배분하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2014",
-    "stars": 1
-   }
-  },
-  {
-   "en": "incredulous",
-   "ipa": "/ɪnˈkredʒ.ʊ.ləs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "믿기 어려워하는, 의심하는",
-     "ex": "The jury remained incredulous despite the elaborate evidence presented, sensing that something about the account was fabricated.",
-     "tr": "배심원단은 제시된 정교한 증거에도 불구하고 설명에 뭔가 꾸며낸 것이 있다고 느끼며 의심스러운 태도를 유지했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "skeptical",
-    "disbelieving",
-    "dubious"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "uphold",
-   "ipa": "/ʌpˈhoʊld/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "지지하다, 유지하다",
-     "ex": "Leaders who uphold a false persona often pay a significant personal cost over time.",
-     "tr": "거짓 페르소나를 유지하는 지도자들은 시간이 지남에 따라 상당한 개인적 대가를 치른다.",
-     "src": "2013 9월모평 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(판결 등을) 인정하다, 지지하다"
-    }
-   ],
-   "syn": [
-    "maintain",
-    "sustain",
-    "support",
-    "endorse"
-   ],
-   "deriv": [
-    "upholder (n.)"
-   ],
-   "roots": [
-    {
-     "part": "up",
-     "mean": "위로"
-    },
-    {
-     "part": "hold",
-     "mean": "잡다"
-    }
-   ],
-   "etymHint": "up(위로)+hold(잡다) → 높이 들어 올려 잡다 → 지지하다",
+   "etymHint": "like(비슷한)+-ness(상태) → 비슷한 상태 → 유사성",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -518,69 +128,65 @@
    }
   },
   {
-   "en": "fertility",
-   "ipa": "/fərˈtɪlɪti/",
-   "pos": "n.",
+   "en": "reorganize",
+   "ipa": "/ˌriːˈɔːɡənaɪz/",
+   "pos": "v.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "(토양의) 비옥함, 생산력",
-     "ex": "Sustainable farming practices are designed to preserve soil fertility for future generations.",
-     "tr": "지속 가능한 농업 관행은 미래 세대를 위해 토양의 비옥함을 보존하도록 설계되었다.",
-     "src": "2013 9월모평 30번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(생물학적) 번식력, 출산율"
+     "pos": "v.",
+     "ko": "재편성하다, 재조직하다",
+     "ex": "Industrial societies began to reorganize their daily routines around the clock rather than the rhythms of nature.",
+     "tr": "산업 사회는 자연의 리듬이 아닌 시계를 중심으로 일상 루틴을 재편성하기 시작했다.",
+     "src": "2025 수능 23번"
     }
    ],
    "syn": [
-    "fecundity",
-    "productivity",
-    "fruitfulness"
+    "restructure",
+    "revamp",
+    "overhaul"
    ],
    "deriv": [
-    "fertile (adj.)",
-    "fertilize (v.)",
-    "fertilizer (n.)"
+    "organization (n.)",
+    "organizational (adj.)",
+    "reorganization (n.)"
    ],
    "roots": [
     {
-     "part": "fertil",
-     "mean": "비옥한"
+     "part": "re-",
+     "mean": "다시"
     },
     {
-     "part": "-ity",
-     "mean": "명사형 접미사"
+     "part": "organ",
+     "mean": "기관·구조"
     }
    ],
-   "etymHint": "fertil(비옥한)+-ity(명사형) → 비옥함 → 생산력",
+   "etymHint": "re(다시)+organ(구조)+ize → 구조를 다시 만들다 → 재편성하다",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2013",
+    "recentYear": "2025",
     "stars": 1
    }
   },
   {
-   "en": "disparaging",
-   "ipa": "/dɪˈspærɪdʒɪŋ/",
+   "en": "boorish",
+   "ipa": "/ˈbʊərɪʃ/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "경멸적인, 얕잡아 보는",
-     "ex": "His disparaging remarks about his predecessor betrayed an insecurity he tried to conceal.",
-     "tr": "전임자에 대한 그의 경멸적인 발언은 그가 감추려 했던 불안감을 드러냈다.",
+     "ko": "무례하고 야비한",
+     "ex": "His boorish remarks at the reception embarrassed his colleagues and offended the guests.",
+     "tr": "리셉션에서 그의 야비한 발언은 동료들을 당혹스럽게 하고 손님들을 기분 상하게 했다.",
      "src": ""
     }
    ],
    "syn": [
-    "denigrating",
-    "derogatory",
-    "belittling"
+    "loutish",
+    "crass",
+    "uncouth"
    ],
    "deriv": [],
    "roots": [],
@@ -595,108 +201,233 @@
    }
   },
   {
-   "en": "blunt",
-   "ipa": "/blʌnt/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "무딘, 효력이 약한",
-     "ex": "Blanket regulations are blunt instruments that often fail to account for the diversity of real situations.",
-     "tr": "일률적 규제는 흔히 현실 상황의 다양성을 반영하지 못하는 무딘 도구다.",
-     "src": "2023 수능 23번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "직설적인, 퉁명스러운"
-    },
-    {
-     "pos": "v.",
-     "ko": "무디게 하다, 약화시키다"
-    }
-   ],
-   "syn": [
-    "dull",
-    "blunted",
-    "straightforward"
-   ],
-   "deriv": [
-    "bluntly (adv.)",
-    "bluntness (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "decadent",
-   "ipa": "/ˈdɛkədənt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "퇴폐적인, 타락한",
-     "ex": "The Decadent movement of the 1890s celebrated sensory excess and moral ambiguity as legitimate aesthetic values in their own right.",
-     "tr": "1890년대 퇴폐주의 운동은 감각적 과잉과 도덕적 모호함을 그 자체로 정당한 미적 가치로서 찬양했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "degenerate",
-    "dissipated",
-    "hedonistic"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "deforestation",
-   "ipa": "/diːˌfɒrɪˈsteɪʃən/",
+   "en": "mold",
+   "ipa": "/moʊld/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "삼림 벌채, 산림 파괴",
-     "ex": "Carbon credits tied to halting deforestation in tropical regions are among the most cost-effective climate solutions.",
-     "tr": "열대 지역의 삼림 벌채 방지와 연계된 탄소 크레딧은 가장 비용 효율적인 기후 해결책 중 하나다.",
+     "ko": "틀, 형태를 만드는 것",
+     "ex": "The cultural mold that shapes individual behavior is often invisible to those living within it.",
+     "tr": "개인의 행동을 형성하는 문화적 틀은 그 안에서 살고 있는 사람들에게 종종 보이지 않는다.",
+     "src": "2015 6월모평 40번"
+    },
+    {
+     "pos": "v.",
+     "ko": "형성하다, 틀에 넣어 만들다"
+    },
+    {
+     "pos": "n.",
+     "ko": "곰팡이"
+    }
+   ],
+   "syn": [
+    "cast",
+    "model",
+    "shape"
+   ],
+   "deriv": [
+    "molding (n.)",
+    "molder (v.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
+  {
+   "en": "modulate",
+   "ipa": "/ˈmɒdʒuleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "조절하다, 변조하다",
+     "ex": "The central bank uses interest rates to modulate economic activity and control inflation.",
+     "tr": "중앙은행은 이자율을 사용하여 경제 활동을 조절하고 인플레이션을 통제한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "regulate",
+    "adjust",
+    "temper"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "supervision",
+   "ipa": "/ˌsuːpəˈvɪʒən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "감독, 관리",
+     "ex": "Children require close supervision when engaging with digital platforms that may expose them to harmful content.",
+     "tr": "어린이들은 유해한 콘텐츠에 노출될 수 있는 디지털 플랫폼을 이용할 때 면밀한 감독이 필요하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "oversight",
+    "management",
+    "surveillance"
+   ],
+   "deriv": [
+    "supervise (v.)",
+    "supervisor (n.)",
+    "supervisory (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "super-",
+     "mean": "위에"
+    },
+    {
+     "part": "vis",
+     "mean": "보다"
+    }
+   ],
+   "etymHint": "super(위에)+vis(보다)+ion → 위에서 내려다보다 → 감독",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "aesthetic",
+   "ipa": "/ɛsˈθɛtɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "미적인, 심미적인",
+     "ex": "The curator's aesthetic sensibility was evident in the way she arranged contrasting works to create unexpected visual dialogues.",
+     "tr": "큐레이터의 미적 감수성은 대조적인 작품들을 배치하여 예상치 못한 시각적 대화를 만들어내는 방식에서 분명히 드러났다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "artistic",
+    "sensory",
+    "visual"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "misconception",
+   "ipa": "/ˌmɪskənˈsepʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "오해, 잘못된 생각",
+     "ex": "A widespread misconception about resilience is that it involves suppressing negative emotions rather than processing them.",
+     "tr": "회복력에 대한 널리 퍼진 오해는 그것이 부정적인 감정을 처리하는 것이 아니라 억압하는 것을 수반한다는 것이다.",
+     "src": "2024 9월모평 20번"
+    }
+   ],
+   "syn": [
+    "misunderstanding",
+    "fallacy",
+    "delusion"
+   ],
+   "deriv": [
+    "conceive (v.)",
+    "conception (n.)",
+    "misconceive (v.)"
+   ],
+   "roots": [
+    {
+     "part": "mis-",
+     "mean": "잘못"
+    },
+    {
+     "part": "con-",
+     "mean": "함께"
+    },
+    {
+     "part": "cep",
+     "mean": "받아들이다·잡다"
+    }
+   ],
+   "etymHint": "mis(잘못)+con(함께)+cep(잡다)+ion → 잘못 받아들인 것 → 오해",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "removal",
+   "ipa": "/rɪˈmuːvəl/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "제거, 철폐",
+     "ex": "Many economists argue that the removal of fossil fuel subsidies is a prerequisite for meaningful climate reform.",
+     "tr": "많은 경제학자들은 화석 연료 보조금 철폐가 의미 있는 기후 개혁의 선결 조건이라고 주장한다.",
      "src": "2019 수능 23번"
+    },
+    {
+     "pos": "n.",
+     "ko": "이전, 이사"
     }
    ],
    "syn": [
-    "clear-cutting",
-    "woodland destruction"
+    "elimination",
+    "abolition",
+    "withdrawal"
    ],
    "deriv": [
-    "deforest (v.)",
-    "deforested (adj.)"
+    "remove (v.)",
+    "removable (adj.)"
    ],
    "roots": [
     {
-     "part": "de-",
-     "mean": "제거"
+     "part": "re-",
+     "mean": "뒤로"
     },
     {
-     "part": "forest",
-     "mean": "숲"
+     "part": "mov",
+     "mean": "움직이다"
     }
    ],
-   "etymHint": "de(제거)+forest(숲) → 숲을 없애다 → 삼림 벌채",
+   "etymHint": "re(뒤로)+mov(움직이다)+al → 뒤로 움직임 → 제거",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -707,22 +438,328 @@
    }
   },
   {
-   "en": "pernicious",
-   "ipa": "/pərˈnɪʃəs/",
-   "pos": "adj",
+   "en": "vestige",
+   "ipa": "/ˈvɛstɪdʒ/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "유해한, 치명적인",
-     "ex": "The pernicious influence of misinformation has eroded public trust in scientific institutions.",
-     "tr": "허위 정보의 유해한 영향은 과학 기관에 대한 공공의 신뢰를 침식했다.",
+     "pos": "n",
+     "ko": "흔적, 잔재",
+     "ex": "Only a faint vestige of the original ritual survived in the modern ceremonial practice.",
+     "tr": "현대의 의식적 관행 속에는 원래 의례의 희미한 흔적만이 남아 있었다.",
      "src": ""
     }
    ],
    "syn": [
-    "deleterious",
-    "insidious",
-    "detrimental"
+    "remnant",
+    "relic",
+    "trace"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "misinterpret",
+   "ipa": "/ˌmɪsɪnˈtɜːprɪt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "잘못 해석하다, 오해하다",
+     "ex": "Historians who lack sufficient cultural context are liable to misinterpret the motives behind historical decisions.",
+     "tr": "충분한 문화적 맥락이 부족한 역사가들은 역사적 결정 뒤에 있는 동기를 잘못 해석할 가능성이 있다.",
+     "src": "2016 수능 22번"
+    }
+   ],
+   "syn": [
+    "misconstrue",
+    "misread",
+    "distort"
+   ],
+   "deriv": [
+    "interpretation (n.)",
+    "misinterpretation (n.)",
+    "interpret (v.)"
+   ],
+   "roots": [
+    {
+     "part": "mis-",
+     "mean": "잘못"
+    },
+    {
+     "part": "inter",
+     "mean": "사이에"
+    },
+    {
+     "part": "pret",
+     "mean": "설명하다"
+    }
+   ],
+   "etymHint": "mis(잘못)+inter(사이에)+pret(설명하다) → 잘못 설명하다 → 오해하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "backbone",
+   "ipa": "/ˈbækbəʊn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "(비유) 근간, 중추",
+     "ex": "Transport infrastructure has historically constituted the backbone of urban development and economic expansion.",
+     "tr": "교통 인프라는 역사적으로 도시 개발과 경제 성장의 근간을 이루어 왔다.",
+     "src": "2024 6월모평 24번"
+    },
+    {
+     "pos": "n.",
+     "ko": "척추"
+    }
+   ],
+   "syn": [
+    "foundation",
+    "pillar",
+    "mainstay"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "back",
+     "mean": "등"
+    },
+    {
+     "part": "bone",
+     "mean": "뼈"
+    }
+   ],
+   "etymHint": "back(등)+bone(뼈) → 등뼈 → (비유) 중추",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "affirm",
+   "ipa": "/əˈfɜːrm/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "단언하다, 확언하다",
+     "ex": "The philosopher affirmed that rational inquiry alone cannot resolve questions of moral value.",
+     "tr": "그 철학자는 합리적 탐구만으로는 도덕적 가치에 관한 문제를 해결할 수 없다고 단언했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "assert",
+    "aver",
+    "avow"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "baseline",
+   "ipa": "/ˈbeɪslaɪn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "기준선, 기본 수준",
+     "ex": "Ethical conduct in medicine requires a baseline commitment to avoiding harm before pursuing any aspirational goals.",
+     "tr": "의학에서 윤리적 행동은 어떠한 이상적 목표를 추구하기 전에 해를 끼치지 않겠다는 기준선적 헌신을 요구한다.",
+     "src": "2020 6월모평 34번"
+    }
+   ],
+   "syn": [
+    "benchmark",
+    "standard",
+    "reference point"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "base",
+     "mean": "기초"
+    },
+    {
+     "part": "line",
+     "mean": "선"
+    }
+   ],
+   "etymHint": "base(기초)+line(선) → 측정의 기초가 되는 선 → 기준선",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "coerce",
+   "ipa": "/koʊˈɜːrs/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "강요하다, 강제하다",
+     "ex": "Authoritarian regimes often coerce citizens into compliance through surveillance and threats of punishment.",
+     "tr": "권위주의 정권은 종종 감시와 처벌의 위협을 통해 시민들을 복종하도록 강요한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "compel",
+    "force",
+    "intimidate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "humility",
+   "ipa": "/hjuːˈmɪlɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "겸손, 겸허함",
+     "ex": "True intellectual humility requires acknowledging the limits of one's own knowledge even in areas of expertise.",
+     "tr": "진정한 지적 겸손은 전문 분야에서조차 자신의 지식의 한계를 인정하는 것을 요구한다.",
+     "src": "2014 수능 33번"
+    }
+   ],
+   "syn": [
+    "modesty",
+    "meekness",
+    "deference"
+   ],
+   "deriv": [
+    "humble (adj.)",
+    "humiliate (v.)",
+    "humiliation (n.)"
+   ],
+   "roots": [
+    {
+     "part": "humil",
+     "mean": "낮은"
+    },
+    {
+     "part": "-ity",
+     "mean": "성질·상태"
+    }
+   ],
+   "etymHint": "humil(낮은)+-ity(상태) → 자신을 낮추는 상태 → 겸손",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2014",
+    "stars": 1
+   }
+  },
+  {
+   "en": "compass",
+   "ipa": "/ˈkʌmpəs/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "나침반",
+     "ex": "Early explorers relied on the compass as an indispensable navigational tool when sailing through uncharted waters.",
+     "tr": "초기 탐험가들은 미지의 바다를 항해할 때 나침반을 없어서는 안 될 항법 도구로 사용했다.",
+     "src": "2026 9월모평 32번"
+    },
+    {
+     "pos": "n.",
+     "ko": "범위, 영역"
+    }
+   ],
+   "syn": [
+    "bearing",
+    "direction finder"
+   ],
+   "deriv": [
+    "encompass (v.)"
+   ],
+   "roots": [
+    {
+     "part": "com-",
+     "mean": "함께"
+    },
+    {
+     "part": "pass",
+     "mean": "걷다·지나가다"
+    }
+   ],
+   "etymHint": "com(함께)+pass(걷다) → 함께 걸어가는 경로를 알려주는 것 → 나침반",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "allegory",
+   "ipa": "/ˈæləɡɔːri/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "알레고리, 우의",
+     "ex": "The mural functions as an allegory for the nation's turbulent transition from colonial subjugation to hard-won independence.",
+     "tr": "그 벽화는 식민 지배에서 어렵게 쟁취한 독립으로의 국가의 격동적인 전환에 대한 알레고리로 기능한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "parable",
+    "fable",
+    "metaphor"
    ],
    "deriv": [],
    "roots": [],

@@ -4,21 +4,25 @@
  "day": 11,
  "words": [
   {
-   "en": "system",
-   "ipa": "/ˈsɪstəm/",
-   "pos": "n",
+   "en": "crash",
+   "ipa": "/kræʃ/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "시스템, 체계",
-     "ex": "The school uses an online system for checking attendance.",
-     "tr": "학교는 출석 확인을 위해 온라인 시스템을 사용한다.",
+     "pos": "v",
+     "ko": "(프로그램이) 충돌하다, 갑자기 멈추다",
+     "ex": "My computer crashed while I was writing a report.",
+     "tr": "보고서를 쓰는 도중에 컴퓨터가 충돌했다.",
      "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "부딪히다, 충돌하다"
     }
    ],
    "syn": [
-    "network",
-    "structure"
+    "freeze",
+    "fail"
    ],
    "deriv": [],
    "roots": [],
@@ -33,25 +37,52 @@
    }
   },
   {
-   "en": "access",
-   "ipa": "/ˈækses/",
+   "en": "drag",
+   "ipa": "/dræɡ/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "접속하다, 이용하다",
-     "ex": "You can access the school library website from home.",
-     "tr": "집에서도 학교 도서관 웹사이트에 접속할 수 있다.",
+     "ko": "끌다, 드래그하다",
+     "ex": "Drag the file into the folder to move it.",
+     "tr": "파일을 폴더로 드래그하여 이동시켜라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "pull"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "resolution",
+   "ipa": "/ˌrezəˈluːʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "해상도",
+     "ex": "This monitor has a very high resolution, so images look sharp.",
+     "tr": "이 모니터는 해상도가 매우 높아서 이미지가 선명하게 보인다.",
      "src": ""
     },
     {
      "pos": "n",
-     "ko": "접근, 이용 권한"
+     "ko": "결심, 해결"
     }
    ],
    "syn": [
-    "enter",
-    "reach"
+    "sharpness"
    ],
    "deriv": [],
    "roots": [],
@@ -66,391 +97,15 @@
    }
   },
   {
-   "en": "log in",
-   "ipa": "/lɔɡ ɪn/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "로그인하다",
-     "ex": "You need to log in with your student ID to see the grades.",
-     "tr": "성적을 보려면 학생 ID로 로그인해야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "sign in"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "log out",
-   "ipa": "/lɔɡ aʊt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "로그아웃하다",
-     "ex": "Always log out of your account when using a shared computer.",
-     "tr": "공용 컴퓨터를 사용할 때는 항상 계정에서 로그아웃해라.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "sign out"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sign up",
-   "ipa": "/saɪn ʌp/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "회원 가입하다",
-     "ex": "I signed up for the cooking class at the community center.",
-     "tr": "나는 주민 센터 요리 수업에 회원 가입했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "register",
-    "join"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "register",
-   "ipa": "/ˈrɛdʒɪstər/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "등록하다",
-     "ex": "Students must register for their classes before the deadline.",
-     "tr": "학생들은 마감일 전에 수업을 등록해야 한다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "명부, 등록부"
-    }
-   ],
-   "syn": [
-    "sign up",
-    "enroll"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "privacy",
-   "ipa": "/ˈpraɪvəsi/",
+   "en": "pixel",
+   "ipa": "/ˈpɪksəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "개인 정보 보호, 사생활",
-     "ex": "You should protect your privacy by using a strong password.",
-     "tr": "강력한 비밀번호를 사용하여 개인 정보를 보호해야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "secrecy"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "security",
-   "ipa": "/sɪˈkjʊərɪti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보안, 안전",
-     "ex": "The school improved security by adding cameras at the gates.",
-     "tr": "학교는 교문에 카메라를 추가하여 보안을 강화했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "safety",
-    "protection"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "virus",
-   "ipa": "/ˈvaɪrəs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "(컴퓨터) 바이러스",
-     "ex": "The computer slowed down because it had a virus on it.",
-     "tr": "컴퓨터에 바이러스가 있어서 속도가 느려졌다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "malware"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "hack",
-   "ipa": "/hæk/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "해킹하다",
-     "ex": "Someone tried to hack into the school website last week.",
-     "tr": "지난주에 누군가 학교 웹사이트를 해킹하려 했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "break in",
-    "crack"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "browser",
-   "ipa": "/ˈbraʊzər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "브라우저, 인터넷 검색 프로그램",
-     "ex": "Open your browser and search for the answer online.",
-     "tr": "브라우저를 열고 온라인에서 답을 검색해 봐.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "web browser"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "attach",
-   "ipa": "/əˈtætʃ/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "첨부하다, 붙이다",
-     "ex": "Please attach your photo to the application form.",
-     "tr": "지원서에 사진을 첨부해 주세요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "add",
-    "include"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "attachment",
-   "ipa": "/əˈtætʃmənt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "첨부 파일",
-     "ex": "I could not open the attachment in the email on my phone.",
-     "tr": "나는 휴대폰에서 이메일의 첨부 파일을 열 수 없었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "file",
-    "enclosure"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "automatic",
-   "ipa": "/ˌɔːtəˈmætɪk/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "자동의",
-     "ex": "The door at the supermarket is automatic, so it opens by itself.",
-     "tr": "슈퍼마켓의 문은 자동이라서 저절로 열린다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "self-operating",
-    "mechanical"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "virtual",
-   "ipa": "/ˈvɜːrtʃuəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "가상의",
-     "ex": "The students attended a virtual class from their homes.",
-     "tr": "학생들은 집에서 가상 수업에 참석했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "digital",
-    "online"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "screen time",
-   "ipa": "/skriːn taɪm/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "스크린 타임(화면 이용 시간)",
-     "ex": "My parents limit my screen time to two hours a day.",
-     "tr": "부모님은 나의 스크린 타임을 하루 두 시간으로 제한하신다.",
+     "ko": "픽셀(화면을 구성하는 최소 단위)",
+     "ex": "A photo with more pixels looks clearer on the screen.",
+     "tr": "픽셀이 많을수록 사진이 화면에서 더 선명하게 보인다.",
      "src": ""
     }
    ],
@@ -468,24 +123,361 @@
    }
   },
   {
-   "en": "caption",
-   "ipa": "/ˈkæpʃən/",
+   "en": "format",
+   "ipa": "/ˈfɔːrmæt/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "자막, 설명글",
-     "ex": "She turned on the captions to understand the foreign film.",
-     "tr": "그녀는 외국 영화를 이해하기 위해 자막을 켰다.",
+     "ko": "형식, 포맷",
+     "ex": "Please save the file in a PDF format for easy sharing.",
+     "tr": "파일을 쉽게 공유할 수 있도록 PDF 형식으로 저장해라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "form",
+    "layout"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "function",
+   "ipa": "/ˈfʌŋkʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "기능, 역할",
+     "ex": "The main function of this button is to save your work.",
+     "tr": "이 버튼의 주요 기능은 작업을 저장하는 것이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "feature",
+    "role"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "satellite",
+   "ipa": "/ˈsætəlaɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "위성",
+     "ex": "The satellite sends weather data to scientists on the ground.",
+     "tr": "위성은 지상의 과학자들에게 기상 데이터를 보낸다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "keyboard shortcut",
+   "ipa": "/ˈkiːbɔːrd ˈʃɔːrkʌt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "키보드 단축키",
+     "ex": "Learning keyboard shortcuts can help you work much faster.",
+     "tr": "키보드 단축키를 배우면 작업을 훨씬 빠르게 할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "backup",
+   "ipa": "/ˈbækʌp/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "백업, 예비 복사본",
+     "ex": "Always make a backup of your files in case the computer breaks.",
+     "tr": "컴퓨터가 고장날 경우를 대비해 항상 파일을 백업해 두어라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "copy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "viral",
+   "ipa": "/ˈvaɪrəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "바이럴의, 빠르게 퍼지는",
+     "ex": "Her funny video went viral and got a million views.",
+     "tr": "그녀의 재미있는 영상이 바이럴이 되어 조회수가 백만 건을 기록했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "popular",
+    "trending"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "interactive",
+   "ipa": "/ˌɪntərˈæktɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "상호작용하는, 쌍방향의",
+     "ex": "The museum has an interactive exhibit where kids can touch everything.",
+     "tr": "그 박물관에는 아이들이 모든 것을 만질 수 있는 체험형 전시물이 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "hands-on"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "society",
+   "ipa": "/səˈsaɪəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "사회",
+     "ex": "Every person in society has rights and responsibilities.",
+     "tr": "사회의 모든 사람은 권리와 책임을 가지고 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "community"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "government",
+   "ipa": "/ˈɡʌvərnmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "정부",
+     "ex": "The government built new schools in rural areas.",
+     "tr": "정부는 농촌 지역에 새 학교를 지었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "administration"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "freedom",
+   "ipa": "/ˈfriːdəm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자유",
+     "ex": "People need freedom to express their opinions openly.",
+     "tr": "사람들은 자신의 의견을 자유롭게 표현할 자유가 필요하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "liberty"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "citizen",
+   "ipa": "/ˈsɪtɪzən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "시민",
+     "ex": "Every citizen should follow the laws of their country.",
+     "tr": "모든 시민은 자국의 법을 따라야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "resident"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "resource",
+   "ipa": "/ˈriːsɔːrs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "자원",
+     "ex": "Water is one of the most important natural resources on Earth.",
+     "tr": "물은 지구에서 가장 중요한 천연 자원 중 하나이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "supply",
+    "asset"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "waste",
+   "ipa": "/weɪst/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "폐기물, 쓰레기",
+     "ex": "Factories must treat industrial waste before releasing it.",
+     "tr": "공장은 산업 폐기물을 처리한 후에 배출해야 한다.",
      "src": ""
     },
     {
      "pos": "n",
-     "ko": "(사진 아래의) 설명"
+     "ko": "낭비"
     }
    ],
    "syn": [
-    "subtitle"
+    "trash",
+    "garbage"
    ],
    "deriv": [],
    "roots": [],
@@ -500,21 +492,20 @@
    }
   },
   {
-   "en": "rating",
-   "ipa": "/ˈreɪtɪŋ/",
+   "en": "recycling",
+   "ipa": "/ˌriːˈsaɪklɪŋ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "평점, 등급",
-     "ex": "This app has a high rating in the app store.",
-     "tr": "이 앱은 앱 스토어에서 높은 평점을 받고 있다.",
+     "ko": "재활용",
+     "ex": "Recycling paper and plastic helps protect the environment.",
+     "tr": "종이와 플라스틱을 재활용하면 환경을 보호하는 데 도움이 된다.",
      "src": ""
     }
    ],
    "syn": [
-    "score",
-    "grade"
+    "reuse"
    ],
    "deriv": [],
    "roots": [],
@@ -529,52 +520,54 @@
    }
   },
   {
-   "en": "source",
-   "ipa": "/sɔːrs/",
-   "pos": "n",
+   "en": "destroy",
+   "ipa": "/dɪˈstrɔɪ/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "출처, 정보원",
-     "ex": "You should check the source before sharing the news.",
-     "tr": "뉴스를 공유하기 전에 출처를 확인해야 한다.",
+     "pos": "v",
+     "ko": "파괴하다",
+     "ex": "The storm destroyed several houses in the neighborhood.",
+     "tr": "폭풍이 인근의 집 여러 채를 파괴했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ruin",
+    "wreck"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "damage",
+   "ipa": "/ˈdæmɪdʒ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "손상을 입히다",
+     "ex": "Heavy rain damaged the roof of the old building.",
+     "tr": "폭우가 낡은 건물의 지붕에 손상을 입혔다.",
      "src": ""
     },
     {
      "pos": "n",
-     "ko": "근원, 원천"
+     "ko": "피해, 손상"
     }
    ],
    "syn": [
-    "origin"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "keyword",
-   "ipa": "/ˈkiːwɜːrd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "키워드, 검색어",
-     "ex": "Type a keyword to find what you are looking for.",
-     "tr": "찾고 있는 것을 찾으려면 키워드를 입력해라.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "search term"
+    "harm",
+    "hurt"
    ],
    "deriv": [],
    "roots": [],

@@ -4,547 +4,807 @@
  "day": 1,
  "words": [
   {
-   "en": "teamwork",
-   "ipa": "/ˈtiːmwɜːrk/",
+   "en": "patent",
+   "ipa": "/ˈpeɪtənt/",
+   "pos": "n./adj./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "특허(권)",
+     "ex": "The extension of patent protection to seed varieties in the 1990s drove the growth of private seed markets.",
+     "tr": "1990년대에 종자 품종에 대한 특허 보호의 확대는 민간 종자 시장의 성장을 촉진했다.",
+     "src": "2016 수능 33번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "명백한; 특허의"
+    }
+   ],
+   "syn": [
+    "copyright",
+    "licence",
+    "intellectual property"
+   ],
+   "deriv": [
+    "patented (adj.)",
+    "patentee (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pat",
+     "mean": "열다, 펼치다"
+    }
+   ],
+   "etymHint": "pat(열다) → 공개적으로 열어 보이다 → 특허·명백한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 16,
+    "exams": 4,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "classification",
+   "ipa": "/ˌklæsɪfɪˈkeɪʃn/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "팀워크, 협동 작업",
-     "ex": "Corporate retreats are often designed to strengthen teamwork and improve communication among employees.",
-     "tr": "기업 워크숍은 직원들 사이의 팀워크를 강화하고 소통을 향상시키기 위해 설계되는 경우가 많다.",
-     "src": "2018 수능 21번"
+     "ko": "분류, 범주화",
+     "ex": "Image classification methods automatically tag visual content with descriptive output labels.",
+     "tr": "이미지 분류 방법은 시각적 콘텐츠에 설명적인 출력 레이블을 자동으로 부여한다.",
+     "src": "2024 9월모평 32번"
     }
    ],
    "syn": [
-    "collaboration",
-    "cooperation",
-    "joint effort"
+    "categorization",
+    "taxonomy",
+    "sorting"
    ],
    "deriv": [
-    "team (n.)",
-    "teammate (n.)"
+    "classify (v.)",
+    "classifier (n.)",
+    "classified (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "classis",
+     "mean": "집단, 등급"
+    },
+    {
+     "part": "-fic-",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "classis(집단)+fic(만들다)+ation(명사) → 집단으로 나눔 → 분류",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 11,
+    "exams": 4,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "kin",
+   "ipa": "/kɪn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "친족, 친척; 혈연 관계",
+     "ex": "Obligations toward kin have shaped social structures in virtually every known human society.",
+     "tr": "친족에 대한 의무는 거의 모든 알려진 인간 사회의 사회 구조를 형성해 왔다.",
+     "src": "2014 6월모평 34번"
+    }
+   ],
+   "syn": [
+    "relatives",
+    "family",
+    "kinsfolk"
+   ],
+   "deriv": [
+    "kinship (n.)",
+    "kindred (n./adj.)"
+   ],
+   "roots": [
+    {
+     "part": "cynn",
+     "mean": "종족, 가족 (고대영어)"
+    }
+   ],
+   "etymHint": "cynn(종족) → kin → 친족",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 10,
+    "exams": 4,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "loyalty",
+   "ipa": "/ˈlɔɪəlti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "충성심, 충실함",
+     "ex": "Consumers rarely display the kind of loyalty toward banks that they show toward lifestyle or sports brands.",
+     "tr": "소비자들은 라이프스타일 브랜드나 스포츠 브랜드에 보여주는 것과 같은 충성심을 은행에는 거의 보이지 않는다.",
+     "src": "2022 6월모평 30번"
+    }
+   ],
+   "syn": [
+    "faithfulness",
+    "devotion",
+    "allegiance"
+   ],
+   "deriv": [
+    "loyal (adj.)",
+    "loyalist (n.)",
+    "disloyalty (n.)"
+   ],
+   "roots": [
+    {
+     "part": "legalis",
+     "mean": "법의, 합법적인"
+    }
+   ],
+   "etymHint": "legalis(법의) → loial(정직한) → loyalty(충성심)",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 10,
+    "exams": 4,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "esteem",
+   "ipa": "/ɪˈstiːm/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "존중, 존경; 자존감",
+     "ex": "Our self-esteem in society depends largely on the goals and identities we choose to commit ourselves to.",
+     "tr": "사회에서 우리의 자존감은 주로 우리가 스스로에게 부여하는 목표와 정체성에 달려 있다.",
+     "src": "2011 9월모평 28번"
+    },
+    {
+     "pos": "v.",
+     "ko": "존중하다, 높이 평가하다"
+    }
+   ],
+   "syn": [
+    "respect",
+    "regard",
+    "admiration"
+   ],
+   "deriv": [
+    "self-esteem (n.)",
+    "esteemed (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "aestimare",
+     "mean": "평가하다, 가치를 매기다"
+    }
+   ],
+   "etymHint": "aestimare(가치를 매기다) → esteem → 존중",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 4,
+    "recentYear": "2018",
+    "stars": 1
+   }
+  },
+  {
+   "en": "attain",
+   "ipa": "/əˈteɪn/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "달성하다, 이루다; 도달하다",
+     "ex": "It has been argued that insight into a problem can be attained without any specialized prior knowledge.",
+     "tr": "문제에 대한 통찰은 전문적인 사전 지식 없이도 달성될 수 있다고 주장되어 왔다.",
+     "src": "2018 9월모평 22번"
+    }
+   ],
+   "syn": [
+    "achieve",
+    "reach",
+    "accomplish"
+   ],
+   "deriv": [
+    "attainment (n.)",
+    "attainable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ad-",
+     "mean": "~쪽으로"
+    },
+    {
+     "part": "tangere",
+     "mean": "만지다, 닿다"
+    }
+   ],
+   "etymHint": "ad(~쪽으로)+tangere(닿다) → ~에 닿다 → 달성하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 4,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "poetic",
+   "ipa": "/pəʊˈetɪk/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "시적인, 시에 관한; 시적 감성이 있는",
+     "ex": "Poets like Milton and Keats believed that poetic greatness could bestow a form of immortality upon their names.",
+     "tr": "밀턴과 키츠 같은 시인들은 시적 위대함이 그들의 이름에 일종의 불멸성을 부여할 수 있다고 믿었다.",
+     "src": "2016 수능 34번"
+    }
+   ],
+   "syn": [
+    "lyrical",
+    "expressive",
+    "artistic"
+   ],
+   "deriv": [
+    "poem (n.)",
+    "poet (n.)",
+    "poetry (n.)",
+    "poetically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "poiein",
+     "mean": "만들다, 창조하다 (그리스어)"
+    }
+   ],
+   "etymHint": "poiein(만들다) → poetes(시인) → poetic → 시를 만드는",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 4,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "imagery",
+   "ipa": "/ˈɪmɪdʒri/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "이미지, 심상; 비유적 표현; 영상",
+     "ex": "The close relationships he formed with artists allowed him to capture some of the most vivid and iconic imagery of the era.",
+     "tr": "예술가들과 맺은 긴밀한 관계 덕분에 그는 그 시대의 가장 생생하고 상징적인 이미지들을 포착할 수 있었다.",
+     "src": "2018 수능 25번"
+    }
+   ],
+   "syn": [
+    "visuals",
+    "pictures",
+    "mental images"
+   ],
+   "deriv": [
+    "image (n.)",
+    "imagine (v.)",
+    "imaginary (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "imago",
+     "mean": "형상, 모습"
+    }
+   ],
+   "etymHint": "imago(형상) → image → imagery → 형상들의 집합 → 심상",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 4,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "privilege",
+   "ipa": "/ˈprɪvɪlɪdʒ/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "특권, 특혜",
+     "ex": "Modern societies have sought to eliminate inherited privilege so that social standing depends on individual merit rather than birth.",
+     "tr": "현대 사회는 세습된 특권을 제거하여 사회적 지위가 출신보다 개인의 능력에 따라 결정되도록 노력해 왔다.",
+     "src": "2009 6월모평 25번"
+    },
+    {
+     "pos": "v.",
+     "ko": "특혜를 주다, 우선시하다"
+    }
+   ],
+   "syn": [
+    "advantage",
+    "entitlement",
+    "prerogative"
+   ],
+   "deriv": [
+    "privileged (adj.)",
+    "underprivileged (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "privus",
+     "mean": "개인의"
+    },
+    {
+     "part": "lex/legis",
+     "mean": "법"
+    }
+   ],
+   "etymHint": "privus(개인의)+lex(법) → 개인에게 적용되는 특별한 법 → 특권",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "infant",
+   "ipa": "/ˈɪnfənt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "유아, 갓난아기",
+     "ex": "The cost of a university degree may be five times higher by the time today's infants reach college age.",
+     "tr": "오늘날 유아들이 대학 진학 연령에 이를 때쯤이면 대학 학위 비용이 다섯 배 더 높아질 수도 있다.",
+     "src": "2016 6월모평 22번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "초기의, 유아기의"
+    }
+   ],
+   "syn": [
+    "baby",
+    "newborn",
+    "toddler"
+   ],
+   "deriv": [
+    "infancy (n.)",
+    "infantile (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "not"
+    },
+    {
+     "part": "fans",
+     "mean": "speaking (from fari)"
+    }
+   ],
+   "etymHint": "in(not) + fans(speaking) → 말을 못하는 → 유아",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "geographical",
+   "ipa": "/ˌdʒiːəˈɡræfɪkəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "지리적인, 지리학의",
+     "ex": "Despite the accelerating pace of travel, our bodies remain passive as we move through geographical and virtual space.",
+     "tr": "여행 속도가 빨라짐에도 불구하고, 우리의 몸은 지리적·가상 공간을 이동하는 동안 수동적인 상태로 머문다.",
+     "src": "2023 6월모평 40번"
+    }
+   ],
+   "syn": [
+    "geographic",
+    "territorial",
+    "spatial"
+   ],
+   "deriv": [
+    "geography (n.)",
+    "geographer (n.)",
+    "geographically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "geo",
+     "mean": "땅·지구"
+    },
+    {
+     "part": "graphein",
+     "mean": "쓰다·기술하다"
+    }
+   ],
+   "etymHint": "geo(땅) + graphein(기술하다) → 땅을 기술하는 → 지리학의",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "restoration",
+   "ipa": "/ˌrestəˈreɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "복원, 복구, 회복",
+     "ex": "The city completed a major riverfront restoration project that transformed the area into a vibrant public space.",
+     "tr": "그 도시는 그 지역을 활기찬 공공 공간으로 탈바꿈시킨 대규모 강변 복원 사업을 완료했다.",
+     "src": "2010 수능 37번"
+    }
+   ],
+   "syn": [
+    "renovation",
+    "rehabilitation",
+    "renewal"
+   ],
+   "deriv": [
+    "restore (v.)",
+    "restorative (adj.)",
+    "restorer (n.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "다시"
+    },
+    {
+     "part": "restaurare",
+     "mean": "다시 세우다"
+    }
+   ],
+   "etymHint": "re(다시) + restaurare(세우다) → 다시 세우다 → 복원",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2013",
+    "stars": 1
+   }
+  },
+  {
+   "en": "salesperson",
+   "ipa": "/ˈseɪlzˌpɜːrsən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "판매원, 영업 사원",
+     "ex": "A skilled salesperson focuses on understanding the customer's needs before attempting to close a profitable deal.",
+     "tr": "숙련된 판매원은 수익성 있는 거래를 성사시키기 전에 고객의 필요를 파악하는 데 집중한다.",
+     "src": "2016 9월모평 20번"
+    }
+   ],
+   "syn": [
+    "vendor",
+    "sales representative",
+    "sales agent"
+   ],
+   "deriv": [
+    "sales (n.)",
+    "salesman (n.)",
+    "saleswoman (n.)"
    ],
    "roots": [],
    "etymHint": "",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "furious",
-   "ipa": "/ˈfjʊəriəs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "맹렬한, 격렬한; 몹시 화난",
-     "ex": "Developers were clearing the wetlands at a furious pace, threatening the local wildlife population.",
-     "tr": "개발업자들이 맹렬한 속도로 습지를 개간하여 지역 야생동물 개체군을 위협하고 있었다.",
-     "src": "2016 수능 29번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "몹시 화난, 격분한"
-    }
-   ],
-   "syn": [
-    "fierce",
-    "intense",
-    "raging"
-   ],
-   "deriv": [
-    "furiously (adv.)",
-    "fury (n.)"
-   ],
-   "roots": [
-    {
-     "part": "fur",
-     "mean": "분노, 광기"
-    }
-   ],
-   "etymHint": "fur(분노) → 분노가 가득한 → 맹렬한, 격분한",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
+    "count": 7,
+    "exams": 4,
     "recentYear": "2016",
     "stars": 1
    }
   },
   {
-   "en": "deserve",
-   "ipa": "/dɪˈzɜːrv/",
-   "pos": "v.",
+   "en": "session",
+   "ipa": "/ˈsɛʃən/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "~을 받을 자격이 있다, ~을 마땅히 받다",
-     "ex": "Scientists whose findings are publicly misrepresented sometimes deserve recognition for correcting the record.",
-     "tr": "연구 결과가 공공에서 잘못 전달되는 과학자들은 때로 기록을 바로잡는 것에 대해 인정을 받을 자격이 있다.",
-     "src": "2022 6월모평 20번"
+     "pos": "n.",
+     "ko": "(특정 활동을 위한) 시간, 세션, 회기",
+     "ex": "She often complained about the difficulty of the exercises and occasionally skipped her training sessions.",
+     "tr": "그녀는 종종 운동의 어려움에 대해 불평하며 훈련 세션을 가끔 빠지기도 했다.",
+     "src": "2019 6월모평 19번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(의회·법원 등의) 개회, 회의"
     }
    ],
    "syn": [
-    "merit",
-    "warrant",
-    "earn"
+    "meeting",
+    "sitting",
+    "period"
    ],
-   "deriv": [
-    "deserving (adj.)",
-    "deserved (adj.)",
-    "deservedly (adv.)"
-   ],
+   "deriv": [],
    "roots": [
     {
-     "part": "de-",
-     "mean": "완전히"
-    },
-    {
-     "part": "serv",
-     "mean": "봉사하다"
+     "part": "sessio",
+     "mean": "앉음 (from sedere)"
     }
    ],
-   "etymHint": "de(완전히)+serv(봉사하다) → 충분히 봉사하다 → ~받을 자격이 있다",
+   "etymHint": "sessio(앉음) → 앉아서 진행하는 모임 → 회기·세션",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 5,
+    "count": 7,
+    "exams": 4,
     "recentYear": "2022",
     "stars": 1
    }
   },
   {
-   "en": "slippery",
-   "ipa": "/ˈslɪpəri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "미끄러운; 믿기 어려운",
-     "ex": "The synthetic coating applied to modern cookware creates an extremely slippery surface that prevents food from sticking.",
-     "tr": "현대 조리기구에 적용되는 합성 코팅은 음식이 달라붙는 것을 막는 매우 미끄러운 표면을 만든다.",
-     "src": "2015 9월모평 31번"
-    }
-   ],
-   "syn": [
-    "slick",
-    "smooth",
-    "greasy"
-   ],
-   "deriv": [
-    "slipperiness (n.)",
-    "slip (v./n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "imitation",
-   "ipa": "/ˌɪmɪˈteɪʃən/",
+   "en": "collector",
+   "ipa": "/kəˈlɛktər/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "모방, 모작",
-     "ex": "Even when a work of art closely resembles its source, the act of creation goes beyond mere imitation.",
-     "tr": "예술 작품이 원본과 매우 닮았더라도, 창작 행위는 단순한 모방을 넘어선다.",
-     "src": "2013 6월모평 45번"
+     "ko": "수집가, 징수원",
+     "ex": "Once dealers understand what a particular collector is looking for, they can seek out specific pieces to complete the collection.",
+     "tr": "딜러들이 특정 수집가가 무엇을 찾고 있는지 파악하면, 컬렉션을 완성할 특정 작품을 적극적으로 찾아나설 수 있다.",
+     "src": "2025 9월모평 35번"
     }
    ],
    "syn": [
-    "copy",
-    "mimicry",
-    "reproduction"
+    "accumulator",
+    "gatherer"
    ],
    "deriv": [
-    "imitate (v.)",
-    "imitative (adj.)",
-    "imitator (n.)"
+    "collect (v.)",
+    "collection (n.)",
+    "collective (adj.)"
    ],
    "roots": [
     {
-     "part": "imit",
-     "mean": "모방하다"
+     "part": "col-",
+     "mean": "함께"
+    },
+    {
+     "part": "legere",
+     "mean": "모으다·선택하다"
     }
    ],
-   "etymHint": "imit(모방하다) → 모방하는 행위 → 모방",
+   "etymHint": "col(함께) + legere(모으다) → 함께 모으다 → 수집가",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2018",
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2027",
     "stars": 1
    }
   },
   {
-   "en": "shortage",
-   "ipa": "/ˈʃɔːrtɪdʒ/",
+   "en": "disposal",
+   "ipa": "/dɪˈspoʊzəl/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "부족, 결핍",
-     "ex": "An excessive focus on current food production may inadvertently create serious food shortages in the future.",
-     "tr": "현재의 식량 생산에 지나치게 집중하면 미래에 심각한 식량 부족을 의도치 않게 초래할 수 있다.",
-     "src": "2012 9월모평 41번"
-    }
-   ],
-   "syn": [
-    "scarcity",
-    "deficit",
-    "lack"
-   ],
-   "deriv": [
-    "short (adj.)",
-    "shorten (v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "possession",
-   "ipa": "/pəˈzeʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "소유, 소유물",
-     "ex": "Even incomplete possession of self-control helps individuals break free from being driven solely by their immediate environment.",
-     "tr": "자기 통제력의 불완전한 소유만으로도 개인이 즉각적인 환경에만 이끌리는 상태에서 벗어나는 데 도움이 된다.",
-     "src": "2025 수능 32번"
+     "ko": "처분, 처리, 폐기",
+     "ex": "Reprocessing nuclear waste has proven costly and may actually worsen the challenge of safe disposal.",
+     "tr": "핵폐기물 재처리는 비용이 많이 드는 것으로 판명되었으며, 안전한 처리의 어려움을 실제로 악화시킬 수 있다.",
+     "src": "2019 9월모평 24번"
     },
     {
      "pos": "n.",
-     "ko": "점유; 소지품"
+     "ko": "(at one's disposal) 마음대로 쓸 수 있는"
     }
    ],
    "syn": [
-    "ownership",
-    "holding",
-    "belonging"
+    "discarding",
+    "removal",
+    "elimination"
    ],
    "deriv": [
-    "possess (v.)",
-    "possessive (adj.)",
-    "possessor (n.)"
+    "dispose (v.)",
+    "disposable (adj.)"
    ],
    "roots": [
     {
-     "part": "pot",
-     "mean": "힘, 능력"
+     "part": "dis-",
+     "mean": "분리"
     },
     {
-     "part": "sess",
-     "mean": "앉다, 보유하다"
-    }
-   ],
-   "etymHint": "pot/sess(보유하다) → 무언가를 보유하는 것 → 소유",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "capture",
-   "ipa": "/ˈkæptʃər/",
-   "pos": "v./n.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "포착하다, 담아내다; 포획하다",
-     "ex": "Simple category labels fail to capture the complexity of who is doing what in a given interaction.",
-     "tr": "단순한 범주 레이블은 특정 상호작용에서 누가 무엇을 하는지의 복잡성을 포착하지 못한다.",
-     "src": "2024 9월모평 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "포획, 포착"
-    }
-   ],
-   "syn": [
-    "seize",
-    "grasp",
-    "convey"
-   ],
-   "deriv": [
-    "captive (adj./n.)",
-    "captivate (v.)",
-    "captivity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "capt",
-     "mean": "잡다"
-    }
-   ],
-   "etymHint": "capt(잡다) → 잡아내다 → 포착하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "embrace",
-   "ipa": "/ɪmˈbreɪs/",
-   "pos": "v./n.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "받아들이다, 포용하다; 껴안다",
-     "ex": "Researchers achieve more meaningful results when they focus deeply rather than trying to embrace every field simultaneously.",
-     "tr": "연구자들은 모든 분야를 동시에 포용하려 하기보다 깊이 집중할 때 더 의미 있는 결과를 얻는다.",
-     "src": "2024 수능 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "포옹; 수용"
-    }
-   ],
-   "syn": [
-    "adopt",
-    "accept",
-    "incorporate"
-   ],
-   "deriv": [
-    "embracing (adj.)",
-    "embracement (n.)"
-   ],
-   "roots": [
-    {
-     "part": "em-",
-     "mean": "안으로"
-    },
-    {
-     "part": "brace",
-     "mean": "팔"
-    }
-   ],
-   "etymHint": "em(안으로)+brace(팔) → 팔 안으로 끌어당기다 → 껴안다, 받아들이다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "anticipation",
-   "ipa": "/ænˌtɪsɪˈpeɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "기대, 예상, 설렘",
-     "ex": "Many novice climbers feel a sense of nervous anticipation before attempting their very first ascent.",
-     "tr": "많은 초보 등반가들은 처음으로 오르기 전에 긴장된 기대감을 느낀다.",
-     "src": "2020 9월모평 18번"
-    }
-   ],
-   "syn": [
-    "expectation",
-    "eagerness",
-    "excitement"
-   ],
-   "deriv": [
-    "anticipate (v.)",
-    "anticipatory (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "anti-",
-     "mean": "앞서, 미리"
-    },
-    {
-     "part": "cap",
-     "mean": "잡다"
-    }
-   ],
-   "etymHint": "anti(미리)+cap(잡다) → 미리 잡다 → 예상하다, 기대하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "orientation",
-   "ipa": "/ˌɔːriənˈteɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "오리엔테이션, 방향; 성향",
-     "ex": "Missing the orientation session meant she could not receive the necessary training before starting her volunteer work.",
-     "tr": "오리엔테이션 세션에 참석하지 못해 그녀는 자원봉사 활동을 시작하기 전에 필요한 교육을 받을 수 없었다.",
-     "src": "2017 6월모평 18번"
-    },
-    {
-     "pos": "n.",
-     "ko": "방향 감각; 성향, 지향"
-    }
-   ],
-   "syn": [
-    "direction",
-    "introduction",
-    "alignment"
-   ],
-   "deriv": [
-    "orient (v.)",
-    "oriented (adj.)",
-    "disorientate (v.)"
-   ],
-   "roots": [
-    {
-     "part": "orient",
-     "mean": "동쪽, 해가 뜨는 방향"
-    }
-   ],
-   "etymHint": "orient(해가 뜨는 방향) → 방향을 잡다 → 방향 설정, 오리엔테이션",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "opposition",
-   "ipa": "/ˌɒpəˈzɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "반대, 대립; 반대 세력",
-     "ex": "Live performing arts exist in opposition to mass-distributed recordings, offering an irreplaceable sense of immediacy.",
-     "tr": "라이브 공연 예술은 대량 배포된 녹화물에 대립하여 존재하며, 대체할 수 없는 즉각성의 감각을 제공한다.",
-     "src": "2026 수능 40번"
-    }
-   ],
-   "syn": [
-    "resistance",
-    "objection",
-    "contrast"
-   ],
-   "deriv": [
-    "oppose (v.)",
-    "opponent (n.)",
-    "opposite (adj./n.)"
-   ],
-   "roots": [
-    {
-     "part": "op-",
-     "mean": "맞서"
-    },
-    {
-     "part": "pos",
+     "part": "ponere",
      "mean": "놓다"
     }
    ],
-   "etymHint": "op(맞서)+pos(놓다) → 맞서서 놓다 → 반대",
+   "etymHint": "dis(분리) + ponere(놓다) → 따로 놓아버리다 → 처분",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2026",
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2019",
     "stars": 1
    }
   },
   {
-   "en": "wander",
-   "ipa": "/ˈwɒndər/",
+   "en": "discourage",
+   "ipa": "/dɪsˈkʌrɪdʒ/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "배회하다, 거닐다; (생각이) 흘러가다",
-     "ex": "Freed from her daily obligations, her mind began to wander through memories of the scenic riverside she had visited.",
-     "tr": "일상의 의무에서 벗어나자 그녀의 마음은 방문했던 아름다운 강변의 기억 속을 헤매기 시작했다.",
-     "src": "2018 6월모평 19번"
+     "ko": "낙담시키다, 의욕을 꺾다; 막다",
+     "ex": "Managers expected the workers who had been laid off to feel defeated and deeply discouraged about the future.",
+     "tr": "관리자들은 해고된 근로자들이 패배감을 느끼고 미래에 대해 깊이 낙담할 것이라고 예상했다.",
+     "src": "2012 9월모평 42번"
+    },
+    {
+     "pos": "v.",
+     "ko": "(행동을) 단념하게 하다, 억제하다"
     }
    ],
    "syn": [
-    "roam",
-    "stray",
-    "drift"
+    "dishearten",
+    "deter",
+    "demoralize"
    ],
    "deriv": [
-    "wanderer (n.)",
-    "wandering (adj./n.)"
+    "discouragement (n.)",
+    "discouraging (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "dis-",
+     "mean": "반대·제거"
+    },
+    {
+     "part": "coraticum",
+     "mean": "용기 (from cor, 심장)"
+    }
+   ],
+   "etymHint": "dis(제거) + coraticum(용기) → 용기를 없애다 → 낙담시키다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "scarce",
+   "ipa": "/skɛrs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "부족한, 드문, 희귀한",
+     "ex": "In traditional societies where resources remained scarce, consumption was collectively managed and seasonally regulated.",
+     "tr": "자원이 여전히 부족했던 전통 사회에서는 소비가 공동으로 관리되고 계절적으로 조절되었다.",
+     "src": "2015 9월모평 23번"
+    }
+   ],
+   "syn": [
+    "rare",
+    "insufficient",
+    "limited"
+   ],
+   "deriv": [
+    "scarcity (n.)",
+    "scarcely (adv.)"
    ],
    "roots": [],
    "etymHint": "",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2022",
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2019",
     "stars": 1
    }
   },
   {
-   "en": "unsuccessful",
-   "ipa": "/ˌʌnsəkˈsesfl/",
+   "en": "lag",
+   "ipa": "/læɡ/",
+   "pos": "v./n.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "뒤처지다, 뒤떨어지다",
+     "ex": "Even the winning team can make errors and lag behind their opponents during certain periods of the match.",
+     "tr": "우승 팀조차도 실수를 하고 경기 특정 구간에서 상대에게 뒤처질 수 있다.",
+     "src": "2015 수능 18번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(시간적) 지연, 격차"
+    }
+   ],
+   "syn": [
+    "fall behind",
+    "trail",
+    "delay"
+   ],
+   "deriv": [
+    "lagging (adj.)",
+    "jet lag (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 7,
+    "exams": 4,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "unstable",
+   "ipa": "/ʌnˈsteɪbəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "성공하지 못한, 실패한",
-     "ex": "Many unsuccessful individuals come from highly accomplished families, suggesting that success is not simply inherited.",
-     "tr": "성공하지 못한 많은 사람들이 매우 뛰어난 가정 출신으로, 성공은 단순히 유전되지 않음을 시사한다.",
-     "src": "2013 수능 39번"
+     "ko": "불안정한, 변동이 심한",
+     "ex": "Agricultural markets are inherently unstable because harvests fluctuate with unpredictable weather and environmental conditions.",
+     "tr": "농업 시장은 예측할 수 없는 기상 및 환경 조건에 따라 수확량이 변동하기 때문에 본질적으로 불안정하다.",
+     "src": "2026 수능 31번"
     }
    ],
    "syn": [
-    "failed",
-    "ineffective",
-    "fruitless"
+    "volatile",
+    "unsteady",
+    "precarious"
    ],
    "deriv": [
-    "success (n.)",
-    "succeed (v.)",
-    "successful (adj.)"
+    "instability (n.)",
+    "stabilize (v.)",
+    "stability (n.)"
    ],
    "roots": [
     {
@@ -552,256 +812,16 @@
      "mean": "부정"
     },
     {
-     "part": "sub-",
-     "mean": "아래에"
-    },
-    {
-     "part": "ced",
-     "mean": "가다"
+     "part": "stabilis",
+     "mean": "안정적인 (from stare)"
     }
    ],
-   "etymHint": "un(부정)+sub(아래)+ced(가다) → 뒤따르지 못한 → 성공하지 못한",
+   "etymHint": "un(부정) + stabilis(안정적인) → 안정적이지 않은 → 불안정한",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "vacuum",
-   "ipa": "/ˈvækjuəm/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "진공; 공백",
-     "ex": "An AI vacuum-cleaning agent that anticipates where dirt will accumulate performs more efficiently than one that does not.",
-     "tr": "먼지가 쌓일 곳을 미리 예측하는 AI 청소 로봇은 그렇지 않은 것보다 더 효율적으로 작동한다.",
-     "src": "2024 6월모평 30번"
-    },
-    {
-     "pos": "v.",
-     "ko": "진공청소기로 청소하다"
-    }
-   ],
-   "syn": [
-    "void",
-    "emptiness"
-   ],
-   "deriv": [
-    "vacuous (adj.)",
-    "vacuity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "vacu",
-     "mean": "비어있는"
-    }
-   ],
-   "etymHint": "vacu(비어있는) → 비어있는 공간 → 진공",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "breakthrough",
-   "ipa": "/ˈbreɪkθruː/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "돌파구, 획기적 발전",
-     "ex": "Each individual achievement in science represents a potential breakthrough that can benefit the entire research community.",
-     "tr": "과학에서의 각 개인적 성취는 전체 연구 공동체에 이익이 될 수 있는 잠재적 돌파구를 나타낸다.",
-     "src": "2011 수능 40번"
-    }
-   ],
-   "syn": [
-    "advance",
-    "discovery",
-    "progress"
-   ],
-   "deriv": [
-    "break (v./n.)",
-    "break through (phr.v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2015",
-    "stars": 1
-   }
-  },
-  {
-   "en": "overlook",
-   "ipa": "/ˌoʊvərˈlʊk/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "간과하다, 못 본 척하다; 내려다보다",
-     "ex": "What researchers have overlooked is the crucial role that the environment plays in shaping an organism's behavior.",
-     "tr": "연구자들이 간과한 것은 환경이 유기체의 행동을 형성하는 데 있어 중요한 역할을 한다는 점이다.",
-     "src": "2015 6월모평 40번"
-    },
-    {
-     "pos": "v.",
-     "ko": "내려다보다, 전망하다"
-    }
-   ],
-   "syn": [
-    "miss",
-    "neglect",
-    "disregard"
-   ],
-   "deriv": [
-    "overlooked (adj.)",
-    "oversight (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "worthless",
-   "ipa": "/ˈwɜːrθləs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "가치 없는, 쓸모없는",
-     "ex": "A rule that no one can follow is essentially worthless and serves no practical purpose.",
-     "tr": "아무도 따를 수 없는 규칙은 본질적으로 가치가 없으며 실질적인 목적을 수행하지 못한다.",
-     "src": "2024 9월모평 33번"
-    }
-   ],
-   "syn": [
-    "useless",
-    "valueless",
-    "futile"
-   ],
-   "deriv": [
-    "worthlessness (n.)"
-   ],
-   "roots": [
-    {
-     "part": "worth",
-     "mean": "가치"
-    }
-   ],
-   "etymHint": "worth(가치) + -less(없는) → 가치 없는",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "exhibit",
-   "ipa": "/ɪɡˈzɪbɪt/",
-   "pos": "v./n.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "보이다, 드러내다; 전시하다",
-     "ex": "Under stress, people often exhibit behaviors that are inconsistent with their usual character.",
-     "tr": "스트레스를 받으면 사람들은 평소 성격과 일치하지 않는 행동을 드러내는 경우가 많다.",
-     "src": "2017 6월모평 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "전시물, 전시회"
-    }
-   ],
-   "syn": [
-    "display",
-    "demonstrate",
-    "manifest"
-   ],
-   "deriv": [
-    "exhibition (n.)",
-    "exhibitor (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ex-",
-     "mean": "밖으로"
-    },
-    {
-     "part": "hibit",
-     "mean": "잡다, 보유하다"
-    }
-   ],
-   "etymHint": "ex-(밖으로) + hibit(잡다) → 밖으로 꺼내 보이다 → 드러내다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "assign",
-   "ipa": "/əˈsaɪn/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "배정하다, 할당하다; (과제를) 부여하다",
-     "ex": "When a task is assigned in vague terms, students have greater freedom to approach it creatively.",
-     "tr": "과제가 막연한 표현으로 부여되면, 학생들은 창의적으로 접근할 더 큰 자유를 갖는다.",
-     "src": "2010 수능 38번"
-    }
-   ],
-   "syn": [
-    "allocate",
-    "designate",
-    "delegate"
-   ],
-   "deriv": [
-    "assignment (n.)",
-    "assignee (n.)"
-   ],
-   "roots": [
-    {
-     "part": "as-",
-     "mean": "~에 향하여"
-    },
-    {
-     "part": "sign",
-     "mean": "표시, 인장"
-    }
-   ],
-   "etymHint": "as-(~에 향하여) + sign(표시) → 표시를 해서 배정하다 → 할당하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 5,
+    "count": 7,
+    "exams": 4,
     "recentYear": "2026",
     "stars": 1
    }

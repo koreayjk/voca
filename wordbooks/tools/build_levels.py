@@ -38,6 +38,24 @@ LVRANK = {'A1':0, 'A2':1, 'B1':2, 'B2':3, 'C1':4, 'C2':5}
 N_BOOKS = 12
 PER_DAY = 20
 
+# ── 최상급 보충 60개 ────────────────────────────────────────────
+# 12권 × 20일 × 20개 = 4,800 인데 원본이 4,740 이라 60개가 모자란다.
+# 토플 단어장(아직 미발행)의 C1 1,243개 중 '수능 최상급·원서' 성격에 맞는
+# 것만 손으로 골랐다. electrode/calculus/alkali 같은 이공계 전문어는 뺐고,
+# 이미 있는 단어의 단순 파생형(inhibit↔inhibition)도 피했다.
+# 이 60개는 C1 으로 들어가므로 Lv.11~12 에 배치된다.
+ADD_SRC = ['toefl2', 'toefl3']
+ADD = ['indispensable','causation','influx','infringement','inhibit','initiate',
+       'innumerable','apocalypse','asceticism','atheism','clergy','artisan',
+       'domesticate','commandment','apparition','congregation','chronology',
+       'anthology','compatibility','contemplation','citadel','convent','agitation',
+       'bibliography','cornerstone','creed','coronation','amnesia','abolition',
+       'characterization','deity','apathetic','accountability','cliche','devout',
+       'acquit','disciple','perishable','amnesty','epilogue','brilliance','cleave',
+       'facade','interrelated','divinity','dominion','quarry','attribution','annex',
+       'excerpt','intersect','antiquity','academia','gospel','dynastic','reap',
+       'farce','connoisseur','imposing','afterlife']
+
 # 단어가 아니라 고유명사다. 기출 지문에서 뽑히면서 섞여 들어왔다.
 # (bach=작곡가, burke/peterson/robinson=사람 이름) 재편하는 김에 뺀다.
 DROP = {'bach', 'burke', 'peterson', 'robinson'}
@@ -64,6 +82,21 @@ def load_all():
                 seen[key] = True
                 lv = (w.get('level') or 'B1').upper()
                 rows.append({'sort': (LVRANK.get(lv, 2), rank, day, i), 'w': w, 'lv': lv})
+    # 보충 단어 — 원본 여섯 권 뒤(rank 99)에 붙여 같은 CEFR 안에서 맨 끝에 오게
+    want = {w: i for i, w in enumerate(ADD)}
+    found = {}
+    for pre in ADD_SRC:
+        for f in glob.glob(str(ROOT / f'suneung-{pre}-day*.json')):
+            for w in json.load(open(f, encoding='utf-8'))['words']:
+                k = (w.get('en') or '').lower().strip()
+                if k in want and k not in seen and k not in found:
+                    found[k] = w
+    missing = [w for w in ADD if w not in found]
+    assert not missing, f'보충 단어를 못 찾았다: {missing}'
+    for k, w in found.items():
+        lv = (w.get('level') or 'C1').upper()
+        rows.append({'sort': (LVRANK.get(lv, 4), 99, 0, want[k]), 'w': w, 'lv': lv})
+
     rows.sort(key=lambda r: r['sort'])
     return rows, dup
 

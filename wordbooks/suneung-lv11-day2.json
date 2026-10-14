@@ -4,22 +4,22 @@
  "day": 2,
  "words": [
   {
-   "en": "oblique",
-   "ipa": "/əˈbliːk/",
+   "en": "autocratic",
+   "ipa": "/ˌɔːtəˈkrætɪk/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "간접적인, 비스듬한",
-     "ex": "Rather than confronting the issue directly, she offered an oblique critique through metaphor.",
-     "tr": "문제를 직접 대면하는 대신 그녀는 은유를 통해 간접적인 비판을 제시했다.",
+     "ko": "독재적인, 전제적인",
+     "ex": "The autocratic ruler dismissed parliament and consolidated power within the executive branch.",
+     "tr": "독재적인 통치자는 의회를 해산하고 행정부 내에 권력을 집중시켰다.",
      "src": ""
     }
    ],
    "syn": [
-    "indirect",
-    "slanted",
-    "circuitous"
+    "despotic",
+    "tyrannical",
+    "authoritarian"
    ],
    "deriv": [],
    "roots": [],
@@ -34,65 +34,63 @@
    }
   },
   {
-   "en": "sufficiency",
-   "ipa": "/səˈfɪʃənsi/",
+   "en": "patch",
+   "ipa": "/pætʃ/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "충분함, 자급자족",
-     "ex": "The notion of economic self-sufficiency is an impossible fantasy in a world defined by complex interdependence.",
-     "tr": "경제적 자급자족의 개념은 복잡한 상호의존으로 정의되는 세계에서는 불가능한 환상이다.",
-     "src": "2025 9월모평 34번"
+     "ko": "(작은) 구역, 조각",
+     "ex": "As forests are fragmented, wildlife is confined to isolated patches of habitat that can no longer sustain viable populations.",
+     "tr": "삼림이 단편화됨에 따라 야생 동물은 더 이상 생존 가능한 개체군을 부양할 수 없는 고립된 서식지 구역에 갇히게 된다.",
+     "src": "2011 수능 35번"
+    },
+    {
+     "pos": "v.",
+     "ko": "때우다, 수선하다"
+    },
+    {
+     "pos": "n.",
+     "ko": "덧댄 천, 반창고"
     }
    ],
    "syn": [
-    "adequacy",
-    "enough",
-    "self-reliance"
+    "plot",
+    "tract",
+    "section"
    ],
    "deriv": [
-    "sufficient (adj.)",
-    "sufficiently (adv.)",
-    "insufficient (adj.)"
+    "patchy (adj.)",
+    "patchwork (n.)"
    ],
-   "roots": [
-    {
-     "part": "suf-",
-     "mean": "아래에서"
-    },
-    {
-     "part": "fic",
-     "mean": "만들다"
-    }
-   ],
-   "etymHint": "suf(아래에서)+fic(만들다) → 아래에서 받쳐 만들다 → 충분함",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2025",
+    "recentYear": "2021",
     "stars": 1
    }
   },
   {
-   "en": "fallacious",
-   "ipa": "/fəˈleɪʃəs/",
+   "en": "disproportionate",
+   "ipa": "/ˌdɪsprəˈpɔːrʃənɪt/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "허위의, 오류에 근거한",
-     "ex": "The study's fallacious premises undermined every conclusion it claimed to establish.",
-     "tr": "연구의 허위 전제는 그것이 확립하고자 한 모든 결론을 훼손했다.",
+     "ko": "불균형적인, 과도한",
+     "ex": "Minority communities bore a disproportionate burden of the economic downturn.",
+     "tr": "소수 집단 공동체는 경제 침체의 불균형적으로 큰 부담을 짊어졌다.",
      "src": ""
     }
    ],
    "syn": [
-    "erroneous",
-    "specious",
-    "spurious"
+    "unequal",
+    "excessive",
+    "inordinate"
    ],
    "deriv": [],
    "roots": [],
@@ -107,212 +105,64 @@
    }
   },
   {
-   "en": "conducive",
-   "ipa": "/kənˈdjuːsɪv/",
+   "en": "paradoxical",
+   "ipa": "/ˌpærəˈdɒksɪkl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "도움이 되는, 유리한 (~에 기여하는)",
-     "ex": "The rhythmic motion of a moving train proves far more conducive to introspective thought than a static indoor environment.",
-     "tr": "움직이는 기차의 리드미컬한 움직임은 정적인 실내 환경보다 내성적인 사고에 훨씬 더 도움이 된다는 것이 입증된다.",
-     "src": "2011 수능 28번"
+     "ko": "역설적인, 모순되는 것 같은",
+     "ex": "It seems paradoxical that sports journalism, consumed by millions daily, is rarely taken seriously as a legitimate literary form.",
+     "tr": "스포츠 저널리즘이 매일 수백만 명에게 소비되면서도 정당한 문학 형식으로 진지하게 받아들여지지 않는다는 것은 역설적으로 보인다.",
+     "src": "2023 수능 31번"
     }
    ],
    "syn": [
-    "favourable",
-    "helpful",
-    "beneficial"
+    "contradictory",
+    "self-contradictory",
+    "anomalous"
    ],
    "deriv": [
-    "conduce (v.)"
+    "paradox (n.)",
+    "paradoxically (adv.)"
    ],
    "roots": [
     {
-     "part": "con-",
-     "mean": "함께"
+     "part": "para",
+     "mean": "반하여"
     },
     {
-     "part": "duc",
-     "mean": "이끌다"
+     "part": "dox",
+     "mean": "의견, 생각"
     }
    ],
-   "etymHint": "con(함께)+duc(이끌다) → 함께 이끌어주다 → 도움이 되는",
+   "etymHint": "para(반하여)+dox(의견) → 통념에 반하는 생각 → 역설적인",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2011",
+    "recentYear": "2023",
     "stars": 1
    }
   },
   {
-   "en": "correlation",
-   "ipa": "/ˌkɒrəˈleɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "상관관계",
-     "ex": "The strong correlation between shoe size and vocabulary reflects age rather than any meaningful link between the two variables.",
-     "tr": "신발 크기와 어휘력 사이의 강한 상관관계는 두 변수 간의 어떤 의미 있는 연결보다는 나이를 반영한다.",
-     "src": "2016 9월모평 33번"
-    }
-   ],
-   "syn": [
-    "relationship",
-    "association",
-    "connection"
-   ],
-   "deriv": [
-    "correlate (v.)",
-    "correlational (adj.)",
-    "correlate (n.)"
-   ],
-   "roots": [
-    {
-     "part": "cor-",
-     "mean": "함께"
-    },
-    {
-     "part": "relat",
-     "mean": "관련짓다"
-    }
-   ],
-   "etymHint": "cor(함께)+relat(관련짓다) → 함께 관련짓다 → 상관관계",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "ameliorate",
-   "ipa": "/əˈmiːliəreɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "개선하다, 완화하다",
-     "ex": "The government launched several initiatives to ameliorate the living conditions of rural communities.",
-     "tr": "정부는 농촌 지역 사회의 생활 여건을 개선하기 위한 여러 계획을 시작했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "improve",
-    "alleviate",
-    "mitigate"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "dispel",
-   "ipa": "/dɪˈspɛl/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "불식시키다, 제거하다",
-     "ex": "The longitudinal study dispelled the widely held assumption that cognitive decline is inevitable in middle age.",
-     "tr": "종단 연구는 인지 감소가 중년에 불가피하다는 널리 퍼진 가정을 불식시켰다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "dissipate",
-    "refute",
-    "banish"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "mandatory",
-   "ipa": "/ˈmændəˌtɔːri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "의무적인, 강제적인",
-     "ex": "Mandatory disclosure of ingredients allows consumers to make genuinely informed dietary choices.",
-     "tr": "성분의 의무적 공개는 소비자들이 진정으로 정보에 입각한 식이 선택을 할 수 있게 한다.",
-     "src": "2018 9월모평 23번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "법으로 정해진"
-    }
-   ],
-   "syn": [
-    "compulsory",
-    "obligatory",
-    "required"
-   ],
-   "deriv": [
-    "mandate (n./v.)",
-    "mandatorily (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "mand",
-     "mean": "명령하다"
-    },
-    {
-     "part": "-ory",
-     "mean": "~의 성격을 가진"
-    }
-   ],
-   "etymHint": "mand(명령하다)+ory(형용사 접미사) → 명령된 → 의무적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "irony",
-   "ipa": "/ˈaɪrəni/",
+   "en": "complacency",
+   "ipa": "/kəmˈpleɪsənsi/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "반어; 아이러니",
-     "ex": "The irony of a peace prize being awarded to a wartime leader was not lost on commentators.",
-     "tr": "전시 지도자에게 평화상이 수여된다는 아이러니는 평론가들의 눈을 피해가지 않았다.",
+     "ko": "자기만족, 안주하는 태도",
+     "ex": "Complacency born of early success blinded the company to emerging competitive threats.",
+     "tr": "초기 성공에서 비롯된 자기만족은 회사가 새로운 경쟁 위협을 보지 못하게 했다.",
      "src": ""
     }
    ],
    "syn": [
-    "paradox",
-    "incongruity",
-    "sarcasm"
+    "self-satisfaction",
+    "smugness",
+    "contentment"
    ],
    "deriv": [],
    "roots": [],
@@ -327,90 +177,43 @@
    }
   },
   {
-   "en": "harmonious",
-   "ipa": "/hɑːrˈmoʊniəs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "조화로운, 화목한",
-     "ex": "A harmonious relationship between employer and staff depends on clear and consistent communication.",
-     "tr": "고용주와 직원 간의 조화로운 관계는 명확하고 일관된 소통에 달려 있다.",
-     "src": ""
-    },
-    {
-     "pos": "adj.",
-     "ko": "(소리·색 등이) 잘 어울리는"
-    }
-   ],
-   "syn": [
-    "concordant",
-    "congenial",
-    "amicable"
-   ],
-   "deriv": [
-    "harmony (n.)",
-    "harmonize (v.)",
-    "harmoniously (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "harmon",
-     "mean": "조화, 연결 (그리스 harmonia)"
-    },
-    {
-     "part": "-ious",
-     "mean": "~한 성질의"
-    }
-   ],
-   "etymHint": "harmonia(조화)+ious(형용사 접미사) → 조화로운",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "meditation",
-   "ipa": "/ˌmedɪˈteɪʃən/",
+   "en": "asymmetry",
+   "ipa": "/eɪˈsɪmɪtri/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "명상, 묵상",
-     "ex": "Regular meditation has been shown to lower cortisol levels and improve emotional regulation.",
-     "tr": "규칙적인 명상은 코르티솔 수치를 낮추고 감정 조절을 향상시키는 것으로 밝혀졌다.",
-     "src": "2013 6월모평 26번"
-    },
-    {
-     "pos": "n.",
-     "ko": "깊은 사색, 심사숙고"
+     "ko": "비대칭, 불균형",
+     "ex": "The asymmetry between male and female dispersal patterns leads females to warn nearby kin while males rarely emit alarm calls.",
+     "tr": "수컷과 암컷의 분산 패턴 사이의 비대칭성은 암컷이 근처 친족에게 경고하게 하는 반면 수컷은 경보 신호를 거의 내지 않게 한다.",
+     "src": "2013 수능 25번"
     }
    ],
    "syn": [
-    "contemplation",
-    "reflection",
-    "mindfulness"
+    "imbalance",
+    "inequality",
+    "disproportion"
    ],
    "deriv": [
-    "meditate (v.)",
-    "meditative (adj.)",
-    "meditator (n.)"
+    "asymmetric (adj.)",
+    "asymmetrical (adj.)",
+    "symmetry (n.)"
    ],
    "roots": [
     {
-     "part": "medit",
-     "mean": "숙고하다"
+     "part": "a",
+     "mean": "없음"
     },
     {
-     "part": "-ation",
-     "mean": "행위, 상태"
+     "part": "sym",
+     "mean": "같이"
+    },
+    {
+     "part": "metr",
+     "mean": "측정"
     }
    ],
-   "etymHint": "medit(숙고하다)+ation(명사 접미사) → 깊이 생각하는 행위 → 명상",
+   "etymHint": "a(없음)+sym(같이)+metr(측정) → 같이 측정되지 않음 → 비대칭",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -421,72 +224,68 @@
    }
   },
   {
-   "en": "disguise",
-   "ipa": "/dɪsˈɡaɪz/",
+   "en": "emit",
+   "ipa": "/ɪˈmɪt/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "위장하다, 변장하다",
-     "ex": "Retailers often disguise the commercial nature of gift packaging by emphasizing its personal touch.",
-     "tr": "소매업자들은 개인적인 감성을 강조함으로써 선물 포장의 상업적 성격을 종종 위장한다.",
-     "src": "2012 6월모평 24번"
-    },
-    {
-     "pos": "n.",
-     "ko": "변장, 위장"
+     "ko": "방출하다, 내다, 발산하다",
+     "ex": "Leaders who habitually emit negative energy tend to repel their followers and erode the cohesion of their teams.",
+     "tr": "부정적인 에너지를 습관적으로 발산하는 리더들은 부하들을 멀어지게 하고 팀의 응집력을 약화시키는 경향이 있다.",
+     "src": "2016 9월모평 22번"
     },
     {
      "pos": "v.",
-     "ko": "(감정·사실을) 숨기다"
+     "ko": "(소리·빛·냄새를) 내다"
     }
    ],
    "syn": [
-    "camouflage",
-    "conceal",
-    "mask"
+    "release",
+    "discharge",
+    "radiate"
    ],
    "deriv": [
-    "disguised (adj.)",
-    "disguisement (n.)"
+    "emission (n.)",
+    "emitter (n.)"
    ],
    "roots": [
     {
-     "part": "dis-",
-     "mean": "반대, 제거"
+     "part": "e",
+     "mean": "밖으로"
     },
     {
-     "part": "guise",
-     "mean": "외모, 모양"
+     "part": "mit",
+     "mean": "보내다"
     }
    ],
-   "etymHint": "dis(반대)+guise(외모) → 본래 외모를 없애다 → 위장하다",
+   "etymHint": "e(밖으로)+mit(보내다) → 밖으로 내보내다 → 방출하다",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2012",
+    "recentYear": "2016",
     "stars": 1
    }
   },
   {
-   "en": "odious",
-   "ipa": "/ˈoʊdiəs/",
+   "en": "didactic",
+   "ipa": "/daɪˈdæk.tɪk/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "가증스러운, 혐오스러운",
-     "ex": "The philosopher argued that certain forms of discrimination are not merely wrong but odious.",
-     "tr": "그 철학자는 특정 형태의 차별은 단순히 잘못된 것이 아니라 가증스럽다고 주장했다.",
+     "ko": "교훈적인, 지나치게 가르치려는",
+     "ex": "Critics found the novel too didactic, feeling that the author's moral message overwhelmed the narrative.",
+     "tr": "비평가들은 소설이 너무 교훈적이라고 느끼며, 작가의 도덕적 메시지가 서사를 압도한다고 느꼈다.",
      "src": ""
     }
    ],
    "syn": [
-    "abhorrent",
-    "detestable",
-    "repugnant"
+    "instructive",
+    "preachy",
+    "moralistic"
    ],
    "deriv": [],
    "roots": [],
@@ -501,116 +300,105 @@
    }
   },
   {
-   "en": "persistent",
-   "ipa": "/pərˈsɪstənt/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "지속적인, 끈질긴",
-     "ex": "Persistent inadequacies in foreign aid undermine any meaningful effort to address global food insecurity.",
-     "tr": "외국 원조의 지속적인 부족함은 세계 식량 불안을 해결하려는 모든 의미 있는 노력을 약화시킨다.",
-     "src": "2019 수능 23번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(사람이) 집요한, 포기하지 않는"
-    }
-   ],
-   "syn": [
-    "tenacious",
-    "enduring",
-    "relentless"
-   ],
-   "deriv": [
-    "persist (v.)",
-    "persistence (n.)",
-    "persistently (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "per-",
-     "mean": "완전히, 내내"
-    },
-    {
-     "part": "sist",
-     "mean": "서다, 지속하다"
-    }
-   ],
-   "etymHint": "per(내내)+sist(서다) → 계속 서 있다 → 지속적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "diffident",
-   "ipa": "/ˈdɪfɪdənt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "소심한, 자신감이 없는",
-     "ex": "Despite her expertise, she remained diffident in large professional gatherings.",
-     "tr": "그녀는 전문 지식에도 불구하고 대규모 전문가 모임에서 여전히 소심한 모습을 보였다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "timid",
-    "reticent",
-    "self-effacing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tranquility",
-   "ipa": "/træŋˈkwɪlɪti/",
+   "en": "gene",
+   "ipa": "/dʒiːn/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "평온, 고요함",
-     "ex": "The tranquility of remote national parks is increasingly threatened by the noise of recreational tourism.",
-     "tr": "외딴 국립공원의 평온함은 레크리에이션 관광의 소음으로 점점 더 위협받고 있다.",
-     "src": "2017 수능 40번"
+     "ko": "유전자",
+     "ex": "Genes interact with environmental factors throughout development, making it impossible to separate nature from nurture cleanly.",
+     "tr": "유전자는 발달 전반에 걸쳐 환경적 요인과 상호작용하므로 본성과 양육을 깔끔하게 분리하는 것이 불가능하다.",
+     "src": "2020 수능 23번"
     }
    ],
    "syn": [
-    "serenity",
-    "calm",
-    "placidity"
+    "allele",
+    "hereditary unit"
    ],
    "deriv": [
-    "tranquil (adj.)",
-    "tranquillize (v.)",
-    "tranquilly (adv.)"
+    "genetic (adj.)",
+    "genetics (n.)",
+    "genome (n.)"
    ],
    "roots": [
     {
-     "part": "tranquil",
-     "mean": "조용한 (라틴 tranquillus)"
-    },
-    {
-     "part": "-ity",
-     "mean": "상태, 성질"
+     "part": "gen",
+     "mean": "생성하다, 태어나다"
     }
    ],
-   "etymHint": "tranquillus(고요한)+ity(명사 접미사) → 고요한 상태 → 평온",
+   "etymHint": "gen(생성하다) → 생명 특성을 생성하는 단위 → 유전자",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "vilify",
+   "ipa": "/ˈvɪlɪfaɪ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "중상하다, 비방하다",
+     "ex": "The tabloids routinely vilified celebrities to sell papers, with little regard for truth.",
+     "tr": "타블로이드지는 진실에 대한 거의 고려 없이 신문을 팔기 위해 유명인들을 일상적으로 중상했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "malign",
+    "defame",
+    "slander"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "aura",
+   "ipa": "/ˈɔːrə/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "분위기, 기운, 후광",
+     "ex": "The careful use of grids and standardized symbols gives a map an aura of objective scientific authority that may be misleading.",
+     "tr": "격자와 표준화된 기호의 신중한 사용은 지도에 오해를 불러일으킬 수 있는 객관적 과학적 권위의 분위기를 부여한다.",
+     "src": "2017 수능 21번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(사람을 둘러싼) 영적 기운"
+    }
+   ],
+   "syn": [
+    "atmosphere",
+    "ambiance",
+    "mystique"
+   ],
+   "deriv": [
+    "aural (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "aura",
+     "mean": "바람, 공기"
+    }
+   ],
+   "etymHint": "aura(바람·공기) → 사람을 감싸는 기운 → 분위기, 후광",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -621,22 +409,22 @@
    }
   },
   {
-   "en": "ratification",
-   "ipa": "/ˌrætɪfɪˈkeɪʃən/",
-   "pos": "n",
+   "en": "sanguine",
+   "ipa": "/ˈsæŋɡwɪn/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "비준, 재가",
-     "ex": "The climate accord required ratification by at least two-thirds of signatory states.",
-     "tr": "기후 협정은 서명국의 최소 3분의 2에 의한 비준이 필요했다.",
+     "pos": "adj",
+     "ko": "낙관적인",
+     "ex": "Few analysts remained sanguine about the economy after the third consecutive quarter of contraction.",
+     "tr": "3분기 연속 수축 이후 경제에 대해 낙관적인 분석가는 거의 없었다.",
      "src": ""
     }
    ],
    "syn": [
-    "endorsement",
-    "confirmation",
-    "approval"
+    "optimistic",
+    "buoyant",
+    "hopeful"
    ],
    "deriv": [],
    "roots": [],
@@ -651,107 +439,105 @@
    }
   },
   {
-   "en": "cosmic",
-   "ipa": "/ˈkɒzmɪk/",
+   "en": "inborn",
+   "ipa": "/ˌɪnˈbɔːrn/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "우주의, 광대한",
-     "ex": "Scientists strive to crack the cosmic code by probing the fundamental laws that govern the universe.",
-     "tr": "과학자들은 우주를 지배하는 근본적인 법칙을 탐구함으로써 우주의 암호를 해독하려 한다.",
-     "src": "2012 9월모평 28번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "무한한, 광막한"
+     "ko": "타고난, 선천적인",
+     "ex": "Risk compensation theory proposes that humans possess an inborn tolerance for danger that adjusts behaviour in response to perceived safety.",
+     "tr": "위험 보상 이론은 인간이 지각된 안전에 반응하여 행동을 조정하는 위험에 대한 선천적 관용을 가지고 있다고 제안한다.",
+     "src": "2013 수능 45번"
     }
    ],
    "syn": [
-    "universal",
-    "celestial",
-    "astronomical"
+    "innate",
+    "congenital",
+    "inherent"
    ],
    "deriv": [
-    "cosmos (n.)",
-    "cosmically (adv.)",
-    "cosmology (n.)"
+    "inbred (adj.)"
    ],
    "roots": [
     {
-     "part": "cosm",
-     "mean": "우주, 질서 (그리스 kosmos)"
+     "part": "in",
+     "mean": "안에"
+    },
+    {
+     "part": "born",
+     "mean": "태어난"
     }
    ],
-   "etymHint": "kosmos(우주, 질서)+ic(형용사 접미사) → 우주의",
+   "etymHint": "in(안에)+born(태어난) → 태어날 때부터 안에 있는 → 선천적인",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2012",
+    "recentYear": "2013",
     "stars": 1
    }
   },
   {
-   "en": "inscription",
-   "ipa": "/ɪnˈskrɪpʃən/",
+   "en": "passageway",
+   "ipa": "/ˈpæsɪdʒweɪ/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "비문, 새겨진 글",
-     "ex": "The inscription above the entrance confirmed that the monastery had been founded in the early twelfth century.",
-     "tr": "입구 위의 비문은 그 수도원이 12세기 초에 세워졌음을 확인해 주었다.",
-     "src": "2012 9월모평 37번"
+     "ko": "통로, 복도",
+     "ex": "Information flows through narrow cognitive passageways much as water is constrained by the geometry of a channel.",
+     "tr": "정보는 물이 수로의 형태에 의해 제한되듯이 좁은 인지적 통로를 통해 흐른다.",
+     "src": "2014 6월모평 34번"
     }
    ],
    "syn": [
-    "engraving",
-    "epitaph",
-    "legend"
+    "corridor",
+    "hallway",
+    "thoroughfare"
    ],
    "deriv": [
-    "inscribe (v.)",
-    "inscribed (adj.)"
+    "passage (n.)",
+    "pass (v.)"
    ],
    "roots": [
     {
-     "part": "in-",
-     "mean": "안에"
+     "part": "pass",
+     "mean": "지나가다"
     },
     {
-     "part": "scrib",
-     "mean": "쓰다"
+     "part": "way",
+     "mean": "길"
     }
    ],
-   "etymHint": "in(안에)+scrib(쓰다)+tion(명사 접미사) → 새겨 넣은 글 → 비문",
+   "etymHint": "pass(지나가다)+way(길) → 지나갈 수 있는 길 → 통로",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2012",
+    "recentYear": "2014",
     "stars": 1
    }
   },
   {
-   "en": "nevertheless",
-   "ipa": "/ˌnevərðəˈles/",
-   "pos": "adv",
+   "en": "tortuous",
+   "ipa": "/ˈtɔːrtʃuəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "adv",
-     "ko": "그럼에도 불구하고",
-     "ex": "The evidence was circumstantial; nevertheless, the jury returned a guilty verdict.",
-     "tr": "증거는 정황적이었다; 그럼에도 불구하고 배심원단은 유죄 평결을 내렸다.",
+     "pos": "adj",
+     "ko": "구불구불한, 복잡한",
+     "ex": "The tortuous path to regulatory approval discouraged smaller firms from entering the market.",
+     "tr": "규제 승인에 이르는 복잡한 경로는 소규모 기업들의 시장 진입을 억제했다.",
      "src": ""
     }
    ],
    "syn": [
-    "nonetheless",
-    "notwithstanding",
-    "yet"
+    "convoluted",
+    "sinuous",
+    "winding"
    ],
    "deriv": [],
    "roots": [],
@@ -763,6 +549,191 @@
     "exams": 0,
     "recentYear": "",
     "stars": 0
+   }
+  },
+  {
+   "en": "competitor",
+   "ipa": "/kəmˈpɛtɪtər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "경쟁자, 경쟁 선수",
+     "ex": "Mental skills training benefits competitors at every level, not merely those who have already achieved elite status.",
+     "tr": "심리 기술 훈련은 이미 엘리트 수준에 도달한 선수들만이 아니라 모든 수준의 경쟁자들에게 도움이 된다.",
+     "src": "2018 6월모평 29번"
+    }
+   ],
+   "syn": [
+    "rival",
+    "contender",
+    "opponent"
+   ],
+   "deriv": [
+    "compete (v.)",
+    "competition (n.)",
+    "competitive (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "com",
+     "mean": "함께"
+    },
+    {
+     "part": "pet",
+     "mean": "추구하다, 나아가다"
+    }
+   ],
+   "etymHint": "com(함께)+pet(추구하다) → 함께 같은 것을 추구하다 → 경쟁자",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "reticence",
+   "ipa": "/ˈrɛtɪsəns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "과묵함, 말을 삼가는 태도",
+     "ex": "His reticence in team meetings was frequently misread as disagreement rather than cautious deliberation.",
+     "tr": "팀 회의에서의 그의 과묵함은 신중한 숙고가 아닌 반대 의사로 자주 오해받았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "taciturnity",
+    "reserve",
+    "silence"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "humidity",
+   "ipa": "/hjuːˈmɪdɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "습도, 습기",
+     "ex": "A climber who succeeds under unusually low humidity may mistakenly attribute the achievement to improved personal skill.",
+     "tr": "비정상적으로 낮은 습도 아래에서 성공한 등반가는 그 성취를 향상된 개인 기술 덕분으로 잘못 귀인할 수 있다.",
+     "src": "2026 6월모평 21번"
+    }
+   ],
+   "syn": [
+    "moisture",
+    "dampness",
+    "mugginess"
+   ],
+   "deriv": [
+    "humid (adj.)",
+    "humidify (v.)",
+    "humidifier (n.)"
+   ],
+   "roots": [
+    {
+     "part": "humidus",
+     "mean": "축축한, 젖은"
+    }
+   ],
+   "etymHint": "humidus(축축한) → 공기 중의 수분 → 습도",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "causality",
+   "ipa": "/kɔːˈzæləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인과관계; 인과율",
+     "ex": "Establishing causality rather than mere correlation is one of the central challenges in epidemiological research.",
+     "tr": "단순한 상관관계가 아닌 인과관계를 규명하는 것은 역학 연구의 핵심 과제 중 하나이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "causation",
+    "determinism",
+    "etiology"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "immigrant",
+   "ipa": "/ˈɪmɪɡrənt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "이민자, 이주자",
+     "ex": "Immigrant vendors transform urban street food scenes by introducing culinary traditions from their home countries to new audiences.",
+     "tr": "이민자 상인들은 자국의 요리 전통을 새로운 청중에게 소개함으로써 도시 길거리 음식 장면을 변화시킨다.",
+     "src": "2013 6월모평 39번"
+    }
+   ],
+   "syn": [
+    "migrant",
+    "newcomer",
+    "expatriate"
+   ],
+   "deriv": [
+    "immigrate (v.)",
+    "immigration (n.)",
+    "emigrant (n.)"
+   ],
+   "roots": [
+    {
+     "part": "im",
+     "mean": "안으로"
+    },
+    {
+     "part": "migr",
+     "mean": "이동하다"
+    }
+   ],
+   "etymHint": "im(안으로)+migr(이동하다) → 안으로 이동해 오는 사람 → 이민자",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2024",
+    "stars": 1
    }
   }
  ],

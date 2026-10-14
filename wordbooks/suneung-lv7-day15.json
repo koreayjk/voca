@@ -4,26 +4,119 @@
  "day": 15,
  "words": [
   {
-   "en": "context",
-   "ipa": "/ˈkɒntɛkst/",
+   "en": "identify",
+   "ipa": "/aɪˈdɛntɪfaɪ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "확인하다, 파악하다",
+     "ex": "Rather than treating all patients with similar symptoms the same way, doctors should identify the root causes of illness.",
+     "tr": "비슷한 증상을 가진 모든 환자를 같은 방식으로 치료하는 것이 아니라, 의사들은 질병의 근본 원인을 파악해야 한다.",
+     "src": "2010 수능 25번"
+    },
+    {
+     "pos": "v.",
+     "ko": "동일시하다, ~와 동질감을 느끼다"
+    }
+   ],
+   "syn": [
+    "recognize",
+    "determine",
+    "pinpoint"
+   ],
+   "deriv": [
+    "identification (n.)",
+    "identifiable (adj.)",
+    "identity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "idem",
+     "mean": "같은 것"
+    },
+    {
+     "part": "facere",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "idem(같은 것)+facere(만들다) → 같다고 만들어 냄 → 확인하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 52,
+    "exams": 21,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "recognize",
+   "ipa": "/ˈrɛkəɡnaɪz/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "인식하다, 알아보다",
+     "ex": "Information has become a widely recognized resource that can be measured, evaluated, and given a price.",
+     "tr": "정보는 측정되고, 평가되며, 가격이 매겨질 수 있는 널리 인정된 자원이 되었다.",
+     "src": "2019 수능 22번"
+    },
+    {
+     "pos": "v.",
+     "ko": "인정하다, 공식적으로 승인하다"
+    }
+   ],
+   "syn": [
+    "identify",
+    "acknowledge",
+    "distinguish"
+   ],
+   "deriv": [
+    "recognition (n.)",
+    "recognizable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "re-",
+     "mean": "다시"
+    },
+    {
+     "part": "cognoscere",
+     "mean": "알다"
+    }
+   ],
+   "etymHint": "re(다시)+cognoscere(알다) → 다시 알아봄 → 인식하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 50,
+    "exams": 21,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "consequence",
+   "ipa": "/ˈkɒnsɪkwəns/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "맥락, 상황",
-     "ex": "People from individualistic cultural contexts often feel motivated to maintain personal control over their actions.",
-     "tr": "개인주의적 문화적 맥락 출신의 사람들은 자신의 행동에 대한 개인적 통제를 유지하려는 동기를 흔히 느낀다.",
-     "src": "2021 6월모평 29번"
+     "ko": "결과, 영향",
+     "ex": "The consequences of poor time management are wasted energy, lower productivity, and a loss of trust.",
+     "tr": "시간 관리를 잘못하면 에너지 낭비, 생산성 저하, 신뢰 상실이라는 결과가 초래된다.",
+     "src": "2013 9월모평 23번"
     }
    ],
    "syn": [
-    "setting",
-    "background",
-    "circumstances"
+    "result",
+    "outcome",
+    "effect"
    ],
    "deriv": [
-    "contextual (adj.)",
-    "contextualize (v.)"
+    "consequent (adj.)",
+    "consequently (adv.)"
    ],
    "roots": [
     {
@@ -31,840 +124,750 @@
      "mean": "함께"
     },
     {
-     "part": "text-",
-     "mean": "짜다"
+     "part": "sequi",
+     "mean": "따르다"
     }
    ],
-   "etymHint": "con(함께) + text(짜다) → 함께 짜인 것 → 맥락",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 75,
-    "exams": 31,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "approach",
-   "ipa": "/əˈproʊtʃ/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "접근법, 방식",
-     "ex": "This approach has shown limited results when used against major pests in large-scale farming systems.",
-     "tr": "이 접근법은 대규모 농업 시스템에서 주요 해충에 사용될 때 제한된 결과를 보여 주었다.",
-     "src": "2019 6월모평 22번"
-    },
-    {
-     "pos": "v.",
-     "ko": "접근하다, 다가가다"
-    }
-   ],
-   "syn": [
-    "method",
-    "strategy",
-    "technique"
-   ],
-   "deriv": [
-    "approachable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ap-",
-     "mean": "~쪽으로"
-    },
-    {
-     "part": "proch-",
-     "mean": "가까이"
-    }
-   ],
-   "etymHint": "ap(~쪽으로) + proch(가까이) → ~쪽으로 가까이 가다 → 접근하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 66,
-    "exams": 31,
-    "recentYear": "2025",
-    "stars": 3
-   }
-  },
-  {
-   "en": "essential",
-   "ipa": "/ɪˈsɛnʃəl/",
-   "pos": "adj./n.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "필수적인, 본질적인",
-     "ex": "You can apply essential oils to your wrist or the back of your neck to enjoy their scent.",
-     "tr": "에센셜 오일을 손목이나 목 뒤에 발라 그 향을 즐길 수 있다.",
-     "src": "2012 6월모평 35번"
-    },
-    {
-     "pos": "n.",
-     "ko": "필수품, 핵심 요소"
-    }
-   ],
-   "syn": [
-    "necessary",
-    "vital",
-    "fundamental"
-   ],
-   "deriv": [
-    "essentially (adv.)",
-    "essence (n.)"
-   ],
-   "roots": [
-    {
-     "part": "esse-",
-     "mean": "존재하다, ~이다"
-    }
-   ],
-   "etymHint": "esse(존재하다) + -ntial → 존재의 근본이 되는 → 필수적인",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 62,
-    "exams": 31,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "perspective",
-   "ipa": "/pərˈspektɪv/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "관점, 시각; 원근법",
-     "ex": "With a positive perspective and persistence, you can overcome any obstacle in your path.",
-     "tr": "긍정적인 관점과 끈기를 갖고 있다면 당신은 길 위의 어떤 장애물도 극복할 수 있다.",
-     "src": "2015 6월모평 20번"
-    }
-   ],
-   "syn": [
-    "viewpoint",
-    "standpoint"
-   ],
-   "deriv": [
-    "perspectival (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "per",
-     "mean": "통하여"
-    },
-    {
-     "part": "specere",
-     "mean": "보다"
-    }
-   ],
-   "etymHint": "per(통하여)+specere(보다) → 꿰뚫어 봄 → 관점",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 65,
-    "exams": 29,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "necessity",
-   "ipa": "/nɪˈsesɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "필요성, 필수품",
-     "ex": "He soon recognized the necessity of learning a new writing system to communicate with others.",
-     "tr": "그는 다른 사람들과 소통하기 위해 새로운 문자 체계를 배울 필요성을 곧 인식했다.",
-     "src": "2017 6월모평 25번"
-    }
-   ],
-   "syn": [
-    "need",
-    "requirement",
-    "essential"
-   ],
-   "deriv": [
-    "necessary (adj.)",
-    "necessarily (adv.)",
-    "necessitate (v.)"
-   ],
-   "roots": [
-    {
-     "part": "necess",
-     "mean": "피할 수 없는"
-    },
-    {
-     "part": "-ity",
-     "mean": "상태, 성질"
-    }
-   ],
-   "etymHint": "necess(피할 수 없는) + -ity(상태) → 피할 수 없는 상태 → 필요성",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 42,
-    "exams": 29,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "potential",
-   "ipa": "/pəˈtenʃəl/",
-   "pos": "adj./n.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "잠재적인, 가능성 있는",
-     "ex": "Organizing communication networks allows people to filter the potentially overwhelming flow of new information.",
-     "tr": "통신 네트워크를 구성하면 사람들이 잠재적으로 압도적인 새 정보의 흐름을 걸러낼 수 있다.",
-     "src": "2018 수능 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "잠재력, 가능성"
-    }
-   ],
-   "syn": [
-    "possible",
-    "prospective",
-    "latent"
-   ],
-   "deriv": [
-    "potentially (adv.)",
-    "potentiality (n.)"
-   ],
-   "roots": [
-    {
-     "part": "potent",
-     "mean": "힘, 능력"
-    }
-   ],
-   "etymHint": "potent(힘·능력) + -ial(형용사 접미사) → 아직 발휘되지 않은 능력 → 잠재적인",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 67,
-    "exams": 28,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "significant",
-   "ipa": "/sɪɡˈnɪfɪkənt/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "중요한, 상당한",
-     "ex": "The study found that people's suggestions changed significantly depending on whether crime was described as a virus or a beast.",
-     "tr": "연구에 따르면 범죄를 바이러스로 표현하느냐 짐승으로 표현하느냐에 따라 사람들의 제안이 상당히 달라졌다.",
-     "src": "2021 6월모평 23번"
-    }
-   ],
-   "syn": [
-    "important",
-    "notable",
-    "considerable"
-   ],
-   "deriv": [
-    "significance (n.)",
-    "significantly (adv.)",
-    "signify (v.)"
-   ],
-   "roots": [
-    {
-     "part": "sign",
-     "mean": "표시, 신호"
-    },
-    {
-     "part": "fic",
-     "mean": "만들다"
-    }
-   ],
-   "etymHint": "sign(표시) + fic(만들다) → 뚜렷한 표시를 만드는 → 중요한",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 50,
-    "exams": 28,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "contrast",
-   "ipa": "/ˈkɒntrɑːst/ (n.) /kənˈtrɑːst/ (v.)",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "대조, 대비",
-     "ex": "The spaces between musical notes provide a baseline and contrast that give a piece of music its structure and texture.",
-     "tr": "음표 사이의 공간은 음악 작품에 구조와 질감을 부여하는 기준과 대비를 제공한다.",
-     "src": "2013 9월모평 26번"
-    },
-    {
-     "pos": "v.",
-     "ko": "대조하다, 대비를 이루다"
-    }
-   ],
-   "syn": [
-    "difference",
-    "opposition",
-    "distinction"
-   ],
-   "deriv": [
-    "contrasting (adj.)",
-    "contrastive (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "contra-",
-     "mean": "반대로"
-    },
-    {
-     "part": "sta",
-     "mean": "서다"
-    }
-   ],
-   "etymHint": "contra(반대로) + sta(서다) → 반대편에 서다 → 대조",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 42,
-    "exams": 28,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "aspect",
-   "ipa": "/ˈæspɛkt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "측면, 양상",
-     "ex": "Life experience may help older adults improve in certain aspects of understanding social situations.",
-     "tr": "삶의 경험은 나이 든 성인이 사회적 상황을 이해하는 특정 측면에서 향상되는 데 도움이 될 수 있다.",
-     "src": "2022 6월모평 24번"
-    }
-   ],
-   "syn": [
-    "facet",
-    "dimension",
-    "feature"
-   ],
-   "deriv": [
-    "aspectual (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ad",
-     "mean": "~쪽으로"
-    },
-    {
-     "part": "specere",
-     "mean": "보다"
-    }
-   ],
-   "etymHint": "ad(~쪽으로)+specere(보다) → 특정 방향으로 바라본 모습 → 측면",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 63,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "perception",
-   "ipa": "/pərˈsɛpʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "인식, 지각",
-     "ex": "This kind of perception is also common in investing, where feelings can override logic.",
-     "tr": "이러한 종류의 인식은 투자에서도 흔히 나타나는데, 감정이 논리를 앞서기도 한다.",
-     "src": "2012 수능 26번"
-    }
-   ],
-   "syn": [
-    "awareness",
-    "recognition",
-    "insight"
-   ],
-   "deriv": [
-    "perceive (v.)",
-    "perceptive (adj.)",
-    "perceptual (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "per",
-     "mean": "완전히"
-    },
-    {
-     "part": "capere",
-     "mean": "잡다"
-    }
-   ],
-   "etymHint": "per(완전히)+capere(잡다) → 감각으로 완전히 잡아냄 → 인식, 지각",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 58,
-    "exams": 26,
-    "recentYear": "2027",
-    "stars": 3
-   }
-  },
-  {
-   "en": "extent",
-   "ipa": "/ɪkˈstent/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "정도, 범위",
-     "ex": "The computer has, to a considerable extent, solved the problem of storing and retrieving information.",
-     "tr": "컴퓨터는 상당한 정도로 정보를 저장하고 검색하는 문제를 해결했다.",
-     "src": "2022 9월모평 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "규모, 넓이"
-    }
-   ],
-   "syn": [
-    "degree",
-    "scope",
-    "range"
-   ],
-   "deriv": [
-    "extensive (adj.)",
-    "extend (v.)",
-    "extension (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "tend",
-     "mean": "뻗다"
-    }
-   ],
-   "etymHint": "ex(밖으로)+tend(뻗다)+t → 밖으로 뻗어나간 범위 → 정도·범위",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 36,
-    "exams": 25,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "concept",
-   "ipa": "/ˈkɒnsept/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "개념, 관념",
-     "ex": "War cannot be understood without some image or concept of the enemy.",
-     "tr": "전쟁은 적에 대한 어떤 이미지나 개념 없이는 이해될 수 없다.",
-     "src": "2019 수능 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "구상, 아이디어"
-    }
-   ],
-   "syn": [
-    "idea",
-    "notion",
-    "conception"
-   ],
-   "deriv": [
-    "conceptual (adj.)",
-    "conceptualize (v.)",
-    "conception (n.)"
-   ],
-   "roots": [
-    {
-     "part": "con",
-     "mean": "함께"
-    },
-    {
-     "part": "cept",
-     "mean": "잡다"
-    }
-   ],
-   "etymHint": "con(함께)+cept(잡다) → 여러 생각을 함께 잡아 모은 것 → 개념",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 68,
-    "exams": 24,
-    "recentYear": "2025",
-    "stars": 3
-   }
-  },
-  {
-   "en": "impact",
-   "ipa": "/ˈɪmpækt/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "영향, 충격",
-     "ex": "Individual members of large organizations are often unsure of their impact or ability to bring about change.",
-     "tr": "대규모 조직의 개인 구성원들은 자신의 영향력이나 변화를 가져올 능력에 대해 종종 확신하지 못한다.",
-     "src": "2014 6월모평 35번"
-    },
-    {
-     "pos": "v.",
-     "ko": "영향을 미치다"
-    }
-   ],
-   "syn": [
-    "influence",
-    "effect",
-    "consequence"
-   ],
-   "deriv": [
-    "impactful (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "im",
-     "mean": "안으로"
-    },
-    {
-     "part": "pact",
-     "mean": "누르다, 치다"
-    }
-   ],
-   "etymHint": "im(안으로)+pact(치다) → 안으로 강하게 치는 것 → 충격·영향",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 58,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "creativity",
-   "ipa": "/ˌkriːeɪˈtɪvɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "창의성, 창조력",
-     "ex": "Such wide-ranging creativity has placed children's literature at the forefront of imaginative experimentation.",
-     "tr": "이처럼 광범위한 창의성은 아동 문학을 상상적 실험의 최전선에 세워왔다.",
-     "src": "2017 9월모평 21번"
-    }
-   ],
-   "syn": [
-    "imagination",
-    "originality",
-    "inventiveness"
-   ],
-   "deriv": [
-    "creative (adj.)",
-    "create (v.)",
-    "creator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "creat",
-     "mean": "만들다"
-    }
-   ],
-   "etymHint": "creat(만들다)+ivity → 새로운 것을 만드는 능력 → 창의성",
+   "etymHint": "con(함께)+sequi(따르다) → 뒤따라 함께 오는 것 → 결과",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 43,
-    "exams": 24,
+    "exams": 21,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "innovation",
+   "ipa": "/ˌɪnəˈveɪʃn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "혁신, 새로운 방법",
+     "ex": "Research from an institute for public innovation found that materialism can block our deeper social needs.",
+     "tr": "공공 혁신 연구소의 연구에 따르면 물질주의는 우리의 더 깊은 사회적 욕구를 가로막을 수 있다.",
+     "src": "2021 9월모평 40번"
+    }
+   ],
+   "syn": [
+    "invention",
+    "reform",
+    "breakthrough"
+   ],
+   "deriv": [
+    "innovate (v.)",
+    "innovative (adj.)",
+    "innovator (n.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "안에"
+    },
+    {
+     "part": "novus",
+     "mean": "새로운"
+    }
+   ],
+   "etymHint": "in(안에)+novus(새로운) → 안에서 새로운 것을 만들어 냄 → 혁신",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 41,
+    "exams": 21,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "evolution",
+   "ipa": "/ˌiːvəˈluːʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "진화, 발전",
+     "ex": "A widespread mistake in evolutionary thinking is treating genes as the sole driving force of evolution.",
+     "tr": "진화론적 사고에서 흔한 오류는 유전자를 진화의 유일한 원동력으로 보는 것이다.",
+     "src": "2021 6월모평 24번"
+    },
+    {
+     "pos": "n.",
+     "ko": "점진적 변화"
+    }
+   ],
+   "syn": [
+    "development",
+    "progression",
+    "advancement"
+   ],
+   "deriv": [
+    "evolve (v.)",
+    "evolutionary (adj.)",
+    "evolve (v.)"
+   ],
+   "roots": [
+    {
+     "part": "e-",
+     "mean": "밖으로"
+    },
+    {
+     "part": "volu",
+     "mean": "구르다, 펼치다"
+    }
+   ],
+   "etymHint": "e(밖으로)+volu(구르다)+tion(명사) → 밖으로 펼쳐짐 → 진화",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 39,
+    "exams": 21,
     "recentYear": "2027",
     "stars": 3
    }
   },
   {
-   "en": "industrial",
-   "ipa": "/ɪnˈdʌstriəl/",
+   "en": "tendency",
+   "ipa": "/ˈten.dən.si/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "경향, 성향",
+     "ex": "One feature of the rental market is its tendency to experience a sharp and long-lasting downturn.",
+     "tr": "임대 시장의 한 가지 특징은 급격하고 장기적인 침체를 겪는 경향이 있다는 것이다.",
+     "src": "2015 9월모평 29번"
+    }
+   ],
+   "syn": [
+    "trend",
+    "inclination",
+    "propensity"
+   ],
+   "deriv": [
+    "tend (v.)",
+    "tendentious (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "tend",
+     "mean": "뻗다, 향하다"
+    }
+   ],
+   "etymHint": "tend(향하다)+ency(명사) → 어떤 방향으로 향하는 성질 → 경향",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 34,
+    "exams": 21,
+    "recentYear": "2025",
+    "stars": 3
+   }
+  },
+  {
+   "en": "competitive",
+   "ipa": "/kəmˈpet.ɪ.tɪv/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "산업의, 공업의",
-     "ex": "He began working in the new field of industrial design, patenting several lamps between 1911 and 1914.",
-     "tr": "그는 산업 디자인이라는 새로운 분야에서 일하기 시작했으며, 1911년부터 1914년 사이에 여러 조명 특허를 받았다.",
-     "src": "2013 9월모평 37번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "산업화된, 공업화된"
+     "ko": "경쟁적인, 경쟁력 있는",
+     "ex": "As athletes climb the competitive ladder, they tend to become more similar in physical ability.",
+     "tr": "운동선수들이 경쟁의 사다리를 올라갈수록 신체 능력 면에서 점점 비슷해지는 경향이 있다.",
+     "src": "2018 6월모평 29번"
     }
    ],
    "syn": [
-    "manufacturing",
-    "commercial",
-    "factory"
+    "rivalrous",
+    "aggressive",
+    "ambitious"
    ],
    "deriv": [
-    "industry (n.)",
-    "industrialize (v.)",
-    "industrious (adj.)"
+    "compete (v.)",
+    "competition (n.)",
+    "competitor (n.)",
+    "competitively (adv.)"
    ],
    "roots": [
     {
-     "part": "industri",
-     "mean": "부지런함, 활동"
+     "part": "compet",
+     "mean": "함께 구하다, 겨루다"
     }
    ],
-   "etymHint": "industri(부지런한 활동)+al → 부지런한 생산 활동과 관련된 → 산업의",
+   "etymHint": "com(함께)+pet(구하다)+itive(형용사) → 함께 무언가를 얻으려 겨루는 → 경쟁적인",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 41,
-    "exams": 24,
-    "recentYear": "2026",
-    "stars": 3
-   }
-  },
-  {
-   "en": "sincerely",
-   "ipa": "/sɪnˈsɪərli/",
-   "pos": "adv.",
-   "meanings": [
-    {
-     "pos": "adv.",
-     "ko": "진심으로, 성실하게",
-     "ex": "These beliefs are sincerely held by many people, yet they are hard to apply in public decision-making.",
-     "tr": "이러한 믿음들은 많은 사람들이 진심으로 갖고 있지만, 공적 의사결정에 적용하기는 어렵다.",
-     "src": "2019 6월모평 23번"
-    }
-   ],
-   "syn": [
-    "genuinely",
-    "honestly",
-    "earnestly"
-   ],
-   "deriv": [
-    "sincere (adj.)",
-    "sincerity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "sincer",
-     "mean": "순수한, 진짜의 (라틴어 sincerus)"
-    }
-   ],
-   "etymHint": "sincer(순수한) + -ly(부사 어미) → 순수하게 → 진심으로",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 25,
-    "exams": 24,
-    "recentYear": "2025",
-    "stars": 3
-   }
-  },
-  {
-   "en": "attempt",
-   "ipa": "/əˈtɛmpt/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "시도, 노력",
-     "ex": "Scientists may agree on a shared model without ever attempting to produce a complete explanation of it.",
-     "tr": "과학자들은 어떤 공유된 모델에 동의하면서도 그것에 대한 완전한 설명을 만들려고 시도하지 않을 수 있다.",
-     "src": "2022 수능 23번"
-    },
-    {
-     "pos": "v.",
-     "ko": "시도하다"
-    }
-   ],
-   "syn": [
-    "try",
-    "effort",
-    "endeavor"
-   ],
-   "deriv": [
-    "attempted (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "at",
-     "mean": "~을 향해"
-    },
-    {
-     "part": "tempt",
-     "mean": "시험하다 (라틴어 temptare)"
-    }
-   ],
-   "etymHint": "at(~을 향해) + tempt(시험하다) → 무언가를 향해 시험해보다 → 시도하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 53,
-    "exams": 23,
-    "recentYear": "2025",
-    "stars": 3
-   }
-  },
-  {
-   "en": "desire",
-   "ipa": "/dɪˈzaɪər/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "욕망, 소망",
-     "ex": "To the ancient desire to be remembered forever in written words, he added a new understanding of fame.",
-     "tr": "문자로 영원히 기억되고자 하는 오래된 욕망에 그는 명성에 대한 새로운 감각을 더했다.",
-     "src": "2016 수능 34번"
-    },
-    {
-     "pos": "v.",
-     "ko": "원하다, 바라다"
-    }
-   ],
-   "syn": [
-    "wish",
-    "longing",
-    "craving"
-   ],
-   "deriv": [
-    "desirable (adj.)",
-    "undesirable (adj.)",
-    "desirably (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "desider",
-     "mean": "별을 기다리다, 갈망하다 (라틴어 desiderare)"
-    }
-   ],
-   "etymHint": "desider(갈망하다) → 무언가를 간절히 원하는 마음 → 욕망",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 51,
-    "exams": 23,
+    "count": 33,
+    "exams": 21,
     "recentYear": "2027",
     "stars": 3
    }
   },
   {
-   "en": "visual",
-   "ipa": "/ˈvɪʒuəl/",
-   "pos": "adj./n.",
+   "en": "diverse",
+   "ipa": "/daɪˈvɜːrs/",
+   "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "시각적인, 눈에 보이는",
-     "ex": "Higher-ranking animals tend to ignore lower-ranking ones visually, while subordinates watch dominant individuals closely.",
-     "tr": "지위가 높은 동물들은 시각적으로 하위 동물들을 무시하는 경향이 있는 반면, 하위 개체들은 우세한 개체를 주의 깊게 바라본다.",
-     "src": "2014 수능 33번"
-    },
-    {
-     "pos": "n.",
-     "ko": "시각 자료, 영상물"
+     "ko": "다양한, 여러 종류의",
+     "ex": "Many vendors are immigrants who bring street versions of the world's diverse food traditions to the city.",
+     "tr": "많은 노점상들은 세계의 다양한 음식 전통을 도시에 가져오는 이민자들이다.",
+     "src": "2013 6월모평 39번"
     }
    ],
    "syn": [
-    "optical",
-    "visible",
-    "graphic"
+    "varied",
+    "assorted",
+    "heterogeneous"
    ],
    "deriv": [
-    "visually (adv.)",
-    "visualize (v.)",
-    "visualization (n.)",
-    "visible (adj.)"
+    "diversity (n.)",
+    "diversify (v.)",
+    "diversely (adv.)"
    ],
    "roots": [
     {
-     "part": "vis",
-     "mean": "보다 (라틴어 videre)"
+     "part": "di-",
+     "mean": "따로"
+    },
+    {
+     "part": "vers",
+     "mean": "돌리다"
     }
    ],
-   "etymHint": "vis(보다) + -ual(형용사 어미) → 보는 것과 관련된 → 시각적인",
+   "etymHint": "di(따로)+vers(돌리다)+e → 여러 방향으로 돌아간 → 다양한",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 41,
-    "exams": 23,
+    "count": 33,
+    "exams": 21,
+    "recentYear": "2025",
+    "stars": 3
+   }
+  },
+  {
+   "en": "demand",
+   "ipa": "/dɪˈmɑːnd/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "수요; 요구",
+     "ex": "Think about how demanding it would be to consider all possible uses of every familiar object around you.",
+     "tr": "주변의 모든 익숙한 물건의 가능한 용도를 모두 생각해야 한다면 얼마나 힘들지 상상해 보라.",
+     "src": "2021 9월모평 21번"
+    },
+    {
+     "pos": "v.",
+     "ko": "요구하다, 필요로 하다"
+    }
+   ],
+   "syn": [
+    "requirement",
+    "need",
+    "request"
+   ],
+   "deriv": [
+    "demanding (adj.)",
+    "in demand (phrase)"
+   ],
+   "roots": [
+    {
+     "part": "de-",
+     "mean": "완전히"
+    },
+    {
+     "part": "mand",
+     "mean": "명령하다"
+    }
+   ],
+   "etymHint": "de(완전히)+mand(명령하다) → 강하게 명령하다 → 요구하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 68,
+    "exams": 20,
     "recentYear": "2026",
     "stars": 3
    }
   },
   {
-   "en": "maintain",
-   "ipa": "/meɪnˈteɪn/",
+   "en": "theory",
+   "ipa": "/ˈθɪə.ri/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "이론, 학설",
+     "ex": "Einstein spent his life searching for a unified field theory that could explain all of nature's forces in one framework.",
+     "tr": "아인슈타인은 하나의 틀 안에서 자연의 모든 힘을 설명할 수 있는 통일장 이론을 찾는 데 평생을 바쳤다.",
+     "src": "2012 9월모평 22번"
+    },
+    {
+     "pos": "n.",
+     "ko": "가설, 추측"
+    }
+   ],
+   "syn": [
+    "hypothesis",
+    "framework",
+    "model"
+   ],
+   "deriv": [
+    "theoretical (adj.)",
+    "theorize (v.)",
+    "theorist (n.)"
+   ],
+   "roots": [
+    {
+     "part": "theor",
+     "mean": "바라보다, 관찰하다"
+    }
+   ],
+   "etymHint": "theor(바라보다)+y → 관찰을 통해 세운 체계 → 이론",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 67,
+    "exams": 20,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "determine",
+   "ipa": "/dɪˈtɜːr.mɪn/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "유지하다, 지속하다",
-     "ex": "We shift between reflection and comparison in ways that help us maintain a positive view of ourselves.",
-     "tr": "우리는 자신에 대한 긍정적인 관점을 유지하도록 돕는 방식으로 성찰과 비교 사이를 오간다.",
-     "src": "2018 9월모평 21번"
+     "ko": "결정하다, 결정짓다",
+     "ex": "This view assumes that social institutions determine culture and that universal areas of society can be studied across different cultures.",
+     "tr": "이 관점은 사회 제도가 문화를 결정하며 보편적인 사회 영역을 여러 문화에 걸쳐 연구할 수 있다고 가정한다.",
+     "src": "2020 9월모평 34번"
     },
     {
      "pos": "v.",
-     "ko": "주장하다"
+     "ko": "밝혀내다, 확인하다"
     }
    ],
    "syn": [
-    "keep",
-    "preserve",
-    "sustain"
+    "decide",
+    "establish",
+    "ascertain"
    ],
    "deriv": [
-    "maintenance (n.)",
-    "maintainable (adj.)"
+    "determination (n.)",
+    "determined (adj.)",
+    "determinism (n.)"
    ],
    "roots": [
     {
-     "part": "main",
-     "mean": "손 (라틴어 manus)"
+     "part": "de-",
+     "mean": "완전히"
     },
     {
-     "part": "tain",
-     "mean": "잡다 (라틴어 tenere)"
+     "part": "termin",
+     "mean": "경계, 끝"
     }
    ],
-   "etymHint": "main(손) + tain(잡다) → 손으로 계속 붙잡다 → 유지하다",
+   "etymHint": "de(완전히)+termin(경계)+e → 경계를 완전히 확정짓다 → 결정하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 57,
+    "exams": 20,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "observe",
+   "ipa": "/əbˈzɜːrv/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "관찰하다, 주시하다",
+     "ex": "Both foot size and vocabulary size can be explained by a single cause that the two observed phenomena share.",
+     "tr": "발 크기와 어휘 크기는 둘 다 두 관찰된 현상이 공유하는 단일 원인으로 설명될 수 있다.",
+     "src": "2016 9월모평 33번"
+    },
+    {
+     "pos": "v.",
+     "ko": "언급하다, 발언하다"
+    }
+   ],
+   "syn": [
+    "watch",
+    "notice",
+    "monitor"
+   ],
+   "deriv": [
+    "observation (n.)",
+    "observer (n.)",
+    "observable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ob-",
+     "mean": "향하여"
+    },
+    {
+     "part": "serv",
+     "mean": "지키다, 보다"
+    }
+   ],
+   "etymHint": "ob(향하여)+serv(지키다·보다)+e → 무언가를 향해 지켜보다 → 관찰하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 55,
+    "exams": 20,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "engage",
+   "ipa": "/ɪnˈɡeɪdʒ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "참여하다, 끌어들이다",
+     "ex": "Presentation styles have long been caught between an educational goal and the need to engage audiences in an entertaining way.",
+     "tr": "발표 방식은 오랫동안 교육적 목표와 관객을 흥미롭게 끌어들여야 하는 필요 사이에서 균형을 맞춰야 했다.",
+     "src": "2022 수능 32번"
+    },
+    {
+     "pos": "v.",
+     "ko": "종사하다, 관여하다"
+    }
+   ],
+   "syn": [
+    "involve",
+    "attract",
+    "participate"
+   ],
+   "deriv": [
+    "engagement (n.)",
+    "engaging (adj.)",
+    "disengage (v.)"
+   ],
+   "roots": [
+    {
+     "part": "en-",
+     "mean": "안으로"
+    },
+    {
+     "part": "gage",
+     "mean": "담보, 약속"
+    }
+   ],
+   "etymHint": "en(안으로)+gage(약속·담보) → 약속 안으로 들어가다 → 관여하다·참여하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 48,
+    "exams": 20,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "capacity",
+   "ipa": "/kəˈpæsɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "능력, 수용력",
+     "ex": "People with a greater capacity for forming relationships tend to have stronger immune systems.",
+     "tr": "관계를 맺는 능력이 더 큰 사람들은 더 강한 면역 체계를 갖는 경향이 있다.",
+     "src": "2009 6월모평 23번"
+    },
+    {
+     "pos": "n.",
+     "ko": "용량, 규모"
+    }
+   ],
+   "syn": [
+    "ability",
+    "capability",
+    "potential"
+   ],
+   "deriv": [
+    "capable (adj.)",
+    "incapacity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "capere",
+     "mean": "잡다, 담다"
+    }
+   ],
+   "etymHint": "capere(담다) → 담을 수 있는 양 → 수용력, 능력",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 36,
+    "exams": 20,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "definition",
+   "ipa": "/ˌdɛfɪˈnɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "정의, 개념 규정",
+     "ex": "In areas not central to our self-definition, we tend to compare ourselves with more successful others.",
+     "tr": "우리의 자아 정의에 핵심적이지 않은 영역에서 우리는 더 성공한 타인과 비교하려 한다.",
+     "src": "2018 9월모평 21번"
+    }
+   ],
+   "syn": [
+    "explanation",
+    "description",
+    "meaning"
+   ],
+   "deriv": [
+    "define (v.)",
+    "definitive (adj.)",
+    "indefinite (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "de-",
+     "mean": "완전히"
+    },
+    {
+     "part": "finis",
+     "mean": "끝, 경계"
+    }
+   ],
+   "etymHint": "de(완전히)+finis(경계) → 경계를 완전히 정함 → 정의",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 27,
+    "exams": 20,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "appropriate",
+   "ipa": "/əˈproʊpriɪt/",
+   "pos": "adj./v.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "적절한, 알맞은",
+     "ex": "You must choose a strategy that is appropriate to the situation and follow it consistently.",
+     "tr": "상황에 적절한 전략을 선택하고 일관되게 따라야 한다.",
+     "src": "2016 9월모평 20번"
+    },
+    {
+     "pos": "v.",
+     "ko": "전용하다, 충당하다"
+    }
+   ],
+   "syn": [
+    "suitable",
+    "proper",
+    "fitting"
+   ],
+   "deriv": [
+    "appropriately (adv.)",
+    "appropriateness (n.)",
+    "inappropropriate (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ad-",
+     "mean": "~에"
+    },
+    {
+     "part": "proprius",
+     "mean": "자신의, 고유한"
+    }
+   ],
+   "etymHint": "ad(~에)+proprius(고유한) → 그것에 고유하게 맞는 → 적절한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 27,
+    "exams": 20,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "establish",
+   "ipa": "/ɪˈstæblɪʃ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "설립하다, 확립하다",
+     "ex": "After achieving financial success, he established a foundation to support arts education.",
+     "tr": "재정적 성공을 거둔 후 그는 예술 교육을 지원하는 재단을 설립했다.",
+     "src": "2022 9월모평 26번"
+    }
+   ],
+   "syn": [
+    "found",
+    "set up",
+    "create"
+   ],
+   "deriv": [
+    "establishment (n.)",
+    "established (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "stabilire",
+     "mean": "굳히다, 세우다"
+    }
+   ],
+   "etymHint": "stabilire(굳히다) → 튼튼하게 세움 → 설립하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 44,
+    "exams": 19,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "mere",
+   "ipa": "/mɪər/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "단순한, 불과한",
+     "ex": "Some people prevent discussion by mere topic changes rather than addressing the real issue.",
+     "tr": "어떤 사람들은 진짜 문제를 다루지 않고 단순히 화제를 바꿔 토론을 피한다.",
+     "src": "2021 6월모평 20번"
+    }
+   ],
+   "syn": [
+    "only",
+    "nothing more than",
+    "sheer"
+   ],
+   "deriv": [
+    "merely (adv.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 41,
+    "exams": 19,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "characteristic",
+   "ipa": "/ˌkærɪktəˈrɪstɪk/",
+   "pos": "n./adj.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "특성, 특징",
+     "ex": "Certain characteristics that are valued in one culture may not be appreciated in another.",
+     "tr": "한 문화에서 가치 있게 여겨지는 특성이 다른 문화에서는 높이 평가받지 못할 수 있다.",
+     "src": "2011 9월모평 45번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "특유의, 특징적인"
+    }
+   ],
+   "syn": [
+    "feature",
+    "trait",
+    "quality"
+   ],
+   "deriv": [
+    "characteristically (adv.)",
+    "characterize (v.)"
+   ],
+   "roots": [
+    {
+     "part": "kharaktēr",
+     "mean": "새겨진 표시, 특징"
+    }
+   ],
+   "etymHint": "kharaktēr(새겨진 표시) → 구별하는 특성 → 특징",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 40,
-    "exams": 23,
-    "recentYear": "2027",
-    "stars": 3
+    "exams": 19,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "intellectual",
+   "ipa": "/ˌɪntəˈlɛktʃuəl/",
+   "pos": "adj./n.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "지적인, 지성의",
+     "ex": "Vaguely expressed ideas can be more intellectually stimulating than simple facts for a reader.",
+     "tr": "모호하게 표현된 생각은 독자에게 단순한 사실보다 더 지적으로 자극이 될 수 있다.",
+     "src": "2017 수능 22번"
+    },
+    {
+     "pos": "n.",
+     "ko": "지식인"
+    }
+   ],
+   "syn": [
+    "academic",
+    "scholarly",
+    "cerebral"
+   ],
+   "deriv": [
+    "intellect (n.)",
+    "intellectually (adv.)",
+    "intelligence (n.)"
+   ],
+   "roots": [
+    {
+     "part": "inter-",
+     "mean": "사이에"
+    },
+    {
+     "part": "lect",
+     "mean": "읽다, 모으다"
+    }
+   ],
+   "etymHint": "inter(사이)+lect(모으다) → 생각들 사이에서 골라 모음 → 지성",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 29,
+    "exams": 19,
+    "recentYear": "2026",
+    "stars": 2
    }
   }
  ],

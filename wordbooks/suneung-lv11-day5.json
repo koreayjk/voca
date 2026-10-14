@@ -4,37 +4,73 @@
  "day": 5,
  "words": [
   {
-   "en": "aura",
-   "ipa": "/ˈɔːrə/",
+   "en": "vicarious",
+   "ipa": "/vɪˈkeəriəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "대리의, 간접 경험에 의한",
+     "ex": "Readers derive vicarious pleasure from the protagonist's daring exploits throughout the novel.",
+     "tr": "독자들은 소설 전반에 걸쳐 주인공의 대담한 행적에서 대리적 쾌락을 얻는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "surrogate",
+    "indirect",
+    "secondhand"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "defender",
+   "ipa": "/dɪˈfendər/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "분위기, 기운, 후광",
-     "ex": "The careful use of grids and standardized symbols gives a map an aura of objective scientific authority that may be misleading.",
-     "tr": "격자와 표준화된 기호의 신중한 사용은 지도에 오해를 불러일으킬 수 있는 객관적 과학적 권위의 분위기를 부여한다.",
-     "src": "2017 수능 21번"
+     "ko": "옹호자; 수비수",
+     "ex": "Neither the prosecutor nor the defender is obliged to present evidence that might undermine their respective arguments in court.",
+     "tr": "검사도 변호인도 법정에서 자신들의 주장을 약화시킬 수 있는 증거를 제시할 의무는 없다.",
+     "src": "2017 6월모평 40번"
     },
     {
      "pos": "n.",
-     "ko": "(사람을 둘러싼) 영적 기운"
+     "ko": "방어자, 수호자"
     }
    ],
    "syn": [
-    "atmosphere",
-    "ambiance",
-    "mystique"
+    "advocate",
+    "protector",
+    "champion"
    ],
    "deriv": [
-    "aural (adj.)"
+    "defend (v.)",
+    "defense (n.)",
+    "defensive (adj.)"
    ],
    "roots": [
     {
-     "part": "aura",
-     "mean": "바람, 공기"
+     "part": "de-",
+     "mean": "아래에서"
+    },
+    {
+     "part": "fend-",
+     "mean": "막다"
     }
    ],
-   "etymHint": "aura(바람·공기) → 사람을 감싸는 기운 → 분위기, 후광",
+   "etymHint": "de(아래에서)+fend(막다) → 아래에서 막아내다 → 방어하다",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -45,208 +81,22 @@
    }
   },
   {
-   "en": "sanguine",
-   "ipa": "/ˈsæŋɡwɪn/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "낙관적인",
-     "ex": "Few analysts remained sanguine about the economy after the third consecutive quarter of contraction.",
-     "tr": "3분기 연속 수축 이후 경제에 대해 낙관적인 분석가는 거의 없었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "optimistic",
-    "buoyant",
-    "hopeful"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "inborn",
-   "ipa": "/ˌɪnˈbɔːrn/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "타고난, 선천적인",
-     "ex": "Risk compensation theory proposes that humans possess an inborn tolerance for danger that adjusts behaviour in response to perceived safety.",
-     "tr": "위험 보상 이론은 인간이 지각된 안전에 반응하여 행동을 조정하는 위험에 대한 선천적 관용을 가지고 있다고 제안한다.",
-     "src": "2013 수능 45번"
-    }
-   ],
-   "syn": [
-    "innate",
-    "congenital",
-    "inherent"
-   ],
-   "deriv": [
-    "inbred (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안에"
-    },
-    {
-     "part": "born",
-     "mean": "태어난"
-    }
-   ],
-   "etymHint": "in(안에)+born(태어난) → 태어날 때부터 안에 있는 → 선천적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
-   }
-  },
-  {
-   "en": "passageway",
-   "ipa": "/ˈpæsɪdʒweɪ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "통로, 복도",
-     "ex": "Information flows through narrow cognitive passageways much as water is constrained by the geometry of a channel.",
-     "tr": "정보는 물이 수로의 형태에 의해 제한되듯이 좁은 인지적 통로를 통해 흐른다.",
-     "src": "2014 6월모평 34번"
-    }
-   ],
-   "syn": [
-    "corridor",
-    "hallway",
-    "thoroughfare"
-   ],
-   "deriv": [
-    "passage (n.)",
-    "pass (v.)"
-   ],
-   "roots": [
-    {
-     "part": "pass",
-     "mean": "지나가다"
-    },
-    {
-     "part": "way",
-     "mean": "길"
-    }
-   ],
-   "etymHint": "pass(지나가다)+way(길) → 지나갈 수 있는 길 → 통로",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2014",
-    "stars": 1
-   }
-  },
-  {
-   "en": "tortuous",
-   "ipa": "/ˈtɔːrtʃuəs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "구불구불한, 복잡한",
-     "ex": "The tortuous path to regulatory approval discouraged smaller firms from entering the market.",
-     "tr": "규제 승인에 이르는 복잡한 경로는 소규모 기업들의 시장 진입을 억제했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "convoluted",
-    "sinuous",
-    "winding"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "competitor",
-   "ipa": "/kəmˈpɛtɪtər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "경쟁자, 경쟁 선수",
-     "ex": "Mental skills training benefits competitors at every level, not merely those who have already achieved elite status.",
-     "tr": "심리 기술 훈련은 이미 엘리트 수준에 도달한 선수들만이 아니라 모든 수준의 경쟁자들에게 도움이 된다.",
-     "src": "2018 6월모평 29번"
-    }
-   ],
-   "syn": [
-    "rival",
-    "contender",
-    "opponent"
-   ],
-   "deriv": [
-    "compete (v.)",
-    "competition (n.)",
-    "competitive (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "com",
-     "mean": "함께"
-    },
-    {
-     "part": "pet",
-     "mean": "추구하다, 나아가다"
-    }
-   ],
-   "etymHint": "com(함께)+pet(추구하다) → 함께 같은 것을 추구하다 → 경쟁자",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "reticence",
-   "ipa": "/ˈrɛtɪsəns/",
+   "en": "obsolescence",
+   "ipa": "/ˌɒbsəˈlɛsəns/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "과묵함, 말을 삼가는 태도",
-     "ex": "His reticence in team meetings was frequently misread as disagreement rather than cautious deliberation.",
-     "tr": "팀 회의에서의 그의 과묵함은 신중한 숙고가 아닌 반대 의사로 자주 오해받았다.",
+     "ko": "노후화, 쓸모없어짐",
+     "ex": "Planned obsolescence, the deliberate designing of products to fail, drives consumerist cycles of replacement.",
+     "tr": "제품이 고장나도록 의도적으로 설계하는 계획적 노후화는 소비주의적 교체 순환을 주도한다.",
      "src": ""
     }
    ],
    "syn": [
-    "taciturnity",
-    "reserve",
-    "silence"
+    "outdatedness",
+    "desuetude",
+    "superannuation"
    ],
    "deriv": [],
    "roots": [],
@@ -261,398 +111,73 @@
    }
   },
   {
-   "en": "humidity",
-   "ipa": "/hjuːˈmɪdɪti/",
+   "en": "settlement",
+   "ipa": "/ˈsetlmənt/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "습도, 습기",
-     "ex": "A climber who succeeds under unusually low humidity may mistakenly attribute the achievement to improved personal skill.",
-     "tr": "비정상적으로 낮은 습도 아래에서 성공한 등반가는 그 성취를 향상된 개인 기술 덕분으로 잘못 귀인할 수 있다.",
-     "src": "2026 6월모평 21번"
-    }
-   ],
-   "syn": [
-    "moisture",
-    "dampness",
-    "mugginess"
-   ],
-   "deriv": [
-    "humid (adj.)",
-    "humidify (v.)",
-    "humidifier (n.)"
-   ],
-   "roots": [
-    {
-     "part": "humidus",
-     "mean": "축축한, 젖은"
-    }
-   ],
-   "etymHint": "humidus(축축한) → 공기 중의 수분 → 습도",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "causality",
-   "ipa": "/kɔːˈzæləti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "인과관계; 인과율",
-     "ex": "Establishing causality rather than mere correlation is one of the central challenges in epidemiological research.",
-     "tr": "단순한 상관관계가 아닌 인과관계를 규명하는 것은 역학 연구의 핵심 과제 중 하나이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "causation",
-    "determinism",
-    "etiology"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "immigrant",
-   "ipa": "/ˈɪmɪɡrənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "이민자, 이주자",
-     "ex": "Immigrant vendors transform urban street food scenes by introducing culinary traditions from their home countries to new audiences.",
-     "tr": "이민자 상인들은 자국의 요리 전통을 새로운 청중에게 소개함으로써 도시 길거리 음식 장면을 변화시킨다.",
-     "src": "2013 6월모평 39번"
-    }
-   ],
-   "syn": [
-    "migrant",
-    "newcomer",
-    "expatriate"
-   ],
-   "deriv": [
-    "immigrate (v.)",
-    "immigration (n.)",
-    "emigrant (n.)"
-   ],
-   "roots": [
-    {
-     "part": "im",
-     "mean": "안으로"
-    },
-    {
-     "part": "migr",
-     "mean": "이동하다"
-    }
-   ],
-   "etymHint": "im(안으로)+migr(이동하다) → 안으로 이동해 오는 사람 → 이민자",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "concession",
-   "ipa": "/kənˈsɛʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "양보, 이권 허가",
-     "ex": "The negotiators secured trade concessions in exchange for removing tariff barriers.",
-     "tr": "협상가들은 관세 장벽을 제거하는 대가로 무역상의 양보를 얻어냈다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "compromise",
-    "grant",
-    "allowance"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "revise",
-   "ipa": "/rɪˈvaɪz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "개정하다, 수정하다",
-     "ex": "In a revised edition of his landmark work, the author integrated critical commentary with biographical sketches of each artist.",
-     "tr": "그의 획기적인 작품의 개정판에서 저자는 각 예술가의 전기적 스케치에 비평적 논평을 통합했다.",
-     "src": "2012 수능 38번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(의견·계획 등을) 재검토하다"
-    }
-   ],
-   "syn": [
-    "amend",
-    "update",
-    "rework"
-   ],
-   "deriv": [
-    "revision (n.)",
-    "revised (adj.)",
-    "revisionary (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시"
-    },
-    {
-     "part": "vis",
-     "mean": "보다"
-    }
-   ],
-   "etymHint": "re(다시)+vis(보다) → 다시 보다 → 개정하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "terrain",
-   "ipa": "/təˈreɪn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "지형, 지세",
-     "ex": "Hikers should be prepared for moderately challenging terrain, including steep slopes and uneven ground covered with loose rock.",
-     "tr": "등산객들은 느슨한 바위로 덮인 가파른 경사와 울퉁불퉁한 지면을 포함한 적당히 도전적인 지형에 대비해야 한다.",
-     "src": "2015 6월모평 23번"
-    }
-   ],
-   "syn": [
-    "landscape",
-    "topography",
-    "ground"
-   ],
-   "deriv": [
-    "terrestrial (adj.)",
-    "territory (n.)"
-   ],
-   "roots": [
-    {
-     "part": "terra",
-     "mean": "땅, 대지"
-    }
-   ],
-   "etymHint": "terra(땅) → 땅의 형태 → 지형",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "soliloquy",
-   "ipa": "/səˈlɪləkwi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "독백",
-     "ex": "Hamlet's soliloquies perform a radical interiority that was unprecedented in the theatre of Shakespeare's contemporaries.",
-     "tr": "햄릿의 독백은 셰익스피어의 동시대 연극에서는 전례 없는 급진적 내면성을 수행한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "monologue",
-    "aside",
-    "interior speech"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "segment",
-   "ipa": "/ˈsɛɡmənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "부분, 구간, 선분",
-     "ex": "Participants were shown three line segments and asked to identify which one matched a standard reference line in length.",
-     "tr": "참가자들은 세 개의 선분을 보여주고 어느 것이 길이에서 표준 기준선과 일치하는지 식별하도록 요청받았다.",
-     "src": "2011 수능 27번"
+     "ko": "정착지, 거주지",
+     "ex": "In a small village settlement of thatched huts, every mother could hear the cries of any infant in the night.",
+     "tr": "초가집으로 이루어진 작은 마을 정착지에서, 모든 어머니는 밤에 어떤 아이의 울음소리도 들을 수 있었다.",
+     "src": "2017 9월모평 31번"
     },
     {
      "pos": "n.",
-     "ko": "(시장·소비자의) 세분 집단"
+     "ko": "해결, 합의"
     },
     {
-     "pos": "v.",
-     "ko": "분할하다, 나누다"
+     "pos": "n.",
+     "ko": "정착, 이주"
     }
    ],
    "syn": [
-    "section",
-    "portion",
-    "division"
+    "colony",
+    "community",
+    "resolution"
    ],
    "deriv": [
-    "segmentation (n.)",
-    "segmented (adj.)"
+    "settle (v.)",
+    "settler (n.)",
+    "unsettled (adj.)"
    ],
    "roots": [
     {
-     "part": "seg/sect",
-     "mean": "자르다"
+     "part": "settl-",
+     "mean": "자리 잡다"
+    },
+    {
+     "part": "-ment",
+     "mean": "행위·결과"
     }
    ],
-   "etymHint": "seg(자르다) → 잘라 낸 부분 → 구간, 부분",
+   "etymHint": "settl(자리 잡다)+-ment → 자리 잡은 곳 → 정착지",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2015",
+    "recentYear": "2017",
     "stars": 1
    }
   },
   {
-   "en": "rhetoric",
-   "ipa": "/ˈrɛtərɪk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "수사학; 수사적 표현",
-     "ex": "The politician's rhetoric was powerful but hollow, offering inspiration without actionable policy.",
-     "tr": "그 정치인의 수사는 강력하지만 공허했으며, 실행 가능한 정책 없이 영감만 제공했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "oratory",
-    "eloquence",
-    "discourse"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "rhetorical",
-   "ipa": "/rɪˈtɒrɪkl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "수사적인, 수사학의",
-     "ex": "Autobiographical writing relies on rhetorical acts such as assertion and justification to shape the reader's interpretation of past events.",
-     "tr": "자서전적 글쓰기는 독자의 과거 사건 해석을 형성하기 위해 주장과 정당화 같은 수사적 행위에 의존한다.",
-     "src": "2026 9월모평 23번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(질문이) 수사적인, 답을 기대하지 않는"
-    }
-   ],
-   "syn": [
-    "oratorical",
-    "persuasive",
-    "stylistic"
-   ],
-   "deriv": [
-    "rhetoric (n.)",
-    "rhetorician (n.)",
-    "rhetorically (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "rhetor",
-     "mean": "연설가, 수사학자"
-    }
-   ],
-   "etymHint": "rhetor(연설가) → 연설가의 기술에 관한 → 수사적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "engender",
-   "ipa": "/ɪnˈdʒɛndər/",
+   "en": "amplify",
+   "ipa": "/ˈæmplɪfaɪ/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "야기하다, 낳다",
-     "ex": "Prolonged inequality tends to engender resentment among the disenfranchised segments of society.",
-     "tr": "장기적인 불평등은 사회의 소외된 계층에서 분노를 야기하는 경향이 있다.",
+     "ko": "증폭하다, 확대하다",
+     "ex": "Echo chambers on digital platforms amplify extreme viewpoints and distort public perception of consensus.",
+     "tr": "디지털 플랫폼의 에코 챔버는 극단적인 견해를 증폭하고 합의에 대한 대중의 인식을 왜곡한다.",
      "src": ""
     }
    ],
    "syn": [
-    "generate",
-    "produce",
-    "foster"
+    "intensify",
+    "magnify",
+    "enhance"
    ],
    "deriv": [],
    "roots": [],
@@ -667,38 +192,33 @@
    }
   },
   {
-   "en": "nostalgia",
-   "ipa": "/nɒˈstældʒə/",
-   "pos": "n.",
+   "en": "gigantic",
+   "ipa": "/dʒaɪˈɡæntɪk/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "향수, 과거에 대한 그리움",
-     "ex": "The film deliberately evokes nostalgia for a simpler era, using sepia tones and period-specific soundtracks to anchor viewers emotionally.",
-     "tr": "그 영화는 관객들을 감정적으로 고정시키기 위해 세피아 톤과 시대별 사운드트랙을 사용하여 더 단순한 시대에 대한 향수를 의도적으로 불러일으킨다.",
+     "pos": "adj.",
+     "ko": "거대한, 엄청난",
+     "ex": "The project required a gigantic coordinated effort spanning dozens of international institutions and thousands of researchers.",
+     "tr": "그 프로젝트는 수십 개의 국제 기관과 수천 명의 연구자에 걸친 엄청난 공동 노력을 필요로 했다.",
      "src": ""
     }
    ],
    "syn": [
-    "sentimentality",
-    "wistfulness",
-    "longing"
+    "enormous",
+    "colossal",
+    "immense"
    ],
    "deriv": [
-    "nostalgic (adj.)",
-    "nostalgically (adv.)"
+    "gigantically (adv.)"
    ],
    "roots": [
     {
-     "part": "nostos",
-     "mean": "귀향"
-    },
-    {
-     "part": "algos",
-     "mean": "고통"
+     "part": "gigant-",
+     "mean": "거인"
     }
    ],
-   "etymHint": "nostos(귀향)+algos(고통) → 고향으로 돌아가고 싶은 고통 → 향수",
+   "etymHint": "gigant(거인)+-ic → 거인 같은 → 거대한",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -709,45 +229,537 @@
    }
   },
   {
-   "en": "verification",
-   "ipa": "/ˌvɛrɪfɪˈkeɪʃən/",
+   "en": "extrapolate",
+   "ipa": "/ɪkˈstræpəˌleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "외삽하다, 추론하다",
+     "ex": "It would be rash to extrapolate from a regional study findings that apply universally across cultures.",
+     "tr": "지역 연구에서 모든 문화에 보편적으로 적용되는 결과를 추론하는 것은 경솔한 일이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "project",
+    "infer",
+    "generalize"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "progression",
+   "ipa": "/prəˈɡreʃən/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "검증, 확인",
-     "ex": "Scientific objectivity demands that all measurements and observations be open to independent verification by other researchers.",
-     "tr": "과학적 객관성은 모든 측정과 관찰이 다른 연구자들에 의한 독립적 검증에 열려 있을 것을 요구한다.",
-     "src": "2015 9월모평 28번"
+     "ko": "진행, 발전; 연속",
+     "ex": "Each experiment in science, whether it confirms or refutes a hypothesis, initiates a new step in a theoretically infinite progression.",
+     "tr": "과학의 모든 실험은 가설을 확인하든 반박하든 이론적으로 무한한 발전의 새로운 단계를 시작한다.",
+     "src": "2017 9월모평 40번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(음악) 진행"
     }
    ],
    "syn": [
-    "confirmation",
-    "validation",
-    "authentication"
+    "advancement",
+    "sequence",
+    "development"
    ],
    "deriv": [
-    "verify (v.)",
-    "verifiable (adj.)",
-    "veracity (n.)"
+    "progress (n./v.)",
+    "progressive (adj.)",
+    "progressively (adv.)"
    ],
    "roots": [
     {
-     "part": "ver",
-     "mean": "진실"
+     "part": "pro-",
+     "mean": "앞으로"
     },
     {
-     "part": "fic",
-     "mean": "만들다"
+     "part": "gress-",
+     "mean": "걷다"
     }
    ],
-   "etymHint": "ver(진실)+fic(만들다) → 진실로 만들어 확인하다 → 검증",
+   "etymHint": "pro(앞으로)+gress(걷다) → 앞으로 나아가다 → 진행",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 3,
     "exams": 2,
-    "recentYear": "2015",
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "licence",
+   "ipa": "/ˈlaɪsəns/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "허가, 면허; (창작의) 자유",
+     "ex": "When storytellers embellish a tale for comedic effect, the audience willingly grants them comic licence to deviate from strict factual accuracy.",
+     "tr": "이야기꾼이 희극적 효과를 위해 이야기를 부풀릴 때, 청중은 기꺼이 그들에게 엄격한 사실적 정확성에서 벗어날 수 있는 희극적 허가를 부여한다.",
+     "src": "2022 수능 31번"
+    },
+    {
+     "pos": "v.",
+     "ko": "허가하다"
+    }
+   ],
+   "syn": [
+    "permission",
+    "authorization",
+    "liberty"
+   ],
+   "deriv": [
+    "license (v.)",
+    "licensed (adj.)",
+    "licensing (n.)"
+   ],
+   "roots": [
+    {
+     "part": "licen-",
+     "mean": "허용하다"
+    }
+   ],
+   "etymHint": "licen(허용하다)+-ce → 허용된 것 → 허가",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "implacable",
+   "ipa": "/ɪmˈplækəbəl/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "달래기 어려운, 완강한",
+     "ex": "The implacable opposition of the senate blocked every reform proposal the president advanced.",
+     "tr": "상원의 완강한 반대가 대통령이 추진한 모든 개혁 제안을 저지했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "relentless",
+    "inexorable",
+    "intractable"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "invariable",
+   "ipa": "/ɪnˈveəriəbəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "변하지 않는, 일정한",
+     "ex": "Because word meanings are never truly invariable, every act of communication involves active interpretation by both speaker and listener.",
+     "tr": "단어의 의미는 결코 완전히 변하지 않는 것이 아니기 때문에, 모든 의사소통 행위는 화자와 청자 모두의 능동적인 해석을 수반한다.",
+     "src": "2017 수능 22번"
+    }
+   ],
+   "syn": [
+    "constant",
+    "fixed",
+    "unvarying"
+   ],
+   "deriv": [
+    "invariably (adv.)",
+    "variable (adj.)",
+    "vary (v.)"
+   ],
+   "roots": [
+    {
+     "part": "in-",
+     "mean": "아니다"
+    },
+    {
+     "part": "vari-",
+     "mean": "변하다"
+    },
+    {
+     "part": "-able",
+     "mean": "~할 수 있는"
+    }
+   ],
+   "etymHint": "in(아니다)+vari(변하다)+-able → 변할 수 없는 → 변하지 않는",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "cacophony",
+   "ipa": "/kəˈkɒfəni/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "불협화음, 소음",
+     "ex": "The avant-garde composer embraced cacophony as a deliberate aesthetic strategy to destabilise the listener's expectations.",
+     "tr": "아방가르드 작곡가는 청취자의 기대를 불안정하게 만들기 위한 의도적인 미적 전략으로서 불협화음을 수용했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "dissonance",
+    "discord",
+    "din"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "maturity",
+   "ipa": "/məˈtjʊərɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "성숙, 원숙함",
+     "ex": "Emotional maturity allows individuals to tolerate ambiguity without demanding immediate resolution or certainty.",
+     "tr": "정서적 성숙은 개인이 즉각적인 해결이나 확실성을 요구하지 않고 모호함을 견딜 수 있게 한다.",
+     "src": ""
+    },
+    {
+     "pos": "n.",
+     "ko": "(금융) 만기"
+    }
+   ],
+   "syn": [
+    "adulthood",
+    "ripeness",
+    "development"
+   ],
+   "deriv": [
+    "mature (adj./v.)",
+    "immature (adj.)",
+    "maturing (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "matur-",
+     "mean": "익다"
+    },
+    {
+     "part": "-ity",
+     "mean": "상태"
+    }
+   ],
+   "etymHint": "matur(익다)+-ity(상태) → 무르익은 상태 → 성숙",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "axiomatic",
+   "ipa": "/ˌæksiəˈmætɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "자명한, 공리적인",
+     "ex": "It seems axiomatic that democratic institutions depend on an informed and engaged citizenry.",
+     "tr": "민주주의 제도는 정보를 갖추고 참여하는 시민에 달려 있다는 것은 자명해 보인다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "self-evident",
+    "incontrovertible",
+    "postulatory"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "larvae",
+   "ipa": "/ˈlɑːrviː/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "유충들 (larva의 복수)",
+     "ex": "The larvae of certain moth species hatch within days and immediately begin feeding on the host plant's leaves.",
+     "tr": "특정 나방 종의 유충은 며칠 안에 부화하여 즉시 숙주 식물의 잎을 먹기 시작한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "grubs",
+    "caterpillars"
+   ],
+   "deriv": [
+    "larva (n. sing.)",
+    "larval (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "larv-",
+     "mean": "가면, 유령"
+    }
+   ],
+   "etymHint": "larv(가면) → 아직 본 모습을 드러내지 않은 것 → 유충",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "improvise",
+   "ipa": "/ˈɪmprəvaɪz/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "즉흥적으로 하다, 임기응변으로 만들다",
+     "ex": "Skilled improvisers draw on deep reservoirs of knowledge; those who cannot improvise meaningfully are merely producing random variations.",
+     "tr": "숙련된 즉흥 연주자는 깊은 지식의 저장고에서 끌어내며, 의미 있게 즉흥할 수 없는 이들은 단지 무작위 변형을 만들어낼 뿐이다.",
+     "src": "2020 수능 21번"
+    }
+   ],
+   "syn": [
+    "extemporize",
+    "ad-lib",
+    "devise"
+   ],
+   "deriv": [
+    "improvisation (n.)",
+    "improviser (n.)",
+    "improvisational (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "im-",
+     "mean": "아니다"
+    },
+    {
+     "part": "pro-",
+     "mean": "미리"
+    },
+    {
+     "part": "vis-",
+     "mean": "보다"
+    }
+   ],
+   "etymHint": "im(아니다)+pro(미리)+vis(보다) → 미리 보지 않고 → 즉흥적으로 하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "stipulate",
+   "ipa": "/ˈstɪpjəˌleɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "명시하다, 조건으로 규정하다",
+     "ex": "The contract stipulates that any deviation from the agreed protocol must receive prior written authorization.",
+     "tr": "계약서는 합의된 프로토콜에서 벗어나는 모든 사항은 사전 서면 승인을 받아야 한다고 명시한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "specify",
+    "prescribe",
+    "mandate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "mastery",
+   "ipa": "/ˈmɑːstəri/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "숙달, 정통; 지배",
+     "ex": "Achieving genuine job mastery in the digital age demands continuous engagement with the rapidly evolving tools available online.",
+     "tr": "디지털 시대에 진정한 직무 숙달을 이루려면 온라인에서 빠르게 진화하는 도구들과의 지속적인 교류가 필요하다.",
+     "src": "2019 6월모평 21번"
+    }
+   ],
+   "syn": [
+    "expertise",
+    "proficiency",
+    "command"
+   ],
+   "deriv": [
+    "master (n./v.)",
+    "masterful (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "mast-",
+     "mean": "지배하다"
+    },
+    {
+     "part": "-ery",
+     "mean": "상태·기술"
+    }
+   ],
+   "etymHint": "mast(지배하다)+-ery → 완전히 지배하는 상태 → 숙달",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2019",
+    "stars": 1
+   }
+  },
+  {
+   "en": "allege",
+   "ipa": "/əˈlɛdʒ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "주장하다, (증거 없이) 단언하다",
+     "ex": "The report alleged that systemic bias had distorted the findings of the initial inquiry.",
+     "tr": "그 보고서는 체계적인 편견이 초기 조사의 결과를 왜곡했다고 주장했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "claim",
+    "contend",
+    "assert"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "embellish",
+   "ipa": "/ɪmˈbelɪʃ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "꾸미다, 윤색하다",
+     "ex": "A digital index can be embellished with colour coding, icons, and hyperlinks to make navigation far more intuitive.",
+     "tr": "디지털 색인은 탐색을 훨씬 더 직관적으로 만들기 위해 색상 코딩, 아이콘, 하이퍼링크로 꾸밀 수 있다.",
+     "src": "2020 9월모평 31번"
+    },
+    {
+     "pos": "v.",
+     "ko": "(이야기를) 과장하여 꾸미다"
+    }
+   ],
+   "syn": [
+    "adorn",
+    "ornament",
+    "elaborate"
+   ],
+   "deriv": [
+    "embellishment (n.)"
+   ],
+   "roots": [
+    {
+     "part": "em-",
+     "mean": "만들다"
+    },
+    {
+     "part": "bell-",
+     "mean": "아름다운"
+    }
+   ],
+   "etymHint": "em(만들다)+bell(아름다운) → 아름답게 만들다 → 꾸미다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2020",
     "stars": 1
    }
   }

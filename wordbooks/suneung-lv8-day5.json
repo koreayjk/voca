@@ -4,826 +4,761 @@
  "day": 5,
  "words": [
   {
-   "en": "resistant",
-   "ipa": "/rɪˈzɪstənt/",
+   "en": "distinctive",
+   "ipa": "/dɪˈstɪŋktɪv/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "저항하는, 내성이 있는",
-     "ex": "The densely packed wood structure is resistant to damage from insects and other pests.",
-     "tr": "촘촘하게 짜인 목재 구조는 곤충과 다른 해충에 의한 피해에 저항한다.",
-     "src": "2011 수능 37번"
+     "ko": "독특한, 특유의",
+     "ex": "The athlete was widely known for his distinctive running style that set him apart from others.",
+     "tr": "그 운동선수는 다른 선수들과 구분되는 독특한 달리기 스타일로 널리 알려져 있었다.",
+     "src": "2022 6월모평 26번"
     }
    ],
    "syn": [
-    "immune",
-    "tough",
-    "resilient"
+    "unique",
+    "characteristic",
+    "distinguishing"
    ],
    "deriv": [
-    "resist (v.)",
-    "resistance (n.)"
+    "distinct (adj.)",
+    "distinction (n.)",
+    "distinctly (adv.)"
    ],
    "roots": [
     {
-     "part": "re-",
-     "mean": "다시, 반대로"
+     "part": "dis",
+     "mean": "분리"
     },
     {
-     "part": "sist-",
-     "mean": "서다 (라틴어 sistere)"
+     "part": "stinct",
+     "mean": "찌르다, 구별하다"
     }
    ],
-   "etymHint": "re(반대로) + sist(서다) → 맞서 서다 → 저항하는",
+   "etymHint": "dis(분리)+stinct(구별하다) → 분리하여 구별되는 → 독특한",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 16,
-    "exams": 10,
-    "recentYear": "2020",
+    "count": 15,
+    "exams": 9,
+    "recentYear": "2025",
     "stars": 2
    }
   },
   {
-   "en": "emphasis",
-   "ipa": "/ˈemfəsɪs/",
-   "pos": "n.",
+   "en": "accumulate",
+   "ipa": "/əˈkjuːmjəleɪt/",
+   "pos": "v.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "강조, 중점",
-     "ex": "The information-processing model places a strong emphasis on finding quick solutions to problems.",
-     "tr": "정보 처리 모델은 문제에 대한 빠른 해결책을 찾는 것에 강한 강조를 둔다.",
-     "src": "2011 9월모평 45번"
+     "pos": "v.",
+     "ko": "축적하다, 모으다",
+     "ex": "Dust had accumulated on the old shelves.",
+     "tr": "오래된 선반에 먼지가 쌓여 있었다."
+    }
+   ],
+   "syn": [
+    "gather",
+    "pile up"
+   ],
+   "deriv": [
+    "accumulation (n.)"
+   ],
+   "roots": [
+    {
+     "part": "ac-",
+     "mean": "~에"
+    },
+    {
+     "part": "cumul",
+     "mean": "더미"
+    }
+   ],
+   "etymHint": "ac(~에)+cumul(더미) → 더미로 쌓다 → 축적하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 20,
+    "exams": 17,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "adequate",
+   "ipa": "/ˈædɪkwət/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "충분한, 적절한",
+     "ex": "The lighting was adequate for reading.",
+     "tr": "조명은 읽기에 충분했다."
+    }
+   ],
+   "syn": [
+    "sufficient",
+    "enough"
+   ],
+   "deriv": [
+    "adequacy (n.)",
+    "adequately (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "ad-",
+     "mean": "~에"
+    },
+    {
+     "part": "equ",
+     "mean": "같은"
+    }
+   ],
+   "etymHint": "ad(~에)+equ(같은) → 필요에 꼭 맞는 → 충분한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 6,
+    "exams": 5,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "anticipate",
+   "ipa": "/ænˈtɪsɪpeɪt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "예상하다, 기대하다",
+     "ex": "We anticipate strong sales this year.",
+     "tr": "우리는 올해 강한 매출을 예상한다."
+    },
+    {
+     "pos": "v.",
+     "ko": "미리 대비하다"
+    }
+   ],
+   "syn": [
+    "expect",
+    "foresee"
+   ],
+   "deriv": [
+    "anticipation (n.)"
+   ],
+   "roots": [
+    {
+     "part": "ante-",
+     "mean": "미리"
+    },
+    {
+     "part": "cip",
+     "mean": "잡다"
+    }
+   ],
+   "etymHint": "ante(미리)+cip(잡다) → 미리 붙잡다 → 예상하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 17,
+    "exams": 17,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "feasible",
+   "ipa": "/ˈfiːzəbəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "실현 가능한",
+     "ex": "The committee studied whether the plan was financially feasible.",
+     "tr": "위원회는 그 계획이 재정적으로 실현 가능한지 검토했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "viable",
+    "practicable",
+    "workable"
+   ],
+   "deriv": [
+    "feasibility (n.)"
+   ],
+   "roots": [],
+   "etymHint": "fe(행하다) → 해낼 수 있는",
+   "level": "B2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "assess",
+   "ipa": "/əˈses/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "평가하다, 가늠하다",
+     "ex": "Researchers carefully assess how much sleep affects memory.",
+     "tr": "연구자들은 수면이 기억에 얼마나 영향을 주는지 신중히 평가한다."
+    },
+    {
+     "pos": "v.",
+     "ko": "(가치·세금을) 산정하다"
+    }
+   ],
+   "syn": [
+    "evaluate",
+    "judge"
+   ],
+   "deriv": [
+    "assessment (n.)"
+   ],
+   "roots": [
+    {
+     "part": "as-",
+     "mean": "옆에"
+    },
+    {
+     "part": "sess",
+     "mean": "앉다"
+    }
+   ],
+   "etymHint": "as(옆에)+sess(앉다) → 옆에 앉아 매기다 → 평가하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 24,
+    "exams": 15,
+    "recentYear": "2026",
+    "stars": 2
+   },
+   "exVaried": true
+  },
+  {
+   "en": "robust",
+   "ipa": "/roʊˈbʌst/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "튼튼한, 탄탄한",
+     "ex": "The system was designed to be robust enough to handle heavy traffic.",
+     "tr": "그 시스템은 과중한 트래픽도 견딜 만큼 탄탄하게 설계되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sturdy",
+    "strong",
+    "resilient"
+   ],
+   "deriv": [
+    "robustly (adv.)"
+   ],
+   "roots": [],
+   "etymHint": "robur(참나무) → 참나무처럼 튼튼한",
+   "level": "B2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "rigorous",
+   "ipa": "/ˈrɪɡərəs/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "엄격한, 철저한",
+     "ex": "The drug passed a series of rigorous safety tests.",
+     "tr": "그 약은 일련의 엄격한 안전 시험을 통과했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "strict",
+    "thorough",
+    "stringent"
+   ],
+   "deriv": [
+    "rigorously (adv.)",
+    "rigor (n.)"
+   ],
+   "roots": [],
+   "etymHint": "rig(뻣뻣한) → 빈틈없이 엄한",
+   "level": "B2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "contradict",
+   "ipa": "/ˌkɑːntrəˈdɪkt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "모순되다, 배치되다",
+     "ex": "His actions contradict his words.",
+     "tr": "그의 행동은 그의 말과 모순된다."
+    },
+    {
+     "pos": "v.",
+     "ko": "반박하다, 부인하다"
+    }
+   ],
+   "syn": [
+    "oppose",
+    "deny"
+   ],
+   "deriv": [
+    "contradiction (n.)",
+    "contradictory (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "contra-",
+     "mean": "반대"
+    },
+    {
+     "part": "dict",
+     "mean": "말하다"
+    }
+   ],
+   "etymHint": "contra(반대)+dict(말하다) → 반대로 말하다 → 모순되다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 9,
+    "exams": 7,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "compelling",
+   "ipa": "/kəmˈpelɪŋ/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "강력한, 설득력 있는",
+     "ex": "She made a compelling case for investing in renewable energy.",
+     "tr": "그녀는 재생에너지 투자에 대한 설득력 있는 주장을 펼쳤다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "convincing",
+    "persuasive",
+    "gripping"
+   ],
+   "deriv": [
+    "compel (v.)"
+   ],
+   "roots": [],
+   "etymHint": "com-(함께)+pel(밀다) → 마음을 밀어붙이는",
+   "level": "B2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "eliminate",
+   "ipa": "/ɪˈlɪmɪneɪt/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "제거하다, 없애다",
+     "ex": "We must eliminate all errors.",
+     "tr": "우리는 모든 오류를 제거해야 한다."
+    }
+   ],
+   "syn": [
+    "remove",
+    "get rid of"
+   ],
+   "deriv": [
+    "elimination (n.)"
+   ],
+   "roots": [
+    {
+     "part": "e-",
+     "mean": "밖으로"
+    },
+    {
+     "part": "limin",
+     "mean": "문턱"
+    }
+   ],
+   "etymHint": "e(밖으로)+limin(문턱) → 문 밖으로 내보내다 → 제거하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 23,
+    "exams": 19,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "versatile",
+   "ipa": "/ˈvɜːrsətəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "다재다능한, 다용도의",
+     "ex": "A versatile tool, the device can be used for dozens of tasks.",
+     "tr": "다용도 도구인 그 장치는 수십 가지 작업에 쓰일 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "adaptable",
+    "flexible",
+    "all-round"
+   ],
+   "deriv": [
+    "versatility (n.)"
+   ],
+   "roots": [],
+   "etymHint": "vers(돌다) → 여러 쪽으로 도는",
+   "level": "B2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "emphasize",
+   "ipa": "/ˈemfəsaɪz/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "강조하다",
+     "ex": "The article emphasizes the importance of protecting wildlife.",
+     "tr": "그 글은 야생동물 보호의 중요성을 강조한다."
     }
    ],
    "syn": [
     "stress",
-    "focus",
-    "accent"
+    "highlight"
    ],
    "deriv": [
-    "emphasize (v.)",
+    "emphasis (n.)",
     "emphatic (adj.)"
    ],
-   "roots": [
-    {
-     "part": "em-",
-     "mean": "안에"
-    },
-    {
-     "part": "phas-",
-     "mean": "나타나다 (그리스어 phainein)"
-    }
-   ],
-   "etymHint": "em(안에) + phas(나타나다) → 안에서 두드러지게 나타남 → 강조",
+   "etymHint": "em(안에)+phas(보이다) → 안의 것을 드러내 보이다 → 강조하다",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 16,
-    "exams": 10,
+    "count": 36,
+    "exams": 19,
+    "recentYear": "2027",
+    "stars": 2
+   },
+   "exVaried": true
+  },
+  {
+   "en": "viable",
+   "ipa": "/ˈvaɪəbəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "실행 가능한, 생존 가능한",
+     "ex": "Solar power has become a viable alternative to fossil fuels.",
+     "tr": "태양광은 화석연료를 대체할 실행 가능한 대안이 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "feasible",
+    "workable",
+    "sustainable"
+   ],
+   "deriv": [
+    "viability (n.)"
+   ],
+   "roots": [],
+   "etymHint": "vi(생명) → 살아남을 수 있는",
+   "level": "B2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "evident",
+   "ipa": "/ˈevɪdənt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "분명한, 명백한",
+     "ex": "Her talent was evident from a young age.",
+     "tr": "그녀의 재능은 어린 나이부터 분명했다."
+    }
+   ],
+   "syn": [
+    "clear",
+    "obvious"
+   ],
+   "deriv": [
+    "evidently (adv.)",
+    "evidence (n.)"
+   ],
+   "roots": [
+    {
+     "part": "e-",
+     "mean": "밖으로"
+    },
+    {
+     "part": "vid",
+     "mean": "보다"
+    }
+   ],
+   "etymHint": "e(밖으로)+vid(보다) → 밖으로 보이는 → 명백한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 80,
+    "exams": 30,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "justify",
+   "ipa": "/ˈdʒʌstɪfaɪ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "정당화하다, 타당함을 보이다",
+     "ex": "Nothing can justify such cruelty.",
+     "tr": "어떤 것도 그런 잔인함을 정당화할 수 없다."
+    }
+   ],
+   "syn": [
+    "warrant",
+    "defend"
+   ],
+   "deriv": [
+    "justification (n.)",
+    "justified (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "just",
+     "mean": "올바른"
+    },
+    {
+     "part": "-fy",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "just(올바른)+fy(만들다) → 올바르게 만들다 → 정당화하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 23,
+    "exams": 17,
     "recentYear": "2026",
     "stars": 2
    }
   },
   {
-   "en": "intensity",
-   "ipa": "/ɪnˈtensɪti/",
-   "pos": "n.",
+   "en": "identical",
+   "ipa": "/aɪˈdentɪkəl/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "강도, 강렬함",
-     "ex": "People differ greatly both in the intensity of their response to art and in how that response is expressed.",
-     "tr": "사람들은 예술에 대한 반응의 강도와 그 반응이 표현되는 방식 모두에서 크게 다르다.",
-     "src": "2015 수능 40번"
+     "pos": "adj.",
+     "ko": "동일한, 똑같은",
+     "ex": "The two groups received identical instructions, yet their responses to the task differed significantly.",
+     "tr": "두 그룹은 동일한 지시를 받았지만 과제에 대한 반응은 크게 달랐다.",
+     "src": "2021 9월모평 33번"
     }
    ],
    "syn": [
-    "strength",
-    "force",
-    "vehemence"
+    "same",
+    "equivalent",
+    "indistinguishable"
    ],
    "deriv": [
-    "intense (adj.)",
-    "intensify (v.)"
+    "identity (n.)",
+    "identify (v.)",
+    "identification (n.)"
    ],
    "roots": [
     {
-     "part": "intens-",
-     "mean": "긴장된, 팽팽한 (라틴어 intensus)"
+     "part": "ident",
+     "mean": "동일한 것"
     }
    ],
-   "etymHint": "intens(긴장된) + -ity(명사 접미) → 긴장되고 팽팽한 정도 → 강도",
+   "etymHint": "ident(동일한 것) → 같은 것임을 나타내는 → 동일한",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 15,
-    "exams": 10,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "recognition",
-   "ipa": "/ˌrekəɡˈnɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "인식, 인정",
-     "ex": "One of the most important changes will be a growing recognition of ideas that have long been overlooked.",
-     "tr": "가장 중요한 변화 중 하나는 오랫동안 무시되어 온 개념들에 대한 인식의 증가일 것이다.",
-     "src": "2010 수능 25번"
-    },
-    {
-     "pos": "n.",
-     "ko": "표창, 감사 표시"
-    }
-   ],
-   "syn": [
-    "acknowledgment",
-    "awareness",
-    "identification"
-   ],
-   "deriv": [
-    "recognize (v.)",
-    "recognizable (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re-",
-     "mean": "다시"
-    },
-    {
-     "part": "cogn-",
-     "mean": "알다 (라틴어 cognoscere)"
-    }
-   ],
-   "etymHint": "re(다시) + cogn(알다) + -ition → 다시 알아봄 → 인식, 인정",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 15,
-    "exams": 10,
+    "count": 11,
+    "exams": 8,
     "recentYear": "2021",
     "stars": 2
    }
   },
   {
-   "en": "primitive",
-   "ipa": "/ˈprɪmɪtɪv/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "원시적인, 초기의",
-     "ex": "When it comes to evaluating choices, humans are far more primitive in their thinking than we typically assume.",
-     "tr": "선택을 평가하는 것에 관해서, 인간은 우리가 일반적으로 가정하는 것보다 훨씬 더 원시적인 사고를 한다.",
-     "src": "2012 6월모평 30번"
-    }
-   ],
-   "syn": [
-    "basic",
-    "primal",
-    "rudimentary"
-   ],
-   "deriv": [
-    "primitively (adv.)",
-    "primitivism (n.)"
-   ],
-   "roots": [
-    {
-     "part": "prim-",
-     "mean": "처음 (라틴어 primus)"
-    }
-   ],
-   "etymHint": "prim(처음) + -itive → 처음 단계에 속하는 → 원시적인",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 15,
-    "exams": 10,
-    "recentYear": "2012",
-    "stars": 2
-   }
-  },
-  {
-   "en": "domain",
-   "ipa": "/doʊˈmeɪn/",
+   "en": "uncertainty",
+   "ipa": "/ʌnˈsɜːrtənti/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "영역, 분야",
-     "ex": "The skills that create expertise in one specialized domain can lead to blind spots in other areas.",
-     "tr": "한 전문 영역에서 전문성을 만드는 기술이 다른 분야에서는 맹점으로 이어질 수 있다.",
-     "src": "2022 수능 21번"
+     "ko": "불확실성, 불확실한 상태",
+     "ex": "Persistent opposition from a vocal minority can introduce uncertainty and self-doubt within the dominant group.",
+     "tr": "소수의 지속적인 반대는 다수 집단 내에 불확실성과 자기 의심을 불러일으킬 수 있다.",
+     "src": "2019 수능 32번"
     }
    ],
    "syn": [
-    "field",
-    "realm",
-    "area"
+    "doubt",
+    "ambiguity",
+    "unpredictability"
    ],
    "deriv": [
-    "dominate (v.)",
-    "dominant (adj.)"
+    "uncertain (adj.)",
+    "certainly (adv.)",
+    "certainty (n.)"
    ],
    "roots": [
     {
-     "part": "domin-",
-     "mean": "지배하다 (라틴어 dominus)"
+     "part": "cert",
+     "mean": "확실한"
     }
    ],
-   "etymHint": "domin(지배하다) + -ain → 지배하는 땅 → 영역",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 15,
-    "exams": 10,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "literary",
-   "ipa": "/ˈlɪtəreri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "문학적인, 문예의",
-     "ex": "Characters in literary fiction rarely return in later works, unlike in genre fiction where recurring heroes are common.",
-     "tr": "문학 소설의 등장인물들은 이후 작품에서 거의 돌아오지 않는데, 반복되는 주인공이 흔한 장르 소설과는 다르다.",
-     "src": "2026 9월모평 40번"
-    }
-   ],
-   "syn": [
-    "fictional",
-    "textual",
-    "written"
-   ],
-   "deriv": [
-    "literature (n.)",
-    "literacy (n.)",
-    "literate (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "liter-",
-     "mean": "글자 (라틴어 littera)"
-    }
-   ],
-   "etymHint": "liter(글자) + -ary → 글자에 관한 → 문학적인",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 14,
-    "exams": 10,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "component",
-   "ipa": "/kəmˈpoʊnənt/",
-   "pos": "n./adj.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "구성 요소, 성분",
-     "ex": "People still eat food, but an increasing component of its value comes from factors beyond basic nutrition.",
-     "tr": "사람들은 여전히 음식을 먹지만, 그 가치의 점점 더 많은 구성 요소가 기본적인 영양을 넘어선 요인에서 비롯된다.",
-     "src": "2024 6월모평 31번"
-    }
-   ],
-   "syn": [
-    "element",
-    "part",
-    "ingredient"
-   ],
-   "deriv": [
-    "compose (v.)",
-    "composition (n.)"
-   ],
-   "roots": [
-    {
-     "part": "com-",
-     "mean": "함께"
-    },
-    {
-     "part": "pon-",
-     "mean": "놓다 (라틴어 ponere)"
-    }
-   ],
-   "etymHint": "com(함께) + pon(놓다) + -ent → 함께 놓여 이루는 것 → 구성 요소",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 14,
-    "exams": 10,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "wisdom",
-   "ipa": "/ˈwɪzdəm/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "지혜, 현명함",
-     "ex": "The line between madness and wisdom in a novel is often subjective, depending on the reader's own perspective.",
-     "tr": "소설에서 광기와 지혜 사이의 경계는 종종 주관적이며, 독자 자신의 관점에 달려 있다.",
-     "src": "2019 6월모평 33번"
-    }
-   ],
-   "syn": [
-    "insight",
-    "knowledge",
-    "prudence"
-   ],
-   "deriv": [
-    "wise (adj.)",
-    "wisely (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 13,
-    "exams": 10,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "driven",
-   "ipa": "/ˈdrɪvən/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "동기 부여된, 이끌리는",
-     "ex": "People are naturally driven to forget or ignore undesirable memories and negative experiences.",
-     "tr": "사람들은 자연적으로 불쾌한 기억과 부정적인 경험을 잊거나 무시하도록 이끌린다.",
-     "src": "2019 수능 31번"
-    }
-   ],
-   "syn": [
-    "motivated",
-    "compelled",
-    "determined"
-   ],
-   "deriv": [
-    "drive (v./n.)",
-    "driver (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 13,
-    "exams": 10,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "hypothesis",
-   "ipa": "/haɪˈpɒθɪsɪs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "가설, 추정",
-     "ex": "Scientists may include any evidence or hypothesis that supports their claim, but must follow one basic rule of science.",
-     "tr": "과학자들은 자신의 주장을 뒷받침하는 어떤 증거나 가설도 포함할 수 있지만, 과학의 한 가지 기본 규칙을 따라야 한다.",
-     "src": "2017 6월모평 40번"
-    }
-   ],
-   "syn": [
-    "theory",
-    "assumption",
-    "conjecture"
-   ],
-   "deriv": [
-    "hypothesize (v.)",
-    "hypothetical (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "hypo-",
-     "mean": "아래에"
-    },
-    {
-     "part": "thesis",
-     "mean": "놓음, 명제 (그리스어 tithenai)"
-    }
-   ],
-   "etymHint": "hypo(아래에) + thesis(명제) → 아래에 놓인 전제 → 가설",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 13,
-    "exams": 10,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "machinery",
-   "ipa": "/məˈʃiːnəri/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "기계류, 기계 장치",
-     "ex": "All department managers must ensure that dangerous machinery is properly stored and secured.",
-     "tr": "모든 부서 관리자는 위험한 기계류가 적절히 보관되고 고정되어 있는지 확인해야 한다.",
-     "src": "2019 6월모평 18번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(조직의) 체계, 구조"
-    }
-   ],
-   "syn": [
-    "equipment",
-    "apparatus",
-    "mechanism"
-   ],
-   "deriv": [
-    "machine (n.)",
-    "mechanical (adj.)",
-    "machinist (n.)"
-   ],
-   "roots": [
-    {
-     "part": "machin",
-     "mean": "기계, 장치"
-    },
-    {
-     "part": "-ery",
-     "mean": "집합 명사 접미사"
-    }
-   ],
-   "etymHint": "machin(기계) + -ery(집합) → 기계들의 집합 → 기계류",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2024",
-    "stars": 2
-   }
-  },
-  {
-   "en": "reproduction",
-   "ipa": "/ˌriːprəˈdʌkʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "복제, 재현",
-     "ex": "A copy of a painting, no matter how detailed, is a reproduction and not the original work.",
-     "tr": "아무리 정교하더라도 그림의 복사본은 복제품이지 원본 작품이 아니다.",
-     "src": "2013 6월모평 45번"
-    },
-    {
-     "pos": "n.",
-     "ko": "번식, 생식"
-    }
-   ],
-   "syn": [
-    "copy",
-    "duplicate",
-    "replication"
-   ],
-   "deriv": [
-    "reproduce (v.)",
-    "reproductive (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re-",
-     "mean": "다시"
-    },
-    {
-     "part": "produce",
-     "mean": "만들다, 생산하다"
-    }
-   ],
-   "etymHint": "re(다시) + produce(만들다) + -tion(명사) → 다시 만들어 냄 → 복제",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2024",
-    "stars": 2
-   }
-  },
-  {
-   "en": "empire",
-   "ipa": "/ˈɛmpaɪər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "제국; 거대 기업",
-     "ex": "During the Roman Empire, architecture became an important symbol of political power.",
-     "tr": "로마 제국 시대에 건축은 정치적 권력의 중요한 상징이 되었다.",
-     "src": "2025 수능 21번"
-    }
-   ],
-   "syn": [
-    "dominion",
-    "realm",
-    "kingdom"
-   ],
-   "deriv": [
-    "emperor (n.)",
-    "imperial (adj.)",
-    "imperialism (n.)"
-   ],
-   "roots": [
-    {
-     "part": "imper",
-     "mean": "명령하다, 지배하다"
-    }
-   ],
-   "etymHint": "imper(명령하다) → 지배하는 영역 → 제국",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "evaluation",
-   "ipa": "/ɪˌvæljuˈeɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "평가, 사정",
-     "ex": "The self-evaluation model helps explain how people measure their own performance against others.",
-     "tr": "자기 평가 모델은 사람들이 타인과 비교해 자신의 수행을 어떻게 측정하는지 설명하는 데 도움을 준다.",
-     "src": "2018 9월모평 21번"
-    }
-   ],
-   "syn": [
-    "assessment",
-    "appraisal",
-    "review"
-   ],
-   "deriv": [
-    "evaluate (v.)",
-    "evaluative (adj.)",
-    "evaluator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "e-",
-     "mean": "밖으로"
-    },
-    {
-     "part": "valu",
-     "mean": "가치"
-    }
-   ],
-   "etymHint": "e(밖으로) + valu(가치) + -tion(명사) → 가치를 끌어내는 것 → 평가",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "accessible",
-   "ipa": "/əkˈsɛsɪbəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "접근 가능한; 이용하기 쉬운",
-     "ex": "The world needs to produce far more food in ways that are accessible to people who do not have enough to eat.",
-     "tr": "세계는 식량이 부족한 사람들이 이용할 수 있는 방식으로 훨씬 더 많은 식량을 생산해야 한다.",
-     "src": "2020 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "available",
-    "reachable",
-    "attainable"
-   ],
-   "deriv": [
-    "access (n./v.)",
-    "accessibility (n.)",
-    "inaccessible (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ac-",
-     "mean": "~쪽으로"
-    },
-    {
-     "part": "cess",
-     "mean": "가다"
-    }
-   ],
-   "etymHint": "ac(~쪽으로) + cess(가다) + -ible(가능한) → 다가갈 수 있는 → 접근 가능한",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "commitment",
-   "ipa": "/kəˈmɪtmənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "헌신, 전념; 약속",
-     "ex": "People tend to spend time with their pets only when they are free from other commitments.",
-     "tr": "사람들은 다른 약속에서 벗어날 여유가 있을 때만 반려동물과 시간을 보내는 경향이 있다.",
-     "src": "2013 9월모평 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(의무적) 책임, 의무"
-    }
-   ],
-   "syn": [
-    "dedication",
-    "obligation",
-    "pledge"
-   ],
-   "deriv": [
-    "commit (v.)",
-    "committed (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "com-",
-     "mean": "함께, 완전히"
-    },
-    {
-     "part": "mit",
-     "mean": "보내다, 맡기다"
-    }
-   ],
-   "etymHint": "com(완전히) + mit(보내다) → 완전히 맡겨 보냄 → 헌신",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2023",
-    "stars": 2
-   }
-  },
-  {
-   "en": "remarkable",
-   "ipa": "/rɪˈmɑːrkəbəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "놀라운, 주목할 만한",
-     "ex": "Our sense of hearing gives us a remarkable connection to the hidden patterns that underlie the world.",
-     "tr": "우리의 청각은 세계의 근저에 있는 숨겨진 패턴과 놀라운 연결을 제공한다.",
-     "src": "2015 수능 30번"
-    }
-   ],
-   "syn": [
-    "extraordinary",
-    "exceptional",
-    "outstanding"
-   ],
-   "deriv": [
-    "remark (n./v.)",
-    "remarkably (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "re-",
-     "mean": "다시, 강조"
-    },
-    {
-     "part": "mark",
-     "mean": "표시하다, 주목하다"
-    }
-   ],
-   "etymHint": "re(강조) + mark(주목하다) + -able(할 수 있는) → 다시 주목할 만한 → 놀라운",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "reduction",
-   "ipa": "/rɪˈdʌkʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "감소, 축소; 할인",
-     "ex": "A productive debate does not necessarily lead to a reduction in disagreement between the two sides.",
-     "tr": "생산적인 토론이 반드시 양측 간의 의견 불일치를 줄이는 것으로 이어지지는 않는다.",
-     "src": "2018 6월모평 32번"
-    }
-   ],
-   "syn": [
-    "decrease",
-    "decline",
-    "cutback"
-   ],
-   "deriv": [
-    "reduce (v.)",
-    "reductive (adj.)",
-    "reducer (n.)"
-   ],
-   "roots": [
-    {
-     "part": "re-",
-     "mean": "다시, 뒤로"
-    },
-    {
-     "part": "duc",
-     "mean": "이끌다"
-    }
-   ],
-   "etymHint": "re(뒤로) + duc(이끌다) + -tion(명사) → 뒤로 이끌어 줄임 → 감소",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 12,
-    "exams": 10,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "enormous",
-   "ipa": "/ɪˈnɔːrməs/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "거대한, 막대한",
-     "ex": "Being punctual can make an enormous difference to your daily life and to those around you.",
-     "tr": "시간을 지키는 것은 당신과 주변 사람들의 일상생활에 막대한 차이를 만들어 낼 수 있다.",
-     "src": "2012 6월모평 25번"
-    }
-   ],
-   "syn": [
-    "huge",
-    "immense",
-    "vast"
-   ],
-   "deriv": [
-    "enormously (adv.)",
-    "enormity (n.)"
-   ],
-   "roots": [
-    {
-     "part": "e-",
-     "mean": "밖으로"
-    },
-    {
-     "part": "norm",
-     "mean": "규범, 기준"
-    }
-   ],
-   "etymHint": "e(밖으로) + norm(규범) → 규범을 벗어난 크기 → 거대한",
+   "etymHint": "un(부정) + cert(확실한) + ty(상태) → 확실하지 않은 상태 → 불확실성",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 11,
-    "exams": 10,
-    "recentYear": "2024",
+    "exams": 8,
+    "recentYear": "2021",
+    "stars": 2
+   }
+  },
+  {
+   "en": "pursuit",
+   "ipa": "/pərˈsjuːt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "추구, 추적; 활동",
+     "ex": "The relentless pursuit of academic recognition can sometimes become an end in itself, divorced from genuine inquiry.",
+     "tr": "학문적 인정에 대한 끊임없는 추구는 때때로 진정한 탐구와 분리된 목적 자체가 될 수 있다.",
+     "src": "2022 6월모평 31번"
+    }
+   ],
+   "syn": [
+    "quest",
+    "chase",
+    "endeavor"
+   ],
+   "deriv": [
+    "pursue (v.)",
+    "pursuer (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pur-",
+     "mean": "앞으로"
+    },
+    {
+     "part": "suit",
+     "mean": "따르다"
+    }
+   ],
+   "etymHint": "pur(앞으로) + suit(따르다) → 앞으로 따라가다 → 추구",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 10,
+    "exams": 8,
+    "recentYear": "2026",
+    "stars": 2
+   }
+  },
+  {
+   "en": "exploration",
+   "ipa": "/ˌekspləˈreɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "탐구, 탐험",
+     "ex": "By avoiding risk and staying within familiar boundaries, one moves further from genuine exploration and creative growth.",
+     "tr": "위험을 회피하고 친숙한 범위 안에 머무름으로써 사람은 진정한 탐구와 창의적 성장에서 멀어진다.",
+     "src": "2013 6월모평 22번"
+    }
+   ],
+   "syn": [
+    "investigation",
+    "inquiry",
+    "discovery"
+   ],
+   "deriv": [
+    "explore (v.)",
+    "explorer (n.)",
+    "exploratory (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ex",
+     "mean": "밖으로"
+    },
+    {
+     "part": "plor",
+     "mean": "소리치다, 조사하다"
+    }
+   ],
+   "etymHint": "ex(밖으로) + plor(조사하다) → 밖으로 나가 조사하다 → 탐구",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 10,
+    "exams": 8,
+    "recentYear": "2025",
     "stars": 2
    }
   }

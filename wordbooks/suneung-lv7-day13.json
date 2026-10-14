@@ -4,687 +4,811 @@
  "day": 13,
  "words": [
   {
-   "en": "bamboo",
-   "ipa": "/bæmˈbuː/",
-   "pos": "n.",
+   "en": "wave",
+   "ipa": "/weɪv/",
+   "pos": "n./v.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "대나무",
-     "ex": "Bamboo grows remarkably fast and is increasingly used as a sustainable alternative to timber in construction.",
-     "tr": "대나무는 놀랍도록 빠르게 자라며 건축에서 목재의 지속 가능한 대안으로 점점 더 많이 사용되고 있다.",
-     "src": ""
+     "ko": "파도, 물결",
+     "ex": "He stood upright on the surfboard and rode the powerful wave all the way to the shoreline.",
+     "tr": "그는 서프보드 위에 똑바로 서서 강력한 파도를 타고 해안선까지 갔다.",
+     "src": "2019 수능 19번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(감정·사건의) 물결, 파동"
+    },
+    {
+     "pos": "v.",
+     "ko": "손을 흔들다, 흔들리다"
     }
    ],
-   "syn": [],
-   "deriv": [],
+   "syn": [
+    "surge",
+    "swell"
+   ],
+   "deriv": [
+    "wavelength (n.)",
+    "wavy (adj.)"
+   ],
    "roots": [],
    "etymHint": "",
    "level": "B1",
    "exam": {
     "tested": true,
-    "count": 3,
-    "exams": 3,
+    "count": 4,
+    "exams": 2,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "carton",
+   "ipa": "/ˈkɑːrtən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "종이 상자, 판지 용기",
+     "ex": "The store placed a carton of milk on the shelf alongside other dairy products for easy customer access.",
+     "tr": "가게는 고객이 쉽게 접근할 수 있도록 다른 유제품과 함께 우유 종이 상자를 선반에 놓았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "box",
+    "container",
+    "crate"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "cart",
+     "mean": "종이, 판지"
+    }
+   ],
+   "etymHint": "cart(종이/판지) → 판지로 만든 용기 → 종이 상자",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 4,
+    "exams": 2,
     "recentYear": "",
     "stars": 1
    }
   },
   {
-   "en": "info",
-   "ipa": "/ˈɪnfoʊ/",
+   "en": "learner",
+   "ipa": "/ˈlɜːrnər/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "정보 (information의 구어 축약형)",
-     "ex": "The system automatically fills in any missing info so that the output sounds natural and uninterrupted to the listener.",
-     "tr": "시스템은 누락된 정보를 자동으로 채워서 출력이 청취자에게 자연스럽고 끊기지 않는 것처럼 들리도록 한다.",
-     "src": "2010 수능 27번"
+     "ko": "학습자, 배우는 사람",
+     "ex": "Engaging with literature allows learners to move beyond rote grammar drills and connect more deeply with the foreign language.",
+     "tr": "문학에 참여하면 학습자들이 단순한 문법 암기 연습을 넘어 외국어와 더 깊이 연결될 수 있다.",
+     "src": "2025 수능 31번"
     }
    ],
    "syn": [
-    "information",
-    "data",
-    "details"
+    "student",
+    "pupil"
    ],
    "deriv": [
-    "information (n.)",
-    "inform (v.)"
+    "learn (v.)",
+    "learning (n.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 4,
+    "exams": 2,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "vitamin",
+   "ipa": "/ˈvaɪtəmɪn/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "비타민",
+     "ex": "Citrus fruits are well known for being rich in vitamin C, which supports immune function and overall health.",
+     "tr": "감귤류 과일은 면역 기능과 전반적인 건강을 지원하는 비타민 C가 풍부한 것으로 잘 알려져 있다.",
+     "src": "2014 6월모평 40번"
+    }
+   ],
+   "syn": [
+    "nutrient"
+   ],
+   "deriv": [],
+   "roots": [
+    {
+     "part": "vita",
+     "mean": "생명"
+    },
+    {
+     "part": "amin",
+     "mean": "아민(질소 화합물)"
+    }
+   ],
+   "etymHint": "vita(생명) + amin(아민) → 생명에 필요한 아민 성분 → 비타민",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 4,
+    "exams": 2,
+    "recentYear": "2014",
+    "stars": 1
+   }
+  },
+  {
+   "en": "weigh",
+   "ipa": "/weɪ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "무게가 나가다, 무게를 달다",
+     "ex": "The vehicle is about thirteen meters long and weighs more than six tons, making it one of the heaviest in its class.",
+     "tr": "그 차량은 약 13미터 길이에 6톤 이상의 무게가 나가, 해당 등급에서 가장 무거운 것 중 하나이다.",
+     "src": "2012 6월모평 38번"
+    },
+    {
+     "pos": "v.",
+     "ko": "신중히 고려하다, 따져보다"
+    }
+   ],
+   "syn": [
+    "measure",
+    "consider"
+   ],
+   "deriv": [
+    "weight (n.)",
+    "weighty (adj.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": true,
+    "count": 4,
+    "exams": 2,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "individual",
+   "ipa": "/ˌɪndɪˈvɪdʒuəl/",
+   "pos": "n./adj.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "개인",
+     "ex": "Some scholars argue that the ‘individual’ is partly a social invention.",
+     "tr": "일부 학자들은 ‘개인’이 부분적으로 사회적 발명품이라고 주장한다.",
+     "src": "2021 9월모평 23번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "개별의, 각각의"
+    }
+   ],
+   "syn": [
+    "person",
+    "single"
+   ],
+   "deriv": [
+    "individually (adv.)"
    ],
    "roots": [
     {
      "part": "in-",
-     "mean": "안으로"
+     "mean": "아닌"
     },
     {
-     "part": "form",
-     "mean": "형태, 모양 (< L. forma)"
+     "part": "divid",
+     "mean": "나누다"
     }
    ],
-   "etymHint": "in(안으로) + form(형태) → 안에 형태를 부여하다 → 알리다 → 정보",
-   "level": "B1",
+   "etymHint": "in(아닌)+divid(나누다) → 더 못 나누는 → 개인",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 3,
-    "exams": 3,
+    "count": 206,
+    "exams": 50,
     "recentYear": "2027",
-    "stars": 1
+    "stars": 3
    }
   },
   {
-   "en": "spray",
-   "ipa": "/spreɪ/",
-   "pos": "v./n.",
+   "en": "scientific",
+   "ipa": "/ˌsaɪənˈtɪfɪk/",
+   "pos": "adj.",
    "meanings": [
     {
-     "pos": "v.",
-     "ko": "뿌리다, 분사하다",
-     "ex": "Farmers often spray pesticides carefully to minimize harm to the surrounding ecosystem and beneficial insects.",
-     "tr": "농부들은 주변 생태계와 유익한 곤충에 대한 피해를 최소화하기 위해 살충제를 신중하게 뿌린다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "분무, 물보라; 스프레이"
+     "pos": "adj.",
+     "ko": "과학적인",
+     "ex": "His reputation for scientific accuracy gained him many customers.",
+     "tr": "과학적 정확성에 대한 그의 명성은 많은 고객을 얻게 해 주었다.",
+     "src": "2015 수능 24번"
     }
    ],
    "syn": [
-    "sprinkle",
-    "mist",
-    "shower"
+    "systematic",
+    "empirical"
    ],
    "deriv": [
-    "sprayer (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "businessman",
-   "ipa": "/ˈbɪznəsmæn/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "사업가, 실업인",
-     "ex": "He was born in Birmingham to a father who worked both as a businessman and as a dedicated amateur musician.",
-     "tr": "그는 버밍엄에서 사업가이자 헌신적인 아마추어 음악가로 활동한 아버지 밑에서 태어났다.",
-     "src": "2027 6월모평 26번"
-    }
-   ],
-   "syn": [
-    "entrepreneur",
-    "executive",
-    "merchant"
-   ],
-   "deriv": [
-    "business (n.)",
-    "businesswoman (n.)",
-    "businesslike (adj.)"
+    "science (n.)",
+    "scientist (n.)"
    ],
    "roots": [
     {
-     "part": "busy",
-     "mean": "바쁜"
-    },
-    {
-     "part": "-ness",
-     "mean": "명사 접사"
+     "part": "sci",
+     "mean": "알다"
     }
    ],
-   "etymHint": "busy(바쁜) + -ness(상태) → 바쁜 활동 상태 → 사업 → 사업가",
-   "level": "B1",
+   "etymHint": "sci(알다) → 앎을 다루는 → 과학적인",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "inch",
-   "ipa": "/ɪntʃ/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "인치 (2.54cm); 아주 조금",
-     "ex": "Jessie sat patiently at her favorite fishing spot, but her line had not moved an inch in over an hour.",
-     "tr": "제시는 좋아하는 낚시 자리에서 참을성 있게 앉아 있었지만, 그녀의 낚싯줄은 한 시간이 넘도록 조금도 움직이지 않았다.",
-     "src": "2026 6월모평 19번"
-    },
-    {
-     "pos": "v.",
-     "ko": "조금씩 움직이다, 서서히 나아가다"
-    }
-   ],
-   "syn": [
-    "bit",
-    "fraction"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "hop",
-   "ipa": "/hɒp/",
-   "pos": "v./n.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "깡충 뛰다, 폴짝 뛰다; (구어) 희망하다 (hope의 비형식형과 혼용 주의)",
-     "ex": "We are hoping that dedicated volunteers will step forward and help these students complete the academic program.",
-     "tr": "우리는 헌신적인 자원봉사자들이 앞으로 나서서 이 학생들이 학업 프로그램을 마칠 수 있도록 도와주기를 바라고 있다.",
-     "src": "2013 9월모평 20번"
-    },
-    {
-     "pos": "n.",
-     "ko": "깡충 뜀, 짧은 여행"
-    }
-   ],
-   "syn": [
-    "jump",
-    "leap",
-    "bound"
-   ],
-   "deriv": [
-    "hopping (adj./n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
+    "count": 98,
+    "exams": 38,
     "recentYear": "2025",
-    "stars": 1
+    "stars": 3
    }
   },
   {
-   "en": "quiz",
-   "ipa": "/kwɪz/",
-   "pos": "n./v.",
+   "en": "beyond",
+   "ipa": "/biˈjɑːnd/",
+   "pos": "prep.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "퀴즈, 간단한 시험",
-     "ex": "The teacher gave a short quiz at the end of each lesson to check students' understanding of the material.",
-     "tr": "교사는 학생들의 학습 내용 이해도를 확인하기 위해 매 수업 끝에 간단한 퀴즈를 제출했다.",
-     "src": ""
-    },
-    {
-     "pos": "v.",
-     "ko": "퀴즈를 내다, 질문하다"
+     "pos": "prep.",
+     "ko": "~을 넘어서, ~ 너머",
+     "ex": "As memory takes over, the bad feelings fade beyond recall.",
+     "tr": "기억이 자리를 잡으면서 나쁜 감정은 떠올릴 수 없을 만큼 희미해진다.",
+     "src": "2011 9월모평 39번"
     }
    ],
    "syn": [
-    "test",
-    "exam",
-    "questionnaire"
+    "past",
+    "over"
    ],
    "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
+   "roots": [
+    {
+     "part": "be",
+     "mean": "~에"
+    },
+    {
+     "part": "yond",
+     "mean": "저쪽"
+    }
+   ],
+   "etymHint": "be(~에)+yond(저쪽) → 저쪽으로 넘어 → ~을 넘어서",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "",
-    "stars": 1
+    "count": 55,
+    "exams": 38,
+    "recentYear": "2027",
+    "stars": 3
    }
   },
   {
-   "en": "oak",
-   "ipa": "/oʊk/",
+   "en": "response",
+   "ipa": "/rɪˈspɑːns/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "참나무, 오크나무",
-     "ex": "The old oak at the center of the village had stood for over three hundred years, witnessing many generations.",
-     "tr": "마을 중심에 있는 오래된 참나무는 300년 이상 서서 많은 세대를 목격해 왔다.",
-     "src": ""
+     "ko": "반응, 대응",
+     "ex": "Like stress, these negative emotions can weaken the immune response.",
+     "tr": "스트레스처럼 이러한 부정적 감정은 면역 반응을 약화시킬 수 있다.",
+     "src": "2017 9월모평 32번"
     }
    ],
-   "syn": [],
-   "deriv": [
-    "oaken (adj.)"
+   "syn": [
+    "reaction",
+    "reply"
    ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
+   "deriv": [
+    "respond (v.)"
+   ],
+   "roots": [
+    {
+     "part": "re",
+     "mean": "다시"
+    },
+    {
+     "part": "spons",
+     "mean": "약속하다"
+    }
+   ],
+   "etymHint": "re(다시)+spons(답하다) → 되돌려 답함 → 반응",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "",
-    "stars": 1
+    "count": 84,
+    "exams": 36,
+    "recentYear": "2027",
+    "stars": 3
    }
   },
   {
-   "en": "eighth",
-   "ipa": "/eɪtθ/",
+   "en": "indifferent",
+   "ipa": "/ɪnˈdɪfərənt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "무관심한, 냉담한",
+     "ex": "Higher-status individuals can appear indifferent, while lower-status people must stay attentive.",
+     "tr": "지위가 높은 사람들은 무관심하게 보여도 되지만, 지위가 낮은 사람들은 주의를 기울여야 한다.",
+     "src": "2014 수능 33번"
+    }
+   ],
+   "syn": [
+    "unconcerned",
+    "apathetic",
+    "uninterested"
+   ],
+   "deriv": [
+    "indifference (n.)",
+    "indifferently (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "in",
+     "mean": "아닌"
+    },
+    {
+     "part": "differens",
+     "mean": "다른(라틴)"
+    }
+   ],
+   "etymHint": "in(아닌)+differens(다른) → 차이를 두지 않는 → 무관심한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 37,
+    "exams": 34,
+    "recentYear": "2014",
+    "stars": 3
+   }
+  },
+  {
+   "en": "context",
+   "ipa": "/ˈkɒntɛkst/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "맥락, 상황",
+     "ex": "People from individualistic cultural contexts often feel motivated to maintain personal control over their actions.",
+     "tr": "개인주의적 문화적 맥락 출신의 사람들은 자신의 행동에 대한 개인적 통제를 유지하려는 동기를 흔히 느낀다.",
+     "src": "2021 6월모평 29번"
+    }
+   ],
+   "syn": [
+    "setting",
+    "background",
+    "circumstances"
+   ],
+   "deriv": [
+    "contextual (adj.)",
+    "contextualize (v.)"
+   ],
+   "roots": [
+    {
+     "part": "con-",
+     "mean": "함께"
+    },
+    {
+     "part": "text-",
+     "mean": "짜다"
+    }
+   ],
+   "etymHint": "con(함께) + text(짜다) → 함께 짜인 것 → 맥락",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 75,
+    "exams": 31,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "approach",
+   "ipa": "/əˈproʊtʃ/",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "접근법, 방식",
+     "ex": "This approach has shown limited results when used against major pests in large-scale farming systems.",
+     "tr": "이 접근법은 대규모 농업 시스템에서 주요 해충에 사용될 때 제한된 결과를 보여 주었다.",
+     "src": "2019 6월모평 22번"
+    },
+    {
+     "pos": "v.",
+     "ko": "접근하다, 다가가다"
+    }
+   ],
+   "syn": [
+    "method",
+    "strategy",
+    "technique"
+   ],
+   "deriv": [
+    "approachable (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ap-",
+     "mean": "~쪽으로"
+    },
+    {
+     "part": "proch-",
+     "mean": "가까이"
+    }
+   ],
+   "etymHint": "ap(~쪽으로) + proch(가까이) → ~쪽으로 가까이 가다 → 접근하다",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 66,
+    "exams": 31,
+    "recentYear": "2025",
+    "stars": 3
+   }
+  },
+  {
+   "en": "essential",
+   "ipa": "/ɪˈsɛnʃəl/",
    "pos": "adj./n.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "여덟 번째의",
-     "ex": "Born as the eighth child in a large family, he learned early on to be resourceful and independent.",
-     "tr": "대가족의 여덟 번째 아이로 태어난 그는 일찍부터 재치 있고 자립적인 사람이 되는 법을 배웠다.",
-     "src": "2025 6월모평 26번"
+     "ko": "필수적인, 본질적인",
+     "ex": "You can apply essential oils to your wrist or the back of your neck to enjoy their scent.",
+     "tr": "에센셜 오일을 손목이나 목 뒤에 발라 그 향을 즐길 수 있다.",
+     "src": "2012 6월모평 35번"
     },
     {
      "pos": "n.",
-     "ko": "8분의 1, 여덟 번째"
-    }
-   ],
-   "syn": [],
-   "deriv": [
-    "eight (n.)",
-    "eighty (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "dumb",
-   "ipa": "/dʌm/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "멍청한, 어리석은",
-     "ex": "The team argued that the recurring errors were not their fault but the result of a dumb workflow.",
-     "tr": "팀원들은 반복되는 오류가 자신들의 잘못이 아니라 어리석은 작업 흐름의 결과라고 주장했다.",
-     "src": "2020 6월모평 21번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(구어) 말을 못 하는, 벙어리의"
+     "ko": "필수품, 핵심 요소"
     }
    ],
    "syn": [
-    "stupid",
-    "foolish",
-    "brainless"
+    "necessary",
+    "vital",
+    "fundamental"
    ],
    "deriv": [
-    "dumbly (adv.)",
-    "dumbness (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "mad",
-   "ipa": "/mæd/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "화가 난, 열중한",
-     "ex": "People caught up in a mad chase for status often lose sight of what truly matters.",
-     "tr": "지위를 향한 미친 듯한 경쟁에 빠진 사람들은 진정으로 중요한 것을 잃는 경우가 많다.",
-     "src": "2012 6월모평 24번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "미친, 정신 나간"
-    }
-   ],
-   "syn": [
-    "crazy",
-    "furious",
-    "frantic"
-   ],
-   "deriv": [
-    "madly (adv.)",
-    "madness (n.)",
-    "madden (v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "chase",
-   "ipa": "/tʃeɪs/",
-   "pos": "v./n.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "뒤쫓다, 추구하다",
-     "ex": "Society encourages individuals to relentlessly chase wealth and recognition, leaving little room for reflection.",
-     "tr": "사회는 개인들이 끊임없이 부와 명예를 추구하도록 부추기며, 성찰을 위한 공간을 거의 남기지 않는다.",
-     "src": "2019 수능 21번"
-    },
-    {
-     "pos": "n.",
-     "ko": "추격, 추적"
-    }
-   ],
-   "syn": [
-    "pursue",
-    "follow",
-    "hunt"
-   ],
-   "deriv": [
-    "chaser (n.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "yogurt",
-   "ipa": "/ˈjoʊɡərt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "요구르트",
-     "ex": "Fermented dairy products such as yogurt have been a dietary staple across many cultures for centuries.",
-     "tr": "요구르트와 같은 발효 유제품은 수 세기 동안 많은 문화권에서 주식이 되어 왔다.",
-     "src": "2020 수능 26번"
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "logo",
-   "ipa": "/ˈloʊɡoʊ/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "로고, 상징 표시",
-     "ex": "Every participant received a commemorative T-shirt printed with the university's logo after the campus event.",
-     "tr": "모든 참가자는 캠퍼스 행사 후 대학 로고가 새겨진 기념 티셔츠를 받았다.",
-     "src": "2025 9월모평 27번"
-    }
-   ],
-   "syn": [
-    "emblem",
-    "symbol",
-    "brand mark"
-   ],
-   "deriv": [
-    "logotype (n.)"
+    "essentially (adv.)",
+    "essence (n.)"
    ],
    "roots": [
     {
-     "part": "logos",
-     "mean": "말, 이성"
+     "part": "esse-",
+     "mean": "존재하다, ~이다"
     }
    ],
-   "etymHint": "logos(말·이성) → 짧은 기호로 브랜드를 표현 → 로고",
-   "level": "B1",
+   "etymHint": "esse(존재하다) + -ntial → 존재의 근본이 되는 → 필수적인",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 3,
-    "exams": 3,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "waiter",
-   "ipa": "/ˈweɪtər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "웨이터, 남자 종업원",
-     "ex": "The waiter courteously informed the customer that green tea is traditionally served without sugar.",
-     "tr": "웨이터는 녹차는 전통적으로 설탕 없이 제공된다고 손님에게 정중하게 알렸다.",
-     "src": "2012 6월모평 34번"
-    }
-   ],
-   "syn": [
-    "server",
-    "attendant"
-   ],
-   "deriv": [
-    "waitress (n.)",
-    "wait (v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 7,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sour",
-   "ipa": "/saʊər/",
-   "pos": "adj./v.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "신, 시큼한; 발효된",
-     "ex": "Among the Nuer people, soured milk similar to yogurt was a staple food for adults in daily life.",
-     "tr": "누에르 사람들 사이에서 요구르트와 비슷한 발효 우유는 성인들의 일상적인 주식이었다.",
-     "src": "2020 수능 26번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(관계·기분이) 나빠지다, 시어지다"
-    }
-   ],
-   "syn": [
-    "tart",
-    "acidic",
-    "tangy"
-   ],
-   "deriv": [
-    "sourness (n.)",
-    "sourly (adv.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 7,
-    "exams": 2,
+    "count": 62,
+    "exams": 31,
     "recentYear": "2027",
-    "stars": 1
+    "stars": 3
    }
   },
   {
-   "en": "yoga",
-   "ipa": "/ˈjoʊɡə/",
+   "en": "perspective",
+   "ipa": "/pərˈspektɪv/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "요가",
-     "ex": "The jungle yoga program invites participants to reconnect with natural rhythms while practicing in an outdoor setting.",
-     "tr": "정글 요가 프로그램은 참가자들이 야외 환경에서 수련하며 자연의 리듬과 다시 연결되도록 초대한다.",
-     "src": "2026 9월모평 27번"
+     "ko": "관점, 시각; 원근법",
+     "ex": "With a positive perspective and persistence, you can overcome any obstacle in your path.",
+     "tr": "긍정적인 관점과 끈기를 갖고 있다면 당신은 길 위의 어떤 장애물도 극복할 수 있다.",
+     "src": "2015 6월모평 20번"
     }
    ],
    "syn": [
-    "mindfulness practice",
-    "meditation exercise"
+    "viewpoint",
+    "standpoint"
    ],
    "deriv": [
-    "yogi (n.)"
+    "perspectival (adj.)"
    ],
    "roots": [
     {
-     "part": "yug",
-     "mean": "연결하다(산스크리트어)"
+     "part": "per",
+     "mean": "통하여"
+    },
+    {
+     "part": "specere",
+     "mean": "보다"
     }
    ],
-   "etymHint": "yug(연결하다) → 몸과 마음을 연결하다 → 요가",
-   "level": "B1",
+   "etymHint": "per(통하여)+specere(보다) → 꿰뚫어 봄 → 관점",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 7,
-    "exams": 2,
+    "count": 65,
+    "exams": 29,
     "recentYear": "2026",
-    "stars": 1
+    "stars": 3
    }
   },
   {
-   "en": "garbage",
-   "ipa": "/ˈɡɑːrbɪdʒ/",
+   "en": "necessity",
+   "ipa": "/nɪˈsesɪti/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "쓰레기; 쓸모없는 것",
-     "ex": "'Garbage in, garbage out' is a principle warning that flawed input data inevitably produces unreliable results.",
-     "tr": "'쓰레기를 넣으면 쓰레기가 나온다'는 원칙은 결함 있는 입력 데이터가 필연적으로 신뢰할 수 없는 결과를 낳는다고 경고한다.",
-     "src": "2020 6월모평 21번"
+     "ko": "필요성, 필수품",
+     "ex": "He soon recognized the necessity of learning a new writing system to communicate with others.",
+     "tr": "그는 다른 사람들과 소통하기 위해 새로운 문자 체계를 배울 필요성을 곧 인식했다.",
+     "src": "2017 6월모평 25번"
     }
    ],
    "syn": [
-    "trash",
-    "rubbish",
-    "waste"
+    "need",
+    "requirement",
+    "essential"
    ],
    "deriv": [
-    "garbage collector (n.)"
+    "necessary (adj.)",
+    "necessarily (adv.)",
+    "necessitate (v.)"
    ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": true,
-    "count": 6,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "selfie",
-   "ipa": "/ˈsɛlfi/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "셀피, 자기 사진",
-     "ex": "The popularity of selfies persists not because the format is entirely new, but because it extends the long tradition of self-portraiture.",
-     "tr": "셀피의 인기는 형식이 완전히 새롭기 때문이 아니라, 자화상의 오랜 전통을 이어가기 때문에 지속된다.",
-     "src": "2025 수능 24번"
-    }
-   ],
-   "syn": [
-    "self-portrait",
-    "self-photograph"
-   ],
-   "deriv": [],
    "roots": [
     {
-     "part": "self",
-     "mean": "자기 자신"
+     "part": "necess",
+     "mean": "피할 수 없는"
+    },
+    {
+     "part": "-ity",
+     "mean": "상태, 성질"
     }
    ],
-   "etymHint": "self(자기 자신) + -ie(구어체 축소 접미사) → 자신을 찍은 사진 → 셀피",
-   "level": "B1",
+   "etymHint": "necess(피할 수 없는) + -ity(상태) → 피할 수 없는 상태 → 필요성",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 6,
-    "exams": 2,
-    "recentYear": "2025",
-    "stars": 1
+    "count": 42,
+    "exams": 29,
+    "recentYear": "2026",
+    "stars": 3
    }
   },
   {
-   "en": "reindeer",
-   "ipa": "/ˈreɪndɪər/",
+   "en": "potential",
+   "ipa": "/pəˈtenʃəl/",
+   "pos": "adj./n.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "잠재적인, 가능성 있는",
+     "ex": "Organizing communication networks allows people to filter the potentially overwhelming flow of new information.",
+     "tr": "통신 네트워크를 구성하면 사람들이 잠재적으로 압도적인 새 정보의 흐름을 걸러낼 수 있다.",
+     "src": "2018 수능 40번"
+    },
+    {
+     "pos": "n.",
+     "ko": "잠재력, 가능성"
+    }
+   ],
+   "syn": [
+    "possible",
+    "prospective",
+    "latent"
+   ],
+   "deriv": [
+    "potentially (adv.)",
+    "potentiality (n.)"
+   ],
+   "roots": [
+    {
+     "part": "potent",
+     "mean": "힘, 능력"
+    }
+   ],
+   "etymHint": "potent(힘·능력) + -ial(형용사 접미사) → 아직 발휘되지 않은 능력 → 잠재적인",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 67,
+    "exams": 28,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "significant",
+   "ipa": "/sɪɡˈnɪfɪkənt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "중요한, 상당한",
+     "ex": "The study found that people's suggestions changed significantly depending on whether crime was described as a virus or a beast.",
+     "tr": "연구에 따르면 범죄를 바이러스로 표현하느냐 짐승으로 표현하느냐에 따라 사람들의 제안이 상당히 달라졌다.",
+     "src": "2021 6월모평 23번"
+    }
+   ],
+   "syn": [
+    "important",
+    "notable",
+    "considerable"
+   ],
+   "deriv": [
+    "significance (n.)",
+    "significantly (adv.)",
+    "signify (v.)"
+   ],
+   "roots": [
+    {
+     "part": "sign",
+     "mean": "표시, 신호"
+    },
+    {
+     "part": "fic",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "sign(표시) + fic(만들다) → 뚜렷한 표시를 만드는 → 중요한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 50,
+    "exams": 28,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contrast",
+   "ipa": "/ˈkɒntrɑːst/ (n.) /kənˈtrɑːst/ (v.)",
+   "pos": "n./v.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "대조, 대비",
+     "ex": "The spaces between musical notes provide a baseline and contrast that give a piece of music its structure and texture.",
+     "tr": "음표 사이의 공간은 음악 작품에 구조와 질감을 부여하는 기준과 대비를 제공한다.",
+     "src": "2013 9월모평 26번"
+    },
+    {
+     "pos": "v.",
+     "ko": "대조하다, 대비를 이루다"
+    }
+   ],
+   "syn": [
+    "difference",
+    "opposition",
+    "distinction"
+   ],
+   "deriv": [
+    "contrasting (adj.)",
+    "contrastive (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "contra-",
+     "mean": "반대로"
+    },
+    {
+     "part": "sta",
+     "mean": "서다"
+    }
+   ],
+   "etymHint": "contra(반대로) + sta(서다) → 반대편에 서다 → 대조",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 42,
+    "exams": 28,
+    "recentYear": "2026",
+    "stars": 3
+   }
+  },
+  {
+   "en": "aspect",
+   "ipa": "/ˈæspɛkt/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "순록",
-     "ex": "The Lapps had long relied on reindeer sleds for transport before the snowmobile offered a more efficient alternative.",
-     "tr": "라프 사람들은 스노모빌이 더 효율적인 대안을 제공하기 전까지 오랫동안 순록 썰매를 교통수단으로 이용했다.",
-     "src": "2011 6월모평 32번"
+     "ko": "측면, 양상",
+     "ex": "Life experience may help older adults improve in certain aspects of understanding social situations.",
+     "tr": "삶의 경험은 나이 든 성인이 사회적 상황을 이해하는 특정 측면에서 향상되는 데 도움이 될 수 있다.",
+     "src": "2022 6월모평 24번"
     }
    ],
    "syn": [
-    "caribou"
+    "facet",
+    "dimension",
+    "feature"
    ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
+   "deriv": [
+    "aspectual (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "ad",
+     "mean": "~쪽으로"
+    },
+    {
+     "part": "specere",
+     "mean": "보다"
+    }
+   ],
+   "etymHint": "ad(~쪽으로)+specere(보다) → 특정 방향으로 바라본 모습 → 측면",
+   "level": "B2",
    "exam": {
     "tested": true,
-    "count": 5,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
+    "count": 63,
+    "exams": 26,
+    "recentYear": "2027",
+    "stars": 3
+   }
+  },
+  {
+   "en": "perception",
+   "ipa": "/pərˈsɛpʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "인식, 지각",
+     "ex": "This kind of perception is also common in investing, where feelings can override logic.",
+     "tr": "이러한 종류의 인식은 투자에서도 흔히 나타나는데, 감정이 논리를 앞서기도 한다.",
+     "src": "2012 수능 26번"
+    }
+   ],
+   "syn": [
+    "awareness",
+    "recognition",
+    "insight"
+   ],
+   "deriv": [
+    "perceive (v.)",
+    "perceptive (adj.)",
+    "perceptual (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "per",
+     "mean": "완전히"
+    },
+    {
+     "part": "capere",
+     "mean": "잡다"
+    }
+   ],
+   "etymHint": "per(완전히)+capere(잡다) → 감각으로 완전히 잡아냄 → 인식, 지각",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 58,
+    "exams": 26,
+    "recentYear": "2027",
+    "stars": 3
    }
   }
  ],

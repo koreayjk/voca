@@ -4,22 +4,22 @@
  "day": 9,
  "words": [
   {
-   "en": "attenuated",
-   "ipa": "/əˈtenjueɪtɪd/",
-   "pos": "adj",
+   "en": "trope",
+   "ipa": "/troʊp/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj",
-     "ko": "약화된, 희석된",
-     "ex": "The attenuated signal barely reached the remote research station through the dense atmosphere.",
-     "tr": "약화된 신호는 짙은 대기를 통해 외딴 연구소에 겨우 도달했다.",
+     "pos": "n",
+     "ko": "수사적 비유, 상투적 표현",
+     "ex": "The critic argued that the 'tortured genius' trope does a disservice to artists by romanticising mental suffering as a prerequisite for creativity.",
+     "tr": "비평가는 '고뇌하는 천재' 상투적 표현이 정신적 고통을 창의성의 전제조건으로 낭만화함으로써 예술가들에게 해를 끼친다고 주장했다.",
      "src": ""
     }
    ],
    "syn": [
-    "weakened",
-    "diluted",
-    "diminished"
+    "figure of speech",
+    "motif",
+    "convention"
    ],
    "deriv": [],
    "roots": [],
@@ -34,65 +34,111 @@
    }
   },
   {
-   "en": "violent",
-   "ipa": "/ˈvaɪələnt/",
+   "en": "resourceful",
+   "ipa": "/rɪˈzɔːrsfl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "폭력적인, 격렬한",
-     "ex": "Hobbes argued that humanity's inherently violent nature necessitates a robust legal order to preserve civil peace.",
-     "tr": "홉스는 인간의 본질적으로 폭력적인 본성이 시민적 평화를 유지하기 위한 강력한 법 질서를 필요로 한다고 주장했다.",
-     "src": "2026 수능 34번"
+     "ko": "수완이 있는, 임기응변에 능한",
+     "ex": "A resourceful engineer will devise an elegant solution even when operating with severely limited materials and time.",
+     "tr": "수완이 있는 엔지니어는 재료와 시간이 극히 제한된 상황에서도 우아한 해결책을 고안해낼 것이다.",
+     "src": ""
     }
    ],
    "syn": [
-    "brutal",
-    "vicious",
-    "ferocious"
+    "ingenious",
+    "inventive",
+    "capable"
    ],
    "deriv": [
-    "violence (n.)",
-    "violently (adv.)",
-    "violate (v.)"
+    "resource (n.)",
+    "resourcefully (adv.)",
+    "resourcefulness (n.)"
    ],
    "roots": [
     {
-     "part": "viol",
-     "mean": "힘, 폭력 (vis)"
+     "part": "re",
+     "mean": "다시"
     },
     {
-     "part": "-ent",
-     "mean": "~한 성질의"
+     "part": "source",
+     "mean": "원천"
     }
    ],
-   "etymHint": "viol(힘·폭력)+-ent(~한 성질) → 폭력적인 성질을 지닌 → 폭력적인",
+   "etymHint": "re(다시)+source(원천)+ful(가득한) → 자원을 다시 찾아내는 능력이 있는 → 수완 있는",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2026",
+    "recentYear": "",
     "stars": 1
    }
   },
   {
-   "en": "mitigate",
-   "ipa": "/ˈmɪtɪɡeɪt/",
-   "pos": "v",
+   "en": "precondition",
+   "ipa": "/ˌpriːkənˈdɪʃən/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "완화하다, 경감하다",
-     "ex": "Planting trees along urban streets can mitigate the heat island effect in densely populated areas.",
-     "tr": "도시 거리를 따라 나무를 심으면 인구 밀집 지역의 열섬 효과를 완화할 수 있다.",
+     "pos": "n.",
+     "ko": "전제 조건",
+     "ex": "A stable balance of applied forces is a precondition for any firm and controlled physical grip on an object.",
+     "tr": "가해진 힘의 안정적인 균형은 물체를 확실하고 통제된 방식으로 쥐기 위한 전제 조건이다.",
+     "src": "2017 6월모평 31번"
+    },
+    {
+     "pos": "n.",
+     "ko": "필요 조건"
+    }
+   ],
+   "syn": [
+    "prerequisite",
+    "requirement",
+    "necessity"
+   ],
+   "deriv": [
+    "condition (n.)",
+    "conditional (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "pre",
+     "mean": "미리"
+    },
+    {
+     "part": "condition",
+     "mean": "조건"
+    }
+   ],
+   "etymHint": "pre(미리)+condition(조건) → 미리 갖춰야 할 조건 → 전제 조건",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "exponentially",
+   "ipa": "/ˌekspəˈnenʃəli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "기하급수적으로",
+     "ex": "Computing power has grown exponentially while the cost of storage has declined in parallel.",
+     "tr": "컴퓨팅 성능은 기하급수적으로 증가한 반면 저장 비용은 병행하여 감소했다.",
      "src": ""
     }
    ],
    "syn": [
-    "alleviate",
-    "lessen",
-    "attenuate"
+    "geometrically",
+    "rapidly",
+    "at an accelerating rate"
    ],
    "deriv": [],
    "roots": [],
@@ -107,39 +153,47 @@
    }
   },
   {
-   "en": "uneaten",
-   "ipa": "/ˌʌnˈiːtən/",
+   "en": "spiritual",
+   "ipa": "/ˈspɪrɪtʃuəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "먹지 않은, 먹히지 않은",
-     "ex": "Sensory-specific satiety occurs when appetite for a consumed food decreases while attraction to uneaten foods persists.",
-     "tr": "감각 특이적 포만감은 섭취한 음식에 대한 식욕이 감소하는 반면 먹지 않은 음식에 대한 끌림은 지속될 때 나타난다.",
-     "src": "2018 수능 22번"
+     "ko": "영적인, 정신적인",
+     "ex": "The protagonist's physical voyage down the river mirrors his profound mental and spiritual transformation throughout the narrative.",
+     "tr": "강을 따라 내려가는 주인공의 물리적 여정은 서사 전반에 걸친 그의 심오한 정신적·영적 변화를 반영한다.",
+     "src": "2018 수능 31번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "종교적인, 신앙과 관련된"
+    },
+    {
+     "pos": "n.",
+     "ko": "흑인 영가 (미국 민속 음악)"
     }
    ],
    "syn": [
-    "unconsumed",
-    "untouched",
-    "left over"
+    "sacred",
+    "transcendent",
+    "ethereal"
    ],
    "deriv": [
-    "eat (v.)",
-    "eaten (adj.)",
-    "uneaten (adj.)"
+    "spirit (n.)",
+    "spirituality (n.)",
+    "spiritually (adv.)"
    ],
    "roots": [
     {
-     "part": "un-",
-     "mean": "부정"
+     "part": "spirit",
+     "mean": "정신, 영혼"
     },
     {
-     "part": "eaten",
-     "mean": "먹힌"
+     "part": "ual",
+     "mean": "~의"
     }
    ],
-   "etymHint": "un-(부정)+eaten(먹힌) → 먹히지 않은 → 먹지 않은",
+   "etymHint": "spirit(영혼)+ual(~의) → 영혼에 관한 → 영적인",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -150,208 +204,22 @@
    }
   },
   {
-   "en": "retrospect",
-   "ipa": "/ˈretrəspekt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "회고, 돌이켜봄 (in retrospect: 되돌아보면)",
-     "ex": "In retrospect, the seemingly trivial need to record livestock proved to be the catalyst for written language itself.",
-     "tr": "돌이켜보면, 가축을 기록해야 한다는 겉으로는 사소해 보이는 필요가 문자 언어 자체를 촉발한 계기였다.",
-     "src": "2020 수능 22번"
-    }
-   ],
-   "syn": [
-    "hindsight",
-    "reflection",
-    "reconsideration"
-   ],
-   "deriv": [
-    "retrospective (adj./n.)",
-    "retrospectively (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "retro",
-     "mean": "뒤로"
-    },
-    {
-     "part": "spect",
-     "mean": "보다"
-    }
-   ],
-   "etymHint": "retro(뒤로)+spect(보다) → 뒤를 돌아보다 → 회고",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "ethos",
-   "ipa": "/ˈiːθɑs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "에토스; 시대정신; 집단적 기풍",
-     "ex": "The ethos of scientific objectivity demands that researchers disclose potential conflicts of interest.",
-     "tr": "과학적 객관성의 정신은 연구자들이 잠재적인 이해 충돌을 공개할 것을 요구한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "spirit",
-    "character",
-    "disposition"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "multitask",
-   "ipa": "/ˈmʌltiˌtæsk/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "여러 일을 동시에 처리하다",
-     "ex": "What appears to be an ability to multitask is actually rapid alternation of attention between separate activities.",
-     "tr": "여러 일을 동시에 처리하는 능력처럼 보이는 것은 실제로는 별개의 활동 사이에서 주의를 빠르게 교대하는 것이다.",
-     "src": "2015 수능 31번"
-    }
-   ],
-   "syn": [
-    "juggle tasks",
-    "parallel-process"
-   ],
-   "deriv": [
-    "multitasking (n./adj.)",
-    "multitasker (n.)"
-   ],
-   "roots": [
-    {
-     "part": "multi",
-     "mean": "많은, 다수의"
-    },
-    {
-     "part": "task",
-     "mean": "과업"
-    }
-   ],
-   "etymHint": "multi(많은)+task(과업) → 많은 과업을 동시에 → 멀티태스킹하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "denigrate",
-   "ipa": "/ˈdenɪɡreɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "비방하다, 폄하하다",
-     "ex": "The campaign systematically attempted to denigrate its opponents' credentials and character.",
-     "tr": "그 캠페인은 체계적으로 상대방의 자격과 인격을 폄하하려 했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "belittle",
-    "disparage",
-    "malign"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "absurd",
-   "ipa": "/əbˈsɜːrd/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "불합리한, 터무니없는",
-     "ex": "It would be absurd to interpret every statistical correlation as proof of a direct causal relationship between variables.",
-     "tr": "모든 통계적 상관관계를 변수 간 직접적인 인과관계의 증거로 해석하는 것은 터무니없는 일일 것이다.",
-     "src": "2016 9월모평 33번"
-    }
-   ],
-   "syn": [
-    "preposterous",
-    "ludicrous",
-    "ridiculous"
-   ],
-   "deriv": [
-    "absurdity (n.)",
-    "absurdly (adv.)",
-    "absurdism (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ab-",
-     "mean": "멀리"
-    },
-    {
-     "part": "surd",
-     "mean": "귀머거리의, 소음"
-    }
-   ],
-   "etymHint": "ab(멀리)+surd(귀머거리) → 귀에 거슬릴 정도로 이치에서 벗어난 → 불합리한",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "palpable",
-   "ipa": "/ˈpælpəbəl/",
+   "en": "sublime",
+   "ipa": "/səˈblaɪm/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "명백한, 손으로 만질 수 있는",
-     "ex": "The tension in the negotiating room was palpable as both sides refused to yield ground.",
-     "tr": "양측이 양보를 거부하면서 협상장의 긴장감은 눈에 띄게 느껴졌다.",
+     "ko": "숭고한",
+     "ex": "Burke distinguished the beautiful from the sublime, arguing that the latter produces a mixture of terror and astonishment before overwhelming vastness.",
+     "tr": "버크는 아름다움과 숭고함을 구별하여, 후자는 압도적인 광대함 앞에서 공포와 경이로움의 혼합을 만들어낸다고 주장했다.",
      "src": ""
     }
    ],
    "syn": [
-    "tangible",
-    "manifest",
-    "perceptible"
+    "transcendent",
+    "majestic",
+    "exalted"
    ],
    "deriv": [],
    "roots": [],
@@ -366,101 +234,68 @@
    }
   },
   {
-   "en": "amino",
-   "ipa": "/əˈmiːnoʊ/",
+   "en": "ancestral",
+   "ipa": "/ænˈsestrəl/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "아미노의, 아미노기를 포함하는",
-     "ex": "Amino acids are the fundamental building blocks from which all proteins in living organisms are constructed.",
-     "tr": "아미노산은 모든 살아있는 생물체의 단백질이 구성되는 기본 구성 요소이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [
-    "amino acid (아미노산)"
-   ],
-   "roots": [
-    {
-     "part": "amine",
-     "mean": "암모니아 유도 화합물"
-    }
-   ],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "fluctuate",
-   "ipa": "/ˈflʌktʃueɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "변동하다, 오르내리다",
-     "ex": "The pitch of traditional Korean sanjo music fluctuates subtly around fixed tonal centers, creating an expressive quality.",
-     "tr": "한국 전통 산조 음악의 음높이는 고정된 음조 중심 주변을 미묘하게 변동하며 표현적인 특성을 만들어낸다.",
-     "src": "2020 수능 34번"
+     "ko": "조상의, 선조 전래의",
+     "ex": "Their totemic system connects present-day community members to ancestral origins, embedding them within a broader cosmological framework.",
+     "tr": "그들의 토템 체계는 현재 공동체 구성원들을 조상의 기원과 연결하여, 더 넓은 우주론적 틀 안에 그들을 위치시킨다.",
+     "src": "2017 6월모평 34번"
     },
     {
-     "pos": "v.",
-     "ko": "(감정·상태가) 흔들리다, 동요하다"
+     "pos": "adj.",
+     "ko": "세습적인"
     }
    ],
    "syn": [
-    "vary",
-    "oscillate",
-    "waver"
+    "hereditary",
+    "inherited",
+    "lineage-based"
    ],
    "deriv": [
-    "fluctuation (n.)",
-    "fluctuating (adj.)"
+    "ancestor (n.)",
+    "ancestry (n.)"
    ],
    "roots": [
     {
-     "part": "fluctu",
-     "mean": "파도처럼 흐르다"
+     "part": "ante",
+     "mean": "앞에"
     },
     {
-     "part": "ate",
-     "mean": "동사 어미"
+     "part": "cessor",
+     "mean": "가다"
     }
    ],
-   "etymHint": "fluctu(파도처럼 흐르다)+ate → 파도처럼 오르내리다 → 변동하다",
+   "etymHint": "ante(앞에)+cessor(가다) → 앞서 간 사람 → 조상 → 조상의",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2020",
+    "recentYear": "2017",
     "stars": 1
    }
   },
   {
-   "en": "egregious",
-   "ipa": "/ɪˈɡriːdʒəs/",
+   "en": "loquacious",
+   "ipa": "/loʊˈkweɪ.ʃəs/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "극악한, 터무니없는",
-     "ex": "The report catalogued egregious human rights abuses that demanded immediate international response.",
-     "tr": "보고서는 즉각적인 국제적 대응을 요구하는 극악한 인권 침해 사례들을 목록화했다.",
+     "ko": "말이 많은, 수다스러운",
+     "ex": "The loquacious guest dominated every dinner conversation, rarely allowing others to express their views.",
+     "tr": "말이 많은 손님은 모든 저녁 식사 대화를 독점하며 다른 사람들이 자신의 의견을 표현할 기회를 거의 주지 않았다.",
      "src": ""
     }
    ],
    "syn": [
-    "flagrant",
-    "glaring",
-    "heinous"
+    "garrulous",
+    "voluble",
+    "verbose"
    ],
    "deriv": [],
    "roots": [],
@@ -475,253 +310,478 @@
    }
   },
   {
-   "en": "negate",
-   "ipa": "/nɪˈɡeɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "부정하다, 무효로 만들다",
-     "ex": "A single act of negligence can negate years of diligent effort to build a trustworthy reputation.",
-     "tr": "단 한 번의 부주의한 행동이 신뢰할 수 있는 평판을 쌓기 위한 수년간의 부지런한 노력을 무효로 만들 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "nullify",
-    "invalidate",
-    "counteract"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "warwick",
-   "ipa": "/ˈwɒrɪk/",
-   "pos": "n.",
+   "en": "motive",
+   "ipa": "/ˈmoʊtɪv/",
+   "pos": "n./adj.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "워릭 (영국 잉글랜드 중부의 도시 및 대학교 이름)",
-     "ex": "The University of Warwick is widely recognised for its rigorous interdisciplinary research programmes.",
-     "tr": "워릭 대학교는 엄격한 학제 간 연구 프로그램으로 널리 인정받고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "dissipate",
-   "ipa": "/ˈdɪsɪpeɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "소산하다, 흩어지게 하다",
-     "ex": "The morning fog gradually dissipated as the sun rose higher in the sky.",
-     "tr": "아침 안개는 해가 하늘 높이 오르면서 서서히 소산되었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "disperse",
-    "dissolve",
-    "evaporate"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "declaration",
-   "ipa": "/ˌdekləˈreɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "선언, 공표",
-     "ex": "Physical symptoms such as sweating and an accelerated heartbeat represent the body's own declaration of readiness to cope with stress.",
-     "tr": "땀 흘림과 빨라진 심장 박동과 같은 신체적 증상은 스트레스에 대처할 준비가 되었다는 몸 자체의 선언을 나타낸다.",
-     "src": "2016 6월모평 19번"
+     "ko": "동기, 이유",
+     "ex": "The Tiv elders reinterpreted the motives of Hamlet's characters entirely through the lens of their own cultural norms.",
+     "tr": "티브 장로들은 햄릿 등장인물들의 동기를 자신들의 문화 규범의 렌즈를 통해 전적으로 재해석했다.",
+     "src": "2012 수능 35번"
     },
     {
      "pos": "n.",
-     "ko": "(세관 등의) 신고, 신고서"
-    }
-   ],
-   "syn": [
-    "proclamation",
-    "announcement",
-    "statement"
-   ],
-   "deriv": [
-    "declare (v.)",
-    "declarative (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "de",
-     "mean": "완전히"
-    },
-    {
-     "part": "clar",
-     "mean": "명확하게 하다"
-    }
-   ],
-   "etymHint": "de(완전히)+clar(명확하게 하다) → 완전히 명확하게 밝히다 → 선언",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2016",
-    "stars": 1
-   }
-  },
-  {
-   "en": "impermanence",
-   "ipa": "/ɪmˈpɜːrmənəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "무상, 덧없음",
-     "ex": "Buddhist philosophy centers on the impermanence of all conditioned phenomena as a source of suffering.",
-     "tr": "불교 철학은 고통의 원천으로서 모든 조건 지어진 현상의 무상함을 중심에 둔다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "transience",
-    "ephemerality",
-    "fleetingness"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "mindful",
-   "ipa": "/ˈmaɪndfəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "주의를 기울이는, 유념하는",
-     "ex": "A thoughtful reader must be mindful that archaic language and poetic form carry meaning beyond their surface appearance.",
-     "tr": "사려 깊은 독자는 고어와 시적 형식이 표면적인 외양 너머의 의미를 담고 있음을 유념해야 한다.",
-     "src": "2027 6월모평 30번"
+     "ko": "(음악·미술의) 모티프"
     },
     {
      "pos": "adj.",
-     "ko": "마음챙김의, 의식적인 (명상·심리학 맥락)"
+     "ko": "원동력이 되는"
     }
    ],
    "syn": [
-    "aware",
-    "conscious",
-    "attentive"
-   ],
-   "deriv": [
-    "mindfulness (n.)",
-    "mindlessly (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "mind",
-     "mean": "마음"
-    },
-    {
-     "part": "ful",
-     "mean": "가득한"
-    }
-   ],
-   "etymHint": "mind(마음)+ful(가득한) → 마음이 가득 채워져 있는 → 주의를 기울이는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "stimulus",
-   "ipa": "/ˈstɪmjʊləs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "자극, 자극제",
-     "ex": "Being 'stimulus-driven' means constantly reacting to the most vivid environmental input rather than pursuing deliberate goals.",
-     "tr": "'자극 주도적'이라는 것은 의도적인 목표를 추구하기보다 가장 생생한 환경적 입력에 끊임없이 반응하는 것을 의미한다.",
-     "src": "2025 수능 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(경제적) 경기 부양책"
-    }
-   ],
-   "syn": [
+    "motivation",
     "incentive",
-    "impetus",
-    "trigger"
+    "reason"
    ],
    "deriv": [
-    "stimulate (v.)",
-    "stimulation (n.)",
-    "stimuli (n. pl.)"
+    "motivate (v.)",
+    "motivation (n.)",
+    "motif (n.)"
    ],
    "roots": [
     {
-     "part": "stimul",
-     "mean": "찌르다, 자극하다"
+     "part": "mot",
+     "mean": "움직이다"
     }
    ],
-   "etymHint": "stimul(찌르다) → 반응을 일으키도록 찌르는 것 → 자극",
+   "etymHint": "mot(움직이다) → 움직이게 하는 것 → 동기",
    "level": "C1",
    "exam": {
     "tested": true,
     "count": 2,
     "exams": 2,
-    "recentYear": "2025",
+    "recentYear": "2018",
+    "stars": 1
+   }
+  },
+  {
+   "en": "predisposition",
+   "ipa": "/ˌpriːdɪspəˈzɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "소인; 선천적 경향",
+     "ex": "Genetic research suggests a predisposition toward certain mental health conditions, though environment remains decisive.",
+     "tr": "유전자 연구는 특정 정신 건강 상태에 대한 유전적 소인을 시사하지만, 환경도 결정적인 역할을 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inclination",
+    "susceptibility",
+    "proclivity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "individualism",
+   "ipa": "/ˌɪndɪˈvɪdʒuəlɪzəm/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "개인주의",
+     "ex": "Western cultures tend to celebrate individualism, placing personal autonomy above collective obligations and community cohesion.",
+     "tr": "서구 문화는 집단적 의무와 공동체 결속보다 개인의 자율성을 앞세우며 개인주의를 높이 평가하는 경향이 있다.",
+     "src": ""
+    },
+    {
+     "pos": "n.",
+     "ko": "개성, 독자성"
+    }
+   ],
+   "syn": [
+    "self-reliance",
+    "autonomy",
+    "independence"
+   ],
+   "deriv": [
+    "individual (n./adj.)",
+    "individualist (n.)",
+    "individualistic (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "individu",
+     "mean": "나눌 수 없는 단위"
+    },
+    {
+     "part": "ism",
+     "mean": "주의"
+    }
+   ],
+   "etymHint": "individu(나눌 수 없는 단위)+ism(주의) → 개인을 가장 중시하는 주의 → 개인주의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "prosecutor",
+   "ipa": "/ˈprɒsɪkjuːtər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "검사, 기소자",
+     "ex": "Neither the prosecutor nor the defence counsel is obliged to present evidence that undermines their own argument.",
+     "tr": "검사도 변호인도 자신의 논거를 약화시키는 증거를 제시할 의무는 없다.",
+     "src": "2017 6월모평 40번"
+    }
+   ],
+   "syn": [
+    "attorney",
+    "counsel",
+    "public prosecutor"
+   ],
+   "deriv": [
+    "prosecute (v.)",
+    "prosecution (n.)"
+   ],
+   "roots": [
+    {
+     "part": "pro",
+     "mean": "앞으로"
+    },
+    {
+     "part": "secut",
+     "mean": "따라가다"
+    }
+   ],
+   "etymHint": "pro(앞으로)+secut(따라가다) → 법정 앞으로 끌고 가다 → 기소하다 → 검사",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "ambivalence",
+   "ipa": "/æmˈbɪvələns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "양가감정, 상반된 감정의 공존",
+     "ex": "Her ambivalence toward the promotion was evident — she craved recognition yet feared the added responsibility.",
+     "tr": "승진에 대한 그녀의 양가감정은 분명했다 — 인정을 갈망하면서도 추가된 책임을 두려워했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ambiguity",
+    "irresolution",
+    "indecision"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "disprove",
+   "ipa": "/ˌdɪsˈpruːv/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "반증하다, 틀렸음을 증명하다",
+     "ex": "Scientists construct testable hypotheses precisely so that empirical evidence can either corroborate or disprove them.",
+     "tr": "과학자들은 경험적 증거가 가설을 확증하거나 반증할 수 있도록 검증 가능한 가설을 구성한다.",
+     "src": "2020 6월모평 32번"
+    },
+    {
+     "pos": "v.",
+     "ko": "논박하다"
+    }
+   ],
+   "syn": [
+    "refute",
+    "rebut",
+    "invalidate"
+   ],
+   "deriv": [
+    "disproof (n.)"
+   ],
+   "roots": [
+    {
+     "part": "dis",
+     "mean": "반대"
+    },
+    {
+     "part": "prove",
+     "mean": "증명하다"
+    }
+   ],
+   "etymHint": "dis(반대)+prove(증명하다) → 반대로 증명하다 → 반증하다",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "injustice",
+   "ipa": "/ɪnˈdʒʌstɪs/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "불의, 부당함",
+     "ex": "Structural injustice persists not because individuals are malicious, but because systems are designed to favour certain groups over others.",
+     "tr": "구조적 불의가 지속되는 것은 개인이 악의적이기 때문이 아니라, 시스템이 특정 집단을 다른 집단보다 유리하게 설계되어 있기 때문이다.",
+     "src": ""
+    },
+    {
+     "pos": "n.",
+     "ko": "불공평한 행위"
+    }
+   ],
+   "syn": [
+    "unfairness",
+    "inequity",
+    "wrongdoing"
+   ],
+   "deriv": [
+    "justice (n.)",
+    "unjust (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "in",
+     "mean": "부정"
+    },
+    {
+     "part": "just",
+     "mean": "공정한"
+    }
+   ],
+   "etymHint": "in(부정)+just(공정한)+ice(명사화) → 공정하지 않은 것 → 불의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "serendipity",
+   "ipa": "/ˌsɛrənˈdɪpɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "뜻밖의 행운; 우연한 발견",
+     "ex": "The discovery of penicillin is a celebrated example of serendipity in the history of science.",
+     "tr": "페니실린의 발견은 과학사에서 뜻밖의 행운의 유명한 사례이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "fortuity",
+    "chance",
+    "coincidence"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "masterpiece",
+   "ipa": "/ˈmæstərpiːs/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "걸작, 최고 작품",
+     "ex": "He concealed himself among the audience at exhibitions to overhear unguarded reactions to his masterpieces.",
+     "tr": "그는 자신의 걸작들에 대한 솔직한 반응을 엿듣기 위해 전시회에서 관람객들 사이에 몸을 숨기곤 했다.",
+     "src": "2011 수능 36번"
+    },
+    {
+     "pos": "n.",
+     "ko": "최고의 솜씨를 보여주는 것"
+    }
+   ],
+   "syn": [
+    "magnum opus",
+    "chef-d'oeuvre",
+    "tour de force"
+   ],
+   "deriv": [
+    "master (n.)",
+    "masterly (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "master",
+     "mean": "장인, 달인"
+    },
+    {
+     "part": "piece",
+     "mean": "작품"
+    }
+   ],
+   "etymHint": "master(달인)+piece(작품) → 달인의 작품 → 걸작",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "passersby",
+   "ipa": "/ˌpæsərˈbaɪ/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "지나가는 사람들 (passerby의 복수)",
+     "ex": "The street performer drew a considerable crowd of passersby who paused their daily routines to watch the spectacle.",
+     "tr": "거리 공연자는 일상적인 발걸음을 멈추고 그 광경을 바라보는 상당한 수의 지나가는 사람들을 끌어 모았다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "bystanders",
+    "onlookers",
+    "pedestrians"
+   ],
+   "deriv": [
+    "passerby (n. sg.)"
+   ],
+   "roots": [
+    {
+     "part": "pass",
+     "mean": "지나가다"
+    },
+    {
+     "part": "by",
+     "mean": "옆으로"
+    }
+   ],
+   "etymHint": "pass(지나가다)+by(옆으로) → 옆으로 지나가는 사람 → 행인",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "conversely",
+   "ipa": "/ˈkɑːnvɜːrsli/",
+   "pos": "adv",
+   "meanings": [
+    {
+     "pos": "adv",
+     "ko": "반대로, 역으로",
+     "ex": "High inflation erodes purchasing power; conversely, deflation can stifle economic growth.",
+     "tr": "높은 인플레이션은 구매력을 잠식한다; 반대로, 디플레이션은 경제 성장을 억제할 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inversely",
+    "on the contrary",
+    "contrariwise"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "feast",
+   "ipa": "/fiːst/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "연회, 잔치",
+     "ex": "Holiday rituals centered on communal feasting reinforced social bonds and temporarily suspended ordinary labor.",
+     "tr": "공동 잔치를 중심으로 한 명절 의식은 사회적 유대를 강화하고 일상적인 노동을 일시적으로 중단시켰다.",
+     "src": "2015 9월모평 23번"
+    },
+    {
+     "pos": "v.",
+     "ko": "진수성찬을 즐기다, 포식하다"
+    }
+   ],
+   "syn": [
+    "banquet",
+    "celebration",
+    "gala"
+   ],
+   "deriv": [
+    "feasting (n.)",
+    "festive (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "fest",
+     "mean": "축제"
+    }
+   ],
+   "etymHint": "fest(축제) → 축제 음식 → 연회",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 2,
+    "exams": 2,
+    "recentYear": "2016",
     "stars": 1
    }
   }

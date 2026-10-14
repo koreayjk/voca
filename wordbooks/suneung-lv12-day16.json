@@ -4,747 +4,667 @@
  "day": 16,
  "words": [
   {
-   "en": "contemptible",
-   "ipa": "/kənˈtemptɪbəl/",
+   "en": "commandment",
+   "ipa": "/kəˈmɑːndmənt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "계율, 계명",
+     "ex": "Many moral traditions summarize their core duties in a short list of commandments.",
+     "tr": "많은 도덕 전통은 그 핵심 의무를 짧은 계율 목록으로 요약한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "precept",
+    "decree"
+   ],
+   "deriv": [
+    "command (v) 명령하다"
+   ],
+   "roots": [
+    "com(=강조) + mandare(=맡기다, 명하다) → 지켜야 할 명령"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "apparition",
+   "ipa": "/ˌæpəˈrɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "출현",
+     "ex": "Ancient astronomers recorded the sudden apparition of a bright new star in the night sky.",
+     "tr": "고대 천문학자들은 밤하늘에 밝은 새 별이 갑자기 출현한 것을 기록했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "appearance",
+    "emergence"
+   ],
+   "deriv": [
+    "apparent (adj) 명백한"
+   ],
+   "roots": [
+    "ad(=to) + parere(=나타나다) → 눈앞에 나타남"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "천문",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "congregation",
+   "ipa": "/ˌkɒŋɡrɪˈɡeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신도, 회중",
+     "ex": "The entire congregation rose to sing as the service began.",
+     "tr": "예배가 시작되자 온 회중이 일어나 노래를 불렀다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "worshippers",
+    "assembly"
+   ],
+   "deriv": [
+    "congregate (v) 모이다"
+   ],
+   "roots": [
+    "con(=together) + grex(=무리) → 함께 모인 무리"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "chronology",
+   "ipa": "/krəˈnɒlədʒi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "연대순, 연표",
+     "ex": "Historians constructed a careful chronology of events leading up to the revolution.",
+     "tr": "역사가들은 그 혁명으로 이어진 사건들의 세심한 연표를 작성했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "timeline",
+    "sequence"
+   ],
+   "deriv": [
+    "chronological (adj) 연대순의"
+   ],
+   "roots": [
+    "chronos(=시간) + logia(=학문) → 시간의 순서"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "anthology",
+   "ipa": "/ænˈθɒlədʒi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "선집, 명시선",
+     "ex": "The anthology brings together the finest short poems of the last century.",
+     "tr": "그 선집은 지난 세기의 가장 뛰어난 짧은 시들을 한데 모은다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "collection",
+    "compilation"
+   ],
+   "deriv": [],
+   "roots": [
+    "anthos(=꽃) + logia(=모음) → 꽃을 모은 것, 명작 모음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "compatibility",
+   "ipa": "/kəmˌpætəˈbɪləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "호환성",
+     "ex": "Before installing the update, users should check its compatibility with their operating system.",
+     "tr": "업데이트를 설치하기 전에 사용자는 자신의 운영 체제와의 호환성을 확인해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "interoperability"
+   ],
+   "deriv": [
+    "compatible (adj) 호환되는"
+   ],
+   "roots": [
+    "com(=together) + pati(=견디다) → 함께 잘 어울림"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "기술컴퓨팅",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "contemplation",
+   "ipa": "/ˌkɒntəmˈpleɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "사색, 명상",
+     "ex": "Many philosophers valued quiet contemplation as the path to genuine understanding.",
+     "tr": "많은 철학자들은 조용한 사색을 참된 이해에 이르는 길로 여겼다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reflection",
+    "meditation"
+   ],
+   "deriv": [
+    "contemplate (v) 사색하다"
+   ],
+   "roots": [
+    "com(=강조) + templum(=관측 구역) → 마음속을 깊이 살핌"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "citadel",
+   "ipa": "/ˈsɪtədel/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "성채",
+     "ex": "The ancient citadel stood on a hill, guarding the city against invaders for centuries.",
+     "tr": "고대 성채는 언덕 위에 서서 수 세기 동안 침략자로부터 도시를 지켰다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "fortress",
+    "stronghold"
+   ],
+   "deriv": [],
+   "roots": [
+    "이탈리아어 cittadella(=작은 도시, 요새)에서"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "convent",
+   "ipa": "/ˈkɒnvent/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "수녀원",
+     "ex": "The young woman entered the convent and devoted her life to prayer and charity.",
+     "tr": "그 젊은 여성은 수녀원에 들어가 기도와 자선에 삶을 바쳤다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "nunnery",
+    "cloister"
+   ],
+   "deriv": [],
+   "roots": [
+    "con(=together) + venire(=come) → 함께 모여 사는 곳"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "agitation",
+   "ipa": "/ˌædʒɪˈteɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "동요, 불안",
+     "ex": "The patient showed signs of agitation, pacing the room and wringing his hands.",
+     "tr": "그 환자는 방 안을 서성이고 손을 비틀며 동요의 징후를 보였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "anxiety",
+    "restlessness"
+   ],
+   "deriv": [
+    "agitate (v) 동요시키다"
+   ],
+   "roots": [
+    "ag(=몰다) + agitare(=흔들다) → 마음을 뒤흔듦"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "bibliography",
+   "ipa": "/ˌbɪbliˈɒɡrəfi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "참고 문헌",
+     "ex": "Every serious research paper ends with a bibliography listing the sources consulted.",
+     "tr": "모든 진지한 연구 논문은 참고한 출처를 열거한 참고 문헌으로 끝난다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "reference list",
+    "sources"
+   ],
+   "deriv": [],
+   "roots": [
+    "biblion(=책) + graphein(=쓰다) → 책 목록"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "cornerstone",
+   "ipa": "/ˈkɔːrnərstoʊn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "초석",
+     "ex": "Free public education became a cornerstone of the new democratic society.",
+     "tr": "무상 공교육은 그 새로운 민주 사회의 초석이 되었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "foundation",
+    "basis"
+   ],
+   "deriv": [],
+   "roots": [
+    "corner(=모퉁이) + stone(=돌) → 건물의 기초가 되는 돌"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "건축",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "creed",
+   "ipa": "/kriːd/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신조, 교리",
+     "ex": "The community welcomed people of every race and creed.",
+     "tr": "그 공동체는 모든 인종과 신조의 사람들을 환영했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "belief",
+    "doctrine"
+   ],
+   "deriv": [],
+   "roots": [
+    "라틴어 credo(=나는 믿는다)에서"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "coronation",
+   "ipa": "/ˌkɒrəˈneɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "대관식",
+     "ex": "Crowds lined the streets to watch the young queen coronation.",
+     "tr": "군중이 젊은 여왕의 대관식을 보려고 거리를 메웠다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "crowning",
+    "enthronement"
+   ],
+   "deriv": [
+    "coronate (v) 즉위시키다"
+   ],
+   "roots": [
+    "corona(=왕관) → 왕관을 씌우는 의식"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "역사",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "amnesia",
+   "ipa": "/æmˈniːʒə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "기억 상실증",
+     "ex": "After the accident, he suffered amnesia and could not recall the events of that day.",
+     "tr": "사고 후 그는 기억 상실증을 겪어 그날의 일을 떠올리지 못했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "memory loss"
+   ],
+   "deriv": [
+    "amnesiac (n) 기억상실증 환자"
+   ],
+   "roots": [
+    "a(=not) + mnesis(=기억) → 기억을 잃음"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "심리",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "abolition",
+   "ipa": "/ˌæbəˈlɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "폐지",
+     "ex": "The abolition of slavery was one of the great moral victories of the century.",
+     "tr": "노예제 폐지는 그 세기의 위대한 도덕적 승리 중 하나였다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "ending",
+    "elimination"
+   ],
+   "deriv": [
+    "abolish (v) 폐지하다"
+   ],
+   "roots": [
+    "ab(=away) + olere(=자라다) → 자라지 못하게 없앰"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "정치법률",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "characterization",
+   "ipa": "/ˌkærəktərəˈzeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "인물 묘사",
+     "ex": "The novel is praised for its subtle characterization of an ambitious but flawed leader.",
+     "tr": "그 소설은 야심 차지만 결함 있는 지도자에 대한 섬세한 인물 묘사로 찬사를 받는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "portrayal",
+    "depiction"
+   ],
+   "deriv": [
+    "characterize (v) 특징짓다"
+   ],
+   "roots": [
+    "charakter(=새겨진 표시) → 인물의 성격을 그려 냄"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "문학언어",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "deity",
+   "ipa": "/ˈdiːəti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "신",
+     "ex": "Each ancient city worshipped a particular deity believed to protect its people.",
+     "tr": "각 고대 도시는 자기 백성을 지켜 준다고 믿어지는 특정한 신을 숭배했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "god",
+    "divine being"
+   ],
+   "deriv": [],
+   "roots": [
+    "deus(=신) → 신적인 존재"
+   ],
+   "etymHint": "",
+   "level": "C1",
+   "topic": "철학종교",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 3
+   }
+  },
+  {
+   "en": "apathetic",
+   "ipa": "/ˌæpəˈθetɪk/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "경멸스러운, 비열한",
-     "ex": "His contemptible treatment of subordinates eventually led to his forced resignation.",
-     "tr": "부하 직원들에 대한 그의 경멸스러운 처우는 결국 강제 사임으로 이어졌다.",
+     "ko": "무관심한",
+     "ex": "Voters who feel their voices are ignored often become apathetic about elections.",
+     "tr": "자기 목소리가 무시된다고 느끼는 유권자들은 흔히 선거에 무관심해진다.",
      "src": ""
     }
    ],
    "syn": [
-    "despicable",
-    "deplorable",
-    "ignominious"
+    "indifferent",
+    "unconcerned"
    ],
-   "deriv": [],
-   "roots": [],
+   "deriv": [
+    "apathy (n) 무관심"
+   ],
+   "roots": [
+    "a(=없는) + pathos(=감정) → 감정이 없는"
+   ],
    "etymHint": "",
    "level": "C1",
+   "topic": "심리",
    "exam": {
     "tested": false,
     "count": 0,
     "exams": 0,
     "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   },
   {
-   "en": "heuristic",
-   "ipa": "/hjʊˈrɪstɪk/",
+   "en": "accountability",
+   "ipa": "/əˌkaʊntəˈbɪləti/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "발견법; 경험적 추론",
-     "ex": "The availability heuristic leads people to overestimate the likelihood of events that come easily to mind.",
-     "tr": "가용성 발견법은 사람들이 쉽게 떠오르는 사건의 가능성을 과대평가하게 만든다.",
+     "ko": "책임 (성)",
+     "ex": "Public officials must accept accountability for how they spend taxpayers money.",
+     "tr": "공직자들은 납세자의 돈을 어떻게 쓰는지에 대해 책임을 받아들여야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "rule of thumb",
-    "shortcut",
-    "algorithm"
+    "responsibility",
+    "answerability"
    ],
-   "deriv": [],
-   "roots": [],
+   "deriv": [
+    "accountable (adj) 책임이 있는"
+   ],
+   "roots": [
+    "com(=함께) + putare(=셈하다) → 셈을 해명할 의무"
+   ],
    "etymHint": "",
    "level": "C1",
+   "topic": "정치법률",
    "exam": {
     "tested": false,
     "count": 0,
     "exams": 0,
     "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "instrumental",
-   "ipa": "/ˌɪnstrəˈmentəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "도움이 되는, 중요한 역할을 하는",
-     "ex": "Public education was instrumental in spreading literacy and creating a shared civic identity across diverse social classes.",
-     "tr": "공교육은 다양한 사회 계층에 걸쳐 문해력을 확산시키고 공유된 시민적 정체성을 만드는 데 중요한 역할을 했다.",
-     "src": "2020 9월모평 40번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "기악의, 악기를 사용하는"
-    }
-   ],
-   "syn": [
-    "crucial",
-    "pivotal",
-    "contributory"
-   ],
-   "deriv": [
-    "instrument (n.)",
-    "instrumentality (n.)",
-    "instrumentally (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "instru",
-     "mean": "갖추다, 세우다"
-    },
-    {
-     "part": "-ment",
-     "mean": "수단"
-    }
-   ],
-   "etymHint": "instru(갖추다)+-ment(수단)+-al(형용사) → 수단이 되는 → 도움이 되는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "coherence",
-   "ipa": "/koʊˈhɪrəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "일관성; 응집성",
-     "ex": "The internal coherence of a philosophical argument is as important as its empirical validity.",
-     "tr": "철학적 논증의 내적 일관성은 경험적 타당성만큼이나 중요하다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "consistency",
-    "integrity",
-    "unity"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "workload",
-   "ipa": "/ˈwɜːrkloʊd/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "업무량, 작업 부담",
-     "ex": "People instinctively adjust their physical workload in extreme temperatures, increasing effort in cold conditions and reducing it in heat.",
-     "tr": "사람들은 극단적인 온도에서 본능적으로 신체적 작업량을 조절하여, 추운 조건에서는 노력을 늘리고 더운 조건에서는 줄인다.",
-     "src": "2019 9월모평 31번"
-    }
-   ],
-   "syn": [
-    "task load",
-    "burden",
-    "volume of work"
-   ],
-   "deriv": [
-    "work (n./v.)",
-    "load (n./v.)"
-   ],
-   "roots": [
-    {
-     "part": "work",
-     "mean": "일"
-    },
-    {
-     "part": "load",
-     "mean": "짐, 부하"
-    }
-   ],
-   "etymHint": "work(일)+load(짐) → 일의 짐 → 업무량",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "recollection",
-   "ipa": "/ˌrekəˈlekʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "회상, 기억",
-     "ex": "Our attachment to a homeland is often rooted in vivid recollections of sensory experiences from early childhood.",
-     "tr": "고향에 대한 우리의 애착은 어린 시절의 생생한 감각적 경험에 대한 회상에 뿌리를 두는 경우가 많다.",
-     "src": "2019 9월모평 33번"
-    }
-   ],
-   "syn": [
-    "memory",
-    "reminiscence",
-    "recall"
-   ],
-   "deriv": [
-    "recollect (v.)",
-    "recollective (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시"
-    },
-    {
-     "part": "collect",
-     "mean": "모으다"
-    }
-   ],
-   "etymHint": "re(다시)+collect(모으다) → 기억을 다시 모아들이다 → 회상",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "obliterate",
-   "ipa": "/əˈblɪtəreɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "완전히 없애다, 말소하다",
-     "ex": "The firebombing campaign obliterated entire city blocks and left the civilian population in desperate need.",
-     "tr": "소이탄 폭격 작전은 도시의 구획 전체를 완전히 없애고 민간인들을 절박한 처지에 빠뜨렸다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "destroy",
-    "annihilate",
-    "erase"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "dietary",
-   "ipa": "/ˈdaɪəteri/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "식이(식단)의, 음식 섭취와 관련된",
-     "ex": "Chronic diseases such as type 2 diabetes are strongly associated with poor dietary habits sustained over many years.",
-     "tr": "제2형 당뇨병과 같은 만성 질환은 오랜 기간 지속된 나쁜 식이 습관과 강하게 연관되어 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "nutritional",
-    "alimentary",
-    "food-related"
-   ],
-   "deriv": [
-    "diet (n./v.)",
-    "dietitian (n.)",
-    "dieter (n.)"
-   ],
-   "roots": [
-    {
-     "part": "diaita",
-     "mean": "생활 방식, 식이요법 (그리스어)"
-    }
-   ],
-   "etymHint": "diaita(생활 방식, 식이요법) → 음식 및 식단과 관련된 → 식이의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "perpetuate",
-   "ipa": "/pərˈpɛtʃueɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "영속시키다, 지속시키다",
-     "ex": "Biased hiring practices perpetuate systemic inequality and hinder social mobility for marginalized groups.",
-     "tr": "편향된 채용 관행은 제도적 불평등을 영속시키고 소외 집단의 사회적 이동성을 방해한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "sustain",
-    "maintain",
-    "prolong"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "obesity",
-   "ipa": "/oʊˈbiːsɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "비만",
-     "ex": "Many tropical plant compounds are being investigated as potential therapeutic agents against cancer, malaria, and obesity.",
-     "tr": "많은 열대 식물 화합물이 암, 말라리아, 비만에 대한 잠재적 치료제로 연구되고 있다.",
-     "src": "2021 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "overweight",
-    "corpulence",
-    "adiposity"
-   ],
-   "deriv": [
-    "obese (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ob",
-     "mean": "완전히"
-    },
-    {
-     "part": "es",
-     "mean": "먹다 (edere)"
-    }
-   ],
-   "etymHint": "ob(완전히)+es(먹다) → 지나치게 많이 먹어 살이 찜 → 비만",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "contrition",
-   "ipa": "/kənˈtrɪʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "회개, 진심 어린 뉘우침",
-     "ex": "True contrition, according to the philosopher, requires not just regret but a fundamental change in conduct.",
-     "tr": "철학자에 따르면, 진정한 회개는 후회뿐만 아니라 행동의 근본적인 변화를 필요로 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "remorse",
-    "penitence",
-    "repentance"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "consumable",
-   "ipa": "/kənˈsjuːməbəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "소비(소모)될 수 있는, 소비재의",
-     "ex": "Museums risk losing their educational mission when they prioritise consumable experiences such as gift shops and cafes over curatorial depth.",
-     "tr": "박물관은 큐레이터의 깊이보다 기념품 가게나 카페 같은 소비 가능한 경험을 우선시할 때 교육적 사명을 잃을 위험이 있다.",
-     "src": "2024 6월모평 23번"
-    },
-    {
-     "pos": "n.",
-     "ko": "소모품"
-    }
-   ],
-   "syn": [
-    "expendable",
-    "disposable",
-    "usable"
-   ],
-   "deriv": [
-    "consume (v.)",
-    "consumer (n.)",
-    "consumption (n.)"
-   ],
-   "roots": [
-    {
-     "part": "con",
-     "mean": "완전히"
-    },
-    {
-     "part": "sum",
-     "mean": "가져가다, 취하다"
-    }
-   ],
-   "etymHint": "con(완전히)+sum(가져가다)+-able(할 수 있는) → 완전히 취해 없앨 수 있는 → 소비될 수 있는",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "oxymoron",
-   "ipa": "/ˌɒksɪˈmɔːrɒn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "모순어법",
-     "ex": "Shakespeare's 'O brawling love, O loving hate' deploys oxymoron to capture the contradictory nature of adolescent passion.",
-     "tr": "셰익스피어의 '오, 싸우는 사랑이여, 오, 사랑하는 증오여'는 모순어법을 구사하여 청소년기 열정의 모순적 본성을 포착한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "paradox",
-    "contradiction",
-    "antithesis"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "disclose",
-   "ipa": "/dɪsˈkləʊz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "공개하다, 누설하다",
-     "ex": "Companies that proactively disclose safety risks to regulators tend to receive more lenient treatment.",
-     "tr": "안전 위험을 규제 당국에 선제적으로 공개하는 기업들은 더 관대한 처우를 받는 경향이 있다.",
-     "src": "2018 6월모평 22번"
-    },
-    {
-     "pos": "v.",
-     "ko": "밝히다, 드러내다"
-    }
-   ],
-   "syn": [
-    "reveal",
-    "divulge",
-    "expose",
-    "unveil"
-   ],
-   "deriv": [
-    "disclosure (n.)",
-    "undisclosed (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "dis-",
-     "mean": "반대, 분리"
-    },
-    {
-     "part": "close",
-     "mean": "닫다"
-    }
-   ],
-   "etymHint": "dis(반대)+close(닫다) → 닫힌 것을 반대로 → 공개하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2018",
-    "stars": 1
-   }
-  },
-  {
-   "en": "fascination",
-   "ipa": "/ˌfæsɪˈneɪʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "매혹, 강한 흥미",
-     "ex": "Live performances retain their power of fascination even in an era saturated with digital entertainment.",
-     "tr": "라이브 공연은 디지털 오락이 넘쳐나는 시대에도 매혹의 힘을 유지한다.",
-     "src": "2026 수능 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "매력적인 것"
-    }
-   ],
-   "syn": [
-    "captivation",
-    "enchantment",
-    "allure",
-    "enthrallment"
-   ],
-   "deriv": [
-    "fascinate (v.)",
-    "fascinating (adj.)",
-    "fascinated (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "fascin",
-     "mean": "마법을 걸다 (라틴어 fascinare)"
-    },
-    {
-     "part": "-ation",
-     "mean": "명사화"
-    }
-   ],
-   "etymHint": "fascin(마법을 걸다)+-ation(명사) → 마법에 걸린 상태 → 매혹",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "equanimity",
-   "ipa": "/ˌiːkwəˈnɪməti/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "평정심, 침착함",
-     "ex": "She faced the devastating diagnosis with remarkable equanimity, calming those around her.",
-     "tr": "그녀는 충격적인 진단을 놀라운 평정심으로 받아들이며 주변 사람들을 진정시켰다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "composure",
-    "serenity",
-    "tranquility"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "accelerate",
-   "ipa": "/əkˈseləreɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "가속하다, 촉진하다",
-     "ex": "Pooling collective expertise and applying it decisively accelerates progress far beyond what individuals can achieve.",
-     "tr": "집단적 전문 지식을 모아 결단력 있게 적용하면 개인이 달성할 수 있는 것을 훨씬 넘어서 발전을 촉진한다.",
-     "src": "2012 수능 42번"
-    },
-    {
-     "pos": "v.",
-     "ko": "빨라지다, 빠르게 하다"
-    }
-   ],
-   "syn": [
-    "hasten",
-    "expedite",
-    "quicken",
-    "speed up"
-   ],
-   "deriv": [
-    "acceleration (n.)",
-    "accelerator (n.)",
-    "accelerated (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "ac-",
-     "mean": "~을 향해"
-    },
-    {
-     "part": "celer",
-     "mean": "빠른"
-    }
-   ],
-   "etymHint": "ac(향해)+celer(빠른) → 빠르게 만들다 → 가속하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2019",
-    "stars": 1
-   }
-  },
-  {
-   "en": "nebulous",
-   "ipa": "/ˈnebjələs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "모호한, 불분명한",
-     "ex": "The policy brief offered only nebulous guidance, leaving implementers uncertain how to proceed.",
-     "tr": "정책 브리핑은 모호한 지침만 제공하여 실행자들이 어떻게 진행해야 할지 불확실하게 남겼다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "vague",
-    "indistinct",
-    "amorphous"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "publicize",
-   "ipa": "/ˈpʌblɪsaɪz/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "공표하다, 홍보하다",
-     "ex": "When manufacturers are obliged to publicize the safety performance of their products, consumers can make more informed purchasing decisions.",
-     "tr": "제조업체가 자사 제품의 안전 성능을 공표할 의무가 있을 때, 소비자는 더 정보에 근거한 구매 결정을 내릴 수 있다.",
-     "src": "2023 수능 23번"
-    }
-   ],
-   "syn": [
-    "advertise",
-    "promote",
-    "disseminate",
-    "broadcast"
-   ],
-   "deriv": [
-    "publicization (n.)",
-    "publicity (n.)",
-    "public (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "public",
-     "mean": "공공의"
-    },
-    {
-     "part": "-ize",
-     "mean": "~하게 만들다"
-    }
-   ],
-   "etymHint": "public(공공의)+-ize(만들다) → 공공에 알리다 → 공표하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 2,
-    "exams": 2,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "osmosis",
-   "ipa": "/ɒzˈmoʊsɪs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "삼투 (반투막을 통한 용매 이동)",
-     "ex": "Osmosis drives water into plant root cells when the soil water potential exceeds that of the cytoplasm.",
-     "tr": "삼투는 토양 수분 포텐셜이 세포질의 그것을 초과할 때 식물 뿌리 세포 안으로 물을 끌어들인다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "diffusion",
-    "passive transport"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
+    "stars": 3
    }
   }
  ],

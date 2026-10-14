@@ -4,25 +4,332 @@
  "day": 19,
  "words": [
   {
-   "en": "deployment",
-   "ipa": "/dɪˈplɔɪmənt/",
+   "en": "parasitic",
+   "ipa": "/ˌpærəˈsɪtɪk/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "기생하는, 기생적인",
+     "ex": "In populations shielded from parasitic cuckoos for generations, host birds gradually lost their ability to distinguish foreign eggs.",
+     "tr": "여러 세대에 걸쳐 기생성 뻐꾸기로부터 보호된 개체군에서 숙주 조류는 외부 알을 구분하는 능력을 서서히 잃었다.",
+     "src": "2011 6월모평 26번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "(사람이) 기식하는, 남에게 의존하는"
+    }
+   ],
+   "syn": [
+    "exploitative",
+    "dependent"
+   ],
+   "deriv": [
+    "parasite (n.)",
+    "parasitism (n.)",
+    "parasitize (v.)"
+   ],
+   "roots": [
+    {
+     "part": "para-",
+     "mean": "옆에"
+    },
+    {
+     "part": "sitos",
+     "mean": "음식"
+    }
+   ],
+   "etymHint": "para(옆에)+sitos(음식) → 옆에서 음식을 빌어먹다 → 기생하는",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2011",
+    "stars": 1
+   }
+  },
+  {
+   "en": "interdisciplinary",
+   "ipa": "/ˌɪntərˈdɪsəplɪnəri/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "학제 간의, 여러 학문 분야에 걸친",
+     "ex": "Contemporary curricula increasingly reflect an interdisciplinary approach, connecting mathematical reasoning to scientific enquiry.",
+     "tr": "현대 교육과정은 수학적 추론을 과학적 탐구와 연결하는 학제 간 접근 방식을 점점 더 반영하고 있다.",
+     "src": "2011 6월모평 33번"
+    }
+   ],
+   "syn": [
+    "cross-disciplinary",
+    "multidisciplinary"
+   ],
+   "deriv": [
+    "discipline (n.)",
+    "interdisciplinarity (n.)"
+   ],
+   "roots": [
+    {
+     "part": "inter-",
+     "mean": "사이에"
+    },
+    {
+     "part": "disciplin",
+     "mean": "분야, 훈련"
+    }
+   ],
+   "etymHint": "inter(사이에)+disciplin(학문 분야) → 학문 분야들 사이에 걸쳐있는 → 학제 간의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2011",
+    "stars": 1
+   }
+  },
+  {
+   "en": "asymmetric",
+   "ipa": "/ˌeɪsɪˈmɛtrɪk/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "비대칭적인",
+     "ex": "The asymmetric power relationship between creditor nations and debtor states shapes global governance.",
+     "tr": "채권국과 채무국 사이의 비대칭적 권력 관계는 세계 거버넌스를 형성한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unequal",
+    "imbalanced",
+    "disproportionate"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "monumental",
+   "ipa": "/ˌmɒnjəˈmentəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "기념비적인, 엄청난",
+     "ex": "The term 'monumental' captures a sense of grand permanence that few other adjectives can convey with equal force.",
+     "tr": "'기념비적인'이라는 용어는 다른 어떤 형용사도 동등한 힘으로 전달할 수 없는 웅장한 영속성의 감각을 담아낸다.",
+     "src": "2019 수능 29번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "기념물의"
+    }
+   ],
+   "syn": [
+    "colossal",
+    "immense",
+    "epoch-making"
+   ],
+   "deriv": [
+    "monument (n.)",
+    "monumentally (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "monum",
+     "mean": "기억, 기념"
+    },
+    {
+     "part": "-al",
+     "mean": "형용사 접미사"
+    }
+   ],
+   "etymHint": "monum(기억)+ent+al → 기억될 만큼 크다 → 기념비적인",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2019",
+    "stars": 1
+   }
+  },
+  {
+   "en": "negation",
+   "ipa": "/nɪˈɡeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "부정; 부정 행위",
+     "ex": "In Hegelian dialectics, negation is the necessary step through which a thesis is challenged and transcended.",
+     "tr": "헤겔 변증법에서 부정은 테제가 도전받고 지양되는 필수적 단계이다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "denial",
+    "contradiction",
+    "refutation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "pervasive",
+   "ipa": "/pərˈveɪsɪv/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "만연한, 널리 퍼진",
+     "ex": "The pervasive influence of social media shapes how teenagers see themselves.",
+     "tr": "소셜 미디어의 만연한 영향은 십대들이 자신을 보는 방식을 형성한다.",
+     "src": "2011 9월모평 27번"
+    }
+   ],
+   "syn": [
+    "widespread",
+    "prevalent"
+   ],
+   "deriv": [
+    "pervade (v.)",
+    "pervasiveness (n.)"
+   ],
+   "roots": [
+    {
+     "part": "per",
+     "mean": "두루"
+    },
+    {
+     "part": "vad",
+     "mean": "가다"
+    }
+   ],
+   "etymHint": "per(두루)+vad(가다) → 두루 퍼지다 → 만연한",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2011",
+    "stars": 1
+   }
+  },
+  {
+   "en": "antipathy",
+   "ipa": "/ænˈtɪpəθi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "반감, 강한 혐오감",
+     "ex": "Their long-standing antipathy made any collaborative effort feel strained from the outset.",
+     "tr": "그들의 오랜 반감은 어떤 협력적인 노력도 처음부터 불편하게 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "aversion",
+    "hostility",
+    "animosity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "botanical",
+   "ipa": "/bəˈtænɪkəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "식물학의, 식물에 관한",
+     "ex": "Georg Dionysius Ehret rose to prominence in the eighteenth century as the foremost botanical illustrator of his era.",
+     "tr": "게오르크 디오니시우스 에레트는 18세기에 그 시대의 가장 저명한 식물 삽화가로 명성을 얻었다.",
+     "src": "2015 수능 24번"
+    }
+   ],
+   "syn": [
+    "horticultural",
+    "floral"
+   ],
+   "deriv": [
+    "botany (n.)",
+    "botanist (n.)",
+    "botanically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "botan",
+     "mean": "풀, 식물"
+    }
+   ],
+   "etymHint": "botan(식물)+-ical → 식물에 관한 → 식물학의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2015",
+    "stars": 1
+   }
+  },
+  {
+   "en": "deliberation",
+   "ipa": "/dɪˌlɪbəˈreɪʃən/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "배치, 전개, 활용",
-     "ex": "The strategic deployment of media power ensures that commercial values are widely accepted by consumers.",
-     "tr": "미디어 권력의 전략적 배치는 소비자들이 상업적 가치를 폭넓게 받아들이도록 보장한다.",
-     "src": "2015 9월모평 34번"
+     "ko": "숙고, 신중한 고려",
+     "ex": "In democratic political deliberation, suppressing dissenting voices ultimately undermines the legitimacy of collective decisions.",
+     "tr": "민주적 정치적 숙의에서 반대 목소리를 억압하는 것은 궁극적으로 집단적 결정의 정당성을 훼손한다.",
+     "src": "2018 6월모평 32번"
+    },
+    {
+     "pos": "n.",
+     "ko": "(배심원의) 평의"
     }
    ],
    "syn": [
-    "deployment",
-    "arrangement",
-    "mobilization"
+    "consideration",
+    "reflection",
+    "contemplation"
    ],
    "deriv": [
-    "deploy (v.)"
+    "deliberate (v./adj.)",
+    "deliberately (adv.)"
    ],
    "roots": [
     {
@@ -30,161 +337,190 @@
      "mean": "완전히"
     },
     {
-     "part": "ployer",
-     "mean": "접다, 펼치다 (프랑스어)"
+     "part": "libr",
+     "mean": "저울"
     }
    ],
-   "etymHint": "de(완전히) + ployer(펼치다) → 완전히 펼쳐 배치하다 → 배치",
+   "etymHint": "de(완전히)+libr(저울) → 저울로 충분히 달아보다 → 신중한 숙고",
    "level": "C1",
    "exam": {
     "tested": true,
-    "count": 5,
+    "count": 3,
     "exams": 2,
-    "recentYear": "2015",
+    "recentYear": "2018",
     "stars": 1
    }
   },
   {
-   "en": "topography",
-   "ipa": "/təˈpɒɡrəfi/",
-   "pos": "n.",
+   "en": "provoke",
+   "ipa": "/prəˈvoʊk/",
+   "pos": "v.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "지형, 지형학",
-     "ex": "The region's topography, with its steep ridges and deep valleys, has shaped patterns of settlement and agriculture for centuries.",
-     "tr": "가파른 능선과 깊은 계곡을 가진 이 지역의 지형은 수 세기 동안 정착과 농업 양식을 형성해 왔다.",
+     "pos": "v.",
+     "ko": "유발하다, 자극하다",
+     "ex": "Provocative artworks are deliberately designed to provoke critical reflection rather than passive aesthetic enjoyment.",
+     "tr": "도발적인 예술 작품들은 수동적인 미적 향유보다는 비판적 성찰을 유발하도록 의도적으로 설계된다.",
      "src": ""
+    },
+    {
+     "pos": "v.",
+     "ko": "(화를) 돋우다, 화나게 하다"
     }
    ],
    "syn": [
-    "terrain",
-    "landscape"
+    "incite",
+    "trigger",
+    "instigate"
    ],
    "deriv": [
-    "topographical (adj.)",
-    "topographer (n.)"
+    "provocation (n.)",
+    "provocative (adj.)",
+    "provocateur (n.)"
    ],
    "roots": [
     {
-     "part": "topos",
-     "mean": "장소 (그리스어)"
+     "part": "pro-",
+     "mean": "앞으로"
     },
     {
-     "part": "graphein",
-     "mean": "쓰다, 묘사하다"
+     "part": "voc",
+     "mean": "부르다"
     }
    ],
-   "etymHint": "topos(장소) + graphein(묘사하다) → 장소를 묘사함 → 지형학",
+   "etymHint": "pro(앞으로)+voc(부르다) → 앞으로 불러내다 → 유발하다",
    "level": "C1",
    "exam": {
     "tested": true,
-    "count": 5,
+    "count": 3,
     "exams": 2,
     "recentYear": "",
     "stars": 1
    }
   },
   {
-   "en": "deterministic",
-   "ipa": "/dɪˌtɜːrmɪˈnɪstɪk/",
-   "pos": "adj.",
+   "en": "oblique",
+   "ipa": "/əˈbliːk/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "결정론적인",
-     "ex": "Genetic findings are often modest in real terms, yet the media tends to translate them into deterministic language for the public.",
-     "tr": "유전적 연구 결과는 실제로 제한적인 경우가 많지만, 미디어는 이를 대중에게 결정론적 언어로 전달하는 경향이 있다.",
-     "src": "2020 9월모평 22번"
+     "pos": "adj",
+     "ko": "간접적인, 비스듬한",
+     "ex": "Rather than confronting the issue directly, she offered an oblique critique through metaphor.",
+     "tr": "문제를 직접 대면하는 대신 그녀는 은유를 통해 간접적인 비판을 제시했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "predetermined",
-    "mechanistic"
+    "indirect",
+    "slanted",
+    "circuitous"
    ],
-   "deriv": [
-    "determinism (n.)",
-    "determinist (n.)",
-    "determine (v.)"
-   ],
-   "roots": [
-    {
-     "part": "determinare",
-     "mean": "경계를 짓다, 결정하다"
-    }
-   ],
-   "etymHint": "de(완전히) + terminare(경계 짓다) → 결과가 이미 정해진 → 결정론적인",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "archival",
-   "ipa": "/ɑːrˈkaɪvəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "기록 보관소의, 기록물과 관련된",
-     "ex": "For writers of personal memoirs, lived memory serves as the primary archival source rather than official documents.",
-     "tr": "개인 회고록 작가들에게는 공식 문서보다 실제로 살아온 기억이 주요 기록 보관 자료로 기능한다.",
-     "src": "2026 9월모평 23번"
-    }
-   ],
-   "syn": [
-    "documentary",
-    "historical"
-   ],
-   "deriv": [
-    "archive (n./v.)",
-    "archivist (n.)"
-   ],
-   "roots": [
-    {
-     "part": "arkheion",
-     "mean": "공공 건물, 기록 보관소 (그리스어)"
-    }
-   ],
-   "etymHint": "arkheion(공공 기록 보관소) → archive → 기록 보관소의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 5,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "contagion",
-   "ipa": "/kənˈteɪdʒən/",
+   "en": "sufficiency",
+   "ipa": "/səˈfɪʃənsi/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "전염, 감염, 전파",
-     "ex": "Financial contagion can spread rapidly across borders when one major economy falls into crisis.",
-     "tr": "하나의 주요 경제가 위기에 빠지면 금융 전염이 국경을 넘어 빠르게 확산될 수 있다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "전염병"
+     "ko": "충분함, 자급자족",
+     "ex": "The notion of economic self-sufficiency is an impossible fantasy in a world defined by complex interdependence.",
+     "tr": "경제적 자급자족의 개념은 복잡한 상호의존으로 정의되는 세계에서는 불가능한 환상이다.",
+     "src": "2025 9월모평 34번"
     }
    ],
    "syn": [
-    "infection",
-    "spread",
-    "transmission"
+    "adequacy",
+    "enough",
+    "self-reliance"
    ],
    "deriv": [
-    "contagious (adj.)",
-    "contagiously (adv.)"
+    "sufficient (adj.)",
+    "sufficiently (adv.)",
+    "insufficient (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "suf-",
+     "mean": "아래에서"
+    },
+    {
+     "part": "fic",
+     "mean": "만들다"
+    }
+   ],
+   "etymHint": "suf(아래에서)+fic(만들다) → 아래에서 받쳐 만들다 → 충분함",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "fallacious",
+   "ipa": "/fəˈleɪʃəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "허위의, 오류에 근거한",
+     "ex": "The study's fallacious premises undermined every conclusion it claimed to establish.",
+     "tr": "연구의 허위 전제는 그것이 확립하고자 한 모든 결론을 훼손했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "erroneous",
+    "specious",
+    "spurious"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "conducive",
+   "ipa": "/kənˈdjuːsɪv/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "도움이 되는, 유리한 (~에 기여하는)",
+     "ex": "The rhythmic motion of a moving train proves far more conducive to introspective thought than a static indoor environment.",
+     "tr": "움직이는 기차의 리드미컬한 움직임은 정적인 실내 환경보다 내성적인 사고에 훨씬 더 도움이 된다는 것이 입증된다.",
+     "src": "2011 수능 28번"
+    }
+   ],
+   "syn": [
+    "favourable",
+    "helpful",
+    "beneficial"
+   ],
+   "deriv": [
+    "conduce (v.)"
    ],
    "roots": [
     {
@@ -192,599 +528,243 @@
      "mean": "함께"
     },
     {
-     "part": "tangere",
-     "mean": "만지다"
+     "part": "duc",
+     "mean": "이끌다"
     }
    ],
-   "etymHint": "con(함께) + tangere(만지다) → 접촉을 통해 함께 퍼지다 → 전염",
+   "etymHint": "con(함께)+duc(이끌다) → 함께 이끌어주다 → 도움이 되는",
    "level": "C1",
    "exam": {
     "tested": true,
-    "count": 4,
+    "count": 3,
     "exams": 2,
-    "recentYear": "",
+    "recentYear": "2011",
     "stars": 1
    }
   },
   {
-   "en": "cohesion",
-   "ipa": "/koʊˈhiːʒən/",
+   "en": "correlation",
+   "ipa": "/ˌkɒrəˈleɪʃən/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "결속, 응집력, 통합",
-     "ex": "In several North American communities, labor-sharing practices serve as a key economic foundation of social cohesion.",
-     "tr": "여러 북미 지역 사회에서 노동 공유 관행은 사회적 결속의 핵심적인 경제적 토대로 기능한다.",
-     "src": "2024 6월모평 32번"
+     "ko": "상관관계",
+     "ex": "The strong correlation between shoe size and vocabulary reflects age rather than any meaningful link between the two variables.",
+     "tr": "신발 크기와 어휘력 사이의 강한 상관관계는 두 변수 간의 어떤 의미 있는 연결보다는 나이를 반영한다.",
+     "src": "2016 9월모평 33번"
     }
    ],
    "syn": [
-    "unity",
-    "solidarity",
-    "coherence"
+    "relationship",
+    "association",
+    "connection"
    ],
    "deriv": [
-    "cohesive (adj.)",
-    "cohere (v.)"
+    "correlate (v.)",
+    "correlational (adj.)",
+    "correlate (n.)"
    ],
    "roots": [
     {
-     "part": "co-",
+     "part": "cor-",
      "mean": "함께"
     },
     {
-     "part": "haerere",
-     "mean": "달라붙다"
+     "part": "relat",
+     "mean": "관련짓다"
     }
    ],
-   "etymHint": "co(함께) + haerere(달라붙다) → 함께 달라붙음 → 결속",
+   "etymHint": "cor(함께)+relat(관련짓다) → 함께 관련짓다 → 상관관계",
    "level": "C1",
    "exam": {
     "tested": true,
-    "count": 4,
+    "count": 3,
     "exams": 2,
-    "recentYear": "2024",
+    "recentYear": "2016",
     "stars": 1
    }
   },
   {
-   "en": "martial",
-   "ipa": "/ˈmɑːrʃəl/",
-   "pos": "adj.",
+   "en": "ameliorate",
+   "ipa": "/əˈmiːliəreɪt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "전투의, 무술의, 군사의",
-     "ex": "Seasoned martial artists draw on years of experience to distinguish what is essential from what is irrelevant in a confrontation.",
-     "tr": "숙련된 무술가들은 수년간의 경험을 활용하여 대결에서 본질적인 것과 관련 없는 것을 구별한다.",
-     "src": "2011 수능 39번"
+     "pos": "v",
+     "ko": "개선하다, 완화하다",
+     "ex": "The government launched several initiatives to ameliorate the living conditions of rural communities.",
+     "tr": "정부는 농촌 지역 사회의 생활 여건을 개선하기 위한 여러 계획을 시작했다.",
+     "src": ""
     }
    ],
    "syn": [
-    "military",
-    "warlike",
-    "combative"
-   ],
-   "deriv": [
-    "martially (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "Martialis",
-     "mean": "마르스(전쟁의 신)의"
-    }
-   ],
-   "etymHint": "Mars(로마 전쟁의 신) + -alis(~의) → 전쟁의 신과 관련된 → 전투적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2012",
-    "stars": 1
-   }
-  },
-  {
-   "en": "neutrality",
-   "ipa": "/njuːˈtræləti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "중립성, 공정성",
-     "ex": "Whereas anonymity demands that decisions be independent of individuals' identities, neutrality requires impartiality toward all available alternatives.",
-     "tr": "익명성이 결정이 개인의 정체성과 무관해야 함을 요구하는 반면, 중립성은 가능한 모든 대안에 대한 공정성을 요구한다.",
-     "src": "2026 9월모평 34번"
-    }
-   ],
-   "syn": [
-    "impartiality",
-    "objectivity",
-    "nonalignment"
-   ],
-   "deriv": [
-    "neutral (adj.)",
-    "neutralize (v.)",
-    "neutrally (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "neuter",
-     "mean": "어느 쪽도 아닌 (라틴어)"
-    }
-   ],
-   "etymHint": "ne(아닌) + uter(둘 중 하나) → 어느 쪽도 아닌 → 중립",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2026",
-    "stars": 1
-   }
-  },
-  {
-   "en": "alpine",
-   "ipa": "/ˈælpaɪn/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "고산의, 알프스의",
-     "ex": "Among the plants thriving in harsh conditions were arctic poppy and alpine saxifrage, which cling to rocky surfaces.",
-     "tr": "가혹한 환경에서 번성하는 식물 중에는 북극 양귀비와 고산 범의귀가 있었으며, 이들은 암석 표면에 달라붙어 자란다.",
-     "src": "2013 6월모평 31번"
-    }
-   ],
-   "syn": [
-    "montane",
-    "high-altitude"
+    "improve",
+    "alleviate",
+    "mitigate"
    ],
    "deriv": [],
-   "roots": [
-    {
-     "part": "Alp",
-     "mean": "알프스 산맥"
-    }
-   ],
-   "etymHint": "Alp(알프스 산맥) → 알프스 같은 고산의 → 고산의",
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "mutation",
-   "ipa": "/mjuːˈteɪʃən/",
-   "pos": "n.",
+   "en": "dispel",
+   "ipa": "/dɪˈspɛl/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "돌연변이, 변화",
-     "ex": "Early cooking practices selected for genetic mutations that resulted in smaller digestive tracts, rather than the other way around.",
-     "tr": "초기의 요리 관행은 반대 방향이 아니라, 더 작은 소화관을 초래하는 유전적 돌연변이를 선택했다.",
-     "src": "2013 수능 27번"
+     "pos": "v",
+     "ko": "불식시키다, 제거하다",
+     "ex": "The longitudinal study dispelled the widely held assumption that cognitive decline is inevitable in middle age.",
+     "tr": "종단 연구는 인지 감소가 중년에 불가피하다는 널리 퍼진 가정을 불식시켰다.",
+     "src": ""
     }
    ],
    "syn": [
-    "variation",
-    "alteration"
+    "dissipate",
+    "refute",
+    "banish"
    ],
-   "deriv": [
-    "mutate (v.)",
-    "mutant (n./adj.)"
-   ],
-   "roots": [
-    {
-     "part": "mut",
-     "mean": "변하다"
-    }
-   ],
-   "etymHint": "mut(변하다) + ation(명사화) → 변화 → 돌연변이",
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2013",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "incremental",
-   "ipa": "/ˌɪŋkrəˈmentəl/",
+   "en": "mandatory",
+   "ipa": "/ˈmændəˌtɔːri/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "점진적인, 증가하는",
-     "ex": "The tradition allowed a steady flow of incremental modifications, each of which could be absorbed into the mainstream if it proved beneficial.",
-     "tr": "그 전통은 꾸준한 점진적 수정을 허용했으며, 각 수정이 유익한 것으로 입증되면 주류에 흡수될 수 있었다.",
-     "src": "2016 9월모평 31번"
-    }
-   ],
-   "syn": [
-    "gradual",
-    "progressive",
-    "step-by-step"
-   ],
-   "deriv": [
-    "increment (n.)",
-    "incrementally (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "위에"
-    },
-    {
-     "part": "cresc/crem",
-     "mean": "자라다, 증가하다"
-    }
-   ],
-   "etymHint": "in + cresc(자라다) + ment → 증가 단계 → 점진적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2021",
-    "stars": 1
-   }
-  },
-  {
-   "en": "intrigue",
-   "ipa": "/ɪnˈtriːɡ/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "흥미, 호기심; 음모",
-     "ex": "When science education focuses only on prescribed answers, the cognitive intrigue that once drove curiosity is gradually lost.",
-     "tr": "과학 교육이 정해진 답에만 초점을 맞출 때, 한때 호기심을 이끌었던 인지적 흥미는 점차 사라진다.",
-     "src": "2017 수능 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "흥미를 자아내다; 음모를 꾸미다"
-    }
-   ],
-   "syn": [
-    "fascination",
-    "curiosity",
-    "scheme"
-   ],
-   "deriv": [
-    "intriguing (adj.)",
-    "intriguingly (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "안에"
-    },
-    {
-     "part": "tric",
-     "mean": "얽힌 것, 장애"
-    }
-   ],
-   "etymHint": "in + tric(얽힌 것) → 얽어넣다 → 음모, 흥미를 끌다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "imperative",
-   "ipa": "/ɪmˈperətɪv/",
-   "pos": "n./adj.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "절대적 요구, 필수적인 것",
-     "ex": "Even without the imperative of addressing climate change, dense urban environments face urgent demands for safer and more accessible infrastructure.",
-     "tr": "기후 변화 대응이라는 절대적 요구가 없더라도, 밀집된 도시 환경은 더 안전하고 접근하기 쉬운 기반 시설에 대한 긴박한 요구에 직면해 있다.",
-     "src": "2023 6월모평 30번"
+     "ko": "의무적인, 강제적인",
+     "ex": "Mandatory disclosure of ingredients allows consumers to make genuinely informed dietary choices.",
+     "tr": "성분의 의무적 공개는 소비자들이 진정으로 정보에 입각한 식이 선택을 할 수 있게 한다.",
+     "src": "2018 9월모평 23번"
     },
     {
      "pos": "adj.",
-     "ko": "반드시 해야 하는, 긴박한"
+     "ko": "법으로 정해진"
     }
    ],
    "syn": [
-    "necessity",
-    "obligation",
-    "urgent"
+    "compulsory",
+    "obligatory",
+    "required"
    ],
    "deriv": [
-    "imperatively (adv.)"
+    "mandate (n./v.)",
+    "mandatorily (adv.)"
    ],
    "roots": [
     {
-     "part": "imper",
+     "part": "mand",
      "mean": "명령하다"
-    }
-   ],
-   "etymHint": "Latin imperare(명령하다) → 명령적인 → 반드시 해야 하는 것",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "incidental",
-   "ipa": "/ˌɪnsɪˈdentəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "부수적인, 우연히 일어나는",
-     "ex": "Given the systematic methods of science, the identity of the person who discovers a law is largely incidental to the discovery itself.",
-     "tr": "과학의 체계적인 방법론을 감안할 때, 법칙을 발견한 사람의 정체성은 발견 자체에 있어 대체로 부수적인 것이다.",
-     "src": "2017 9월모평 40번"
-    }
-   ],
-   "syn": [
-    "coincidental",
-    "secondary",
-    "peripheral"
-   ],
-   "deriv": [
-    "incidentally (adv.)",
-    "incidence (n.)"
-   ],
-   "roots": [
-    {
-     "part": "in",
-     "mean": "위에"
     },
     {
-     "part": "cid/cas",
-     "mean": "떨어지다"
+     "part": "-ory",
+     "mean": "~의 성격을 가진"
     }
    ],
-   "etymHint": "in(위에) + cid(떨어지다) → 우연히 떨어진 → 부수적인",
+   "etymHint": "mand(명령하다)+ory(형용사 접미사) → 명령된 → 의무적인",
    "level": "C1",
    "exam": {
     "tested": true,
-    "count": 4,
+    "count": 3,
     "exams": 2,
     "recentYear": "2018",
     "stars": 1
    }
   },
   {
-   "en": "filmic",
-   "ipa": "/ˈfɪlmɪk/",
-   "pos": "adj.",
+   "en": "irony",
+   "ipa": "/ˈaɪrəni/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "영화적인, 영화와 관련된",
-     "ex": "By selecting and rearranging recorded footage, a director constructs a unique filmic time and space distinct from reality.",
-     "tr": "녹화된 영상을 선택하고 재배열함으로써, 감독은 현실과 구별되는 독특한 영화적 시간과 공간을 구성한다.",
-     "src": "2017 수능 23번"
+     "pos": "n",
+     "ko": "반어; 아이러니",
+     "ex": "The irony of a peace prize being awarded to a wartime leader was not lost on commentators.",
+     "tr": "전시 지도자에게 평화상이 수여된다는 아이러니는 평론가들의 눈을 피해가지 않았다.",
+     "src": ""
     }
    ],
    "syn": [
-    "cinematic"
-   ],
-   "deriv": [
-    "film (n./v.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "rote",
-   "ipa": "/roʊt/",
-   "pos": "n./adj.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "기계적 암기, 주입식 학습",
-     "ex": "Certain educational environments prioritize a rote-memorized database of facts over genuine understanding and creative thinking.",
-     "tr": "일부 교육 환경은 진정한 이해와 창의적 사고보다 사실의 기계적 암기 데이터베이스를 우선시한다.",
-     "src": "2020 수능 21번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "기계적으로 암기된"
-    }
-   ],
-   "syn": [
-    "memorization",
-    "drill"
+    "paradox",
+    "incongruity",
+    "sarcasm"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
    "level": "C1",
    "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
    }
   },
   {
-   "en": "neural",
-   "ipa": "/ˈnjʊərəl/",
+   "en": "harmonious",
+   "ipa": "/hɑːrˈmoʊniəs/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "신경의, 신경계의",
-     "ex": "The neural mechanisms that allow humans to imagine future scenarios were essential to the development of tool-making and civilization.",
-     "tr": "인간이 미래 시나리오를 상상할 수 있게 해주는 신경 메커니즘은 도구 제작과 문명 발전에 필수적이었다.",
-     "src": "2018 6월모평 33번"
-    }
-   ],
-   "syn": [
-    "neurological",
-    "nervous"
-   ],
-   "deriv": [
-    "neuron (n.)",
-    "neurological (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "neur",
-     "mean": "신경"
-    }
-   ],
-   "etymHint": "Greek neuron(신경) → 신경의 → 신경계의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2023",
-    "stars": 1
-   }
-  },
-  {
-   "en": "analytical",
-   "ipa": "/ˌænəˈlɪtɪkəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "분석적인",
-     "ex": "Experimental research has revealed that insight is not a sudden gift but the product of systematic, analytical thinking.",
-     "tr": "실험적 연구는 통찰이 갑작스러운 선물이 아니라 체계적이고 분석적인 사고의 산물임을 밝혀냈다.",
-     "src": "2018 9월모평 22번"
-    }
-   ],
-   "syn": [
-    "systematic",
-    "logical",
-    "methodical"
-   ],
-   "deriv": [
-    "analysis (n.)",
-    "analyst (n.)",
-    "analyze (v.)"
-   ],
-   "roots": [
-    {
-     "part": "ana",
-     "mean": "위로, 분리하여"
-    },
-    {
-     "part": "lys",
-     "mean": "풀다"
-    }
-   ],
-   "etymHint": "ana(분리하여) + lys(풀다) → 나누어 풀다 → 분석적인",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2020",
-    "stars": 1
-   }
-  },
-  {
-   "en": "sanction",
-   "ipa": "/ˈsæŋkʃən/",
-   "pos": "n./v.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "제재, 처벌; 승인, 허가",
-     "ex": "International bodies may impose economic sanctions against states that violate established diplomatic agreements.",
-     "tr": "국제 기구는 확립된 외교 협정을 위반하는 국가에 대해 경제적 제재를 부과할 수 있다.",
+     "ko": "조화로운, 화목한",
+     "ex": "A harmonious relationship between employer and staff depends on clear and consistent communication.",
+     "tr": "고용주와 직원 간의 조화로운 관계는 명확하고 일관된 소통에 달려 있다.",
      "src": ""
     },
     {
-     "pos": "v.",
-     "ko": "공식 승인하다, 제재를 가하다"
+     "pos": "adj.",
+     "ko": "(소리·색 등이) 잘 어울리는"
     }
    ],
    "syn": [
-    "penalty",
-    "penalty",
-    "authorization"
+    "concordant",
+    "congenial",
+    "amicable"
    ],
    "deriv": [
-    "sanctioned (adj.)"
+    "harmony (n.)",
+    "harmonize (v.)",
+    "harmoniously (adv.)"
    ],
    "roots": [
     {
-     "part": "sanct",
-     "mean": "신성하게 하다, 승인하다"
+     "part": "harmon",
+     "mean": "조화, 연결 (그리스 harmonia)"
+    },
+    {
+     "part": "-ious",
+     "mean": "~한 성질의"
     }
    ],
-   "etymHint": "Latin sancire(신성하게 하다) → 공식적으로 승인하다 / 위반 시 처벌 → 제재, 승인",
+   "etymHint": "harmonia(조화)+ious(형용사 접미사) → 조화로운",
    "level": "C1",
    "exam": {
     "tested": true,
-    "count": 4,
+    "count": 3,
     "exams": 2,
     "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "emulate",
-   "ipa": "/ˈemjʊleɪt/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "모방하다, 따라 하다; (컴퓨터) 에뮬레이트하다",
-     "ex": "Digital search engines have not yet managed to emulate the serendipitous discoveries that come from browsing physical library shelves.",
-     "tr": "디지털 검색 엔진은 아직 물리적 도서관 서가를 탐색하면서 생기는 우연한 발견을 모방하는 데 성공하지 못했다.",
-     "src": "2018 수능 40번"
-    }
-   ],
-   "syn": [
-    "imitate",
-    "mimic",
-    "replicate"
-   ],
-   "deriv": [
-    "emulation (n.)",
-    "emulator (n.)"
-   ],
-   "roots": [
-    {
-     "part": "aemul",
-     "mean": "경쟁하다, 따라잡다"
-    }
-   ],
-   "etymHint": "Latin aemulari(경쟁하다) → 누군가를 따라잡으려 하다 → 모방하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 4,
-    "exams": 2,
-    "recentYear": "2018",
     "stars": 1
    }
   }

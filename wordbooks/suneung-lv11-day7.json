@@ -4,38 +4,601 @@
  "day": 7,
  "words": [
   {
-   "en": "metric",
-   "ipa": "/ˈmetrɪk/",
+   "en": "disclosure",
+   "ipa": "/dɪsˈkloʊʒər/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "측정 기준, 지표",
-     "ex": "For commercial broadcasters, total audience size remains the most decisive metric, overshadowing demographic or psychographic variables.",
-     "tr": "상업 방송사에게는 전체 청취자 규모가 인구통계학적·심리분석적 변수를 압도하는 가장 결정적인 지표로 남는다.",
+     "ko": "공개, 폭로; 공시",
+     "ex": "Full disclosure of potential conflicts of interest is essential for preserving the integrity of academic peer review.",
+     "tr": "잠재적 이해충돌의 완전한 공개는 학술 동료 심사의 무결성을 보존하는 데 필수적이다.",
+     "src": "2023 수능 23번"
+    }
+   ],
+   "syn": [
+    "revelation",
+    "exposure",
+    "divulgence"
+   ],
+   "deriv": [
+    "disclose (v.)",
+    "undisclosed (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "dis",
+     "mean": "반대, 분리"
+    },
+    {
+     "part": "claus",
+     "mean": "닫다"
+    }
+   ],
+   "etymHint": "dis(반대)+claus(닫다)+ure → 닫힌 것을 열다 → 공개",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "consolidate",
+   "ipa": "/kənˈsɒlɪdeɪt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "통합하다, 공고히 하다",
+     "ex": "The merger allowed both companies to consolidate their market position and eliminate redundant operations.",
+     "tr": "합병은 두 회사가 시장 위치를 통합하고 중복된 사업을 제거할 수 있게 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "merge",
+    "strengthen",
+    "unify"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "subordinate",
+   "ipa": "/səˈbɔːrdɪnɪt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "부하의, 종속된; 하위의",
+     "ex": "When managers model transparent communication, their subordinate staff tend to adopt the same open approach.",
+     "tr": "관리자들이 투명한 소통을 모범으로 보일 때, 부하 직원들은 같은 개방적인 접근 방식을 따르는 경향이 있다.",
+     "src": "2013 9월모평 23번"
+    },
+    {
+     "pos": "n.",
+     "ko": "부하 직원, 하급자"
+    },
+    {
+     "pos": "v.",
+     "ko": "종속시키다"
+    }
+   ],
+   "syn": [
+    "junior",
+    "inferior",
+    "subsidiary"
+   ],
+   "deriv": [
+    "subordination (n.)",
+    "insubordinate (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "sub",
+     "mean": "아래"
+    },
+    {
+     "part": "ordin",
+     "mean": "순서, 질서"
+    }
+   ],
+   "etymHint": "sub(아래)+ordin(질서)+ate → 질서의 아래에 있는 → 종속된",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "instill",
+   "ipa": "/ɪnˈstɪl/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "서서히 심어주다, 불어넣다",
+     "ex": "Effective mentors instill confidence and critical thinking skills that remain with students throughout their careers.",
+     "tr": "효과적인 멘토는 학생들의 경력 내내 지속되는 자신감과 비판적 사고 능력을 서서히 심어준다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "inculcate",
+    "imbue",
+    "impart"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "inert",
+   "ipa": "/ɪˈnɜːrt/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "비활성의, 불활성의; 활동하지 않는",
+     "ex": "Stripped of its cellular context, DNA remains chemically inert and cannot direct any biological processes on its own.",
+     "tr": "세포 맥락에서 분리되면, DNA는 화학적으로 비활성 상태로 남아 스스로 어떤 생물학적 과정도 이끌 수 없다.",
+     "src": "2020 수능 23번"
+    }
+   ],
+   "syn": [
+    "inactive",
+    "dormant",
+    "static"
+   ],
+   "deriv": [
+    "inertia (n.)",
+    "inertness (n.)",
+    "inertly (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "in",
+     "mean": "부정"
+    },
+    {
+     "part": "ars/art",
+     "mean": "기술, 능력"
+    }
+   ],
+   "etymHint": "in(부정)+ers(기술) → 기술이 없는 → 움직이지 않는 → 비활성의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "interplay",
+   "ipa": "/ˈɪntərˌpleɪ/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "상호 작용, 상호 영향",
+     "ex": "A nuanced theory of equality must acknowledge the complex interplay between uniformity and difference among individuals.",
+     "tr": "평등에 관한 섬세한 이론은 개인들 사이의 균일성과 차이 간의 복잡한 상호 작용을 인정해야 한다.",
+     "src": "2021 9월모평 33번"
+    }
+   ],
+   "syn": [
+    "interaction",
+    "interrelation",
+    "dynamic"
+   ],
+   "deriv": [
+    "interplay (v.)"
+   ],
+   "roots": [
+    {
+     "part": "inter",
+     "mean": "사이"
+    },
+    {
+     "part": "play",
+     "mean": "작용하다, 놀다"
+    }
+   ],
+   "etymHint": "inter(사이)+play(작용하다) → 서로 간에 작용 → 상호 작용",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2021",
+    "stars": 1
+   }
+  },
+  {
+   "en": "unscrupulous",
+   "ipa": "/ʌnˈskruːpjʊləs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "비양심적인, 파렴치한",
+     "ex": "Unscrupulous brokers exploited the housing crisis to extract excessive fees from desperate buyers.",
+     "tr": "비양심적인 중개업자들은 주택 위기를 악용하여 절박한 구매자들로부터 과도한 수수료를 뜯어냈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "unethical",
+    "dishonest",
+    "unprincipled"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "inorganic",
+   "ipa": "/ˌɪnɔːrˈɡænɪk/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "무기(물)의; 유기적이지 않은",
+     "ex": "Unlike organic compounds, inorganic substances such as minerals do not typically contain carbon-hydrogen bonds.",
+     "tr": "유기 화합물과 달리, 광물과 같은 무기 물질은 일반적으로 탄소-수소 결합을 포함하지 않는다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "mineral",
+    "non-biological",
+    "abiotic"
+   ],
+   "deriv": [
+    "organic (adj.)",
+    "inorganically (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "in",
+     "mean": "부정"
+    },
+    {
+     "part": "organ",
+     "mean": "기관, 도구"
+    }
+   ],
+   "etymHint": "in(부정)+organic(유기의) → 유기적이지 않은 → 무기의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "destabilize",
+   "ipa": "/diːˈsteɪbɪlaɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "불안정하게 하다, 흔들다",
+     "ex": "Persistent capital outflows can destabilize even robust economies by undermining investor confidence.",
+     "tr": "지속적인 자본 유출은 투자자 신뢰를 약화시켜 견고한 경제조차 불안정하게 만들 수 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "undermine",
+    "unsettle",
+    "weaken"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "governmental",
+   "ipa": "/ˌɡʌvərnˈmɛntəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "정부의, 정부에 관한",
+     "ex": "Excessive governmental substitution for civic responsibility can undermine a society's capacity to respond to crises.",
+     "tr": "시민의 책임에 대한 과도한 정부의 대체는 위기에 대응하는 사회의 역량을 약화시킬 수 있다.",
+     "src": "2022 9월모평 24번"
+    }
+   ],
+   "syn": [
+    "administrative",
+    "official",
+    "state"
+   ],
+   "deriv": [
+    "government (n.)",
+    "govern (v.)",
+    "governance (n.)"
+   ],
+   "roots": [
+    {
+     "part": "gubernare",
+     "mean": "방향을 잡다, 통치하다 (라틴어)"
+    }
+   ],
+   "etymHint": "gubernare(통치하다)+ment+al → 통치 기관의 → 정부의",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "fragmentation",
+   "ipa": "/ˌfræɡmənˈteɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "분열, 파편화; 단편화",
+     "ex": "The fragmentation of political discourse into isolated online communities makes genuine deliberation increasingly difficult.",
+     "tr": "정치 담론의 고립된 온라인 공동체로의 파편화는 진정한 숙의를 점점 더 어렵게 만든다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "disintegration",
+    "breakup",
+    "splintering"
+   ],
+   "deriv": [
+    "fragment (n./v.)",
+    "fragmented (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "frag",
+     "mean": "부수다 (라틴어 frangere)"
+    }
+   ],
+   "etymHint": "frangere(부수다)+ment+ation → 부서진 조각들 → 파편화",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "hypothesize",
+   "ipa": "/haɪˈpɒθɪˌsaɪz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "가설을 세우다",
+     "ex": "The team hypothesized that the observed correlation was mediated by an as-yet-unidentified variable.",
+     "tr": "팀은 관찰된 상관관계가 아직 밝혀지지 않은 변수에 의해 매개된다고 가설을 세웠다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "theorize",
+    "postulate",
+    "conjecture"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "socio",
+   "ipa": "/ˈsoʊʃioʊ/",
+   "pos": "prefix",
+   "meanings": [
+    {
+     "pos": "prefix",
+     "ko": "사회(적)- (결합형 접두사)",
+     "ex": "Planners must consider socio-economic disparities when deciding where to locate new public services.",
+     "tr": "기획자들은 새로운 공공 서비스를 어디에 배치할지 결정할 때 사회경제적 격차를 고려해야 한다.",
+     "src": "2026 6월모평 34번"
+    }
+   ],
+   "syn": [
+    "social-"
+   ],
+   "deriv": [
+    "socio-economic (adj.)",
+    "sociolinguistics (n.)",
+    "sociocultural (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "socius",
+     "mean": "동반자, 사회 (라틴어)"
+    }
+   ],
+   "etymHint": "socius(동반자, 사회) → 사회와 관련된 결합 접두사",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "approximation",
+   "ipa": "/əˌprɒksɪˈmeɪʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "근사치, 근접; 어림잡기",
+     "ex": "Historical understanding does not progress through an approximation of a single truth but by multiplying possible interpretations.",
+     "tr": "역사적 이해는 단일한 진실에 대한 근사치를 통해 진전되는 것이 아니라 가능한 해석들을 늘림으로써 진전된다.",
+     "src": "2022 수능 34번"
+    }
+   ],
+   "syn": [
+    "estimate",
+    "rough figure",
+    "close match"
+   ],
+   "deriv": [
+    "approximate (adj./v.)",
+    "approximately (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "ad",
+     "mean": "향하여"
+    },
+    {
+     "part": "proximus",
+     "mean": "가장 가까운 (라틴어)"
+    }
+   ],
+   "etymHint": "ad(향하여)+proximus(가장 가까운)+ation → 가까이 다가가는 행위 → 근사치",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2022",
+    "stars": 1
+   }
+  },
+  {
+   "en": "duplicitous",
+   "ipa": "/djuːˈplɪsɪtəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "이중적인, 기만적인",
+     "ex": "The duplicitous negotiator secretly served opposing interests while appearing to broker a deal.",
+     "tr": "이중적인 협상가는 거래를 중재하는 척하면서 몰래 상반된 이익을 추구했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "deceitful",
+    "two-faced",
+    "treacherous"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "aggregate",
+   "ipa": "/ˈæɡrɪɡɪt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "집합, 총계; 집합체",
+     "ex": "Broadcasters measure success by the sheer size of the audience aggregated across all platforms and time slots.",
+     "tr": "방송사들은 모든 플랫폼과 시간대에 걸쳐 집계된 시청자 수의 규모로 성공을 측정한다.",
      "src": "2024 9월모평 23번"
     },
     {
      "pos": "adj.",
-     "ko": "미터법의"
+     "ko": "합산된, 집합적인"
+    },
+    {
+     "pos": "v.",
+     "ko": "집합시키다, 합산하다"
     }
    ],
    "syn": [
-    "measure",
-    "criterion",
-    "benchmark"
+    "total",
+    "sum",
+    "collective"
    ],
    "deriv": [
-    "metrics (n.)",
-    "metrical (adj.)"
+    "aggregation (n.)",
+    "aggregated (adj.)",
+    "disaggregate (v.)"
    ],
    "roots": [
     {
-     "part": "metr-",
-     "mean": "측정하다"
+     "part": "ad",
+     "mean": "향하여"
+    },
+    {
+     "part": "greg",
+     "mean": "무리"
     }
    ],
-   "etymHint": "metr(측정하다) → 측정하는 기준 → 지표",
+   "etymHint": "ad(향하여)+greg(무리)+ate → 무리를 향해 모으다 → 집합체",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -46,508 +609,22 @@
    }
   },
   {
-   "en": "aphorism",
-   "ipa": "/ˈæfəˌrɪzəm/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "격언, 경구",
-     "ex": "Oscar Wilde's prose is studded with aphorisms so polished they read as effortless truths rather than crafted epigrammatic lines.",
-     "tr": "오스카 와일드의 산문은 너무나 세련된 격언들로 가득해 공들여 만든 경구가 아니라 자연스러운 진리처럼 읽힌다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "maxim",
-    "adage",
-    "epigram"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "boundary",
-   "ipa": "/ˈbaʊndri/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "경계, 한계",
-     "ex": "When the same bird song was played at a boundary separating two distinct territories, it was treated as an intrusion by a stranger.",
-     "tr": "같은 새 노래가 두 개의 서로 다른 영역을 구분하는 경계에서 재생되었을 때, 그것은 낯선 자의 침입으로 취급되었다.",
-     "src": "2022 6월모평 34번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(행동·규범의) 범위"
-    }
-   ],
-   "syn": [
-    "border",
-    "limit",
-    "perimeter"
-   ],
-   "deriv": [
-    "bound (n./v.)",
-    "bounded (adj.)",
-    "unbounded (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "bound-",
-     "mean": "경계"
-    }
-   ],
-   "etymHint": "bound(경계)+-ary → 경계를 이루는 것 → 경계",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "vibrant",
-   "ipa": "/ˈvaɪbrənt/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "활기찬, 생동감 넘치는",
-     "ex": "Readers encountered in his verse a vibrant cultural performance, as though a charismatic figure leapt from the page to address them directly.",
-     "tr": "독자들은 그의 시에서 활기찬 문화적 퍼포먼스를 접했는데, 마치 카리스마 있는 인물이 페이지에서 뛰쳐나와 직접 말을 거는 것 같았다.",
-     "src": "2016 수능 34번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(색채·소리가) 선명한, 울리는"
-    }
-   ],
-   "syn": [
-    "lively",
-    "dynamic",
-    "vivid"
-   ],
-   "deriv": [
-    "vibrate (v.)",
-    "vibration (n.)",
-    "vibrancy (n.)"
-   ],
-   "roots": [
-    {
-     "part": "vibr-",
-     "mean": "진동하다"
-    }
-   ],
-   "etymHint": "vibr(진동하다)+-ant → 진동하듯 살아 있는 → 활기찬",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "diffusion",
-   "ipa": "/dɪˈfjuːʒən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "확산, 전파",
-     "ex": "The diffusion of printing technology across Europe transformed how knowledge was produced and consumed.",
-     "tr": "유럽 전역으로의 인쇄 기술 확산은 지식이 생산되고 소비되는 방식을 변화시켰다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "dissemination",
-    "propagation",
-    "permeation"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "savanna",
-   "ipa": "/səˈvænə/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "사바나 (열대 초원)",
-     "ex": "Imagine an early humanoid foraging across the open African savanna and suddenly encountering an unexpected abundance of food.",
-     "tr": "초기 인류가 넓게 펼쳐진 아프리카 사바나를 돌아다니다 갑자기 예상치 못한 식량의 풍요와 마주치는 상황을 상상해 보라.",
-     "src": "2012 9월모평 44번"
-    }
-   ],
-   "syn": [
-    "grassland",
-    "plain",
-    "veldt"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "obdurate",
-   "ipa": "/ˈɒbdjʊrɪt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "완고한, 고집스러운",
-     "ex": "Despite mounting evidence, the defendant remained obdurate and refused to enter any plea.",
-     "tr": "증거가 쌓여감에도 피고는 완고하게 버티며 어떤 답변도 거부했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "stubborn",
-    "intransigent",
-    "inflexible"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "aboriginal",
-   "ipa": "/ˌæbəˈrɪdʒɪnəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "원주민의, 토착의",
-     "ex": "The aboriginal communities of the region preserved oral histories and ceremonial knowledge that dated back thousands of years.",
-     "tr": "그 지역의 원주민 공동체는 수천 년 전으로 거슬러 올라가는 구술 역사와 의식 지식을 보존했다.",
-     "src": ""
-    },
-    {
-     "pos": "n.",
-     "ko": "원주민"
-    }
-   ],
-   "syn": [
-    "indigenous",
-    "native",
-    "autochthonous"
-   ],
-   "deriv": [
-    "aborigine (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ab-",
-     "mean": "부터"
-    },
-    {
-     "part": "origin-",
-     "mean": "기원"
-    }
-   ],
-   "etymHint": "ab(부터)+origin(기원) → 기원부터 있던 → 원주민의",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "",
-    "stars": 1
-   }
-  },
-  {
-   "en": "xenophobia",
-   "ipa": "/ˌzɛnəˈfoʊbiə/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "외국인 혐오, 이방인 공포증",
-     "ex": "The surge in nationalist sentiment was accompanied by a troubling rise in xenophobia.",
-     "tr": "민족주의 정서의 급증은 우려스러운 외국인 혐오의 증가와 함께 나타났다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "bigotry",
-    "nativism",
-    "chauvinism"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "mythology",
-   "ipa": "/mɪˈθɒlədʒi/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "신화(학)",
-     "ex": "Oral histories and ceremonial records, exchanged within the lodge, were gradually transformed into the mythology of the community.",
-     "tr": "오두막 안에서 교환된 구술 역사와 의식 기록은 점차 공동체의 신화로 변모했다.",
-     "src": "2017 6월모평 34번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(사회·문화적) 통념, 믿음 체계"
-    }
-   ],
-   "syn": [
-    "legend",
-    "folklore",
-    "lore"
-   ],
-   "deriv": [
-    "myth (n.)",
-    "mythological (adj.)",
-    "mythologize (v.)"
-   ],
-   "roots": [
-    {
-     "part": "mytho-",
-     "mean": "이야기"
-    },
-    {
-     "part": "-logy",
-     "mean": "학문"
-    }
-   ],
-   "etymHint": "mytho(이야기)+-logy(학문) → 이야기를 연구하는 학문 → 신화학",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "vicarious",
-   "ipa": "/vɪˈkeəriəs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "대리의, 간접 경험에 의한",
-     "ex": "Readers derive vicarious pleasure from the protagonist's daring exploits throughout the novel.",
-     "tr": "독자들은 소설 전반에 걸쳐 주인공의 대담한 행적에서 대리적 쾌락을 얻는다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "surrogate",
-    "indirect",
-    "secondhand"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "defender",
-   "ipa": "/dɪˈfendər/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "옹호자; 수비수",
-     "ex": "Neither the prosecutor nor the defender is obliged to present evidence that might undermine their respective arguments in court.",
-     "tr": "검사도 변호인도 법정에서 자신들의 주장을 약화시킬 수 있는 증거를 제시할 의무는 없다.",
-     "src": "2017 6월모평 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "방어자, 수호자"
-    }
-   ],
-   "syn": [
-    "advocate",
-    "protector",
-    "champion"
-   ],
-   "deriv": [
-    "defend (v.)",
-    "defense (n.)",
-    "defensive (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "de-",
-     "mean": "아래에서"
-    },
-    {
-     "part": "fend-",
-     "mean": "막다"
-    }
-   ],
-   "etymHint": "de(아래에서)+fend(막다) → 아래에서 막아내다 → 방어하다",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "obsolescence",
-   "ipa": "/ˌɒbsəˈlɛsəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "노후화, 쓸모없어짐",
-     "ex": "Planned obsolescence, the deliberate designing of products to fail, drives consumerist cycles of replacement.",
-     "tr": "제품이 고장나도록 의도적으로 설계하는 계획적 노후화는 소비주의적 교체 순환을 주도한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "outdatedness",
-    "desuetude",
-    "superannuation"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "settlement",
-   "ipa": "/ˈsetlmənt/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "정착지, 거주지",
-     "ex": "In a small village settlement of thatched huts, every mother could hear the cries of any infant in the night.",
-     "tr": "초가집으로 이루어진 작은 마을 정착지에서, 모든 어머니는 밤에 어떤 아이의 울음소리도 들을 수 있었다.",
-     "src": "2017 9월모평 31번"
-    },
-    {
-     "pos": "n.",
-     "ko": "해결, 합의"
-    },
-    {
-     "pos": "n.",
-     "ko": "정착, 이주"
-    }
-   ],
-   "syn": [
-    "colony",
-    "community",
-    "resolution"
-   ],
-   "deriv": [
-    "settle (v.)",
-    "settler (n.)",
-    "unsettled (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "settl-",
-     "mean": "자리 잡다"
-    },
-    {
-     "part": "-ment",
-     "mean": "행위·결과"
-    }
-   ],
-   "etymHint": "settl(자리 잡다)+-ment → 자리 잡은 곳 → 정착지",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "amplify",
-   "ipa": "/ˈæmplɪfaɪ/",
+   "en": "annihilate",
+   "ipa": "/əˈnaɪəleɪt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "증폭하다, 확대하다",
-     "ex": "Echo chambers on digital platforms amplify extreme viewpoints and distort public perception of consensus.",
-     "tr": "디지털 플랫폼의 에코 챔버는 극단적인 견해를 증폭하고 합의에 대한 대중의 인식을 왜곡한다.",
+     "ko": "전멸시키다, 완전히 파괴하다",
+     "ex": "A large-scale asteroid impact could annihilate entire ecosystems and trigger a mass extinction event.",
+     "tr": "대규모 소행성 충돌은 전체 생태계를 전멸시키고 대량 멸종 사건을 촉발할 수 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "intensify",
-    "magnify",
-    "enhance"
+    "obliterate",
+    "exterminate",
+    "eradicate"
    ],
    "deriv": [],
    "roots": [],
@@ -562,33 +639,108 @@
    }
   },
   {
-   "en": "gigantic",
-   "ipa": "/dʒaɪˈɡæntɪk/",
+   "en": "obsession",
+   "ipa": "/əbˈsɛʃən/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "집착, 강박 관념",
+     "ex": "An obsession with technical perfection can ultimately undermine the very craftsman's pleasure that originally drove the work.",
+     "tr": "기술적 완벽함에 대한 집착은 결국 처음에 그 작업을 이끌었던 장인 본래의 즐거움을 훼손할 수 있다.",
+     "src": "2023 수능 40번"
+    }
+   ],
+   "syn": [
+    "fixation",
+    "preoccupation",
+    "compulsion"
+   ],
+   "deriv": [
+    "obsess (v.)",
+    "obsessive (adj.)",
+    "obsessively (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "ob",
+     "mean": "맞서서"
+    },
+    {
+     "part": "sess",
+     "mean": "앉다, 자리잡다"
+    }
+   ],
+   "etymHint": "ob(맞서서)+sess(앉다) → 마음속에 들러붙어 앉다 → 집착",
+   "level": "C1",
+   "exam": {
+    "tested": true,
+    "count": 3,
+    "exams": 2,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "tenacity",
+   "ipa": "/tɪˈnæsɪti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "집요함; 인내",
+     "ex": "The tenacity with which she pursued her hypothesis, even in the face of contradictory evidence, alarmed her peers.",
+     "tr": "모순되는 증거에도 불구하고 가설을 집요하게 추구하는 그녀의 태도는 동료들을 놀라게 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "persistence",
+    "resolve",
+    "pertinacity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "C1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "vigilant",
+   "ipa": "/ˈvɪdʒɪlənt/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "거대한, 엄청난",
-     "ex": "The project required a gigantic coordinated effort spanning dozens of international institutions and thousands of researchers.",
-     "tr": "그 프로젝트는 수십 개의 국제 기관과 수천 명의 연구자에 걸친 엄청난 공동 노력을 필요로 했다.",
+     "ko": "바짝 경계하는, 방심하지 않는",
+     "ex": "Security analysts must remain vigilant against emerging cyber threats that conventional defences cannot detect.",
+     "tr": "보안 분석가들은 기존의 방어 체계가 감지할 수 없는 새로운 사이버 위협에 대해 바짝 경계를 유지해야 한다.",
      "src": ""
     }
    ],
    "syn": [
-    "enormous",
-    "colossal",
-    "immense"
+    "watchful",
+    "alert",
+    "wary"
    ],
    "deriv": [
-    "gigantically (adv.)"
+    "vigilance (n.)",
+    "vigilantly (adv.)",
+    "vigilante (n.)"
    ],
    "roots": [
     {
-     "part": "gigant-",
-     "mean": "거인"
+     "part": "vigil",
+     "mean": "깨어 있음 (라틴어)"
     }
    ],
-   "etymHint": "gigant(거인)+-ic → 거인 같은 → 거대한",
+   "etymHint": "vigil(깨어 있음)+ant → 깨어서 감시하는 → 경계하는",
    "level": "C1",
    "exam": {
     "tested": true,
@@ -596,156 +748,6 @@
     "exams": 2,
     "recentYear": "",
     "stars": 1
-   }
-  },
-  {
-   "en": "extrapolate",
-   "ipa": "/ɪkˈstræpəˌleɪt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "외삽하다, 추론하다",
-     "ex": "It would be rash to extrapolate from a regional study findings that apply universally across cultures.",
-     "tr": "지역 연구에서 모든 문화에 보편적으로 적용되는 결과를 추론하는 것은 경솔한 일이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "project",
-    "infer",
-    "generalize"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "progression",
-   "ipa": "/prəˈɡreʃən/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "진행, 발전; 연속",
-     "ex": "Each experiment in science, whether it confirms or refutes a hypothesis, initiates a new step in a theoretically infinite progression.",
-     "tr": "과학의 모든 실험은 가설을 확인하든 반박하든 이론적으로 무한한 발전의 새로운 단계를 시작한다.",
-     "src": "2017 9월모평 40번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(음악) 진행"
-    }
-   ],
-   "syn": [
-    "advancement",
-    "sequence",
-    "development"
-   ],
-   "deriv": [
-    "progress (n./v.)",
-    "progressive (adj.)",
-    "progressively (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "pro-",
-     "mean": "앞으로"
-    },
-    {
-     "part": "gress-",
-     "mean": "걷다"
-    }
-   ],
-   "etymHint": "pro(앞으로)+gress(걷다) → 앞으로 나아가다 → 진행",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2017",
-    "stars": 1
-   }
-  },
-  {
-   "en": "licence",
-   "ipa": "/ˈlaɪsəns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "허가, 면허; (창작의) 자유",
-     "ex": "When storytellers embellish a tale for comedic effect, the audience willingly grants them comic licence to deviate from strict factual accuracy.",
-     "tr": "이야기꾼이 희극적 효과를 위해 이야기를 부풀릴 때, 청중은 기꺼이 그들에게 엄격한 사실적 정확성에서 벗어날 수 있는 희극적 허가를 부여한다.",
-     "src": "2022 수능 31번"
-    },
-    {
-     "pos": "v.",
-     "ko": "허가하다"
-    }
-   ],
-   "syn": [
-    "permission",
-    "authorization",
-    "liberty"
-   ],
-   "deriv": [
-    "license (v.)",
-    "licensed (adj.)",
-    "licensing (n.)"
-   ],
-   "roots": [
-    {
-     "part": "licen-",
-     "mean": "허용하다"
-    }
-   ],
-   "etymHint": "licen(허용하다)+-ce → 허용된 것 → 허가",
-   "level": "C1",
-   "exam": {
-    "tested": true,
-    "count": 3,
-    "exams": 2,
-    "recentYear": "2022",
-    "stars": 1
-   }
-  },
-  {
-   "en": "implacable",
-   "ipa": "/ɪmˈplækəbəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "달래기 어려운, 완강한",
-     "ex": "The implacable opposition of the senate blocked every reform proposal the president advanced.",
-     "tr": "상원의 완강한 반대가 대통령이 추진한 모든 개혁 제안을 저지했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "relentless",
-    "inexorable",
-    "intractable"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "C1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
    }
   }
  ],

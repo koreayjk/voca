@@ -4,70 +4,515 @@
  "day": 8,
  "words": [
   {
-   "en": "mechanical",
-   "ipa": "/mɪˈkænɪkəl/",
-   "pos": "adj.",
+   "en": "passion",
+   "ipa": "/ˈpæʃən/",
+   "pos": "n.",
    "meanings": [
     {
-     "pos": "adj.",
-     "ko": "기계적인, 기계의",
-     "ex": "The widespread mechanical reproduction of images in the press became feasible with advances in printing technology during the late 19th century.",
-     "tr": "언론에서 이미지의 광범위한 기계적 복제는 19세기 후반 인쇄 기술의 발전으로 가능해졌다.",
-     "src": "2024 9월모평 34번"
+     "pos": "n.",
+     "ko": "열정, 열망; 격정",
+     "ex": "You can channel your passion for photography into meaningful work that will transform your skills and artistic vision.",
+     "tr": "사진에 대한 당신의 열정을 당신의 기술과 예술적 시각을 변화시킬 의미 있는 작업으로 쏟아낼 수 있다.",
+     "src": "2012 수능 18번"
     },
     {
-     "pos": "adj.",
-     "ko": "무의식적인, 습관적인"
+     "pos": "n.",
+     "ko": "애정, 강한 감정"
     }
    ],
    "syn": [
-    "automated",
-    "machine-like",
-    "technical"
+    "enthusiasm",
+    "ardor",
+    "zeal"
    ],
    "deriv": [
-    "mechanic (n.)",
-    "mechanically (adv.)",
-    "mechanism (n.)",
-    "mechanize (v.)"
+    "passionate (adj.)",
+    "passionately (adv.)",
+    "dispassionate (adj.)"
    ],
    "roots": [
     {
-     "part": "mechan",
-     "mean": "기계, 장치"
+     "part": "pati",
+     "mean": "고통받다, 느끼다 (라틴)"
     }
    ],
-   "etymHint": "mechan(기계) → 기계에 관련된 → 기계적인",
+   "etymHint": "pati(고통받다, 강하게 느끼다) → 강렬하게 느끼는 감정 → 열정",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 9,
-    "exams": 8,
-    "recentYear": "2025",
-    "stars": 2
+    "exams": 7,
+    "recentYear": "2018",
+    "stars": 1
    }
   },
   {
-   "en": "influential",
-   "ipa": "/ˌɪnfluˈenʃəl/",
+   "en": "adaptive",
+   "ipa": "/əˈdæptɪv/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "영향력 있는",
-     "ex": "Widespread economic conditions can act as influential factors that uniformly suppress the performance of all individuals being evaluated.",
-     "tr": "광범위한 경제적 조건은 평가받는 모든 사람의 성과를 일괄적으로 억제하는 영향력 있는 요인으로 작용할 수 있다.",
-     "src": "2016 수능 40번"
+     "ko": "적응하는, 적응력 있는",
+     "ex": "Organisms that develop adaptive traits in response to environmental change are more likely to survive and reproduce successfully.",
+     "tr": "환경 변화에 대응하여 적응적 특성을 발달시키는 유기체가 생존하고 성공적으로 번식할 가능성이 더 높다.",
+     "src": ""
     }
    ],
    "syn": [
-    "powerful",
-    "significant",
-    "impactful"
+    "flexible",
+    "adjustable",
+    "responsive"
    ],
    "deriv": [
-    "influence (n./v.)",
-    "influenced (adj.)"
+    "adapt (v.)",
+    "adaptation (n.)",
+    "adaptability (n.)",
+    "adaptively (adv.)"
+   ],
+   "roots": [
+    {
+     "part": "ad-",
+     "mean": "~에"
+    },
+    {
+     "part": "aptus",
+     "mean": "맞다, 적합하다 (라틴)"
+    }
+   ],
+   "etymHint": "ad-(~에) + aptus(적합하다) → 상황에 맞추다 → 적응하는",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 9,
+    "exams": 7,
+    "recentYear": "",
+    "stars": 1
+   }
+  },
+  {
+   "en": "manual",
+   "ipa": "/ˈmænjuəl/",
+   "pos": "adj./n.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "손으로 하는, 육체적인",
+     "ex": "The earliest etiquette manuals, which appeared in the twelfth and thirteenth centuries, were written to instruct the children of the aristocracy.",
+     "tr": "12~13세기에 등장한 최초의 예절 교범들은 귀족 자녀들을 교육하기 위해 작성되었다.",
+     "src": "2020 6월모평 23번"
+    },
+    {
+     "pos": "n.",
+     "ko": "설명서, 안내서"
+    }
+   ],
+   "syn": [
+    "handbook",
+    "guide",
+    "physical (adj.)"
+   ],
+   "deriv": [
+    "manually (adv.)",
+    "manufacture (v.)",
+    "manuscript (n.)"
+   ],
+   "roots": [
+    {
+     "part": "manus",
+     "mean": "손 (라틴)"
+    }
+   ],
+   "etymHint": "manus(손) → 손으로 하는 → 손으로 다루는 지침서",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 9,
+    "exams": 7,
+    "recentYear": "2025",
+    "stars": 1
+   }
+  },
+  {
+   "en": "flexibility",
+   "ipa": "/ˌflɛksɪˈbɪlɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "유연성, 융통성",
+     "ex": "Disclosure requirements have a key advantage over stricter forms of regulation: their flexibility allows markets to continue operating with minimal interference.",
+     "tr": "공시 요건은 더 엄격한 규제 형태에 비해 핵심적인 장점이 있다. 그 유연성이 시장이 최소한의 간섭으로 계속 운영될 수 있게 한다.",
+     "src": "2023 수능 23번"
+    }
+   ],
+   "syn": [
+    "adaptability",
+    "pliability",
+    "versatility"
+   ],
+   "deriv": [
+    "flexible (adj.)",
+    "flexibly (adv.)",
+    "inflexibility (n.)"
+   ],
+   "roots": [
+    {
+     "part": "flect/flex",
+     "mean": "구부리다 (라틴)"
+    }
+   ],
+   "etymHint": "flex(구부리다) + -ibility(가능성) → 구부릴 수 있는 성질 → 유연성",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 9,
+    "exams": 7,
+    "recentYear": "2023",
+    "stars": 1
+   }
+  },
+  {
+   "en": "stability",
+   "ipa": "/stəˈbɪlɪti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "안정성, 안정; 견고함",
+     "ex": "Stability is a fundamental human need, and when it is threatened, people's capacity to embrace change can be significantly reduced.",
+     "tr": "안정성은 인간의 근본적인 욕구이며, 그것이 위협받을 때 변화를 수용하는 사람들의 능력은 크게 감소할 수 있다.",
+     "src": "2017 9월모평 22번"
+    }
+   ],
+   "syn": [
+    "steadiness",
+    "firmness",
+    "equilibrium"
+   ],
+   "deriv": [
+    "stable (adj.)",
+    "stabilize (v.)",
+    "stabilization (n.)",
+    "instability (n.)"
+   ],
+   "roots": [
+    {
+     "part": "stare",
+     "mean": "서다 (라틴)"
+    }
+   ],
+   "etymHint": "stare(서다) → 굳건히 서 있는 상태 → 안정성",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 9,
+    "exams": 7,
+    "recentYear": "2017",
+    "stars": 1
+   }
+  },
+  {
+   "en": "laboratory",
+   "ipa": "/ˈlæbrəˌtɔːri/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "실험실, 연구소",
+     "ex": "Researchers invited professional musicians to the laboratory to measure their finger speed and precision.",
+     "tr": "연구원들은 전문 음악가들을 실험실로 초대하여 손가락 속도와 정밀도를 측정했다.",
+     "src": "2009 6월모평 24번"
+    }
+   ],
+   "syn": [
+    "lab",
+    "research facility"
+   ],
+   "deriv": [
+    "laboratory (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "labor",
+     "mean": "일, 노동"
+    }
+   ],
+   "etymHint": "labor(노동) → 작업하는 곳 → 실험실",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2020",
+    "stars": 1
+   }
+  },
+  {
+   "en": "scholar",
+   "ipa": "/ˈskɑːlər/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "학자, 학식이 높은 사람",
+     "ex": "Contemporary scholars are still expected to uphold the ethical standards that distinguished thinkers of the past.",
+     "tr": "현대의 학자들은 여전히 과거의 뛰어난 사상가들을 특징지었던 윤리적 기준을 지킬 것으로 기대된다.",
+     "src": "2009 6월모평 18번"
+    }
+   ],
+   "syn": [
+    "academic",
+    "intellectual",
+    "learned person"
+   ],
+   "deriv": [
+    "scholarly (adj.)",
+    "scholarship (n.)"
+   ],
+   "roots": [
+    {
+     "part": "schola",
+     "mean": "학교, 여가"
+    }
+   ],
+   "etymHint": "schola(학교) → 배움에 전념하는 사람 → 학자",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "acknowledge",
+   "ipa": "/əkˈnɒlɪdʒ/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "인정하다, 인식하다",
+     "ex": "Environmental managers acknowledge that change is inevitable but strive to control its pace and direction.",
+     "tr": "환경 관리자들은 변화가 불가피하다는 것을 인정하지만 그 속도와 방향을 통제하려고 노력한다.",
+     "src": "2027 6월모평 31번"
+    },
+    {
+     "pos": "v.",
+     "ko": "감사를 표하다, 알림을 주다"
+    }
+   ],
+   "syn": [
+    "admit",
+    "recognize",
+    "concede"
+   ],
+   "deriv": [
+    "acknowledgement (n.)",
+    "acknowledged (adj.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "spite",
+   "ipa": "/spaɪt/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "앙심, 악의 (in spite of: ~에도 불구하고)",
+     "ex": "In spite of the presenter's positive words, the audience's subdued reaction indicated little genuine enthusiasm for the proposal.",
+     "tr": "발표자의 긍정적인 말에도 불구하고, 청중의 차분한 반응은 그 제안에 대한 진정한 열의가 거의 없음을 나타냈다.",
+     "src": "2015 6월모평 33번"
+    },
+    {
+     "pos": "v.",
+     "ko": "앙심을 품고 해치다"
+    }
+   ],
+   "syn": [
+    "malice",
+    "grudge",
+    "ill will"
+   ],
+   "deriv": [
+    "spiteful (adj.)",
+    "spitefully (adv.)"
+   ],
+   "roots": [],
+   "etymHint": "",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "clarity",
+   "ipa": "/ˈklærəti/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "명확성, 명료함",
+     "ex": "An emergency commander must deliver all instructions with complete clarity to avoid any misunderstanding under pressure.",
+     "tr": "비상 지휘관은 압박 속에서의 오해를 피하기 위해 모든 지시를 완전한 명확성으로 전달해야 한다.",
+     "src": "2010 수능 38번"
+    }
+   ],
+   "syn": [
+    "clearness",
+    "lucidity",
+    "precision"
+   ],
+   "deriv": [
+    "clarify (v.)",
+    "clear (adj.)",
+    "clarification (n.)"
+   ],
+   "roots": [
+    {
+     "part": "clarus",
+     "mean": "밝은, 명확한"
+    }
+   ],
+   "etymHint": "clarus(밝은) → 밝고 분명한 상태 → 명확성",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2026",
+    "stars": 1
+   }
+  },
+  {
+   "en": "automobile",
+   "ipa": "/ˈɔːtəməˌbiːl/",
+   "pos": "n.",
+   "meanings": [
+    {
+     "pos": "n.",
+     "ko": "자동차",
+     "ex": "Urban planners worldwide now agree that automobile use in cities must be actively managed rather than simply accommodated.",
+     "tr": "전 세계 도시 계획가들은 이제 도시 내 자동차 이용이 단순히 수용되는 것이 아니라 적극적으로 관리되어야 한다는 데 동의한다.",
+     "src": "2023 6월모평 30번"
+    }
+   ],
+   "syn": [
+    "car",
+    "vehicle",
+    "motor vehicle"
+   ],
+   "deriv": [
+    "automotive (adj.)"
+   ],
+   "roots": [
+    {
+     "part": "auto",
+     "mean": "스스로"
+    },
+    {
+     "part": "mobile",
+     "mean": "움직이는"
+    }
+   ],
+   "etymHint": "auto(스스로)+mobile(움직이는) → 스스로 움직이는 것 → 자동차",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "substantial",
+   "ipa": "/səbˈstænʃəl/",
+   "pos": "adj.",
+   "meanings": [
+    {
+     "pos": "adj.",
+     "ko": "상당한, 실질적인",
+     "ex": "The medieval city accumulated its wealth largely through substantial fees levied on merchants who passed through its gates.",
+     "tr": "그 중세 도시는 성문을 통과하는 상인들에게 부과한 상당한 통행료를 통해 주로 부를 축적했다.",
+     "src": "2011 6월모평 36번"
+    },
+    {
+     "pos": "adj.",
+     "ko": "튼튼한, 견고한"
+    }
+   ],
+   "syn": [
+    "considerable",
+    "significant",
+    "sizeable"
+   ],
+   "deriv": [
+    "substantially (adv.)",
+    "substance (n.)",
+    "substantiate (v.)"
+   ],
+   "roots": [
+    {
+     "part": "sub",
+     "mean": "아래"
+    },
+    {
+     "part": "stare",
+     "mean": "서다"
+    }
+   ],
+   "etymHint": "sub(아래)+stare(서다) → 단단히 기반을 둔 → 실질적인, 상당한",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2024",
+    "stars": 1
+   }
+  },
+  {
+   "en": "induce",
+   "ipa": "/ɪnˈdjuːs/",
+   "pos": "v.",
+   "meanings": [
+    {
+     "pos": "v.",
+     "ko": "유도하다, 설득하다; 유발하다",
+     "ex": "When people are induced to verbally defend a position they privately disagree with, they often experience guilt about their dishonesty.",
+     "tr": "사람들이 자신이 속으로 동의하지 않는 입장을 말로 옹호하도록 유도되면, 자신의 불성실함에 대해 죄책감을 느끼는 경우가 많다.",
+     "src": "2012 6월모평 20번"
+    },
+    {
+     "pos": "v.",
+     "ko": "(증상 등을) 유발하다, 일으키다"
+    }
+   ],
+   "syn": [
+    "persuade",
+    "prompt",
+    "cause"
+   ],
+   "deriv": [
+    "induction (n.)",
+    "inducement (n.)",
+    "inductive (adj.)"
    ],
    "roots": [
     {
@@ -75,364 +520,166 @@
      "mean": "안으로"
     },
     {
-     "part": "flu",
-     "mean": "흐르다"
+     "part": "ducere",
+     "mean": "이끌다"
     }
    ],
-   "etymHint": "in(안으로) + flu(흐르다) → 안으로 흘러들어 영향을 미치는 → 영향력 있는",
+   "etymHint": "in(안으로)+ducere(이끌다) → 안쪽으로 이끌다 → 유도하다",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 9,
-    "exams": 8,
-    "recentYear": "2027",
-    "stars": 2
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2022",
+    "stars": 1
    }
   },
   {
-   "en": "arise",
-   "ipa": "/əˈraɪz/",
-   "pos": "v.",
+   "en": "pre",
+   "ipa": "/priː/",
+   "pos": "prefix",
+   "meanings": [
+    {
+     "pos": "prefix",
+     "ko": "이전의, 미리 (접두사)",
+     "ex": "Even the best-performing sales associate showed only a marginal decline compared to their previous year's results.",
+     "tr": "가장 우수한 판매 직원조차 전년도 실적에 비해 미미한 하락을 보였을 뿐이었다.",
+     "src": "2016 수능 40번"
+    }
+   ],
+   "syn": [],
+   "deriv": [
+    "preview (n./v.)",
+    "predict (v.)",
+    "precede (v.)",
+    "prevent (v.)"
+   ],
+   "roots": [
+    {
+     "part": "prae",
+     "mean": "앞에, 이전에"
+    }
+   ],
+   "etymHint": "prae(앞에, 이전에) → 무언가 앞에 오는 것 → 미리, 이전의",
+   "level": "B2",
+   "exam": {
+    "tested": true,
+    "count": 8,
+    "exams": 7,
+    "recentYear": "2027",
+    "stars": 1
+   }
+  },
+  {
+   "en": "associate",
+   "ipa": "/əˈsoʊʃieɪt/",
+   "pos": "v./n./adj.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "발생하다, 생기다; 일어나다",
-     "ex": "More severe misunderstandings arise when an individual interprets a social situation in a highly idiosyncratic manner.",
-     "tr": "개인이 사회적 상황을 매우 개인적인 방식으로 해석할 때 더욱 심각한 오해가 발생한다.",
-     "src": "2018 9월모평 32번"
-    }
-   ],
-   "syn": [
-    "emerge",
-    "occur",
-    "result"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 9,
-    "exams": 8,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "irrelevant",
-   "ipa": "/ɪˈreləvənt/",
-   "pos": "adj.",
-   "meanings": [
+     "ko": "연관시키다, 결부짓다",
+     "ex": "One of the drawbacks associated with reintroducing a predatory bird is the potential reduction in other protected species' populations.",
+     "tr": "맹금류를 다시 도입하는 것과 관련된 단점 중 하나는 다른 보호종 개체 수가 감소할 가능성이다.",
+     "src": "2020 6월모평 31번"
+    },
+    {
+     "pos": "n.",
+     "ko": "동료, 협력자"
+    },
     {
      "pos": "adj.",
-     "ko": "무관한, 관련 없는",
-     "ex": "An idea that is genuinely original but fails to serve any useful purpose is essentially irrelevant to practical problem-solving.",
-     "tr": "진정으로 독창적이지만 유용한 목적에 기여하지 못하는 아이디어는 실질적인 문제 해결과 본질적으로 무관하다.",
-     "src": "2025 6월모평 32번"
+     "ko": "부(副)~, 준(準)~"
     }
    ],
    "syn": [
-    "inapplicable",
-    "immaterial",
-    "unrelated"
+    "connect",
+    "link",
+    "relate"
    ],
    "deriv": [
-    "irrelevance (n.)",
-    "relevant (adj.)",
-    "relevance (n.)"
+    "association (n.)",
+    "associated (adj.)"
    ],
    "roots": [
     {
-     "part": "re",
-     "mean": "다시, 뒤로"
-    },
-    {
-     "part": "lev",
-     "mean": "들어 올리다"
+     "part": "socius",
+     "mean": "동반자, 동료"
     }
    ],
-   "etymHint": "ir(부정) + re + lev(들어 올리다) → 끌어들일 수 없는 → 무관한",
+   "etymHint": "ad(~로)+socius(동반자) → 동반자로 연결하다 → 연관시키다",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 9,
-    "exams": 8,
-    "recentYear": "2025",
-    "stars": 2
-   }
-  },
-  {
-   "en": "mode",
-   "ipa": "/moʊd/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "방식, 양식; 모드",
-     "ex": "The information processing mode of thinking prioritizes logical analysis and systematic techniques over intuitive judgment.",
-     "tr": "정보 처리 방식의 사고는 직관적 판단보다 논리적 분석과 체계적인 기법을 우선시한다.",
-     "src": "2011 9월모평 45번"
-    },
-    {
-     "pos": "n.",
-     "ko": "유행, 최신 경향"
-    }
-   ],
-   "syn": [
-    "manner",
-    "method",
-    "style"
-   ],
-   "deriv": [
-    "modal (adj.)",
-    "modality (n.)",
-    "model (n.)"
-   ],
-   "roots": [
-    {
-     "part": "mod",
-     "mean": "척도, 방법"
-    }
-   ],
-   "etymHint": "mod(방법, 척도) → 어떤 방법이나 형태 → 방식",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 9,
-    "exams": 8,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "ownership",
-   "ipa": "/ˈoʊnərʃɪp/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "소유권, 소유",
-     "ex": "Holding shares in a company gives investors the illusion of ownership, yet control over stock performance remains largely out of their hands.",
-     "tr": "회사 주식을 보유하는 것은 투자자들에게 소유권의 환상을 주지만 주가 성과에 대한 통제는 대부분 그들의 손 밖에 있다.",
-     "src": "2012 수능 26번"
-    }
-   ],
-   "syn": [
-    "possession",
-    "proprietorship",
-    "title"
-   ],
-   "deriv": [
-    "own (v./adj.)",
-    "owner (n.)",
-    "owned (adj.)"
-   ],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 9,
-    "exams": 8,
+    "count": 8,
+    "exams": 7,
     "recentYear": "2027",
-    "stars": 2
+    "stars": 1
    }
   },
   {
-   "en": "expense",
-   "ipa": "/ɪkˈspens/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "비용, 지출",
-     "ex": "Many retirees discovered that inflation pushed their actual living expenses well beyond what they had originally anticipated.",
-     "tr": "많은 은퇴자들은 인플레이션이 실제 생활 비용을 당초 예상했던 것보다 훨씬 초과하게 만들었음을 깨달았다.",
-     "src": "2016 6월모평 22번"
-    }
-   ],
-   "syn": [
-    "cost",
-    "expenditure",
-    "outlay"
-   ],
-   "deriv": [
-    "expensive (adj.)",
-    "expend (v.)",
-    "expenditure (n.)"
-   ],
-   "roots": [
-    {
-     "part": "ex",
-     "mean": "밖으로"
-    },
-    {
-     "part": "pens",
-     "mean": "달다, 지불하다"
-    }
-   ],
-   "etymHint": "ex(밖으로) + pens(지불하다) → 밖으로 지불하는 것 → 비용",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 9,
-    "exams": 8,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "transform",
-   "ipa": "/trænsˈfɔːrm/",
+   "en": "analyze",
+   "ipa": "/ˈænəlaɪz/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "변형하다, 바꾸다",
-     "ex": "Innovative architectural design has the potential to transform not only physical spaces but also the ways people perceive and engage with their environment.",
-     "tr": "혁신적인 건축 설계는 물리적 공간뿐만 아니라 사람들이 환경을 인식하고 상호 작용하는 방식도 변형할 잠재력을 가지고 있다.",
-     "src": "2020 9월모평 40번"
+     "ko": "분석하다",
+     "ex": "Managers should use their critical thinking skills to analyze which situations will benefit most from direct feedback.",
+     "tr": "관리자들은 비판적 사고 능력을 활용하여 어떤 상황이 직접적인 피드백으로부터 가장 많은 이익을 얻을 수 있는지 분석해야 한다.",
+     "src": "2016 9월모평 34번"
     }
    ],
    "syn": [
-    "convert",
-    "alter",
-    "change"
+    "examine",
+    "investigate",
+    "assess"
    ],
    "deriv": [
-    "transformation (n.)",
-    "transformative (adj.)",
-    "transformer (n.)"
+    "analysis (n.)",
+    "analyst (n.)",
+    "analytical (adj.)"
    ],
    "roots": [
     {
-     "part": "trans",
-     "mean": "넘어서"
+     "part": "ana",
+     "mean": "위로, 완전히"
     },
     {
-     "part": "form",
-     "mean": "형태"
+     "part": "lysis",
+     "mean": "풀다"
     }
    ],
-   "etymHint": "trans(넘어서) + form(형태) → 형태를 넘어서 바꾸다 → 변형하다",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 9,
-    "exams": 8,
-    "recentYear": "2024",
-    "stars": 2
-   }
-  },
-  {
-   "en": "resist",
-   "ipa": "/rɪˈzɪst/",
-   "pos": "v.",
-   "meanings": [
-    {
-     "pos": "v.",
-     "ko": "저항하다, 버티다",
-     "ex": "Students who lack self-direction often fail to resist the temptation to follow the conventional path chosen by their peers.",
-     "tr": "자기 방향성이 부족한 학생들은 또래들이 선택한 관습적인 길을 따르려는 유혹에 저항하지 못하는 경우가 많다.",
-     "src": "2019 6월모평 20번"
-    }
-   ],
-   "syn": [
-    "withstand",
-    "oppose",
-    "defy"
-   ],
-   "deriv": [
-    "resistance (n.)",
-    "resistant (adj.)",
-    "irresistible (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "re",
-     "mean": "다시, 반대로"
-    },
-    {
-     "part": "sist",
-     "mean": "서다"
-    }
-   ],
-   "etymHint": "re(반대로) + sist(서다) → 반대로 서다 → 저항하다",
+   "etymHint": "ana(완전히)+lysis(풀다) → 완전히 분해하다 → 분석하다",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 8,
-    "exams": 8,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "humanity",
-   "ipa": "/hjuːˈmænɪti/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "인류; 인간성",
-     "ex": "Conflict and warfare appear to be recurring features throughout the long history of humanity across all cultures.",
-     "tr": "분쟁과 전쟁은 모든 문화에 걸쳐 인류의 긴 역사 전반에 반복되는 특징으로 보인다.",
-     "src": "2010 수능 32번"
-    },
-    {
-     "pos": "n.",
-     "ko": "인문학 (복수형 humanities)"
-    }
-   ],
-   "syn": [
-    "humankind",
-    "mankind",
-    "compassion"
-   ],
-   "deriv": [
-    "human (n./adj.)",
-    "humane (adj.)",
-    "humanitarian (adj./n.)"
-   ],
-   "roots": [
-    {
-     "part": "human",
-     "mean": "사람, 땅 (humus)"
-    }
-   ],
-   "etymHint": "human(사람) + ity(상태, 성질) → 사람이라는 성질 → 인간성, 인류",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 8,
+    "exams": 7,
     "recentYear": "2025",
-    "stars": 2
+    "stars": 1
    }
   },
   {
-   "en": "relevance",
-   "ipa": "/ˈreləvəns/",
-   "pos": "n.",
+   "en": "reinforce",
+   "ipa": "/ˌriːɪnˈfɔːrs/",
+   "pos": "v.",
    "meanings": [
     {
-     "pos": "n.",
-     "ko": "관련성, 적절성",
-     "ex": "The judging panel evaluated each submission based on criteria including creativity, attractiveness, and relevance to the designated theme.",
-     "tr": "심사위원단은 창의성, 매력도, 지정된 주제와의 관련성을 포함한 기준에 따라 각 출품작을 평가했다.",
-     "src": "2026 9월모평 28번"
+     "pos": "v.",
+     "ko": "강화하다, 보강하다",
+     "ex": "Rote learning methods in classrooms may reinforce a passive approach to knowledge, reducing students' intellectual curiosity over time.",
+     "tr": "교실에서의 암기식 학습 방식은 지식에 대한 수동적인 접근 방식을 강화하여 시간이 지남에 따라 학생들의 지적 호기심을 감소시킬 수 있다.",
+     "src": "2017 수능 31번"
     }
    ],
    "syn": [
-    "pertinence",
-    "applicability",
-    "bearing"
+    "strengthen",
+    "bolster",
+    "fortify"
    ],
    "deriv": [
-    "relevant (adj.)",
-    "irrelevant (adj.)",
-    "irrelevance (n.)"
+    "reinforcement (n.)",
+    "reinforced (adj.)"
    ],
    "roots": [
     {
@@ -440,382 +687,135 @@
      "mean": "다시"
     },
     {
-     "part": "lev",
-     "mean": "들어 올리다"
+     "part": "fortis",
+     "mean": "강한"
     }
    ],
-   "etymHint": "re + lev(들어 올리다) → 다시 끌어 올릴 수 있는 것 → 관련성",
+   "etymHint": "re(다시)+fortis(강한) → 다시 강하게 만들다 → 강화하다",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 8,
-    "exams": 8,
+    "exams": 7,
     "recentYear": "2026",
-    "stars": 2
+    "stars": 1
    }
   },
   {
-   "en": "logic",
-   "ipa": "/ˈlɒdʒɪk/",
+   "en": "civilization",
+   "ipa": "/ˌsɪvələˈzeɪʃən/",
    "pos": "n.",
    "meanings": [
     {
      "pos": "n.",
-     "ko": "논리, 이치; 논리학",
-     "ex": "Ecological relationships follow their own internal logic that operates independently of human influence.",
-     "tr": "생태적 관계는 인간의 영향과는 독립적으로 작동하는 고유한 내적 논리를 따른다.",
-     "src": "2022 6월모평 33번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(행동·결정의) 타당한 이유"
+     "ko": "문명, 문명 사회",
+     "ex": "Researchers studying early human civilizations have found evidence that ancient communities endured repeated cycles of drought and extreme cold.",
+     "tr": "초기 인류 문명을 연구하는 연구자들은 고대 공동체가 반복적인 가뭄과 극심한 추위의 순환을 견뎌냈다는 증거를 발견했다.",
+     "src": "2018 6월모평 40번"
     }
    ],
    "syn": [
-    "reasoning",
-    "rationale",
-    "coherence"
+    "culture",
+    "society",
+    "culture"
    ],
    "deriv": [
-    "logical (adj.)",
-    "logically (adv.)",
-    "logician (n.)"
+    "civilize (v.)",
+    "civil (adj.)",
+    "civilized (adj.)"
    ],
    "roots": [
     {
-     "part": "log",
-     "mean": "말, 이성 (그리스어 logos)"
+     "part": "civis",
+     "mean": "시민"
     }
    ],
-   "etymHint": "logos(이성·말) → 이성적 추론 → 논리",
+   "etymHint": "civis(시민) → 시민들이 이룬 공동체 → 문명",
    "level": "B2",
    "exam": {
     "tested": true,
     "count": 8,
-    "exams": 8,
-    "recentYear": "2024",
-    "stars": 2
+    "exams": 7,
+    "recentYear": "2021",
+    "stars": 1
    }
   },
   {
-   "en": "framework",
-   "ipa": "/ˈfreɪmwɜːrk/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "틀, 체계; 구조",
-     "ex": "Contemporary art that lacks cultural context cannot be properly understood within any established framework of tradition.",
-     "tr": "문화적 맥락이 없는 현대 예술은 어떤 기존의 전통 체계 안에서도 제대로 이해될 수 없다.",
-     "src": "2021 9월모평 31번"
-    },
-    {
-     "pos": "n.",
-     "ko": "(건물 등의) 뼈대, 골조"
-    }
-   ],
-   "syn": [
-    "structure",
-    "system",
-    "scheme"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 8,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "adapt",
-   "ipa": "/əˈdæpt/",
+   "en": "obtain",
+   "ipa": "/əbˈteɪn/",
    "pos": "v.",
    "meanings": [
     {
      "pos": "v.",
-     "ko": "적응시키다; 개조하다, 각색하다",
-     "ex": "Delivery fleets can be adapted to fit the specific demands of dense urban environments by using smaller vehicles.",
-     "tr": "배달 차량은 더 작은 차량을 사용함으로써 밀집된 도시 환경의 특수한 요구에 맞게 개조될 수 있다.",
-     "src": "2023 수능 22번"
-    },
-    {
-     "pos": "v.",
-     "ko": "(새 환경에) 적응하다"
+     "ko": "얻다, 획득하다",
+     "ex": "Excessive reliance on quick lookups undermines our capacity to obtain a deep and structured understanding of a subject.",
+     "tr": "빠른 검색에 지나치게 의존하면 특정 주제에 대한 깊고 구조화된 이해를 얻는 우리의 능력이 손상된다.",
+     "src": "2020 수능 21번"
     }
    ],
    "syn": [
-    "adjust",
-    "modify",
-    "tailor"
+    "acquire",
+    "gain",
+    "secure"
    ],
    "deriv": [
-    "adaptation (n.)",
-    "adaptive (adj.)",
-    "adaptable (adj.)"
+    "obtainable (adj.)"
    ],
    "roots": [
     {
-     "part": "ad-",
-     "mean": "~쪽으로"
+     "part": "ob",
+     "mean": "~에 대해"
     },
     {
-     "part": "apt",
-     "mean": "맞는 (라틴어 aptus)"
+     "part": "tenere",
+     "mean": "잡다"
     }
    ],
-   "etymHint": "ad(~쪽으로) + aptus(맞는) → 맞게 조정하다 → 적응시키다",
+   "etymHint": "ob(~쪽으로)+tenere(잡다) → 잡아서 가지다 → 얻다",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 8,
-    "exams": 8,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "criteria",
-   "ipa": "/kraɪˈtɪəriə/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "기준, 척도 (criterion의 복수형)",
-     "ex": "The assessment criteria for the competition weighted creativity most heavily at fifty percent.",
-     "tr": "그 대회의 평가 기준은 창의성에 50%로 가장 높은 비중을 두었다.",
-     "src": "2026 9월모평 28번"
-    }
-   ],
-   "syn": [
-    "standards",
-    "measures",
-    "benchmarks"
-   ],
-   "deriv": [
-    "criterion (n. 단수)"
-   ],
-   "roots": [
-    {
-     "part": "krit-",
-     "mean": "판단하다 (그리스어 krinein)"
-    }
-   ],
-   "etymHint": "krinein(판단하다) → 판단의 기준 → 기준",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 8,
-    "exams": 8,
-    "recentYear": "2026",
-    "stars": 2
-   }
-  },
-  {
-   "en": "nonverbal",
-   "ipa": "/ˌnɒnˈvɜːrbəl/",
-   "pos": "adj.",
-   "meanings": [
-    {
-     "pos": "adj.",
-     "ko": "비언어적인",
-     "ex": "It falls on the partner to correctly interpret nonverbal cues and make appropriate adjustments to their shared plan.",
-     "tr": "파트너가 비언어적 단서를 올바르게 해석하고 공동 계획에 적절한 조정을 가하는 것은 파트너의 몫이다.",
-     "src": "2015 6월모평 33번"
-    }
-   ],
-   "syn": [
-    "gestural",
-    "unspoken"
-   ],
-   "deriv": [
-    "verbal (adj.)",
-    "verbally (adv.)"
-   ],
-   "roots": [
-    {
-     "part": "non-",
-     "mean": "아닌"
-    },
-    {
-     "part": "verb",
-     "mean": "말 (라틴어 verbum)"
-    }
-   ],
-   "etymHint": "non(아닌) + verbum(말) → 말이 아닌 → 비언어적인",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 22,
+    "count": 7,
     "exams": 7,
-    "recentYear": "2027",
+    "recentYear": "2020",
     "stars": 1
    }
   },
   {
-   "en": "conscious",
-   "ipa": "/ˈkɒnʃəs/",
+   "en": "urgent",
+   "ipa": "/ˈɜːrdʒənt/",
    "pos": "adj.",
    "meanings": [
     {
      "pos": "adj.",
-     "ko": "의식하는, 자각하는; 의도적인",
-     "ex": "Words can carry meanings that extend well beyond those consciously intended by the writer or speaker.",
-     "tr": "단어는 글쓴이나 말하는 사람이 의식적으로 의도한 것을 훨씬 넘어서는 의미를 담을 수 있다.",
-     "src": "2017 수능 22번"
-    },
-    {
-     "pos": "adj.",
-     "ko": "(의학적으로) 의식이 있는"
+     "ko": "긴급한, 시급한",
+     "ex": "The growing threat to biodiversity means that society is in urgent need of comprehensive conservation strategies.",
+     "tr": "생물 다양성에 대한 위협이 커지면서 사회는 포괄적인 보전 전략이 시급히 필요한 상황에 처해 있다.",
+     "src": "2013 수능 18번"
     }
    ],
    "syn": [
-    "aware",
-    "deliberate",
-    "intentional"
+    "pressing",
+    "critical",
+    "immediate"
    ],
    "deriv": [
-    "consciousness (n.)",
-    "consciously (adv.)",
-    "subconscious (adj.)"
+    "urgently (adv.)",
+    "urgency (n.)"
    ],
    "roots": [
     {
-     "part": "con-",
-     "mean": "함께"
-    },
-    {
-     "part": "sci",
-     "mean": "알다 (라틴어 scire)"
+     "part": "urgere",
+     "mean": "재촉하다, 밀다"
     }
    ],
-   "etymHint": "con(함께) + scire(알다) → 함께 알다 → 의식하다",
+   "etymHint": "urgere(재촉하다) → 즉각 행동을 재촉하는 → 긴급한",
    "level": "B2",
    "exam": {
     "tested": true,
-    "count": 14,
-    "exams": 7,
-    "recentYear": "2027",
-    "stars": 1
-   }
-  },
-  {
-   "en": "organism",
-   "ipa": "/ˈɔːrɡənɪzəm/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "유기체, 생물체; 조직체",
-     "ex": "The term 'biological control' encompasses a wide spectrum of living organisms and biologically derived products used in pest management.",
-     "tr": "'생물학적 방제'라는 용어는 해충 관리에 사용되는 살아있는 유기체와 생물학적으로 유래된 제품들의 광범위한 스펙트럼을 포괄한다.",
-     "src": "2019 6월모평 22번"
-    }
-   ],
-   "syn": [
-    "creature",
-    "living thing",
-    "entity"
-   ],
-   "deriv": [
-    "organic (adj.)",
-    "organize (v.)",
-    "organization (n.)"
-   ],
-   "roots": [
-    {
-     "part": "organ",
-     "mean": "도구, 기관 (그리스어 organon)"
-    }
-   ],
-   "etymHint": "organon(도구·기관) + -ism(상태) → 기관들로 이루어진 것 → 유기체",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 14,
+    "count": 7,
     "exams": 7,
     "recentYear": "2024",
-    "stars": 1
-   }
-  },
-  {
-   "en": "crisis",
-   "ipa": "/ˈkraɪsɪs/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "위기, 중대 국면",
-     "ex": "Researchers found that proactively disclosing bad news caused the public to perceive the resulting crisis as less severe.",
-     "tr": "연구자들은 나쁜 소식을 선제적으로 공개하면 대중이 그로 인한 위기를 덜 심각하게 인식하게 된다는 것을 발견했다.",
-     "src": "2018 6월모평 22번"
-    }
-   ],
-   "syn": [
-    "emergency",
-    "catastrophe",
-    "turning point"
-   ],
-   "deriv": [
-    "crises (n. 복수)",
-    "critical (adj.)"
-   ],
-   "roots": [
-    {
-     "part": "kri-",
-     "mean": "판단하다, 가르다 (그리스어 krinein)"
-    }
-   ],
-   "etymHint": "krinein(판단·결정하다) → 결정적 순간 → 위기",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 14,
-    "exams": 7,
-    "recentYear": "2025",
-    "stars": 1
-   }
-  },
-  {
-   "en": "violence",
-   "ipa": "/ˈvaɪələns/",
-   "pos": "n.",
-   "meanings": [
-    {
-     "pos": "n.",
-     "ko": "폭력; 격렬함",
-     "ex": "In an age of global interdependence, resorting to violence and warfare has become increasingly counterproductive.",
-     "tr": "세계적 상호의존의 시대에 폭력과 전쟁에 의존하는 것은 갈수록 역효과를 낳고 있다.",
-     "src": "2010 수능 32번"
-    }
-   ],
-   "syn": [
-    "aggression",
-    "brutality",
-    "force"
-   ],
-   "deriv": [
-    "violent (adj.)",
-    "violently (adv.)",
-    "violate (v.)"
-   ],
-   "roots": [
-    {
-     "part": "viol-",
-     "mean": "힘 (라틴어 vis/violare)"
-    }
-   ],
-   "etymHint": "vis(힘) → 강한 힘을 가하다 → 폭력",
-   "level": "B2",
-   "exam": {
-    "tested": true,
-    "count": 13,
-    "exams": 7,
-    "recentYear": "2025",
     "stars": 1
    }
   }
