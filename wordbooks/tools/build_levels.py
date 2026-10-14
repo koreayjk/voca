@@ -28,15 +28,17 @@ GO = "--go" in sys.argv
 SRC = ['mid1', 'mid2', 'mid3', 'basic', 'core', 'hard']
 LVRANK = {'A1':0, 'A2':1, 'B1':2, 'B2':3, 'C1':4, 'C2':5}
 
+# (prefix, 제목, 코드, 단어 수, 하루 분량)
+# 하루 분량이 권마다 다르다 — 입문·기초 단계에서 하루 40개는 외우다 지친다.
+# 처음 두 권만 20개로 두고, 어휘에 익숙해지는 Lv.3 부터 40개로 올린다.
 BOOKS = [
-    ('lv1', 'Lv.1 입문',   'IMV-L1', 800),
-    ('lv2', 'Lv.2 기초',   'IMV-L2', 800),
-    ('lv3', 'Lv.3 기본',   'IMV-L3', 800),
-    ('lv4', 'Lv.4 중급',   'IMV-L4', 800),
-    ('lv5', 'Lv.5 상급',   'IMV-L5', 800),
-    ('lv6', 'Lv.6 최상급', 'IMV-L6', None),   # None = 나머지 전부
+    ('lv1', 'Lv.1 입문',   'IMV-L1', 800,  20),
+    ('lv2', 'Lv.2 기초',   'IMV-L2', 800,  20),
+    ('lv3', 'Lv.3 기본',   'IMV-L3', 800,  40),
+    ('lv4', 'Lv.4 중급',   'IMV-L4', 800,  40),
+    ('lv5', 'Lv.5 상급',   'IMV-L5', 800,  40),
+    ('lv6', 'Lv.6 최상급', 'IMV-L6', None, 40),   # None = 나머지 전부
 ]
-PER_DAY = 40
 
 # 단어가 아니라 고유명사다. 기출 지문에서 뽑히면서 섞여 들어왔다.
 # (bach=작곡가, burke/peterson/robinson=사람 이름) 재편하는 김에 뺀다.
@@ -75,22 +77,23 @@ def main():
     fixed = sum(s for s in sizes if s)
     sizes = [s if s else total - fixed for s in sizes]
     assert sum(sizes) == total, (sum(sizes), total)
+    perday = [b[4] for b in BOOKS]
 
     print(f'원본 6권 합계 {total + dup:,}개 → 중복 {dup:,}개 제거 → 고유 {total:,}개\n')
-    print(f"{'권':<12}{'단어':>6}{'일':>5}   레벨 구성")
-    out, at = [], 0
-    for (pre, title, code, _), size in zip(BOOKS, sizes):
+    print(f"{'권':<12}{'단어':>6}{'일':>5}{'하루':>5}   레벨 구성")
+    out, at, alldays = [], 0, 0
+    for (pre, title, code, _, pd), size in zip(BOOKS, sizes):
         chunk = rows[at:at + size]; at += size
         c = collections.Counter(r['lv'] for r in chunk)
         comp = ' · '.join(f'{l} {c[l]}' for l in ['A1','A2','B1','B2','C1','C2'] if c[l])
-        days = -(-size // PER_DAY)
-        print(f'{title:<12}{size:>6}{days:>5}일   {comp}')
+        days = -(-size // pd); alldays += days
+        print(f'{title:<12}{size:>6}{days:>5}일{pd:>5}개   {comp}')
         for d in range(days):
-            ws = [r['w'] for r in chunk[d*PER_DAY:(d+1)*PER_DAY]]
+            ws = [r['w'] for r in chunk[d*pd:(d+1)*pd]]
             out.append((f'suneung-{pre}-day{d+1}.json',
                         {'book': title, 'code': code, 'day': d+1,
                          'words': ws, 'exampleNote': NOTE}))
-    print(f"\n{'합계':<12}{total:>6}{sum(-(-s//PER_DAY) for s in sizes):>5}일")
+    print(f"\n{'합계':<12}{total:>6}{alldays:>5}일")
 
     # 검증 — 단어 유실·중복이 없어야 한다
     allw = [w['en'].lower().strip() for _, d in out for w in d['words']]

@@ -4,21 +4,20 @@
  "day": 6,
  "words": [
   {
-   "en": "holiday",
-   "ipa": "/ˈhɑlədeɪ/",
+   "en": "chair",
+   "ipa": "/tʃɛr/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "휴일",
-     "ex": "Today is a holiday, so no school.",
-     "tr": "오늘은 휴일이라 학교가 없어요.",
+     "ko": "의자",
+     "ex": "Please sit on this chair.",
+     "tr": "이 의자에 앉으세요.",
      "src": ""
     }
    ],
    "syn": [
-    "day off",
-    "vacation"
+    "seat"
    ],
    "deriv": [],
    "roots": [],
@@ -33,21 +32,20 @@
    }
   },
   {
-   "en": "lunchtime",
-   "ipa": "/ˈlʌntʃtaɪm/",
+   "en": "table",
+   "ipa": "/ˈteɪbəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "점심 시간",
-     "ex": "We play outside at lunchtime.",
-     "tr": "우리는 점심 시간에 밖에서 놀아요.",
+     "ko": "탁자, 식탁",
+     "ex": "We eat dinner at the table.",
+     "tr": "우리는 식탁에서 저녁을 먹는다.",
      "src": ""
     }
    ],
    "syn": [
-    "lunch break",
-    "noon"
+    "desk"
    ],
    "deriv": [],
    "roots": [],
@@ -62,25 +60,80 @@
    }
   },
   {
-   "en": "count",
-   "ipa": "/kaʊnt/",
-   "pos": "v",
+   "en": "desk",
+   "ipa": "/dɛsk/",
+   "pos": "n",
    "meanings": [
     {
-     "pos": "v",
-     "ko": "세다",
-     "ex": "Please count the apples on the table.",
-     "tr": "테이블 위의 사과를 세어 주세요.",
+     "pos": "n",
+     "ko": "책상",
+     "ex": "I do homework at my desk.",
+     "tr": "나는 책상에서 숙제를 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "table"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "lamp",
+   "ipa": "/læmp/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "램프, 조명",
+     "ex": "Turn on the lamp to read.",
+     "tr": "읽으려면 램프를 켜라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "light"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "light",
+   "ipa": "/laɪt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "빛, 조명",
+     "ex": "The light in this room is bright.",
+     "tr": "이 방의 조명은 밝다.",
      "src": ""
     },
     {
-     "pos": "n",
-     "ko": "수, 계산"
+     "pos": "adj",
+     "ko": "밝은; 가벼운"
     }
    ],
    "syn": [
-    "number",
-    "tally"
+    "lamp"
    ],
    "deriv": [],
    "roots": [],
@@ -95,195 +148,15 @@
    }
   },
   {
-   "en": "check",
-   "ipa": "/tʃɛk/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "확인하다",
-     "ex": "Check your bag before you leave.",
-     "tr": "나가기 전에 가방을 확인하세요.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "확인, 점검"
-    }
-   ],
-   "syn": [
-    "look",
-    "verify"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "job",
-   "ipa": "/dʒɑb/",
+   "en": "towel",
+   "ipa": "/ˈtaʊəl/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "직업, 일",
-     "ex": "My mom has a job at a school.",
-     "tr": "우리 엄마는 학교에서 일해요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "work",
-    "task"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "work",
-   "ipa": "/wɜrk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "일, 직장",
-     "ex": "My dad goes to work every day.",
-     "tr": "우리 아빠는 매일 직장에 가요.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "일하다"
-    }
-   ],
-   "syn": [
-    "job",
-    "task"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "office",
-   "ipa": "/ˈɔfɪs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "사무실",
-     "ex": "The teacher is in the office.",
-     "tr": "선생님은 사무실에 계세요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "room",
-    "workplace"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "farmer",
-   "ipa": "/ˈfɑrmər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "농부",
-     "ex": "The farmer grows rice in the field.",
-     "tr": "농부는 밭에서 쌀을 키워요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "grower"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "driver",
-   "ipa": "/ˈdraɪvər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "운전사",
-     "ex": "The bus driver is very kind.",
-     "tr": "버스 운전사는 매우 친절해요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "operator"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "baker",
-   "ipa": "/ˈbeɪkər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "제빵사",
-     "ex": "The baker makes fresh bread every morning.",
-     "tr": "제빵사는 매일 아침 신선한 빵을 만들어요.",
+     "ko": "수건",
+     "ex": "Use a towel to dry your hands.",
+     "tr": "손을 닦으려면 수건을 사용해라.",
      "src": ""
     }
    ],
@@ -301,15 +174,15 @@
    }
   },
   {
-   "en": "firefighter",
-   "ipa": "/ˈfaɪərfaɪtər/",
+   "en": "soap",
+   "ipa": "/soʊp/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "소방관",
-     "ex": "The firefighter put out the fire quickly.",
-     "tr": "소방관이 불을 빠르게 껐어요.",
+     "ko": "비누",
+     "ex": "Wash your hands with soap.",
+     "tr": "비누로 손을 씻어라.",
      "src": ""
     }
    ],
@@ -327,44 +200,15 @@
    }
   },
   {
-   "en": "police officer",
-   "ipa": "/pəˈliːs ˈɔfɪsər/",
+   "en": "shampoo",
+   "ipa": "/ʃæmˈpuː/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "경찰관",
-     "ex": "The police officer helps people on the street.",
-     "tr": "경찰관은 거리에서 사람들을 도와줘요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cop",
-    "officer"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "soldier",
-   "ipa": "/ˈsoʊldʒər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "군인",
-     "ex": "The soldier wears a green uniform.",
-     "tr": "군인은 초록색 제복을 입어요.",
+     "ko": "샴푸",
+     "ex": "I use shampoo to wash my hair.",
+     "tr": "나는 머리를 감을 때 샴푸를 사용한다.",
      "src": ""
     }
    ],
@@ -382,43 +226,15 @@
    }
   },
   {
-   "en": "artist",
-   "ipa": "/ˈɑrtɪst/",
+   "en": "toothbrush",
+   "ipa": "/ˈtuːθbrʌʃ/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "예술가",
-     "ex": "The artist draws a big picture.",
-     "tr": "예술가는 큰 그림을 그려요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "painter"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "singer",
-   "ipa": "/ˈsɪŋər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "가수",
-     "ex": "She wants to be a famous singer.",
-     "tr": "그녀는 유명한 가수가 되고 싶어해요.",
+     "ko": "칫솔",
+     "ex": "I brush teeth with my toothbrush.",
+     "tr": "나는 칫솔로 이를 닦는다.",
      "src": ""
     }
    ],
@@ -436,15 +252,15 @@
    }
   },
   {
-   "en": "pilot",
-   "ipa": "/ˈpaɪlət/",
+   "en": "toothpaste",
+   "ipa": "/ˈtuːθpeɪst/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "조종사",
-     "ex": "The pilot flies the airplane.",
-     "tr": "조종사는 비행기를 조종해요.",
+     "ko": "치약",
+     "ex": "Put toothpaste on your toothbrush.",
+     "tr": "칫솔에 치약을 묻혀라.",
      "src": ""
     }
    ],
@@ -462,191 +278,15 @@
    }
   },
   {
-   "en": "writer",
-   "ipa": "/ˈraɪtər/",
+   "en": "toilet",
+   "ipa": "/ˈtɔɪlət/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "작가",
-     "ex": "The writer reads many books.",
-     "tr": "작가는 책을 많이 읽어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "author"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "worker",
-   "ipa": "/ˈwɜrkər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "노동자, 직원",
-     "ex": "The workers build a new house.",
-     "tr": "노동자들이 새 집을 짓고 있어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "employee",
-    "staff"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "boss",
-   "ipa": "/bɔs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "상사, 사장",
-     "ex": "My boss is very nice to me.",
-     "tr": "내 상사는 나에게 매우 친절해요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "manager",
-    "chief"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "shop",
-   "ipa": "/ʃɑp/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "가게",
-     "ex": "There is a small shop near my school.",
-     "tr": "내 학교 근처에 작은 가게가 있어요.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "쇼핑하다"
-    }
-   ],
-   "syn": [
-    "store"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "company",
-   "ipa": "/ˈkʌmpəni/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "회사",
-     "ex": "My father works at a big company.",
-     "tr": "우리 아버지는 큰 회사에서 일해요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "firm",
-    "business"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "factory",
-   "ipa": "/ˈfæktəri/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "공장",
-     "ex": "Workers make cars at the factory.",
-     "tr": "공장에서 노동자들이 자동차를 만들어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "plant",
-    "mill"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "bank",
-   "ipa": "/bæŋk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "은행",
-     "ex": "My mom saves money at the bank.",
-     "tr": "엄마는 은행에 돈을 저축해요.",
+     "ko": "화장실, 변기",
+     "ex": "The toilet is in the bathroom.",
+     "tr": "변기는 욕실에 있다.",
      "src": ""
     }
    ],
@@ -664,43 +304,15 @@
    }
   },
   {
-   "en": "scientist",
-   "ipa": "/ˈsaɪəntɪst/",
+   "en": "shower",
+   "ipa": "/ˈʃaʊər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "과학자",
-     "ex": "The scientist works in a lab.",
-     "tr": "과학자는 실험실에서 일해요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "researcher"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "actor",
-   "ipa": "/ˈæktər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "배우(남)",
-     "ex": "The actor is very popular.",
-     "tr": "그 배우는 매우 인기 있어요.",
+     "ko": "샤워기, 샤워",
+     "ex": "I take a shower every morning.",
+     "tr": "나는 매일 아침 샤워를 한다.",
      "src": ""
     }
    ],
@@ -718,15 +330,15 @@
    }
   },
   {
-   "en": "actress",
-   "ipa": "/ˈæktrɪs/",
+   "en": "oven",
+   "ipa": "/ˈʌvən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "배우(여)",
-     "ex": "The actress sings and dances well.",
-     "tr": "그 여배우는 노래와 춤을 잘해요.",
+     "ko": "오븐",
+     "ex": "Mom bakes bread in the oven.",
+     "tr": "엄마는 오븐에서 빵을 굽는다.",
      "src": ""
     }
    ],
@@ -744,15 +356,71 @@
    }
   },
   {
-   "en": "dancer",
-   "ipa": "/ˈdænsər/",
+   "en": "refrigerator",
+   "ipa": "/rɪˈfrɪdʒəreɪtər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "댄서, 무용가",
-     "ex": "The dancer moves very gracefully.",
-     "tr": "댄서는 매우 우아하게 움직여요.",
+     "ko": "냉장고",
+     "ex": "Keep the milk in the refrigerator.",
+     "tr": "우유는 냉장고에 보관해라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "fridge"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "fridge",
+   "ipa": "/frɪdʒ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "냉장고",
+     "ex": "There is juice in the fridge.",
+     "tr": "냉장고 안에 주스가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "refrigerator"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "fan",
+   "ipa": "/fæn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "선풍기, 팬",
+     "ex": "Turn on the fan. It is hot.",
+     "tr": "선풍기를 켜라. 덥다.",
      "src": ""
     }
    ],
@@ -770,20 +438,20 @@
    }
   },
   {
-   "en": "waitress",
-   "ipa": "/ˈweɪtrɪs/",
+   "en": "television",
+   "ipa": "/ˈtɛlɪvɪʒən/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "웨이트리스",
-     "ex": "The waitress brings the food to us.",
-     "tr": "웨이트리스가 우리에게 음식을 가져다줘요.",
+     "ko": "텔레비전",
+     "ex": "We watch television in the evening.",
+     "tr": "우리는 저녁에 텔레비전을 본다.",
      "src": ""
     }
    ],
    "syn": [
-    "server"
+    "TV"
    ],
    "deriv": [],
    "roots": [],
@@ -798,21 +466,20 @@
    }
   },
   {
-   "en": "tool",
-   "ipa": "/tuːl/",
+   "en": "telephone",
+   "ipa": "/ˈtɛlɪfoʊn/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "도구",
-     "ex": "A hammer is a useful tool.",
-     "tr": "망치는 유용한 도구예요.",
+     "ko": "전화기",
+     "ex": "The telephone is ringing now.",
+     "tr": "전화기가 지금 울리고 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "instrument",
-    "device"
+    "phone"
    ],
    "deriv": [],
    "roots": [],
@@ -827,20 +494,20 @@
    }
   },
   {
-   "en": "machine",
-   "ipa": "/məˈʃiːn/",
+   "en": "clock",
+   "ipa": "/klɒk/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "기계",
-     "ex": "This machine washes the clothes.",
-     "tr": "이 기계는 옷을 세탁해요.",
+     "ko": "시계",
+     "ex": "The clock on the wall shows three.",
+     "tr": "벽에 있는 시계가 3시를 가리킨다.",
      "src": ""
     }
    ],
    "syn": [
-    "device"
+    "watch"
    ],
    "deriv": [],
    "roots": [],
@@ -855,278 +522,15 @@
    }
   },
   {
-   "en": "plan",
-   "ipa": "/plæn/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "계획하다",
-     "ex": "We plan to go to the park tomorrow.",
-     "tr": "우리는 내일 공원에 갈 계획이에요.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "계획"
-    }
-   ],
-   "syn": [
-    "arrange",
-    "prepare"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "clothes",
-   "ipa": "/kloʊðz/",
+   "en": "alarm clock",
+   "ipa": "/əˈlɑːrm klɒk/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "옷, 의류",
-     "ex": "I put on clean clothes every day.",
-     "tr": "나는 매일 깨끗한 옷을 입어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "clothing",
-    "outfit"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "shirt",
-   "ipa": "/ʃɜrt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "셔츠",
-     "ex": "He is wearing a white shirt.",
-     "tr": "그는 흰 셔츠를 입고 있어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "top",
-    "blouse"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "pants",
-   "ipa": "/pænts/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "바지",
-     "ex": "These pants are too long for me.",
-     "tr": "이 바지는 나에게 너무 길어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "trousers"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "dress",
-   "ipa": "/drɛs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "드레스, 원피스",
-     "ex": "She wears a pink dress today.",
-     "tr": "그녀는 오늘 분홍색 원피스를 입었어요.",
-     "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "옷을 입다"
-    }
-   ],
-   "syn": [
-    "gown",
-    "frock"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "skirt",
-   "ipa": "/skɜrt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "치마",
-     "ex": "My sister has a blue skirt.",
-     "tr": "내 여동생은 파란색 치마가 있어요.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "jacket",
-   "ipa": "/ˈdʒækɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재킷",
-     "ex": "Put on your jacket. It is cold.",
-     "tr": "재킷을 입어. 추워.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "coat"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "coat",
-   "ipa": "/koʊt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "코트",
-     "ex": "She wears a long coat in winter.",
-     "tr": "그녀는 겨울에 긴 코트를 입어요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "jacket",
-    "overcoat"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "shoes",
-   "ipa": "/ʃuːz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "신발",
-     "ex": "I wear my new shoes to school.",
-     "tr": "나는 학교에 새 신발을 신고 가요.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "footwear"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "boots",
-   "ipa": "/buːts/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "부츠",
-     "ex": "She wears boots on rainy days.",
-     "tr": "그녀는 비 오는 날에 부츠를 신어요.",
+     "ko": "알람시계",
+     "ex": "My alarm clock wakes me up early.",
+     "tr": "알람시계가 나를 일찍 깨운다.",
      "src": ""
     }
    ],

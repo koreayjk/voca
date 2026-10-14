@@ -4,20 +4,51 @@
  "day": 4,
  "words": [
   {
-   "en": "calendar",
-   "ipa": "/ˈkæl.ɪn.dər/",
+   "en": "cold",
+   "ipa": "/koʊld/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "달력",
-     "ex": "I check the calendar every morning.",
-     "tr": "나는 매일 아침 달력을 확인한다.",
+     "ko": "감기",
+     "ex": "I have a bad cold this week.",
+     "tr": "나는 이번 주에 심한 감기에 걸렸다.",
+     "src": ""
+    },
+    {
+     "pos": "adj",
+     "ko": "차가운, 추운"
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "tired",
+   "ipa": "/ˈtaɪərd/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "피곤한",
+     "ex": "I am tired after school.",
+     "tr": "나는 학교 수업 후에 피곤하다.",
      "src": ""
     }
    ],
    "syn": [
-    "planner"
+    "sleepy",
+    "weary"
    ],
    "deriv": [],
    "roots": [],
@@ -32,76 +63,318 @@
    }
   },
   {
-   "en": "key",
-   "ipa": "/kiː/",
+   "en": "rest",
+   "ipa": "/rɛst/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "쉬다",
+     "ex": "You need to rest today.",
+     "tr": "너는 오늘 쉬어야 한다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "휴식"
+    }
+   ],
+   "syn": [
+    "relax"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "sleep",
+   "ipa": "/sliːp/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "자다, 잠자다",
+     "ex": "I sleep eight hours every night.",
+     "tr": "나는 매일 밤 여덟 시간 잔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "rest",
+    "nap"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "doctor",
+   "ipa": "/ˈdɑːktər/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "열쇠",
+     "ko": "의사",
+     "ex": "The doctor told me to rest.",
+     "tr": "의사는 나에게 쉬라고 했다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "nurse",
+   "ipa": "/nɜːrs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "간호사",
+     "ex": "The nurse helped the sick child.",
+     "tr": "간호사는 아픈 아이를 도왔다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "hospital",
+   "ipa": "/ˈhɑːspɪtl/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "병원",
+     "ex": "My dad went to the hospital.",
+     "tr": "우리 아빠가 병원에 갔다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "clinic"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "medicine",
+   "ipa": "/ˈmɛdɪsɪn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "약, 의학",
+     "ex": "Take this medicine after meals.",
+     "tr": "이 약을 식후에 드세요.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "drug"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "exercise",
+   "ipa": "/ˈɛksərsaɪz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "운동",
+     "ex": "Daily exercise is good for health.",
+     "tr": "매일 운동하는 것은 건강에 좋다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "운동하다"
+    }
+   ],
+   "syn": [
+    "workout"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "look",
+   "ipa": "/lʊk/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "보다, ~처럼 보이다",
+     "ex": "Look at that tall tree!",
+     "tr": "저 큰 나무를 봐!",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "~처럼 보이다"
+    }
+   ],
+   "syn": [
+    "see",
+    "watch"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "straight",
+   "ipa": "/streɪt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "곧은, 직모의",
+     "ex": "She has long, straight hair.",
+     "tr": "그녀는 길고 직모인 머리카락을 가지고 있다.",
+     "src": ""
+    },
+    {
+     "pos": "adv",
+     "ko": "곧장"
+    }
+   ],
+   "syn": [
+    "direct"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "glasses",
+   "ipa": "/ˈɡlæsɪz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "안경",
+     "ex": "I need glasses to read books.",
+     "tr": "나는 책을 읽을 때 안경이 필요하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "spectacles"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "lose",
+   "ipa": "/luːz/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "잃다, (체중이) 줄다",
      "ex": "I lost my key at school.",
      "tr": "나는 학교에서 열쇠를 잃어버렸다.",
      "src": ""
     },
     {
-     "pos": "adj",
-     "ko": "중요한"
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "bell",
-   "ipa": "/bɛl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "초인종, 종",
-     "ex": "The bell rang at eight o'clock.",
-     "tr": "종이 8시에 울렸다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "food",
-   "ipa": "/fuːd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "음식",
-     "ex": "This food smells very good.",
-     "tr": "이 음식은 냄새가 아주 좋다.",
-     "src": ""
+     "pos": "v",
+     "ko": "지다, 패하다"
     }
    ],
    "syn": [
-    "meal"
+    "miss"
    ],
    "deriv": [],
    "roots": [],
@@ -116,20 +389,25 @@
    }
   },
   {
-   "en": "eat",
-   "ipa": "/iːt/",
+   "en": "break",
+   "ipa": "/breɪk/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "먹다",
-     "ex": "I eat rice for lunch every day.",
-     "tr": "나는 매일 점심으로 밥을 먹는다.",
+     "ko": "부러지다, 부러뜨리다",
+     "ex": "Do not break the window.",
+     "tr": "창문을 깨지 마라.",
      "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "휴식 시간"
     }
    ],
    "syn": [
-    "have"
+    "crack",
+    "snap"
    ],
    "deriv": [],
    "roots": [],
@@ -144,76 +422,79 @@
    }
   },
   {
-   "en": "drink",
-   "ipa": "/drɪŋk/",
+   "en": "cut",
+   "ipa": "/kʌt/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "베인 상처",
+     "ex": "He has a small cut on his hand.",
+     "tr": "그는 손에 작은 베인 상처가 있다.",
+     "src": ""
+    },
+    {
+     "pos": "v",
+     "ko": "자르다, 베다"
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "wash",
+   "ipa": "/wɑːʃ/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "마시다",
-     "ex": "She drinks milk every morning.",
-     "tr": "그녀는 매일 아침 우유를 마신다.",
+     "ko": "씻다",
+     "ex": "Wash your hands with soap.",
+     "tr": "비누로 손을 씻어라.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "clean",
+    "rinse"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "brush",
+   "ipa": "/brʌʃ/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "닦다, 빗다",
+     "ex": "Brush your teeth before bed.",
+     "tr": "자기 전에 이를 닦아라.",
      "src": ""
     },
     {
      "pos": "n",
-     "ko": "음료"
-    }
-   ],
-   "syn": [
-    "sip"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "meal",
-   "ipa": "/miːl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "식사",
-     "ex": "We eat three meals a day.",
-     "tr": "우리는 하루에 세 끼 식사를 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "food"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "breakfast",
-   "ipa": "/ˈbrɛk.fəst/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "아침 식사",
-     "ex": "I eat breakfast at seven o'clock.",
-     "tr": "나는 7시에 아침 식사를 한다.",
-     "src": ""
+     "ko": "솔, 브러시"
     }
    ],
    "syn": [],
@@ -230,835 +511,86 @@
    }
   },
   {
-   "en": "lunch",
-   "ipa": "/lʌntʃ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "점심 식사",
-     "ex": "We have lunch at school together.",
-     "tr": "우리는 학교에서 함께 점심을 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "dinner",
-   "ipa": "/ˈdɪn.ər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "저녁 식사",
-     "ex": "My family eats dinner at six.",
-     "tr": "우리 가족은 6시에 저녁 식사를 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "supper"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "milk",
-   "ipa": "/mɪlk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "우유",
-     "ex": "I drink a glass of milk daily.",
-     "tr": "나는 매일 우유 한 잔을 마신다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "juice",
-   "ipa": "/dʒuːs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "주스",
-     "ex": "She drinks orange juice for breakfast.",
-     "tr": "그녀는 아침에 오렌지 주스를 마신다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tea",
-   "ipa": "/tiː/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "차",
-     "ex": "My mom drinks hot tea every evening.",
-     "tr": "우리 엄마는 매일 저녁 뜨거운 차를 마신다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "coffee",
-   "ipa": "/ˈkɔː.fi/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "커피",
-     "ex": "Dad drinks coffee in the morning.",
-     "tr": "아빠는 아침에 커피를 마신다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "rice",
-   "ipa": "/raɪs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "쌀, 밥",
-     "ex": "I eat rice with soup for lunch.",
-     "tr": "나는 점심에 국과 함께 밥을 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "bread",
-   "ipa": "/brɛd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "빵",
-     "ex": "I eat bread and butter for breakfast.",
-     "tr": "나는 아침에 빵과 버터를 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "egg",
-   "ipa": "/ɛɡ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "달걀",
-     "ex": "She eats one egg every morning.",
-     "tr": "그녀는 매일 아침 달걀 하나를 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "meat",
-   "ipa": "/miːt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "고기",
-     "ex": "We cook meat for dinner tonight.",
-     "tr": "우리는 오늘 저녁에 고기를 요리한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "fish",
-   "ipa": "/fɪʃ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "생선",
-     "ex": "My dad cooks fish on Fridays.",
-     "tr": "우리 아빠는 금요일마다 생선을 요리한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "chicken",
-   "ipa": "/ˈtʃɪk.ɪn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "닭고기",
-     "ex": "I love fried chicken very much.",
-     "tr": "나는 튀긴 닭고기를 매우 좋아한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "apple",
-   "ipa": "/ˈæp.əl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "사과",
-     "ex": "I eat an apple after school.",
-     "tr": "나는 방과 후에 사과를 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "banana",
-   "ipa": "/bəˈnæn.ə/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "바나나",
-     "ex": "He eats a banana every morning.",
-     "tr": "그는 매일 아침 바나나를 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "orange",
-   "ipa": "/ˈɔːr.ɪndʒ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "오렌지",
-     "ex": "This orange is very sweet and fresh.",
-     "tr": "이 오렌지는 매우 달콤하고 신선하다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "potato",
-   "ipa": "/pəˈteɪ.toʊ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "감자",
-     "ex": "Mom boiled potatoes for dinner.",
-     "tr": "엄마는 저녁 식사를 위해 감자를 삶았다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tomato",
-   "ipa": "/təˈmeɪ.toʊ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "토마토",
-     "ex": "I put a tomato in my salad.",
-     "tr": "나는 샐러드에 토마토를 넣는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "carrot",
-   "ipa": "/ˈkær.ət/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "당근",
-     "ex": "Rabbits like to eat carrots a lot.",
-     "tr": "토끼는 당근을 매우 좋아한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "cake",
-   "ipa": "/keɪk/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "케이크",
-     "ex": "We eat cake on my birthday.",
-     "tr": "우리는 내 생일에 케이크를 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "pizza",
-   "ipa": "/ˈpiːt.sə/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "피자",
-     "ex": "We order pizza on weekends.",
-     "tr": "우리는 주말에 피자를 주문한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "soup",
-   "ipa": "/suːp/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "수프",
-     "ex": "This soup is warm and tasty.",
-     "tr": "이 수프는 따뜻하고 맛있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "salad",
-   "ipa": "/ˈsæl.əd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "샐러드",
-     "ex": "I make a salad with tomatoes.",
-     "tr": "나는 토마토로 샐러드를 만든다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sandwich",
-   "ipa": "/ˈsænd.wɪtʃ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "샌드위치",
-     "ex": "I eat a sandwich for lunch.",
-     "tr": "나는 점심으로 샌드위치를 먹는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sugar",
-   "ipa": "/ˈʃʊɡ.ər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "설탕",
-     "ex": "I put sugar in my tea.",
-     "tr": "나는 차에 설탕을 넣는다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "salt",
-   "ipa": "/sɔːlt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "소금",
-     "ex": "Add a little salt to the soup.",
-     "tr": "수프에 소금을 조금 넣어라.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "butter",
-   "ipa": "/ˈbʌt.ər/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "버터",
-     "ex": "I spread butter on my bread.",
-     "tr": "나는 빵에 버터를 바른다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "cheese",
-   "ipa": "/tʃiːz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "치즈",
-     "ex": "I put cheese on my sandwich.",
-     "tr": "나는 샌드위치에 치즈를 올린다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "hungry",
-   "ipa": "/ˈhʌŋ.ɡri/",
+   "en": "clean",
+   "ipa": "/kliːn/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "배고픈",
-     "ex": "I am very hungry after school.",
-     "tr": "나는 방과 후에 매우 배고프다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "thirsty",
-   "ipa": "/ˈθɜːr.sti/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "목마른",
-     "ex": "I am thirsty after playing outside.",
-     "tr": "나는 밖에서 놀고 나서 목이 마르다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "delicious",
-   "ipa": "/dɪˈlɪʃ.əs/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "맛있는",
-     "ex": "This cake is very delicious.",
-     "tr": "이 케이크는 매우 맛있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "tasty",
-    "yummy"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "sweet",
-   "ipa": "/swiːt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "달콤한",
-     "ex": "This orange juice is sweet.",
-     "tr": "이 오렌지 주스는 달콤하다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "A1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "hot",
-   "ipa": "/hɑːt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "뜨거운",
-     "ex": "Be careful, the soup is hot.",
-     "tr": "조심해, 수프가 뜨겁다.",
+     "ko": "깨끗한",
+     "ex": "Keep your room clean every day.",
+     "tr": "매일 방을 깨끗하게 유지해라.",
      "src": ""
     },
     {
-     "pos": "adj",
-     "ko": "매운"
+     "pos": "v",
+     "ko": "청소하다"
     }
    ],
    "syn": [
-    "warm"
+    "neat",
+    "tidy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "dirty",
+   "ipa": "/ˈdɜːrti/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "더러운",
+     "ex": "My shoes are dirty after the rain.",
+     "tr": "비가 온 뒤에 내 신발이 더러워졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "messy",
+    "muddy"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "smell",
+   "ipa": "/smɛl/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "냄새가 나다",
+     "ex": "The flowers smell very nice.",
+     "tr": "꽃들이 매우 좋은 냄새가 난다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "냄새"
+    }
+   ],
+   "syn": [
+    "scent"
    ],
    "deriv": [],
    "roots": [],

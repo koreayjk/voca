@@ -4,21 +4,21 @@
  "day": 19,
  "words": [
   {
-   "en": "navigation",
-   "ipa": "/ˌnævɪˈɡeɪʃən/",
+   "en": "relationship",
+   "ipa": "/rɪˈleɪʃənʃɪp/",
    "pos": "n",
    "meanings": [
     {
      "pos": "n",
-     "ko": "내비게이션, 항법",
-     "ex": "The driver used navigation on his phone to find the hotel.",
-     "tr": "운전자는 호텔을 찾기 위해 휴대폰의 내비게이션을 사용했다.",
+     "ko": "관계",
+     "ex": "She has a close relationship with her younger sister.",
+     "tr": "그녀는 여동생과 가까운 관계를 맺고 있다.",
      "src": ""
     }
    ],
    "syn": [
-    "guidance",
-    "directions"
+    "connection",
+    "bond"
    ],
    "deriv": [],
    "roots": [],
@@ -33,21 +33,53 @@
    }
   },
   {
-   "en": "commute",
-   "ipa": "/kəˈmjuːt/",
+   "en": "divorce",
+   "ipa": "/dɪˈvɔːrs/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "이혼",
+     "ex": "The divorce was hard for the whole family to accept.",
+     "tr": "이혼은 온 가족이 받아들이기 어려운 일이었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "separation"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "support",
+   "ipa": "/səˈpɔːrt/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "통근하다",
-     "ex": "My mom commutes to work by subway every morning.",
-     "tr": "엄마는 매일 아침 지하철로 통근한다.",
+     "ko": "지지하다, 돕다",
+     "ex": "My parents always support me when I face difficulties.",
+     "tr": "부모님은 내가 어려움에 처할 때 항상 나를 지지해 주신다.",
      "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "지원, 도움"
     }
    ],
    "syn": [
-    "travel",
-    "journey"
+    "help",
+    "back"
    ],
    "deriv": [],
    "roots": [],
@@ -62,21 +94,21 @@
    }
   },
   {
-   "en": "commuter",
-   "ipa": "/kəˈmjuːtər/",
-   "pos": "n",
+   "en": "describe",
+   "ipa": "/dɪˈskraɪb/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "통근자",
-     "ex": "The train was full of commuters heading to the city.",
-     "tr": "기차는 도시로 향하는 통근자들로 가득 찼다.",
+     "pos": "v",
+     "ko": "묘사하다, 설명하다",
+     "ex": "Can you describe what the thief looked like to the police?",
+     "tr": "경찰에게 도둑이 어떻게 생겼는지 묘사해 줄 수 있나요?",
      "src": ""
     }
    ],
    "syn": [
-    "traveler",
-    "passenger"
+    "explain",
+    "depict"
    ],
    "deriv": [],
    "roots": [],
@@ -91,21 +123,21 @@
    }
   },
   {
-   "en": "rush hour",
-   "ipa": "/ˈrʌʃ ˌaʊər/",
-   "pos": "n",
+   "en": "argue",
+   "ipa": "/ˈɑːrɡjuː/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "러시아워, 출퇴근 혼잡 시간",
-     "ex": "Traffic is very heavy during rush hour in the morning.",
-     "tr": "아침 러시아워 동안에는 교통이 매우 혼잡하다.",
+     "pos": "v",
+     "ko": "다투다, 말다툼하다",
+     "ex": "The two brothers often argue about which TV show to watch.",
+     "tr": "두 형제는 어떤 TV 프로그램을 볼지 자주 다툰다.",
      "src": ""
     }
    ],
    "syn": [
-    "peak hour",
-    "busy hour"
+    "quarrel",
+    "fight"
    ],
    "deriv": [],
    "roots": [],
@@ -120,20 +152,21 @@
    }
   },
   {
-   "en": "speed limit",
-   "ipa": "/ˈspiːd ˌlɪmɪt/",
-   "pos": "n",
+   "en": "forgive",
+   "ipa": "/fərˈɡɪv/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "제한 속도",
-     "ex": "Drivers must follow the speed limit on every road.",
-     "tr": "운전자들은 모든 도로에서 제한 속도를 지켜야 한다.",
+     "pos": "v",
+     "ko": "용서하다",
+     "ex": "She decided to forgive her friend for breaking her promise.",
+     "tr": "그녀는 약속을 어긴 친구를 용서하기로 결심했다.",
      "src": ""
     }
    ],
    "syn": [
-    "maximum speed"
+    "pardon",
+    "excuse"
    ],
    "deriv": [],
    "roots": [],
@@ -148,25 +181,54 @@
    }
   },
   {
-   "en": "permit",
-   "ipa": "/ˈpɜːrmɪt/",
-   "pos": "n",
+   "en": "protect",
+   "ipa": "/prəˈtɛkt/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "허가증",
-     "ex": "You need a permit to park in this area.",
-     "tr": "이 구역에 주차하려면 허가증이 필요하다.",
+     "pos": "v",
+     "ko": "보호하다, 지키다",
+     "ex": "We should protect wild animals from losing their homes.",
+     "tr": "우리는 야생 동물들이 서식지를 잃지 않도록 보호해야 한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "guard",
+    "keep safe"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "adopt",
+   "ipa": "/əˈdɑːpt/",
+   "pos": "v",
+   "meanings": [
+    {
+     "pos": "v",
+     "ko": "입양하다",
+     "ex": "The couple decided to adopt a child from the orphanage.",
+     "tr": "그 부부는 고아원에서 아이를 입양하기로 결심했다.",
      "src": ""
     },
     {
      "pos": "v",
-     "ko": "허락하다"
+     "ko": "(방법·습관을) 받아들이다"
     }
    ],
    "syn": [
-    "pass",
-    "license"
+    "take in",
+    "accept"
    ],
    "deriv": [],
    "roots": [],
@@ -181,600 +243,21 @@
    }
   },
   {
-   "en": "license",
-   "ipa": "/ˈlaɪsəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "면허증, 자격증",
-     "ex": "She studied hard and passed her driving license test.",
-     "tr": "그녀는 열심히 공부해서 운전면허 시험을 통과했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "permit",
-    "certificate"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "insurance",
-   "ipa": "/ɪnˈʃʊərəns/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "보험",
-     "ex": "My parents bought travel insurance before our trip abroad.",
-     "tr": "부모님은 해외여행 전에 여행 보험을 들었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "coverage",
-    "protection"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "rental",
-   "ipa": "/ˈrɛntəl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "렌탈, 임대",
-     "ex": "We picked up a rental car at the airport.",
-     "tr": "우리는 공항에서 렌터카를 빌렸다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "hire",
-    "lease"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "shuttle",
-   "ipa": "/ˈʃʌtəl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "셔틀버스, 왕복 교통편",
-     "ex": "A free shuttle runs between the hotel and the airport.",
-     "tr": "호텔과 공항 사이에 무료 셔틀버스가 운행된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "bus",
-    "transport"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "frost",
-   "ipa": "/frɔːst/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "서리",
-     "ex": "There was frost on the grass early this morning.",
-     "tr": "오늘 아침 일찍 잔디에 서리가 내려 있었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "ice",
-    "freeze"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "cliff",
-   "ipa": "/klɪf/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "절벽",
-     "ex": "We stood at the edge of the cliff and looked at the sea below.",
-     "tr": "우리는 절벽 끝에 서서 아래의 바다를 바라보았다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "bluff",
-    "rock face"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "swamp",
-   "ipa": "/swɑːmp/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "늪",
-     "ex": "Many frogs and insects live in the swamp near the river.",
-     "tr": "강 근처 늪에는 많은 개구리와 곤충이 산다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "marsh",
-    "bog"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "drought",
-   "ipa": "/draʊt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "가뭄",
-     "ex": "The long drought caused farmers to lose many of their crops.",
-     "tr": "긴 가뭄으로 농부들이 많은 농작물을 잃었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "dry spell",
-    "dry period"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "climate",
-   "ipa": "/ˈklaɪmɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "기후",
-     "ex": "This country has a warm climate throughout the year.",
-     "tr": "이 나라는 연중 따뜻한 기후를 가지고 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "weather pattern",
-    "environment"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "pollution",
-   "ipa": "/pəˈluːʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "오염",
-     "ex": "Air pollution from cars affects people's health in big cities.",
-     "tr": "자동차로 인한 대기 오염은 대도시 사람들의 건강에 영향을 미친다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "contamination",
-    "dirt"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "ash",
-   "ipa": "/æʃ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재",
-     "ex": "After the campfire, only ash was left on the ground.",
-     "tr": "모닥불이 꺼진 후 땅 위에는 재만 남았다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "cinder",
-    "embers"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tide",
-   "ipa": "/taɪd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "조수, 조류",
-     "ex": "The tide comes in and covers the rocks on the beach.",
-     "tr": "조수가 들어오면 해변의 바위들이 덮인다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "current",
-    "flow"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "weed",
-   "ipa": "/wiːd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "잡초",
-     "ex": "My grandfather spent the afternoon pulling weeds from the garden.",
-     "tr": "할아버지는 오후에 정원에서 잡초를 뽑으며 시간을 보냈다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "wild plant"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "habitat",
-   "ipa": "/ˈhæbɪtæt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "서식지",
-     "ex": "Cutting down forests destroys the habitat of many animals.",
-     "tr": "숲을 벌채하면 많은 동물들의 서식지가 파괴된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "environment",
-    "home"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "species",
-   "ipa": "/ˈspiːʃiːz/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "종(생물)",
-     "ex": "Scientists discovered a new species of fish in the deep ocean.",
-     "tr": "과학자들은 심해에서 새로운 어류 종을 발견했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "type",
-    "kind"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "steep",
-   "ipa": "/stiːp/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "가파른",
-     "ex": "The path up the mountain was very steep and hard to climb.",
-     "tr": "산을 오르는 길은 매우 가파르고 오르기 어려웠다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "sharp",
-    "sharp-angled"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "extinct",
-   "ipa": "/ɪkˈstɪŋkt/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "멸종된",
-     "ex": "Dinosaurs became extinct millions of years ago.",
-     "tr": "공룡은 수백만 년 전에 멸종했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "gone",
-    "died out"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "endangered",
-   "ipa": "/ɪnˈdeɪndʒərd/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "멸종 위기의",
-     "ex": "Tigers are an endangered species that need our protection.",
-     "tr": "호랑이는 우리의 보호가 필요한 멸종 위기 종이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "threatened",
-    "at risk"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "tropical",
-   "ipa": "/ˈtrɒpɪkəl/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "열대의",
-     "ex": "Parrots live in tropical forests where it is warm and wet.",
-     "tr": "앵무새는 따뜻하고 습한 열대 숲에 서식한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "warm",
-    "hot"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "polar",
-   "ipa": "/ˈpoʊlər/",
-   "pos": "adj",
-   "meanings": [
-    {
-     "pos": "adj",
-     "ko": "극지방의",
-     "ex": "Polar bears are well adapted to living in freezing conditions.",
-     "tr": "북극곰은 영하의 환경에서 사는 데 잘 적응되어 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "arctic",
-    "freezing"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "bloom",
-   "ipa": "/bluːm/",
+   "en": "belong",
+   "ipa": "/bɪˈlɔːŋ/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "꽃이 피다",
-     "ex": "Cherry trees bloom beautifully every spring in the park.",
-     "tr": "벚나무는 매년 봄 공원에서 아름답게 꽃을 피운다.",
+     "ko": "속하다, ~의 것이다",
+     "ex": "This jacket belongs to my older brother, not me.",
+     "tr": "이 재킷은 내 것이 아니라 오빠 것이다.",
      "src": ""
     }
    ],
    "syn": [
-    "blossom",
-    "flower"
+    "be part of",
+    "fit"
    ],
    "deriv": [],
    "roots": [],
@@ -789,354 +272,320 @@
    }
   },
   {
-   "en": "migrate",
-   "ipa": "/ˈmaɪɡreɪt/",
-   "pos": "v",
+   "en": "intelligent",
+   "ipa": "/ɪnˈtɛlɪdʒənt/",
+   "pos": "adj",
    "meanings": [
+    {
+     "pos": "adj",
+     "ko": "지능이 높은, 똑똑한",
+     "ex": "She is intelligent enough to solve difficult math problems.",
+     "tr": "그녀는 어려운 수학 문제를 풀 만큼 충분히 똑똑하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "smart",
+    "clever"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "outgoing",
+   "ipa": "/ˈaʊtˌɡoʊɪŋ/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "외향적인, 사교적인",
+     "ex": "My new classmate is very outgoing and makes friends easily.",
+     "tr": "우리 새 반 친구는 매우 외향적이어서 쉽게 친구를 사귄다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sociable",
+    "friendly"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "generous",
+   "ipa": "/ˈdʒɛnərəs/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "관대한, 너그러운",
+     "ex": "He is generous and always shares his snacks with others.",
+     "tr": "그는 관대해서 항상 자신의 간식을 다른 사람들과 나눈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "kind",
+    "giving"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "selfish",
+   "ipa": "/ˈsɛlfɪʃ/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "이기적인",
+     "ex": "It was selfish of him to eat all the pizza without sharing.",
+     "tr": "피자를 나누지 않고 다 먹은 것은 이기적인 행동이었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "greedy",
+    "self-centered"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "sensitive",
+   "ipa": "/ˈsɛnsɪtɪv/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "민감한, 감수성이 강한",
+     "ex": "She is sensitive to criticism and gets upset easily.",
+     "tr": "그녀는 비판에 민감하게 반응해서 쉽게 속상해한다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "emotional",
+    "tender"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "confident",
+   "ipa": "/ˈkɑːnfɪdənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "자신감 있는",
+     "ex": "She felt confident before giving her speech on stage.",
+     "tr": "그녀는 무대에서 발표하기 전에 자신감을 느꼈다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "self-assured",
+    "bold"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "patient",
+   "ipa": "/ˈpeɪʃənt/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "참을성 있는, 인내심 강한",
+     "ex": "A good teacher is patient when students don't understand.",
+     "tr": "좋은 선생님은 학생이 이해하지 못할 때 인내심을 갖는다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "환자"
+    }
+   ],
+   "syn": [
+    "calm",
+    "tolerant"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "familiar",
+   "ipa": "/fəˈmɪliər/",
+   "pos": "adj",
+   "meanings": [
+    {
+     "pos": "adj",
+     "ko": "친숙한, 익숙한",
+     "ex": "That song sounds familiar because I heard it last week.",
+     "tr": "그 노래는 지난주에 들었기 때문에 친숙하게 들린다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "known",
+    "recognizable"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ability",
+   "ipa": "/əˈbɪləti/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "능력, 재능",
+     "ex": "She has the ability to speak three languages fluently.",
+     "tr": "그녀는 세 가지 언어를 유창하게 구사할 수 있는 능력이 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "skill",
+    "talent"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "opinion",
+   "ipa": "/əˈpɪnjən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "의견, 생각",
+     "ex": "In my opinion, this book is better than the movie.",
+     "tr": "내 생각에는 이 책이 영화보다 더 낫다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "view",
+    "thought"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "B1",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "value",
+   "ipa": "/ˈvæljuː/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "가치",
+     "ex": "Honesty is a value that my family teaches me every day.",
+     "tr": "정직함은 우리 가족이 매일 내게 가르쳐 주는 가치이다.",
+     "src": ""
+    },
     {
      "pos": "v",
-     "ko": "이동하다, 이주하다",
-     "ex": "Many birds migrate south to escape the cold winter.",
-     "tr": "많은 새들이 추운 겨울을 피해 남쪽으로 이동한다.",
-     "src": ""
+     "ko": "소중히 여기다"
     }
    ],
    "syn": [
-    "move",
-    "travel"
+    "worth",
+    "importance"
    ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "pollute",
-   "ipa": "/pəˈluːt/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "오염시키다",
-     "ex": "Factories can pollute rivers if they dump waste into the water.",
-     "tr": "공장들이 폐수를 강에 버리면 강을 오염시킬 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "contaminate",
-    "dirty"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "survive",
-   "ipa": "/sərˈvaɪv/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "살아남다",
-     "ex": "Some animals can survive in very cold and dry places.",
-     "tr": "일부 동물들은 매우 춥고 건조한 곳에서도 살아남을 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "live",
-    "endure"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "worldwide",
-   "ipa": "/ˈwɜːrldˌwaɪd/",
-   "pos": "adv",
-   "meanings": [
-    {
-     "pos": "adv",
-     "ko": "전 세계적으로",
-     "ex": "This song became popular worldwide after it was uploaded online.",
-     "tr": "이 노래는 온라인에 업로드된 후 전 세계적으로 인기를 얻었다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "globally",
-    "internationally"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "thorn",
-   "ipa": "/θɔːrn/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "가시",
-     "ex": "She pricked her finger on a thorn while picking roses.",
-     "tr": "그녀는 장미를 꺾다가 가시에 손가락을 찔렸다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "spike",
-    "prickle"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "greenhouse",
-   "ipa": "/ˈɡriːnˌhaʊs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "온실",
-     "ex": "My grandmother grows tomatoes and herbs in her greenhouse.",
-     "tr": "할머니는 온실에서 토마토와 허브를 키운다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "glasshouse",
-    "hothouse"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "oxygen",
-   "ipa": "/ˈɒksɪdʒən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "산소",
-     "ex": "Trees produce oxygen, which all living things need to breathe.",
-     "tr": "나무는 모든 생물이 호흡하는 데 필요한 산소를 만들어 낸다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "air",
-    "O2"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "carbon dioxide",
-   "ipa": "/ˈkɑːrbən daɪˈɒksaɪd/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "이산화탄소",
-     "ex": "Plants absorb carbon dioxide and release oxygen during photosynthesis.",
-     "tr": "식물은 광합성 중에 이산화탄소를 흡수하고 산소를 방출한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "ecosystem",
-   "ipa": "/ˈiːkoʊˌsɪstəm/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "생태계",
-     "ex": "A forest ecosystem includes trees, animals, and soil organisms.",
-     "tr": "숲 생태계는 나무, 동물, 그리고 토양 생물을 포함한다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "wildlife",
-   "ipa": "/ˈwaɪldlaɪf/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "야생 생물",
-     "ex": "The national park protects a wide variety of wildlife.",
-     "tr": "그 국립공원은 매우 다양한 야생 생물을 보호한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "fauna"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "mammal",
-   "ipa": "/ˈmæməl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "포유류",
-     "ex": "A whale is the largest mammal that lives in the ocean.",
-     "tr": "고래는 바다에 사는 가장 큰 포유류이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "reptile",
-   "ipa": "/ˈreptaɪl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "파충류",
-     "ex": "A snake is a reptile that has no legs.",
-     "tr": "뱀은 다리가 없는 파충류이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "amphibian",
-   "ipa": "/æmˈfɪbiən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "양서류",
-     "ex": "A frog is an amphibian that can live both in water and on land.",
-     "tr": "개구리는 물과 육지 모두에서 살 수 있는 양서류이다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
    "deriv": [],
    "roots": [],
    "etymHint": "",
