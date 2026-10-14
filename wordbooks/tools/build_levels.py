@@ -28,17 +28,15 @@ GO = "--go" in sys.argv
 SRC = ['mid1', 'mid2', 'mid3', 'basic', 'core', 'hard']
 LVRANK = {'A1':0, 'A2':1, 'B1':2, 'B2':3, 'C1':4, 'C2':5}
 
-# (prefix, 제목, 코드, 단어 수, 하루 분량)
-# 하루 분량이 권마다 다르다 — 입문~기본 단계에서 하루 40개는 외우다 지친다.
-# Lv.3 까지는 20개로 두고, 어휘에 익숙해지는 Lv.4 부터 40개로 올린다.
-BOOKS = [
-    ('lv1', 'Lv.1 입문',   'IMV-L1', 800,  20),
-    ('lv2', 'Lv.2 기초',   'IMV-L2', 800,  20),
-    ('lv3', 'Lv.3 기본',   'IMV-L3', 800,  20),
-    ('lv4', 'Lv.4 중급',   'IMV-L4', 800,  40),
-    ('lv5', 'Lv.5 상급',   'IMV-L5', 800,  40),
-    ('lv6', 'Lv.6 최상급', 'IMV-L6', None, 40),   # None = 나머지 전부
-]
+# 12권 · 전부 20일 · 하루 20개.
+#   권마다 길이가 같아야 학원에서 '한 권 = 한 달' 로 반을 짤 수 있다.
+#   그래서 권수를 먼저 정하고 단어를 고르게 나눈다 — 4,740 / 12 = 395.
+#   395 는 20 으로 나누어떨어지지 않아 각 권의 마지막 Day 만 15개가 된다.
+#   (한 권을 마무리하는 날이 가벼워지는 셈이라 오히려 낫다)
+#   하루 20개로 고정한 이유: 빠른 학생은 하루 2페이지를 하면 되지만,
+#   40개짜리 페이지는 20개로 쪼갤 수가 없다. 작은 쪽이 언제나 더 유연하다.
+N_BOOKS = 12
+PER_DAY = 20
 
 # 단어가 아니라 고유명사다. 기출 지문에서 뽑히면서 섞여 들어왔다.
 # (bach=작곡가, burke/peterson/robinson=사람 이름) 재편하는 김에 뺀다.
@@ -72,33 +70,33 @@ def load_all():
 def main():
     rows, dup = load_all()
     total = len(rows)
-    # 마지막 권은 나머지 전부
-    sizes = [b[3] for b in BOOKS]
-    fixed = sum(s for s in sizes if s)
-    sizes = [s if s else total - fixed for s in sizes]
-    assert sum(sizes) == total, (sum(sizes), total)
-    perday = [b[4] for b in BOOKS]
+
+    # 권당 단어 수를 고르게 — 나머지는 앞 권부터 한 개씩 더 준다
+    base, rem = divmod(total, N_BOOKS)
+    sizes = [base + (1 if i < rem else 0) for i in range(N_BOOKS)]
+    assert sum(sizes) == total
 
     print(f'원본 6권 합계 {total + dup:,}개 → 중복 {dup:,}개 제거 → 고유 {total:,}개\n')
-    print(f"{'권':<12}{'단어':>6}{'일':>5}{'하루':>5}   레벨 구성")
+    print(f"{'권':<8}{'단어':>6}{'일':>5}{'하루':>5}   레벨 구성")
     out, at, alldays = [], 0, 0
-    for (pre, title, code, _, pd), size in zip(BOOKS, sizes):
+    for i, size in enumerate(sizes, 1):
+        pre, title, code = f'lv{i}', f'Lv.{i}', f'IMV-L{i}'
         chunk = rows[at:at + size]; at += size
         c = collections.Counter(r['lv'] for r in chunk)
         comp = ' · '.join(f'{l} {c[l]}' for l in ['A1','A2','B1','B2','C1','C2'] if c[l])
-        days = -(-size // pd); alldays += days
-        print(f'{title:<12}{size:>6}{days:>5}일{pd:>5}개   {comp}')
+        days = -(-size // PER_DAY); alldays += days
+        print(f'{title:<8}{size:>6}{days:>5}일{PER_DAY:>5}개   {comp}')
         for d in range(days):
-            ws = [r['w'] for r in chunk[d*pd:(d+1)*pd]]
+            ws = [r['w'] for r in chunk[d*PER_DAY:(d+1)*PER_DAY]]
             out.append((f'suneung-{pre}-day{d+1}.json',
                         {'book': title, 'code': code, 'day': d+1,
                          'words': ws, 'exampleNote': NOTE}))
-    print(f"\n{'합계':<12}{total:>6}{alldays:>5}일")
+    print(f"\n{'합계':<8}{total:>6}{alldays:>5}일")
 
     # 검증 — 단어 유실·중복이 없어야 한다
     allw = [w['en'].lower().strip() for _, d in out for w in d['words']]
     assert len(allw) == total, (len(allw), total)
-    assert len(set(allw)) == total, '새 6권 안에 중복이 있다'
+    assert len(set(allw)) == total, '새 책들 안에 중복이 있다'
     print('검증: 유실 0 · 중복 0')
 
     if not GO:

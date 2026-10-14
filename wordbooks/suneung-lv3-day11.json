@@ -1,33 +1,29 @@
 {
- "book": "Lv.3 기본",
+ "book": "Lv.3",
  "code": "IMV-L3",
  "day": 11,
  "words": [
   {
-   "en": "crash",
-   "ipa": "/kræʃ/",
+   "en": "imagine",
+   "ipa": "/ɪˈmædʒɪn/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "(프로그램이) 충돌하다, 갑자기 멈추다",
-     "ex": "My computer crashed while I was writing a report.",
-     "tr": "보고서를 쓰는 도중에 컴퓨터가 충돌했다.",
+     "ko": "상상하다",
+     "ex": "Can you imagine living on the moon?",
+     "tr": "달에서 사는 것을 상상할 수 있니?",
      "src": ""
-    },
-    {
-     "pos": "v",
-     "ko": "부딪히다, 충돌하다"
     }
    ],
    "syn": [
-    "freeze",
-    "fail"
+    "picture",
+    "think of"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -37,75 +33,345 @@
    }
   },
   {
-   "en": "drag",
-   "ipa": "/dræɡ/",
+   "en": "imagination",
+   "ipa": "/ɪˌmædʒɪˈneɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "상상력",
+     "ex": "Children have a lot of imagination.",
+     "tr": "어린이들은 상상력이 풍부하다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "creativity"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ink",
+   "ipa": "/ɪŋk/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "잉크",
+     "ex": "The pen ran out of ink in the middle of the test.",
+     "tr": "시험 도중에 펜의 잉크가 다 떨어졌다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "cartoon",
+   "ipa": "/kɑːrˈtuːn/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "만화",
+     "ex": "My little brother watches cartoons after school.",
+     "tr": "내 남동생은 방과 후에 만화를 본다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "comic"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "animation",
+   "ipa": "/ˌænɪˈmeɪʃən/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "애니메이션",
+     "ex": "That animation movie is very popular with kids.",
+     "tr": "그 애니메이션 영화는 아이들에게 매우 인기가 있다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "cartoon"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "ending",
+   "ipa": "/ˈɛndɪŋ/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "결말",
+     "ex": "The ending of the movie made me cry.",
+     "tr": "그 영화의 결말은 나를 울게 만들었다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "conclusion",
+    "finish"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "comedy",
+   "ipa": "/ˈkɑːmədi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "코미디",
+     "ex": "We watched a funny comedy on TV last night.",
+     "tr": "우리는 어젯밤 TV에서 재미있는 코미디를 봤다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "drama",
+   "ipa": "/ˈdrɑːmə/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "드라마",
+     "ex": "My mom likes watching dramas after dinner.",
+     "tr": "엄마는 저녁 식사 후에 드라마를 즐겨 본다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "horror",
+   "ipa": "/ˈhɔːrər/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "공포(물)",
+     "ex": "I do not like horror movies because they are scary.",
+     "tr": "나는 공포 영화가 무서워서 좋아하지 않는다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "fantasy",
+   "ipa": "/ˈfæntəsi/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "판타지",
+     "ex": "He loves reading fantasy books about dragons.",
+     "tr": "그는 용이 나오는 판타지 책을 즐겨 읽는다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "romance",
+   "ipa": "/ˈroʊmæns/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "로맨스",
+     "ex": "That movie is a sweet romance between two students.",
+     "tr": "그 영화는 두 학생 사이의 달콤한 로맨스 이야기다.",
+     "src": ""
+    }
+   ],
+   "syn": [],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "volume",
+   "ipa": "/ˈvɑːljuːm/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "음량, 볼륨",
+     "ex": "Please turn down the volume. It is too loud.",
+     "tr": "볼륨을 줄여 주세요. 너무 시끄럽습니다.",
+     "src": ""
+    },
+    {
+     "pos": "n",
+     "ko": "(책의) 권"
+    }
+   ],
+   "syn": [
+    "loudness"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "noise",
+   "ipa": "/nɔɪz/",
+   "pos": "n",
+   "meanings": [
+    {
+     "pos": "n",
+     "ko": "소음, 잡음",
+     "ex": "There is too much noise outside my window.",
+     "tr": "창문 밖이 너무 시끄럽다.",
+     "src": ""
+    }
+   ],
+   "syn": [
+    "sound",
+    "racket"
+   ],
+   "deriv": [],
+   "roots": [],
+   "etymHint": "",
+   "level": "A2",
+   "exam": {
+    "tested": false,
+    "count": 0,
+    "exams": 0,
+    "recentYear": "",
+    "stars": 0
+   }
+  },
+  {
+   "en": "download",
+   "ipa": "/ˈdaʊnloʊd/",
    "pos": "v",
    "meanings": [
     {
      "pos": "v",
-     "ko": "끌다, 드래그하다",
-     "ex": "Drag the file into the folder to move it.",
-     "tr": "파일을 폴더로 드래그하여 이동시켜라.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "pull"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "resolution",
-   "ipa": "/ˌrezəˈluːʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "해상도",
-     "ex": "This monitor has a very high resolution, so images look sharp.",
-     "tr": "이 모니터는 해상도가 매우 높아서 이미지가 선명하게 보인다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "결심, 해결"
-    }
-   ],
-   "syn": [
-    "sharpness"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "pixel",
-   "ipa": "/ˈpɪksəl/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "픽셀(화면을 구성하는 최소 단위)",
-     "ex": "A photo with more pixels looks clearer on the screen.",
-     "tr": "픽셀이 많을수록 사진이 화면에서 더 선명하게 보인다.",
+     "ko": "다운로드하다",
+     "ex": "I downloaded the app on my phone this morning.",
+     "tr": "나는 오늘 아침 내 폰에 앱을 다운로드했다.",
      "src": ""
     }
    ],
@@ -113,7 +379,7 @@
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -123,73 +389,15 @@
    }
   },
   {
-   "en": "format",
-   "ipa": "/ˈfɔːrmæt/",
-   "pos": "n",
+   "en": "upload",
+   "ipa": "/ˈʌploʊd/",
+   "pos": "v",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "형식, 포맷",
-     "ex": "Please save the file in a PDF format for easy sharing.",
-     "tr": "파일을 쉽게 공유할 수 있도록 PDF 형식으로 저장해라.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "form",
-    "layout"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "function",
-   "ipa": "/ˈfʌŋkʃən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "기능, 역할",
-     "ex": "The main function of this button is to save your work.",
-     "tr": "이 버튼의 주요 기능은 작업을 저장하는 것이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "feature",
-    "role"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "satellite",
-   "ipa": "/ˈsætəlaɪt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "위성",
-     "ex": "The satellite sends weather data to scientists on the ground.",
-     "tr": "위성은 지상의 과학자들에게 기상 데이터를 보낸다.",
+     "pos": "v",
+     "ko": "업로드하다",
+     "ex": "She uploaded her photo to the class group chat.",
+     "tr": "그녀는 학급 단체 채팅에 사진을 업로드했다.",
      "src": ""
     }
    ],
@@ -197,7 +405,7 @@
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -207,80 +415,26 @@
    }
   },
   {
-   "en": "keyboard shortcut",
-   "ipa": "/ˈkiːbɔːrd ˈʃɔːrkʌt/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "키보드 단축키",
-     "ex": "Learning keyboard shortcuts can help you work much faster.",
-     "tr": "키보드 단축키를 배우면 작업을 훨씬 빠르게 할 수 있다.",
-     "src": ""
-    }
-   ],
-   "syn": [],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "backup",
-   "ipa": "/ˈbækʌp/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "백업, 예비 복사본",
-     "ex": "Always make a backup of your files in case the computer breaks.",
-     "tr": "컴퓨터가 고장날 경우를 대비해 항상 파일을 백업해 두어라.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "copy"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "viral",
-   "ipa": "/ˈvaɪrəl/",
+   "en": "calm",
+   "ipa": "/kɑːm/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "바이럴의, 빠르게 퍼지는",
-     "ex": "Her funny video went viral and got a million views.",
-     "tr": "그녀의 재미있는 영상이 바이럴이 되어 조회수가 백만 건을 기록했다.",
+     "ko": "침착한, 고요한",
+     "ex": "Stay calm and take a deep breath.",
+     "tr": "침착하게 있고 깊게 숨을 쉬세요.",
      "src": ""
     }
    ],
    "syn": [
-    "popular",
-    "trending"
+    "peaceful",
+    "quiet"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -290,25 +444,26 @@
    }
   },
   {
-   "en": "interactive",
-   "ipa": "/ˌɪntərˈæktɪv/",
+   "en": "worried",
+   "ipa": "/ˈwʌrid/",
    "pos": "adj",
    "meanings": [
     {
      "pos": "adj",
-     "ko": "상호작용하는, 쌍방향의",
-     "ex": "The museum has an interactive exhibit where kids can touch everything.",
-     "tr": "그 박물관에는 아이들이 모든 것을 만질 수 있는 체험형 전시물이 있다.",
+     "ko": "걱정하는",
+     "ex": "I was worried because my friend did not call me.",
+     "tr": "친구가 전화를 안 해서 나는 걱정이 되었다.",
      "src": ""
     }
    ],
    "syn": [
-    "hands-on"
+    "anxious",
+    "nervous"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -318,25 +473,26 @@
    }
   },
   {
-   "en": "society",
-   "ipa": "/səˈsaɪəti/",
-   "pos": "n",
+   "en": "nervous",
+   "ipa": "/ˈnɜːrvəs/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "사회",
-     "ex": "Every person in society has rights and responsibilities.",
-     "tr": "사회의 모든 사람은 권리와 책임을 가지고 있다.",
+     "pos": "adj",
+     "ko": "긴장한",
+     "ex": "He felt nervous before giving a speech in class.",
+     "tr": "그는 수업에서 발표하기 전에 긴장했다.",
      "src": ""
     }
    ],
    "syn": [
-    "community"
+    "anxious",
+    "worried"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -346,25 +502,26 @@
    }
   },
   {
-   "en": "government",
-   "ipa": "/ˈɡʌvərnmənt/",
-   "pos": "n",
+   "en": "gentle",
+   "ipa": "/ˈdʒɛntəl/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "정부",
-     "ex": "The government built new schools in rural areas.",
-     "tr": "정부는 농촌 지역에 새 학교를 지었다.",
+     "pos": "adj",
+     "ko": "온화한, 부드러운",
+     "ex": "Be gentle with the little puppy.",
+     "tr": "강아지에게 부드럽게 대해 주세요.",
      "src": ""
     }
    ],
    "syn": [
-    "administration"
+    "soft",
+    "kind"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
@@ -374,205 +531,25 @@
    }
   },
   {
-   "en": "freedom",
-   "ipa": "/ˈfriːdəm/",
-   "pos": "n",
+   "en": "embarrassed",
+   "ipa": "/ɪmˈbærəst/",
+   "pos": "adj",
    "meanings": [
     {
-     "pos": "n",
-     "ko": "자유",
-     "ex": "People need freedom to express their opinions openly.",
-     "tr": "사람들은 자신의 의견을 자유롭게 표현할 자유가 필요하다.",
+     "pos": "adj",
+     "ko": "당황한, 창피한",
+     "ex": "She felt embarrassed when she fell in front of everyone.",
+     "tr": "그녀는 모두 앞에서 넘어져서 창피했다.",
      "src": ""
     }
    ],
    "syn": [
-    "liberty"
+    "ashamed"
    ],
    "deriv": [],
    "roots": [],
    "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "citizen",
-   "ipa": "/ˈsɪtɪzən/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "시민",
-     "ex": "Every citizen should follow the laws of their country.",
-     "tr": "모든 시민은 자국의 법을 따라야 한다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "resident"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "resource",
-   "ipa": "/ˈriːsɔːrs/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "자원",
-     "ex": "Water is one of the most important natural resources on Earth.",
-     "tr": "물은 지구에서 가장 중요한 천연 자원 중 하나이다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "supply",
-    "asset"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "waste",
-   "ipa": "/weɪst/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "폐기물, 쓰레기",
-     "ex": "Factories must treat industrial waste before releasing it.",
-     "tr": "공장은 산업 폐기물을 처리한 후에 배출해야 한다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "낭비"
-    }
-   ],
-   "syn": [
-    "trash",
-    "garbage"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "recycling",
-   "ipa": "/ˌriːˈsaɪklɪŋ/",
-   "pos": "n",
-   "meanings": [
-    {
-     "pos": "n",
-     "ko": "재활용",
-     "ex": "Recycling paper and plastic helps protect the environment.",
-     "tr": "종이와 플라스틱을 재활용하면 환경을 보호하는 데 도움이 된다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "reuse"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "destroy",
-   "ipa": "/dɪˈstrɔɪ/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "파괴하다",
-     "ex": "The storm destroyed several houses in the neighborhood.",
-     "tr": "폭풍이 인근의 집 여러 채를 파괴했다.",
-     "src": ""
-    }
-   ],
-   "syn": [
-    "ruin",
-    "wreck"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
-   "exam": {
-    "tested": false,
-    "count": 0,
-    "exams": 0,
-    "recentYear": "",
-    "stars": 0
-   }
-  },
-  {
-   "en": "damage",
-   "ipa": "/ˈdæmɪdʒ/",
-   "pos": "v",
-   "meanings": [
-    {
-     "pos": "v",
-     "ko": "손상을 입히다",
-     "ex": "Heavy rain damaged the roof of the old building.",
-     "tr": "폭우가 낡은 건물의 지붕에 손상을 입혔다.",
-     "src": ""
-    },
-    {
-     "pos": "n",
-     "ko": "피해, 손상"
-    }
-   ],
-   "syn": [
-    "harm",
-    "hurt"
-   ],
-   "deriv": [],
-   "roots": [],
-   "etymHint": "",
-   "level": "B1",
+   "level": "A2",
    "exam": {
     "tested": false,
     "count": 0,
