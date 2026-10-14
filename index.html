@@ -6282,6 +6282,27 @@ function _officialCover(title, dbCover){
 function _officialLang(title){ return String(title||'').startsWith('스페인어') ? 'es' : 'en'; }
 
 // 공식책 카탈로그(페이지·단어 포함)를 한 번만 받아 캐시. 추가 모달 선택 목록·개인 추가에 재사용.
+// ── 레벨 12권으로 대체된 옛 공식책 ──────────────────────────────
+// 중등 3권 + 수능 단어 3권은 Lv.1~12 로 다시 나눠 담았다(중복 846개 제거).
+// 지우지는 않는다 — 이미 공부 중인 사람의 복습 진도(voca_review)가 책+페이지에
+// 묶여 있어서, 책이 사라지면 진도가 통째로 고아가 된다.
+// 그래서 '새로 담을 수만 없게' 한다: 이미 책장에 있는 사람에게는 계속 보인다.
+// ⚠️ 수능 숙어(SUN-IDIOM)는 대체된 책이 아니다 — 단어가 아니라 표현이라
+//    레벨로 나누지 않았다. 여기 넣으면 안 된다.
+const RETIRED_OFFICIAL = new Set(['MID-1','MID-2','MID-3','SUN-BASIC','SUN-CORE','SUN-HARD']);
+function _isRetiredOfficial(row){
+  return RETIRED_OFFICIAL.has(String((row && row.description) || '').trim().toUpperCase());
+}
+// 목록에서 Lv.1~12 를 맨 앞에 번호순으로 (DB 는 created_at 순이라 새 책이 맨 뒤로 간다)
+function _officialPickerOrder(a, b){
+  const lv = t => { const m = /^Lv\.(\d+)/.exec(String(t||'').trim()); return m ? +m[1] : 0; };
+  const la = lv(a.title), lb = lv(b.title);
+  if (la && lb) return la - lb;
+  if (la) return -1;
+  if (lb) return 1;
+  return String(a.title||'').localeCompare(String(b.title||''), 'ko');
+}
+
 async function ensureOfficialCatalog(){
   if (Array.isArray(window._officialCatalogFull)) return window._officialCatalogFull;
   try {
@@ -6664,10 +6685,13 @@ async function renderOfficialPicker(){
     box.innerHTML = `<div style="font-size:12px;color:var(--ink-40);padding:8px 2px;">${TT('불러오는 중…','Loading…')}</div>`;
   }
   const od = await ensureOfficialCatalog();
-  // 전 언어 공식책 모두 노출 — 스페인어 단어장도 토익·토플처럼 누구나 추가해서 공부할 수 있게 (학습언어 필터 제거)
-  const list = od;
-  if (!list.length){ box.innerHTML=''; return; }
   const onShelf = new Set(books.map(b=>b.id));
+  // 전 언어 공식책 모두 노출 — 스페인어 단어장도 토익·토플처럼 누구나 추가해서 공부할 수 있게 (학습언어 필터 제거)
+  // 다만 Lv.1~12 로 대체된 옛 책은 '이미 책장에 있는 사람' 에게만 남긴다.
+  // (빼기 버튼이 있어야 하므로 감추면 안 되고, 새로 담을 수만 없게 한다)
+  const list = od.filter(b => !_isRetiredOfficial(b) || onShelf.has(b.id))
+                 .slice().sort(_officialPickerOrder);
+  if (!list.length){ box.innerHTML=''; return; }
   const rows = list.map(b=>{
     const wc = (b.voca_pages||[]).reduce((n,p)=>n+((p.voca_words||[]).length),0);
     const added = onShelf.has(b.id);
