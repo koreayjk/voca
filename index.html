@@ -6267,6 +6267,9 @@ async function loadBooksFromDB() {
 // 공식 책 표지: 제목에 따라 레포에 호스팅된 표지 이미지를 매핑(DB cover_url이 비어도 적용).
 function _officialCover(title, dbCover){
   const t = title || '';
+  // 레벨 12권 — 표지는 SVG 로 저장소에 둔다(12장 합쳐 48KB, 사진 한 장보다 가볍다)
+  const _lv = /^Lv\.(\d+)\s*$/.exec(t.trim());
+  if (_lv && +_lv[1] >= 1 && +_lv[1] <= 12) return `cover-lv${+_lv[1]}.svg?v=1`;
   // 수능 전용 표지 — 제목에 '수능'이 있을 때만. (중등 핵심/스페인어 등이 '핵심' 같은
   // 공통어로 수능 표지를 잘못 가져가던 문제 방지)
   if (t.indexOf('수능') >= 0) {
@@ -6550,6 +6553,16 @@ async function appendOfficialBooks() {
 // (#official-picker-list)인데, renderOfficialPicker 가 innerHTML 로 그 박스를
 // 통째로 새로 만들기 때문에 scrollTop 이 무조건 0 으로 돌아간다.
 // → 다시 그리기 전에 위치를 적어두고, 새로 생긴 박스에 그대로 돌려준다.
+function startLevelTest(){
+  if (document.getElementById('lt-overlay')) return;
+  const ov = document.createElement('div');
+  ov.id = 'lt-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10001;display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML = `<div class="lt-box" style="background:var(--bg-card);border-radius:18px;padding:22px;max-width:360px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.25);"></div>`;
+  ov.onclick = e => { if (e.target === ov) closeLevelTest(); };
+  document.body.appendChild(ov);
+  openLevelTest();
+}
 function _keepPickerScroll(fn){
   const prev = document.getElementById('official-picker-list');
   const top = prev ? prev.scrollTop : 0;
@@ -6564,6 +6577,119 @@ function _keepPickerScroll(fn){
   let r; try { r = fn(); } catch(e){ restore(); throw e; }
   if (r && typeof r.then === 'function') r.then(restore, restore); else restore();
 }
+
+// ── 레벨 배치 테스트 ───────────────────────────────────────────
+// 12권이 되면서 '나는 몇 번부터?' 가 막막해졌다. 레벨을 앱이 찾아준다.
+//
+// 방식: 이분 탐색. 가운데 레벨부터 4단어를 물어 3개 이상 맞으면 위로,
+//       아니면 아래로. 12권이라 네 번이면 좁혀진다 → 16단어, 1~2분.
+//       (낮은 레벨부터 올라가면 상급자가 40단어를 풀어야 한다)
+// 문제는 '안다/모른다' 자기신고가 아니라 4지선다 — 자기신고는 과대평가된다.
+// 단어는 이미 받아둔 공식책 카탈로그에서 뽑으므로 추가 요청이 없다.
+const LT_PER_ROUND = 4;        // 한 레벨에서 묻는 단어 수
+const LT_PASS = 3;             // 이만큼 맞으면 '안다'
+let _lt = null;
+
+function _ltBooks(){
+  const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
+  const by = {};
+  od.forEach(b => { const m = /^Lv\.(\d+)\s*$/.exec(String(b.title||'').trim()); if (m) by[+m[1]] = b; });
+  return by;
+}
+// 그 레벨의 단어를 고르게 뽑는다(앞 Day 에만 몰리지 않게)
+function _ltPick(book, k){
+  const all = [];
+  (book.voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => {
+    if (w && w.en && w.base) all.push({ en:w.en, ko:w.base });
+  }));
+  const out = [], used = new Set();
+  while (out.length < k && used.size < all.length) {
+    const i = Math.floor(Math.random()*all.length);
+    if (used.has(i)) continue;
+    used.add(i); out.push(all[i]);
+  }
+  return out;
+}
+function openLevelTest(){
+  const by = _ltBooks();
+  const levels = Object.keys(by).map(Number).sort((a,b)=>a-b);
+  if (levels.length < 3) { toast(TT('레벨 단어장을 불러오는 중이에요. 잠시 뒤 다시 눌러주세요','Loading — please try again in a moment')); return; }
+  // 오답 보기용 전체 뜻 풀
+  const pool = [];
+  levels.forEach(l => (by[l].voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => { if (w && w.base) pool.push(w.base); })));
+  _lt = { by, levels, lo: levels[0], hi: levels[levels.length-1], pool,
+          q: [], at: 0, right: 0, asked: 0, done: false, result: null };
+  _ltRound();
+}
+function _ltRound(){
+  const t = _lt;
+  if (t.lo >= t.hi) { _ltFinish(t.lo); return; }
+  const mid = Math.floor((t.lo + t.hi + 1) / 2);
+  t.mid = mid;
+  t.q = _ltPick(t.by[mid], LT_PER_ROUND);
+  t.at = 0; t.right = 0;
+  if (!t.q.length) { _ltFinish(t.lo); return; }
+  _ltRender();
+}
+function _ltAnswer(ok){
+  const t = _lt;
+  if (ok) t.right++;
+  t.at++; t.asked++;
+  if (t.at < t.q.length) { _ltRender(); return; }
+  if (t.right >= LT_PASS) t.lo = t.mid; else t.hi = t.mid - 1;
+  _ltRound();
+}
+function _ltFinish(level){
+  const t = _lt;
+  // 마지막으로 '안다' 고 판정된 레벨의 다음부터 시작 (전부 틀리면 Lv.1)
+  const start = Math.min(level + (t.right >= LT_PASS || level > t.levels[0] ? 1 : 0), t.levels[t.levels.length-1]);
+  t.done = true; t.result = Math.max(t.levels[0], start);
+  _ltRender();
+}
+function _ltRender(){
+  const t = _lt, el = document.getElementById('lt-overlay');
+  if (!el) return;
+  const box = el.querySelector('.lt-box');
+  if (t.done) {
+    const lv = t.result, b = t.by[lv];
+    box.innerHTML = `
+      <div style="text-align:center;">
+        <div style="font-size:40px;line-height:1;margin-bottom:12px;">🎯</div>
+        <div style="font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--ink-100);">${TT('여기서 시작하세요','Start here')}</div>
+        <div style="font-family:var(--font-display);font-size:46px;font-weight:700;color:var(--accent);margin:12px 0 4px;letter-spacing:-0.02em;">Lv.${lv}</div>
+        <div class="muted" style="font-size:12.5px;margin-bottom:20px;">${TX(`{v0}단어를 물어본 결과예요`,`based on {v0} words`,{v0:(t.asked)})}</div>
+        <button class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;" onclick="_ltAdd(${lv})">${TX(`Lv.{v0} 책장에 담기`,`Add Lv.{v0}`,{v0:(lv)})}</button>
+        <button onclick="closeLevelTest()" style="width:100%;padding:11px;margin-top:6px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('직접 고를게요','I\u2019ll choose myself')}</button>
+      </div>`;
+    return;
+  }
+  const q = t.q[t.at];
+  // 보기 4개 — 정답 1 + 다른 뜻 3 (중복·같은 뜻 제외)
+  const opts = [q.ko]; let guard = 0;
+  while (opts.length < 4 && guard++ < 400) {
+    const c = t.pool[Math.floor(Math.random()*t.pool.length)];
+    if (c && !opts.includes(c)) opts.push(c);
+  }
+  for (let i = opts.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
+  const prog = Math.round((t.at / t.q.length) * 100);
+  box.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div class="muted" style="font-size:11.5px;">${TT('레벨 테스트','Level test')} · ${TX(`{v0}번째 단어`,`word {v0}`,{v0:(t.asked+1)})}</div>
+      <span onclick="closeLevelTest()" style="font-size:18px;color:var(--ink-40);cursor:pointer;line-height:1;">✕</span>
+    </div>
+    <div style="height:3px;background:var(--ink-07);border-radius:9px;overflow:hidden;margin-bottom:22px;">
+      <div style="height:100%;width:${prog}%;background:var(--accent);transition:width .25s ease;"></div>
+    </div>
+    <div style="text-align:center;font-family:var(--font-display);font-size:30px;font-weight:600;color:var(--ink-100);margin-bottom:22px;word-break:break-word;">${esc(q.en)}</div>
+    ${opts.map(o => `<button onclick="_ltAnswer(${o===q.ko})" style="display:block;width:100%;text-align:left;padding:13px 15px;margin-bottom:8px;border-radius:11px;border:1px solid var(--ink-12);background:var(--bg-input);color:var(--ink-100);font-size:14px;font-family:var(--font-body);cursor:pointer;">${esc(o)}</button>`).join('')}
+    <button onclick="_ltAnswer(false)" style="display:block;width:100%;padding:11px;margin-top:4px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('모르겠어요','I don\u2019t know')}</button>`;
+}
+function _ltAdd(lv){
+  const b = _ltBooks()[lv];
+  closeLevelTest();
+  if (b) addOfficialToShelf(b.id);
+}
+function closeLevelTest(){ document.getElementById('lt-overlay')?.remove(); _lt = null; }
 
 // 개인 사용자: 공식책을 책장에 추가/제거
 function addOfficialToShelf(id){
@@ -6705,7 +6831,9 @@ async function renderOfficialPicker(){
         : `<button onclick="addOfficialToShelf('${jsq(b.id)}')" style="flex-shrink:0;background:var(--gold-bg);border:1px solid rgba(28,53,83,0.25);border-radius:8px;padding:6px 11px;font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;font-family:var(--font-body);">＋ ${TT('추가','Add')}</button>`}
     </div>`;
   }).join('');
-  box.innerHTML = `<div style="font-size:12px;color:var(--ink-60);margin:2px 0 6px;font-weight:600;">📗 ${TT('우리가 만든 단어장 — 원하는 것만 추가하세요','Our wordbooks — add the ones you want')}</div>
+  const hasLv = list.some(b => /^Lv\.(\d+)\s*$/.test(String(b.title||'').trim()));
+  const testBtn = hasLv ? `<button onclick="startLevelTest()" style="width:100%;margin:2px 0 10px;padding:11px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : '';
+  box.innerHTML = testBtn + `<div style="font-size:12px;color:var(--ink-60);margin:2px 0 6px;font-weight:600;">📗 ${TT('우리가 만든 단어장 — 원하는 것만 추가하세요','Our wordbooks — add the ones you want')}</div>
     <div id="official-picker-list" style="border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;max-height:230px;overflow-y:auto;">${rows}</div>`;
 }
 

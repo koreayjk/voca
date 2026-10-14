@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 430" width="300" height="430">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#4b4f97"/><stop offset="1" stop-color="#30346e"/>
+  </linearGradient>
+  <linearGradient id="s" x1="0" y1="0" x2="0.7" y2="1">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+    <stop offset="0.42" stop-color="#ffffff" stop-opacity="0.05"/>
+    <stop offset="0.6" stop-color="#ffffff" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+<rect width="300" height="430" fill="url(#g)"/>
+<rect width="300" height="430" fill="url(#s)"/>
+<!-- 책등 -->
+<rect x="0" y="0" width="7" height="430" fill="#000" opacity="0.17"/>
+<rect x="7" y="0" width="2" height="430" fill="#fff" opacity="0.10"/>
+
+<text x="30" y="46" fill="#fff" fill-opacity="0.72" font-family="Georgia,serif"
+      font-size="13" letter-spacing="3.4">IM VOCA</text>
+<rect x="30" y="58" width="26" height="2" fill="#fff" opacity="0.5"/>
+
+<text x="30" y="214" fill="#fff" font-family="Georgia,serif" font-size="74"
+      font-weight="bold" letter-spacing="-2">Lv.8</text>
+
+<text x="31" y="256" fill="#fff" fill-opacity="0.95" font-family="'Apple SD Gothic Neo',sans-serif"
+      font-size="25" font-weight="bold" letter-spacing="5">중급</text>
+
+<rect x="30" y="286" width="36.4" height="25" rx="12.5" fill="#fff" fill-opacity="0.17"/>
+<text x="40.0" y="303" fill="#fff" fill-opacity="0.92" font-family="Georgia,serif"
+      font-size="13" letter-spacing="1.4">B2</text>
+
+<text x="30" y="398" fill="#fff" fill-opacity="0.6" font-family="'Apple SD Gothic Neo',sans-serif"
+      font-size="12.5" letter-spacing="0.4">400단어 · 20일</text>
+</svg>

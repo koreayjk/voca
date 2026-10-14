@@ -28,6 +28,7 @@ const ASSETS = [
   'icon-192.png',
   'icon-512.png',
   'icon-512-maskable.png',
+  ...Array.from({ length: 12 }, (_, i) => `cover-lv${i + 1}.svg`),   // 레벨 12권 표지
   'cover-suneung-basic.jpg',
   'cover-suneung-core.jpg',
   'cover-suneung-hard.jpg',
