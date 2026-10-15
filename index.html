@@ -2808,7 +2808,7 @@ function adminBookPool(){
   const have = new Set((books||[]).map(b=>b.id));
   return [...(books||[]), ...cat.filter(b=>!have.has(b.id)).map(b=>_mapOfficialBook(b))];
 }
-function _testBooks(){ return adminBookPool().filter(b=>b.pages && b.pages.some(p=>p.words&&p.words.length)); }
+function _testBooks(){ return adminBookPool().filter(b=>b.pages && ((b._pending && b.pages.length) || b.pages.some(p=>p.words&&p.words.length))); }
 function _pageLabel(b,p){ return (b._official||b._officialContent) ? String(p.num) : ('Page '+p.num); }
 
 async function loadTests(){
@@ -2920,10 +2920,16 @@ function showTestCreate(){
   el.addEventListener('click',e=>{ if(e.target===el) el.remove(); });
   _tcDays();
 }
-function _tcSelectedBook(){ return findBook(document.getElementById('tc-book')?.value); }
-function _tcDays(){
+function _tcSelectedBook(){ const id=document.getElementById('tc-book')?.value; return findBook(id) || adminBookPool().find(b=>b.id===id); }
+async function _tcDays(){
   const box=document.getElementById('tc-days'); if(!box) return;
-  const b=_tcSelectedBook(); if(!b){ box.innerHTML=''; return; }
+  let b=_tcSelectedBook(); if(!b){ box.innerHTML=''; return; }
+  // 공식책은 카탈로그에 단어가 없을 수 있다 — 고른 순간 그 책만 받아온다
+  if (b._pending) {
+    box.innerHTML = `<div class="muted" style="font-size:12px;padding:6px;">${TT('단어를 불러오는 중…','Loading…')}</div>`;
+    await ensureOfficialBookWords(b.id);
+    b = _tcSelectedBook(); if(!b){ box.innerHTML=''; return; }
+  }
   const pgs=[...b.pages].filter(p=>p.words&&p.words.length).sort((a,b2)=>pageSort(a,b2));
   box.innerHTML=`<label style="font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;padding:5px 10px;border:1px solid var(--accent);border-radius:8px;"><input type="checkbox" id="tc-all" onchange="_tcToggleAll(this.checked)" style="vertical-align:-1px;"> ${TT('전체','All')}</label>`
     + pgs.map(p=>`<label style="font-size:12.5px;color:var(--ink-100);cursor:pointer;padding:5px 10px;border:1px solid var(--ink-12);border-radius:8px;"><input type="checkbox" class="tc-day" value="${esc(String(p.num))}" onchange="_tcPool()" style="vertical-align:-1px;"> ${esc(_pageLabel(b,p))}</label>`).join('');
@@ -6306,14 +6312,76 @@ function _officialPickerOrder(a, b){
   return String(a.title||'').localeCompare(String(b.title||''), 'ko');
 }
 
+// 공식책이 29권(약 8MB)이 되면서 '전부 + 전 단어'를 한 번에 받던 쿼리가 서버
+// statement timeout 으로 죽었다(=책 추가 화면이 30초 멈춤). 목록에 필요한 건
+// 제목·표지·단어 수뿐이므로 카탈로그는 메타데이터만 받고(≈6KB),
+// 단어는 그 책이 실제로 필요해질 때 ensureOfficialBookWords 로 한 권씩 가져온다.
 async function ensureOfficialCatalog(){
   if (Array.isArray(window._officialCatalogFull)) return window._officialCatalogFull;
-  try {
-    // 일시적 오류로 null 이 오면 재시도 — 공식책이 가끔 안 뜨던 문제 방지(공용 fetchRetry)
-    const od = await fetchRetry(() => sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=*,voca_pages(*,voca_words(*))&order=created_at`));
-    if (Array.isArray(od)) window._officialCatalogFull = od;
-  } catch(e){ console.warn('[official catalog]', e); }
-  return Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
+  if (window._officialCatalogP) return window._officialCatalogP;
+  window._officialCatalogP = (async () => {
+    try {
+      // 단어 수 집계(voca_words count)는 행마다 RLS 를 타서 전체 책에 걸면 타임아웃난다.
+      // → 목록에는 Day 수와 부제만 쓰고, 단어 수는 그 책을 열 때 자연히 드러난다.
+      const COLS = 'id,title,author,color,description,cover_url,category,created_at';
+      const od = await fetchRetry(() => sbFetch(`/rest/v1/voca_books?is_official=eq.true&select=${COLS}&order=created_at`));
+      if (Array.isArray(od) && od.length) {
+        // 페이지(Day) 목록은 따로 — 책에 중첩시키면 같은 결과에 5초 넘게 걸린다
+        const ids = od.map(b => b.id).join(',');
+        let pgs = [];
+        try {
+          const r = await fetchRetry(() => sbFetch(`/rest/v1/voca_pages?book_id=in.(${ids})&select=id,book_id,page_num&limit=5000`));
+          if (Array.isArray(r)) pgs = r;
+        } catch(e){ console.warn('[official pages]', e); }
+        const byBook = {};
+        pgs.forEach(pg => { (byBook[pg.book_id] = byBook[pg.book_id] || []).push(pg); });
+        od.forEach(b => {
+          b.voca_pages = (byBook[b.id] || []).map(pg => ({ id: pg.id, page_num: pg.page_num, voca_words: [], _wc: null }));
+          b._wordsLoaded = false;
+        });
+        window._officialCatalogFull = od;
+      }
+    } catch(e){ console.warn('[official catalog]', e); }
+    finally { window._officialCatalogP = null; }
+    return Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
+  })();
+  return window._officialCatalogP;
+}
+// 공식책 한 권의 페이지·단어를 받아 카탈로그 행에 채운다(한 권 ≈ 270KB).
+// 같은 책을 동시에 여러 번 요청해도 한 번만 나가도록 진행 중인 약속을 재사용한다.
+window._offWordsP = {};
+async function ensureOfficialBookWords(id){
+  if (!id) return null;
+  const od = await ensureOfficialCatalog();
+  const row = od.find(b => b.id === id);
+  if (!row) return null;
+  if (row._wordsLoaded) return row;
+  if (window._offWordsP[id]) return window._offWordsP[id];
+  window._offWordsP[id] = (async () => {
+    try {
+      const pgs = await fetchRetry(() => sbFetch(`/rest/v1/voca_pages?book_id=eq.${id}&select=*,voca_words(*)`));
+      if (Array.isArray(pgs)) {
+        row.voca_pages = pgs;
+        row._wordsLoaded = true;
+        // 이미 책장에 올라가 있는 책이면 메모리 쪽도 같이 채운다
+        const mem = (typeof books !== 'undefined') ? books.find(b => b.id === id) : null;
+        if (mem && (mem._official || mem._officialContent)) {
+          mem.pages = _mapOfficialBook(row).pages;
+          try { _stripHiddenWords(); } catch(e){}
+        }
+      }
+    } catch(e){ console.warn('[official words]', id, e); }
+    finally { delete window._offWordsP[id]; }
+    return row;
+  })();
+  return window._offWordsP[id];
+}
+// 여러 권을 한꺼번에 — 동시 3개까지만 (모바일 회선에서 한 번에 다 열면 더 느리다)
+async function _loadOfficialWordsFor(ids){
+  const q = (ids || []).filter(Boolean);
+  let at = 0;
+  const worker = async () => { while (at < q.length) { const i = at++; await ensureOfficialBookWords(q[i]); } };
+  await Promise.all(Array.from({ length: Math.min(3, q.length) }, worker));
 }
 // DB 공식책 행 → 메모리 book 객체(읽기전용)
 function _mapOfficialBook(b){
@@ -6322,10 +6390,12 @@ function _mapOfficialBook(b){
     _added: (getMyOfficialAt()[b.id] || b.created_at || ''),   // 책장에 담은 시각
     desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
     _official: true, _readonly: true, _officialContent: true,
+    _pending: (b._wordsLoaded === false),   // 단어는 아직 — 필요할 때 ensureOfficialBookWords
     pages: (b.voca_pages || [])
       .sort((a,c) => (a.page_num+'').localeCompare(c.page_num+'', undefined, { numeric: true }))
       .map(p => ({
         num: p.page_num, _pid: p.id,
+        _wc: (p._wc != null ? p._wc : (p.voca_words || []).length),
         words: (p.voca_words || [])
           .sort((a,c) => new Date(a.created_at) - new Date(c.created_at))
           .map(_dbRowToWord)
@@ -6500,6 +6570,7 @@ async function appendOfficialBooks() {
           ? await sbFetch(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=in.(${offIds.join(',')})&select=book_id`)
           : [];
         const studied = new Set(Array.isArray(rv) ? rv.map(r => r.book_id) : []);
+        await _loadOfficialWordsFor(od.filter(b => studied.has(b.id)).map(b => b.id));
         od.filter(b => studied.has(b.id)).forEach(b => {
           const ex = findBook(b.id);
           if (ex) { ex._official = true; ex._readonly = true; ex._officialContent = true; if (!ex.cover) ex.cover = _officialCover(b.title, b.cover_url); }
@@ -6524,6 +6595,8 @@ async function appendOfficialBooks() {
       } catch(e){ _setMyOfficialIds([]); }
     }
     const picked = new Set(getMyOfficialIds());
+    // 책장에 담아둔 공식책만 단어를 받는다 (카탈로그 전체는 ≈8MB 라 받을 수 없다)
+    await _loadOfficialWordsFor(od.filter(b => picked.has(b.id)).map(b => b.id));
     od.filter(b => picked.has(b.id)).forEach(b => {
       const ex = findBook(b.id);
       if (ex) {
@@ -6610,22 +6683,38 @@ function _ltPick(book, k){
   }
   return out;
 }
-function openLevelTest(){
+async function openLevelTest(){
   const by = _ltBooks();
   const levels = Object.keys(by).map(Number).sort((a,b)=>a-b);
   if (levels.length < 3) { toast(TT('레벨 단어장을 불러오는 중이에요. 잠시 뒤 다시 눌러주세요','Loading — please try again in a moment')); return; }
-  // 오답 보기용 전체 뜻 풀
-  const pool = [];
-  levels.forEach(l => (by[l].voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => { if (w && w.base) pool.push(w.base); })));
-  _lt = { by, levels, lo: levels[0], hi: levels[levels.length-1], pool,
+  // 12권 전부의 단어를 미리 받으면 3MB가 넘는다 — 이분 탐색이 실제로 들르는
+  // 레벨(보통 3~4권)만 그때그때 받고, 오답 보기 풀도 받은 만큼만 쓴다.
+  _lt = { by, levels, lo: levels[0], hi: levels[levels.length-1], pool: [],
           q: [], at: 0, right: 0, asked: 0, done: false, result: null };
   _ltRound();
 }
-function _ltRound(){
+// 받아온 레벨의 뜻을 오답 보기 풀에 보탠다
+function _ltAddPool(row){
+  const t = _lt; if (!t || !row) return;
+  (row.voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => { if (w && w.base) t.pool.push(w.base); }));
+}
+function _ltLoading(){
+  const box = document.getElementById('lt-overlay')?.querySelector('.lt-box');
+  if (box) box.innerHTML = `<div style="text-align:center;padding:34px 10px;color:var(--ink-45);font-size:13px;">${TT('단어를 불러오는 중…','Loading…')}</div>`;
+}
+async function _ltRound(){
   const t = _lt;
+  if (!t) return;
   if (t.lo >= t.hi) { _ltFinish(t.lo); return; }
   const mid = Math.floor((t.lo + t.hi + 1) / 2);
   t.mid = mid;
+  const row = t.by[mid];
+  if (row && !row._wordsLoaded) {
+    _ltLoading();
+    await ensureOfficialBookWords(row.id);
+    if (_lt !== t) return;              // 그 사이 테스트를 닫았다
+  }
+  _ltAddPool(t.by[mid]);
   t.q = _ltPick(t.by[mid], LT_PER_ROUND);
   t.at = 0; t.right = 0;
   if (!t.q.length) { _ltFinish(t.lo); return; }
@@ -6637,7 +6726,7 @@ function _ltAnswer(ok){
   t.at++; t.asked++;
   if (t.at < t.q.length) { _ltRender(); return; }
   if (t.right >= LT_PASS) t.lo = t.mid; else t.hi = t.mid - 1;
-  _ltRound();
+  _ltRound().catch(e => console.warn('[level test]', e));
 }
 function _ltFinish(level){
   const t = _lt;
@@ -6692,10 +6781,16 @@ function _ltAdd(lv){
 function closeLevelTest(){ document.getElementById('lt-overlay')?.remove(); _lt = null; }
 
 // 개인 사용자: 공식책을 책장에 추가/제거
-function addOfficialToShelf(id){
+async function addOfficialToShelf(id){
   const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
-  const row = od.find(b => b.id === id);
+  let row = od.find(b => b.id === id);
   if (!row) return;
+  // 카탈로그는 메타데이터만 들고 있다 — 책장에 넣기 전에 그 책의 단어를 받아온다
+  if (!row._wordsLoaded) {
+    toast(TT('단어를 불러오는 중…','Loading words…'));
+    row = (await ensureOfficialBookWords(id)) || row;
+    if (!row._wordsLoaded) { toast(TT('불러오지 못했어요. 다시 시도해 주세요','Could not load — please try again')); return; }
+  }
   _setMyOfficialAt(id, new Date().toISOString());   // 최신순 정렬에서 방금 담은 책이 맨 위로
   if (!books.some(b => b.id === id)) books.push(_mapOfficialBook(row));
   _setMyOfficialIds([...getMyOfficialIds(), id]);
@@ -6819,12 +6914,14 @@ async function renderOfficialPicker(){
                  .slice().sort(_officialPickerOrder);
   if (!list.length){ box.innerHTML=''; return; }
   const rows = list.map(b=>{
-    const wc = (b.voca_pages||[]).reduce((n,p)=>n+((p.voca_words||[]).length),0);
+    const pc = (b.voca_pages||[]).length;
+    const wc = b._wordsLoaded ? (b.voca_pages||[]).reduce((n,p)=>n+((p.voca_words||[]).length),0) : 0;
+    const meta = [ (b.author||'').trim(), pc ? `${pc} ${TT('일','days')}` : '', wc ? `${wc} ${TT('단어','words')}` : '' ].filter(Boolean).join(' · ');
     const added = onShelf.has(b.id);
     return `<div style="display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--ink-05);">
       <div style="flex:1;min-width:0;">
         <div style="font-size:13px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${_officialLang(b.title)==='es'?'🇪🇸 ':''}${esc(b.title)}</div>
-        <div class="muted" style="font-size:11px;">${wc} ${TT('단어','words')}</div>
+        <div class="muted" style="font-size:11px;">${esc(meta)}</div>
       </div>
       ${added
         ? `<button onclick="removeOfficialFromShelf('${jsq(b.id)}')" style="flex-shrink:0;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;color:var(--ink-60);cursor:pointer;font-family:var(--font-body);">✓ ${TT('추가됨','Added')}</button>`
