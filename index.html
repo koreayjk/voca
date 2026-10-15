@@ -312,6 +312,13 @@ body { word-break: keep-all; overflow-wrap: break-word; }
   .dock__btn span:first-child { font-size: 26px !important; width: 30px !important; text-align: center; }
   .dock__btn span:last-child { font-size: 16px !important; }
 
+  /* 상세 화면(단어 목록·암기 카드 등)은 사이드바를 그리지 않는다. 그런데 왼쪽
+     여백은 그대로 비워 둬서, 아이패드에서 화면 1/4 이 빈 색면으로 남았다.
+     사이드바가 실제로 있는 화면에서만 밀어준다. */
+  body:not(:has(.dock)) .scr,
+  body:not(:has(.dock)) .btn-fixed,
+  body:not(:has(.dock)) .study-start-bar { left: 0 !important; }
+
   /* 콘텐츠 영역: 사이드바 오른쪽 전체, 내부에서 가운데 정렬 */
   .scr {
     left: var(--sidebar-w) !important; right: 0 !important; width: auto !important; max-width: none !important;
@@ -322,6 +329,11 @@ body { word-break: keep-all; overflow-wrap: break-word; }
   }
   /* 실제 내용은 적당한 폭으로 가운데, 내용 적으면 위아래도 가운데 */
   .scr > *:not(.btn-fixed):not(.dock):not(.study-start-bar) { width: 100%; max-width: 720px; }
+  /* 암기 카드는 남은 높이를 전부 먹는다. 13인치 아이패드에서는 카드가 900px 넘게
+     늘어나 한가운데 단어 하나만 떠 있는 꼴이 된다 — 카드답게 보이도록 높이를 묶는다. */
+  /* .card-wrap 기본 규칙이 이 블록보다 아래에 있어 margin 이 덮어쓰인다 — 선택자를 한 단계 올린다 */
+  .study .card-wrap { width: 100%; max-width: 680px; max-height: 600px; align-self: center; margin-top: auto; margin-bottom: auto; }
+  .study .ox-row, .study .ox-hint { width: 100%; max-width: 680px; align-self: center; }
   .scr-scroll {
     width: 100%; max-width: 720px;
     margin-left: auto !important; margin-right: auto !important;
