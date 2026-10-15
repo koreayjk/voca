@@ -5884,9 +5884,11 @@ function signInWithProvider(provider){
     //    app.imvoca://auth 를 반드시 추가해둬야 한다.
     const redirect = encodeURIComponent(_isIosApp() ? IOS_AUTH_REDIRECT : (location.origin + location.pathname));
     let authUrl = SB_URL + '/auth/v1/authorize?provider=' + provider + '&redirect_to=' + redirect;
-    // 회원가입에서는 구글 계정 선택 화면을 강제로 띄운다.
-    // (브라우저에 이미 로그인된 계정으로 자동 진행돼 원치 않는 아이디로 가입/로그인되는 문제 방지)
-    if (onSignupTab) authUrl += '&prompt=select_account';
+    // 구글 계정 선택 화면을 항상 띄운다. 안 띄우면 브라우저에 남아 있는 세션으로
+    // 곧장 들어가서, 공용 기기(학원 태블릿·PC)에서 앞 사람 계정으로 로그인된다.
+    // 남의 단어장이 보이고 학습 기록이 남의 계정에 쌓이는 문제라 탭 한 번보다 무겁다.
+    // 세션은 refresh_token 으로 유지되므로 이 화면을 다시 보는 건 설치 직후·로그아웃 뒤뿐이다.
+    authUrl += '&prompt=select_account';
     track(onSignupTab ? 'sign_up' : 'login', { method: provider });
     // 앱 안 웹뷰에서 구글 로그인 페이지를 열면 구글이 'disallowed_useragent' 로 막는다.
     // 시스템 브라우저로 띄우고, 끝나면 딥링크로 앱이 다시 깨어난다.
