@@ -1,5 +1,27 @@
 <head>
 <meta charset="UTF-8">
+<script>
+// 앱이 두 스토어에 올라간 뒤로, imvoca.app 을 처음 연 사람이 볼 것은 로그인 화면이 아니라
+// 소개 페이지여야 한다. 다만 '/' 는 그냥 홈이 아니다 —
+//   · 설치된 PWA 와 안드로이드 TWA 의 start_url 이고
+//   · 이메일 인증·비밀번호 재설정 링크가 돌아오는 곳이며
+//   · 단체 코드(?code=)·광고(?signup=1) 링크가 떨어지는 곳이다
+// 그래서 그 경우를 모두 비켜간 '맨몸으로 루트에 처음 온 브라우저' 만 소개 페이지로 보낸다.
+(function () {
+  try {
+    if (window.__IMVOCA_IOS_APP__) return;                      // 아이폰 앱(빌드가 심는 플래그)
+    if (location.protocol !== 'https:' && location.protocol !== 'http:') return;  // capacitor:// 등
+    var path = location.pathname;
+    if (path !== '/' && path !== '/index.html') return;         // 루트가 아니면 건드리지 않는다
+    if (location.search || location.hash) return;               // ?code= ?signup=1 ?demo= #access_token=…
+    if (window.matchMedia && matchMedia('(display-mode: standalone)').matches) return;  // PWA·TWA
+    if (navigator.standalone) return;                           // iOS 홈 화면에 추가
+    if (document.referrer.indexOf('android-app://') === 0) return;                      // TWA
+    if (localStorage.getItem('imvoca.session')) return;         // 쓰던 사람은 바로 앱으로
+    location.replace('/lp.html');
+  } catch (e) {}
+})();
+</script>
 <!-- Google Analytics 4 (GA4) — 측정 ID G-GYR0GQC304 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYR0GQC304"></script>
 <script>
