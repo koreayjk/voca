@@ -273,6 +273,10 @@ body.dark .word-item__ctx { color: rgba(240,236,228,0.7) !important; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100); -webkit-font-smoothing: antialiased; background: #e3d9c9; }
+/* 한글은 낱말 중간에서도 줄이 끊긴다 — '평균' 이 '평/균' 으로, '암기 카드' 가
+   '암기 카/드' 로 갈라졌다. keep-all 이면 띄어쓰기에서만 끊는다.
+   긴 영단어·URL 은 그대로 두면 칸을 넘치므로 break-word 로 받친다. */
+body { word-break: keep-all; overflow-wrap: break-word; }
 #root { position: fixed; inset: 0; height: 100dvh; }
 .scr { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 20px 22px 0; overflow: hidden; background: radial-gradient(135% 90% at 50% -12%, #f8f2e8 0%, var(--bg-page) 52%); }
 @media (min-width: 768px) {
@@ -446,7 +450,15 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
 }
 .btn-fixed { position: absolute; left: 22px; right: 22px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
 .btn-fixed--row { flex-direction: row; gap: 8px; }
-.btn-fixed--row .btn { flex: 1; }
+.btn-fixed--row .btn { flex: 1; min-width: 0; }
+/* 버튼 세 개가 가로로 들어가는 좁은 화면(360px 안드로이드 등)에서는
+   기본 15px·좌우 14px 패딩으로는 '📚 암기 카드' 가 한 줄에 안 들어간다. */
+@media (max-width: 420px) {
+  .btn-fixed--row .btn { font-size: 13.5px; padding: 14px 7px; letter-spacing: -0.02em; }
+}
+@media (max-width: 360px) {
+  .btn-fixed--row .btn { font-size: 12.5px; padding: 14px 5px; }
+}
 .lib-header { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px; }
 .dock-bottom { display: none; }
 .dock--detail { display: none; }  /* 상세화면 사이드바는 모바일에서 숨김 */
