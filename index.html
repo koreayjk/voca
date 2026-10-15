@@ -1001,12 +1001,14 @@ window.addEventListener('online', () => { if (typeof flushPending === 'function'
 setInterval(() => { if (typeof flushPending === 'function') flushPending(); }, 2 * 60 * 1000);
 
 // ── 언어 설정 ──
+// 모국어(=UI 언어) 목록. UI_XL 에 사전이 있는 언어만 넣는다 —
+// 사전 없이 목록에만 올리면 골랐을 때 화면이 통째로 영어로 나와서 '덜 만든 앱' 이 된다.
+// 언어를 늘릴 때는 UI_XL 과 UI_TEXT 양쪽에 블록을 추가하고 여기에 한 줄 더한다.
+// (프랑스어·독일어·포르투갈어·베트남어·인도네시아어는 사전이 생기면 되살린다)
 const LANG_OPTIONS = [
   {code:'ko',name:'한국어',flag:'🇰🇷'},{code:'en',name:'English',flag:'🇺🇸'},
-  {code:'es',name:'Español',flag:'🇪🇸'},{code:'zh',name:'中文',flag:'🇨🇳'},
-  {code:'ja',name:'日本語',flag:'🇯🇵'},{code:'fr',name:'Français',flag:'🇫🇷'},
-  {code:'de',name:'Deutsch',flag:'🇩🇪'},{code:'pt',name:'Português',flag:'🇧🇷'},
-  {code:'vi',name:'Tiếng Việt',flag:'🇻🇳'},{code:'id',name:'Bahasa',flag:'🇮🇩'},
+  {code:'ja',name:'日本語',flag:'🇯🇵'},{code:'zh',name:'中文',flag:'🇨🇳'},
+  {code:'es',name:'Español',flag:'🇪🇸'},
 ];
 const TARGET_LANG_OPTIONS = [
   {code:'en',name:'English',flag:'🇺🇸'},{code:'ko',name:'한국어',flag:'🇰🇷'},
@@ -1028,7 +1030,15 @@ function _detectNativeLang(){
   } catch(e){}
   return 'en';
 }
-let userNativeLang = localStorage.getItem('imvoca.nativeLang')||_detectNativeLang();
+// 지원 목록에서 빠진 언어를 저장해 둔 사용자(예전에 프랑스어를 골랐던 사람)는
+// 설정 화면에 자기 언어가 안 보여 바꾸지도 못한 채 영어로 남는다 → 감지값으로 되돌린다.
+let userNativeLang = (function(){
+  const saved = localStorage.getItem('imvoca.nativeLang');
+  if (saved && LANG_OPTIONS.some(l => l.code === saved)) return saved;
+  const fallback = _detectNativeLang();
+  if (saved) { try { localStorage.setItem('imvoca.nativeLang', fallback); } catch(e){} }
+  return fallback;
+})();
 let userTargetLang = localStorage.getItem('imvoca.targetLang')||'en';
 // 초기 설정 1순위: 나라 IP → 언어. 위 브라우저 언어는 IP 조회가 끝나기 전/실패 시의 폴백.
 // 사용자가 언어 설정을 한 번이라도 저장하면(localStorage) 그 설정이 항상 우선 — 자동 감지는 다시 개입하지 않는다.
