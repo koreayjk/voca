@@ -5545,9 +5545,31 @@ ${TT('IM VOCA는 한 번 외운 단어를 1·2·3·6·15·30·60일 간격으로
 <div class="ft"><span>${esc2(userOrg.name||'')}</span><span>IM VOCA · ${_todayStr()}</span></div>
 </body></html>`;
 
+  // 앱 안에서는 window.open 이 막혀 빈 창만 뜬다(= '팝업이 차단됐어요').
+  // 리포트는 원장이 아이패드로도 봐야 하는 화면이라 막지 않고, 앱 안에 띄운다.
+  // 완성된 HTML 문서를 그대로 쓰려고 iframe srcdoc 에 넣는다 — 리포트의 CSS 가
+  // 앱 화면에 새지 않고, 문서 쪽 코드를 건드릴 필요도 없다.
+  if (_isIosApp()) { _showReportInApp(html, `${studentName} · ${TT('학습 리포트','Study Report')}`); return; }
   const w = window.open('', '_blank');
   if (!w) { toast(TT('팝업이 차단됐어요. 브라우저에서 허용해주세요','Popup blocked — please allow popups')); return; }
   w.document.write(html); w.document.close();
+}
+
+// 앱 안에서 리포트를 전체화면으로 — 인쇄·PDF 저장은 시스템 공유 시트가 없어 PC 안내.
+function _showReportInApp(html, title){
+  document.getElementById('rpt-overlay')?.remove();
+  const ov = document.createElement('div');
+  ov.id = 'rpt-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:10002;background:var(--bg-page);display:flex;flex-direction:column;';
+  ov.innerHTML = `
+    <div style="flex-shrink:0;display:flex;align-items:center;gap:10px;padding:12px 14px calc(12px);border-bottom:1px solid var(--ink-07);background:var(--bg-card);">
+      <div style="flex:1;min-width:0;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink-100);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(title || (TT('학습 리포트','Study Report')))}</div>
+      <button onclick="document.getElementById('rpt-overlay').remove()" style="flex-shrink:0;background:var(--bg-input);border:1px solid var(--ink-12);border-radius:9px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--ink-60);cursor:pointer;font-family:var(--font-body);">${TT('닫기','Close')}</button>
+    </div>
+    <iframe style="flex:1;width:100%;border:none;background:#fff;"></iframe>
+    <div style="flex-shrink:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--ink-07);background:var(--bg-card);font-size:11.5px;color:var(--ink-45);text-align:center;">${TT('인쇄·PDF 저장은 PC에서 이용해주세요','Printing and PDF export are available on desktop')}</div>`;
+  document.body.appendChild(ov);
+  ov.querySelector('iframe').srcdoc = html;
 }
 
 // ── 학생 표 (리포트 탭) ─────────────────────────────────────────
