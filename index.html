@@ -5466,23 +5466,34 @@ function showMyMenu() {
   const overlay = document.createElement('div');
   overlay.id = 'my-modal';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
-  const row = (icon, label, onclick) => `<button onclick="${onclick}" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;background:none;border:none;border-bottom:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);"><span style="font-size:18px;">${icon}</span><span>${label}</span><span style="margin-left:auto;color:var(--ink-45);">›</span></button>`;
+  // 열한 줄이 한 덩어리로 늘어서 있어 뭐가 어디 있는지 읽히지 않았다. 두 묶음으로 나누고,
+  // 자주 쓰는 것(설정)을 위로 올린다. 전에는 '사용자 후기·앱 소개' 가 맨 위였다.
+  // 회원 탈퇴는 로그아웃 바로 아래라 잘못 누르기 쉬웠다 → '개인정보 변경' 안으로 옮겼다.
+  // (앱스토어 심사지침 5.1.1(v) 는 '앱 안에서 시작할 수 있을 것' 을 요구할 뿐,
+  //  첫 화면에 둘 것을 요구하지 않는다. 계정 화면이 보통 쓰는 자리다.)
+  const row = (icon, label, onclick) => `<button onclick="${onclick}" style="display:flex;align-items:center;gap:12px;width:100%;padding:13px 16px;background:none;border:none;border-bottom:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:14px;color:var(--ink-100);cursor:pointer;text-align:left;font-family:var(--font-body);"><span style="font-size:18px;">${icon}</span><span>${label}</span><span style="margin-left:auto;color:var(--ink-45);">›</span></button>`;
+  const sec = (label) => `<div style="font-family:var(--font-body);font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-40);padding:15px 18px 5px;">${label}</div>`;
   overlay.innerHTML = `
-    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
-      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 12px;color:var(--ink-100);">${TT('My 메뉴','My Menu')}</div>
-      ${row('💬', TT('사용자 후기','User Reviews'), "document.getElementById('my-modal').remove();showEvent()")}
-      ${row('📖', TT('앱 소개','About'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/'+adPage())")}
-      ${row('👤', TT('개인정보 변경','My Info'), "document.getElementById('my-modal').remove();showMyInfo()")}
-      ${userPlan==='premium' && userStripeId && canShowBilling() ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
-      ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
-      ${pushSupported() ? row('🔔', TT('복습 알림','Review Reminders'), "document.getElementById('my-modal').remove();showPushSettings()") : ''}
-      ${row('🌐', TT('언어 설정','Language'), "document.getElementById('my-modal').remove();showLangSettings()")}
-      ${row('❓', TT('자주 묻는 질문','FAQ'), "document.getElementById('my-modal').remove();showFaq()")}
-      ${row('✉️', TT('문의하기','Contact Us'), "document.getElementById('my-modal').remove();contactSupport()")}
-      ${row(isDark?'☀️':'🌙', isDark?(TT('라이트 모드','Light Mode')):(TT('다크 모드','Dark Mode')), "document.getElementById('my-modal').remove();toggleDarkMode()")}
-      ${row('🚪', TT('로그아웃','Logout'), "document.getElementById('my-modal').remove();sbSignOut()")}
-      ${row('🗑️', `<span style="color:#c0392b;">${TT('회원 탈퇴','Delete Account')}</span>`, "document.getElementById('my-modal').remove();showDeleteAccount()")}
-      <button onclick="document.getElementById('my-modal').remove()" style="width:100%;padding:14px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('닫기','Close')}</button>
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:8px 0;max-width:340px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,0.2);overflow:hidden;">
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:600;padding:18px 18px 4px;color:var(--ink-100);flex-shrink:0;">${TT('My 메뉴','My Menu')}</div>
+      <div style="overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;">
+        ${sec(TT('설정','Settings'))}
+        ${row('👤', TT('개인정보 변경','My Info'), "document.getElementById('my-modal').remove();showMyInfo()")}
+        ${pushSupported() ? row('🔔', TT('복습 알림','Review Reminders'), "document.getElementById('my-modal').remove();showPushSettings()") : ''}
+        ${row('🌐', TT('언어 설정','Language'), "document.getElementById('my-modal').remove();showLangSettings()")}
+        ${row(isDark?'☀️':'🌙', isDark?(TT('라이트 모드','Light Mode')):(TT('다크 모드','Dark Mode')), "document.getElementById('my-modal').remove();toggleDarkMode()")}
+        ${userPlan==='premium' && userStripeId && canShowBilling() ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
+        ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
+        ${sec(TT('도움말','Help'))}
+        ${row('❓', TT('자주 묻는 질문','FAQ'), "document.getElementById('my-modal').remove();showFaq()")}
+        ${row('✉️', TT('문의하기','Contact Us'), "document.getElementById('my-modal').remove();contactSupport()")}
+        ${row('📖', TT('앱 소개','About'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/'+adPage())")}
+        ${row('💬', TT('사용자 후기','User Reviews'), "document.getElementById('my-modal').remove();showEvent()")}
+      </div>
+      <div style="flex-shrink:0;border-top:1px solid var(--ink-12,rgba(0,0,0,0.07));display:flex;">
+        <button onclick="document.getElementById('my-modal').remove();sbSignOut()" style="flex:1;padding:14px;background:none;color:var(--ink-60);border:none;border-right:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);">${TT('로그아웃','Log out')}</button>
+        <button onclick="document.getElementById('my-modal').remove()" style="flex:1;padding:14px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('닫기','Close')}</button>
+      </div>
     </div>`;
   overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
   document.body.appendChild(overlay);
@@ -5538,6 +5549,9 @@ function showMyInfo() {
       <input id="info-pw1" type="password" placeholder="${TT('새 비밀번호 (6자 이상)','New password (6+)')}" style="width:100%;padding:11px 13px;border:1px solid rgba(0,0,0,0.15);border-radius:10px;font-size:14px;margin-bottom:8px;box-sizing:border-box;">
       <input id="info-pw2" type="password" placeholder="${TT('새 비밀번호 확인','Confirm password')}" style="width:100%;padding:11px 13px;border:1px solid rgba(0,0,0,0.15);border-radius:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;">
       <button onclick="saveMyPassword()" style="width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:16px;">${TT('비밀번호 변경','Change Password')}</button>
+
+      <div style="border-top:1px solid var(--ink-12,rgba(0,0,0,0.08));margin:2px 0 10px;"></div>
+      <button onclick="document.getElementById('info-modal').remove();showDeleteAccount()" style="width:100%;padding:9px;background:none;border:none;color:#c0392b;font-size:12.5px;cursor:pointer;font-family:var(--font-body);opacity:0.9;">${TT('회원 탈퇴','Delete account')}</button>
 
       <button onclick="document.getElementById('info-modal').remove()" style="width:100%;padding:10px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;">${TT('닫기','Close')}</button>
     </div>`;
