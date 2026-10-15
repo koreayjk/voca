@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>수능 기본 Day 1 — 카드 미리보기</title>
+<title>IM VOCA 공식 단어장 — 카드 미리보기</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -53,7 +53,7 @@
 </style>
 </head>
 <body>
-  <div class="top"><div class="book">📕 <span id="bookname">수능 기본</span> <small id="daylabel">· Day 1</small></div><div class="counter" id="counter">1 / 40</div></div>
+  <div class="top"><div class="book">📕 <span id="bookname">Lv.1</span> <small id="daylabel">· Day 1</small></div><div class="counter" id="counter">1 / 20</div></div>
   <div class="stage"><div class="card" id="card" onclick="flip()"></div></div>
   <div class="nav">
     <button onclick="prev()">←</button>
@@ -95,8 +95,11 @@ function flip(){flipped=!flipped;render();}
 function next(){idx=(idx+1)%words.length;flipped=false;render();}
 function prev(){idx=(idx-1+words.length)%words.length;flipped=false;render();}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();else if(e.key==='ArrowLeft')prev();else if(e.key===' '){e.preventDefault();flip();}});
-const _day=new URLSearchParams(location.search).get('day')||'1';
-fetch('wordbooks/suneung-basic-day'+_day+'.json').then(r=>r.json()).then(d=>{words=d.words||[];if(d.book)document.getElementById('bookname').textContent=d.book;if(d.day)document.getElementById('daylabel').textContent='· Day '+d.day;render();}).catch(e=>{document.getElementById('card').innerHTML='<div style="padding:30px;text-align:center;color:#c0392b">데이터 로드 실패: '+e.message+'</div>';});
+// ?book=lv1&day=1 — 책 이름은 JSON 의 book 값을 그대로 쓴다 (레벨 12권 재편 이후 기본은 Lv.1)
+const _q=new URLSearchParams(location.search);
+const _day=_q.get('day')||'1';
+const _book=(_q.get('book')||'lv1').replace(/[^a-z0-9-]/gi,'');
+fetch('wordbooks/suneung-'+_book+'-day'+_day+'.json').then(r=>r.json()).then(d=>{words=d.words||[];if(d.book)document.getElementById('bookname').textContent=d.book;if(d.day)document.getElementById('daylabel').textContent='· Day '+d.day;render();}).catch(e=>{document.getElementById('card').innerHTML='<div style="padding:30px;text-align:center;color:#c0392b">데이터 로드 실패: '+e.message+'</div>';});
 </script>
 </body>
 </html>
