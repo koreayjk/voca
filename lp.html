@@ -324,7 +324,10 @@
   <nav class="nav">
     <div class="nav-inner">
       <div class="logo"><img src="https://imvoca.app/2.png" alt=""> IM VOCA</div>
-      <button class="nav-cta" onclick="goStart()">무료 시작</button>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://imvoca.app/?login=1" style="font-family:var(--sans);font-size:14px;font-weight:600;color:rgba(240,231,215,0.82);text-decoration:none;white-space:nowrap;">로그인</a>
+        <button class="nav-cta" onclick="goStart()">무료 시작</button>
+      </div>
     </div>
   </nav>
 
@@ -550,7 +553,7 @@
       <h2 class="section-title reveal">자주 묻는 질문</h2>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">정말 무료인가요? <span class="toggle">+</span></div><div class="faq-a">네, 회원가입만 하면 AI 추출 10회와 모든 핵심 기능을 무료로 쓸 수 있어요. 카드 등록도 필요 없어요. 더 많이 쓰고 싶을 때만 월 $3.99 또는 연 $39.99 프리미엄으로 전환하시면 됩니다.</div></div>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">어떤 책이든 인식되나요? <span class="toggle">+</span></div><div class="faq-a">원서, 토익, 수능, SAT, TOEFL, 전공 서적 등 영어로 쓰인 페이지면 모두 가능해요. 글자가 또렷하게 보이는 사진이면 AI가 어려운 단어를 잘 골라줍니다.</div></div>
-      <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">앱 설치가 필요한가요? <span class="toggle">+</span></div><div class="faq-a">아니요. 웹앱이라 imvoca.app에 접속만 하면 바로 쓸 수 있어요. 홈 화면에 추가하면 앱처럼 작동합니다. 곧 앱스토어·구글 플레이에도 출시 예정이에요.</div></div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">앱으로 받아야 하나요? <span class="toggle">+</span></div><div class="faq-a">앱으로 쓰시면 복습할 단어가 생길 때 알림을 받을 수 있어 가장 좋아요. 안드로이드는 <a href="https://play.google.com/store/apps/details?id=app.imvoca.twa" onclick="trackClick('faq-play')" style="color:inherit;font-weight:700;">구글 플레이</a>에서 바로 받으실 수 있고, 아이폰 앱은 준비 중이에요. 설치 없이 웹으로 쓰셔도 되고, 같은 계정으로 로그인하면 기록은 그대로 이어집니다.</div></div>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">단어 뜻이 정확한가요? <span class="toggle">+</span></div><div class="faq-a">Google Gemini AI를 사용해 책의 문맥에 맞는 뜻을 알려드려요. 일반 사전과 달리 "이 책에서는 이런 뜻이에요"를 함께 보여줍니다. 책 종류(수능·SAT·비즈니스 등)를 정해두면 더 정확해져요.</div></div>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">데이터는 안전한가요? <span class="toggle">+</span></div><div class="faq-a">모든 단어와 학습 기록은 안전한 클라우드(Supabase)에 저장돼요. 같은 계정으로 어느 기기에서 로그인하든 단어가 그대로 보존됩니다.</div></div>
     </div>
@@ -594,7 +597,7 @@
   </section>
 
   <footer>
-    <div style="margin-bottom:10px;"><a href="https://imvoca.app/">IM VOCA</a> · <a href="https://imvoca.app/ad_ko.html">앱 소개</a> · <a href="https://imvoca.app/pricing.html">가격</a> · <a href="https://imvoca.app/lp-group.html">학원·단체용</a></div>
+    <div style="margin-bottom:10px;"><a href="https://imvoca.app/?login=1">웹으로 로그인</a> · <a href="https://imvoca.app/ad_ko.html">앱 소개</a> · <a href="https://imvoca.app/pricing.html">가격</a> · <a href="https://imvoca.app/lp-group.html">학원·단체용</a></div>
     <div>© IM AMERICA GROUP CORP. · imvoca.app</div>
   </footer>
 

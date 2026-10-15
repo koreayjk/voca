@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IM VOCA — 고객지원</title>
+<meta name="description" content="IM VOCA 고객지원 — 문의처, 자주 묻는 질문, 계정 삭제 방법.">
+<meta property="og:title" content="IM VOCA — 고객지원">
+<meta property="og:description" content="문의처, 자주 묻는 질문, 계정 삭제 방법.">
+<meta property="og:image" content="https://imvoca.app/og-image.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imvoca.app/og-image.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f0e8; color: #1a1511; line-height: 1.7; word-break: keep-all; overflow-wrap: break-word; }
+  .page { max-width: 680px; margin: 0 auto; padding: 32px 28px 60px; background: #fff; min-height: 100vh; }
+
+  .top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .top img { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
+  .top-name { font-size: 18px; font-weight: 800; color: #1c3553; letter-spacing: -0.02em; }
+
+  .lang-switch { display: flex; gap: 6px; margin: 16px 0 4px; }
+  .lang-btn { font-size: 12px; font-weight: 600; padding: 6px 16px; border-radius: 99px; border: 1px solid rgba(28,53,83,0.25); background: #fff; color: #1c3553; cursor: pointer; }
+  .lang-btn.active { background: #1c3553; color: #fff; border-color: #1c3553; }
+
+  .updated { font-size: 12px; color: #aaa; margin-bottom: 24px; }
+
+  h1 { font-size: 24px; font-weight: 700; margin: 36px 0 6px; color: #1a1511; }
+  h1:first-of-type { margin-top: 12px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; color: #1c3553; }
+  p { font-size: 14px; color: #444; margin-bottom: 10px; }
+  ul { margin: 0 0 12px 20px; }
+  li { font-size: 14px; color: #444; margin-bottom: 6px; }
+  strong { color: #1a1511; }
+  .divider { height: 1px; background: #f0ece4; margin: 32px 0; }
+  .box { background: #fff8f3; border: 1px solid rgba(28,53,83,0.15); border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .box p { margin-bottom: 6px; }
+  .box p:last-child { margin-bottom: 0; }
+  .mail { display: inline-block; margin-top: 6px; background: #1c3553; color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; padding: 11px 22px; border-radius: 10px; }
+  .meta { font-size: 13px; color: #666; }
+  .faq { border-bottom: 1px solid #f0ece4; padding: 14px 0; }
+  .faq:last-of-type { border-bottom: none; }
+  .faq-q { font-size: 14.5px; font-weight: 700; color: #1a1511; margin-bottom: 5px; }
+  .faq-a { font-size: 14px; color: #444; }
+  a { color: #1c3553; }
+  .back { display: inline-block; margin-top: 36px; font-size: 13px; color: #1c3553; text-decoration: none; font-weight: 600; }
+  .ko, .en { display: none; }
+  .ko.show, .en.show { display: block; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <img src="https://imvoca.app/2.png" alt="IM VOCA">
+    <span class="top-name">IM VOCA</span>
+  </div>
+
+  <div class="lang-switch">
+    <button class="lang-btn active" id="btn-ko" onclick="setLang('ko')">한국어</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <!-- ===================== 한국어 ===================== -->
+  <div class="ko show">
+    <div class="updated">최종 수정일: 2026년 10월 15일</div>
+
+    <h1>고객지원</h1>
+    <p>IM VOCA를 쓰시면서 막히는 부분이 있으면 메일 주세요. 사람이 직접 읽고 답장드립니다.</p>
+
+    <div class="box">
+      <p><strong>문의 메일</strong></p>
+      <a class="mail" href="mailto:admin@imvoca.app">admin@imvoca.app</a>
+      <p class="meta" style="margin-top:10px;">보통 <strong>1~2 영업일</strong> 안에 답장드립니다. 주말·공휴일에는 조금 늦어질 수 있어요.</p>
+    </div>
+
+    <p class="meta">문의하실 때 아래를 같이 적어주시면 훨씬 빨리 해결됩니다.</p>
+    <ul>
+      <li>가입하신 <strong>이메일 주소</strong></li>
+      <li>쓰시는 기기 (아이폰·안드로이드·PC)와 앱 버전</li>
+      <li>어떤 화면에서 무엇을 눌렀을 때 생겼는지</li>
+      <li>가능하면 화면 캡처</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h1>자주 묻는 질문</h1>
+
+    <div class="faq">
+      <div class="faq-q">단어 추출이 잘 안 돼요</div>
+      <div class="faq-a">책 페이지가 평평하게 펴진 상태에서, 그림자가 지지 않게 찍어주세요. 글자가 너무 작거나 비스듬히 찍히면 인식률이 떨어집니다. 한 번에 여러 장을 찍어도 됩니다.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">스캔 횟수가 다 찼어요</div>
+      <div class="faq-a">무료 계정은 하루 스캔 수에 제한이 있습니다. 학원에 소속돼 계시면 원장님께 문의하시고, 개인으로 쓰신다면 <a href="https://imvoca.app/pricing.html">요금제</a>를 확인해 주세요.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">단체(학원) 코드를 잃어버렸어요</div>
+      <div class="faq-a">원장님 또는 담당 선생님께 문의해 주세요. 관리자는 단체 관리 화면의 <strong>초대 코드</strong> 탭에서 확인하고 재발급할 수 있습니다.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">복습 알림이 안 와요</div>
+      <div class="faq-a">기기 설정 → 알림에서 IM VOCA 알림이 켜져 있는지 확인해 주세요. 앱 안에서는 <strong>My → 알림 설정</strong>에서 받을 시간을 정할 수 있습니다.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">비밀번호를 잊어버렸어요</div>
+      <div class="faq-a">로그인 화면의 <strong>비밀번호를 잊으셨나요?</strong>를 눌러 가입하신 메일로 재설정 링크를 받으세요. 구글로 가입하셨다면 구글 로그인을 쓰시면 됩니다.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">기기를 바꿨는데 단어장이 그대로 있나요?</div>
+      <div class="faq-a">네. 단어장과 복습 일정은 계정에 저장되므로, 같은 계정으로 로그인하시면 그대로 이어집니다.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h1>계정 삭제</h1>
+    <p>앱 안에서 바로 삭제할 수 있습니다. <strong>My → 회원 탈퇴</strong>를 누르시면 계정과 모든 학습 데이터가 삭제됩니다. 되돌릴 수 없으니 신중히 진행해 주세요.</p>
+    <p class="meta">앱을 쓸 수 없는 상황이면 <a href="https://imvoca.app/delete-account.html">계정 삭제 안내</a> 페이지를 참고하시거나, 가입하신 메일 주소로 <a href="mailto:admin@imvoca.app">admin@imvoca.app</a>에 요청해 주세요.</p>
+
+    <div class="divider"></div>
+
+    <h1>약관 및 정책</h1>
+    <ul>
+      <li><a href="https://imvoca.app/terms.html">이용약관 · 개인정보처리방침 · 환불정책</a></li>
+      <li><a href="https://imvoca.app/guide.html">사용 설명서</a></li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h1>만든 곳</h1>
+    <div class="box">
+      <p><strong>IM AMERICA GROUP CORP</strong></p>
+      <p class="meta">1608 Hollowhill Drive, Apt 912<br>Bryan, TX 77802, United States</p>
+      <p class="meta"><a href="mailto:admin@imvoca.app">admin@imvoca.app</a></p>
+    </div>
+
+    <a class="back" href="https://imvoca.app/">← IM VOCA로 돌아가기</a>
+  </div>
+
+  <!-- ===================== English ===================== -->
+  <div class="en">
+    <div class="updated">Last updated: October 15, 2026</div>
+
+    <h1>Support</h1>
+    <p>If anything goes wrong while you're using IM VOCA, send us an email. A person reads every message and replies.</p>
+
+    <div class="box">
+      <p><strong>Contact</strong></p>
+      <a class="mail" href="mailto:admin@imvoca.app">admin@imvoca.app</a>
+      <p class="meta" style="margin-top:10px;">We usually reply within <strong>1–2 business days</strong>. Weekends and holidays may take a little longer.</p>
+    </div>
+
+    <p class="meta">Including the following helps us solve it much faster:</p>
+    <ul>
+      <li>The <strong>email address</strong> you signed up with</li>
+      <li>Your device (iPhone, Android, PC) and app version</li>
+      <li>Which screen you were on and what you tapped</li>
+      <li>A screenshot, if you can</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h1>Frequently asked questions</h1>
+
+    <div class="faq">
+      <div class="faq-q">Word extraction isn't working well</div>
+      <div class="faq-a">Lay the page flat and avoid shadows. Very small type or a steep angle lowers recognition. You can photograph several pages at once.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">I've used up my scans</div>
+      <div class="faq-a">Free accounts have a daily scan limit. If you belong to an academy, ask your administrator. For personal use, see <a href="https://imvoca.app/pricing.html">Plans</a>.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">I lost my organization code</div>
+      <div class="faq-a">Ask your academy's administrator or teacher. Admins can view and reissue it under the <strong>Invite</strong> tab of the admin console.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">I'm not getting review reminders</div>
+      <div class="faq-a">Check that notifications are enabled for IM VOCA in your device settings. In the app, set your reminder time under <strong>My → Notifications</strong>.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">I forgot my password</div>
+      <div class="faq-a">Tap <strong>Forgot password?</strong> on the sign-in screen to get a reset link by email. If you signed up with Google, use Google sign-in instead.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q">I changed devices — are my wordbooks still there?</div>
+      <div class="faq-a">Yes. Wordbooks and review schedules are stored with your account, so signing in on the new device brings everything back.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h1>Deleting your account</h1>
+    <p>You can delete your account from inside the app: <strong>My → Delete Account</strong>. This removes your account and all learning data, and cannot be undone.</p>
+    <p class="meta">If you can't access the app, see <a href="https://imvoca.app/delete-account.html">Account deletion</a> or email <a href="mailto:admin@imvoca.app">admin@imvoca.app</a> from your registered address.</p>
+
+    <div class="divider"></div>
+
+    <h1>Terms and policies</h1>
+    <ul>
+      <li><a href="https://imvoca.app/terms.html">Terms of Service · Privacy Policy · Refund Policy</a></li>
+      <li><a href="https://imvoca.app/guide.html">User guide</a></li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h1>Developer</h1>
+    <div class="box">
+      <p><strong>IM AMERICA GROUP CORP</strong></p>
+      <p class="meta">1608 Hollowhill Drive, Apt 912<br>Bryan, TX 77802, United States</p>
+      <p class="meta"><a href="mailto:admin@imvoca.app">admin@imvoca.app</a></p>
+    </div>
+
+    <a class="back" href="https://imvoca.app/">← Back to IM VOCA</a>
+  </div>
+</div>
+
+<script>
+  function setLang(lang) {
+    document.querySelector('.ko').classList.toggle('show', lang === 'ko');
+    document.querySelector('.en').classList.toggle('show', lang === 'en');
+    document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    window.scrollTo(0, 0);
+  }
+  // 브라우저 언어가 한국어가 아니면 영어로 시작
+  try { if (!/^ko/i.test(navigator.language || '')) setLang('en'); } catch(e){}
+</script>
+<script>
+// 앱의 인앱 브라우저(?inapp=1)로 열렸을 때는 'IM VOCA로 돌아가기' 링크를 숨긴다.
+(function(){
+  try {
+    if (new URLSearchParams(location.search).get('inapp') !== '1') return;
+    document.querySelectorAll('a.back').forEach(function(a){ a.style.display = 'none'; });
+    // 앱 안에서 열렸을 때는 요금제 링크를 글자로 바꾼다 — 앱에서 외부 결제로
+    // 유도하는 것으로 읽히면 애플 심사지침 3.1.1 위반이 된다.
+    document.querySelectorAll('a[href*="pricing.html"]').forEach(function(a){
+      var t = document.createElement('span'); t.textContent = a.textContent; a.replaceWith(t);
+    });
+  } catch(e){}
+})();
+</script>
+</body>
+</html>
