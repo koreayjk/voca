@@ -342,6 +342,11 @@ html, body { height: 100%; font-family: var(--font-body); color: var(--ink-100);
 }
 .scr-scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
               overscroll-behavior: contain; padding-bottom: 24px; }
+/* 책장: 제목 영역 바로 아래가 스크롤 경계라, 책 표지가 지나갈 때 선 하나에 뚝 잘려
+   잘못 그려진 것처럼 보였다. 경계에서 몇 px 에 걸쳐 흐려지게 해 자연스럽게 넘어가도록. */
+.scr-shelf .scr-scroll { padding-top: 14px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14px);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 14px); }
 
 /* 로그인 화면 (IM메신저 스타일 좌우 2단) */
 .auth-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--bg-page); padding: 20px; overflow-y: auto; }
@@ -435,7 +440,7 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
   .scr-shelf .lib-header { margin-top: 0; }
 }
 .lib-plus { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; color: var(--accent); }
-.book-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px 12px; margin-top: 22px; padding: 0 2px; }
+.book-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px 12px; margin-top: 14px; padding: 0 2px; }
 /* ── 책장 도구줄: 정렬 · 순서 편집 · 보기 방식 ─────────────────── */
 .shelf-tools { display: flex; align-items: center; gap: 8px; margin-top: 18px; padding: 0 6px; flex-wrap: wrap; }
 .shelf-spacer { flex: 1 1 auto; min-width: 0; }
