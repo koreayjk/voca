@@ -3773,6 +3773,7 @@ function orgIsPrimary(){ return !!(userOrg && userOrg.owner_id && currentUser &&
 function orgIsAdmin(){ return userOrgRole === 'owner' && userOrgStatus === 'approved'; }
 
 async function startOrgBilling(){
+  if (!canShowBilling()) return;   // iOS 앱: 외부 결제로 보내면 안 된다 (3.1.1)
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
   if (!orgIsPrimary()) { toast(TT('결제는 주 관리자만 할 수 있어요','Only the primary admin can manage billing')); return; }
@@ -5228,7 +5229,11 @@ function renderOrgAdminPage(root) {
 
   // ── 승인된 단체: LMS 사이드바 레이아웃 ──
   const isPrim = orgIsPrimary();
-  const tab = window._orgTab || 'dashboard';
+  // 애플 심사지침 3.1.1 — iOS 앱에서는 가격·결제 버튼·외부 결제 유도를 보이면 안 된다.
+  // 다른 결제 UI 는 canShowBilling() 으로 막혀 있었는데 단체 콘솔의 '구독·결제' 탭만
+  // 빠져 있었다. 가격($2.99/인)과 Stripe 체크아웃 버튼이 그대로 노출된다.
+  let tab = window._orgTab || 'dashboard';
+  if (tab === 'billing' && !canShowBilling()) tab = 'dashboard';
   const logoBox = (sz)=> userOrg.logo_url
     ? `<img src="${userOrg.logo_url}" style="width:${sz}px;height:${sz}px;object-fit:contain;border-radius:${Math.round(sz*0.23)}px;background:#fff;border:1px solid var(--ink-07);flex-shrink:0;">`
     : `<div style="width:${sz}px;height:${sz}px;border-radius:${Math.round(sz*0.23)}px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-weight:600;font-size:${Math.round(sz*0.43)}px;flex-shrink:0;">${esc((userOrg.name||'?').trim().charAt(0))}</div>`;
@@ -5333,7 +5338,7 @@ function renderOrgAdminPage(root) {
     ['invite','🎫', TT('초대 코드','Invite')],
     ['billing','💳', TT('구독·결제','Billing')],
     ['settings','⚙️', TT('설정','Settings')],
-  ];
+  ].filter(([id]) => id !== 'billing' || canShowBilling());
   const navHTML = NAV.map(([id,ic,lb])=>`<button class="org-nav__btn ${tab===id?'active':''}" onclick="setOrgTab('${id}')"><span class="org-nav__ic">${ic}</span>${lb}</button>`).join('');
 
   root.innerHTML = `
@@ -5359,7 +5364,7 @@ function renderOrgAdminPage(root) {
   if (tab==='dashboard') setTimeout(loadOrgOverview, 0);
   if (tab==='report') setTimeout(loadOrgTable, 0);
   if (tab==='tests') setTimeout(()=>{ loadTests().then(_renderTestList).catch(()=>_renderTestList()); }, 0);
-  if (tab==='billing') setTimeout(loadOrgInvoices, 0);
+  if (tab==='billing' && canShowBilling()) setTimeout(loadOrgInvoices, 0);
 }
 
 // ── 자주 묻는 질문(FAQ) ──
