@@ -177,6 +177,6 @@ Deno.serve(async (req) => {
     ok: true, sent, skipped, dropped, failed,
     // 진단용 — 키 값은 노출하지 않고 '앞 8자 + 길이'만. 앱의 공개키와 대조하기 위함.
     vapid: { pub: VAPID_PUBLIC.slice(0, 8) + '…(' + VAPID_PUBLIC.length + ')', subject: VAPID_SUBJECT },
-    apns: { configured: apnsConfigured(), topic: Deno.env.get('APNS_BUNDLE_ID') ?? 'app.imvoca', host: Deno.env.get('APNS_HOST') ?? 'production' },
+    apns: { configured: apnsConfigured(), topic: Deno.env.get('APNS_BUNDLE_ID') ?? 'app.imvoca.ios', host: Deno.env.get('APNS_HOST') ?? 'production' },
   })
 })
