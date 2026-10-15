@@ -77,7 +77,7 @@
 
     <div class="wait" id="wait">스토어로 이동 중…</div>
     <a class="btn btn-1" id="store-play" href="https://play.google.com/store/apps/details?id=app.imvoca.twa">▶ Play 스토어에서 받기</a>
-    <a class="btn btn-1" id="store-ios" href="https://apps.apple.com/app/id6822972633"> App Store에서 받기</a>
+    <a class="btn btn-1" id="store-ios" href=""> App Store에서 받기</a>
     <a class="btn btn-2" href="https://imvoca.app/">웹에서 바로 쓰기</a>
 
     <div class="pat">🏅 특허출원 기술 · 제10-2026-0127089호</div>
@@ -87,16 +87,23 @@
   // 기기에 맞는 스토어 버튼 하나만 남기고, 모바일에서 온 사람은 원래 스토어 링크를
   // 누른 것과 같은 경험이 되게 바로 넘긴다. PC 는 두 버튼을 다 두고 이 화면에 머문다.
   // 크롤러는 미리보기(og)를 읽어야 하므로 넘기지 않는다.
+  // 심사 승인되면 아래 줄의 주석만 벗기면 된다. 비어 있으면 아이폰에서도
+  // App Store 버튼이 숨고 '웹에서 바로 쓰기' 가 남는다.
+  // var IOS_APP_URL = 'https://apps.apple.com/app/id6822972633';
+  var IOS_APP_URL = '';
+
   (function () {
     var ua = navigator.userAgent || '';
     var isBot = /(kakaotalk-scrap|facebookexternalhit|Twitterbot|Slackbot|bot|crawler|spider)/i.test(ua);
     var android = /Android/i.test(ua);
     var ios = /iPhone|iPad|iPod/i.test(ua) ||
               (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);   // 아이패드 사파리
-    if (android) document.getElementById('store-ios').style.display = 'none';
-    else if (ios) document.getElementById('store-play').style.display = 'none';
+    var iosBtn = document.getElementById('store-ios');
+    if (IOS_APP_URL) iosBtn.href = IOS_APP_URL; else iosBtn.style.display = 'none';
+    if (android) iosBtn.style.display = 'none';
+    else if (ios) document.getElementById('store-play').style.display = 'none';  // 아이폰에 Play 버튼은 막다른 길
     var btn = android ? document.getElementById('store-play')
-            : ios ? document.getElementById('store-ios') : null;
+            : (ios && IOS_APP_URL) ? iosBtn : null;
     if (btn && !isBot) {
       document.getElementById('wait').style.display = 'block';
       setTimeout(function () { location.replace(btn.href); }, 700);

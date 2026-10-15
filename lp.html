@@ -411,7 +411,7 @@
       <div class="feature-list">
         <div class="feature reveal"><div class="feature-icon">📸</div><div class="feature-title">사진 한 장으로 끝</div><div class="feature-desc">책 페이지를 찍기만 하면 AI가 어려운 단어만 골라 자동으로 단어장에 넣어드려요. 타이핑 0초.</div></div>
         <div class="feature reveal"><div class="feature-icon">🎯</div><div class="feature-title">책 문맥에 맞는 뜻</div><div class="feature-desc">기본 뜻 + 이 책 이 문장에서의 뜻. 더 이상 사전 5개 의미 중에서 골라 헤매지 않아요.</div></div>
-        <div class="feature reveal"><div class="feature-icon">🧠</div><div class="feature-title">잊지 않는 복습 시스템</div><div class="feature-desc">에빙하우스 망각곡선으로 1·2·3·6·15·30·60일 자동 알림. 평생 기억에 남게.</div></div>
+        <div class="feature reveal"><div class="feature-icon">🧠</div><div class="feature-title">잊지 않는 복습 시스템</div><div class="feature-desc">에빙하우스 망각곡선으로 1·2·3·6·15·30일 자동 알림. 평생 기억에 남게.</div></div>
         <div class="feature reveal"><div class="feature-icon">📚</div><div class="feature-title">책 종류별 맞춤 검색</div><div class="feature-desc">수능·SAT·비즈니스·의학 등 책 종류를 정하면 그 분야에 맞는 뜻을 우선해서 보여드려요.</div></div>
         <div class="feature reveal"><div class="feature-icon">🔬</div><div class="feature-title">전문 용어는 개념까지 설명</div><div class="feature-desc">의학·법률·화학·공학 등 전문 단어는 단순 번역에 그치지 않고 개념·역할·관련 용어까지 한 줄 더 풀어드려요. 전공 원서도 막힘 없이.</div></div>
       </div>
@@ -474,9 +474,9 @@
           <path d="M 28 26 L 58 44 L 60 27 L 92 43 L 94 27 L 128 44 L 130 28 L 180 46 L 182 29 L 240 46 L 242 30 L 300 44 L 302 31" fill="none" stroke="#d8b46a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
           <circle cx="60" cy="27" r="3.4" fill="#d8b46a"/><circle cx="94" cy="27" r="3.4" fill="#d8b46a"/><circle cx="130" cy="28" r="3.4" fill="#d8b46a"/><circle cx="182" cy="29" r="3.4" fill="#d8b46a"/><circle cx="242" cy="30" r="3.4" fill="#d8b46a"/><circle cx="302" cy="31" r="3.4" fill="#d8b46a"/>
         </svg>
-        <div class="curve-points"><div class="curve-point">1일</div><div class="curve-point">2일</div><div class="curve-point">3일</div><div class="curve-point">6일</div><div class="curve-point">15일</div><div class="curve-point">30일</div><div class="curve-point">60일</div></div>
+        <div class="curve-points"><div class="curve-point">1일</div><div class="curve-point">2일</div><div class="curve-point">3일</div><div class="curve-point">6일</div><div class="curve-point">15일</div><div class="curve-point">30일</div></div>
 
-        <p style="font-size:13px; color:var(--ink-60); line-height:1.7; margin-top:16px;">IM VOCA는 이 <b style="color:var(--accent);">7번의 복습 타이밍(1·2·3·6·15·30·60일)</b>을 자동으로 계산해, '잊을 때쯤' 정확히 알림을 보내드려요. 적은 노력으로도 외운 단어가 오래 기억에 남습니다.</p>
+        <p style="font-size:13px; color:var(--ink-60); line-height:1.7; margin-top:16px;">IM VOCA는 이 <b style="color:var(--accent);">6번의 복습 타이밍(1·2·3·6·15·30일)</b>을 자동으로 계산해, '잊을 때쯤' 정확히 알림을 보내드려요. 적은 노력으로도 외운 단어가 오래 기억에 남습니다.</p>
       </div>
     </div>
   </section>
@@ -609,7 +609,9 @@
     //    IOS_APP_URL 을 비우면 애플 버튼은 '준비 중' 으로 돌아가고,
     //    아이폰 사용자의 CTA 도 웹 가입으로 간다. 심사 반려 같은 일이 생기면
     //    이 한 줄만 비우면 된다.
-    var IOS_APP_URL = 'https://apps.apple.com/app/id6822972633';
+    //    심사 승인되면 아래 줄의 주석만 벗기면 된다.
+    // var IOS_APP_URL = 'https://apps.apple.com/app/id6822972633';
+    var IOS_APP_URL = '';
     var PLAY_APP_URL = 'https://play.google.com/store/apps/details?id=app.imvoca.twa';
 
     // ── 무료 가입 CTA 를 기기에 맞는 곳으로 ─────────────────────────────

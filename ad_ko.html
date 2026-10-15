@@ -485,7 +485,6 @@
       <span class="ebb-day">6일 후</span>
       <span class="ebb-day">15일 후</span>
       <span class="ebb-day">30일 후</span>
-      <span class="ebb-day">60일 후</span>
     </div>
     <div class="ebb-desc" style="margin-top:12px;">암기 카드를 완료하면 자동으로 복습 일정이 등록돼요. 망각하기 직전에 복습하면 장기 기억으로 완전히 내 것이 됩니다.</div>
   </div>
@@ -495,9 +494,9 @@
   (function() {
     const ctx = document.getElementById('ebbChart');
     if (!ctx) return;
-    const labels = ['0일', '1일', '2일', '3일', '6일', '15일', '30일', '60일'];
-    const forgetting = [100, 33, 28, 25, 22, 20, 18, 16];
-    const withReview = [100, 95, 98, 97, 96, 95, 94, 93];
+    const labels = ['0일', '1일', '2일', '3일', '6일', '15일', '30일'];
+    const forgetting = [100, 33, 28, 25, 22, 20, 18];
+    const withReview = [100, 95, 98, 97, 96, 95, 94];
     new Chart(ctx, {
       type: 'line',
       data: {

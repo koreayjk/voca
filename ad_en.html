@@ -482,7 +482,6 @@
       <span class="ebb-day">+6 days</span>
       <span class="ebb-day">+15 days</span>
       <span class="ebb-day">+30 days</span>
-      <span class="ebb-day">+60 days</span>
     </div>
     <div class="ebb-desc" style="margin-top:12px;">Complete flashcards and your review schedule auto-registers. Review before forgetting to build long-term memory.</div>
   </div>
@@ -492,9 +491,9 @@
   (function() {
     const ctx = document.getElementById('ebbChart');
     if (!ctx) return;
-    const labels = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 6', 'Day 15', 'Day 30', 'Day 60'];
-    const forgetting = [100, 33, 28, 25, 22, 20, 18, 16];
-    const withReview = [100, 95, 98, 97, 96, 95, 94, 93];
+    const labels = ['Day 0', 'Day 1', 'Day 2', 'Day 3', 'Day 6', 'Day 15', 'Day 30'];
+    const forgetting = [100, 33, 28, 25, 22, 20, 18];
+    const withReview = [100, 95, 98, 97, 96, 95, 94];
     new Chart(ctx, {
       type: 'line',
       data: {
