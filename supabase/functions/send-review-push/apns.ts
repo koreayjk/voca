@@ -65,7 +65,7 @@ export async function sendApns(
   const keyId = Deno.env.get('APNS_KEY_ID') ?? '';
   const teamId = Deno.env.get('APNS_TEAM_ID') ?? '';
   const p8 = Deno.env.get('APNS_PRIVATE_KEY') ?? '';
-  const topic = Deno.env.get('APNS_BUNDLE_ID') ?? 'app.imvoca';
+  const topic = Deno.env.get('APNS_BUNDLE_ID') ?? 'app.imvoca.ios';
   const preferred = (Deno.env.get('APNS_HOST') ?? '').toLowerCase() === 'sandbox' ? SANDBOX : PROD;
 
   const jwt = await providerToken(keyId, teamId, p8);
