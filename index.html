@@ -5485,10 +5485,12 @@ function showMyMenu() {
         ${userPlan==='premium' && userStripeId && canShowBilling() ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
         ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
         ${sec(TT('도움말','Help'))}
+        ${row('📖', TT('사용법','Guide'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/guide.html?lang='+guideLang())")}
         ${row('❓', TT('자주 묻는 질문','FAQ'), "document.getElementById('my-modal').remove();showFaq()")}
         ${row('✉️', TT('문의하기','Contact Us'), "document.getElementById('my-modal').remove();contactSupport()")}
-        ${row('📖', TT('앱 소개','About'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/'+adPage())")}
+        ${sec('IM VOCA')}
         ${row('💬', TT('사용자 후기','User Reviews'), "document.getElementById('my-modal').remove();showEvent()")}
+        ${row('ℹ️', TT('앱 소개','About'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/'+adPage())")}
       </div>
       <div style="flex-shrink:0;border-top:1px solid var(--ink-12,rgba(0,0,0,0.07));display:flex;">
         <button onclick="document.getElementById('my-modal').remove();sbSignOut()" style="flex:1;padding:14px;background:none;color:var(--ink-60);border:none;border-right:1px solid var(--ink-12,rgba(0,0,0,0.07));font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);">${TT('로그아웃','Log out')}</button>
