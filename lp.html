@@ -121,8 +121,8 @@
     .cta-note { display: block; font-size: 12px; color: var(--ink-40); margin-top: 12px; }
 
     /* ── 스토어 버튼 ─────────────────────────────────────────────
-       아이폰 앱은 아직 심사 전이라 애플 쪽은 '준비 중' 으로 둔다.
-       출시되면 아래 스크립트의 IOS_APP_URL 한 줄만 채우면 두 곳이 같이 살아난다. */
+       애플 버튼은 아래 스크립트의 IOS_APP_URL 이 채워져 있을 때만 살아난다.
+       비어 있으면 '준비 중' 으로 남는다. */
     .stores { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
     .store-btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
                  background: #11181f; color: #f0e7d7; border: 1px solid rgba(240,231,215,0.18);
@@ -554,7 +554,7 @@
       <h2 class="section-title reveal">자주 묻는 질문</h2>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">정말 무료인가요? <span class="toggle">+</span></div><div class="faq-a">네, 회원가입만 하면 AI 추출 10회와 모든 핵심 기능을 무료로 쓸 수 있어요. 카드 등록도 필요 없어요. 더 많이 쓰고 싶을 때만 월 $3.99 또는 연 $39.99 프리미엄으로 전환하시면 됩니다.</div></div>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">어떤 책이든 인식되나요? <span class="toggle">+</span></div><div class="faq-a">원서, 토익, 수능, SAT, TOEFL, 전공 서적 등 영어로 쓰인 페이지면 모두 가능해요. 글자가 또렷하게 보이는 사진이면 AI가 어려운 단어를 잘 골라줍니다.</div></div>
-      <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">앱으로 받아야 하나요? <span class="toggle">+</span></div><div class="faq-a">앱으로 쓰시면 복습할 단어가 생길 때 알림을 받을 수 있어 가장 좋아요. 안드로이드는 <a href="https://play.google.com/store/apps/details?id=app.imvoca.twa" onclick="trackClick('faq-play')" style="color:inherit;font-weight:700;">구글 플레이</a>에서 바로 받으실 수 있고, 아이폰 앱은 준비 중이에요. 설치 없이 웹으로 쓰셔도 되고, 같은 계정으로 로그인하면 기록은 그대로 이어집니다.</div></div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">앱으로 받아야 하나요? <span class="toggle">+</span></div><div class="faq-a">앱으로 쓰시면 복습할 단어가 생길 때 알림을 받을 수 있어 가장 좋아요. 안드로이드는 <a href="https://play.google.com/store/apps/details?id=app.imvoca.twa" onclick="trackClick('faq-play')" style="color:inherit;font-weight:700;">구글 플레이</a>에서 바로 받으실 수 있고, <span id="faq-ios">아이폰 앱은 준비 중이에요</span>. 설치 없이 웹으로 쓰셔도 되고, 같은 계정으로 로그인하면 기록은 그대로 이어집니다.</div></div>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">단어 뜻이 정확한가요? <span class="toggle">+</span></div><div class="faq-a">Google Gemini AI를 사용해 책의 문맥에 맞는 뜻을 알려드려요. 일반 사전과 달리 "이 책에서는 이런 뜻이에요"를 함께 보여줍니다. 책 종류(수능·SAT·비즈니스 등)를 정해두면 더 정확해져요.</div></div>
       <div class="faq-item reveal" onclick="this.classList.toggle('open')"><div class="faq-q">데이터는 안전한가요? <span class="toggle">+</span></div><div class="faq-a">모든 단어와 학습 기록은 안전한 클라우드(Supabase)에 저장돼요. 같은 계정으로 어느 기기에서 로그인하든 단어가 그대로 보존됩니다.</div></div>
     </div>
@@ -605,10 +605,11 @@
   <div class="sticky-cta" id="sticky-cta"><a href="https://imvoca.app/?signup=1" data-app-cta data-app-label="📲 앱 설치하고 시작하기 →" onclick="trackClick('sticky')">무료로 시작하기 →</a></div>
 
   <script>
-    // ── 아이폰 앱이 출시되면 이 한 줄만 채우면 된다 ───────────────────────
-    //    (예: 'https://apps.apple.com/app/id0000000000')
-    //    비워두면 애플 버튼은 '준비 중' 으로 남고, 아이폰 사용자의 CTA 는 웹으로 간다.
-    var IOS_APP_URL = '';
+    // ── 스토어 주소 ───────────────────────────────────────────────────
+    //    IOS_APP_URL 을 비우면 애플 버튼은 '준비 중' 으로 돌아가고,
+    //    아이폰 사용자의 CTA 도 웹 가입으로 간다. 심사 반려 같은 일이 생기면
+    //    이 한 줄만 비우면 된다.
+    var IOS_APP_URL = 'https://apps.apple.com/app/id6822972633';
     var PLAY_APP_URL = 'https://play.google.com/store/apps/details?id=app.imvoca.twa';
 
     // ── 무료 가입 CTA 를 기기에 맞는 곳으로 ─────────────────────────────
@@ -641,6 +642,9 @@
         var small = el.querySelector('.st small');
         if (small) small.textContent = '아이폰';
       });
+      var faq = document.getElementById('faq-ios');
+      if (faq) faq.innerHTML = '아이폰은 <a href="' + IOS_APP_URL +
+        '" onclick="trackClick(\'faq-appstore\')" style="color:inherit;font-weight:700;">App Store</a>에서 받으시면 돼요';
     }
 
     function goStart() {
