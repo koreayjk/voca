@@ -445,9 +445,14 @@ button:active, .dock__btn:active, .book-tile:active, .scope-card:active, .list-r
      줄을 바꿔서 전부 한눈에 보이게 한다. */
   /* 칸마다 글자 길이가 달라 폭이 제각각이면 '넘쳐서 접힌 줄' 처럼 보인다.
      같은 너비의 격자로 맞추면 줄이 나뉘어도 의도한 배치로 읽힌다. */
-  .org-sidebar { position: sticky; top: 0; width: 100%; height: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); align-items: stretch; overflow: visible; border-right: none; border-bottom: 1px solid var(--ink-07); padding: 9px 12px; gap: 5px; box-shadow: none; z-index: 15; }
+  /* 칸마다 글자 길이가 달라 폭이 제각각이면 '넘쳐서 접힌 줄' 처럼 보인다.
+     네 칸 고정 격자로 맞춰 7개가 4+3 으로 떨어지게 한다. 자동 열 수로 두면
+     넓은 기기(Pro Max 430px)에서 다섯 칸이 돼 다시 5+2 로 어긋난다. */
+  .org-sidebar { position: sticky; top: 0; width: 100%; height: auto; display: grid; grid-template-columns: repeat(4, 1fr); align-items: stretch; overflow: visible; border-right: none; border-bottom: 1px solid var(--ink-07); padding: 10px 12px; gap: 6px; box-shadow: none; z-index: 15; }
   .org-sidebar__brand, .org-nav__id { display: none; }
-  .org-nav__btn { width: auto; min-width: 0; justify-content: center; padding: 8px 5px; font-size: 12px; gap: 4px; border: 1px solid var(--ink-07); background: var(--bg-page); white-space: nowrap; overflow: hidden; }
+  .org-nav__btn { width: auto; min-width: 0; justify-content: center; padding: 11px 5px; font-size: 12.5px; gap: 5px; border: 1px solid var(--ink-07); background: var(--bg-page); white-space: nowrap; overflow: hidden; }
+  /* 아주 좁은 기기(SE 1세대 등)에서는 네 칸이 글자를 못 담는다 */
+  @media (max-width: 344px) { .org-sidebar { grid-template-columns: repeat(3, 1fr); } }
   .org-nav__ic { font-size: 13.5px; width: auto; }
   .org-nav__lb { display: none; }
   .org-nav__lb--sm { display: inline; }
