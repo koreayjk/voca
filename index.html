@@ -809,6 +809,76 @@ const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 O
 //    설정 전에 true 로 두면 버튼을 눌렀을 때 오류가 난다.
 const APPLE_LOGIN_ENABLED = false;
 let currentUser = null, _authToken = null;
+
+// ════════════════════════════════════════════════════════════════
+// 🚪 로그인 없이 둘러보기 (앱스토어 심사지침 5.1.1(v))
+//
+// 애플은 "계정이 필요 없는 기능까지 가입을 요구하지 말라"고 한다. 실제로
+// 1.0(5) 가 이 조항으로 반려됐다. 공식 단어장은 RLS 가 is_official=true 로
+// 열려 있어 anon 키만으로 읽힌다(sbFetch 가 _authToken 없으면 SB_KEY 로 폴백) →
+// 둘러보기 사용자도 책을 고르고 Day 1 을 '진짜로' 학습할 수 있다.
+//
+// 저장이 필요한 동작(스캔·책 담기·복습 등록·명예의 전당·단체)에서만 로그인을 청한다.
+// 그 경계는 needsLogin() 한 줄로 긋는다 — 호출부는 `if (needsLogin()) return;`.
+// ════════════════════════════════════════════════════════════════
+let guestMode = false;
+function isGuest(){ return guestMode && !currentUser; }
+
+// 게스트가 '저장이 필요한 곳'을 눌렀을 때 true 를 돌려준다(= 호출부는 그 자리에서 멈춘다).
+// 로그인한 사용자에게는 항상 false 라 기존 흐름에 영향이 없다.
+function needsLogin(why){
+  if (!isGuest()) return false;
+  showLoginInvite(why);
+  return true;
+}
+
+// 둘러보기 시작 — 공식 단어장 카탈로그를 책장에 깔아준다.
+// 단어(voca_words)까지 다 받으면 수 MB 라 느리다. 목록은 메타데이터만 받고
+// 단어는 책을 열 때 ensureOfficialBookWords 로 한 권씩 가져온다(기존 로직 재사용).
+async function startGuest(){
+  guestMode = true;
+  books = [];
+  const root = document.getElementById('root');
+  if (root) root.innerHTML = `<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ink-45);font-size:14px;">${TT('단어장을 불러오는 중…','Loading wordbooks…')}</div>`;
+  try {
+    const od = await ensureOfficialCatalog();
+    if (Array.isArray(od)) {
+      books = od.filter(b => _officialLang(b.title) === userTargetLang)
+                .sort(_officialPickerOrder)
+                .map(_mapOfficialBook);
+    }
+  } catch(e){ console.warn('[guest shelf]', e); }
+  try { track('guest_start', { books: books.length }); } catch(e){}
+  stack = [{ name:'library' }];
+  render();
+}
+
+// 둘러보기 끝내고 로그인 화면으로. 담아둔 것이 없으므로 지울 상태도 없다.
+function exitGuest(tab){
+  guestMode = false;
+  books = [];
+  document.getElementById('login-invite')?.remove();
+  renderLogin(tab);
+}
+
+// "로그인하면 저장돼요" 안내. why 에 그 자리에서 막힌 이유를 한 줄로 넣는다.
+function showLoginInvite(why){
+  document.getElementById('login-invite')?.remove();
+  const ov = document.createElement('div');
+  ov.id = 'login-invite';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10050;display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:26px 24px;max-width:330px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.25);text-align:center;">
+      <div style="font-size:38px;line-height:1;margin-bottom:12px;">🔖</div>
+      <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${TT('로그인하면 이어서 공부할 수 있어요','Log in to keep your progress')}</div>
+      <div style="font-size:13px;color:var(--ink-60);line-height:1.75;margin-bottom:18px;">${why ? esc(why) + '<br>' : ''}${TT('외운 단어와 복습 일정이 계정에 저장돼요.<br>가입은 10초면 끝나고 무료예요.','Your words and review schedule are saved to your account.<br>Signing up takes 10 seconds and is free.')}</div>
+      <button class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;" onclick="exitGuest('signup')">${TT('무료로 시작하기','Get started free')}</button>
+      <button onclick="exitGuest()" style="width:100%;padding:11px;margin-top:6px;background:none;border:none;color:var(--ink-60);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('이미 계정이 있어요','I already have an account')}</button>
+      <button onclick="document.getElementById('login-invite').remove()" style="width:100%;padding:9px;margin-top:2px;background:none;border:none;color:var(--ink-45);font-size:12.5px;cursor:pointer;font-family:var(--font-body);">${TT('계속 둘러보기','Keep looking around')}</button>
+    </div>`;
+  ov.onclick = (e) => { if (e.target === ov) ov.remove(); };
+  document.body.appendChild(ov);
+}
 window._reviewBadgeCount = 0;
 // 공식 단어장(큰 payload)이 책장에 붙는 중인지. 이때 센 복습 개수는 '덜 센' 값이라
 // 뱃지를 낮추는 데 쓰면 안 된다 (켜자마자 뱃지가 사라졌다 몇 초 뒤 다시 뜬다).
@@ -6661,6 +6731,7 @@ function showFaq() {
 
 // My 메뉴 (설정 모음)
 function showMyMenu() {
+  if (needsLogin(TT('마이페이지는 로그인하면 쓸 수 있어요.','My page is available once you log in.'))) return;
   const ko = userNativeLang === 'ko';
   const isDark = document.body.classList.contains('dark');
   const overlay = document.createElement('div');
@@ -7635,6 +7706,7 @@ async function ensureOfficialBookWords(id){
         const mem = (typeof books !== 'undefined') ? books.find(b => b.id === id) : null;
         if (mem && (mem._official || mem._officialContent)) {
           mem.pages = _mapOfficialBook(row).pages;
+          mem._pending = false;        // ⚠️ 안 내리면 '아직 안 받음' 이 영원히 참 → 렌더 무한 루프
           try { _stripHiddenWords(); } catch(e){}
         }
       }
@@ -7719,8 +7791,22 @@ function _bookAddedAt(b){
   return (b && b._added) || '';
 }
 // 현재 정렬 기준으로 정돈한 책 목록 (books 원본은 건드리지 않는다)
+// 책장 머리의 '몇 권 · 몇 단어 · 스캔 잔량' 한 줄.
+// 둘러보기 중에는 스캔 잔량도 단어 수도 뜻이 없다(단어는 책을 열 때 받아오므로 0 으로 보인다).
+function _shelfStatLine(myBooks){
+  if (isGuest()) return TX(`{v0}권 · 눌러서 열어보세요`,`{v0} books · tap one to open`,{v0:(myBooks.length)});
+  const scan = hasUnlimitedScan()
+    ? TX(` · ✨ 스캔 하루 20장`,` · ✨ 20 scans/day`)
+    : (isOrgStudentActive()
+        ? TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(STUDENT_DAILY_LIMIT)})
+        : TX(` · 📷 무료 스캔 {v0}/{v1}장 사용됨`,` · 📷 Free scans {v0}/{v1}`,{v0:(userScanCount),v1:(FREE_SCAN_LIMIT)}));
+  return `${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${TT('단어','words')}${scan}`;
+}
 function sortedShelfBooks(){
   const list = books.slice();
+  // 둘러보기 책장은 '내가 담은 순서' 라는 개념이 없다. Lv.1 부터 차례로 보여야
+  // 처음 온 사람이 어디서 시작할지 바로 안다. (최신순이면 Lv.12 가 맨 앞에 온다)
+  if (isGuest()) return list.sort(_officialPickerOrder);
   const mode = getShelfSort();
   const newest = (a,b) => String(_bookAddedAt(b)).localeCompare(String(_bookAddedAt(a)));
   if (mode === 'title')  return list.sort((a,b) => String(a.title||'').localeCompare(String(b.title||''), undefined, { numeric:true, sensitivity:'base' }));
@@ -8044,12 +8130,14 @@ function _ltRender(){
 function _ltAdd(lv){
   const b = _ltBooks()[lv];
   closeLevelTest();
+  if (needsLogin(TT('추천받은 레벨을 책장에 담으려면 로그인이 필요해요.','Saving your level to a shelf needs an account.'))) return;
   if (b) addOfficialToShelf(b.id);
 }
 function closeLevelTest(){ document.getElementById('lt-overlay')?.remove(); _lt = null; }
 
 // 개인 사용자: 공식책을 책장에 추가/제거
 async function addOfficialToShelf(id){
+  if (needsLogin(TT('책을 책장에 담으려면 로그인이 필요해요.','Saving a book to your shelf needs an account.'))) return;
   const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
   let row = od.find(b => b.id === id);
   if (!row) return;
@@ -8109,6 +8197,7 @@ function _stripHiddenWords(){
   if (changed) updateTotalWords();
 }
 async function hideWordForMe(bookId, pageNum, wordId){
+  if (needsLogin(TT('아는 단어 숨기기는 계정에 저장돼요.','Hiding words is saved to your account.'))) return;
   const b = findBook(bookId); if (!b) return;
   const p = findPage(b, pageNum); if (!p) return;
   const i = (p.words||[]).findIndex(w => w && w.id === wordId);
@@ -8478,6 +8567,11 @@ function renderLogin(tab) {
             `; })()}
           `}
           ${t('loginHint') ? `<div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">${t('loginHint')}</div>` : ''}
+          <div style="display:flex;align-items:center;gap:10px;margin:20px 0 14px;"><div style="flex:1;height:1px;background:var(--ink-07);"></div><div style="font-size:11px;color:var(--ink-40);">${TT('가입 전에','before you sign up')}</div><div style="flex:1;height:1px;background:var(--ink-07);"></div></div>
+          <button type="button" onclick="startGuest()" style="width:100%;background:var(--bg-input);border:1.5px solid var(--ink-12);border-radius:11px;padding:13px;font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink-100);cursor:pointer;">
+            👀 ${TT('로그인 없이 둘러보기','Look around without an account')}
+          </button>
+          <div style="text-align:center;margin-top:7px;font-size:11.5px;color:var(--ink-45);line-height:1.6;">${TT('공식 단어장을 열어보고 Day 1 을 외워볼 수 있어요','Browse the official wordbooks and study Day 1')}</div>
           <div style="text-align:center;margin-top:18px;font-size:10px;color:var(--ink-40);line-height:1.6">
             <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${TT('이용약관','Terms')}</a> ·
             <a href="https://imvoca.app/terms.html" target="_blank" style="color:var(--ink-40);text-decoration:underline">${TT('개인정보처리방침','Privacy')}</a> ·
@@ -8755,6 +8849,15 @@ function _histPush(){ try { history.pushState({ imv: true }, ''); } catch(e){} }
 function push(r) { stack.push(r); _histPush(); render(); }
 function back() { if (stack.length > 1) { stack.pop(); render(); } }
 function goTab(t) {
+  // 복습·명예의 전당·즐겨찾기는 '내 기록' 이 있어야 뜻이 있는 화면이다.
+  // 게스트에게 빈 화면을 보여주느니 왜 비어 있는지 말해주는 편이 낫다.
+  if (isGuest() && (t==='review' || t==='stats' || t==='favorites')) {
+    const why = t==='review' ? TT('복습 일정은 외운 단어가 있어야 생겨요.','Reviews appear once you have studied some words.')
+              : t==='stats'  ? TT('명예의 전당은 내 점수가 쌓여야 올라갈 수 있어요.','The hall of fame needs a score of your own.')
+              :                TT('즐겨찾기는 계정에 저장돼요.','Favorites are saved to your account.');
+    showLoginInvite(why);
+    return;
+  }
   if (t==='study') stack = [{name:'study-setup'}];
   else if (t==='favorites') stack = [{name:'favorites'}];
   else if (t==='stats') { window._hallData=null; window._hallMonthly=null; window._hallAggCache=null; window._hallLegacy=false; window._hallOrgNames=null; window._hallPage=1; window._hallMonthSel=null; window._hallYearSel=null; stack = [{name:'stats'}]; }
@@ -9957,6 +10060,7 @@ function renderKeepScroll(){
 }
 
 async function toggleFavorite(bookId, pageNum, wordIdx) {
+  if (needsLogin(TT('즐겨찾기는 계정에 저장돼요.','Favorites are saved to your account.'))) return;
   const book = findBook(bookId);
   const page = book ? findPage(book, pageNum) : null;
   const word = page?.words[wordIdx];
@@ -10158,7 +10262,7 @@ function render() {
   // 로그아웃·세션만료 뒤에도 직전 화면이 남아 클릭을 받아버리면, 그 화면에서
   // 출발한 모든 서버 호출이 currentUser.id 를 읽다 터진다(에러 리포트 다수).
   // 한 곳에서 막아야 74군데를 일일이 방어하지 않는다.
-  if (!currentUser && typeof renderLogin === 'function') { renderLogin(); return; }
+  if (!currentUser && !guestMode && typeof renderLogin === 'function') { renderLogin(); return; }
 
   // 브라우저 뒤로가기 가둠용 '버퍼 상태' 최초 1회 삽입(로그인 후) → 좌→우 스와이프로 로그인 튕김 방지
   // 버퍼가 한 칸뿐이면 스와이프 한 번에 '맨 처음 기록'(=로그인 화면이 그려져 있던
@@ -10225,17 +10329,24 @@ function render() {
                 </div>
               ` : `
                 <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
-                <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${userName||''}${t('bookshelf')}</div>
+                <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${isGuest() ? TT('공식 단어장','Official Wordbooks') : (userName||'')+t('bookshelf')}</div>
               `}
             </div>
-            <div class="muted" style="font-size:12px;margin-top:2px;">${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${TT('단어','words')}${hasUnlimitedScan()?(TX(` · ✨ 스캔 하루 20장`,` · ✨ 20 scans/day`)):(isOrgStudentActive()?(TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(STUDENT_DAILY_LIMIT)})):(TX(` · 📷 무료 스캔 {v0}/{v1}장 사용됨`,` · 📷 Free scans {v0}/{v1}`,{v0:(userScanCount),v1:(FREE_SCAN_LIMIT)})))}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">${_shelfStatLine(myBooks)}</div>
             <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:4px 11px;">
               <span style="font-size:11px;">🏅</span><span style="font-size:10.5px;font-weight:700;color:var(--accent);letter-spacing:0.01em;">${TT('특허출원 기술 · 제10-2026-0127089호','Patent Pending · KR 10-2026-0127089')}</span>
             </div>
           </div>
-          <button class="lib-add-btn" onclick="openAddBookModal()" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${TT('책 추가','Add Book')}</button>
+          <button class="lib-add-btn" onclick="${isGuest()?`needsLogin('${jsq(TT('책을 책장에 담으려면 로그인이 필요해요.','Saving a book to your shelf needs an account.'))}')`:'openAddBookModal()'}" style="background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;">＋ ${TT('책 추가','Add Book')}</button>
         </div>
         <div class="scr-scroll">
+          ${isGuest() ? `
+            <div style="display:flex;align-items:center;gap:10px;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:12px;padding:12px 14px;margin-bottom:14px;">
+              <span style="font-size:18px;flex-shrink:0;">👀</span>
+              <div style="flex:1;min-width:0;font-size:12.5px;color:var(--ink-70);line-height:1.6;">${TT('둘러보는 중이에요. <b>Day 1</b> 은 지금 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','You are just looking around. <b>Day 1</b> is yours to study right now.<br>Log in to save your words and review schedule.')}</div>
+              <button onclick="exitGuest('signup')" style="flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 13px;font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">${TT('로그인','Log in')}</button>
+            </div>
+            <button onclick="startLevelTest()" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}
           <div id="my-tests-banner"></div>
           ${assignmentBannerHTML()}
           ${!myBooks.length ? `
@@ -10252,7 +10363,7 @@ function render() {
             </div>
             <button class="btn btn-solid" style="padding:13px 26px;font-size:14px;" onclick="openAddBookModal()">＋ ${TT('책 추가','Add Book')}</button>
           </div>` : ''}
-          ${myBooks.length>1?`
+          ${(myBooks.length>1 && !isGuest())?`
           <div class="shelf-tools">
             <label class="shelf-sort">
               <span>${TT('정렬','Sort')}</span>
@@ -10280,7 +10391,7 @@ function render() {
                 </div>
                 <div class="book-row__meta">
                   <div class="book-row__title">${esc(b.title)}${(b._assigned && !orgIsAdmin())?` <span class="book-row__tag">📌 ${TT('과제','Task')}</span>`:''}</div>
-                  <div class="book-row__sub">${esc(b.author)} · ${countWords(b)} ${TT('단어','words')}</div>
+                  <div class="book-row__sub">${esc(b.author)}${b._pending?'':` · ${countWords(b)} ${TT('단어','words')}`}</div>
                 </div>
                 ${_shelfEditing?`<div class="tile-move tile-move--row">
                   <button onclick="event.stopPropagation();moveShelfBook('${jsq(b.id)}',-1)" ${i===0?'disabled':''} aria-label="${TT('위로','Up')}">▲</button>
@@ -10302,7 +10413,7 @@ function render() {
                   </div>`:''}
                 </div>
                 <div class="book-tile__title">${esc(b.title)}</div>
-                <div class="book-tile__sub">${esc(b.author)} · ${countWords(b)} ${TT('단어','words')}</div>
+                <div class="book-tile__sub">${esc(b.author)}${b._pending?'':` · ${countWords(b)} ${TT('단어','words')}`}</div>
               </div>`).join('')}
           </div>`}
         </div>
@@ -10323,6 +10434,15 @@ function render() {
   else if (route.name === 'book') {
     const book = findBook(route.bookId);
     if (!book) { back(); return; }
+    // 공식책 단어를 아직 안 받았으면(목록은 메타데이터만 받는다) 지금 받아 다시 그린다.
+    // 받는 동안 Day 목록이 비어 보이지 않게 '불러오는 중' 을 띄운다.
+    if (book._pending && !window._offWordsP[book.id] && !window._offWordsDone?.[book.id]) {
+      (window._offWordsDone ||= {})[book.id] = true;   // 한 책당 한 번만 — 재귀 렌더 방지
+      ensureOfficialBookWords(book.id).then(() => {
+        const r = stack[stack.length-1];
+        if (r && r.name === 'book' && r.bookId === book.id) render();
+      });
+    }
     loadReviewStatus(book.id);
     loadTestScores(book.id);
     root.innerHTML = `
@@ -10375,7 +10495,7 @@ function render() {
               <div style="flex:1;max-width:110px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:10px;padding:9px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:16px;margin-bottom:2px;">✨</div>${TT('AI 단어 추출','AI extracts')}</div>
               <div style="flex:1;max-width:110px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:10px;padding:9px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:16px;margin-bottom:2px;">🔁</div>${TT('자동 복습','Auto review')}</div>
             </div>
-            <button class="btn btn-solid" style="max-width:240px;" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
+            <button class="btn btn-solid" style="max-width:240px;" onclick="${isGuest()?`needsLogin('${jsq(TT('사진으로 단어를 뽑는 기능은 계정에 횟수가 저장돼요.','Scanning counts are tracked on your account.'))}')`:`push({name:'capture',bookId:'${book.id}'})`}">${t('shootPageBtn')}</button>
           </div>`):
           [...book.pages].filter(p=>(p.words&&p.words.length>0)).sort((a,b)=>pageSort(a,b)).map(p=>{
             const locked = isPageLocked(book.id, p.num);
@@ -10393,7 +10513,7 @@ function render() {
             </div>`;}).join('')}
         </div>
         ${(book._readonly || book._officialContent) ? '' : `<div class="btn-fixed btn-fixed--row">
-          <button class="btn btn-solid" onclick="push({name:'capture',bookId:'${book.id}'})">${t('shootPageBtn')}</button>
+          <button class="btn btn-solid" onclick="${isGuest()?`needsLogin('${jsq(TT('사진으로 단어를 뽑는 기능은 계정에 횟수가 저장돼요.','Scanning counts are tracked on your account.'))}')`:`push({name:'capture',bookId:'${book.id}'})`}">${t('shootPageBtn')}</button>
           <button class="btn btn-outline" onclick="push({name:'manual-add',bookId:'${book.id}'})">${t('manualAddBtn')}</button>
         </div>`}
       </div>` + pcSidebar();
@@ -10601,8 +10721,17 @@ function render() {
     const book = findBook(route.bookId);
     // 새 복습 일정이 막 생긴 경우에만 알림을 권한다 (복습 재수행은 제외).
     // 축하 화면을 먼저 보게 두고 잠시 뒤에 띄운다.
-    if (route.scope === 'page' && !route.isReview) {
+    if (route.scope === 'page' && !route.isReview && !isGuest()) {
       setTimeout(() => { try { maybeAskPush(route.total); } catch(e){} }, 1400);
+    }
+    // 둘러보기로 한 Day 를 끝냈다 — 방금 외운 것이 사라지기 전에 저장을 권한다.
+    // 축하 화면을 먼저 보여주고 띄운다(바로 띄우면 성취감을 가로챈다).
+    if (isGuest()) {
+      const _n = (window._guestStudied || {}).words || route.total || 0;
+      setTimeout(() => {
+        if (!isGuest()) return;
+        showLoginInvite(TX(`방금 {v0}단어를 외우셨어요! 🎉`,`You just studied {v0} words! 🎉`,{v0:_n}));
+      }, 1800);
     }
     root.innerHTML = `
       <div class="scr">
@@ -10928,6 +11057,12 @@ async function advance(isKnown) {
   const newX=isKnown?s.xList:[...s.xList,s.queue[s.idx]];
   if (s.idx+1<s.queue.length) { s.idx++; s.xList=newX; s.flipped=false; renderStudyCard(); }
   else if (newX.length===0) {
+    if (isGuest()) {
+      window._guestStudied = { words: s.stats.total, book: (findBook(s.bookId)||{}).title || '', page: s.pageNum };
+      if (s.scope === 'page' && s.pageNum) { startReviewQuiz(s.bookId, s.pageNum); return; }
+      replace({name:'study-done',bookId:s.bookId,scope:s.scope,pageNum:s.pageNum,rounds:s.round,total:s.stats.total,isReview:false});
+      return;
+    }
     saveStats(s.bookId, s.stats.total, s.stats.oCount);
     if (s.scope === 'page' && s.pageNum) {
       if (s._reviewId && s._reviewStepKey) {
@@ -12615,6 +12750,7 @@ async function saveStats(bookId, total, correct, pageNum) {
   // 1) 로컬 즉시 반영(화면에서 안 사라지게)
   let rate=null;
   if (pageNum != null && total > 0) { rate = Math.round(correct / total * 100); _markLocalScore(bookId, pageNum, rate); }
+  if (!currentUser) return;   // 둘러보기 — 서버에 쌓을 계정이 없다
   // 2) 서버 저장 시도, 실패하면 큐에 넣어 나중에 재전송
   const body = { user_id: currentUser.id, book_id: bookId, total, correct };
   if (pageNum != null) body.page_num = String(pageNum);
@@ -12636,6 +12772,7 @@ async function logActivity(bookId, pageNum, kind, words, step){
 // Day별 테스트 베스트 점수(%) 캐시: key = bookId|pageNum
 let _testScore = {}, _testScoreLoaded = {};
 async function loadTestScores(bookId) {
+  if (!currentUser) return;   // 둘러보기 중에는 내 점수가 없다
   if (_testScoreLoaded[bookId]) return;
   _seedTestScoresFromLocal(); // 로컬 백업 점수 먼저 반영(배지 안 사라지게)
   const data = await authGet(`/rest/v1/voca_stats?user_id=eq.${currentUser.id}&book_id=eq.${bookId}&page_num=not.is.null&select=page_num,total,correct`);
@@ -12652,6 +12789,7 @@ async function loadTestScores(bookId) {
 
 const _savingReview = new Set(); // 동시 등록(암기카드+퀴즈 완료 등) 중복 방지
 async function saveReviewSchedule(bookId, pageNum) {
+  if (!currentUser) return false;   // 둘러보기 — 복습 일정을 걸 계정이 없다
   const _key = currentUser.id + '|' + bookId + '|' + pageNum;
   if (_savingReview.has(_key)) return false; // 같은 페이지 등록이 이미 진행 중 → 중복 차단
   _savingReview.add(_key);
@@ -12736,6 +12874,7 @@ async function _seedScoredPages(){
   if (Array.isArray(rows)) { rows.forEach(r=> _scoredPages.add(r.book_id + '|' + r.page_num)); _scoredSeeded = true; }
 }
 async function _awardFirstStudyPoints(bookId, pageNum, isNew){
+  if (!currentUser) return;   // 둘러보기 — 점수는 계정에 쌓인다
   const book = findBook(bookId);
   const page = book ? book.pages.find(p=>String(p.num)===String(pageNum)) : null;
   const base = page ? calcWordScore(page.words) : 0;
