@@ -807,7 +807,9 @@ const KAKAO_LOGIN_ENABLED = false; // 카카오 비즈니스 전환 중 임시 O
 //    켜기 전에 반드시 먼저: Apple Developer 에서 Services ID + 키 생성 →
 //    Supabase → Authentication → Providers → Apple 설정 (docs/apple-app-store.md 4단계)
 //    설정 전에 true 로 두면 버튼을 눌렀을 때 오류가 난다.
-const APPLE_LOGIN_ENABLED = false;
+//    2026-10-22 켬 — Services ID app.imvoca.web / Supabase Apple provider 설정 완료.
+//    /auth/v1/authorize?provider=apple 가 appleid.apple.com 으로 302 되는 것 확인.
+const APPLE_LOGIN_ENABLED = true;
 let currentUser = null, _authToken = null;
 
 // ════════════════════════════════════════════════════════════════
