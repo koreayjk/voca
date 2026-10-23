@@ -387,8 +387,14 @@ body { word-break: keep-all; overflow-wrap: break-word; }
           mask-image: linear-gradient(to bottom, transparent 0, #000 14px); }
 
 /* 로그인 화면 (IM메신저 스타일 좌우 2단) */
-.auth-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--bg-page); padding: 20px; overflow-y: auto; }
-.auth-card { width: 100%; max-width: 440px; background: var(--bg-card); border-radius: 22px; overflow: hidden; display: flex; box-shadow: 0 4px 12px rgba(40,25,10,0.06), 0 24px 60px rgba(40,25,10,0.16); }
+/* ⚠️ align-items:center + overflow-y:auto 를 같이 쓰면, 내용이 화면보다 길어졌을 때
+   넘친 '위쪽'이 스크롤로 닿을 수 없는 자리로 밀려난다 (로고가 잘려 보이던 원인).
+   가운데 정렬은 자식의 margin:auto 가 대신하게 하고 컨테이너는 flex-start 로 둔다 —
+   공간이 남으면 가운데, 모자라면 위에서부터 스크롤된다.
+   아이폰 노치·홈바 영역도 피하도록 safe-area 를 패딩에 더한다. */
+.auth-screen { position: fixed; inset: 0; display: flex; align-items: flex-start; justify-content: center; background: var(--bg-page); overflow-y: auto; -webkit-overflow-scrolling: touch;
+               padding: calc(20px + env(safe-area-inset-top, 0px)) calc(20px + env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) calc(20px + env(safe-area-inset-left, 0px)); }
+.auth-card { width: 100%; max-width: 440px; margin: auto; background: var(--bg-card); border-radius: 22px; overflow: hidden; display: flex; box-shadow: 0 4px 12px rgba(40,25,10,0.06), 0 24px 60px rgba(40,25,10,0.16); }
 .auth-aside { display: none; }
 .auth-main { flex: 1; padding: 36px 32px; }
 @media (min-width: 768px) {
