@@ -168,28 +168,56 @@ SQL Editor 에 `supabase/push-ios-apns.sql` 내용을 붙여넣고 실행.
 없어서, 애플 서버(APNs)가 직접 기기로 보내야 합니다. 보낼 대상을 고르는 규칙(시간대·시각·중복 방지·
 밀린 개수)은 웹과 **완전히 같은 코드**를 씁니다 — 전송 방식만 갈립니다.
 
+### ⓪ Xcode 에 권한 추가 — 이게 없으면 나머지가 다 무의미하다
+
+앱이 애플에 기기 토큰을 요청하려면 `aps-environment` 엔타이틀먼트가 있어야 한다.
+없으면 `PushNotifications.register()` 가 런타임에 실패한다. 더 나쁜 건,
+사용자 눈에는 알림 토글이 보이는데 켜면 조용히 실패한다는 점이다.
+
+1. `npm run ios:open` → 왼쪽 파란 **App** → TARGETS 의 **App**
+2. **Signing & Capabilities** 탭 → **＋ Capability** → **Push Notifications** 추가
+3. `App.entitlements` 가 생기고 `CODE_SIGN_ENTITLEMENTS` 가 프로젝트에 들어간다.
+   App ID 에도 Push 가 자동으로 켜진다 (자동 서명을 쓰는 경우)
+4. 이 변경은 **커밋해야 한다** — 안 그러면 다음 클론에서 또 빠진다
+
+> 체크 방법: `grep -c ENTITLEMENTS ios/App/App.xcodeproj/project.pbxproj` 가
+> 0 이면 아직 안 들어간 것이다.
+
+### ① APNs 키 만들기
+
 1. developer.apple.com → **Keys → `+`** → ☑︎ **Apple Push Notifications service (APNs)**
    → 키 생성 → **`.p8` 다운로드** (역시 한 번만!)
-2. Supabase → **Edge Functions → Secrets** 에 4개 추가:
+
+### ② Supabase 시크릿 4개
 
 | 이름 | 값 |
 |---|---|
 | `APNS_KEY_ID` | 키 ID (예: `ABC123DEFG`) |
 | `APNS_TEAM_ID` | 개발자 계정 Team ID (우측 상단 멤버십에서 확인) |
 | `APNS_PRIVATE_KEY` | `.p8` 파일을 텍스트 편집기로 열어 **`-----BEGIN` 부터 `END PRIVATE KEY-----` 까지 통째로** 붙여넣기 |
-| `APNS_BUNDLE_ID` | `app.imvoca` |
+| `APNS_BUNDLE_ID` | `app.imvoca.ios` ⚠️ `app.imvoca` 가 아니다 — 틀리면 애플이 `BadTopic` 으로 거부한다 |
 
-3. 함수 재배포:
+### ③ 함수 재배포
    ```bash
    supabase functions deploy send-review-push
    ```
-4. 테스트 (실기기에서 알림을 켜둔 뒤):
+### ④ 테스트 (실기기에서 알림을 켜둔 뒤)
    ```bash
    curl -X POST "https://ziatqkjlafucqtwshhla.supabase.co/functions/v1/send-review-push" \
      -H "Authorization: Bearer <SB_SERVICE_ROLE_KEY>" \
      -H "Content-Type: application/json" -d '{"force":true}'
    ```
    응답의 `apns.configured` 가 `true` 인지, `failed` 가 비어 있는지 보세요.
+
+### ⑤ 매시간 자동 발송 cron — 이게 없으면 한 통도 안 나간다
+
+구독만 쌓이고 알림은 영원히 안 갑니다. iOS·안드로이드·웹 전부 해당됩니다.
+
+```sql
+select * from cron.job;        -- imvoca-review-push 가 있어야 한다
+```
+
+없으면 `docs/push-setup.md` 4번 항목대로 걸어주세요.
 
 > 🔐 `.p8` 두 개(로그인용·알림용)와 service_role 키는 **비밀번호 관리자**에 보관하세요.
 > 채팅·깃허브·앱 코드에 절대 넣지 않습니다.
