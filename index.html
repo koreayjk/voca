@@ -14805,7 +14805,16 @@ async function enableNativePush(hour, silent){
     try { track('enable_push', { hour: Number(hour) || 9, platform: 'ios' }); } catch(e){}
     return true;
   } catch(e){
-    toast(TT('알림을 켜지 못했어요','Could not enable notifications'));
+    // 이유를 삼키면 '안 켜져요' 말고는 알 수 있는 게 없다. 실제로 그것 때문에
+    // 권한이 빠진 빌드인지 키가 틀린 건지 구분하느라 한참 걸렸다.
+    //   · aps-environment  → Xcode 의 Push Notifications capability 가 없는 빌드
+    //   · 시간 초과         → 기기가 APNs 에 닿지 못함(네트워크·시뮬레이터)
+    const why = String((e && e.message) || e || '').slice(0, 80);
+    console.warn('[native push]', e);
+    try { logError('push','enableNativePush', why, { platform:'ios' }); } catch(_){}
+    toast(why
+      ? TX(`알림을 켜지 못했어요 — {v0}`,`Could not enable notifications — {v0}`,{v0:why})
+      : TT('알림을 켜지 못했어요','Could not enable notifications'));
     return false;
   }
 }
