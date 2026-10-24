@@ -87,6 +87,11 @@
     .price-foot { font-size: 12px; color: var(--ink-40); margin-top: 16px; line-height: 1.6; }
 
     /* features */
+    .shelf-12 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+                max-width: 760px; margin: 4px auto 14px; }
+    .shelf-12 img { display: block; width: 100%; height: auto; border-radius: 7px;
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.42); }
+    @media (max-width: 560px) { .shelf-12 { grid-template-columns: repeat(4, 1fr); gap: 9px; } }
     .feature-list { display: flex; flex-direction: column; gap: 14px; }
     .feature { background: rgba(27,37,49,0.80); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 20px 20px; box-shadow: 0 8px 26px rgba(0,0,0,0.28); }
     .feature-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--gold-soft); border: 1px solid rgba(216,180,106,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 13px; }
@@ -157,13 +162,31 @@
   <section>
     <div class="wrap">
       <div class="section-label reveal">단체 단독 혜택 · 공식 단어장</div>
-      <h2 class="section-title reveal">수능 영단어, <em>기출이 증명한 한 권</em>으로 끝냅니다</h2>
+      <h2 class="section-title reveal">중등 기초부터 수능까지, <em>기출이 증명한 열두 권</em>으로 끝냅니다</h2>
       <p class="reveal" style="text-align:center;max-width:640px;margin:0 auto 26px;color:var(--ink-60);font-size:15px;line-height:1.75;">
-        2009년부터 최신까지 <b style="color:var(--ink-90);">약 20년간의 수능·6월·9월 모의평가 기출 전 회차</b>를 분석해,
+        2009년부터 최신까지 <b style="color:var(--ink-90);">수능·6월·9월 모의평가 기출 전 회차</b>를 분석해,
         실제로 가장 많이 나온 순서로 만든 <b style="color:var(--accent);">기출 빅데이터 단어장</b>이에요.
         감이 아니라 <b style="color:var(--ink-90);">데이터가 고른 단어</b>만 외웁니다.
       </p>
-      <img src="books-suneung.jpg" alt="수능 영단어 시리즈 — 기본·핵심·고난도·숙어" class="reveal" loading="lazy" style="display:block;width:100%;max-width:760px;margin:4px auto 30px;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,0.45);">
+      <!-- 공식 단어장 표지 — 앱에 실제로 올라가 있는 Lv.1~12 SVG 그대로다.
+           ⚠️ 예전 수능 기본/핵심/고난도/숙어 사진(books-suneung.jpg)을 여기 다시 넣으면 안 된다.
+              그 네 권은 레벨 12권으로 대체돼서 새로 담을 수 없는 책이다
+              (index.html 의 RETIRED_OFFICIAL). 바로 아래 '레벨 1~12' 문구와 어긋난다. -->
+      <div class="shelf-12 reveal" aria-label="공식 단어장 레벨 1부터 12까지">
+        <img src="cover-lv1.svg?v=1" alt="IM VOCA 공식 단어장 Lv.1" loading="lazy" width="300" height="430">
+        <img src="cover-lv2.svg?v=1" alt="IM VOCA 공식 단어장 Lv.2" loading="lazy" width="300" height="430">
+        <img src="cover-lv3.svg?v=1" alt="IM VOCA 공식 단어장 Lv.3" loading="lazy" width="300" height="430">
+        <img src="cover-lv4.svg?v=1" alt="IM VOCA 공식 단어장 Lv.4" loading="lazy" width="300" height="430">
+        <img src="cover-lv5.svg?v=1" alt="IM VOCA 공식 단어장 Lv.5" loading="lazy" width="300" height="430">
+        <img src="cover-lv6.svg?v=1" alt="IM VOCA 공식 단어장 Lv.6" loading="lazy" width="300" height="430">
+        <img src="cover-lv7.svg?v=1" alt="IM VOCA 공식 단어장 Lv.7" loading="lazy" width="300" height="430">
+        <img src="cover-lv8.svg?v=1" alt="IM VOCA 공식 단어장 Lv.8" loading="lazy" width="300" height="430">
+        <img src="cover-lv9.svg?v=1" alt="IM VOCA 공식 단어장 Lv.9" loading="lazy" width="300" height="430">
+        <img src="cover-lv10.svg?v=1" alt="IM VOCA 공식 단어장 Lv.10" loading="lazy" width="300" height="430">
+        <img src="cover-lv11.svg?v=1" alt="IM VOCA 공식 단어장 Lv.11" loading="lazy" width="300" height="430">
+        <img src="cover-lv12.svg?v=1" alt="IM VOCA 공식 단어장 Lv.12" loading="lazy" width="300" height="430">
+      </div>
+      <div class="reveal" style="text-align:center;color:var(--ink-40);font-size:12.5px;margin:-6px auto 30px;">Lv.1 입문(A1)부터 Lv.12 최상급(C2)까지 · 한 권 400단어</div>
 
       <div class="reveal" style="background:linear-gradient(135deg,rgba(40,92,72,0.90),rgba(24,38,56,0.92));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(84,180,135,0.45);border-radius:18px;padding:22px 22px;text-align:center;margin-bottom:30px;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
         <div style="display:inline-block;background:#54b487;color:#06231a;font-size:12px;font-weight:800;letter-spacing:0.3px;padding:5px 14px;border-radius:99px;margin-bottom:12px;">🎁 학원·단체 등록 시 전권 무료</div>
@@ -174,8 +197,8 @@
       <div class="feature-list">
         <div class="feature reveal">
           <div class="feature-icon">📊</div>
-          <div class="feature-title">20년 기출 빅데이터 — 빈출순 수록</div>
-          <div class="feature-desc">2009~최신 수능·6·9월 모평 전 회차를 분석해 <b>실제 출제 빈도 순</b>으로 단어를 배열했어요. 시험에 잘 나오는 단어부터, 효율적으로.</div>
+          <div class="feature-title">기출 빅데이터 — 빈출순 수록</div>
+          <div class="feature-desc">2009년~최신 수능·6·9월 모평 전 회차를 분석해 <b>실제 출제 빈도 순</b>으로 단어를 배열했어요. 시험에 잘 나오는 단어부터, 효율적으로.</div>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">🎯</div>
@@ -185,7 +208,7 @@
         <div class="feature reveal">
           <div class="feature-icon">🏆</div>
           <div class="feature-title">CEFR 난이도 표시</div>
-          <div class="feature-desc">단어마다 유럽 공인 어휘 기준(B1·B2·C1) 난이도를 표시해, 학생 수준에 맞춰 어디까지 외울지 한눈에 잡혀요.</div>
+          <div class="feature-desc">단어마다 유럽 공인 어휘 기준(A1~C2) 난이도를 표시해, 학생 수준에 맞춰 어디까지 외울지 한눈에 잡혀요.</div>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">🧠</div>
