@@ -86,12 +86,20 @@ Deno.serve(async (req) => {
   if (!VAPID_PUBLIC && !apnsConfigured()) return json({ error: 'no_push_configured' }, 500)
 
   // 호출자 검증 — 이 함수는 cron(서버)만 부르는 기계용이다.
-  // 기본 verify_jwt 는 'anon 키로도 통과'라, 이게 없으면 누구나 {"force":true} 로
-  // 전체 구독자에게 알림을 난사할 수 있다. service_role 키로만 부르게 막는다.
+  // 누구나 부를 수 있으면 {"force":true} 로 전체 구독자에게 알림을 난사할 수 있다.
+  //
+  // 두 가지를 받는다. 둘 중 하나만 맞으면 통과:
+  //   1) x-cron-secret: CRON_SECRET          ← 권장. sync-quantity 가 쓰는 방식과 같다
+  //   2) Authorization: Bearer <DB 키>        ← 기존 방식(호환용)
+  //
+  // 1번을 더한 이유: DB 접근 키를 호출 암호로 같이 쓰면, 키를 바꿀 때 cron·시크릿·
+  // 테스트 세 곳을 한 글자도 틀리지 않게 맞춰야 한다. 실제로 그걸 맞추다 403 을
+  // 반복해서 봤다. 짧은 전용 암호를 따로 두면 DB 키를 언제 바꾸든 알림은 안 끊긴다.
+  const cronSecret = Deno.env.get('CRON_SECRET') ?? ''
+  const viaCron = !!cronSecret && (req.headers.get('x-cron-secret') ?? '') === cronSecret
   const caller = (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '')
-  if (!caller || caller !== (Deno.env.get('SB_SERVICE_ROLE_KEY') ?? '')) {
-    return json({ error: 'forbidden' }, 403)
-  }
+  const viaKey = !!caller && caller === (Deno.env.get('SB_SERVICE_ROLE_KEY') ?? '')
+  if (!viaCron && !viaKey) return json({ error: 'forbidden' }, 403)
 
   if (VAPID_PUBLIC && VAPID_PRIVATE) webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE)
 
