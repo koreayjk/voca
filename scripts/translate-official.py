@@ -218,7 +218,22 @@ def main():
         if before != len(words):
             print('  이미 번역됨 %d개 건너뜀 → 남은 %d개' % (before - len(words), len(words)))
     if a.limit:
-        words = words[:a.limit]
+        # 앞에서부터 자르면 Lv.1 만 뽑혀서 품질 확인이 안 된다
+        # (기초 단어는 어원이 비어 있어 제일 어려운 부분을 못 본다).
+        # 요청한 레벨에 고르게 퍼뜨리고, 어원이 있는 단어를 앞에 둔다.
+        by_lv = {}
+        for w in words:
+            by_lv.setdefault(w['_lv'], []).append(w)
+        for v in by_lv.values():
+            v.sort(key=lambda w: 0 if ((w.get('analysis') or {}).get('etym')) else 1)
+        picked, keys = [], sorted(by_lv, key=lambda k: int(k.split('-L')[-1] or 0))
+        i = 0
+        while len(picked) < a.limit and any(i < len(by_lv[k]) for k in keys):
+            for k in keys:
+                if i < len(by_lv[k]) and len(picked) < a.limit:
+                    picked.append(by_lv[k][i])
+            i += 1
+        words = picked
     if not words:
         print('✓ 할 일이 없습니다.')
         return
