@@ -13,8 +13,13 @@ const svc = createClient(
   Deno.env.get("SB_SERVICE_ROLE_KEY") ?? "",
 );
 
-const FREE_SCAN_LIMIT = 10;      // 무료 플랜 총 누적 (index.html 과 동일)
-const STUDENT_DAILY_LIMIT = 20;  // 결제중 학원 학생 일일
+// ── 스캔 한도 (index.html 의 같은 이름 상수와 반드시 같이 고칠 것) ──────────
+// 무료는 '평생 몇 장'이 아니라 '하루 몇 장'이다. 일일 한도는 매일 돌아올 이유가
+// 되지만 평생 한도는 다 쓰면 그걸로 끝이라 앱을 지울 이유가 된다.
+const FREE_DAILY_LIMIT = 5;      // 무료 플랜 일일
+const FREE_MONTHLY_LIMIT = 60;   // 무료 플랜 월 상한 — 하루 한도만 두면 연 1,825장까지 간다
+const STUDENT_DAILY_LIMIT = 10;  // 결제중 학원 학생 일일
+                                 // 20장이면 월 600장 = 6,000원인데 좌석 수입이 4,200원이라 적자였다
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -68,9 +73,16 @@ Deno.serve(async (req) => {
     // 2) 이미지 스캔이면 서버측 한도 검증 + 카운트 (텍스트 호출은 통과)
     const isScan = JSON.stringify(body ?? {}).includes("inline_data");
     if (isScan) {
-      const { data: m } = await svc.from("members")
-        .select("plan, scan_count, daily_scan_count, daily_scan_date, org_id, org_role, org_status, signup_tz")
-        .eq("id", user.id).single();
+      // 월 컬럼이 아직 없는 DB(= scan-monthly-limit.sql 미실행)에서도 스캔이 죽지 않게
+      // 한 번 더 시도한다. 폴백일 때는 월 한도를 건너뛰고 일일 한도만 건다.
+      const COLS_FULL = "plan, scan_count, daily_scan_count, daily_scan_date, monthly_scan_count, monthly_scan_month, org_id, org_role, org_status, signup_tz";
+      const COLS_BASE = "plan, scan_count, daily_scan_count, daily_scan_date, org_id, org_role, org_status, signup_tz";
+      let hasMonthly = true;
+      let { data: m, error: mErr } = await svc.from("members").select(COLS_FULL).eq("id", user.id).single();
+      if (mErr) {
+        hasMonthly = false;
+        ({ data: m } = await svc.from("members").select(COLS_BASE).eq("id", user.id).single());
+      }
       if (m) {
         let unlimited = (m.plan === "premium");
         let studentDaily = false;
@@ -91,10 +103,22 @@ Deno.serve(async (req) => {
               daily_scan_count: used + 1, daily_scan_date: today, scan_count: (m.scan_count || 0) + 1,
             }).eq("id", user.id);
           } else {
-            if ((m.scan_count || 0) >= FREE_SCAN_LIMIT) {
-              return json({ error: { code: "scan_limit", scope: "free", message: "무료 스캔을 모두 사용했어요" } });
+            // 무료: 하루 5장 + 월 60장. 둘 중 하나라도 걸리면 막는다.
+            const month = today.slice(0, 7);            // 'YYYY-MM'
+            const dUsed = (m.daily_scan_date === today) ? (m.daily_scan_count || 0) : 0;
+            if (dUsed >= FREE_DAILY_LIMIT) {
+              return json({ error: { code: "scan_limit", scope: "daily", message: "오늘 무료 스캔을 다 쓰셨어요" } });
             }
-            await svc.from("members").update({ scan_count: (m.scan_count || 0) + 1 }).eq("id", user.id);
+            const mUsed = (hasMonthly && m.monthly_scan_month === month) ? (m.monthly_scan_count || 0) : 0;
+            if (hasMonthly && mUsed >= FREE_MONTHLY_LIMIT) {
+              return json({ error: { code: "scan_limit", scope: "monthly", message: "이번 달 무료 스캔을 다 쓰셨어요" } });
+            }
+            const patch: Record<string, unknown> = {
+              daily_scan_count: dUsed + 1, daily_scan_date: today,
+              scan_count: (m.scan_count || 0) + 1,
+            };
+            if (hasMonthly) { patch.monthly_scan_count = mUsed + 1; patch.monthly_scan_month = month; }
+            await svc.from("members").update(patch).eq("id", user.id);
           }
         }
       }

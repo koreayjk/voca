@@ -943,10 +943,16 @@ let userStripeId = '';      // Stripe 고객 ID (결제한 사람만 있음)
 let userPremiumUntil = null; // 무료 제공(관리자 지급) 만료일 — 있으면 comp 지급 프리미엄
 let userCreatedAt = null;    // 가입일 (무료 제공 청구내역 시작 기준)
 let userScanCount = 0;      // 이번 달 스캔 횟수
-const FREE_SCAN_LIMIT = 10; // 무료 플랜 스캔 제한 (총 누적)
+// ── 스캔 한도 (gemini-proxy/index.ts 의 같은 이름 상수와 반드시 같이 고칠 것) ──
+// 여기 숫자는 '안내용'이다. 실제 차단은 서버(gemini-proxy)가 한다.
+// 무료는 '평생 몇 장'이 아니라 '하루 몇 장'이다 — 평생 한도는 다 쓰면
+// 앱을 지울 이유가 되지만, 일일 한도는 내일 다시 올 이유가 된다.
+const FREE_DAILY_LIMIT = 5;    // 무료 플랜 일일
+const FREE_MONTHLY_LIMIT = 60; // 무료 플랜 월 상한(서버에서만 검사)
 let userDailyScanCount = 0; // 오늘 스캔 횟수 (단체 학생용)
 let userDailyScanDate = null; // 오늘 스캔 기준 날짜
-const STUDENT_DAILY_LIMIT = 20; // 단체 소속 학생 일일 스캔 제한
+const STUDENT_DAILY_LIMIT = 10; // 단체 소속 학생 일일 스캔 제한
+                                // (20장이면 월 600장=6,000원인데 좌석 수입은 4,200원이라 적자였다)
 
 async function sbFetch(path, method='GET', body=null, useAuth=true, extraHeaders={}) {
   const buildHeaders = () => {
@@ -2390,7 +2396,7 @@ const UI_XL = {
     "Generating... ({v0}/{v1})": "作成中...（{v0}/{v1}）",
     "✅ Filled {v0} examples!": "✅ 例文を {v0} 件 補いました！",
     "{v0} of {v1} done": "{v0}/{v1} 完了",
-    " · ✨ 20 scans/day": " · ✨ スキャン 1日 20 枚",
+    " · ✨ Unlimited scans": " · ✨ スキャン無制限",
     " · 📷 Today {v0}/{v1}": " · 📷 今日 {v0}/{v1}",
     " · 📷 Free scans {v0}/{v1}": " · 📷 無料スキャン {v0}/{v1}",
     "Day 2+ unlocks with Premium or an academy plan. Day 1 is free!": "{v0} 以降はプレミアムまたは塾プランで解放されます。<br>Day 1 は無料でお試しいただけます！",
@@ -2946,7 +2952,7 @@ const UI_XL = {
     'Generate examples for {v0} words?':'为 {v0} 个没有例句的单词生成 AI 例句？',
     'Generating... ({v0}/{v1})':'生成中...（{v0}/{v1}）',
     '✅ Filled {v0} examples!':'✅ 已补充 {v0} 条例句！',
-    ' · ✨ 20 scans/day':' · ✨ 每天20次扫描',
+    ' · ✨ Unlimited scans':' · ✨ 无限扫描',
     ' · 📷 Today {v0}/{v1}':' · 📷 今天 {v0}/{v1}',
     ' · 📷 Free scans {v0}/{v1}':' · 📷 免费扫描 {v0}/{v1}',
     '{v0} starred · all books':'已加星 {v0} 个 · 全部书籍',
@@ -3495,7 +3501,7 @@ const UI_XL = {
     'Generate examples for {v0} words?':'¿Generar ejemplos para {v0} palabras?',
     'Generating... ({v0}/{v1})':'Generando... ({v0}/{v1})',
     '✅ Filled {v0} examples!':'✅ ¡{v0} ejemplos completados!',
-    ' · ✨ 20 scans/day':' · ✨ 20 escaneos/día',
+    ' · ✨ Unlimited scans':' · ✨ Escaneos ilimitados',
     ' · 📷 Today {v0}/{v1}':' · 📷 Hoy {v0}/{v1}',
     ' · 📷 Free scans {v0}/{v1}':' · 📷 Escaneos gratis {v0}/{v1}',
     '{v0} starred · all books':'{v0} con estrella · todos los libros',
@@ -3565,7 +3571,7 @@ async function loadUserPlan() {
     // authGet: 토큰 만료 시 자동 갱신+재시도. (오래 유휴 후 새로고침하면 org 정보가
     // 안 실려 어드민 통계가 0으로 뜨던 문제 방지 — 이 값이 org 상태의 기준점)
     // 일시적 실패면 짧게 재시도(모바일 실행 직후 등) — 공용 fetchRetry
-    const data = await fetchRetry(() => authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,stripe_customer_id,visit_count,org_id,org_role,org_status,premium_until,created_at,signup_tz`), 2);
+    const data = await fetchRetry(() => authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,daily_scan_count,daily_scan_date,stripe_customer_id,visit_count,org_id,org_role,org_status,premium_until,created_at,signup_tz`), 2);
     if (!Array.isArray(data)) return; // 그래도 실패 → 기존 값 유지(0으로 덮어쓰지 않음)
     if (data[0]) {
       userPlan = data[0].plan || 'free';
@@ -4769,12 +4775,13 @@ function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' &&
 function hasUnlimitedScan(){ return userPlan==='premium' || (userOrgRole==='owner' && isOrgBillingActive()); }
 // 공식 단어장 접근: 프리미엄 또는 결제중 학원(관리자/승인학생) → 전체. 무료 → Day 1 체험만.
 function hasOfficialAccess(){
-  if (userPlan === 'premium') return true;
-  // 단체장·공동관리자(승인된 owner)는 결제 여부와 무관하게 공식 단어장 전체 열람.
-  // (학생에게 배정하려면 내용을 다 볼 수 있어야 하므로. 학생은 아래 isOrgStudentActive로 결제시에만 전체)
-  if (userOrgRole==='owner' && userOrgStatus==='approved') return true;
-  if (isOrgStudentActive()) return true;
-  return false;
+  // 2026-10 전권 개방. 공식 단어장은 DB 에 이미 들어있는 정적 데이터라
+  // 한 명이 더 본다고 드는 돈이 없다. 반대로 AI 스캔은 장당 실제 비용이 난다.
+  // 그래서 '돈 안 드는 걸 잠그고 돈 드는 걸 퍼주던' 과금선을 뒤집었다.
+  //   공식 단어장 → 전원 무료 /  스캔 → 하루 한도
+  // 학원이 돈을 내는 이유는 단어장이 아니라 학부모 리포트·진도 관리다.
+  // ⚠️ 되돌리려면 이 함수만 고치면 된다. 호출부는 그대로 둔 채 남겨놨다.
+  return true;
 }
 // 공식 단어장을 학습언어 필터 없이(전체 언어) 볼 수 있는 사용자 = 단체 관리자(배정용)
 function _seesAllOfficialLangs(){ return userOrgRole==='owner' && userOrgStatus==='approved'; }
@@ -4869,8 +4876,8 @@ function canShowBilling(){ return !_isIosApp(); }
 
 function showOfficialPaywall(){
   // iOS 앱에서는 '결제'라는 말을 쓰지 않는다 (외부 결제 유도로 읽힐 수 있음)
-  if (_isIosApp()) { toast(TT('🔒 Day 1은 무료로 체험할 수 있어요','🔒 Day 1 is free to try')); return; }
-  toast(TT('🔒 Day 2~30은 프리미엄 또는 단체 결제로 열려요 · Day 1은 무료 체험!','🔒 Day 2–30 unlock with Premium or an academy plan · Day 1 is free!'));
+  if (_isIosApp()) { toast(TT('공식 단어장은 전권 무료예요','Official wordbooks are free')); return; }
+  toast(TT('공식 단어장은 전권 무료예요 — 바로 외워보세요!','Official wordbooks are free — dive in!'));
 }
 // 학습/퀴즈 시작 가능 여부(공식책 잠금 반영). 비공식책·즐겨찾기는 항상 true.
 function _officialAccessOK(bookId, scope, pageNum){
@@ -4884,19 +4891,23 @@ function canScan() {
   if (hasUnlimitedScan()) return true;  // 개인 프리미엄 또는 결제중 학원 원장
   // 결제중 학원의 승인 학생: 총 누적 제한 면제, 일일 제한만 적용
   if (isOrgStudentActive()) return dailyScansToday() < STUDENT_DAILY_LIMIT;
-  return userScanCount < FREE_SCAN_LIMIT;
+  return dailyScansToday() < FREE_DAILY_LIMIT;   // 무료: 하루 한도(월 상한은 서버가 검사)
 }
 // 차단 사유에 맞는 안내 (학생 일일 한도 vs 무료 한도)
-function handleScanBlocked() {
+function handleScanBlocked(scope) {
   if (isOrgStudentActive()) {
     toast(TX(`오늘 학습 한도({v0}장)에 도달했어요. 내일 다시 이용할 수 있어요 😊`,`Daily limit ({v0}) reached. Try again tomorrow 😊`,{v0:(STUDENT_DAILY_LIMIT)}));
+  } else if (scope === 'monthly') {
+    // 월 상한은 서버만 안다 — 하루 한도가 남아 있어도 여기로 올 수 있다.
+    toast(TX(`이번 달 무료 스캔({v0}장)을 다 쓰셨어요. 다음 달에 다시 채워져요`,`Monthly free scans ({v0}) used up. Resets next month`,{v0:(FREE_MONTHLY_LIMIT)}));
+    showUpgradePopup('monthly');
   } else {
-    showUpgradePopup();
+    showUpgradePopup('daily');
   }
 }
 
 // 업그레이드 팝업 — 성취 프레임 헤드라인 + 혜택 타일 + 하루 단위 가격 재프레이밍 (리디자인 감사 B안)
-function showUpgradePopup() {
+function showUpgradePopup(scope) {
   // iOS 앱: 가격도 구매 버튼도 외부 링크도 없이, 사실만 알린다.
   if (_isIosApp()) {
     const ov = document.createElement('div');
@@ -4927,12 +4938,14 @@ function showUpgradePopup() {
     <div style="background:var(--bg-card);border-radius:20px;padding:26px 22px;width:100%;max-width:380px;text-align:center;">
       <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:8px;">✨ PREMIUM</div>
       <div style="font-family:var(--font-serif-ko);font-size:20px;font-weight:700;line-height:1.4;margin-bottom:14px;color:var(--ink-100);">
-        ${TX(`{v0}장으로 여기까지 왔어요.<br>이제 매일 20장씩 계속하세요`,`You made it through {v0} free scans.<br>Keep going with 20 a day`,{v0:(FREE_SCAN_LIMIT)})}
+        ${scope==='monthly'
+          ? TX(`이번 달 {v0}장을 다 쓰셨어요.<br>프리미엄은 한도가 없어요`,`You used all {v0} scans this month.<br>Premium has no limit`,{v0:(FREE_MONTHLY_LIMIT)})
+          : TX(`오늘 {v0}장을 다 쓰셨어요.<br>내일 다시 {v0}장이 채워져요`,`You used today's {v0} scans.<br>{v0} more tomorrow`,{v0:(FREE_DAILY_LIMIT)})}
       </div>
       <div style="display:flex;gap:8px;background:var(--bg-page);border-radius:14px;padding:10px;margin-bottom:14px;">
-        ${tile('📷', TT('스캔','Scans'), TT('하루 20장','20 / day'))}
-        ${tile('📚', TT('단어장 묶음','Wordbooks'), TT('무료 포함','included'))}
-        ${tile('🧠', TT('30일 복습','30-day review'), TT('자동 관리','automatic'))}
+        ${tile('📷', TT('AI 스캔','AI scan'), TT('무제한','unlimited'))}
+        ${tile('⏱', TT('하루 한도','Daily cap'), TT('없음','none'))}
+        ${tile('📚', TT('공식 단어장','Official books'), TT('무료에도 전권','free for all'))}
       </div>
       <div style="font-size:13px;color:var(--ink-60);margin-bottom:3px;"><b style="font-size:21px;color:var(--ink-100);">$3.99</b>/${TT('월','mo')} · ${TT('연간','yearly')} $39.99 (16%↓)</div>
       <div style="font-size:12px;color:var(--ok);font-weight:700;margin-bottom:16px;">${TT('커피 한 잔 값으로 한 달 — 하루 약 130원','That’s about $0.13 a day')}</div>
@@ -5072,7 +5085,7 @@ async function startOrgBilling(){
   const ko = userNativeLang==='ko';
   if (!userOrg) return;
   if (!orgIsPrimary()) { toast(TT('결제는 주 관리자만 할 수 있어요','Only the primary admin can manage billing')); return; }
-  if (!confirm(TT('학원 프리미엄 결제를 시작할까요?\n\n원장님을 제외한 모든 구성원(선생님·학생) 1명당 매월 $2.99로 청구돼요. 결제하면 전원이 프리미엄(AI 스캔 하루 20장)이 돼요.','Start academy billing? $2.99/month per member (teachers + students, excluding the primary admin). Everyone gets Premium (20 AI scans/day).'))) return;
+  if (!confirm(TT('학원 프리미엄 결제를 시작할까요?\n\n원장님을 제외한 모든 구성원(선생님·학생) 1명당 매월 $2.99로 청구돼요. 결제하면 학생 전원이 AI 스캔 하루 10장으로 늘어나고, 학부모 리포트·진도 관리가 열려요.','Start academy billing? $2.99/month per member (teachers + students, excluding the primary admin). Students get 10 AI scans/day plus parent reports and progress tracking.'))) return;
   try{
     toast(TT('결제 페이지로 이동 중...','Redirecting to checkout...'));
     track('begin_checkout', { plan: 'org' });
@@ -6401,7 +6414,7 @@ const HELP = {
     img:_PROMO+'reissue-modal.png', imgcap:'기준 점수 미만만 자동 선택' },
   invite: { icon:'🎫', title:'초대 코드', purpose:'학생을 우리 단체로 초대하는 코드예요.',
     steps:['코드를 학생에게 알려주기','학생이 가입할 때 코드 입력 → 우리 단체 소속','“재발급”하면 이전 코드는 더 이상 못 써요'] },
-  billing: { icon:'💳', title:'구독·결제', purpose:'학원 프리미엄 결제로 학생·선생님 전원이 프리미엄(AI 스캔 하루 20장)이 돼요. 쓰는 인원수만큼만 매월 자동 청구됩니다.',
+  billing: { icon:'💳', title:'구독·결제', purpose:'학원 결제로 학생 진도 관리·학부모 리포트가 열리고, 학생 AI 스캔이 하루 10장으로 늘어나요. 쓰는 인원수만큼만 매월 자동 청구됩니다.',
     steps:['요금: 선생님·학생 1명당 월 $2.99 (원장·주 관리자는 무료)',
       '청구일: 매월 1일(한국시간)에 자동 청구',
       '인원 기준: 그 시점(매월 1일)에 “승인된” 인원수로 계산',
@@ -6610,11 +6623,11 @@ function renderOrgAdminPage(root) {
         <div id="org-price-block"><div class="muted" style="font-size:12px;">${TT('불러오는 중…','Loading…')}</div></div>
       ` : `
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:15px;font-weight:700;color:var(--ink-100);">✨ ${TT('프리미엄 활성','Premium active')}</span><span style="background:#e6f4ea;color:#1c7c3c;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">ON</span></div>
-        <div class="muted" style="font-size:12.5px;line-height:1.7;">${TT('학원 학생 전원이 프리미엄(AI 스캔 하루 20장)으로 사용 중이에요. 매달 승인된 인원수만큼 자동 청구돼요.','All students on Premium (20 AI scans/day). Billed monthly per approved member.')}<br>${TT('예상 월 청구','Est. monthly')}: <b id="org-bill-est">—</b></div>
+        <div class="muted" style="font-size:12.5px;line-height:1.7;">${TT('학생 진도 관리·학부모 리포트가 켜져 있고, 학생 AI 스캔은 하루 10장이에요. 매달 승인된 인원수만큼 자동 청구돼요.','Progress tracking and parent reports are on; students get 10 AI scans/day. Billed monthly per approved member.')}<br>${TT('예상 월 청구','Est. monthly')}: <b id="org-bill-est">—</b></div>
       `) : `
         <div style="font-size:15px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">💳 ${TT('학원 프리미엄 결제','Academy premium')}</div>
         ${userOrg && userOrg._freeExpired ? `<div style="background:#fdeeee;border:1px solid #e9c7c2;color:#8a3a2c;border-radius:10px;padding:10px 13px;font-size:12.5px;font-weight:600;line-height:1.6;margin-bottom:12px;">⏰ ${TX(`무료 이용 기간이 {v0}에 끝나 무료 플랜으로 전환됐어요. 계속 쓰시려면 아래에서 결제를 시작해주세요.`,`The free period ended on {v0}. Start billing below to continue Premium.`,{v0:(esc(String(userOrg.free_until).slice(0,10)))})}</div>` : ''}
-        <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${TT('결제하면 우리 학원 전원이 프리미엄(AI 스캔 하루 20장)이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.','Everyone gets Premium (20 AI scans/day). The primary admin is free; teachers and students are $2.99/month each.')}<br>${TT('예상 월 청구','Est. monthly')}: <b id="org-bill-est">—</b></div>
+        <div class="muted" style="font-size:12.5px;line-height:1.7;margin-bottom:14px;">${TT('결제하면 학생 진도 관리·학부모 리포트가 열리고 학생 AI 스캔이 하루 10장이 돼요. 원장님은 무료, 선생님·학생은 1명당 월 $2.99로 매달 인원수만큼 자동 청구돼요.','Unlocks progress tracking and parent reports; students get 10 AI scans/day. The primary admin is free; teachers and students are $2.99/month each.')}<br>${TT('예상 월 청구','Est. monthly')}: <b id="org-bill-est">—</b></div>
         ${isPrim ? `<button class="btn btn-solid" style="max-width:280px;" onclick="startOrgBilling()">${TT('💳 결제 시작','💳 Start billing')}</button>` : `<div class="muted" style="font-size:12px;color:var(--ink-40);">${TT('결제는 주 관리자만 진행할 수 있어요.','Only the primary admin can start billing.')}</div>`}
       `)}
     ${userOrg.billing_active ? `
@@ -7804,10 +7817,10 @@ function _bookAddedAt(b){
 function _shelfStatLine(myBooks){
   if (isGuest()) return TX(`{v0}권 · 눌러서 열어보세요`,`{v0} books · tap one to open`,{v0:(myBooks.length)});
   const scan = hasUnlimitedScan()
-    ? TX(` · ✨ 스캔 하루 20장`,` · ✨ 20 scans/day`)
+    ? TX(` · ✨ 스캔 무제한`,` · ✨ Unlimited scans`)
     : (isOrgStudentActive()
         ? TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(STUDENT_DAILY_LIMIT)})
-        : TX(` · 📷 무료 스캔 {v0}/{v1}장 사용됨`,` · 📷 Free scans {v0}/{v1}`,{v0:(userScanCount),v1:(FREE_SCAN_LIMIT)}));
+        : TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(FREE_DAILY_LIMIT)}));
   return `${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${TT('단어','words')}${scan}`;
 }
 function sortedShelfBooks(){
@@ -9724,7 +9737,7 @@ async function doScan() {
     const b64 = imgData.split(',')[1], mt = imgData.split(';')[0].split(':')[1];
     const data = await geminiWithRetry({ contents:[{parts:[{inline_data:{mime_type:mt,data:b64}},{text:buildScanPrompt(true)}]}], generationConfig:{temperature:0.1,maxOutputTokens:16384} });
     if (data.error) {
-      if (data.error.code==='scan_limit') { handleScanBlocked(); return; } // 서버 한도 초과
+      if (data.error.code==='scan_limit') { handleScanBlocked(data.error.scope); return; } // 서버 한도 초과(daily|monthly)
       if (data.error.code===403) toast('API 키를 확인해주세요');
       else toast('오류가 발생했어요\n잠시 후 다시 시도해주세요');
       render(); return;
@@ -10485,9 +10498,9 @@ function render() {
             const assignBtn = orgIsAdmin()?`<div onclick="assignBook('${book.id}',null)" style="display:flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px dashed rgba(28,53,83,0.3);color:var(--accent);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:12px;">🏫 ${TT('이 책을 학원생에게 배정','Assign this book to students')}</div>`:'';
             const banner = (txt)=>`<div style="display:flex;align-items:center;gap:8px;background:var(--bg-input);border:1px solid var(--ink-07);color:var(--ink-60);border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:12px;">${txt}</div>`;
             if (book._official)
-              return banner(`📕 ${hasOfficialAccess()?TT('공식 단어장 · 기출 빅데이터 기반','Official wordbook'):TT('공식 단어장 · Day 1 무료 체험 · 나머지는 프리미엄/단체','Official wordbook · Day 1 free · rest with Premium/academy')}`) + assignBtn;
+              return banner(`📕 ${hasOfficialAccess()?TT('공식 단어장 · 기출 빅데이터 기반','Official wordbook'):TT('공식 단어장 · 기출 빅데이터 기반','Official wordbook')}`) + assignBtn;
             if (book._assigned) // 학생이 배정받은 책
-              return banner(`📌 ${hasOfficialAccess()?TT('학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요','Assigned by your academy (read-only)'):TT('학원 과제 책 · Day 1 무료 · 나머지는 학원 결제 시 열려요','Assigned by your academy · Day 1 free · rest unlocks with the academy plan')}`);
+              return banner(`📌 ${hasOfficialAccess()?TT('학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요','Assigned by your academy (read-only)'):TT('학원 과제 책이에요 (읽기 전용) · 페이지를 눌러 외워보세요','Assigned by your academy (read-only)')}`);
             return assignBtn;  // 내 책
           })()}
           <div class="sect-row"><div class="sect-row__name">${t('pageWords')}</div><div class="sect-row__count">${countWords(book)} words</div></div>
@@ -10637,7 +10650,7 @@ function render() {
           <div style="text-align:center;padding:48px 24px;">
             <div style="font-size:48px;margin-bottom:12px;">🔒</div>
             <div style="font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${TT('프리미엄 전용 단어장이에요','Premium wordbook')}</div>
-            <div style="font-size:13px;color:var(--ink-60);line-height:1.7;max-width:300px;margin:0 auto 20px;">${TX(`{v0}부터는 프리미엄 또는 단체 결제로 열려요.<br>Day 1은 무료로 체험할 수 있어요!`,`Day 2+ unlocks with Premium or an academy plan. Day 1 is free!`,{v0:String(page.num)})}</div>
+            <div style="font-size:13px;color:var(--ink-60);line-height:1.7;max-width:300px;margin:0 auto 20px;">${TT('공식 단어장은 전권 무료예요. 바로 외워보세요!','Official wordbooks are free — dive in!')}</div>
             <button class="btn btn-solid" style="max-width:240px;margin:0 auto;" onclick="goTab('mypage')">${TT('프리미엄 보기','See Premium')}</button>
           </div>
         </div>`;
