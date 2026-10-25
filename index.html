@@ -954,6 +954,7 @@ const FREE_DAILY_LIMIT = 5,     FREE_MONTHLY_LIMIT = 60;
 const PREMIUM_DAILY_LIMIT = 30, PREMIUM_MONTHLY_LIMIT = 300;
 let userDailyScanCount = 0; // 오늘 스캔 횟수 (단체 학생용)
 let userDailyScanDate = null; // 오늘 스캔 기준 날짜
+let userAcademyName = '';     // 가입 때 적은 '다니는 학원' (학원 영업 리스트용)
 const STUDENT_DAILY_LIMIT = 10, STUDENT_MONTHLY_LIMIT = 150; // 단체 소속 학생
                                 // (하루 20장이면 월 600장 = 원가 $4.2 인데 좌석 수입이 $2.9 라 적자였다)
 
@@ -3574,13 +3575,14 @@ async function loadUserPlan() {
     // authGet: 토큰 만료 시 자동 갱신+재시도. (오래 유휴 후 새로고침하면 org 정보가
     // 안 실려 어드민 통계가 0으로 뜨던 문제 방지 — 이 값이 org 상태의 기준점)
     // 일시적 실패면 짧게 재시도(모바일 실행 직후 등) — 공용 fetchRetry
-    const data = await fetchRetry(() => authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,daily_scan_count,daily_scan_date,stripe_customer_id,visit_count,org_id,org_role,org_status,premium_until,created_at,signup_tz`), 2);
+    const data = await fetchRetry(() => authGet(`/rest/v1/members?id=eq.${currentUser.id}&select=plan,scan_count,daily_scan_count,daily_scan_date,academy_name,stripe_customer_id,visit_count,org_id,org_role,org_status,premium_until,created_at,signup_tz`), 2);
     if (!Array.isArray(data)) return; // 그래도 실패 → 기존 값 유지(0으로 덮어쓰지 않음)
     if (data[0]) {
       userPlan = data[0].plan || 'free';
       userScanCount = data[0].scan_count || 0;
       userDailyScanCount = data[0].daily_scan_count || 0;
       userDailyScanDate = data[0].daily_scan_date || null;
+      userAcademyName = data[0].academy_name || '';
       userStripeId = data[0].stripe_customer_id || '';
       userPremiumUntil = data[0].premium_until || null;
       userCreatedAt = data[0].created_at || null;
@@ -6792,6 +6794,7 @@ function showMyMenu() {
         ${row(isDark?'☀️':'🌙', isDark?(TT('라이트 모드','Light Mode')):(TT('다크 모드','Dark Mode')), "document.getElementById('my-modal').remove();toggleDarkMode()")}
         ${userPlan==='premium' && userStripeId && canShowBilling() ? row('💳', TT('구독 관리','Manage Subscription'), "document.getElementById('my-modal').remove();openBillingPortal()") : ''}
         ${_indComp() ? row('🎁', TT('구독 상태 · 결제 내역','Subscription · Invoices'), "document.getElementById('my-modal').remove();showPersonalBilling()") : ''}
+        ${!userOrgId ? sec(TT('학원·단체','Academy')) + row('🏫', TT('우리 학원에 추천하기','Recommend to my academy'), "document.getElementById('my-modal').remove();showAcademyRecommend()") : ''}
         ${sec(TT('도움말','Help'))}
         ${row('📖', TT('사용법','Guide'), "document.getElementById('my-modal').remove();goExternal('https://imvoca.app/guide.html?lang='+guideLang())")}
         ${row('❓', TT('자주 묻는 질문','FAQ'), "document.getElementById('my-modal').remove();showFaq()")}
@@ -7208,7 +7211,15 @@ function collectSignupSource(){
   if (sel === 'other') { const o=(document.getElementById('su-other')?.value||'').trim(); return o ? ('기타: '+o) : '기타'; }
   return sel || '';
 }
-function pickSource(v){ window._signupSource = v; renderLogin('signup'); }
+function pickSource(v){
+  // 이 select 를 건드리면 폼을 다시 그린다 → 적어둔 학원 이름이 날아가지 않게 먼저 담는다
+  const a = document.getElementById('su-academy'); if (a) window._suAcademy = a.value;
+  window._signupSource = v; renderLogin('signup');
+}
+function collectSignupAcademy(){
+  const v = (document.getElementById('su-academy')?.value ?? window._suAcademy ?? '').trim();
+  return v.slice(0, 80);
+}
 
 // ── 소셜 로그인 (구글/카카오) ──
 function signInWithProvider(provider){
@@ -7433,7 +7444,7 @@ async function maybeSeedSampleBook(){
   return;
 }
 
-async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source='') {
+async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source='', academy='') {
   // 입력값 검증
   if (!name?.trim()) { toast(TT('이름을 입력해주세요','Please enter your name')); return; }
   if (!email?.trim()) { toast(TT('이메일을 입력해주세요','Please enter your email')); return; }
@@ -7457,6 +7468,7 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
     if (data.user?.id) {
       const body = { id: data.user.id, name, email, role: '멤버', plan: 'free', scan_count: 0 };
       if (source) body.signup_source = source;
+      if (academy) body.academy_name = academy;   // 학원 영업 리스트의 씨앗
       if (acctType === 'owner') { body.org_role = 'owner'; body.org_status = 'approved'; try { localStorage.setItem('imvoca.ownerIntent.' + data.user.id, '1'); } catch(e){} } // 단체장 자동 승인
       else if (org) { body.org_id = org.id; body.org_role = 'student'; body.org_status = 'pending'; }
       const mRes = await fetch(SB_URL + '/rest/v1/members', {
@@ -7481,6 +7493,61 @@ async function sbSignUp(email, pw, name, acctType='personal', orgCode='', source
     window._suType = 'personal';
     renderLogin('login');
   } catch(e) { toast('가입 오류: ' + e.message); }
+}
+
+// ── 우리 학원에 추천하기 ──────────────────────────────────────────
+// 학생이 먼저 요청한 학원은 전환율이 맨땅 영업과 비교가 안 된다.
+// 받은 건은 academy_leads 에 쌓이고, 조회는 Supabase 대시보드에서 한다
+// (영업 리스트라 사용자끼리 서로 보면 안 돼서 읽기 정책을 일부러 안 뒀다).
+function showAcademyRecommend(){
+  if (needsLogin(TT('로그인하면 추천할 수 있어요.','Log in to recommend.'))) return;
+  const esc = v => String(v||'').replace(/"/g,'&quot;');
+  const overlay = document.createElement('div');
+  overlay.id = 'acad-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const inp = 'width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px;box-sizing:border-box;';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-card,#fff);border-radius:18px;padding:22px 20px;max-width:360px;width:100%;max-height:88vh;overflow-y:auto;">
+      <div style="font-family:var(--font-serif-ko);font-size:19px;font-weight:700;color:var(--ink-100);margin-bottom:6px;">${TT('우리 학원에도 알려주세요','Tell us about your academy')}</div>
+      <div style="font-size:12.5px;color:var(--ink-60);line-height:1.65;margin-bottom:16px;">${TT('학원이 IM VOCA를 쓰면 선생님이 진도를 보고 학부모님께 리포트가 갑니다. 원장님 계정은 무료예요.','If your academy joins, teachers see progress and parents get reports. The director account is free.')}</div>
+      <input id="acad-name" type="text" value="${esc(userAcademyName)}" placeholder="${TT('학원 이름 (필수)','Academy name (required)')}" style="${inp}">
+      <input id="acad-contact" type="text" placeholder="${TT('원장님 연락처 (선택)','Director contact (optional)')}" style="${inp}">
+      <textarea id="acad-memo" rows="2" placeholder="${TT('한마디 (선택)','A note (optional)')}" style="${inp}resize:vertical;"></textarea>
+      <div style="font-size:11px;color:var(--ink-45);line-height:1.6;margin-bottom:14px;">${TT('연락처를 모르시면 비워두셔도 돼요. 학원 이름만으로도 도움이 됩니다.','Leave the contact blank if you do not know it — the name alone helps.')}</div>
+      <button id="acad-send" onclick="sendAcademyRecommend()" class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;">${TT('보내기','Send')}</button>
+      <button onclick="document.getElementById('acad-modal').remove()" style="width:100%;margin-top:8px;padding:11px;background:none;border:none;font-family:var(--font-body);font-size:13px;color:var(--ink-60);cursor:pointer;">${TT('닫기','Close')}</button>
+    </div>`;
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+  setTimeout(()=>document.getElementById('acad-name')?.focus(), 60);
+}
+async function sendAcademyRecommend(){
+  const name = (document.getElementById('acad-name')?.value||'').trim();
+  if (!name) { toast(TT('학원 이름을 적어주세요','Please enter the academy name')); return; }
+  const btn = document.getElementById('acad-send');
+  if (btn) { btn.disabled = true; btn.textContent = TT('보내는 중…','Sending…'); }
+  try {
+    await sbFetch('/rest/v1/academy_leads', 'POST', {
+      member_id: currentUser.id,
+      student_name: userName || '',
+      academy_name: name.slice(0,80),
+      contact: (document.getElementById('acad-contact')?.value||'').trim().slice(0,120),
+      memo: (document.getElementById('acad-memo')?.value||'').trim().slice(0,300),
+    }, true, { 'Prefer': 'return=minimal' });
+    // 가입 때 안 적었으면 이참에 채워둔다 — 다음에 또 묻지 않게
+    if (!userAcademyName) {
+      userAcademyName = name;
+      sbFetch(`/rest/v1/members?id=eq.${currentUser.id}`, 'PATCH', { academy_name: name.slice(0,80) }, true,
+        { 'Prefer': 'return=minimal' }).catch(()=>{});
+    }
+    try { track('academy_recommend', { has_contact: !!(document.getElementById('acad-contact')?.value||'').trim() }); } catch(e){}
+    document.getElementById('acad-modal')?.remove();
+    toast(TT('고마워요! 학원에 연락해볼게요 😊','Thanks! We will reach out to them 😊'));
+  } catch(e) {
+    console.warn('[academy lead]', e);
+    if (btn) { btn.disabled = false; btn.textContent = TT('보내기','Send'); }
+    toast(TT('보내지 못했어요. 잠시 후 다시 시도해주세요','Could not send. Please try again'));
+  }
 }
 
 // ── 회원 탈퇴 (앱스토어 요건: 앱 내 계정 삭제) ─────────────────────
@@ -8584,6 +8651,10 @@ function renderLogin(tab) {
             ${t0==='owner'?`
               <div style="background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--ink-60);line-height:1.5;margin-bottom:12px;">${TT('단체장으로 가입하면 바로 단체(학원·학교·모임 등)를 만들고 전용 코드로 멤버를 받을 수 있어요.','Create your organization and invite members with a code.')}</div>
             `:''}
+            ${t0!=='owner'?`
+              <input id="su-academy" type="text" value="${(window._suAcademy||'').replace(/"/g,'&quot;')}" placeholder="${TT('다니는 학원 (선택)','Your academy (optional)')}" oninput="window._suAcademy=this.value" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:6px">
+              <div style="font-size:11px;color:var(--ink-45);margin-bottom:10px;">${TT('적어두시면 학원에서 IM VOCA를 도입할 때 바로 연결돼요. 안 적으셔도 돼요.','If your academy adopts IM VOCA later, you will be connected right away. Optional.')}</div>
+            `:''}
             <div style="font-size:12px;font-weight:600;color:var(--ink-70);margin-bottom:8px;">${TT('가입 경로 (어떻게 알게 되셨나요?)','How did you hear about us?')}</div>
             ${(()=>{ const src=window._signupSource||''; const opts=[['ad','📱 '+(TT('인스타·페북 광고','Instagram/FB ad'))],['search','🔍 '+(TT('검색 (구글·네이버)','Search'))],['referral','👥 '+(TT('지인·동료 소개','Referral'))],['community','🏫 '+(TT('모임·커뮤니티','Community'))],['other','✏️ '+(TT('기타','Other'))]];
               const ph = TT('선택해주세요','Please select');
@@ -8598,7 +8669,7 @@ function renderLogin(tab) {
             <input id="su-em" type="email" placeholder="${TT('이메일','Email')}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:10px">
             <input id="su-pw" type="password" placeholder="${TT('비밀번호 (6자 이상)','Password (6+ characters)')}" style="width:100%;background:var(--bg-input);border:1px solid var(--ink-07);border-radius:10px;padding:12px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink-100);outline:none;margin-bottom:12px"
               onkeydown="if(event.key==='Enter'){sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'',collectSignupSource());}">
-            <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'',collectSignupSource())">${TT('이메일로 가입하기','Sign up with email')}</button>
+            <button class="btn btn-solid" onclick="sbSignUp(document.getElementById('su-em').value,document.getElementById('su-pw').value,document.getElementById('su-nm').value,window._suType||'personal',document.getElementById('su-code')?.value||'',collectSignupSource(),collectSignupAcademy())">${TT('이메일로 가입하기','Sign up with email')}</button>
             `; })()}
           `}
           ${t('loginHint') ? `<div style="text-align:center;margin-top:16px;font-size:11px;color:var(--ink-40)">${t('loginHint')}</div>` : ''}
