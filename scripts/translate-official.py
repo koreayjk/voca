@@ -173,7 +173,8 @@ def translate(api_key, lang, batch, retries=4):
 # ── main ────────────────────────────────────────────────────────────────
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--lang', required=True, choices=sorted(LANG_NAMES))
+    ap.add_argument('--lang', required=True,
+                    help='zh  또는  zh,es,ja  (쉼표로 여러 개 — 차례로 돌린다)')
     ap.add_argument('--levels', default=','.join(str(n) for n in range(1, 13)),
                     help='예: 1,5,9  (기본: 1~12 전부)')
     ap.add_argument('--limit', type=int, default=0, help='이 개수만 (0=전부)')
@@ -203,16 +204,37 @@ def main():
     if not gem:
         die('GEMINI_API_KEY 를 환경변수로 넣어주세요')
 
+    langs = [x.strip() for x in a.lang.split(',') if x.strip()]
+    bad = [l for l in langs if l not in LANG_NAMES]
+    if bad:
+        die('모르는 언어: %s  (쓸 수 있는 것: %s)'
+            % (', '.join(bad), ', '.join(sorted(LANG_NAMES))))
+
     levels = [int(x) for x in a.levels.split(',') if x.strip()]
     db = DB(url, key)
 
     print('· 단어를 읽는 중…')
-    words = fetch_words(db, levels)
-    print('  Lv.%s → %d단어' % (a.levels, len(words)))
+    all_words = fetch_words(db, levels)
+    print('  Lv.%s → %d단어' % (a.levels, len(all_words)))
+
+    grand_ok = grand_fail = 0
+    for li, lang in enumerate(langs, 1):
+        if len(langs) > 1:
+            print('\n' + '─' * 52)
+            print('[%d/%d] %s' % (li, len(langs), LANG_NAMES[lang][1]))
+        ok, fail = run_one(db, gem, a, lang, all_words)
+        grand_ok += ok; grand_fail += fail
+    if len(langs) > 1:
+        print('\n' + '═' * 52)
+        print('전체 — 성공 %d · 실패 %d' % (grand_ok, grand_fail))
+
+
+def run_one(db, gem, a, lang, all_words):
+    words = list(all_words)
 
     if not a.redo:
         done = {r['word_id'] for r in
-                db.page_all('voca_word_i18n?lang=eq.%s&select=word_id' % a.lang)}
+                db.page_all('voca_word_i18n?lang=eq.%s&select=word_id' % lang)}
         before = len(words)
         words = [w for w in words if w['id'] not in done]
         if before != len(words):
@@ -236,18 +258,18 @@ def main():
         words = picked
     if not words:
         print('✓ 할 일이 없습니다.')
-        return
+        return 0, 0
 
     batches = [words[i:i + a.batch] for i in range(0, len(words), a.batch)]
     print('· %s 로 번역 — %d단어 / %d묶음%s\n'
-          % (LANG_NAMES[a.lang][1], len(words), len(batches),
+          % (LANG_NAMES[lang][1], len(words), len(batches),
              '  (연습: DB 에 쓰지 않음)' if a.dry_run else ''))
 
     ok = fail = 0
     t0 = time.time()
     for bi, batch in enumerate(batches, 1):
         try:
-            out = translate(gem, a.lang, batch)
+            out = translate(gem, lang, batch)
         except Exception as e:
             fail += len(batch)
             print('✗ %d/%d 묶음 실패 — %s' % (bi, len(batches), str(e)[:140]))
@@ -258,7 +280,7 @@ def main():
             if not base:
                 fail += 1
                 continue
-            rows.append({'word_id': w['id'], 'lang': a.lang, 'base': base,
+            rows.append({'word_id': w['id'], 'lang': lang, 'base': base,
                          'ctx': (o.get('ctx') or '').strip() or None,
                          'etym': (o.get('etym') or '').strip() or None})
             if a.dry_run:
@@ -284,6 +306,7 @@ def main():
              '  (연습이라 저장하지 않음)' if a.dry_run else ''))
     if fail:
         print('  실패분은 같은 명령을 다시 돌리면 이어서 합니다.')
+    return ok, fail
 
 
 if __name__ == '__main__':
