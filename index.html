@@ -853,6 +853,7 @@ async function startGuest(){
     // 전에는 _officialBooksForMe() 를 빼먹어서, 비한국인 방문자에게도 한국어 뜻으로 된
     // 공식책 26권을 보여주고 → 가입하면 책장이 텅 비는 미끼가 됐다.
     // (공식책은 뜻·어원·기출 출처가 전부 한국어라 한국어 사용자용이다)
+    await _ensureOfficialI18n().catch(()=>{});
     const od = _officialBooksForMe() ? await ensureOfficialCatalog() : null;
     if (Array.isArray(od)) {
       books = od.filter(b => _officialLang(b.title) === userTargetLang)
@@ -4805,7 +4806,10 @@ function _seesAllOfficialLangs(){ return userOrgRole==='owner' && userOrgStatus=
 // 뜻·어원·기출 출처가 전부 한국어라, 다른 언어 사용자가 담으면 읽을 수 없는 책이 된다.
 // → 추가 목록에서 아예 보여주지 않는다. (이미 책장에 담아둔 책은 건드리지 않는다 —
 //    남의 책장에서 책을 말없이 빼앗는 일은 하지 않는다)
-function _officialBooksForMe(){ return userNativeLang === 'ko'; }
+function _officialBooksForMe(){
+  if (userNativeLang === 'ko') return true;          // 원본이 한국어
+  return _offI18nState === userNativeLang;           // 그 언어 번역이 들어와 있을 때만
+}
 const OFFICIAL_FREE_PAGE = 'Day 1';
 // 무료 체험 페이지 판정: page_num 형식('Day 1'/'1'/'Day1'/'1일' 등)에 상관없이 "첫 날(숫자 1)"이면 무료
 function _isOfficialFreePage(pageNum){
@@ -7705,6 +7709,8 @@ async function loadBooksFromDB() {
     // 공식 단어장(~6천 단어, 큰 payload)은 비동기로 붙임 → 소유 책 먼저 그려 첫 화면
     // 블로킹을 없애고, 로드 완료 후 현재 화면을 다시 렌더한다.
     window._officialPending = true;
+    // 비한국어 사용자는 '그 언어 번역이 있는지' 를 먼저 알아야 공식책을 띄울지 정한다
+    _ensureOfficialI18n().catch(()=>{}).then(() => {
     appendOfficialBooks().then(() => {
       window._officialPending = false;
       updateTotalWords();
@@ -7714,6 +7720,7 @@ async function loadBooksFromDB() {
       // (이걸 안 하면 공식 단어장 복습이 있는 사람은 탭 뱃지가 안 뜬다)
       try { if (currentUser && typeof checkReviews === 'function') checkReviews().catch(()=>{}); } catch(e){}
     }).catch(e => { window._officialPending = false; console.warn('[official load]', e); });
+    });
   } catch(e) { console.error('DB load error:', e); }
 }
 
@@ -7806,7 +7813,24 @@ async function ensureOfficialBookWords(id){
   if (window._offWordsP[id]) return window._offWordsP[id];
   window._offWordsP[id] = (async () => {
     try {
-      const pgs = await fetchRetry(() => sbFetch(`/rest/v1/voca_pages?book_id=eq.${id}&select=*,voca_words(*)`));
+      // 번역이 있는 언어면 한 번의 요청으로 같이 받는다(단어 id 를 400개씩
+      // URL 에 넣으면 주소가 너무 길어져서 끊긴다 → PostgREST 중첩 조회를 쓴다).
+      const _tl = await _ensureOfficialI18n();
+      let sel = '*,voca_words(*)', extra = '';
+      if (_tl) {
+        sel = '*,voca_words(*,voca_word_i18n(base,ctx,etym))';
+        extra = `&voca_words.voca_word_i18n.lang=eq.${encodeURIComponent(_tl)}`;
+      }
+      let pgs = null;
+      try {
+        pgs = await fetchRetry(() => sbFetch(`/rest/v1/voca_pages?book_id=eq.${id}&select=${sel}${extra}`));
+      } catch(e) {
+        if (!_tl) throw e;
+        // 중첩 조회가 막히면(관계 미설정 등) 번역 없이라도 단어는 보여준다
+        console.warn('[official i18n join]', e);
+        _offI18nState = false;
+        pgs = await fetchRetry(() => sbFetch(`/rest/v1/voca_pages?book_id=eq.${id}&select=*,voca_words(*)`));
+      }
       if (Array.isArray(pgs)) {
         row.voca_pages = pgs;
         row._wordsLoaded = true;
@@ -8499,7 +8523,42 @@ async function savePageWordsToDB(bookId, pageNum, words) {
 
 // 저장된 DB 행을 메모리 단어 객체로 변환
 function _dbRowToWord(w) {
-  return { id: w.id, en: w.en, ipa: w.ipa||'', base: w.base, ctx: w.ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: w.analysis || null };
+  let base = w.base, ctx = w.ctx, analysis = w.analysis || null;
+  // 공식 단어장의 번역본(voca_word_i18n). 영어 단어·발음기호·예문은 언어와
+  // 무관하므로 그대로 두고, 한국어로 된 뜻·문맥뜻·어원만 갈아끼운다.
+  // 같이 빼는 것: src('2014 수능 25번')·exam(수능 출제 빈도) — 한국 수험생 전용이라
+  // 해외 학습자 화면에 남으면 뜻 모를 한국어가 섞인다.
+  const tr = Array.isArray(w.voca_word_i18n) ? w.voca_word_i18n[0] : w.voca_word_i18n;
+  if (tr && tr.base) {
+    base = tr.base;
+    ctx = tr.ctx || '';
+    analysis = analysis ? Object.assign({}, analysis) : {};
+    if (tr.etym) analysis.etym = tr.etym; else delete analysis.etym;
+    delete analysis.src; delete analysis.exam;
+  }
+  return { id: w.id, en: w.en, ipa: w.ipa||'', base: base, ctx: ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: analysis };
+}
+
+// ── 공식 단어장 번역(voca_word_i18n) ────────────────────────────────
+// 한국어 사용자는 원본이 이미 한국어라 번역이 필요 없다.
+// 그 외 언어는 '번역이 실제로 들어와 있는지' 한 번만 확인하고 기억한다.
+// 표가 아직 없거나(SQL 미실행) 그 언어 번역이 0건이면 영원히 안 붙인다.
+let _offI18nState = null;   // null=모름 / false=없음 / 'zh' 같은 언어코드=있음
+async function _ensureOfficialI18n(){
+  const lang = userNativeLang;
+  if (lang === 'ko') return false;
+  if (_offI18nState !== null && _offI18nState !== lang) {
+    if (_offI18nState === false) return false;
+  }
+  if (_offI18nState === lang) return lang;
+  try {
+    const r = await sbFetch(`/rest/v1/voca_word_i18n?lang=eq.${encodeURIComponent(lang)}&select=word_id&limit=1`);
+    _offI18nState = (Array.isArray(r) && r.length) ? lang : false;
+  } catch(e) {
+    console.warn('[official i18n]', e);   // 표가 없으면 여기로 온다 — 조용히 끈다
+    _offI18nState = false;
+  }
+  return _offI18nState;
 }
 
 
