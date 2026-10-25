@@ -16,10 +16,14 @@ const svc = createClient(
 // ── 스캔 한도 (index.html 의 같은 이름 상수와 반드시 같이 고칠 것) ──────────
 // 무료는 '평생 몇 장'이 아니라 '하루 몇 장'이다. 일일 한도는 매일 돌아올 이유가
 // 되지만 평생 한도는 다 쓰면 그걸로 끝이라 앱을 지울 이유가 된다.
-const FREE_DAILY_LIMIT = 5;      // 무료 플랜 일일
-const FREE_MONTHLY_LIMIT = 60;   // 무료 플랜 월 상한 — 하루 한도만 두면 연 1,825장까지 간다
-const STUDENT_DAILY_LIMIT = 10;  // 결제중 학원 학생 일일
-                                 // 20장이면 월 600장 = 6,000원인데 좌석 수입이 4,200원이라 적자였다
+// 장당 원가 약 $0.007. 그래서 '무제한'은 결제중 학원의 원장 하나뿐이다.
+// 프리미엄도 상한이 있다 — $3.99 에서 Stripe 수수료를 빼면 실수령 $3.57,
+// 손익분기가 월 510장이라 무제한이면 많이 쓰는 한 명이 구독료보다 더 쓴다.
+// 하루·월을 둘 다 거는 이유: 하루만 두면 월 900장까지 가서 적자고,
+//                            월만 두면 하루에 몰아 써서 남용 탐지가 어렵다.
+const FREE_DAILY_LIMIT = 5,     FREE_MONTHLY_LIMIT = 60;      // 최악 원가 $0.42 (획득 비용)
+const STUDENT_DAILY_LIMIT = 10, STUDENT_MONTHLY_LIMIT = 150;  // 최악 $1.05 / 실수령 $2.90
+const PREMIUM_DAILY_LIMIT = 30, PREMIUM_MONTHLY_LIMIT = 300;  // 최악 $2.10 / 실수령 $3.57
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -84,42 +88,35 @@ Deno.serve(async (req) => {
         ({ data: m } = await svc.from("members").select(COLS_BASE).eq("id", user.id).single());
       }
       if (m) {
-        let unlimited = (m.plan === "premium");
-        let studentDaily = false;
-        if (!unlimited && m.org_id &&
-            (m.org_role === "owner" || (m.org_role === "student" && m.org_status === "approved"))) {
+        // 등급을 먼저 정하고, 한도 검사는 한 번만 한다.
+        let unlimited = false;                                   // 결제중 학원의 원장만
+        let dayCap = FREE_DAILY_LIMIT, monCap = FREE_MONTHLY_LIMIT;
+        if (m.plan === "premium") { dayCap = PREMIUM_DAILY_LIMIT; monCap = PREMIUM_MONTHLY_LIMIT; }
+        if (m.org_id && (m.org_role === "owner" || (m.org_role === "student" && m.org_status === "approved"))) {
           const { data: org } = await svc.from("orgs").select("billing_active").eq("id", m.org_id).single();
-          if (org?.billing_active) { m.org_role === "owner" ? (unlimited = true) : (studentDaily = true); }
+          if (org?.billing_active) {
+            if (m.org_role === "owner") unlimited = true;
+            else if (m.plan !== "premium") { dayCap = STUDENT_DAILY_LIMIT; monCap = STUDENT_MONTHLY_LIMIT; }
+          }
         }
         if (!unlimited) {
           // 사용자 현지 날짜 → 없거나 이상하면 가입 시 기록해 둔 시간대 → 그것도 없으면 KST
           const today = dateInTz(tz) || dateInTz(m.signup_tz) || kstToday();
-          if (studentDaily) {
-            const used = (m.daily_scan_date === today) ? (m.daily_scan_count || 0) : 0;
-            if (used >= STUDENT_DAILY_LIMIT) {
-              return json({ error: { code: "scan_limit", scope: "daily", message: "오늘 스캔 한도에 도달했어요" } });
-            }
-            await svc.from("members").update({
-              daily_scan_count: used + 1, daily_scan_date: today, scan_count: (m.scan_count || 0) + 1,
-            }).eq("id", user.id);
-          } else {
-            // 무료: 하루 5장 + 월 60장. 둘 중 하나라도 걸리면 막는다.
-            const month = today.slice(0, 7);            // 'YYYY-MM'
-            const dUsed = (m.daily_scan_date === today) ? (m.daily_scan_count || 0) : 0;
-            if (dUsed >= FREE_DAILY_LIMIT) {
-              return json({ error: { code: "scan_limit", scope: "daily", message: "오늘 무료 스캔을 다 쓰셨어요" } });
-            }
-            const mUsed = (hasMonthly && m.monthly_scan_month === month) ? (m.monthly_scan_count || 0) : 0;
-            if (hasMonthly && mUsed >= FREE_MONTHLY_LIMIT) {
-              return json({ error: { code: "scan_limit", scope: "monthly", message: "이번 달 무료 스캔을 다 쓰셨어요" } });
-            }
-            const patch: Record<string, unknown> = {
-              daily_scan_count: dUsed + 1, daily_scan_date: today,
-              scan_count: (m.scan_count || 0) + 1,
-            };
-            if (hasMonthly) { patch.monthly_scan_count = mUsed + 1; patch.monthly_scan_month = month; }
-            await svc.from("members").update(patch).eq("id", user.id);
+          const month = today.slice(0, 7);                       // 'YYYY-MM'
+          const dUsed = (m.daily_scan_date === today) ? (m.daily_scan_count || 0) : 0;
+          if (dUsed >= dayCap) {
+            return json({ error: { code: "scan_limit", scope: "daily", limit: dayCap, message: "오늘 스캔 한도에 도달했어요" } });
           }
+          const mUsed = (hasMonthly && m.monthly_scan_month === month) ? (m.monthly_scan_count || 0) : 0;
+          if (hasMonthly && mUsed >= monCap) {
+            return json({ error: { code: "scan_limit", scope: "monthly", limit: monCap, message: "이번 달 스캔 한도에 도달했어요" } });
+          }
+          const patch: Record<string, unknown> = {
+            daily_scan_count: dUsed + 1, daily_scan_date: today,
+            scan_count: (m.scan_count || 0) + 1,
+          };
+          if (hasMonthly) { patch.monthly_scan_count = mUsed + 1; patch.monthly_scan_month = month; }
+          await svc.from("members").update(patch).eq("id", user.id);
         }
       }
     }

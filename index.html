@@ -947,12 +947,15 @@ let userScanCount = 0;      // 이번 달 스캔 횟수
 // 여기 숫자는 '안내용'이다. 실제 차단은 서버(gemini-proxy)가 한다.
 // 무료는 '평생 몇 장'이 아니라 '하루 몇 장'이다 — 평생 한도는 다 쓰면
 // 앱을 지울 이유가 되지만, 일일 한도는 내일 다시 올 이유가 된다.
-const FREE_DAILY_LIMIT = 5;    // 무료 플랜 일일
-const FREE_MONTHLY_LIMIT = 60; // 무료 플랜 월 상한(서버에서만 검사)
+// 장당 원가가 실제로 나가서 '무제한'은 결제중 학원의 원장 하나뿐이다.
+// 프리미엄도 상한이 있다 — $3.99 에서 수수료를 빼면 실수령 $3.57,
+// 손익분기가 월 510장이라 무제한이면 많이 쓰는 한 명이 구독료보다 더 쓴다.
+const FREE_DAILY_LIMIT = 5,     FREE_MONTHLY_LIMIT = 60;
+const PREMIUM_DAILY_LIMIT = 30, PREMIUM_MONTHLY_LIMIT = 300;
 let userDailyScanCount = 0; // 오늘 스캔 횟수 (단체 학생용)
 let userDailyScanDate = null; // 오늘 스캔 기준 날짜
-const STUDENT_DAILY_LIMIT = 10; // 단체 소속 학생 일일 스캔 제한
-                                // (20장이면 월 600장=6,000원인데 좌석 수입은 4,200원이라 적자였다)
+const STUDENT_DAILY_LIMIT = 10, STUDENT_MONTHLY_LIMIT = 150; // 단체 소속 학생
+                                // (하루 20장이면 월 600장 = 원가 $4.2 인데 좌석 수입이 $2.9 라 적자였다)
 
 async function sbFetch(path, method='GET', body=null, useAuth=true, extraHeaders={}) {
   const buildHeaders = () => {
@@ -4771,8 +4774,15 @@ function _compBillingHTML(fullPrice, seats, startISO, endISO){
   return { priceBlock, invoicesHTML: header + nextRow + paidRows };
 }
 function isOrgStudentActive(){ return !!(userOrgId && userOrgRole==='student' && userOrgStatus==='approved' && isOrgBillingActive()); }
-// 스캔 무제한 판정(개인 프리미엄 또는 결제중 학원의 원장). 헤더 표시와 canScan 을 일치시키기 위해 공용.
-function hasUnlimitedScan(){ return userPlan==='premium' || (userOrgRole==='owner' && isOrgBillingActive()); }
+// 스캔 무제한은 결제중 학원의 원장 하나뿐이다(학생 좌석 수입으로 덮인다).
+// 프리미엄은 무제한이 아니라 하루 30장 — 아래 myScanDailyLimit() 참고.
+function hasUnlimitedScan(){ return userOrgRole==='owner' && isOrgBillingActive(); }
+// 내 등급의 하루 한도 (월 상한은 서버만 검사한다)
+function myScanDailyLimit(){
+  if (userPlan === 'premium') return PREMIUM_DAILY_LIMIT;
+  if (isOrgStudentActive()) return STUDENT_DAILY_LIMIT;
+  return FREE_DAILY_LIMIT;
+}
 // 공식 단어장 접근: 프리미엄 또는 결제중 학원(관리자/승인학생) → 전체. 무료 → Day 1 체험만.
 function hasOfficialAccess(){
   // 2026-10 전권 개방. 공식 단어장은 DB 에 이미 들어있는 정적 데이터라
@@ -4890,20 +4900,26 @@ function dailyScansToday(){ return (userDailyScanDate===_todayStr()) ? userDaily
 function canScan() {
   if (hasUnlimitedScan()) return true;  // 개인 프리미엄 또는 결제중 학원 원장
   // 결제중 학원의 승인 학생: 총 누적 제한 면제, 일일 제한만 적용
-  if (isOrgStudentActive()) return dailyScansToday() < STUDENT_DAILY_LIMIT;
-  return dailyScansToday() < FREE_DAILY_LIMIT;   // 무료: 하루 한도(월 상한은 서버가 검사)
+  return dailyScansToday() < myScanDailyLimit();   // 월 상한은 서버가 검사
 }
 // 차단 사유에 맞는 안내 (학생 일일 한도 vs 무료 한도)
 function handleScanBlocked(scope) {
-  if (isOrgStudentActive()) {
-    toast(TX(`오늘 학습 한도({v0}장)에 도달했어요. 내일 다시 이용할 수 있어요 😊`,`Daily limit ({v0}) reached. Try again tomorrow 😊`,{v0:(STUDENT_DAILY_LIMIT)}));
-  } else if (scope === 'monthly') {
-    // 월 상한은 서버만 안다 — 하루 한도가 남아 있어도 여기로 올 수 있다.
-    toast(TX(`이번 달 무료 스캔({v0}장)을 다 쓰셨어요. 다음 달에 다시 채워져요`,`Monthly free scans ({v0}) used up. Resets next month`,{v0:(FREE_MONTHLY_LIMIT)}));
-    showUpgradePopup('monthly');
-  } else {
-    showUpgradePopup('daily');
+  // 월 상한은 서버만 안다 — 하루 한도가 남아 있어도 scope='monthly' 로 올 수 있다.
+  const monthly = (scope === 'monthly');
+  // 이미 돈을 낸 사람에게 업그레이드 팝업을 띄우지 않는다.
+  if (userPlan === 'premium') {
+    toast(monthly
+      ? TX(`이번 달 스캔 {v0}장을 다 쓰셨어요. 다음 달에 다시 채워져요`,`All {v0} scans used this month. Resets next month`,{v0:(PREMIUM_MONTHLY_LIMIT)})
+      : TX(`오늘 스캔 {v0}장을 다 쓰셨어요. 내일 다시 채워져요`,`Today's {v0} scans are used up. More tomorrow`,{v0:(PREMIUM_DAILY_LIMIT)}));
+    return;
   }
+  if (isOrgStudentActive()) {
+    toast(monthly
+      ? TX(`이번 달 학습 한도({v0}장)에 도달했어요. 다음 달에 다시 채워져요`,`Monthly limit ({v0}) reached. Resets next month`,{v0:(STUDENT_MONTHLY_LIMIT)})
+      : TX(`오늘 학습 한도({v0}장)에 도달했어요. 내일 다시 이용할 수 있어요 😊`,`Daily limit ({v0}) reached. Try again tomorrow 😊`,{v0:(STUDENT_DAILY_LIMIT)}));
+    return;
+  }
+  showUpgradePopup(monthly ? 'monthly' : 'daily');
 }
 
 // 업그레이드 팝업 — 성취 프레임 헤드라인 + 혜택 타일 + 하루 단위 가격 재프레이밍 (리디자인 감사 B안)
@@ -4943,8 +4959,8 @@ function showUpgradePopup(scope) {
           : TX(`오늘 {v0}장을 다 쓰셨어요.<br>내일 다시 {v0}장이 채워져요`,`You used today's {v0} scans.<br>{v0} more tomorrow`,{v0:(FREE_DAILY_LIMIT)})}
       </div>
       <div style="display:flex;gap:8px;background:var(--bg-page);border-radius:14px;padding:10px;margin-bottom:14px;">
-        ${tile('📷', TT('AI 스캔','AI scan'), TT('무제한','unlimited'))}
-        ${tile('⏱', TT('하루 한도','Daily cap'), TT('없음','none'))}
+        ${tile('📷', TT('AI 스캔','AI scan'), TX(`하루 {v0}장`,`{v0} / day`,{v0:(PREMIUM_DAILY_LIMIT)}))}
+        ${tile('⏱', TT('무료 대비','vs free'), TT('6배','6×'))}
         ${tile('📚', TT('공식 단어장','Official books'), TT('무료에도 전권','free for all'))}
       </div>
       <div style="font-size:13px;color:var(--ink-60);margin-bottom:3px;"><b style="font-size:21px;color:var(--ink-100);">$3.99</b>/${TT('월','mo')} · ${TT('연간','yearly')} $39.99 (16%↓)</div>
@@ -7818,9 +7834,7 @@ function _shelfStatLine(myBooks){
   if (isGuest()) return TX(`{v0}권 · 눌러서 열어보세요`,`{v0} books · tap one to open`,{v0:(myBooks.length)});
   const scan = hasUnlimitedScan()
     ? TX(` · ✨ 스캔 무제한`,` · ✨ Unlimited scans`)
-    : (isOrgStudentActive()
-        ? TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(STUDENT_DAILY_LIMIT)})
-        : TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(FREE_DAILY_LIMIT)}));
+    : TX(` · 📷 오늘 스캔 {v0}/{v1}장`,` · 📷 Today {v0}/{v1}`,{v0:(dailyScansToday()),v1:(myScanDailyLimit())});
   return `${myBooks.length}${t('booksCountUnit')} · ${myBooks.reduce((n,b)=>n+countWords(b),0)} ${TT('단어','words')}${scan}`;
 }
 function sortedShelfBooks(){
