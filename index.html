@@ -849,7 +849,11 @@ async function startGuest(){
   const root = document.getElementById('root');
   if (root) root.innerHTML = `<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ink-45);font-size:14px;">${TT('단어장을 불러오는 중…','Loading wordbooks…')}</div>`;
   try {
-    const od = await ensureOfficialCatalog();
+    // ⚠️ 가입 후 책장과 같은 조건으로 걸러야 한다.
+    // 전에는 _officialBooksForMe() 를 빼먹어서, 비한국인 방문자에게도 한국어 뜻으로 된
+    // 공식책 26권을 보여주고 → 가입하면 책장이 텅 비는 미끼가 됐다.
+    // (공식책은 뜻·어원·기출 출처가 전부 한국어라 한국어 사용자용이다)
+    const od = _officialBooksForMe() ? await ensureOfficialCatalog() : null;
     if (Array.isArray(od)) {
       books = od.filter(b => _officialLang(b.title) === userTargetLang)
                 .sort(_officialPickerOrder)
@@ -10452,7 +10456,7 @@ function render() {
           ${isGuest() ? `
             <div style="display:flex;align-items:center;gap:10px;background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:12px;padding:12px 14px;margin-bottom:14px;">
               <span style="font-size:18px;flex-shrink:0;">👀</span>
-              <div style="flex:1;min-width:0;font-size:12.5px;color:var(--ink-70);line-height:1.6;">${TT('둘러보는 중이에요. <b>Day 1</b> 은 지금 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','You are just looking around. <b>Day 1</b> is yours to study right now.<br>Log in to save your words and review schedule.')}</div>
+              <div style="flex:1;min-width:0;font-size:12.5px;color:var(--ink-70);line-height:1.6;">${books.length ? TT('둘러보는 중이에요. <b>Day 1</b> 은 지금 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','Just looking around — <b>Day 1</b> is yours to study right now.<br>Log in to save your words and review schedule.') : TT('둘러보는 중이에요. 아래 <b>책 추가</b>로 단어장을 만들어 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','Just looking around — tap <b>Add Book</b> below to build a wordbook and start.<br>Log in to save your words and review schedule.')}</div>
               <button onclick="exitGuest('signup')" style="flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 13px;font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">${TT('로그인','Log in')}</button>
             </div>
             <button onclick="startLevelTest()" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}
