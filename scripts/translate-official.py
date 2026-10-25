@@ -11,7 +11,9 @@
 쓰는 법 (터미널):
   cd ~/voca
   export SUPABASE_URL=https://ziatqkjlafucqtwshhla.supabase.co
-  export SERVICE_ROLE_KEY=...        # Supabase 대시보드 → Settings → API
+  export SUPABASE_SECRET_KEY=...     # 대시보드 → Settings → API Keys → secret
+                                     #  (sb_secret_… 로 시작. 옛 service_role JWT 는
+                                     #   2026-10-24 에 비활성화됐다)
   export GEMINI_API_KEY=...          # Google AI Studio
 
   # 1) 품질 먼저 — DB 에 쓰지 않고 화면에만 보여준다
@@ -61,8 +63,13 @@ def req(url, method='GET', body=None, headers=None, timeout=120):
 class DB:
     def __init__(self, url, key):
         self.url = url.rstrip('/')
-        self.h = {'apikey': key, 'Authorization': 'Bearer ' + key,
-                  'Content-Type': 'application/json'}
+        # 새 형식 키(sb_secret_…)는 JWT 가 아니다. Authorization: Bearer 자리에
+        # 넣으면 JWT 로 파싱하려다 거부하는 경로가 있어서(엣지 함수가 그랬다)
+        # 새 키는 apikey 로만 보낸다. 레거시 JWT 는 둘 다 보내던 대로 둔다.
+        self.h = {'apikey': key, 'Content-Type': 'application/json',
+                  'User-Agent': 'imvoca-translate/1.0'}
+        if key.startswith('eyJ'):
+            self.h['Authorization'] = 'Bearer ' + key
 
     def get(self, path):
         return req(self.url + '/rest/v1/' + path, headers=self.h)
@@ -176,10 +183,23 @@ def main():
     a = ap.parse_args()
 
     url = os.environ.get('SUPABASE_URL', '').strip()
-    key = os.environ.get('SERVICE_ROLE_KEY', '').strip()
+    key = (os.environ.get('SUPABASE_SECRET_KEY', '')
+           or os.environ.get('SERVICE_ROLE_KEY', '')).strip()
     gem = os.environ.get('GEMINI_API_KEY', '').strip()
     if not url or not key:
-        die('SUPABASE_URL / SERVICE_ROLE_KEY 를 환경변수로 넣어주세요')
+        die('SUPABASE_URL / SUPABASE_SECRET_KEY 를 환경변수로 넣어주세요')
+    # 레거시 anon/service_role JWT 는 2026-10-24 에 비활성화했다(키 유출 대응).
+    # 그대로 쓰면 첫 요청에서 401 이 나므로 여기서 먼저 잡아준다.
+    if key.startswith('eyJ'):
+        die('옛 service_role 키(JWT)입니다. 이 키는 비활성화돼 있어요.\n'
+            '  Supabase 대시보드 → Settings → API Keys 에서\n'
+            "  'secret' 키(sb_secret_… 로 시작)를 복사해 쓰세요.\n"
+            '    export SUPABASE_SECRET_KEY=sb_secret_...')
+    if key.startswith('sb_publishable_'):
+        die('publishable(공개) 키입니다. 이 키로는 쓰기가 안 돼요.\n'
+            "  Settings → API Keys 에서 'secret' 키를 복사해 쓰세요.")
+    if not key.startswith('sb_secret_'):
+        print('⚠ 키 형식이 sb_secret_… 가 아닙니다. 계속 시도합니다.')
     if not gem:
         die('GEMINI_API_KEY 를 환경변수로 넣어주세요')
 
