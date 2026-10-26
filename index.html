@@ -18,7 +18,16 @@
     if (navigator.standalone) return;                           // iOS 홈 화면에 추가
     if (document.referrer.indexOf('android-app://') === 0) return;                      // TWA
     if (localStorage.getItem('imvoca.session')) return;         // 쓰던 사람은 바로 앱으로
-    location.replace('/lp.html');
+    // 한국어 브라우저만 한국어 랜딩으로. 그 외는 영어 랜딩으로 보낸다.
+    // (전에는 전부 lp.html 로 보내서, 해외 방문자가 읽을 수 없는 한국어 벽을 만났다.
+    //  ASO·광고·커뮤니티로 유입을 만들어도 이 한 줄에서 다 샜다.)
+    var _pref = (navigator.languages && navigator.languages.length)
+                  ? navigator.languages : [navigator.language || ''];
+    var _ko = false;
+    for (var _i = 0; _i < _pref.length; _i++) {
+      if (String(_pref[_i]).toLowerCase().indexOf('ko') === 0) { _ko = true; break; }
+    }
+    location.replace(_ko ? '/lp.html' : '/lp-en.html');
   } catch (e) {}
 })();
 </script>
