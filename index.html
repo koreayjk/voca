@@ -10521,6 +10521,7 @@ function render() {
   if (route.name === 'report') { renderReportPage(root); return; }
 
   if (route.name === 'library') {
+    _flushPushAsk();   // 퀴즈를 그만두고 나온 사람도 여기서 알림 권유를 듣는다
     loadAssignments();
     if (typeof _refreshMyTestsBanner==='function') setTimeout(()=>{ try{ _refreshMyTestsBanner(); }catch(e){} }, 0);
     // 재접속/새로고침으로 끊긴 시험/퀴즈가 있으면 자동으로 이어서 열기 (앱 로드당 1회만)
@@ -10867,6 +10868,7 @@ function render() {
         </div>`;
       return;
     }
+    _flushPushAsk();   // 퀴즈에서 ← 로 돌아온 직후가 여기다
     // 안전장치: 이 페이지의 단어를 DB에서 fresh 로드 (백그라운드, 다른 기기 동기화)
     if (page._pid && !page._lastSync) {
       page._lastSync = Date.now();
@@ -10906,7 +10908,7 @@ function render() {
   else if (route.name === 'stats') { renderStats(root, dock); return; }
   else if (route.name === 'search') { renderSearch(root, dock); return; }
   else if (route.name === 'favorites') { renderFavorites(root, dock); return; }
-  else if (route.name === 'review') { renderReviewPage(root, dock); return; }
+  else if (route.name === 'review') { _flushPushAsk(); renderReviewPage(root, dock); return; }
   else if (route.name === 'manual-add') { renderManualAdd(root, route); return; }
 
   else if (route.name === 'study-setup') {
@@ -10954,12 +10956,16 @@ function render() {
 
   else if (route.name === 'study-done') {
     const book = findBook(route.bookId);
-    // 새 복습 일정이 막 생긴 경우에만 알림을 권한다 (복습 재수행은 제외).
-    // 축하 화면을 먼저 보게 두고 잠시 뒤에 띄운다.
+    // 알림 권유. 축하 화면을 먼저 보게 두고 잠시 뒤에 띄운다.
+    // 조건에서 !route.isReview 를 뺐다 — 복습을 한 번 해낸 사람도 알림이 없으면
+    // 다음 복습일을 놓친다. maybeAskPush 가 이미 '구독 중/차단됨/3회 초과'를
+    // 스스로 걸러내므로, 조건을 넓혀도 같은 사람을 또 괴롭히지는 않는다.
+    // 보류 표시(_takePushPend)가 있으면 여기서 소비해 중복 질문을 막는다.
     let _askedPush = false;
-    if (route.scope === 'page' && !route.isReview && !isGuest()) {
+    const _pend = isGuest() ? null : _takePushPend();
+    if (!isGuest() && (_pend || route.scope === 'page')) {
       _askedPush = true;
-      setTimeout(() => { try { maybeAskPush(route.total); } catch(e){} }, 1400);
+      setTimeout(() => { try { maybeAskPush(route.total || (_pend ? _pend.n : 0)); } catch(e){} }, 1400);
     }
     // 학원 물어보기 — '방금 외웠다'는 기분 좋은 순간에만.
     // My 메뉴 안에 두니 한 달 동안 0건이었다. 일부러 찾아가야 하는 자리였다.
@@ -13051,6 +13057,7 @@ async function saveReviewSchedule(bookId, pageNum) {
       const nowF=new Date(), midF=(n)=>{const d=new Date(nowF);d.setDate(d.getDate()+n);d.setHours(0,0,0,0);return d.toISOString();};
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, book_id:bookId, page_num:String(pageNum), first_studied_at:nowF.toISOString(), review_2d:midF(1), review_3d:midF(2), review_6d:midF(3), review_15d:midF(6), review_30d:midF(15), review_60d:midF(30) } });
       _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0, day:_todayStr() } });
+      if (_localNew) _notePushAsk(_words0);   // 알림 권유 보류 (퀴즈 결과와 무관하게)
       return _localNew;
     }
     if (existing.length > 0) {
@@ -13085,8 +13092,10 @@ async function saveReviewSchedule(bookId, pageNum) {
       logError('write_fail','saveReviewSchedule.insert',(res&&res.status)||'network',{ bookId, pageNum });
       _enqueueWrite({ type:'review', book_id:bookId, page_num:String(pageNum), body:reviewBody });
       _enqueueWrite({ type:'activity', book_id:bookId, page_num:String(pageNum), body:{ user_id:currentUser.id, org_id:userOrgId||null, book_id:bookId, page_num:String(pageNum), kind:'study', words:_words0, day:_todayStr() } });
+      _notePushAsk(_words0);
       return true;
     }
+    _notePushAsk(_words0);   // 일정이 생겼다 → 알림 권유 보류
     return true; // 새 복습 일정을 실제로 등록함 → 첫 암기 점수 지급 대상(호출측에서 처리)
   } catch(e) { console.error('[복습 저장 오류]', e); return false; }
   finally { _savingReview.delete(_key); }
@@ -15137,6 +15146,39 @@ async function syncAppBadge(){
 //   1) 우리 화면으로 먼저 묻는다 (브라우저 권한을 안 태운다)
 //   2) '네'를 누른 사람에게만 진짜 브라우저 팝업을 띄운다 — 버튼 클릭 = 사용자 제스처라
 //      requestPermission() 이 정상 동작한다
+// ── 복습 일정이 '생긴 순간'을 적어둔다 ────────────────────────────
+// 전에는 알림 권유가 study-done 화면에서만 떴다. 그런데 첫 암기는
+// 암기카드 → 게이트 퀴즈로 이어지고, 그 퀴즈를 '만점'으로 통과해야만
+// study-done 에 도달한다. 한 단어라도 틀리고 그만둔 사람은 복습 일정은
+// 이미 생겼는데 "알림 켤까요?"를 평생 못 들었다. 알림이 없으면 돌아올
+// 이유가 없다 — 복습률이 2.8% 였던 가장 큰 구조적 이유다.
+//
+// 그래서 일정이 생긴 순간을 따로 적어두고, 카드·퀴즈가 아닌 조용한
+// 화면(책장·복습·단어목록)에 도착하면 그때 묻는다. 흐름을 끊지 않으면서
+// 일정이 생긴 사람은 전원 한 번은 듣게 된다.
+// 24시간이 지난 보류는 버린다 ("방금 외운 N개" 문구가 거짓이 되므로).
+function _notePushAsk(words){
+  try { localStorage.setItem('imvoca.pushPend', JSON.stringify({ n: words||0, at: Date.now() })); } catch(e){}
+}
+function _takePushPend(){
+  let o = null;
+  try {
+    const raw = localStorage.getItem('imvoca.pushPend');
+    if (raw === null) return null;
+    localStorage.removeItem('imvoca.pushPend');
+    o = JSON.parse(raw);
+  } catch(e){ return null; }
+  if (!o || !o.at || Date.now() - o.at > 86400000) return null;
+  return o;
+}
+// 조용한 화면에 도착했을 때 호출 — 보류가 있으면 그때 묻는다
+function _flushPushAsk(){
+  if (isGuest() || !currentUser) return;
+  const o = _takePushPend();
+  if (!o) return;
+  setTimeout(() => { try { maybeAskPush(o.n); } catch(e){} }, 1200);
+}
+
 // '나중에'를 고른 사람은 권한이 'default' 로 남아 며칠 뒤 다시 물어볼 수 있다.
 const _PUSH_ASK_KEY = 'imvoca.pushAsk';   // { n: 물어본 횟수, at: 마지막 시각 }
 function _pushAskState(){ try { return JSON.parse(localStorage.getItem(_PUSH_ASK_KEY) || '{}') || {}; } catch(e){ return {}; } }
