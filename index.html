@@ -18,16 +18,23 @@
     if (navigator.standalone) return;                           // iOS 홈 화면에 추가
     if (document.referrer.indexOf('android-app://') === 0) return;                      // TWA
     if (localStorage.getItem('imvoca.session')) return;         // 쓰던 사람은 바로 앱으로
-    // 한국어 브라우저만 한국어 랜딩으로. 그 외는 영어 랜딩으로 보낸다.
+    // 브라우저 언어로 랜딩을 고른다. 맞는 게 없으면 영어.
     // (전에는 전부 lp.html 로 보내서, 해외 방문자가 읽을 수 없는 한국어 벽을 만났다.
     //  ASO·광고·커뮤니티로 유입을 만들어도 이 한 줄에서 다 샜다.)
+    // 공식 단어장 4,800단어의 뜻을 zh·es·ja 로 다 번역해 뒀는데, 중국어·일본어
+    // 방문자가 도착할 입구가 없어서 그 번역이 묻혀 있었다 → lp-zh / lp-ja 추가.
+    // 스페인어는 아직 랜딩이 없어서 영어로 보낸다(앱 안의 UI·뜻은 스페인어로 나온다).
     var _pref = (navigator.languages && navigator.languages.length)
                   ? navigator.languages : [navigator.language || ''];
-    var _ko = false;
+    var _lp = '/lp-en.html';
     for (var _i = 0; _i < _pref.length; _i++) {
-      if (String(_pref[_i]).toLowerCase().indexOf('ko') === 0) { _ko = true; break; }
+      var _t = String(_pref[_i] || '').toLowerCase();
+      if (_t.indexOf('ko') === 0) { _lp = '/lp.html'; break; }
+      if (_t.indexOf('zh') === 0) { _lp = '/lp-zh.html'; break; }
+      if (_t.indexOf('ja') === 0) { _lp = '/lp-ja.html'; break; }
+      if (_t.indexOf('en') === 0) { _lp = '/lp-en.html'; break; }
     }
-    location.replace(_ko ? '/lp.html' : '/lp-en.html');
+    location.replace(_lp);
   } catch (e) {}
 })();
 </script>

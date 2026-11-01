@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IM VOCA — 教科書を撮るだけ。単語を二度と忘れない。</title>
+<meta name="description" content="単語帳のページを撮るだけで AI が単語帳を作ります。そして忘れかけたタイミングで、1・2・3・6・15・30 日後に一語ずつ連れ戻します。">
+<link rel="canonical" href="https://imvoca.app/lp-ja.html">
+<link rel="alternate" hreflang="ko" href="https://imvoca.app/lp.html">
+<link rel="alternate" hreflang="en" href="https://imvoca.app/lp-en.html">
+<link rel="alternate" hreflang="zh" href="https://imvoca.app/lp-zh.html">
+<link rel="alternate" hreflang="ja" href="https://imvoca.app/lp-ja.html">
+<link rel="alternate" hreflang="x-default" href="https://imvoca.app/lp-en.html">
+<meta property="og:title" content="IM VOCA — 教科書を撮るだけ。単語を二度と忘れない。">
+<meta property="og:description" content="AI が単語帳のページ写真をカードに変え、復習の予定まで全部組みます。">
+<meta property="og:image" content="https://imvoca.app/og-landing.png">
+<meta property="og:url" content="https://imvoca.app/lp-ja.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://imvoca.app/icon-192.png">
+<style>
+  :root{
+    --bg:#232f3d; --bg-soft:#1b2531; --card:#2c3b4c;
+    --ink:#f0e7d7; --ink-60:rgba(240,231,215,.66); --ink-40:rgba(240,231,215,.42);
+    --ink-12:rgba(240,231,215,.13); --gold:#d8b46a; --green:#54b487;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+       line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;padding:0 22px}
+  @media(min-width:900px){.wrap{max-width:960px}}
+  a{color:inherit}
+  .nav{position:sticky;top:0;z-index:30;background:rgba(27,37,49,.92);
+       -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+       border-bottom:1px solid var(--ink-12)}
+  .nav .wrap{display:flex;align-items:center;gap:10px;height:58px}
+  .nav img{width:32px;height:32px;border-radius:9px;background:#fff;padding:3px}
+  .nav b{font-size:16px;letter-spacing:-.3px}
+  .nav .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .nav a.lang{font-size:12px;color:var(--ink-40);text-decoration:none;padding:6px 9px;
+              border:1px solid var(--ink-12);border-radius:8px}
+  .nav a.cta{background:var(--gold);color:#16202b;font-weight:800;font-size:13px;
+             padding:9px 15px;border-radius:9px;text-decoration:none}
+
+  section{padding:62px 0}
+  .eyebrow{text-align:center;font-size:11px;font-weight:800;letter-spacing:.14em;
+           text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  h1{font-size:34px;line-height:1.22;letter-spacing:-1px;font-weight:800;text-align:center}
+  h2{font-size:27px;line-height:1.3;letter-spacing:-.7px;font-weight:800;text-align:center;margin-bottom:26px}
+  em{font-style:normal;color:var(--gold)}
+  .lead{text-align:center;color:var(--ink-60);font-size:15.5px;margin:16px auto 0;max-width:460px}
+  @media(min-width:900px){h1{font-size:46px}h2{font-size:34px}}
+
+  .hero{padding:58px 0 46px;background:
+    radial-gradient(70% 50% at 50% 0%, rgba(96,142,194,.20), transparent 70%)}
+  .shot{display:block;width:100%;max-width:300px;margin:30px auto 0;border-radius:18px;
+        box-shadow:0 20px 50px rgba(0,0,0,.45)}
+
+  .stores{display:flex;flex-direction:column;gap:11px;max-width:380px;margin:28px auto 0}
+  @media(min-width:560px){.stores{flex-direction:row;justify-content:center}}
+  .store-btn{flex:1;display:flex;align-items:center;gap:12px;background:#f6f1e7;color:#15202b;
+             border-radius:13px;padding:12px 17px;text-decoration:none;min-height:66px}
+  .store-btn svg{width:30px;height:30px;flex:none}
+  .store-btn .st{display:flex;flex-direction:column;line-height:1.25}
+  .store-btn small{font-size:11px;opacity:.65}
+  .store-btn b{font-size:17px;letter-spacing:-.3px}
+  .store-btn svg path[fill="#f0e7d7"]{fill:#15202b}
+  .webalt{text-align:center;font-size:12.5px;color:var(--ink-40);margin-top:14px}
+  .webalt a{color:var(--gold)}
+
+  .steps{display:grid;gap:14px}
+  @media(min-width:900px){.steps{grid-template-columns:repeat(3,1fr)}}
+  .step{background:var(--card);border:1px solid var(--ink-12);border-radius:16px;padding:22px 20px}
+  .step .n{width:30px;height:30px;border-radius:50%;background:var(--gold);color:#16202b;
+           font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;
+           margin-bottom:13px}
+  .step h3{font-size:17px;margin-bottom:7px;letter-spacing:-.3px}
+  .step p{font-size:14px;color:var(--ink-60)}
+
+  .curve{background:var(--bg-soft)}
+  .bars{display:flex;align-items:flex-end;gap:9px;max-width:420px;margin:0 auto;height:140px}
+  .bars>div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+  .bars i{display:block;width:100%;border-radius:6px 6px 0 0}
+  .bars span{font-size:11.5px;font-weight:800;margin-top:9px;color:var(--ink-60)}
+  .curve-note{text-align:center;color:var(--ink-60);font-size:14px;margin-top:22px;max-width:470px;
+              margin-left:auto;margin-right:auto}
+  .curve-note b{color:var(--ink)}
+
+  .feats{display:grid;gap:13px}
+  @media(min-width:900px){.feats{grid-template-columns:repeat(2,1fr)}}
+  .feat{background:var(--card);border:1px solid var(--ink-12);border-radius:15px;padding:20px}
+  .feat .ic{font-size:21px;margin-bottom:9px}
+  .feat h3{font-size:16px;margin-bottom:6px;letter-spacing:-.3px}
+  .feat p{font-size:13.5px;color:var(--ink-60)}
+
+  .plans{display:grid;gap:14px;max-width:760px;margin:0 auto}
+  @media(min-width:760px){.plans{grid-template-columns:1fr 1fr}}
+  .plan{background:var(--card);border:1px solid var(--ink-12);border-radius:17px;padding:24px 22px}
+  .plan.hi{border-color:var(--gold)}
+  .plan .pn{font-size:13px;font-weight:800;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+  .plan .pp{font-size:33px;font-weight:800;margin:9px 0 4px;letter-spacing:-1px}
+  .plan .pp small{font-size:14px;font-weight:600;color:var(--ink-40)}
+  .plan ul{list-style:none;margin-top:15px}
+  .plan li{font-size:14px;color:var(--ink-60);padding:7px 0;border-bottom:1px solid var(--ink-12)}
+  .plan li:last-child{border-bottom:0}
+  .plan li::before{content:'✓ ';color:var(--green);font-weight:800}
+
+  details{background:var(--card);border:1px solid var(--ink-12);border-radius:13px;
+          padding:16px 18px;margin-bottom:10px}
+  summary{cursor:pointer;font-size:15px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';float:right;color:var(--gold);font-weight:800}
+  details[open] summary::after{content:'−'}
+  details p{font-size:13.5px;color:var(--ink-60);margin-top:11px}
+
+  .final{background:linear-gradient(135deg,#d8b46a,#c79e52);color:#16202b;text-align:center}
+  .final h2{color:#16202b}
+  .final .lead{color:rgba(22,32,43,.75)}
+  .final .store-btn{background:#16202b;color:#f6f1e7}
+  .final .store-btn svg path[fill="#f0e7d7"]{fill:#f6f1e7}
+  .final .webalt{color:rgba(22,32,43,.7)} .final .webalt a{color:#16202b}
+
+  footer{background:var(--bg-soft);padding:34px 0;text-align:center;font-size:12.5px;color:var(--ink-40)}
+  footer a{color:var(--ink-60);text-decoration:none;margin:0 7px}
+</style>
+</head>
+<body>
+
+<div class="nav"><div class="wrap">
+  <img src="https://imvoca.app/2.png" alt="IM VOCA"><b>IM VOCA</b>
+  <span class="sp">
+    <a class="lang" href="https://imvoca.app/lp-en.html">English</a>
+    <a class="lang" href="https://imvoca.app/lp-zh.html">中文</a>
+    <a class="cta" href="https://imvoca.app/?signup=1">無料で始める</a>
+  </span>
+</div></div>
+
+<section class="hero"><div class="wrap">
+  <div class="eyebrow">AI 単語帳 · 間隔反復</div>
+  <h1>覚えた。<br>そして<em>消えた</em>。</h1>
+  <p class="lead">記憶力の問題ではありません。タイミングの問題です。
+     IM VOCA は忘れかけたその瞬間に、一語ずつ連れ戻します。</p>
+
+  <div class="stores">
+    <a class="store-btn" href="https://apps.apple.com/app/id6822972633">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f0e7d7" d="M16.37 1.43c0 1.14-.47 2.22-1.22 3-.82.85-2.14 1.51-3.24 1.42-.13-1.1.45-2.26 1.2-3.02.83-.85 2.27-1.47 3.26-1.4zM20.9 17.06c-.55 1.27-.81 1.84-1.52 2.96-.99 1.56-2.39 3.5-4.12 3.51-1.54.02-1.93-1-4.02-.99-2.09.01-2.52 1.01-4.06.99-1.73-.02-3.05-1.77-4.04-3.33-2.77-4.36-3.06-9.48-1.35-12.2 1.21-1.93 3.13-3.06 4.93-3.06 1.83 0 2.98 1 4.5 1 1.47 0 2.36-1 4.48-1 1.6 0 3.3.87 4.51 2.38-3.97 2.17-3.32 7.83.69 9.74z"/></svg>
+      <span class="st"><small>ダウンロード</small><b>App Store</b></span></a>
+    <a class="store-btn" href="https://play.google.com/store/apps/details?id=app.imvoca.twa">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#00D2FF" d="M47 24c-6 6-9 15-9 27v410c0 12 3 21 9 27l2 1 230-230v-5L49 23z"/><path fill="#FFC300" d="M355 341l-78-78v-5l78-78 2 1 92 53c26 15 26 39 0 54l-92 52z"/><path fill="#00E676" d="M357 340l-80-80L47 490c9 9 23 10 39 1z"/><path fill="#FF3A44" d="M357 182L86 31c-16-9-30-8-39 1l230 229z"/></svg>
+      <span class="st"><small>手に入れよう</small><b>Google Play</b></span></a>
+  </div>
+  <div class="webalt">カード登録は不要 · <a href="https://imvoca.app/?signup=1">ブラウザでもそのまま使えます</a></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">使い方</div>
+  <h2>3ステップ。あとは<em>勝手に回ります</em>。</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div>
+      <h3>ページを撮る</h3>
+      <p>どんな単語帳でも、教科書でも、自分の手書きでも。写真 1 枚で足ります。</p></div>
+    <div class="step"><div class="n">2</div>
+      <h3>AI が単語帳を作る</h3>
+      <p>意味・発音・例文・語源まで付けて、単語を全部拾い出します。</p></div>
+    <div class="step"><div class="n">3</div>
+      <h3>復習は自動で組まれる</h3>
+      <p>忘れかける日に合わせて、一語が 6 回戻ってきます。</p></div>
+  </div>
+</div></section>
+
+<section class="curve"><div class="wrap">
+  <div class="eyebrow">忘れる理由</div>
+  <h2>覚えるのはあなたの仕事。<br><em>忘れさせない</em>のが私たちの仕事。</h2>
+  <div class="bars">
+    <div><i style="height:74%;background:#b28b3c"></i><span>1日</span></div>
+    <div><i style="height:63%;background:#bb9750"></i><span>2日</span></div>
+    <div><i style="height:54%;background:#c4a365"></i><span>3日</span></div>
+    <div><i style="height:44%;background:#3f8f6b"></i><span>6日</span></div>
+    <div><i style="height:35%;background:#55a37e"></i><span>15日</span></div>
+    <div><i style="height:26%;background:#6bb492"></i><span>30日</span></div>
+  </div>
+  <p class="curve-note">間隔を少しずつ広げながら 6 回、<b>エビングハウスの忘却曲線</b>に沿って復習します。
+     何を復習するかはアプリが決めます。カードをめくるだけでは終わりません ——
+     クイズに答えて初めて 1 回とカウントされます。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">できること</div>
+  <h2><em>最後までやり切る</em>人のために</h2>
+  <div class="feats">
+    <div class="feat"><div class="ic">📷</div><h3>どの本でもカードになる</h3>
+      <p>一語ずつ入力するのはもう終わりです。今使っているページを撮るだけ。</p></div>
+    <div class="feat"><div class="ic">🧠</div><h3>辞書の羅列ではなく、文脈の意味</h3>
+      <p>撮った文の中でどの意味なのか。語源・類義語・派生語も付きます。</p></div>
+    <div class="feat"><div class="ic">🎯</div><h3>公式単語帳 レベル 1〜12</h3>
+      <p>CEFR A1〜C2 で並べた 4,800 語。全員無料です。1 レベル 400 語 —— 1 日 20 語なら 20 日で 1 冊。</p></div>
+    <div class="feat"><div class="ic">⏱</div><h3>1 分のレベル判定</h3>
+      <p>どこから始めるか迷ったら、何語か答えるだけ。アプリが決めます。</p></div>
+    <div class="feat"><div class="ic">🔔</div><h3>必要なときだけ通知</h3>
+      <p>復習の日に 1 回だけ。連続記録で追い詰めたり、毎日送りつけたりはしません。</p></div>
+    <div class="feat"><div class="ic">🔊</div><h3>読みながら聞ける</h3>
+      <p>単語と例文にネイティブ発音が付いています。</p></div>
+  </div>
+</div></section>
+
+<section class="curve"><div class="wrap">
+  <div class="eyebrow">料金</div>
+  <h2>無料は<em>お試し</em>ではなく、<br>ちゃんとしたプランです</h2>
+  <div class="plans">
+    <div class="plan">
+      <div class="pn">無料</div>
+      <div class="pp">$0<small> ずっと</small></div>
+      <ul>
+        <li>公式 4,800 語すべて（レベル 1〜12）</li>
+        <li>AI 撮影スキャン 1 日 5 回</li>
+        <li>手入力の単語は無制限</li>
+        <li>復習エンジンとクイズは全機能</li>
+        <li>すべての端末で同期</li>
+      </ul>
+    </div>
+    <div class="plan hi">
+      <div class="pn">プレミアム</div>
+      <div class="pp">$3.99<small>/月 · $39.99/年</small></div>
+      <ul>
+        <li>AI 撮影スキャン 1 日 30 回 —— 無料版の 6 倍</li>
+        <li>無料版の全機能を含む</li>
+        <li>アプリ内でいつでも解約できます</li>
+      </ul>
+    </div>
+  </div>
+  <p class="curve-note">公式単語帳は全部無料です —— 一円も払わずに 4,800 語を終えられます。
+     AI でもっと多くのページを撮りたいときだけプレミアムが要ります。</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">よくある質問</div>
+  <h2>始める<em>前に</em></h2>
+  <details><summary>対応している言語は？</summary>
+    <p>アプリの表示は日本語・英語・韓国語・中国語・スペイン語に対応しています。
+       公式単語帳は英語を学ぶためのもので、意味はあなたの言語で書かれています。
+       ページを撮れば、どの言語の組み合わせでも自分の単語帳を作れます。</p></details>
+  <details><summary>紙の本は必要ですか？</summary>
+    <p>必要ありません。公式単語帳（CEFR 12 レベル・4,800 語）は無料で、すでにアプリに入っています。
+       カメラは、手元にある本で勉強したいときのためのものです。</p></details>
+  <details><summary>Anki とどう違いますか？</summary>
+    <p>デッキを自分で作る必要がありません。ページを撮れば、意味・例文・発音までそろったカードが
+       できています。スケジュールは固定で自動 —— 設定するものがありません。</p></details>
+  <details><summary>1 日できなかったらどうなりますか？</summary>
+    <p>何も失われません。期限の過ぎた復習はリセットされず、待っています。
+       途切れる連続記録も、ペナルティもありません。</p></details>
+  <details><summary>スマホを買い替えてもデータは残りますか？</summary>
+    <p>同じアカウントでログインすれば、単語・進捗・復習予定がそのまま付いてきます。
+       端末の間でも、ウェブとアプリの間でも同じです。</p></details>
+</div></section>
+
+<section class="final"><div class="wrap">
+  <h2>同じ単語を覚え直すのは、もう終わりに</h2>
+  <p class="lead">登録は 30 秒。カードは不要です。</p>
+  <div class="stores">
+    <a class="store-btn" href="https://apps.apple.com/app/id6822972633">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f0e7d7" d="M16.37 1.43c0 1.14-.47 2.22-1.22 3-.82.85-2.14 1.51-3.24 1.42-.13-1.1.45-2.26 1.2-3.02.83-.85 2.27-1.47 3.26-1.4zM20.9 17.06c-.55 1.27-.81 1.84-1.52 2.96-.99 1.56-2.39 3.5-4.12 3.51-1.54.02-1.93-1-4.02-.99-2.09.01-2.52 1.01-4.06.99-1.73-.02-3.05-1.77-4.04-3.33-2.77-4.36-3.06-9.48-1.35-12.2 1.21-1.93 3.13-3.06 4.93-3.06 1.83 0 2.98 1 4.5 1 1.47 0 2.36-1 4.48-1 1.6 0 3.3.87 4.51 2.38-3.97 2.17-3.32 7.83.69 9.74z"/></svg>
+      <span class="st"><small>ダウンロード</small><b>App Store</b></span></a>
+    <a class="store-btn" href="https://play.google.com/store/apps/details?id=app.imvoca.twa">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#00D2FF" d="M47 24c-6 6-9 15-9 27v410c0 12 3 21 9 27l2 1 230-230v-5L49 23z"/><path fill="#FFC300" d="M355 341l-78-78v-5l78-78 2 1 92 53c26 15 26 39 0 54l-92 52z"/><path fill="#00E676" d="M357 340l-80-80L47 490c9 9 23 10 39 1z"/><path fill="#FF3A44" d="M357 182L86 31c-16-9-30-8-39 1l230 229z"/></svg>
+      <span class="st"><small>手に入れよう</small><b>Google Play</b></span></a>
+  </div>
+  <div class="webalt">または <a href="https://imvoca.app/?signup=1">ブラウザで使う</a></div>
+</div></section>
+
+<footer><div class="wrap">
+  <div style="margin-bottom:9px">
+    <a href="https://imvoca.app/lp-en.html" hreflang="en">English</a> ·
+    <a href="https://imvoca.app/lp-zh.html" hreflang="zh">中文</a> ·
+    <a href="https://imvoca.app/lp.html" hreflang="ko">한국어</a> ·
+    <a href="https://imvoca.app/terms.html">規約とプライバシー</a> ·
+    <a href="https://imvoca.app/support.html">サポート</a>
+  </div>
+  <div>IM AMERICA GROUP CORP · 特許出願中 KR 10-2026-0127089</div>
+</div></footer>
+
+</body>
+</html>
