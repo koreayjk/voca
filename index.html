@@ -8173,8 +8173,24 @@ async function appendOfficialBooks() {
 // (#official-picker-list)인데, renderOfficialPicker 가 innerHTML 로 그 박스를
 // 통째로 새로 만들기 때문에 scrollTop 이 무조건 0 으로 돌아간다.
 // → 다시 그리기 전에 위치를 적어두고, 새로 생긴 박스에 그대로 돌려준다.
-function startLevelTest(){
+// ── 레벨 테스트 퍼널 계측 ──────────────────────────────────────────
+// d727116 로 '빈 책장 → 레벨 테스트 → Day 1' 길을 깔았는데, 효과를 판정할
+// 수단이 없었다. 테스트를 아예 안 누르는 건지, 누르고 중간에 닫는 건지,
+// 결과까지 보고 '직접 고를게요'로 빠지는 건지 구분이 안 됐다.
+// 알림 퍼널과 같은 방식으로 voca_errors 에 kind='lt_funnel' 로 남긴다.
+// context 에 출처(empty_shelf / guest / picker)를 넣어 자리별로 비교한다.
+// logError 가 kind|context|message 로 중복을 막으므로 세션당 단계별 1행이다.
+function _ltLog(stage, extra){
+  try {
+    const from = (_lt && _lt.from) || window._ltFrom || '?';
+    logError('lt_funnel', from, stage, extra || null);
+  } catch(e){}
+}
+
+function startLevelTest(from){
   if (document.getElementById('lt-overlay')) return;
+  window._ltFrom = from || '?';
+  _ltLog('started');
   const ov = document.createElement('div');
   ov.id = 'lt-overlay';
   ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10001;display:flex;align-items:center;justify-content:center;padding:20px;';
@@ -8233,11 +8249,15 @@ function _ltPick(book, k){
 async function openLevelTest(){
   const by = _ltBooks();
   const levels = Object.keys(by).map(Number).sort((a,b)=>a-b);
-  if (levels.length < 3) { toast(TT('레벨 단어장을 불러오는 중이에요. 잠시 뒤 다시 눌러주세요','Loading — please try again in a moment')); return; }
+  if (levels.length < 3) {
+    // 여기서 막히면 사용자는 '안 되는 버튼'을 본 것이다. 조용히 넘기면 안 된다.
+    _ltLog('catalog_not_ready', { levels: levels.length });
+    toast(TT('레벨 단어장을 불러오는 중이에요. 잠시 뒤 다시 눌러주세요','Loading — please try again in a moment')); return; }
   // 12권 전부의 단어를 미리 받으면 3MB가 넘는다 — 이분 탐색이 실제로 들르는
   // 레벨(보통 3~4권)만 그때그때 받고, 오답 보기 풀도 받은 만큼만 쓴다.
   _lt = { by, levels, lo: levels[0], hi: levels[levels.length-1], pool: [],
-          q: [], at: 0, right: 0, asked: 0, done: false, result: null };
+          q: [], at: 0, right: 0, asked: 0, done: false, result: null,
+          from: window._ltFrom || '?' };
   _ltRound();
 }
 // 받아온 레벨의 뜻을 오답 보기 풀에 보탠다
@@ -8280,6 +8300,7 @@ function _ltFinish(level){
   // 마지막으로 '안다' 고 판정된 레벨의 다음부터 시작 (전부 틀리면 Lv.1)
   const start = Math.min(level + (t.right >= LT_PASS || level > t.levels[0] ? 1 : 0), t.levels[t.levels.length-1]);
   t.done = true; t.result = Math.max(t.levels[0], start);
+  _ltLog('finished', { lv: t.result, asked: t.asked });
   _ltRender();
 }
 function _ltRender(){
@@ -8294,7 +8315,7 @@ function _ltRender(){
         <div style="font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--ink-100);">${TT('여기서 시작하세요','Start here')}</div>
         <div style="font-family:var(--font-display);font-size:46px;font-weight:700;color:var(--accent);margin:12px 0 4px;letter-spacing:-0.02em;">Lv.${lv}</div>
         <div class="muted" style="font-size:12.5px;margin-bottom:20px;">${TX(`{v0}단어를 물어본 결과예요`,`based on {v0} words`,{v0:(t.asked)})}</div>
-        <button class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;" onclick="_ltAdd(${lv})">${TX(`Lv.{v0} 책장에 담기`,`Add Lv.{v0}`,{v0:(lv)})}</button>
+        <button class="btn btn-solid" style="width:100%;padding:13px;font-size:14px;" onclick="_ltAdd(${lv})">${TX(`Lv.{v0} Day 1 바로 시작`,`Start Lv.{v0} Day 1`,{v0:(lv)})}</button>
         <button onclick="closeLevelTest()" style="width:100%;padding:11px;margin-top:6px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('직접 고를게요','I\u2019ll choose myself')}</button>
       </div>`;
     return;
@@ -8322,12 +8343,25 @@ function _ltRender(){
 }
 function _ltAdd(lv){
   const b = _ltBooks()[lv];
-  closeLevelTest();
+  _ltLog('add_click', { lv: lv, asked: (_lt && _lt.asked) || 0, found: !!b });
+  closeLevelTest('added');
   if (needsLogin(TT('추천받은 레벨을 책장에 담으려면 로그인이 필요해요.','Saving your level to a shelf needs an account.'))) return;
   // 책장에 담아놓고 끝내면 '그래서 뭘 눌러야 하지' 가 또 남는다 → Day 1 암기카드까지 데려간다
   if (b) addOfficialToShelf(b.id, { startNow: true });
 }
-function closeLevelTest(){ document.getElementById('lt-overlay')?.remove(); _lt = null; }
+function closeLevelTest(reason){
+  // 어디서 닫혔는지가 이 퍼널의 핵심이다.
+  //   abandoned_mid    : 문제를 풀다가 닫음 (몇 번째에서 닫았는지 함께)
+  //   declined_result  : 추천 레벨까지 봤는데 '직접 고를게요'로 빠짐
+  //   (reason==='added' : _ltAdd 가 부르는 정상 종료 — 따로 안 남긴다)
+  try {
+    if (_lt && reason !== 'added') {
+      if (_lt.done) _ltLog('declined_result', { lv: _lt.result, asked: _lt.asked });
+      else _ltLog('abandoned_mid', { asked: _lt.asked });
+    }
+  } catch(e){}
+  document.getElementById('lt-overlay')?.remove(); _lt = null;
+}
 
 // 개인 사용자: 공식책을 책장에 추가/제거
 async function addOfficialToShelf(id, opts){
@@ -8354,6 +8388,7 @@ async function addOfficialToShelf(id, opts){
     const p0 = pgs.find(p => (p.words || []).length) || pgs[0];
     if (p0) {
       toast(TT('📚 책장에 담았어요 — 바로 시작해요!','Added — let\'s start!'));
+      try { _ltLog('started_day1', { day: String(p0.num) }); } catch(e){}
       try { initStudy(id, 'page', p0.num); } catch(e){}
       push({ name:'study-cards', bookId:id, scope:'page', pageNum:p0.num });
       return;
@@ -8494,7 +8529,7 @@ async function renderOfficialPicker(){
     </div>`;
   }).join('');
   const hasLv = list.some(b => /^Lv\.(\d+)\s*$/.test(String(b.title||'').trim()));
-  const testBtn = hasLv ? `<button onclick="startLevelTest()" style="width:100%;margin:2px 0 10px;padding:11px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : '';
+  const testBtn = hasLv ? `<button onclick="startLevelTest('picker')" style="width:100%;margin:2px 0 10px;padding:11px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : '';
   box.innerHTML = testBtn + `<div style="font-size:12px;color:var(--ink-60);margin:2px 0 6px;font-weight:600;">📗 ${TT('우리가 만든 단어장 — 원하는 것만 추가하세요','Our wordbooks — add the ones you want')}</div>
     <div id="official-picker-list" style="border:1px solid var(--ink-07);border-radius:12px;padding:2px 12px;max-height:230px;overflow-y:auto;">${rows}</div>`;
 }
@@ -10597,7 +10632,7 @@ function render() {
               <div style="flex:1;min-width:0;font-size:12.5px;color:var(--ink-70);line-height:1.6;">${books.length ? TT('둘러보는 중이에요. <b>Day 1</b> 은 지금 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','Just looking around — <b>Day 1</b> is yours to study right now.<br>Log in to save your words and review schedule.') : TT('둘러보는 중이에요. 아래 <b>책 추가</b>로 단어장을 만들어 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','Just looking around — tap <b>Add Book</b> below to build a wordbook and start.<br>Log in to save your words and review schedule.')}</div>
               <button onclick="exitGuest('signup')" style="flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 13px;font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">${TT('로그인','Log in')}</button>
             </div>
-            <button onclick="startLevelTest()" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}
+            <button onclick="startLevelTest('guest')" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}
           <div id="my-tests-banner"></div>
           ${assignmentBannerHTML()}
           ${(!myBooks.length && !isGuest() && !orgIsAdmin() && _officialBooksForMe()) ? `
@@ -10611,7 +10646,7 @@ function render() {
             <div style="text-align:center;font-size:40px;line-height:1;margin-bottom:12px;">🎯</div>
             <div style="text-align:center;font-family:var(--font-serif-ko);font-size:19px;font-weight:700;color:var(--ink-100);line-height:1.45;margin-bottom:8px;">${TT('몇 레벨부터 할지 찾아드릴게요','Let us find your level')}</div>
             <div style="text-align:center;font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:20px;">${TT('단어 16개만 풀면 1분이면 끝나요.<br>레벨에 맞는 단어장을 바로 담아 외우기 시작해요.','Sixteen words, about a minute.<br>We add the right wordbook and you start right away.')}</div>
-            <button class="btn btn-solid" style="width:100%;padding:15px;font-size:15px;" onclick="startLevelTest()">${TT('🎯 1분 레벨 테스트 시작','🎯 Start the 1-minute test')}</button>
+            <button class="btn btn-solid" style="width:100%;padding:15px;font-size:15px;" onclick="startLevelTest('empty_shelf')">${TT('🎯 1분 레벨 테스트 시작','🎯 Start the 1-minute test')}</button>
             <button onclick="openAddBookModal()" style="width:100%;padding:13px;margin-top:8px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('직접 고를게요 (공식 단어장 · 교재 촬영 · 직접 입력)','I\'ll pick myself (official books, scan, or type)')}</button>
           </div>` : ''}
           ${(!myBooks.length && !(!isGuest() && !orgIsAdmin() && _officialBooksForMe())) ? `
