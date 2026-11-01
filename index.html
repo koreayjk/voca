@@ -15184,27 +15184,109 @@ const _PUSH_ASK_KEY = 'imvoca.pushAsk';   // { n: 물어본 횟수, at: 마지�
 function _pushAskState(){ try { return JSON.parse(localStorage.getItem(_PUSH_ASK_KEY) || '{}') || {}; } catch(e){ return {}; } }
 function _pushAskSave(o){ try { localStorage.setItem(_PUSH_ASK_KEY, JSON.stringify(o)); } catch(e){} }
 
+// ── 알림 퍼널 계측 ────────────────────────────────────────────────
+// 325명 중 알림을 켠 사람이 9명이다. 그런데 '만점 페이지'를 한 번이라도
+// 통과한 사람은 98명 — 즉 대부분은 권유 화면을 볼 기회가 있었는데도
+// 구독으로 이어지지 않았다. 어디서 끊기는지 추측을 멈추고 숫자로 본다.
+// voca_errors 를 쓰는 이유: ua(기기·브라우저)가 같이 박힌다. iOS 사파리는
+// 홈 화면에 추가하지 않으면 웹 푸시가 아예 없어서, 지원 여부가 거기서 갈린다.
+// logError 는 세션당 같은 신호를 1회만 보낸다(중복 방지 내장).
+function _pushLog(stage, extra){
+  try {
+    logError('push_funnel', 'ask', stage, Object.assign({
+      ios_app: _isIosApp(),
+      standalone: (function(){ try { return !!(navigator.standalone || matchMedia('(display-mode: standalone)').matches); } catch(e){ return null; } })(),
+      sw: ('serviceWorker' in navigator),
+      pm: ('PushManager' in window),
+      notif: ('Notification' in window),
+      perm: (typeof Notification !== 'undefined' && Notification.permission) || null
+    }, extra || {}));
+  } catch(e){}
+}
+
 // 암기 카드를 막 끝내 복습 일정이 생긴 직후에만 호출한다 (가치가 눈앞에 증명된 순간)
 async function maybeAskPush(wordCount){
   try {
-    if (!pushSupported()) return;
+    if (!pushSupported()) {
+      _pushLog('unsupported');
+      // 조용히 끝내지 않는다. iOS 사파리는 '홈 화면에 추가'를 해야 웹 푸시가
+      // 생기고, 이제는 앱스토어 앱도 있다. 알림을 받을 길이 있는데 아무 말도
+      // 안 하면 그 사람은 복습일을 알려줄 통로가 영구히 없는 채로 남는다.
+      _maybeOfferAppForPush();
+      return;
+    }
     const st = _pushAskState();
-    if ((st.n || 0) >= 3) return;                            // 평생 3번까지만
-    if (st.at && Date.now() - st.at < 7 * 86400000) return;  // 거절 후 7일은 쉰다
+    if ((st.n || 0) >= 3) { _pushLog('capped', { n: st.n }); return; }   // 평생 3번까지만
+    if (st.at && Date.now() - st.at < 7 * 86400000) { _pushLog('cooldown'); return; }  // 거절 후 7일은 쉰다
     if (_isIosApp()) {
       // iOS 도 권한 팝업은 '딱 한 번'만 뜬다. 아직 안 물어본 상태에서만 우리 화면을 먼저 띄운다.
       const nst = await nativePushState();
-      if (nst !== 'off') return;                             // unsupported/denied/on → 건드리지 않음
+      if (nst !== 'off') { _pushLog('ios_state_' + nst); return; }   // unsupported/denied/on → 건드리지 않음
       const PN = _capPlugin('PushNotifications');
       const perm = await PN.checkPermissions();
-      if (perm.receive === 'granted') return;                // 권한은 있는데 꺼둔 것 → 본인 선택 존중
+      if (perm.receive === 'granted') { _pushLog('ios_granted_but_off'); return; }  // 권한은 있는데 꺼둔 것 → 본인 선택 존중
     } else {
-      if (Notification.permission !== 'default') return;     // 이미 허용/차단 → 건드리지 않음
+      if (Notification.permission !== 'default') { _pushLog('perm_' + Notification.permission); return; }
       const reg = await navigator.serviceWorker.ready;
-      if (await reg.pushManager.getSubscription()) return;   // 이미 구독 중
+      if (await reg.pushManager.getSubscription()) { _pushLog('already_subscribed'); return; }
     }
     _pushAskSave({ n: (st.n || 0) + 1, at: Date.now() });
+    _pushLog('shown', { ask_n: (st.n || 0) + 1 });
     _showPushPrePrompt(wordCount);
+  } catch(e){ _pushLog('threw', { msg: String(e && e.message || e).slice(0,120) }); }
+}
+
+// ── 웹 푸시가 없는 기기: 알림을 받을 수 있는 길을 알려준다 ──────────
+// iOS 사파리(홈 화면 추가 전)에는 PushManager 가 없다. 한국 사용자 비중을
+// 생각하면 이 경우가 적지 않고, 전에는 여기서 아무 일도 일어나지 않았다.
+const _APP_ASK_KEY = 'imvoca.appAsk';
+function _maybeOfferAppForPush(){
+  try {
+    if (_isIosApp()) return;                 // 네이티브 앱 안 — 권한은 위에서 처리
+    let st = {};
+    try { st = JSON.parse(localStorage.getItem(_APP_ASK_KEY) || '{}') || {}; } catch(e){}
+    if ((st.n || 0) >= 2) return;            // 평생 2번까지만
+    if (st.at && Date.now() - st.at < 14 * 86400000) return;
+    const ua = navigator.userAgent || '';
+    const isIos = /iPhone|iPad|iPod/i.test(ua);
+    const isAnd = /Android/i.test(ua);
+    if (!isIos && !isAnd) return;            // PC 는 앱이 없다 — 권할 게 없다
+    let standalone = false;
+    try { standalone = !!(navigator.standalone || matchMedia('(display-mode: standalone)').matches); } catch(e){}
+    if (standalone) return;                  // 이미 홈 화면 앱인데 지원이 없다 → 더 할 게 없다
+    if (document.getElementById('app-ask')) return;
+    try { localStorage.setItem(_APP_ASK_KEY, JSON.stringify({ n: (st.n || 0) + 1, at: Date.now() })); } catch(e){}
+    _pushLog('offered_app', { ios: isIos, and: isAnd });
+
+    const store = isIos ? 'https://apps.apple.com/app/id6822972633'
+                        : 'https://play.google.com/store/apps/details?id=app.imvoca.twa';
+    const ov = document.createElement('div');
+    ov.id = 'app-ask';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:flex-end;justify-content:center;';
+    ov.innerHTML = `
+      <div style="background:var(--bg-card,#fff);border-radius:18px 18px 0 0;padding:24px 22px calc(24px + env(safe-area-inset-bottom));max-width:420px;width:100%;box-shadow:0 -8px 40px rgba(0,0,0,0.25);text-align:center;">
+        <div style="font-size:38px;line-height:1;margin-bottom:10px;">🔔</div>
+        <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);line-height:1.45;margin-bottom:8px;">
+          ${TT('복습할 날, 알려드릴까요?','Want a reminder on review days?')}
+        </div>
+        <div style="font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:18px;">
+          ${isIos
+            ? TT('아이폰 사파리에서는 알림을 보낼 수 없어요. 앱을 받으시면 복습할 날에만 딱 한 번 알려드려요.','Safari on iPhone can\'t receive reminders. Get the app and we\'ll nudge you once on each review day.')
+            : TT('앱으로 쓰시면 복습할 날에만 딱 한 번 알려드려요.','In the app we nudge you once on each review day.')}
+        </div>
+        <button id="app-ask-go" class="btn btn-solid" style="width:100%;padding:14px;font-size:14.5px;">
+          ${isIos ? TT('App Store 에서 받기','Get it on the App Store') : TT('Play 스토어에서 받기','Get it on Google Play')}
+        </button>
+        <button id="app-ask-no" style="width:100%;padding:12px;margin-top:6px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('나중에','Not now')}</button>
+      </div>`;
+    document.body.appendChild(ov);
+    document.getElementById('app-ask-no').onclick = () => ov.remove();
+    document.getElementById('app-ask-go').onclick = () => {
+      _pushLog('app_store_click', { ios: isIos });
+      try { track('push_app_click', { os: isIos ? 'ios' : 'android' }); } catch(e){}
+      ov.remove();
+      window.open(store, '_blank', 'noopener');
+    };
   } catch(e){}
 }
 
@@ -15233,13 +15315,15 @@ function _showPushPrePrompt(wordCount){
       <button id="push-pre-no" style="width:100%;padding:12px;margin-top:6px;background:none;color:var(--ink-45);border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('나중에','Not now')}</button>
     </div>`;
   document.body.appendChild(ov);
-  document.getElementById('push-pre-no').onclick = () => ov.remove();
+  document.getElementById('push-pre-no').onclick = () => { _pushLog('later'); ov.remove(); };
   document.getElementById('push-pre-yes').onclick = async (e) => {
     const h = Number(document.getElementById('push-pre-hour')?.value || 9);
     try { localStorage.setItem('imvoca.pushHour', String(h)); } catch(_){}
     e.currentTarget.disabled = true;
+    _pushLog('accepted', { hour: h });
     // 이 클릭이 사용자 제스처 → 여기서만 진짜 브라우저 권한 팝업이 뜬다
     const ok = await enablePush(h);
+    _pushLog(ok ? 'enabled' : 'enable_failed');
     ov.remove();
     if (ok) _pushAskSave({ n: 99, at: Date.now() });   // 켰으면 다시 묻지 않는다
   };
