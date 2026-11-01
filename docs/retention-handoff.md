@@ -1,6 +1,6 @@
 # IM VOCA 리텐션 조사 — 인수인계
 
-작성 2026-11-01 · 기준 커밋 `d727116` · 조사 대상 Supabase 프로젝트 `ziatqkjlafucqtwshhla`
+작성 2026-11-01 · 기준 커밋 `62566b1` · 조사 대상 Supabase 프로젝트 `ziatqkjlafucqtwshhla`
 
 > 왜 가입자 325명 중 최근 7일 복습한 사람이 7~9명뿐인가. 그 조사를 하다가 중단된
 > 지점과, 다음 세션이 바로 이어받을 수 있는 것들을 정리한다.
@@ -281,15 +281,70 @@ Lv 책은 20단어다. 40단어인 건 구버전 책들이고, 그중 수능·�
 
 ### 아직 안 본 것
 
-- 레벨 테스트 자체의 완료율. `startLevelTest` → `_ltFinish` 사이 이탈을 재는
-  계측이 없다. `_pushLog` 와 같은 방식으로 `kind='lt_funnel'` 을 붙이면 된다.
-  **`d727116` 의 효과를 판정하려면 이게 필요하다** — 테스트를 시작은 하는데
-  중간에 닫는 건지, 아예 안 누르는 건지 구분이 안 된다.
+- ~~레벨 테스트 완료율 계측~~ → `62566b1` 로 넣었다. 아래 3-D 참고.
 - 암기카드가 **모든 단어를 '알아요'로 처리할 때까지 라운드를 반복**한다
   (index.html:11300 부근). 중간 이탈 시 아무 기록이 안 남아 측정 불가.
   20단어면 그라인드가 심하지 않을 테니 우선순위는 낮춰도 된다.
 - 게이트 퀴즈를 '만점' 대신 '80% 이상'으로 완화하는 안. 위 340건(27%)을
   줄일 수 있지만, 점수 파밍과 학습 품질 쪽 trade-off가 있어 판단이 필요하다.
+
+---
+
+## 3-D. `62566b1` — 레벨 테스트 퍼널 계측
+
+`d727116` 의 효과를 판정할 수단이 없었다. 테스트를 아예 안 누르는 건지, 누르고
+중간에 닫는 건지, 추천 레벨까지 보고 '직접 고를게요'로 빠지는 건지 구분이
+안 됐다. 알림 퍼널과 같은 방식으로 `voca_errors(kind='lt_funnel')` 에 남긴다.
+`context` 에 출처가 들어가서 자리별로 비교된다.
+
+```
+started ──┬─ catalog_not_ready        (버튼은 눌렀는데 카탈로그가 안 떠서 못 함)
+          ├─ abandoned_mid            (문제 풀다 닫음, detail.asked = 몇 번째)
+          └─ finished (detail.lv)  ─┬─ declined_result   ('직접 고를게요')
+                                    └─ add_click ─ started_day1 (detail.day)
+```
+
+출처(`context`): `empty_shelf` (빈 책장 히어로 — d727116) / `guest` (게스트 배너) /
+`picker` (공식책 고르기 모달)
+
+### 읽는 쿼리
+
+```sql
+select context as source, message as stage,
+       count(*) as n, count(distinct user_id) as users
+from voca_errors
+where kind = 'lt_funnel' and created_at > now() - interval '14 days'
+group by 1, 2 order by 1, 3 desc;
+```
+
+중간 이탈이 몇 번째 단어에서 일어나는지:
+
+```sql
+select (detail->>'asked')::int as answered_before_quitting, count(*)
+from voca_errors
+where kind = 'lt_funnel' and message = 'abandoned_mid'
+group by 1 order by 1;
+```
+
+### 읽는 법
+
+- `started` 자체가 거의 없다 → 빈 책장 히어로를 안 누른다. 문구·배치 문제.
+- `started` 는 있는데 `abandoned_mid` 가 대부분 → 16문제가 길다. `LT_PER_ROUND`
+  (index.html, 현재 4)를 줄이거나 진행률 표시를 강화한다.
+- `finished` 는 많은데 `declined_result` 가 많다 → 추천 레벨을 못 믿는다.
+  근거를 더 보여줘야 한다.
+- `started_day1` 까지 잘 오는데 그래도 복습이 안 생긴다 → 암기카드 안에서
+  빠지는 것이다. 그때는 카드 내부 계측이 다음 차례다.
+- `catalog_not_ready` 가 보이면 그건 버그다 — 버튼을 눌렀는데 안 되는 상태를
+  사용자가 본 것이다. `appendOfficialBooks` 가 끝나기 전에 히어로가 그려진
+  경우이므로, 로딩 중에는 버튼을 비활성화하거나 자동 재시도를 넣어야 한다.
+
+같이 고친 것: 결과 화면 버튼 문구가 아직 'Lv.N 책장에 담기'였다. `d727116`
+이후로는 담고 끝나지 않고 Day 1 로 바로 들어가므로 동작과 어긋났다
+→ 'Lv.N Day 1 바로 시작'.
+
+헤드리스 5케이스 검증: 즉시닫기 / 2문제후닫기(asked:2) / 완주후거절 /
+완주후 Day 1 진입(day:"1") / 카탈로그 미준비.
 
 ---
 
