@@ -566,7 +566,9 @@ cd /home/user/voca
 - App Store Connect + Play Console 에 5개 언어 메타데이터 입력 (전부 입력 가능 상태)
 - 언어별 스크린샷
 - Search Console 에 `sitemap.xml` 제출, `lp-en.html` 색인 요청
-- 중국어/일본어 랜딩 페이지 (`lp-en.html` 템플릿 사용)
+- ~~중국어/일본어 랜딩 페이지~~ → `7140ba4` 완료 (lp-zh.html / lp-ja.html).
+  루트 라우팅 ko→lp / zh→lp-zh / ja→lp-ja / 그 외→lp-en. **스페인어 랜딩은 아직
+  없다** — 뜻은 번역해 놨는데(4,800행) 입구가 없으므로 다음 후보다.
 - Play Console 설명·스크린샷이 아직 구버전
 - `CRON_SECRET` 교체
 - 학원 리드 수집 경과 확인 (기준선: `academy_name` 2건 / `academy_leads` 0건,
