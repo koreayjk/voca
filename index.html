@@ -8324,12 +8324,13 @@ function _ltAdd(lv){
   const b = _ltBooks()[lv];
   closeLevelTest();
   if (needsLogin(TT('추천받은 레벨을 책장에 담으려면 로그인이 필요해요.','Saving your level to a shelf needs an account.'))) return;
-  if (b) addOfficialToShelf(b.id);
+  // 책장에 담아놓고 끝내면 '그래서 뭘 눌러야 하지' 가 또 남는다 → Day 1 암기카드까지 데려간다
+  if (b) addOfficialToShelf(b.id, { startNow: true });
 }
 function closeLevelTest(){ document.getElementById('lt-overlay')?.remove(); _lt = null; }
 
 // 개인 사용자: 공식책을 책장에 추가/제거
-async function addOfficialToShelf(id){
+async function addOfficialToShelf(id, opts){
   if (needsLogin(TT('책을 책장에 담으려면 로그인이 필요해요.','Saving a book to your shelf needs an account.'))) return;
   const od = Array.isArray(window._officialCatalogFull) ? window._officialCatalogFull : [];
   let row = od.find(b => b.id === id);
@@ -8344,6 +8345,20 @@ async function addOfficialToShelf(id){
   if (!books.some(b => b.id === id)) books.push(_mapOfficialBook(row));
   _setMyOfficialIds([...getMyOfficialIds(), id]);
   try { loadReviewStatus(id); } catch(e){}
+  // 레벨 테스트에서 온 경우: 책장으로 돌려보내지 않고 첫 Day 암기카드로 바로 넣는다.
+  // Day 는 번호로 정렬해서 고른다 — 카탈로그의 페이지 배열은 순서를 보장하지 않는다.
+  if (opts && opts.startNow) {
+    const bk = findBook(id);
+    const pgs = (bk && Array.isArray(bk.pages)) ? bk.pages.slice() : [];
+    pgs.sort((a,b) => (parseFloat(a.num) || 0) - (parseFloat(b.num) || 0));
+    const p0 = pgs.find(p => (p.words || []).length) || pgs[0];
+    if (p0) {
+      toast(TT('📚 책장에 담았어요 — 바로 시작해요!','Added — let\'s start!'));
+      try { initStudy(id, 'page', p0.num); } catch(e){}
+      push({ name:'study-cards', bookId:id, scope:'page', pageNum:p0.num });
+      return;
+    }
+  }
   _keepPickerScroll(() => renderOfficialPicker());
   try { renderKeepScroll(); } catch(e){}
   toast(TT('📚 단어장을 책장에 추가했어요','Added to your shelf'));
@@ -10585,7 +10600,21 @@ function render() {
             <button onclick="startLevelTest()" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}
           <div id="my-tests-banner"></div>
           ${assignmentBannerHTML()}
-          ${!myBooks.length ? `
+          ${(!myBooks.length && !isGuest() && !orgIsAdmin() && _officialBooksForMe()) ? `
+          <!-- 가입 직후 첫 화면. 전에는 여기서 '책 추가'를 눌러 모달에서 고르고,
+               책을 열고, Day 를 고르고, 단어 목록을 내려 '암기 카드'를 눌러야
+               첫 단어가 나왔다. 10월 코호트 48명 중 35명이 한 번 들어와 보고
+               다시 안 왔다(73%). 레벨 배치 테스트는 이미 만들어져 있었는데
+               게스트에게만 보여주고 있었다 — 정작 필요한 사람은 가입한 사람이다.
+               이제 '1분 테스트 → 레벨 책 자동 담기 → Day 1 암기카드' 한 줄로 잇는다. -->
+          <div style="padding:34px 18px 26px;max-width:430px;margin:0 auto;">
+            <div style="text-align:center;font-size:40px;line-height:1;margin-bottom:12px;">🎯</div>
+            <div style="text-align:center;font-family:var(--font-serif-ko);font-size:19px;font-weight:700;color:var(--ink-100);line-height:1.45;margin-bottom:8px;">${TT('몇 레벨부터 할지 찾아드릴게요','Let us find your level')}</div>
+            <div style="text-align:center;font-size:13px;color:var(--ink-60);line-height:1.7;margin-bottom:20px;">${TT('단어 16개만 풀면 1분이면 끝나요.<br>레벨에 맞는 단어장을 바로 담아 외우기 시작해요.','Sixteen words, about a minute.<br>We add the right wordbook and you start right away.')}</div>
+            <button class="btn btn-solid" style="width:100%;padding:15px;font-size:15px;" onclick="startLevelTest()">${TT('🎯 1분 레벨 테스트 시작','🎯 Start the 1-minute test')}</button>
+            <button onclick="openAddBookModal()" style="width:100%;padding:13px;margin-top:8px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('직접 고를게요 (공식 단어장 · 교재 촬영 · 직접 입력)','I\'ll pick myself (official books, scan, or type)')}</button>
+          </div>` : ''}
+          ${(!myBooks.length && !(!isGuest() && !orgIsAdmin() && _officialBooksForMe())) ? `
           <div style="text-align:center;padding:46px 18px 30px;max-width:420px;margin:0 auto;">
             <div style="font-size:44px;line-height:1;margin-bottom:12px;">📚</div>
             <div style="font-family:var(--font-serif-ko);font-size:18px;font-weight:700;color:var(--ink-100);margin-bottom:8px;">${TT('책장이 비어 있어요','Your shelf is empty')}</div>
