@@ -130,7 +130,7 @@ Rules:
   If the input etym is empty, return an empty string.
 - Do NOT translate the English headword or the example sentence.
 - Do NOT add romanization, pronunciation, or commentary.
-
+{extra_rules}
 Return ONLY a JSON array, one object per item, same order, same length:
 [{{"i":0,"base":"...","ctx":"...","etym":"..."}}]
 
@@ -145,7 +145,19 @@ def translate(api_key, lang, batch, retries=4):
               'ctx': w.get('ctx') or '',
               'etym': ((w.get('analysis') or {}).get('etym') or '')}
              for n, w in enumerate(batch)]
+    # ⚠️ 영어만의 함정: 표제어도 영어, 뜻도 영어라서 모델이 뜻 자리에 표제어를
+    #    그대로 베낄 수 있다(aunt → "aunt"). 그러면 암기 카드 앞뒤가 같아져
+    #    단어장이 통째로 쓸모없어진다. 다른 언어에서는 생길 수 없는 일이라
+    #    영어일 때만 규칙을 더 건다.
+    extra = ''
+    if lang == 'en':
+        extra = ('- CRITICAL: never return the headword itself (or an inflected form of it)\n'
+                 '  as "base" or "ctx". Write a short defining phrase instead.\n'
+                 '  Good: "aunt" -> "your parent\'s sister". Bad: "aunt" -> "aunt".\n'
+                 '- Keep each sense under about 8 words. No full sentences, no articles\n'
+                 '  like "a" or "the" at the start unless the sense needs them.\n')
     prompt = PROMPT.format(lang_en=lang_en, lang_native=lang_native,
+                           extra_rules=extra,
                            items=json.dumps(items, ensure_ascii=False))
     url = ('https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s'
            % (MODEL, api_key))
@@ -161,7 +173,15 @@ def translate(api_key, lang, batch, retries=4):
             by_i = {int(o['i']): o for o in arr if 'i' in o}
             if len(by_i) != len(batch):
                 raise ValueError('개수 불일치 %d≠%d' % (len(by_i), len(batch)))
-            return [by_i[n] for n in range(len(batch))]
+            out = [by_i[n] for n in range(len(batch))]
+            if lang == 'en':
+                # 표제어를 그대로 베낀 것이 몇 개나 되는지 센다. 많으면 재시도.
+                same = sum(1 for n, o in enumerate(out)
+                           if str(o.get('base', '')).strip().lower()
+                           == str(batch[n]['en']).strip().lower())
+                if same > max(1, len(batch) // 10):
+                    raise ValueError('표제어를 그대로 쓴 것이 %d개' % same)
+            return out
         except Exception as e:
             if attempt == retries - 1:
                 raise
