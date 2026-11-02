@@ -23,16 +23,15 @@
     //  ASO·광고·커뮤니티로 유입을 만들어도 이 한 줄에서 다 샜다.)
     // 공식 단어장 4,800단어의 뜻을 zh·es·ja 로 다 번역해 뒀는데, 중국어·일본어
     // 방문자가 도착할 입구가 없어서 그 번역이 묻혀 있었다 → lp-zh / lp-ja 추가.
-    // 스페인어는 아직 랜딩이 없어서 영어로 보낸다(앱 안의 UI·뜻은 스페인어로 나온다).
+    // 앱이 지원하는 5개 언어 전부에 랜딩이 있다. 그 외 언어는 영어로 보낸다.
     var _pref = (navigator.languages && navigator.languages.length)
                   ? navigator.languages : [navigator.language || ''];
+    var _lpBy = { ko: '/lp.html', zh: '/lp-zh.html', ja: '/lp-ja.html',
+                  es: '/lp-es.html', en: '/lp-en.html' };
     var _lp = '/lp-en.html';
     for (var _i = 0; _i < _pref.length; _i++) {
-      var _t = String(_pref[_i] || '').toLowerCase();
-      if (_t.indexOf('ko') === 0) { _lp = '/lp.html'; break; }
-      if (_t.indexOf('zh') === 0) { _lp = '/lp-zh.html'; break; }
-      if (_t.indexOf('ja') === 0) { _lp = '/lp-ja.html'; break; }
-      if (_t.indexOf('en') === 0) { _lp = '/lp-en.html'; break; }
+      var _t = String(_pref[_i] || '').toLowerCase().slice(0, 2);
+      if (_lpBy[_t]) { _lp = _lpBy[_t]; break; }
     }
     location.replace(_lp);
   } catch (e) {}
