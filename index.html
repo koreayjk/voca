@@ -8677,20 +8677,33 @@ function _dbRowToWord(w) {
 // 한국어 사용자는 원본이 이미 한국어라 번역이 필요 없다.
 // 그 외 언어는 '번역이 실제로 들어와 있는지' 한 번만 확인하고 기억한다.
 // 표가 아직 없거나(SQL 미실행) 그 언어 번역이 0건이면 영원히 안 붙인다.
-let _offI18nState = null;   // null=모름 / false=없음 / 'zh' 같은 언어코드=있음
+let _offI18nState = null;
+let _offI18nLangChecked = null;   // _offI18nState===false 가 '확인된 부재'인지 구분하는 짝   // null=모름 / false=없음 / 'zh' 같은 언어코드=있음
+// ⚠️ '번역이 없다(false)' 와 '확인에 실패했다' 를 구분해야 한다.
+// 전에는 요청이 한 번 실패하면 catch 에서 _offI18nState=false 로 못 박았고,
+// _officialBooksForMe() 가 false 가 되면서 중국어·일본어·스페인어 사용자의
+// 공식책 26권이 그 세션 동안 통째로 사라졌다. 번역은 DB 에 4,800행씩 멀쩡히
+// 있는데도 그렇다. 스크린샷을 찍다가 실제로 이 상황을 한 번 밟았다
+// (네트워크 한 번 끊김 → 책장 0권).
+// → 실패는 기억하지 않고 다음 호출에서 다시 물어본다. 재시도도 붙인다.
+let _offI18nTried = 0;
 async function _ensureOfficialI18n(){
   const lang = userNativeLang;
   if (lang === 'ko') return false;
-  if (_offI18nState !== null && _offI18nState !== lang) {
-    if (_offI18nState === false) return false;
-  }
   if (_offI18nState === lang) return lang;
+  if (_offI18nState === false && _offI18nLangChecked === lang) return false;  // 정말 없는 것으로 확인됨
   try {
-    const r = await sbFetch(`/rest/v1/voca_word_i18n?lang=eq.${encodeURIComponent(lang)}&select=word_id&limit=1`);
+    const r = await fetchRetry(() => sbFetch(
+      `/rest/v1/voca_word_i18n?lang=eq.${encodeURIComponent(lang)}&select=word_id&limit=1`
+    ).catch(() => null));   // fetchRetry 는 '던지면' 재시도하지 않는다 → null 로 바꿔 재시도를 살린다
+    if (!Array.isArray(r)) throw new Error('i18n 확인 실패');
     _offI18nState = (Array.isArray(r) && r.length) ? lang : false;
+    _offI18nLangChecked = lang;          // 이 언어에 대해 '확인 완료' 로 표시
   } catch(e) {
-    console.warn('[official i18n]', e);   // 표가 없으면 여기로 온다 — 조용히 끈다
-    _offI18nState = false;
+    // 확인 실패 — 못 박지 않는다. 다음 호출에서 다시 물어본다.
+    console.warn('[official i18n] 확인 실패, 다음에 재시도', e);
+    _offI18nTried++;
+    return _offI18nState === lang ? lang : null;
   }
   return _offI18nState;
 }
