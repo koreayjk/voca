@@ -567,8 +567,16 @@ cd /home/user/voca
 - 언어별 스크린샷
 - Search Console 에 `sitemap.xml` 제출, `lp-en.html` 색인 요청
 - ~~중국어/일본어 랜딩 페이지~~ → `7140ba4` 완료 (lp-zh.html / lp-ja.html).
-  루트 라우팅 ko→lp / zh→lp-zh / ja→lp-ja / 그 외→lp-en. **스페인어 랜딩은 아직
-  없다** — 뜻은 번역해 놨는데(4,800행) 입구가 없으므로 다음 후보다.
+  `280822a` 로 스페인어(lp-es.html)까지 추가. **앱이 지원하는 5개 언어 전부에
+  랜딩이 있다.** 루트 라우팅은 맵 `{ko,zh,ja,es,en}` → 각 랜딩, 그 외 영어
+  (index.html 상단 리다이렉트 가드). 5개 랜딩의 hreflang 은 5언어+x-default 로
+  통일, sitemap.xml 16 URL · hreflang 48개.
+
+  ⚠️ 랜딩을 또 추가하면 **네 군데를 같이 고쳐야 한다**: ① 새 파일의 hreflang
+  ② 기존 랜딩 4개의 hreflang ③ index.html 라우팅 맵 ④ sitemap.xml.
+  CSS 는 손으로 복사하지 말고 lp-en.html 의 `<style>` 블록을 추출해 쓴다
+  (스타일이 갈라지지 않게). 검증은 390px 가로 넘침 + 내비 칩 넘침 +
+  해당 언어 외 문자 잔재 + 내부 링크 200 네 가지를 본다.
 - Play Console 설명·스크린샷이 아직 구버전
 - `CRON_SECRET` 교체
 - 학원 리드 수집 경과 확인 (기준선: `academy_name` 2건 / `academy_leads` 0건,
