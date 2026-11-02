@@ -7750,7 +7750,7 @@ async function loadBooksFromDB() {
     // 끝내 실패하면 기존 books 를 비우지 말고(빈 책장 오인 방지) 조용히 종료
     if (!Array.isArray(bd)) { console.error('DB load failed after retries'); return; }
     books = bd.map(b => ({
-      id: b.id, title: b.title, author: b.author, color: b.color,
+      id: b.id, title: b.title, author: _officialAuthor(b), color: b.color,
       _added: b.created_at || '',          // 책장 정렬(최신순) 기준
       desc: b.description || '', cover: b.is_official ? _officialCover(b.title, b.cover_url) : (b.cover_url || ''), category: b.category || 'general',
       _officialContent: !!b.is_official, // 공식 콘텐츠 책: 촬영/직접입력 버튼 숨김(소유자 본인이 봐도)
@@ -7798,7 +7798,12 @@ function _officialCover(title, dbCover){
   const t = title || '';
   // 레벨 12권 — 표지는 SVG 로 저장소에 둔다(12장 합쳐 48KB, 사진 한 장보다 가볍다)
   const _lv = /^Lv\.(\d+)\s*$/.exec(t.trim());
-  if (_lv && +_lv[1] >= 1 && +_lv[1] <= 12) return `cover-lv${+_lv[1]}.svg?v=1`;
+  if (_lv && +_lv[1] >= 1 && +_lv[1] <= 12) {
+    // 표지에 '기본'·'400단어 · 20일' 같은 한국어가 박혀 있어서, 비한국어 사용자의
+    // 책장이 전부 한국어로 보였다(스페인어 스크린샷에서 발견). 언어별 SVG 를 둔다.
+    const _cl = { en:'-en', zh:'-zh', ja:'-ja', es:'-es' }[userNativeLang];
+    return `cover-lv${+_lv[1]}${userNativeLang === 'ko' ? '' : (_cl || '-en')}.svg?v=2`;
+  }
   // 수능 전용 표지 — 제목에 '수능'이 있을 때만. (중등 핵심/스페인어 등이 '핵심' 같은
   // 공통어로 수능 표지를 잘못 가져가던 문제 방지)
   if (t.indexOf('수능') >= 0) {
@@ -7925,9 +7930,34 @@ async function _loadOfficialWordsFor(ids){
   await Promise.all(Array.from({ length: Math.min(3, q.length) }, worker));
 }
 // DB 공식책 행 → 메모리 book 객체(읽기전용)
+// 공식책 부제. DB 의 description 은 한국어뿐이라(「기본 · B1」) 비한국어 사용자에게
+// 그대로 보여주면 책장이 한국어로 보인다. Lv.N 은 제목에서 레벨을 알 수 있으므로
+// 등급 이름만 번역해 다시 만든다. Lv 책이 아니면 DB 값을 그대로 쓴다.
+const _LV_TIER = {
+  ko: ['입문','기본','중급','상급','최상급'],
+  en: ['Beginner','Elementary','Intermediate','Advanced','Mastery'],
+  zh: ['入门','基础','中级','高级','最高级'],
+  ja: ['入門','基本','中級','上級','最上級'],
+  es: ['Inicial','Básico','Intermedio','Avanzado','Maestría'],
+};
+const _LV_CEFR = ['A1','A1~A2','A2','B1','B1','B1','B1~B2','B2','B2','B2~C1','C1','C1~C2'];
+function _lvTierIndex(n){ return n <= 3 ? 0 : n <= 6 ? 1 : n <= 9 ? 2 : n <= 11 ? 3 : 4; }
+// 책 타일 밑에 보이는 「기본 · B1」은 description 이 아니라 author 다.
+// (description 은 'IMV-L4' 같은 내부 코드) — 스크린샷에서 한국어로 남아 발견했다.
+function _officialAuthor(b){
+  // is_official 로 거르지 않는다 — 공식 카탈로그 select 에 그 컬럼이 없어서
+  // 항상 undefined 다(여기서 한 번 걸렸다). 'Lv.N' 제목 패턴만으로 충분하다.
+  if (!b) return '';
+  const m = /^Lv\.(\d+)\s*$/.exec(String(b.title || '').trim());
+  if (!m) return b.author || '';
+  const n = +m[1];
+  if (n < 1 || n > 12) return b.author || '';
+  const tier = (_LV_TIER[userNativeLang] || _LV_TIER.en)[_lvTierIndex(n)];
+  return `${tier} · ${_LV_CEFR[n - 1]}`;
+}
 function _mapOfficialBook(b){
   return {
-    id: b.id, title: b.title, author: b.author, color: b.color,
+    id: b.id, title: b.title, author: _officialAuthor(b), color: b.color,
     _added: (getMyOfficialAt()[b.id] || b.created_at || ''),   // 책장에 담은 시각
     desc: b.description || '', cover: _officialCover(b.title, b.cover_url), category: b.category || 'general',
     _official: true, _readonly: true, _officialContent: true,
@@ -8238,11 +8268,20 @@ function _ltBooks(){
   od.forEach(b => { const m = /^Lv\.(\d+)\s*$/.exec(String(b.title||'').trim()); if (m) by[+m[1]] = b; });
   return by;
 }
+// 카탈로그의 raw 행에서 '그 사람 언어의 뜻'을 꺼낸다.
+// ⚠️ _dbRowToWord 를 거치지 않는 경로(_ltPick/_ltAddPool)는 번역을 놓치기 쉽다.
+// 실제로 스페인어로 레벨 테스트를 띄우니 보기가 전부 한국어로 나왔다 —
+// 번역은 중첩 조인(voca_word_i18n)으로 같이 받아놓고 쓰질 않았던 것이다.
+function _rawBase(w){
+  const tr = Array.isArray(w.voca_word_i18n) ? w.voca_word_i18n[0] : w.voca_word_i18n;
+  return (tr && tr.base) ? tr.base : w.base;
+}
 // 그 레벨의 단어를 고르게 뽑는다(앞 Day 에만 몰리지 않게)
 function _ltPick(book, k){
   const all = [];
   (book.voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => {
-    if (w && w.en && w.base) all.push({ en:w.en, ko:w.base });
+    const b = w && _rawBase(w);
+    if (w && w.en && b) all.push({ en:w.en, ko:b });
   }));
   const out = [], used = new Set();
   while (out.length < k && used.size < all.length) {
@@ -8284,7 +8323,7 @@ async function openLevelTest(){
 // 받아온 레벨의 뜻을 오답 보기 풀에 보탠다
 function _ltAddPool(row){
   const t = _lt; if (!t || !row) return;
-  (row.voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => { if (w && w.base) t.pool.push(w.base); }));
+  (row.voca_pages||[]).forEach(p => (p.voca_words||[]).forEach(w => { const b = w && _rawBase(w); if (b) t.pool.push(b); }));
 }
 function _ltLoading(){
   const box = document.getElementById('lt-overlay')?.querySelector('.lt-box');
@@ -8669,6 +8708,15 @@ function _dbRowToWord(w) {
     analysis = analysis ? Object.assign({}, analysis) : {};
     if (tr.etym) analysis.etym = tr.etym; else delete analysis.etym;
     delete analysis.src; delete analysis.exam;
+    // ⚠️ analysis 안에도 한국어가 더 있다. 번역은 base/ctx/etym 만 만들어 뒀으므로
+    //    나머지 한국어 필드는 걷어내야 한다. 안 걷어내면 UI 는 일본어인데 카드
+    //    뒷면 뜻과 예문 해석만 한국어로 뜬다(일본어 스크린샷에서 발견).
+    //      meanings[].ko  — 번호 매긴 뜻. 지우면 _cardBackBody 가 번역된
+    //                       base/ctx 로 자동 폴백한다(덜 풍성하지만 맞는 말이 나온다)
+    //      example_kr     — 예문의 한국어 해석
+    //      tip            — 한국어 학습 팁
+    //    ↳ 되살리려면 이 필드들까지 번역해 voca_word_i18n 에 넣고 여기서 갈아끼우면 된다.
+    delete analysis.meanings; delete analysis.example_kr; delete analysis.tip;
   }
   return { id: w.id, en: w.en, ipa: w.ipa||'', base: base, ctx: ctx, sentence: w.sentence||'', level: w.level||'', fav: w.is_favorite||false, analysis: analysis };
 }
@@ -10991,9 +11039,9 @@ function render() {
       <div class="scr" style="padding-bottom:110px">
         <div class="topnav"><span class="topnav__back" onclick="back()">←</span><span class="topnav__title">${esc(book.title)} · ${book._official ? String(page.num) : ('Page '+page.num)}</span><span></span></div>
         <div class="h-display h-xl" style="margin-top:14px">${page.words.length} words</div>
-        <div class="muted" style="font-size:11px;margin-top:4px">${TT('기본 뜻 + 문맥 뜻','Meaning + Context')}${(_hiddenStash[book.id]||[]).length?` · <span onclick="showHiddenWords('${jsq(book.id)}')" style="cursor:pointer;color:var(--accent);font-weight:700;">🙈 ${TX(`숨긴 단어 {v0}`,`Hidden {v0}`,{v0:(_hiddenStash[book.id]||[]).length})}</span>`:''}</div>
+        <div class="muted" style="font-size:11px;margin-top:4px">${page.words.some(w=>w.ctx)?TT('기본 뜻 + 문맥 뜻','Meaning + Context'):TT('기본 뜻','Meaning')}${(_hiddenStash[book.id]||[]).length?` · <span onclick="showHiddenWords('${jsq(book.id)}')" style="cursor:pointer;color:var(--accent);font-weight:700;">🙈 ${TX(`숨긴 단어 {v0}`,`Hidden {v0}`,{v0:(_hiddenStash[book.id]||[]).length})}</span>`:''}</div>
         <div class="scr-scroll" style="margin-top:12px">
-          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${esc(w.en)}</div>${(lv&&!/^\d+$/.test(lv))?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}${_usageBadge(w)}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${isFav(book.id,page.num,w)?'#f39c12':'var(--ink-40)'};" title="${TT('즐겨찾기','Favorite')}">${isFav(book.id,page.num,w)?'⭐':'☆'}</button>${book._readonly ? (w.id?`<button onclick="hideWordForMe('${jsq(book.id)}','${jsq(page.num)}','${w.id}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('아는 단어 — 나에게만 숨기기','I know this — hide for me')}">🙈</button>`:``) : `<button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('단어 삭제','Delete word')}">🗑️</button>`}</div><div class="word-item__base">${esc(w.base)}</div><div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>${_literalLine(w)}${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${esc(w.sentence)}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
+          ${page.words.map((w,wi)=>{const lc={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};const lv=w.level||'';return `<div class="word-item"><div style="display:flex;align-items:center;gap:8px;"><div class="word-item__en">${esc(w.en)}</div>${(lv&&!/^\d+$/.test(lv))?`<span style="font-size:10px;font-weight:700;color:#fff;background:${lc[lv]||'#999'};border-radius:99px;padding:2px 7px;">CEFR ${lv}</span>`:''}${_usageBadge(w)}<button onclick="_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0;">🔊</button><button onclick="toggleFavorite('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:15px;padding:0;margin-left:auto;color:${isFav(book.id,page.num,w)?'#f39c12':'var(--ink-40)'};" title="${TT('즐겨찾기','Favorite')}">${isFav(book.id,page.num,w)?'⭐':'☆'}</button>${book._readonly ? (w.id?`<button onclick="hideWordForMe('${jsq(book.id)}','${jsq(page.num)}','${w.id}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('아는 단어 — 나에게만 숨기기','I know this — hide for me')}">🙈</button>`:``) : `<button onclick="deletePageWord('${jsq(book.id)}','${jsq(page.num)}',${wi})" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0;color:var(--ink-40);" title="${TT('단어 삭제','Delete word')}">🗑️</button>`}</div><div class="word-item__base">${esc(w.base)}</div>${w.ctx?`<div class="word-item__ctx">↳ <em>${esc(w.ctx)}</em></div>`:''}${_literalLine(w)}${w.sentence?`<div class="word-item__ctx" style="color:var(--ink-60);margin-top:3px;">📝 ${esc(w.sentence)}</div>`:''}${w.analysis?renderWordAnalysis(w.analysis, book.id, page.num, wi):''}</div>`;}).join('')}
         </div>
         <div class="btn-fixed btn-fixed--row">
           <button class="btn btn-solid" onclick="initStudy('${book.id}','page','${page.num}');push({name:'study-cards',bookId:'${book.id}',pageNum:'${page.num}',scope:'page'})">${TT('📚 암기 카드','📚 Study')}</button>
@@ -11734,7 +11782,7 @@ async function loadAssignments(force){
     rawBooks.forEach(b=>{
       if (existingIds.has(b.id)) { const eb = findBook(b.id); if (eb){ eb._assigned=true; eb._readonly=true; } return; }
       books.push({
-        id:b.id, title:b.title, author:b.author||'', color:b.color,
+        id:b.id, title:b.title, author:_officialAuthor(b)||'', color:b.color,
         // 공식 단어장(수능 등)은 표지가 제목 기반으로 매핑됨 → 배정 책도 동일한 표지로 보이게 _officialCover 적용
         desc:b.description||'', cover:_officialCover(b.title, b.cover_url), category:b.category||'general',
         _assigned:true, _readonly:true,
