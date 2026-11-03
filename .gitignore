@@ -24,3 +24,7 @@ appstore/
 # 시뮬레이터가 Cmd+S 로 떨궈 놓는 스크린샷 — 한 장에 수 MB 라 들어오면 안 된다.
 # 보관할 것은 위의 appstore/ 로 옮긴다.
 Simulator Screenshot*.png
+
+# Supabase CLI 로컬 상태 — 기기마다 달라지고, git pull/rebase 때마다
+# '수정됨'으로 떠서 작업을 막는다. 실제로 한 번 푸시를 막았다.
+supabase/.temp/
