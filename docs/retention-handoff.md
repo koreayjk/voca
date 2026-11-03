@@ -543,6 +543,94 @@ cd /home/user/voca
 
 ---
 
+## 6-B. iOS 앱 배포 — 웹 배포로는 아이폰 사용자에게 안 간다
+
+### 왜 이게 리텐션 문제인가
+
+2026-11-03, 인투어학원 전대점 학생 2명이 "아직 Day 1만 보인다"고 제보했다.
+코드는 멀쩡했다 — `hasOfficialAccess()` 는 무조건 true 이고, 그 학원 학생 조건
+(무료 + 학원 미결제)을 그대로 재현해도 30일 전부 열렸다(잠긴 Day 0개).
+
+범인은 **아이폰 앱 번들**이었다. `capacitor.config.json` 에 `server.url` 이 없다.
+애플이 '웹사이트를 그대로 감싼 앱'(가이드라인 4.2)을 반려하기 때문에 iOS 앱은
+화면 코드를 앱 안에 담아 배포한다. `scripts/build-www.mjs` 주석에 그대로 적혀
+있다 — **"얼어붙는 것은 화면 코드뿐이다."**
+
+날짜가 정확히 어긋나 있었다:
+
+| | 날짜 |
+|---|---|
+| iOS 프로젝트 마지막 변경 | 2026-10-23 |
+| 공식 단어장 전권 개방 (`314fcb1`) | 2026-10-25 |
+
+개방 **이틀 전** 빌드가 스토어에 있었고, 그 안의 옛 규칙은
+`isOrgStudentActive()` 가 false(학원 미결제)면 Day 1만 열었다.
+
+**안드로이드는 영향 없다** — Play 앱은 TWA(`app.imvoca.twa`)라 라이브 사이트를
+띄운다. 웹·PWA 도 서비스워커가 매번 서버에 물어보므로(`cache:'no-cache'`,
+1.2초 레이스) 새로고침 한 번이면 최신이다.
+
+### ⚠️ 규칙: 화면 코드를 고치면 iOS 재빌드가 필요하다
+
+웹은 `git push` 로 즉시 배포되지만 iOS 는 아니다. index.html 을 고칠 때마다
+아이폰 앱 사용자는 **다음 앱 심사가 끝날 때까지** 옛 화면을 본다.
+중요한 변경(과금선·접근권한·온보딩)일수록 재빌드를 같이 잡아야 한다.
+
+### 배포 절차 (2026-11-03 실제로 밟은 순서)
+
+```bash
+cd ~/voca
+npm run build            # www/ 를 현재 index.html 로 다시 만든다
+npx cap sync ios
+grep -c "2026-10 전권 개방" ios/App/App/public/index.html   # 1 이어야 한다
+npx cap open ios
+```
+
+Xcode: TARGETS: App → General → **Version/Build 수정 → ⌘S** →
+상단을 **Any iOS Device (arm64)** 로 → **Product → Archive** →
+Organizer 에서 **Version 열이 방금 값인지 확인** → Distribute → App Store Connect.
+
+### 여기서 실제로 틀렸던 것 세 가지
+
+1. **빌드 번호만 올리면 안 된다.** 이미 출시된 버전(1.0.1)에는 새 빌드를 못
+   붙인다. 업로드가 이렇게 거부된다:
+   `Invalid Pre-Release Train. The train version '1.0.1' is closed`
+   → **MARKETING_VERSION 을 올려야 한다** (1.0.1 → 1.0.2).
+   빌드 번호는 새 버전에서 1부터 다시 써도 되고 이어서 써도 된다.
+2. **버전을 바꾼 뒤 반드시 다시 Archive.** 아카이브는 만들어진 시점의 버전을
+   담고 있다. Organizer 에 남아 있던 옛 아카이브를 올리면 같은 에러가 다시 난다
+   (실제로 한 번 더 났다). Organizer 의 **Version 열**로 확인할 것.
+3. **Xcode 에서 고치고 ⌘S 를 해야** `project.pbxproj` 에 써진다. 저장 전에
+   `git commit` 하면 "nothing to commit" 이 나온다.
+
+### 현재 상태 (2026-11-03)
+
+`MARKETING_VERSION = 1.0.2`, `CURRENT_PROJECT_VERSION = 9` — 업로드 완료,
+App Store Connect 에서 1.0.2 버전 생성 + 메타데이터 입력 + 심사 제출이 남음.
+
+---
+
+## 6-C. members.plan 은 SQL 로 못 바꾼다
+
+`harden-members.sql` 트리거가 막는다:
+
+```
+ERROR: members.plan 은 클라이언트가 변경할 수 없습니다(결제 웹훅 전용).
+CONTEXT: PL/pgSQL function _members_guard()
+```
+
+**이건 의도된 보안장치다. 우회하지 말 것** — 누구나 자기 plan 을 premium 으로
+바꾸는 것을 막는다. 관리자가 무료 프리미엄을 주려면 두 경로뿐이다:
+
+- **https://imvoca.app/admin.html** → 회원 목록 → Premium 전환 → 개월 수
+  (`0` = 무기한). 내부적으로 `admin-set-plan` 엣지함수를 부른다.
+- 엣지함수 직접 호출: `POST /functions/v1/admin-set-plan`,
+  body `{user_id, premium:true, months:0}`, **Authorization 은 koreayjk@gmail.com
+  의 JWT**(`ADMIN_EMAILS` 허용목록 검사). 세션에서는 그 JWT 가 없으므로 사실상
+  admin.html 을 쓰는 수밖에 없다.
+
+`premium_until = null` 이 무기한이고, 만료를 처리하는 크론은 없다.
+
 ## 7. 보안 — 넘겨도 되는 선
 
 - **키를 대화창에 붙여넣지 않는다.** 터미널에만 넣는다.
