@@ -11407,11 +11407,44 @@ function renderStudyCard() {
   const w=s.queue[s.idx], prog=s.idx/s.queue.length*100;
   root.innerHTML=`<div class="study"><div class="study__top"><span class="study__info">${s.idx+1} / ${s.queue.length}</span><span class="study__info">${s.scope==='favorite'?'⭐ '+(TT('즐겨찾기','Favorites')):(findBook(s.bookId)?.title||'')}</span><span class="auto-chip" onclick="toggleAutoRead()" style="font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;border:1px solid var(--ink-12);font-family:var(--font-body);white-space:nowrap;color:${_autoRead?'var(--accent)':'var(--ink-60)'};background:${_autoRead?'var(--gold-bg)':'transparent'};">${_autoRead?TT('🔊 자동 ON','🔊 Auto ON'):TT('🔇 자동','🔇 Auto')}</span><span class="study__close" onclick="back();studyState=null;_autoStop()">✕</span></div><div class="study__bar"><div class="study__fill" style="width:${Math.round(prog)}%"></div></div><div class="study__round">${TX(`${s.round}라운드 · ${s.xList.length}번 틀림`,'Round {v0} · {v1} ✕ so far',{v0:(s.round),v1:(s.xList.length)})}</div><div class="card-wrap" onclick="cardClick(event)"><div class="card ${s.flipped?'card--flip':''} ${(w.analysis&&w.analysis._official)?'card--official':''}"><div class="face face-front">${(w.analysis&&w.analysis._official)?_cardFrontBody(w):`<div class="face-front__center"><div class="card__word" style="font-size:clamp(26px,7.5vw,44px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div><div class="card__ipa">${w.ipa||''}</div><button onclick="event.stopPropagation();speak('${jsq(w.en)}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:8px;">${t('pronounce')}</button></div><div class="card__tap">${t('cardFront')}</div>`}</div><div class="face face-back">${(w.analysis&&w.analysis._official)?_cardBackBody(w):`<div class="back__word" style="font-size:clamp(18px,5vw,27px);white-space:normal;overflow-wrap:break-word;word-break:break-word;">${esc(w.en)}</div>${_cardBackBody(w)}`}</div></div></div><div class="ox-row"><button class="ox-btn ox-x" onclick="advance(false)">✕</button><button class="ox-btn ox-o" onclick="advance(true)">○</button></div><div class="ox-hint"><div class="ox-hint__nav">${TT('👈 이전　·　🔄 가운데 탭 뜻보기　·　외움 👉','👈 Prev　·　🔄 Tap center to flip　·　Got it 👉')}</div><div class="ox-hint__sub">${TT('아래 <b class="hx">✕</b> 모름　<b class="ho">○</b> 외움','<b class="hx">✕</b> Again　<b class="ho">○</b> Got it')}<span class="kbd-only">　·　<kbd>←</kbd> ${TT('이전','Prev')} <kbd>↑</kbd> ${TT('모름','Again')} <kbd>→</kbd> ${TT('외움','Got it')} <kbd>Space</kbd> ${TT('뒤집기','Flip')}</span></div></div></div>`;
   _autoAfterRender(w, s.flipped);
+  _preloadCardAudio(w, s);
+}
+
+// 지금 카드를 보는 동안, 곧 필요할 음원을 브라우저 캐시에 미리 넣어둔다.
+// 전에는 카드가 바뀔 때마다 a.src=url → play() 로 그 자리에서 받기 시작해서,
+// 네트워크 왕복(측정값 ~200ms, 모바일은 더)만큼 소리가 늦게 났다. 그게 쌓여
+// '느리다'는 느낌이 된다. 재생은 하지 않고 받아만 둔다.
+//   · 지금 단어의 '예문' 음원 → 뒤집으면 바로 필요하다
+//   · 다음 단어의 '단어' 음원 → ○/✕ 를 누르면 바로 필요하다
+const _preloaded = new Set();
+function _preloadAudio(url){
+  if (!url || _preloaded.has(url)) return;
+  if (_preloaded.size > 300) _preloaded.clear();   // 무한정 쌓이지 않게
+  _preloaded.add(url);
+  try { fetch(url, { cache: 'force-cache', mode: 'cors' }).catch(()=>{}); } catch(e){}
+}
+function _preloadCardAudio(w, s){
+  try {
+    if (!s || !Array.isArray(s.queue)) return;
+    if (!s.flipped) _preloadAudio(_audioUrl(w, 's'));      // 뒤집으면 쓸 예문
+    const nx = s.queue[s.idx + 1];
+    if (nx) _preloadAudio(_audioUrl(nx, 'w'));             // 다음 카드의 단어
+  } catch(e){}
 }
 
 function flipCard() {
-  if (!studyState.flipped) { studyState.flipped=true; renderStudyCard(); }
-  else { studyState.flipped=false; renderStudyCard(); }
+  if (!studyState) return;
+  studyState.flipped = !studyState.flipped;
+  // ⚠️ 전에는 renderStudyCard() 로 root.innerHTML 을 통째로 다시 만들었다.
+  //    .card 에 260ms 3D 플립 트랜지션(.card--flip)이 걸려 있는데, 엘리먼트를 새로
+  //    만들면 '이미 뒤집힌 상태'로 태어나서 애니메이션이 한 번도 재생되지 않는다.
+  //    카드가 툭 바뀌니 버벅이는 것처럼 느껴졌다. 앞/뒷면은 둘 다 이미 DOM 에
+  //    들어 있으므로 클래스만 토글하면 된다(내용 재생성 불필요).
+  const el = document.querySelector('.card');
+  if (!el) { renderStudyCard(); return; }
+  el.classList.toggle('card--flip', studyState.flipped);
+  const w = studyState.queue[studyState.idx];
+  if (w) { _autoAfterRender(w, studyState.flipped); _preloadCardAudio(w, studyState); }
 }
 
 // 카드를 좌/중/우 세 구역으로 나눠 처리: 왼쪽=이전, 가운데=뒤집기, 오른쪽=외움+다음
