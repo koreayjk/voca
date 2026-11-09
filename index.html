@@ -12940,6 +12940,12 @@ function hallNav(delta) {
   window._hallPage = 1; renderHallTabs(); renderHallBody();
 }
 
+// 명예의 전당 '우리학원'·'단체전'에 넣을 역할.
+// 전에는 'student' 만 세서 원장(owner) 점수가 우리학원 목록에도, 단체 합산에도
+// 들어가지 않았다. 원장도 같이 공부하는 학원에서는 그 점수가 통째로 사라진다.
+// (대기 중인 사람은 제외 — 승인 여부는 호출부에서 org_status 로 이미 거른다)
+function _hallCounts(role){ return role === 'student' || role === 'owner'; }
+
 function renderHallBody() {
   const ko = userNativeLang==='ko';
   const el = document.getElementById('hall-inner');
@@ -12956,7 +12962,7 @@ function renderHallBody() {
     if (tab === 'team') {
       const orgMap = {};
       all.forEach(m => {
-        if (m.org_id && m.org_status==='approved' && m.org_role==='student') {
+        if (m.org_id && m.org_status==='approved' && _hallCounts(m.org_role)) {
           const sc=(m.perfect_reviews||0);
           if(!orgMap[m.org_id]) orgMap[m.org_id]={score:0,count:0};
           orgMap[m.org_id].score+=sc; if(sc>0) orgMap[m.org_id].count+=1;
@@ -12966,7 +12972,7 @@ function renderHallBody() {
         .map(id=>({ name:'🏫 '+( window._hallOrgNames[id]||(TT('단체','Org'))), _score:orgMap[id].score, sub:`👥 ${orgMap[id].count}${TT('명','')}`, mine: id===userOrgId }))
         .sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else if (tab === 'members') {
-      list = all.filter(m=>m.org_id===userOrgId && m.org_status==='approved' && m.org_role==='student')
+      list = all.filter(m=>m.org_id===userOrgId && m.org_status==='approved' && _hallCounts(m.org_role))
         .map(m=>({ name:m.name||(TT('익명','Anon')), _score:(m.perfect_reviews||0), sub:m.last_scored_at?('📅 '+fmtScoreDate(m.last_scored_at)):'', mine:m.name===userName }))
         .filter(m=>m._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else {
@@ -12997,7 +13003,7 @@ function renderHallBody() {
     if (tab === 'team') {
       const orgMap = {};
       users.forEach(u => {
-        if (u.org_id && u.org_status==='approved' && u.org_role==='student') {
+        if (u.org_id && u.org_status==='approved' && _hallCounts(u.org_role)) {
           const sc = scoreOf(u);
           if(!orgMap[u.org_id]) orgMap[u.org_id]={score:0,count:0};
           orgMap[u.org_id].score+=sc; if(sc>0) orgMap[u.org_id].count+=1;
@@ -13007,7 +13013,7 @@ function renderHallBody() {
         .map(id=>({ name:'🏫 '+( window._hallOrgNames[id]||(TT('단체','Org'))), _score:orgMap[id].score, sub:`👥 ${orgMap[id].count}${TT('명','')}`, mine: id===userOrgId }))
         .sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else if (tab === 'members') {
-      list = users.filter(u=>u.org_id===userOrgId && u.org_status==='approved' && u.org_role==='student')
+      list = users.filter(u=>u.org_id===userOrgId && u.org_status==='approved' && _hallCounts(u.org_role))
         .map(u=>({ name:u.name||(TT('익명','Anon')), _score:scoreOf(u), sub:lastOf(u), mine:u.uid===myId }))
         .filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,MAXR);
     } else { // indiv — 전체 사용자
