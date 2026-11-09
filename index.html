@@ -8153,6 +8153,9 @@ async function appendOfficialBooks() {
           ? await sbFetch(`/rest/v1/voca_review?user_id=eq.${currentUser.id}&book_id=in.(${offIds.join(',')})&select=book_id`)
           : [];
         const studied = new Set(Array.isArray(rv) ? rv.map(r => r.book_id) : []);
+        // ⚠️ 진도가 있는 책만 되살리면, 방금 담았지만 아직 안 펴본 책이 새로고침 때
+        //    사라진다. 학생도 직접 담을 수 있게 열었으므로 '내가 담은 목록'도 함께 본다.
+        getMyOfficialIds().forEach(id => studied.add(id));
         await _loadOfficialWordsFor(od.filter(b => studied.has(b.id)).map(b => b.id));
         od.filter(b => studied.has(b.id)).forEach(b => {
           const ex = findBook(b.id);
@@ -8558,8 +8561,11 @@ async function renderOfficialPicker(){
   const ko = userNativeLang==='ko';
   // 한국어 사용자가 아니면 공식 단어장 목록 자체를 숨긴다 (뜻이 전부 한국어라 쓸 수 없다)
   if (!_officialBooksForMe()) { box.innerHTML = ''; return; }
-  // 단체 '학생'에게는 선택 목록을 보이지 않음(배정받은 책만) — 관리자는 개인처럼 추가/빼기 가능.
-  if (userOrgId && !_seesAllOfficialLangs()) { box.innerHTML = ''; return; }
+  // 2026-11 개방. 전에는 단체 '학생'에게 이 목록을 통째로 숨겼다(배정받은 책만 보게).
+  // 그런데 1분 레벨 테스트 버튼도 이 박스 안에 그려지는 탓에, 학생은 레벨 테스트에
+  // 닿을 길이 아예 없었다 — 학원에서 "1분 테스트가 안 된다"는 제보의 실제 원인이다.
+  // (원장 화면에서는 멀쩡히 보여서 기기 문제로 오해하기 쉬웠다)
+  // → 학생도 공식 단어장을 직접 담을 수 있게 연다. 배정은 배정대로 따로 들어온다.
   // 목록을 이미 받아둔 상태에서 '담기/빼기' 후 다시 그리는 경우에는 비우지 않는다.
   // 한 줄짜리 '불러오는 중…' 으로 갈아끼우면 높이가 무너져서 모달 스크롤이 맨 위로 튄다.
   if (!Array.isArray(window._officialCatalogFull)) {
