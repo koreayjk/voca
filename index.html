@@ -7838,11 +7838,20 @@ const UNLISTED_OFFICIAL = new Set(['HEB-ALEFBET']);
 function _isUnlistedOfficial(row){
   return UNLISTED_OFFICIAL.has(String((row && row.description) || '').trim().toUpperCase());
 }
-// 숨겨도 '담을 사람'은 있어야 한다. 그 사람은 가르치는 선생님이다 —
-// 단체 관리자에게는 목록에 보이고, 담아서 자기 반에 배정할 수 있다.
-// (학생·일반 사용자에게는 끝까지 안 보인다)
+// 숨겨도 '담을 사람'은 있어야 한다.
+// ⚠️ 처음엔 orgIsAdmin() 만 봤는데, 그건 '단체 소유자'만 통과시킨다.
+//    정작 책을 만드는 운영자 계정은 어느 단체에도 안 속해 있어서,
+//    자기가 올린 책을 자기가 담을 수 없었다. 운영자를 같이 넣는다.
+//      · 운영자(_EVENT_ADMINS) : 올린 책을 확인하고 담을 수 있어야 한다
+//      · 단체 소유자(원장)      : 담아서 자기 반에 배정할 수 있어야 한다
+//    학생·일반 사용자에게는 끝까지 안 보인다.
 function _seesUnlistedOfficial(){
-  try { return !isGuest() && orgIsAdmin(); } catch(e){ return false; }
+  try {
+    if (isGuest() || !currentUser) return false;
+    const em = String(currentUser.email || '').toLowerCase();
+    if (_EVENT_ADMINS.indexOf(em) >= 0) return true;
+    return orgIsAdmin();
+  } catch(e){ return false; }
 }
 function _isRetiredOfficial(row){
   return RETIRED_OFFICIAL.has(String((row && row.description) || '').trim().toUpperCase());

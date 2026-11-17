@@ -686,7 +686,7 @@ CONTEXT: PL/pgSQL function _members_guard()
 |---|---|
 | DB | `voca_books.description='HEB-ALEFBET'` · book_id `56bba861-c7e2-4e38-89cb-985c2ad094ec` |
 | 구성 | Day 1 = 1~11자 · Day 2 = 12~22자 (끝글자 5자는 본 글자 💡 줄에 넣어 22장) |
-| 공개 범위 | **책 추가 목록에서 숨김** — 단체 관리자 / 이미 담은 사람만 |
+| 공개 범위 | **책 추가 목록에서 숨김** — 운영자(`_EVENT_ADMINS`) / 단체 소유자 / 이미 담은 사람만 |
 | 음원 | **아직 안 올림** — `tts_hebrew.py --go` 한 번 돌리면 끝 |
 | CEFR·품사 | 없음 (`level:''` / `pos:''`) |
 
@@ -715,6 +715,19 @@ python3 tts_hebrew.py --go      # 44개 생성·업로드 (207자 · WaveNet 월
 ```
 
 목소리 바꾸기: `export HE_TTS_VOICE=he-IL-Wavenet-C` (A·C 여성, B·D 남성)
+
+### 누구에게 보이나 (`_seesUnlistedOfficial`)
+
+| 계정 | 책 추가 목록 |
+|---|---|
+| 운영자 (`_EVENT_ADMINS`) | 보임 |
+| 단체 소유자 (`org_role='owner'` + `approved`) | 보임 |
+| 단체 선생님 (`teacher`) · 학생 · 일반 사용자 · 게스트 | **안 보임** |
+| 이미 담은 사람 (누구든) | 보임 |
+
+⚠️ 처음엔 `orgIsAdmin()` 만 봤는데 그건 단체 소유자만 통과시킨다.
+운영자 계정(`koreayjk@gmail.com`)은 `org_id` 가 `null` 이라 걸러져서,
+자기가 올린 책을 자기가 담을 수 없었다. 운영자를 같이 넣어 고쳤다.
 
 ### 전체 공개하는 법
 
