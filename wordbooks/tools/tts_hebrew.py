@@ -43,6 +43,14 @@ NS = "he"
 GO = "--go" in sys.argv
 FORCE = "--force" in sys.argv
 WORDS_ONLY = "--words-only" in sys.argv
+# --out <디렉터리> : 업로드하지 않고 로컬에 파일만 떨어뜨린다.
+#   레포에 넣어 GitHub Pages 로 서비스할 때 쓴다(service_role 키가 필요 없다).
+OUT = None
+if "--out" in sys.argv:
+    i = sys.argv.index("--out")
+    if i + 1 >= len(sys.argv):
+        print("ERROR: --out 다음에 디렉터리를 주세요"); sys.exit(1)
+    OUT = Path(sys.argv[i + 1])
 
 
 def sent_hash(s):
@@ -69,10 +77,17 @@ def synth(text):
         # speakingRate 0.85 — 글자 이름은 짧아서 기본 속도면 훅 지나간다
         "audioConfig": {"audioEncoding": "MP3", "speakingRate": 0.85},
     }).encode()
-    r = urllib.request.Request(
-        "https://texttospeech.googleapis.com/v1/text:synthesize?key=" + GKEY,
-        data=body, method="POST")
+    # 인증 두 가지:
+    #   ① GOOGLE_TTS_KEY 가 있으면 ?key= 쿼리 (평소 방식)
+    #   ② 없으면 Authorization 헤더 — 에이전트 프록시가 저장된 토큰을 끼워 넣거나,
+    #      GOOGLE_TTS_TOKEN(gcloud auth print-access-token)을 직접 쓴다
+    url = "https://texttospeech.googleapis.com/v1/text:synthesize"
+    if GKEY:
+        url += "?key=" + GKEY
+    r = urllib.request.Request(url, data=body, method="POST")
     r.add_header("Content-Type", "application/json")
+    if not GKEY:
+        r.add_header("Authorization", "Bearer " + (os.environ.get("GOOGLE_TTS_TOKEN") or "proxy-injected"))
     with urllib.request.urlopen(r, timeout=60) as resp:
         return base64.b64decode(json.loads(resp.read().decode())["audioContent"])
 
@@ -126,7 +141,9 @@ def main():
     js = jobs()
     chars = sum(len(t) for _, t, _ in js)
     print(f"[plan] {len(js)}개 파일 · {chars}자 · voice={VOICE}")
-    print(f"  SB_URL={'OK' if SB_URL else 'MISSING'}  SB_SERVICE_KEY={'OK' if SB_KEY else 'MISSING'}  GOOGLE_TTS_KEY={'OK' if GKEY else 'MISSING'}")
+    print(f"  목적지: {('로컬 ' + str(OUT)) if OUT else ('Supabase ' + (SB_URL or 'MISSING'))}")
+    print(f"  인증: {'GOOGLE_TTS_KEY' if GKEY else ('GOOGLE_TTS_TOKEN' if os.environ.get('GOOGLE_TTS_TOKEN') else 'Authorization 헤더(프록시 주입)')}"
+          f"{'' if OUT else ('  SB_SERVICE_KEY=' + ('OK' if SB_KEY else 'MISSING'))}")
     for path, text, desc in js[:4]:
         print(f"  {path}  ←  {desc}")
     if len(js) > 4:
@@ -134,19 +151,29 @@ def main():
     if not GO:
         print("\n(dry-run) 실제 생성·업로드는 --go")
         return
-    if not (SB_URL and SB_KEY and GKEY):
-        print("ERROR: SB_URL / SB_SERVICE_KEY / GOOGLE_TTS_KEY 환경변수 필요")
+    if OUT:
+        OUT.mkdir(parents=True, exist_ok=True)
+    elif not (SB_URL and SB_KEY):
+        print("ERROR: SB_URL / SB_SERVICE_KEY 환경변수 필요 (또는 --out <디렉터리> 로 로컬 저장)")
         sys.exit(1)
     made = skipped = failed = 0
     for path, text, desc in js:
-        if not FORCE and exists(path):
+        local = (OUT / path) if OUT else None
+        if not FORCE and (local.exists() if OUT else exists(path)):
             skipped += 1
             print(f"  (있음) {path}")
             continue
         try:
-            upload(path, synth(text))
+            mp3 = synth(text)
+            if not mp3:
+                raise RuntimeError("빈 응답")
+            if OUT:
+                local.parent.mkdir(parents=True, exist_ok=True)
+                local.write_bytes(mp3)
+            else:
+                upload(path, mp3)
             made += 1
-            print(f"  ✓ {path}  ←  {desc}")
+            print(f"  ✓ {path}  {len(mp3):>6}B  ←  {desc}")
         except urllib.error.HTTPError as e:
             failed += 1
             print(f"  ✗ {path}  {e.code} {e.read().decode()[:200]}")

@@ -64,6 +64,9 @@ def map_word(w):
         # 음원 파일명 키. 표제어가 ASCII 밖이면(히브리어 등) 앱의 _safeAudio 가
         # 빈 문자열을 만들어 파일을 영원히 못 찾는다 → 로마자 키를 데이터로 넘긴다.
         **({"audio": w["audio"]} if w.get("audio") else {}),
+        # TTS 가 읽을 글자 이름. 표제어가 글자 하나면(히브리어 알레프벳) 그 글자를
+        # 그대로 읽힐 수 없다 → 읽을 '이름'을 따로 넘긴다.
+        **({"he_name": w["heName"]} if w.get("heName") else {}),
         "deriv": w.get("deriv", []), "etym": w.get("etymHint", ""),
         "roots": w.get("roots", []), "exam": w.get("exam"),
         "colloc": w.get("colloc", []), "tip": w.get("tip", ""),   # 토익: 빈출표현·시험팁

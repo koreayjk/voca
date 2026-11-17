@@ -76,9 +76,12 @@ def to_word(r):
     return {
         'en': letter,
         'ipa': '',
-        # 음원 파일명 키(앱 _audioKey 가 읽는다) · TTS 가 읽을 글자 이름(tts_hebrew.py 가 읽는다)
+        # 음원 파일명 키(앱 _audioKey 가 읽는다) · TTS 가 읽을 글자 이름
+        # ttsName 은 생성 스크립트용, heName 은 DB(analysis.he_name)로 넘어간다 —
+        # edge function 쪽 생성기는 JSON 파일이 아니라 DB 를 읽기 때문이다.
         'audio': key,
         'ttsName': tts_name,
+        'heName': tts_name,
         'level': '',                      # CEFR 배지 없음 (빈 값이면 배지가 렌더되지 않는다)
         'meanings': [
             # seed_official.map_word 가 meanings[0] 에서 base/ctx/sentence 를 뽑는다
