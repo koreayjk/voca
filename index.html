@@ -871,7 +871,7 @@ async function startGuest(){
     await _ensureOfficialI18n().catch(()=>{});
     const od = _officialBooksForMe() ? await ensureOfficialCatalog() : null;
     if (Array.isArray(od)) {
-      books = od.filter(b => _officialLang(b.title) === userTargetLang)
+      books = od.filter(b => _officialLang(b.title) === userTargetLang && !_isUnlistedOfficial(b))
                 .sort(_officialPickerOrder)
                 .map(_mapOfficialBook);
     }
@@ -7827,6 +7827,23 @@ function _officialLang(title){ return String(title||'').startsWith('스페인어
 // ⚠️ 수능 숙어(SUN-IDIOM)는 대체된 책이 아니다 — 단어가 아니라 표현이라
 //    레벨로 나누지 않았다. 여기 넣으면 안 된다.
 const RETIRED_OFFICIAL = new Set(['MID-1','MID-2','MID-3','SUN-BASIC','SUN-CORE','SUN-HARD']);
+// 목록에 올리지 않는 공식책 — '내린 책'(RETIRED)과 뜻이 다르다.
+// 이쪽은 아직 전체 공개를 안 한 책이다. 특정 반·학원에만 배정해서 쓰다가,
+// 준비가 끝나면 여기서 빼기만 하면 전체 공개된다.
+//   · 담은 사람·배정받은 사람에게는 그대로 보인다
+//   · '책 추가' 목록과 둘러보기(게스트) 책장에만 안 뜬다
+//   · 단체 관리자의 배정/출제 목록(adminBookPool)은 카탈로그 전체를 쓰므로 영향 없다
+// 값은 voca_books.description 의 내부 코드다.
+const UNLISTED_OFFICIAL = new Set(['HEB-ALEFBET']);
+function _isUnlistedOfficial(row){
+  return UNLISTED_OFFICIAL.has(String((row && row.description) || '').trim().toUpperCase());
+}
+// 숨겨도 '담을 사람'은 있어야 한다. 그 사람은 가르치는 선생님이다 —
+// 단체 관리자에게는 목록에 보이고, 담아서 자기 반에 배정할 수 있다.
+// (학생·일반 사용자에게는 끝까지 안 보인다)
+function _seesUnlistedOfficial(){
+  try { return !isGuest() && orgIsAdmin(); } catch(e){ return false; }
+}
 function _isRetiredOfficial(row){
   return RETIRED_OFFICIAL.has(String((row && row.description) || '').trim().toUpperCase());
 }
@@ -8576,7 +8593,7 @@ async function renderOfficialPicker(){
   // 전 언어 공식책 모두 노출 — 스페인어 단어장도 토익·토플처럼 누구나 추가해서 공부할 수 있게 (학습언어 필터 제거)
   // 다만 Lv.1~12 로 대체된 옛 책은 '이미 책장에 있는 사람' 에게만 남긴다.
   // (빼기 버튼이 있어야 하므로 감추면 안 되고, 새로 담을 수만 없게 한다)
-  const list = od.filter(b => !_isRetiredOfficial(b) || onShelf.has(b.id))
+  const list = od.filter(b => (!_isRetiredOfficial(b) && (!_isUnlistedOfficial(b) || _seesUnlistedOfficial())) || onShelf.has(b.id))
                  .slice().sort(_officialPickerOrder);
   if (!list.length){ box.innerHTML=''; return; }
   const rows = list.map(b=>{
@@ -11185,8 +11202,32 @@ function render() {
 }
 
 const _LVC={'C2':'#7b2d8b','C1':'#c0392b','B2':'#e67e22','B1':'#2980b9','A2':'#27ae60','A1':'#95a5a6'};
+const _ESC_RE = /[.*+?^${}()|[\]\\]/g;
+// 히브리어 모음·강세 기호(니쿠드) 영역. 자음에 '붙어서' 저장되고, 유니코드 정규화에
+// 따라 붙는 순서까지 달라진다 → 표제어 글자를 예문에서 그대로 찾으면 못 찾는다.
+const _NIQQUD = '[\\u0591-\\u05C7]*';
 function _boldWord(text, en){
-  try{ const stem=en.slice(0,Math.max(3,en.length-3)); return text.replace(new RegExp('\\b('+stem.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\w*)','i'), '<b>$1</b>'); }catch(e){ return text; }
+  try{
+    // 라틴 문자가 없는 표제어(히브리어 등)는 \b·\w 가 통하지 않는다 — 둘 다 ASCII 기준이다.
+    // 자음만 남겨 뽑고, 자음 사이사이에 니쿠드가 끼어들 수 있게 해서 찾는다.
+    // (예: 표제어 'שׁ' 로 예문 'שָׁלוֹם' 의 첫 글자를 잡아낸다)
+    if(!/[a-z]/i.test(en)){
+      const bare = en.replace(/[\u0591-\u05C7]/g, '');
+      if(!bare) return text;
+      const pat = bare.split('').map(c => c.replace(_ESC_RE,'\\$&') + _NIQQUD).join('');
+      return text.replace(new RegExp('('+pat+')'), '<b>$1</b>');
+    }
+    const stem=en.slice(0,Math.max(3,en.length-3));
+    return text.replace(new RegExp('\\b('+stem.replace(_ESC_RE,'\\$&')+'\\w*)','i'), '<b>$1</b>');
+  }catch(e){ return text; }
+}
+// 이 단어를 소리로 읽어줄 수단이 있는가.
+// 히브리어는 저장 음원도 없고 기기 TTS 도 못 믿는다(영어 음성이 글자를 엉뚱하게 읽는다).
+// 음원을 준비하면 이 목록에서 빼면 버튼이 돌아온다.
+const _NO_TTS_LANGS = new Set(['he']);
+function _hasTts(w){
+  const lg = (w && w.analysis && w.analysis._lang) || '';
+  return !_NO_TTS_LANGS.has(lg);
 }
 // 공식 단어장 — 앞면(배지 위·단어·발음 pill)
 function _cardFrontBody(w){
@@ -11202,7 +11243,7 @@ function _cardFrontBody(w){
       <div class="card__word" style="font-size:clamp(28px,7.5vw,46px);" dir="auto">${esc(w.en)}</div>
       <div class="card__ipa">${w.ipa||''}</div>
       ${pos?`<div style="font-size:14px;color:#9a7b3a;font-style:italic;">${pos}</div>`:''}
-      <button onclick="event.stopPropagation();_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>
+      ${_hasTts(w) ? `<button onclick="event.stopPropagation();_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>` : ''}
     </div>
     <div class="card__tap">${t('cardFront')}</div>
   </div>`;

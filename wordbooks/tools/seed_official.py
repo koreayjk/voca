@@ -29,6 +29,12 @@ REPLACE = "--replace" in sys.argv # book_id 유지하고 페이지별 단어를 
 BOOK_PREFIX = os.environ.get("BOOK_PREFIX", "basic")     # 파일 패턴 suneung-<prefix>-day*.json
 BOOK_TITLE = os.environ.get("BOOK_TITLE", "수능 기본")
 BOOK_CODE = os.environ.get("BOOK_CODE", "SUN-BASIC")     # description 에 저장(식별용)
+# 파일 이름 규칙이 'suneung-' 로 고정돼 있었다. 영어/스페인어가 아닌 책(히브리어 등)은
+# 그 접두사를 쓰지 않으므로 패턴 자체를 바꿀 수 있게 한다. {prefix} 가 BOOK_PREFIX 로 치환된다.
+FILE_GLOB = os.environ.get("FILE_GLOB", "suneung-{prefix}-day*.json")
+# 음원·TTS 언어 네임스페이스. 앱의 _audioUrl / _hasTts 가 analysis._lang 을 본다.
+# 'es'=스페인어 저장음원, 'he'=히브리어(음원 없음 → 발음 버튼 숨김). 비우면 영어.
+BOOK_LANG = os.environ.get("BOOK_LANG", "es" if BOOK_PREFIX.startswith("esp") else "")
 
 def req(method, path, body=None, prefer=None):
     url = SB_URL + path
@@ -53,8 +59,8 @@ def map_word(w):
         "meanings": [{"pos": mm.get("pos", ""), "ko": mm.get("ko", "")} for mm in m],
         # 보존(추후 확장용)
         "_official": True, "src": m0.get("src", ""),
-        # 스페인어 책은 음원 언어 네임스페이스(es/) 사용 → 앱 _audioUrl 이 참조
-        **({"_lang": "es"} if os.environ.get("BOOK_PREFIX", "").startswith("esp") else {}),
+        # 음원 언어 네임스페이스 → 앱 _audioUrl / _hasTts 가 참조
+        **({"_lang": BOOK_LANG} if BOOK_LANG else {}),
         "deriv": w.get("deriv", []), "etym": w.get("etymHint", ""),
         "roots": w.get("roots", []), "exam": w.get("exam"),
         "colloc": w.get("colloc", []), "tip": w.get("tip", ""),   # 토익: 빈출표현·시험팁
@@ -64,7 +70,10 @@ def map_word(w):
 
 def load_days():
     import glob, re as _re
-    files = [f for f in glob.glob(str(ROOT / f"suneung-{BOOK_PREFIX}-day*.json")) if ".scaffold." not in f]
+    pat = FILE_GLOB.replace("{prefix}", BOOK_PREFIX)
+    files = [f for f in glob.glob(str(ROOT / pat)) if ".scaffold." not in f]
+    if not files:
+        print(f"ERROR: 패턴에 맞는 파일이 없어요: {ROOT / pat}"); sys.exit(1)
     def daynum(f):
         m = _re.search(r"-day(\d+)\.json$", f); return int(m.group(1)) if m else 0
     out = []
