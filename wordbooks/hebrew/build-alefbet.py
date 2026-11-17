@@ -34,6 +34,24 @@ ROWS = [
  (22, 'ת', '',  '타브',   't',              400,'표시',            '표, 언약, 마지막',     'תּוֹרָה',  '토라',   '율법'),
 ]
 
+# 음원용 — 글자 이름의 로마자 파일명 키와, 실제로 읽을 히브리어 이름.
+# 선생님은 이 표를 고치실 필요가 없습니다(ROWS 만 고치시면 됩니다).
+#   키 'alef'  →  audio/he/w/alef.mp3  를 앱이 찾는다
+#   읽을 글자는 'א' 가 아니라 글자 '이름' 이다 — 글자 하나를 넣으면 TTS 가 못 읽는다.
+AUDIO = {
+ 'א': ('alef',   'אָלֶף'),   'ב': ('bet',    'בֵּית'),
+ 'ג': ('gimel',  'גִּימֶל'),  'ד': ('dalet',  'דָּלֶת'),
+ 'ה': ('hey',    'הֵא'),     'ו': ('vav',    'וָו'),
+ 'ז': ('zayin',  'זַיִן'),    'ח': ('chet',   'חֵית'),
+ 'ט': ('tet',    'טֵית'),    'י': ('yod',    'יוֹד'),
+ 'כ': ('kaf',    'כַּף'),     'ל': ('lamed',  'לָמֶד'),
+ 'מ': ('mem',    'מֵם'),     'נ': ('nun',    'נוּן'),
+ 'ס': ('samekh', 'סָמֶךְ'),   'ע': ('ayin',   'עַיִן'),
+ 'פ': ('pey',    'פֵּא'),     'צ': ('tsade',  'צָדֵי'),
+ 'ק': ('qof',    'קוֹף'),    'ר': ('resh',   'רֵישׁ'),
+ 'שׁ': ('shin',   'שִׁין'),    'ת': ('tav',    'תָּו'),
+}
+
 # 끝글자(소피트) 안내 — 본 글자 카드 안에 같이 넣는다(따로 5장을 더 만들지 않는다)
 def tip_of(num, sofit, letter, name):
     bits = ['숫자값 %d' % num]
@@ -53,9 +71,14 @@ def to_word(r):
     ]
     if picto:
         meanings.append({'pos': '', 'ko': '상형 — %s' % picto})
+    key, tts_name = AUDIO.get(letter, ('', ''))
+    assert key, '음원 키 없음: %r' % letter
     return {
         'en': letter,
         'ipa': '',
+        # 음원 파일명 키(앱 _audioKey 가 읽는다) · TTS 가 읽을 글자 이름(tts_hebrew.py 가 읽는다)
+        'audio': key,
+        'ttsName': tts_name,
         'level': '',                      # CEFR 배지 없음 (빈 값이면 배지가 렌더되지 않는다)
         'meanings': [
             # seed_official.map_word 가 meanings[0] 에서 base/ctx/sentence 를 뽑는다

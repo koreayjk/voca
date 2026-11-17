@@ -11221,13 +11221,18 @@ function _boldWord(text, en){
     return text.replace(new RegExp('\\b('+stem.replace(_ESC_RE,'\\$&')+'\\w*)','i'), '<b>$1</b>');
   }catch(e){ return text; }
 }
-// 이 단어를 소리로 읽어줄 수단이 있는가.
-// 히브리어는 저장 음원도 없고 기기 TTS 도 못 믿는다(영어 음성이 글자를 엉뚱하게 읽는다).
-// 음원을 준비하면 이 목록에서 빼면 버튼이 돌아온다.
+// 기기 TTS 를 믿을 수 없는 언어. 히브리어 음성은 깔려 있는 기기에만 있고(윈도우 PC 엔
+// 보통 아예 없다), 없으면 영어 음성이 히브리 글자를 엉뚱하게 읽는다.
+// → 이 언어는 '저장 음원이 있을 때만' 소리를 낸다. 기기 음성으로 넘어가지 않는다.
 const _NO_TTS_LANGS = new Set(['he']);
-function _hasTts(w){
+function _noDeviceTts(w){
   const lg = (w && w.analysis && w.analysis._lang) || '';
-  return !_NO_TTS_LANGS.has(lg);
+  return _NO_TTS_LANGS.has(lg);
+}
+// 들려줄 소리가 하나라도 있는가 — 없으면 발음 버튼 자체를 그리지 않는다.
+function _hasTts(w){
+  if (!_noDeviceTts(w)) return true;        // 기기 음성으로라도 읽을 수 있다
+  return !!_audioUrl(w, 'w');               // 저장 음원이 있다
 }
 // 공식 단어장 — 앞면(배지 위·단어·발음 pill)
 function _cardFrontBody(w){
@@ -11243,7 +11248,7 @@ function _cardFrontBody(w){
       <div class="card__word" style="font-size:clamp(28px,7.5vw,46px);" dir="auto">${esc(w.en)}</div>
       <div class="card__ipa">${w.ipa||''}</div>
       ${pos?`<div style="font-size:14px;color:#9a7b3a;font-style:italic;">${pos}</div>`:''}
-      ${_hasTts(w) ? `<button onclick="event.stopPropagation();_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}')" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>` : ''}
+      ${_hasTts(w) ? `<button onclick="event.stopPropagation();_playSmart('${jsq(w.en)}','${_audioUrl(w,'w')}',null,${_noDeviceTts(w)})" style="background:var(--gold-bg);border:1px solid var(--ink-12);border-radius:99px;padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font-body);color:var(--accent);margin-top:6px;">${t('pronounce')}</button>` : ''}
     </div>
     <div class="card__tap">${t('cardFront')}</div>
   </div>`;
@@ -11282,6 +11287,14 @@ function _cardBackBody(w){
 // ===== 저장 음원(Gemini TTS) 우선 재생, 없으면 기기 TTS 폴백 =====
 let _curAudio = null;
 function _safeAudio(en){ return (en||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim().replace(/\s+/g,'-'); }
+// 음원 파일명 키. _safeAudio 는 ASCII 밖을 전부 버려서 히브리어·한자는 빈 문자열이 된다
+// (= 파일을 영원히 못 찾는다). 그런 글자는 데이터에 로마자 키를 직접 넣어 둔다.
+//   analysis.audio = 'alef'  →  audio/he/w/alef.mp3
+function _audioKey(w){
+  const a = (w && w.analysis) || {};
+  if (a.audio) return String(a.audio).toLowerCase().replace(/[^a-z0-9_-]/g,'');
+  return _safeAudio(w && w.en);
+}
 function _targetIsEnglish(){
   try { const t = (typeof getTargetLang === 'function') && getTargetLang(); return !t || t.code === 'en'; }
   catch(e){ return true; }
@@ -11333,22 +11346,24 @@ function _audioUrl(w, kind){
     }
     return '';
   }
-  const s=_safeAudio(w.en); if(!s) return '';
+  const s=_audioKey(w); if(!s) return '';
+  // 언어별 음원 폴더. 영어는 뿌리(/w, /s), 나머지는 /<lang>/w, /<lang>/s.
+  const _lg = w.analysis._lang || '';
+  const _ns = _lg ? ('/' + _lg) : '';
   if(kind==='s'){
     // ⭐ 예문 오디오: '문장 내용' 해시로 파일명을 잡는다 → 시리즈·책·문장이 뭐가 됐든 항상 맞는 파일.
     //   파일이 아직 없으면 _playSmart 가 그 예문 텍스트를 TTS로 읽음 → 불일치 원천 차단.
     const ex=_exOf(w); if(!ex) return '';
-    const base = (w.analysis._lang==='es') ? (_AUDIO_BASE+'/es/s/') : (_AUDIO_BASE+'/s/');
-    return base + s + '_' + _sentHash(ex) + '.mp3'; // 구분자 '_' (Supabase 스토리지는 '~' 불가)
+    return _AUDIO_BASE + _ns + '/s/' + s + '_' + _sentHash(ex) + '.mp3'; // 구분자 '_' (Supabase 스토리지는 '~' 불가)
   }
   // 단어 발음은 어느 책이든 동일 → 전역 파일 유지
-  return (w.analysis._lang==='es') ? (_AUDIO_BASE+'/es/w/'+s+'.mp3') : (_AUDIO_BASE+'/w/'+s+'.mp3');
+  return _AUDIO_BASE + _ns + '/w/' + s + '.mp3';
 }
 let _aWatch = null; // mp3 재생 완료 감지 워치독(onended 누락 대비)
 let _sharedAudio = null; // ⚠️ iOS: 제스처로 한 번 잠금해제된 엘리먼트만 이후 프로그램적 재생 허용 → 단일 엘리먼트 재사용
 function _getAudioEl(){ if(!_sharedAudio){ _sharedAudio = new Audio(); _sharedAudio.preload='auto'; } return _sharedAudio; }
 function _stopAudio(){ if(_aWatch){ clearInterval(_aWatch); _aWatch=null; } if(_curAudio){ try{_curAudio.pause();}catch(e){} _curAudio=null; } }
-function _playSmart(text, url, onDone){
+function _playSmart(text, url, onDone, noTts){
   // iOS는 유휴 상태에서 cancel을 반복 호출하면 다음 음성이 쉰 목소리로 깨짐 → 재생 중일 때만 cancel
   _stopAudio(); const _sy=window.speechSynthesis; if(_sy && (_sy.speaking||_sy.pending)) _sy.cancel();
   let done=false; const fin=()=>{ if(done)return; done=true; if(_aWatch){clearInterval(_aWatch);_aWatch=null;} if(onDone)onDone(); };
@@ -11369,6 +11384,9 @@ function _playSmart(text, url, onDone){
             else { const i = name.lastIndexOf('_'); if (i > 0) _requestServerAudio(name.slice(0, i), text); }
           }
         } catch(e){}
+        // 기기 음성을 믿을 수 없는 언어(히브리어 등)는 폴백하지 않는다 —
+        // 엉뚱한 발음을 들려주는 것이 아무 소리도 안 나는 것보다 나쁘다.
+        if (noTts) { fin(); return; }
         speak(text, fin); };
       a.onended=fin; a.onerror=fall;
       if(a.src!==url){ a.src=url; }
@@ -11390,6 +11408,7 @@ function _playSmart(text, url, onDone){
       return;
     }catch(e){}
   }
+  if (noTts) { fin(); return; }
   speak(text, fin);
 }
 
@@ -11412,7 +11431,8 @@ function _autoAfterRender(w, flipped){
     let advanced=false;
     const next=()=>{ if(advanced || my!==_autoTok) return; advanced=true;
       setTimeout(()=>{ if(my===_autoTok && _autoRead && studyState) loop(); }, 1100); };
-    _playSmart(text, url, next);
+    if(_noDeviceTts(w) && !url){ return; }   // 들려줄 게 없으면 루프를 돌리지 않는다
+    _playSmart(text, url, next, _noDeviceTts(w));
     const estMs = (text.length*90)/0.85 + (url?5000:2500); // mp3는 디코딩/무음 여유를 더 둠
     setTimeout(next, Math.max(4000, estMs));               // onended/onend 누락 대비 안전망
   };
