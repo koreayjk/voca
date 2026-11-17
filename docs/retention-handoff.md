@@ -673,3 +673,68 @@ CONTEXT: PL/pgSQL function _members_guard()
   시험 범위, 레벨 커버리지 3가지가 미확인이라 문구를 못 썼다.
 - 보류: Supabase 이메일 확인, fr/de/pt/vi/id UI 언어, D&B 케이스 34922413,
   사업장 주소를 집 주소에서 분리
+
+---
+
+## 9. 성경 히브리어 1권 (2026-11-17)
+
+학원에서 성경 히브리어를 가르쳐서 만든 첫 책. 알레프벳 22자.
+
+### 지금 상태
+
+| | |
+|---|---|
+| DB | `voca_books.description='HEB-ALEFBET'` · book_id `56bba861-c7e2-4e38-89cb-985c2ad094ec` |
+| 구성 | Day 1 = 1~11자 · Day 2 = 12~22자 (끝글자 5자는 본 글자 💡 줄에 넣어 22장) |
+| 공개 범위 | **책 추가 목록에서 숨김** — 단체 관리자 / 이미 담은 사람만 |
+| 음원 | **아직 안 올림** — `tts_hebrew.py --go` 한 번 돌리면 끝 |
+| CEFR·품사 | 없음 (`level:''` / `pos:''`) |
+
+### 원본이 어디 있나
+
+```
+wordbooks/hebrew/build-alefbet.py        ← ⭐ 표를 고치는 곳 (ROWS)
+wordbooks/hebrew/alefbet-draft.md        ← 읽기용 사본 (고쳐도 앱에 반영 안 됨)
+wordbooks/hebrew/hebrew-alefbet-day1.json  ← build-alefbet.py 가 생성
+wordbooks/hebrew/hebrew-alefbet-day2.json
+wordbooks/tools/tts_hebrew.py            ← 음원 생성·업로드
+```
+
+고치는 순서: `ROWS` 수정 → `python3 build-alefbet.py` → `seed_official.py --replace`
+(`--replace` 는 book_id·page_num 을 유지해서 복습·배정 진도가 보존된다. `--reset` 은 끊긴다)
+
+### 음원 올리기 (터미널)
+
+```bash
+cd <레포>/wordbooks/tools
+export SB_URL="https://ziatqkjlafucqtwshhla.supabase.co"
+export SB_SERVICE_KEY="..."     # 터미널에만
+export GOOGLE_TTS_KEY="..."     # 터미널에만. Supabase edge function 의 tts 가 쓰는 것과 같은 키
+python3 tts_hebrew.py           # 미리보기
+python3 tts_hebrew.py --go      # 44개 생성·업로드 (207자 · WaveNet 월 100만 자 무료 안)
+```
+
+목소리 바꾸기: `export HE_TTS_VOICE=he-IL-Wavenet-C` (A·C 여성, B·D 남성)
+
+### 전체 공개하는 법
+
+`index.html` 의 `UNLISTED_OFFICIAL` Set 에서 `'HEB-ALEFBET'` 한 줄 빼면 된다.
+`RETIRED_OFFICIAL` 과 거르는 방식은 같지만 뜻이 다르니 섞지 말 것 —
+저쪽은 Lv.1~12 로 대체된 '내린' 책, 이쪽은 아직 '안 공개한' 책이다.
+
+### 히브리어 때문에 손본 공통 코드
+
+| 어디 | 무엇 |
+|---|---|
+| `dir="auto"` 11곳 | RTL. 그전까지 방향 처리가 한 줄도 없었다 |
+| `_audioKey(w)` | `_safeAudio` 는 ASCII 밖을 전부 버린다 → `analysis.audio` 로마자 키를 먼저 본다 |
+| `_audioUrl` | 언어 폴더를 `es` 하드코딩에서 `_lang` 으로 일반화. 영어·스페인어 주소는 그대로 |
+| `_NO_TTS_LANGS` / `_noDeviceTts` | 기기 음성을 못 믿는 언어는 저장 음원이 없으면 **조용히** 끝낸다. 영어 음성이 히브리 글자를 엉뚱하게 읽는 게 무음보다 나쁘다 |
+| `_boldWord` | `\b`·`\w` 가 ASCII 기준이라 히브리어를 한 글자도 못 잡았다. 자음만 뽑아 사이사이 니쿠드를 허용 |
+| `seed_official.py` | `FILE_GLOB`·`BOOK_LANG` 환경변수 (파일명이 `suneung-` 로 고정돼 있었다) |
+
+### 남은 것
+
+- **글자 이름의 히브리어 표기 검수** (`build-alefbet.py` 의 `AUDIO` 표). TTS 가 실제로 읽는 글자라 틀리면 발음이 틀린다
+- Day 3+ 단어 (알파벳이 실기기에서 확인된 뒤)
+- `_officialLang('성경 히브리어 1')` 이 `'en'` 을 돌려준다. 지금은 숨김 책이라 영향이 없지만, 전체 공개 전에 히브리어 분기를 넣어야 한다 (안 넣으면 학습언어가 영어인 사람의 둘러보기 책장에 뜬다)
