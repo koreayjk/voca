@@ -7032,6 +7032,14 @@ async function sbInit() {
   // ── 소셜 로그인 리다이렉트 처리 ──
   if (await handleOAuthRedirect()) return;
 
+  // ?lt=1 은 '레벨 테스트를 열어달라'는 뜻이다(인스타·틱톡 바이오 링크).
+  // 처음엔 세션이 없는 사람만 처리했는데, 그러면 이미 로그인한 사람이 같은 링크를
+  // 눌렀을 때 아무 일도 일어나지 않는다 — 링크가 멀쩡한데 고장 난 것처럼 보인다.
+  // (실제로 이 링크를 만든 본인이 눌러보고 '아무것도 안 나온다'고 했다.)
+  // 세션 유무와 무관하게 기억해 뒀다가, 책장이 그려질 때 한 번 연다.
+  try {
+    if (new URLSearchParams(window.location.search).get('lt') === '1') window._ltAutoOpen = true;
+  } catch(e){}
   // 저장된 세션이 있으면 로그인 화면 대신 로딩 표시 (깜빡임 방지)
   const hasSavedSession = !!localStorage.getItem('imvoca.session');
   if (hasSavedSession) {
@@ -10833,6 +10841,13 @@ function render() {
     try {
       if (!myBooks.length && ((!isGuest() && !orgIsAdmin() && _officialBooksForMe()) || isGuest())) _ltPrefetch();
     } catch(e){}
+    // ?lt=1 로 들어온 사람에게 레벨 테스트를 연다. 딱 한 번만 — 플래그를 먼저 지운다
+    // (render 는 수없이 다시 불린다).
+    if (window._ltAutoOpen) {
+      window._ltAutoOpen = false;
+      _ltPrefetch();
+      setTimeout(() => { try { if (!document.getElementById('lt-overlay')) startLevelTest('social'); } catch(e){} }, 500);
+    }
     const _sv = getShelfView(), _ss = getShelfSort();
     root.innerHTML = `
       <div class="scr scr-wide scr-shelf" style="padding-bottom:90px;padding-top:50px;">
