@@ -7040,7 +7040,16 @@ async function sbInit() {
     // 광고·단체코드로 처음 온 사람은 '회원가입' 탭 먼저
     const _p = new URLSearchParams(window.location.search);
     const _code = (_p.get('code') || '').trim();
-    if (_p.get('signup') === '1' || _code) {
+    if (_p.get('lt') === '1' && !_code) {
+      // ?lt=1 — 인스타·틱톡에서 온 사람을 가입 벽 없이 레벨 테스트로 바로 보낸다.
+      // 숏폼에서 넘어온 사람에게 가장 먼저 '회원가입'을 들이밀면 거기서 끝난다.
+      // 지금 전환되는 경로는 레벨 테스트 → Day 1 하나뿐이니 거기에 바로 떨어뜨린다.
+      // 결과 화면의 'Day 1 바로 시작'이 로그인을 부른다 — 제품을 겪은 뒤에 묻는다.
+      // from 을 'social' 로 남겨서 lt_funnel 에서 소셜 유입만 따로 볼 수 있다.
+      startGuest().then(() => {
+        setTimeout(() => { try { startLevelTest('social'); } catch(e){} }, 400);
+      }).catch(() => renderLogin());
+    } else if (_p.get('signup') === '1' || _code) {
       if (_code) { window._suType = 'student'; window._prefillCode = _code.toUpperCase(); }
       renderLogin('signup');
     } else {
