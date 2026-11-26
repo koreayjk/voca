@@ -8548,11 +8548,42 @@ function _ltRender(){
     ${opts.map(o => `<button onclick="_ltAnswer(${o===q.ko})" style="display:block;width:100%;text-align:left;padding:13px 15px;margin-bottom:8px;border-radius:11px;border:1px solid var(--ink-12);background:var(--bg-input);color:var(--ink-100);font-size:14px;font-family:var(--font-body);cursor:pointer;">${esc(o)}</button>`).join('')}
     <button onclick="_ltAnswer(false)" style="display:block;width:100%;padding:11px;margin-top:4px;background:none;border:none;color:var(--ink-45);font-size:13px;cursor:pointer;font-family:var(--font-body);">${TT('모르겠어요','I don\u2019t know')}</button>`;
 }
+// 틱톡·인스타에서 ?lt=1 로 들어온 사람은 비회원으로 테스트를 푼다.
+// 결과를 보고 'Day 1 시작'을 누르는 순간이 이 퍼널에서 의향이 가장 높은 지점인데,
+// 거기서 로그인으로 보내면 추천 레벨이 그대로 날아갔다 — 가입을 마치고 돌아오면
+// 빈 책장이고, 방금 1분 들여 받은 'Lv.7' 은 어디에도 없었다.
+// 그래서 레벨을 저장해두고 로그인 후 이어서 담는다.
+const _LT_PENDING = 'imvoca.ltPendingLv';
+async function _ltResumePending(){
+  let o = null;
+  try {
+    const raw = localStorage.getItem(_LT_PENDING);
+    if (!raw) return false;
+    localStorage.removeItem(_LT_PENDING);   // 먼저 지운다 — render 는 수없이 다시 불린다
+    o = JSON.parse(raw) || null;
+  } catch(e){ return false; }
+  if (!o || !o.lv) return false;
+  if (o.at && Date.now() - o.at > 7*86400000) return false;   // 일주일 지난 건 버린다
+  try {
+    window._ltFrom = o.from || 'social';
+    await ensureOfficialCatalog();
+    const b = _ltBooks()[o.lv];
+    _ltLog('resumed_after_login', { lv: o.lv, found: !!b });
+    if (!b) return false;
+    addOfficialToShelf(b.id, { startNow: true });
+    return true;
+  } catch(e){ return false; }
+}
 function _ltAdd(lv){
   const b = _ltBooks()[lv];
   _ltLog('add_click', { lv: lv, asked: (_lt && _lt.asked) || 0, found: !!b });
+  const _from = (_lt && _lt.from) || window._ltFrom || '';
   closeLevelTest('added');
-  if (needsLogin(TT('추천받은 레벨을 책장에 담으려면 로그인이 필요해요.','Saving your level to a shelf needs an account.'))) return;
+  if (isGuest()) {
+    try { localStorage.setItem(_LT_PENDING, JSON.stringify({ lv: lv, from: _from, at: Date.now() })); } catch(e){}
+    _ltLog('login_gate', { lv: lv, asked: (_lt && _lt.asked) || 0 });
+  }
+  if (needsLogin(TX('추천받은 Lv.{v0} 은 가입하면 바로 책장에 담아드려요.','We\u2019ll put Lv.{v0} on your shelf as soon as you sign up.',{v0:lv}))) return;
   // 책장에 담아놓고 끝내면 '그래서 뭘 눌러야 하지' 가 또 남는다 → Day 1 암기카드까지 데려간다
   if (b) addOfficialToShelf(b.id, { startNow: true });
 }
@@ -10848,6 +10879,8 @@ function render() {
       _ltPrefetch();
       setTimeout(() => { try { if (!document.getElementById('lt-overlay')) startLevelTest('social'); } catch(e){} }, 500);
     }
+    // 테스트를 풀고 가입하러 간 사람이 돌아왔다 → 그 레벨을 담아 Day 1 로 보낸다.
+    if (!isGuest() && currentUser) { _ltResumePending().catch(() => {}); }
     const _sv = getShelfView(), _ss = getShelfSort();
     root.innerHTML = `
       <div class="scr scr-wide scr-shelf" style="padding-bottom:90px;padding-top:50px;">
