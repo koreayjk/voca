@@ -1,9 +1,30 @@
 // IM VOCA Service Worker
 // 전략: HTML은 항상 네트워크 우선 (최신 유지), 정적 자원은 캐시 우선 (속도)
 
-const CACHE_VERSION = 'imvoca-v10';
+const CACHE_VERSION = 'imvoca-v11';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
+
+// ⚠️ 탐색(navigate) 요청에 '리디렉션된 응답'을 그대로 돌려주면 브라우저가 거부한다.
+//    규격상 금지돼 있어서 에러도 아니고 그냥 ERR_FAILED 로 페이지가 안 열린다.
+//
+//    GitHub Pages 는 폴더 주소에 슬래시가 없으면 301 을 보낸다: /tt → /tt/
+//    그래서 imvoca.app/tt · /yt · /ig · /fb · /th · /read 가 전부 여기에 걸렸다.
+//    **앱을 한 번이라도 연 사람에게만** 생긴다 — 서비스 워커가 깔려 있어야 하니까.
+//    새 방문자는 멀쩡하고 기존 회원만 안 열리는, 찾기 어려운 형태였다.
+//    (2026-11-26 확인. 영상 엔드카드가 가리키는 주소라 그냥 둘 수 없었다)
+//
+//    → 몸통만 꺼내 응답을 새로 만들어 리디렉션 표시를 지운다.
+//      주소창은 원래 주소로 남고 내용은 목적지 것이 온다. 그게 더 낫다.
+async function stripRedirect(response) {
+  if (!response || !response.redirected) return response;
+  const body = await response.blob();
+  return new Response(body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers,
+  });
+}
 
 // 미리 캐시할 정적 자원 (앱 첫 실행 시 빠르게)
 const PRECACHE_URLS = [
@@ -123,10 +144,13 @@ self.addEventListener('fetch', (event) => {
       //    옵션과 함께 재구성할 수 없어 TypeError 가 난다. 주소만 넘겨 새로 만든다.
       const network = fetch(request.url, { cache: 'no-cache', credentials: 'same-origin' })
         .then(async (response) => {
-          if (response.ok) await runtime.put(request, response.clone());
-          return response;
+          // ⚠️ 캐시에 넣기 '전에' 리디렉션 표시를 지운다. Cache API 는 그 표시를
+          //    그대로 보관해서, 넣어두면 다음에 꺼낼 때 똑같이 거부당한다.
+          const clean = await stripRedirect(response);
+          if (clean.ok) await runtime.put(request, clean.clone());
+          return clean;
         })
-        .catch(() => fetch(request).catch(() => null));
+        .catch(() => fetch(request).then(stripRedirect).catch(() => null));
 
       // 사본을 먼저 보여주면 빠르지만, 새로 고친 내용이 '다음 실행'에나 보인다.
       // 실제로 "새 기능이 아직 안 보인다"는 제보가 이것 때문이었다.
@@ -137,10 +161,11 @@ self.addEventListener('fetch', (event) => {
         network,
         new Promise((r) => setTimeout(() => r('timeout'), TIMEOUT)),
       ]);
-      if (raced && raced !== 'timeout') return raced;
-      if (cached) { event.waitUntil(network); return cached; }
+      if (raced && raced !== 'timeout') return await stripRedirect(raced);
+      // 예전 버전이 넣어둔 사본에는 리디렉션 표시가 남아 있을 수 있다
+      if (cached) { event.waitUntil(network); return await stripRedirect(cached); }
       const fresh = await network;
-      if (fresh) return fresh;
+      if (fresh) return await stripRedirect(fresh);
       // 네트워크도 사본도 없을 때(오프라인)만 앱 껍데기라도 보여준다
       return (await runtime.match('/')) || (await caches.match('/'));
     })());
