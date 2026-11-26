@@ -5059,7 +5059,7 @@ function showUpgradePopup(scope) {
       <div style="display:flex;gap:8px;background:var(--bg-page);border-radius:14px;padding:10px;margin-bottom:14px;">
         ${tile('📷', TT('AI 스캔','AI scan'), TX(`하루 {v0}장`,`{v0} / day`,{v0:(PREMIUM_DAILY_LIMIT)}))}
         ${tile('⏱', TT('무료 대비','vs free'), TT('6배','6×'))}
-        ${tile('📚', TT('공식 단어장','Official books'), TT('무료에도 전권','free for all'))}
+        ${_officialBooksForMe() ? tile('📚', TT('공식 단어장','Official books'), TT('무료에도 전권','free for all')) : tile('🔁', TT('복습 일정','Review plan'), TT('1·2·3·6·15·30일','1·2·3·6·15·30d'))}
       </div>
       <div style="font-size:13px;color:var(--ink-60);margin-bottom:3px;"><b style="font-size:21px;color:var(--ink-100);">$3.99</b>/${TT('월','mo')} · ${TT('연간','yearly')} $39.99 (16%↓)</div>
       <div style="font-size:12px;color:var(--ok);font-weight:700;margin-bottom:16px;">${TT('커피 한 잔 값으로 한 달 — 하루 약 130원','That’s about $0.13 a day')}</div>
@@ -8347,8 +8347,28 @@ function _ltLog(stage, extra){
   } catch(e){}
 }
 
-function startLevelTest(from){
+// 공식 단어장을 쓸 수 없는 언어면 레벨 테스트도 열지 않는다.
+// 레벨 테스트는 공식 Lv.1~12 를 출제하는데, voca_word_i18n 에 그 언어 번역이
+// 없으면 보기가 전부 '한국어 뜻'으로 나온다. 영어 사용자가 실제로 그걸 보고 있었다
+// (voca_word_i18n 에는 es/ja/zh 만 있고 en 은 없다).
+// _officialBooksForMe() 는 책장·책 고르기에는 이미 걸려 있었는데 레벨 테스트만
+// 이 게이트를 안 거쳤다. 진입점이 네 군데(게스트 버튼·빈 책장·책 고르기·?lt=1)라
+// 각각 막지 않고 여기 한 곳에서 막는다.
+// ⚠️ _offI18nState 는 비동기로 채워진다. 확인 전에 동기로 판정하면 스페인어
+//    사용자까지 막히므로, 먼저 기다렸다가 판정한다.
+async function startLevelTest(from){
   if (document.getElementById('lt-overlay')) return;
+  try {
+    if (userNativeLang !== 'ko') {
+      await _ensureOfficialI18n().catch(() => null);
+      if (!_officialBooksForMe()) {
+        window._ltFrom = from || '?';
+        _ltLog('blocked_no_translation', { lang: userNativeLang });
+        return;
+      }
+    }
+  } catch(e){}
+  if (document.getElementById('lt-overlay')) return;   // 기다리는 사이에 열렸으면
   window._ltFrom = from || '?';
   window._ltOpenedAt = Date.now();
   _ltLog('started');
@@ -10887,7 +10907,7 @@ function render() {
     // 버튼을 그리는 것과 같은 조건으로 첫 라운드 단어를 미리 받아 둔다.
     // (아래 템플릿의 두 조건과 같이 움직여야 한다 — 바꿀 때 같이 보라)
     try {
-      if (!myBooks.length && ((!isGuest() && !orgIsAdmin() && _officialBooksForMe()) || isGuest())) _ltPrefetch();
+      if (!myBooks.length && _officialBooksForMe() && ((!isGuest() && !orgIsAdmin()) || isGuest())) _ltPrefetch();
     } catch(e){}
     // ?lt=1 로 들어온 사람에게 레벨 테스트를 연다. 딱 한 번만 — 플래그를 먼저 지운다
     // (render 는 수없이 다시 불린다).
@@ -10915,7 +10935,7 @@ function render() {
                 </div>
               ` : `
                 <img src="https://imvoca.app/2.png" style="width:40px;height:40px;object-fit:contain;border-radius:11px;">
-                <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${isGuest() ? TT('공식 단어장','Official Wordbooks') : (userName||'')+t('bookshelf')}</div>
+                <div style="font-family:var(--font-serif-ko);font-weight:600;letter-spacing:-0.02em;font-size:26px;color:var(--ink-100);">${isGuest() ? (_officialBooksForMe() ? TT('공식 단어장','Official Wordbooks') : 'IM VOCA') : (userName||'')+t('bookshelf')}</div>
               `}
             </div>
             <div class="muted" style="font-size:12px;margin-top:2px;">${_shelfStatLine(myBooks)}</div>
@@ -10932,7 +10952,7 @@ function render() {
               <div style="flex:1;min-width:0;font-size:12.5px;color:var(--ink-70);line-height:1.6;">${books.length ? TT('둘러보는 중이에요. <b>Day 1</b> 은 지금 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','Just looking around — <b>Day 1</b> is yours to study right now.<br>Log in to save your words and review schedule.') : TT('둘러보는 중이에요. 아래 <b>책 추가</b>로 단어장을 만들어 바로 외워볼 수 있어요.<br>로그인하면 외운 단어와 복습 일정이 저장돼요.','Just looking around — tap <b>Add Book</b> below to build a wordbook and start.<br>Log in to save your words and review schedule.')}</div>
               <button onclick="exitGuest('signup')" style="flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 13px;font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">${TT('로그인','Log in')}</button>
             </div>
-            <button onclick="startLevelTest('guest')" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}
+            ${_officialBooksForMe() ? `<button onclick="startLevelTest('guest')" style="width:100%;margin-bottom:14px;padding:12px;border-radius:11px;border:1.5px solid var(--accent);background:var(--gold-bg);color:var(--accent);font-size:13.5px;font-weight:700;font-family:var(--font-body);cursor:pointer;">🎯 ${TT('몇 레벨부터 할지 찾아드릴게요 (1분)','Find my level (1 min)')}</button>` : ''}` : ''}
           <div id="my-tests-banner"></div>
           ${assignmentBannerHTML()}
           ${(!myBooks.length && !isGuest() && !orgIsAdmin() && _officialBooksForMe()) ? `
@@ -10957,7 +10977,7 @@ function render() {
               ? TT('<b>책 추가</b>에서 공식 단어장을 담거나 교재를 촬영해 단어장을 만들어보세요.<br>학생 배정·시험 출제는 책장에 담지 않아도 그대로 할 수 있어요.','Tap <b>Add Book</b> to add official wordbooks or scan a textbook.<br>Assigning and tests work even without books on your shelf.')
               : TT('<b>책 추가</b>를 눌러 첫 단어장을 만들어보세요.<br>책 한 장이면 AI가 단어장을 만들어 드려요.','Tap <b>Add Book</b> to create your first wordbook.<br>One photo and AI does the rest.')}</div>
             <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;">
-              <div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">📗</div>${TT('공식 단어장 담기','Official books')}</div>
+              ${_officialBooksForMe() ? `<div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">📗</div>${TT('공식 단어장 담기','Official books')}</div>` : ''}
               <div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">📷</div>${TT('교재 촬영','Scan a page')}</div>
               <div style="flex:1;max-width:112px;background:var(--bg-card);border:1px solid var(--ink-07);border-radius:12px;padding:10px 6px;font-size:11px;color:var(--ink-60);"><div style="font-size:17px;margin-bottom:3px;">✏️</div>${TT('직접 입력','Type words')}</div>
             </div>
