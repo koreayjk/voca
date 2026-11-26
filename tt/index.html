@@ -15,27 +15,27 @@
 <link rel="canonical" href="https://imvoca.app/">
 <script>
   (function () {
-    // 틱톡은 스페인어 전용 채널이다 (2026-11-26~).
-    // 미국 히스패닉은 폰 언어가 영어인 경우가 많은데, 영어로 잡히면
-    // 공식 단어장이 숨겨지고(voca_word_i18n 에 영어 번역이 없다) 레벨 테스트까지
-    // 막혀 '빈 책장'만 보게 된다. 스페인어 영상을 보고 온 사람에게 막다른 길이다.
-    // → 이 주소로 들어온 사람은 스페인어로 연다.
-    //   이미 설정 화면에서 직접 고른 사람은 그 선택을 존중한다.
+    // 틱톡은 영어권(미국) 채널이다 (2026-11-26~).
+    // 계정이 미국 등록이라 틱톡의 첫 배포가 영어권으로 간다 — 거기에 맞춘다.
+    // 영어 원어민은 '자기 언어 책을 읽다 모르는 단어를 찍는' 쪽이므로
+    // 모국어·공부할 언어를 둘 다 en 으로 둔다(원어민 모드).
+    // 이미 설정 화면에서 직접 고른 사람은 그 선택을 존중한다.
     try {
       if (!localStorage.getItem('imvoca.nativeLang')) {
-        localStorage.setItem('imvoca.nativeLang', 'es');
+        localStorage.setItem('imvoca.nativeLang', 'en');
         localStorage.setItem('imvoca.targetLang', 'en');
       }
     } catch (e) {}
     var q = new URLSearchParams(location.search);
-    // 바이오·게시물별로 utm_campaign 등을 덧붙여 쓸 수 있게, 들어온 값은 그대로 넘긴다
-    q.set('lt', '1');
+    // ⚠️ lt=1 을 붙이지 않는다. 영어 사용자는 레벨 테스트가 막혀 있다
+    //    (공식 Lv.1~12 에 영어 번역이 없어 보기가 한국어로 나오기 때문).
+    //    붙여봐야 아무 일도 안 일어난다.
     if (!q.get('utm_source')) q.set('utm_source', 'tiktok');
     if (!q.get('utm_medium')) q.set('utm_medium', 'bio');
     location.replace('/?' + q.toString());
   })();
 </script>
-<noscript><meta http-equiv="refresh" content="0;url=/?lt=1&utm_source=tiktok&utm_medium=bio"></noscript>
+<noscript><meta http-equiv="refresh" content="0;url=/?utm_source=tiktok&utm_medium=bio"></noscript>
 <p style="font-family:system-ui;text-align:center;margin-top:3rem;color:#1E3754">
-  IM VOCA 로 이동 중… <a href="/?lt=1&utm_source=tiktok&utm_medium=bio">바로가기</a>
+  IM VOCA 로 이동 중… <a href="/?utm_source=tiktok&utm_medium=bio">바로가기</a>
 </p>
