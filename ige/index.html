@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>IM VOCA</title>
+<!--
+  영어권 인스타그램 계정 전용 유입 주소. imvoca.app/ige
+
+  왜 /ig 와 따로 두나:
+  한국어 인스타(@imvoca.app)와 영어 인스타는 **다른 계정**이다 (2026-11-26 개설).
+  같은 주소를 쓰면 utm_source 가 둘 다 'instagram' 으로 찍혀 어느 계정이
+  사람을 데려왔는지 구분이 안 된다. 그래서 utm_source=instagram_en 로 나눈다.
+  → Supabase members.signup_source 에 'auto: instagram_en/bio' 로 찍힌다.
+
+  왜 /read 로 보내나:
+  영어 사용자는 레벨 테스트가 막혀 있고(공식 Lv.1~12 에 영어 번역이 없다)
+  게스트는 스캔도 못 한다. 앱에 바로 떨어뜨리면 '빈 책장 + 로그인 벽' 이
+  전부다. /read 가 실제 스캔 결과를 먼저 보여주고 가입으로 보낸다.
+  자세한 건 marketing/english-market.md.
+
+  ⚠️ 언어를 영어로 '강제'한다. /yt 처럼 감지하지 않는다 —
+  이 계정은 영어 전용이라 한국어 사용자가 올 이유가 없고,
+  미국 거주 비영어권 사용자도 영어 화면을 기대하고 들어온다.
+  설정 화면에서 직접 고른 적이 있는 사람은 그 선택을 존중한다.
+-->
+<link rel="canonical" href="https://imvoca.app/read">
+<script>
+  (function () {
+    try {
+      if (!localStorage.getItem('imvoca.nativeLang')) {
+        localStorage.setItem('imvoca.nativeLang', 'en');
+        localStorage.setItem('imvoca.targetLang', 'en');   // 원어민 모드
+      }
+    } catch (e) {}
+    var q = new URLSearchParams(location.search);
+    // 게시물별로 utm_campaign 을 덧붙여 쓸 수 있게, 들어온 값은 그대로 넘긴다
+    if (!q.get('utm_source')) q.set('utm_source', 'instagram_en');
+    if (!q.get('utm_medium')) q.set('utm_medium', 'bio');
+    location.replace('/read?' + q.toString());
+  })();
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=/read?utm_source=instagram_en&utm_medium=bio"></noscript>
+<p style="font-family:system-ui;text-align:center;margin-top:3rem;color:#1E3754">
+  Opening IM VOCA… <a href="/read?utm_source=instagram_en&utm_medium=bio">Continue</a>
+</p>
