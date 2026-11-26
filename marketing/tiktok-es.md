@@ -171,13 +171,7 @@ CTA  "Deja de buscar lo mismo"
 
 ## 프로필 문구
 
-### 틱톡
-```
-Lee en inglés sin detenerte 📖
-Foto a la página → tarjetas automáticas
-Vuelven justo antes de que las olvides 🧠
-👇
-```
+### ~~틱톡~~ → 영어로 바뀌었다 (`english-market.md`)
 
 ### 페이스북 소개
 ```
