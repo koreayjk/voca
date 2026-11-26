@@ -1160,10 +1160,27 @@ let userNativeLang = (function(){
   return fallback;
 })();
 let userTargetLang = localStorage.getItem('imvoca.targetLang')||'en';
-// 초기 설정 1순위: 나라 IP → 언어. 위 브라우저 언어는 IP 조회가 끝나기 전/실패 시의 폴백.
-// 사용자가 언어 설정을 한 번이라도 저장하면(localStorage) 그 설정이 항상 우선 — 자동 감지는 다시 개입하지 않는다.
+// 브라우저 언어가 지원 목록에 있는지 — 있으면 그게 사용자의 실제 언어다.
+function _browserLangSupported(){
+  try {
+    const supported = LANG_OPTIONS.map(l => l.code);
+    const prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+    for (const c of prefs) {
+      if (supported.includes(String(c).toLowerCase().split('-')[0])) return true;
+    }
+  } catch(e){}
+  return false;
+}
+// 나라 IP → 언어. 단, **브라우저 언어를 덮지 않는다.**
+// 전에는 IP 가 1순위였다. 그래서 미국에 사는 스페인어 사용자(브라우저 es-MX, IP US)가
+// 영어 화면을 받고, 영어 번역은 voca_word_i18n 에 없으므로 단어 뜻이 **한국어**로 나왔다.
+// 멕시코 로케일로 재현해서 확인했다 — "advance / 나무로 만든, 목제의". 미국 히스패닉
+// 시장이 통째로 막혀 있던 셈이다. VPN·여행자도 같은 일을 겪는다.
+// IP 는 브라우저 언어가 지원 목록에 없을 때(예: 브라우저 fr, IP MX)만 쓴다.
+// 사용자가 언어 설정을 한 번이라도 저장하면(localStorage) 그 설정이 항상 우선이다.
 (function _geoLangInit(){
   if (localStorage.getItem('imvoca.nativeLang')) return;
+  if (_browserLangSupported()) return;
   const GEO_LANG = { KR:'ko', CN:'zh', TW:'zh', HK:'zh', MO:'zh', JP:'ja',
     US:'en', GB:'en', AU:'en', CA:'en', NZ:'en', IE:'en', SG:'en', PH:'en', IN:'en',
     ES:'es', MX:'es', AR:'es', CO:'es', CL:'es', PE:'es', FR:'fr', DE:'de', AT:'de',
