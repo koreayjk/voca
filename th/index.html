@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>IM VOCA</title>
+<!--
+  짧은 유입 주소. imvoca.app/th → 레벨 테스트로 바로.
+
+  왜 필요한가: 틱톡·인스타 바이오에 클릭되는 링크를 못 거는 계정이 있다
+  (개인 계정은 팔로워 1,000명 조건이 걸리는 경우가 많다). 그때 긴 주소를
+  타이핑하라고 할 수는 없다. 이 주소는 영상에서 말로 읽어줄 수도 있고,
+  utm 과 ?lt=1 을 그대로 들고 가서 유입 측정도 끊기지 않는다.
+-->
+<link rel="canonical" href="https://imvoca.app/">
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search);
+    // 바이오·게시물별로 utm_campaign 등을 덧붙여 쓸 수 있게, 들어온 값은 그대로 넘긴다
+    q.set('lt', '1');
+    if (!q.get('utm_source')) q.set('utm_source', 'threads');
+    if (!q.get('utm_medium')) q.set('utm_medium', 'bio');
+    location.replace('/?' + q.toString());
+  })();
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=/?lt=1&utm_source=threads&utm_medium=bio"></noscript>
+<p style="font-family:system-ui;text-align:center;margin-top:3rem;color:#1E3754">
+  IM VOCA 로 이동 중… <a href="/?lt=1&utm_source=threads&utm_medium=bio">바로가기</a>
+</p>
