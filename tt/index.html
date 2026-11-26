@@ -15,6 +15,18 @@
 <link rel="canonical" href="https://imvoca.app/">
 <script>
   (function () {
+    // 틱톡은 스페인어 전용 채널이다 (2026-11-26~).
+    // 미국 히스패닉은 폰 언어가 영어인 경우가 많은데, 영어로 잡히면
+    // 공식 단어장이 숨겨지고(voca_word_i18n 에 영어 번역이 없다) 레벨 테스트까지
+    // 막혀 '빈 책장'만 보게 된다. 스페인어 영상을 보고 온 사람에게 막다른 길이다.
+    // → 이 주소로 들어온 사람은 스페인어로 연다.
+    //   이미 설정 화면에서 직접 고른 사람은 그 선택을 존중한다.
+    try {
+      if (!localStorage.getItem('imvoca.nativeLang')) {
+        localStorage.setItem('imvoca.nativeLang', 'es');
+        localStorage.setItem('imvoca.targetLang', 'en');
+      }
+    } catch (e) {}
     var q = new URLSearchParams(location.search);
     // 바이오·게시물별로 utm_campaign 등을 덧붙여 쓸 수 있게, 들어온 값은 그대로 넘긴다
     q.set('lt', '1');
