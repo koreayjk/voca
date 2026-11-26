@@ -32,10 +32,13 @@
     //    붙여봐야 아무 일도 안 일어난다.
     if (!q.get('utm_source')) q.set('utm_source', 'tiktok');
     if (!q.get('utm_medium')) q.set('utm_medium', 'bio');
-    location.replace('/?' + q.toString());
+    // 앱이 아니라 데모 페이지로 보낸다. 영어 사용자는 비회원으로 스캔을 할 수 없어
+    // 앱에 바로 떨어뜨리면 '빈 책장 + 로그인 벽' 이 전부다 — 무료로 가치를 주는
+    // 단계가 없다. /read 는 실제 스캔 결과를 먼저 보여주고 가입으로 보낸다.
+    location.replace('/read?' + q.toString());
   })();
 </script>
-<noscript><meta http-equiv="refresh" content="0;url=/?utm_source=tiktok&utm_medium=bio"></noscript>
+<noscript><meta http-equiv="refresh" content="0;url=/read?utm_source=tiktok&utm_medium=bio"></noscript>
 <p style="font-family:system-ui;text-align:center;margin-top:3rem;color:#1E3754">
-  IM VOCA 로 이동 중… <a href="/?utm_source=tiktok&utm_medium=bio">바로가기</a>
+  IM VOCA 로 이동 중… <a href="/read?utm_source=tiktok&utm_medium=bio">바로가기</a>
 </p>
