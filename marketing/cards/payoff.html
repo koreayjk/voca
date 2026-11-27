@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{width:720px;height:1280px;background:#101E31;color:#F3EEE3;
+      font-family:Inter,'Noto Sans KR',system-ui,sans-serif;
+      display:flex;flex-direction:column;justify-content:center;padding:0 58px}
+ .kick{font-size:27px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
+       color:#E8C87A;margin-bottom:30px}
+ .sent{background:#F3EEE3;color:#1a1a1a;border-radius:18px;padding:30px 30px;
+       font-family:Georgia,serif;font-size:37px;line-height:1.5;margin-bottom:46px}
+ .hl{background:#F7DFA0;font-weight:700;padding:1px 6px;border-radius:4px}
+ .row{display:flex;align-items:flex-start;gap:18px;margin-bottom:26px}
+ .tag{flex:0 0 auto;font-size:25px;font-weight:800;padding:8px 14px;border-radius:8px;margin-top:4px}
+ .t1{background:#7A2E22;color:#FFD9D0}
+ .t2{background:#1E5C45;color:#C8F0DC}
+ .def{font-size:42px;line-height:1.32;font-weight:600}
+ .d1{color:#93A5BD}
+ .d2{color:#E8C87A;font-weight:800}
+ .note{margin-top:20px;font-size:30px;color:#7F93AE;line-height:1.4}
+ /* 복습 카드 */
+ .word{font-size:84px;font-weight:800;margin-bottom:10px}
+ .wsub{font-size:34px;color:#93A5BD;margin-bottom:58px}
+ .days{display:flex;gap:12px;margin-bottom:30px}
+ .d{flex:1;text-align:center;background:#1B2E47;border-radius:12px;padding:20px 0 16px}
+ .d b{display:block;font-size:40px;font-weight:800;color:#E8C87A}
+ .d span{font-size:23px;color:#7F93AE}
+ .big{font-size:46px;font-weight:800;line-height:1.4}
+</style></head><body id="b"></body>
+<script>
+const Q = new URLSearchParams(location.search);
+const L = Q.get('lang')||'en', K = Q.get('kind')||'mean';
+const D = {
+ en:{ meanKick:'What the app gives back',
+      sent:'&ldquo;<span class="hl">Hang</span> spring-cleaning!&rdquo; and bolted out of the house&hellip;',
+      t1:'DICTIONARY', d1:'to suspend or be suspended from above',
+      t2:'IN THIS BOOK', d2:'&ldquo;Forget about spring-cleaning!&rdquo;',
+      note:'Not the first meaning. The one on the page.',
+      revKick:'And then it comes back', word:'Hang', wsub:'used figuratively here',
+      days:[['1','day'],['2','days'],['3','days'],['6','days'],['15','days'],['30','days']],
+      big:'Six times, right before they forget.' },
+ ko:{ meanKick:'앱이 돌려주는 것',
+      sent:'&hellip;to <span class="hl">address</span> the problem of food waste&hellip;',
+      t1:'사전', d1:'주소',
+      t2:'이 지문에서는', d2:'(문제를) 다루다',
+      note:'첫 번째 뜻이 아니라, 이 문장에서의 뜻.',
+      revKick:'그리고 다시 나타납니다', word:'address', wsub:'이 지문에서의 뜻으로',
+      days:[['1','일'],['2','일'],['3','일'],['6','일'],['15','일'],['30','일']],
+      big:'까먹기 직전에, 여섯 번.' }
+}[L];
+const b=document.getElementById('b');
+if(K==='mean'){
+ b.innerHTML = `<div class="kick">${D.meanKick}</div>
+  <div class="sent">${D.sent}</div>
+  <div class="row"><span class="tag t1">${D.t1}</span><span class="def d1">${D.d1}</span></div>
+  <div class="row"><span class="tag t2">${D.t2}</span><span class="def d2">${D.d2}</span></div>
+  <div class="note">${D.note}</div>`;
+}else{
+ b.innerHTML = `<div class="kick">${D.revKick}</div>
+  <div class="word">${D.word}</div><div class="wsub">${D.wsub}</div>
+  <div class="days">${D.days.map(d=>`<div class="d"><b>${d[0]}</b><span>${d[1]}</span></div>`).join('')}</div>
+  <div class="big">${D.big}</div>`;
+}
+</script></html>
