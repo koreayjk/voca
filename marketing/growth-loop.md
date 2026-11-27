@@ -142,15 +142,25 @@
 | 5 | `ko-emo-01-desk` | 11-27 | **감동형 전환** — 무대사·배너 없음·컷 4개 | | | |
 | 6 | `en-emo-01-chart` | 11-27 | 같음 (영어) | | | |
 
-**5·6번 발행 기록 (2026-11-27 02:36)**
+**5·6번 발행 기록 — v2 로 교체 (2026-11-27 06:16)**
 
-| 채널 | 링크 | 엔드카드 |
-|---|---|---|
-| 인스타(한) | `instagram.com/reel/DgOnurNBFmQ/` | `/ig` |
-| 인스타(영) | `instagram.com/reel/DgOnwhBvFCh/` | `/ige` |
-| 유튜브(한) | `youtube.com/watch?v=9lU8U4TuUBU` | `/yt` |
-| 유튜브(영) | `youtube.com/watch?v=h7z-cKm3atg` | `/yt` |
-| 틱톡(영) | 사용자가 폰으로 | `/tt` |
+> ⚠️ v1(02:36 발행) 네 건은 **지웠다.** 두 가지 핵심 — ① 사전 뜻이 아니라
+> **그 지문에서의 뜻** ② **까먹기 직전 6회 복습** — 이 영상 안에 없었다.
+> `marketing/cards/payoff.html` 로 카드 두 장을 만들어 영상에 넣고,
+> 캡션에도 ①② 를 그대로 박아서 다시 올렸다. 아래가 **살아 있는 링크**다.
+> (v1 링크 `DgOnurNBFmQ` / `DgOnwhBvFCh` / `9lU8U4TuUBU` / `h7z-cKm3atg` 는 **죽었다.**)
+
+| 채널 | 링크 | 엔드카드 | 길이 |
+|---|---|---|---|
+| 인스타(한) | `instagram.com/reel/DgPA6leJhNr/` | `/ig` | 23.8s |
+| 인스타(영) | `instagram.com/reel/DgPA7TAuPj5/` | `/ige` | 27.3s |
+| 유튜브(한) | `youtube.com/watch?v=qlLMWRSKOOM` | `/yt` | 23.8s |
+| 유튜브(영) | `youtube.com/watch?v=dJdCP6z-EmY` | `/yt` | 27.3s |
+| 틱톡(영) | 사용자가 폰으로 (v2 파일) | `/tt` | 27.3s |
+
+**교체 비용 0 크레딧** — 카드는 HTML→PNG, 합치기는 ffmpeg 뿐이었다.
+영상을 다시 찍지 않고 **컷 두 개를 끼워 넣는 것**만으로 메시지를 바꿀 수 있다.
+다음에도 이 길로 간다.
 
 ### ⭐ 같은 날 두 포맷이 나갔다 — 처음으로 포맷만 비교된다
 
